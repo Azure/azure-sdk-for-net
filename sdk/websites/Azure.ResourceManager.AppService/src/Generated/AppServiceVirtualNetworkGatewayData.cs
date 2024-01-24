@@ -17,12 +17,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceVirtualNetworkGatewayData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkGatewayData"/>. </summary>
         public AppServiceVirtualNetworkGatewayData()
         {
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkGatewayData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkGatewayData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

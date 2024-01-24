@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListsAllWAFPoliciesInAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/WafListPolicies.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/WafListPolicies.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetsAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/WafPolicyGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/WafPolicyGet.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -119,12 +119,54 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Gets a WAF policy within a resource group
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetsAWAFPolicyWithinAResourceGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/WafPolicyGet.json
+            // this example is just showing the usage of "WebApplicationFirewallPolicies_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this WebApplicationFirewallPolicyResource
+            WebApplicationFirewallPolicyCollection collection = resourceGroupResource.GetWebApplicationFirewallPolicies();
+
+            // invoke the operation
+            string policyName = "Policy1";
+            NullableResponse<WebApplicationFirewallPolicyResource> response = await collection.GetIfExistsAsync(policyName);
+            WebApplicationFirewallPolicyResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                WebApplicationFirewallPolicyData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Creates or updates a WAF policy within a resource group
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreatesOrUpdatesAWAFPolicyWithinAResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/WafPolicyCreateOrUpdate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/WafPolicyCreateOrUpdate.json
             // this example is just showing the usage of "WebApplicationFirewallPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -232,6 +274,30 @@ new GroupByUserSession(new GroupByVariable[]
 new GroupByVariable(ApplicationGatewayFirewallUserSessionVariable.ClientAddr)
 })
 },
+},new WebApplicationFirewallCustomRule(4,WebApplicationFirewallRuleType.MatchRule,new MatchCondition[]
+{
+new MatchCondition(new MatchVariable[]
+{
+new MatchVariable(WebApplicationFirewallMatchVariable.RemoteAddr)
+{
+Selector = null,
+}
+},WebApplicationFirewallOperator.IPMatch,new string[]
+{
+"192.168.1.0/24"
+}),new MatchCondition(new MatchVariable[]
+{
+new MatchVariable(WebApplicationFirewallMatchVariable.RequestHeaders)
+{
+Selector = "UserAgent",
+}
+},WebApplicationFirewallOperator.Contains,new string[]
+{
+"Bot"
+})
+},WebApplicationFirewallAction.JSChallenge)
+{
+Name = "Rule4",
 }
 },
                 ManagedRules = new ManagedRulesDefinition(new ManagedRuleSet[]
@@ -252,6 +318,22 @@ Action = RuleMatchActionType.Log,
 {
 State = ManagedRuleEnabledState.Disabled,
 Action = RuleMatchActionType.AnomalyScoring,
+}
+},
+}
+},
+},new ManagedRuleSet("Microsoft_BotManagerRuleSet","1.0")
+{
+RuleGroupOverrides =
+{
+new ManagedRuleGroupOverride("UnknownBots")
+{
+Rules =
+{
+new ManagedRuleOverride("300700")
+{
+State = ManagedRuleEnabledState.Enabled,
+Action = RuleMatchActionType.JSChallenge,
 }
 },
 }

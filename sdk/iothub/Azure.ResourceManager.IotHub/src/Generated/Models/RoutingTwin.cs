@@ -12,9 +12,18 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> Twin reference input parameter. This is an optional parameter. </summary>
     public partial class RoutingTwin
     {
-        /// <summary> Initializes a new instance of RoutingTwin. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoutingTwin"/>. </summary>
         public RoutingTwin()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RoutingTwin"/>. </summary>
+        /// <param name="tags"> Twin Tags. </param>
+        /// <param name="properties"></param>
+        internal RoutingTwin(BinaryData tags, RoutingTwinProperties properties)
+        {
+            Tags = tags;
+            Properties = properties;
         }
 
         /// <summary>
@@ -23,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

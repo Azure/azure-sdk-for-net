@@ -19,13 +19,16 @@ namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
     /// A Class representing a PrivateStoreOffer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PrivateStoreOfferResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPrivateStoreOfferResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreCollectionInfoResource" /> using the GetPrivateStoreOffer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PrivateStoreOfferResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPrivateStoreOfferResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateStoreCollectionInfoResource"/> using the GetPrivateStoreOffer method.
     /// </summary>
     public partial class PrivateStoreOfferResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PrivateStoreOfferResource"/> instance. </summary>
+        /// <param name="privateStoreId"> The privateStoreId. </param>
+        /// <param name="collectionId"> The collectionId. </param>
+        /// <param name="offerId"> The offerId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(Guid privateStoreId, Guid collectionId, string offerId)
         {
             var resourceId = $"/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}/offers/{offerId}";
@@ -36,12 +39,15 @@ namespace Azure.ResourceManager.Marketplace
         private readonly PrivateStoreCollectionOfferRestOperations _privateStoreOfferPrivateStoreCollectionOfferRestClient;
         private readonly PrivateStoreOfferData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/collections/offers";
+
         /// <summary> Initializes a new instance of the <see cref="PrivateStoreOfferResource"/> class for mocking. </summary>
         protected PrivateStoreOfferResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PrivateStoreOfferResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PrivateStoreOfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PrivateStoreOfferResource(ArmClient client, PrivateStoreOfferData data) : this(client, data.Id)
@@ -62,9 +68,6 @@ namespace Azure.ResourceManager.Marketplace
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Marketplace/privateStores/collections/offers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +101,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +141,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +180,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +223,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,10 +265,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The PrivateStoreOffer to use. </param>
+        /// <param name="data"> The <see cref="PrivateStoreOfferData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateStoreOfferResource>> UpdateAsync(WaitUntil waitUntil, PrivateStoreOfferData data, CancellationToken cancellationToken = default)
@@ -268,10 +311,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> The PrivateStoreOffer to use. </param>
+        /// <param name="data"> The <see cref="PrivateStoreOfferData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PrivateStoreOfferResource> Update(WaitUntil waitUntil, PrivateStoreOfferData data, CancellationToken cancellationToken = default)
@@ -306,9 +357,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_UpsertOfferWithMultiContext</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The MultiContextAndPlansContent to use. </param>
+        /// <param name="content"> The <see cref="MultiContextAndPlansContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<PrivateStoreOfferResource>> UpsertOfferWithMultiContextAsync(MultiContextAndPlansContent content = null, CancellationToken cancellationToken = default)
         {
@@ -337,9 +396,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_UpsertOfferWithMultiContext</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="content"> The MultiContextAndPlansContent to use. </param>
+        /// <param name="content"> The <see cref="MultiContextAndPlansContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<PrivateStoreOfferResource> UpsertOfferWithMultiContext(MultiContextAndPlansContent content = null, CancellationToken cancellationToken = default)
         {
@@ -368,9 +435,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="payload"> The PrivateStoreOperation to use. </param>
+        /// <param name="payload"> The <see cref="PrivateStoreOperation"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response> DeleteAsync(PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
         {
@@ -399,9 +474,17 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollectionOffer_Post</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreOfferResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="payload"> The PrivateStoreOperation to use. </param>
+        /// <param name="payload"> The <see cref="PrivateStoreOperation"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response Delete(PrivateStoreOperation? payload = null, CancellationToken cancellationToken = default)
         {

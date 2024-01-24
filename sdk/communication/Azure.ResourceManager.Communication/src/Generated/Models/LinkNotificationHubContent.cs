@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Communication.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.Communication.Models
     /// <summary> Description of an Azure Notification Hub to link to the communication service. </summary>
     public partial class LinkNotificationHubContent
     {
-        /// <summary> Initializes a new instance of LinkNotificationHubContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LinkNotificationHubContent"/>. </summary>
         /// <param name="resourceId"> The resource ID of the notification hub. </param>
         /// <param name="connectionString"> Connection string for the notification hub. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="connectionString"/> is null. </exception>
@@ -24,6 +57,22 @@ namespace Azure.ResourceManager.Communication.Models
 
             ResourceId = resourceId;
             ConnectionString = connectionString;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkNotificationHubContent"/>. </summary>
+        /// <param name="resourceId"> The resource ID of the notification hub. </param>
+        /// <param name="connectionString"> Connection string for the notification hub. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinkNotificationHubContent(ResourceIdentifier resourceId, string connectionString, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceId = resourceId;
+            ConnectionString = connectionString;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LinkNotificationHubContent"/> for deserialization. </summary>
+        internal LinkNotificationHubContent()
+        {
         }
 
         /// <summary> The resource ID of the notification hub. </summary>

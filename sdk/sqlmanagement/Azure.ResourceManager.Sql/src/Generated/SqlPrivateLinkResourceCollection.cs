@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlPrivateLinkResource" /> and their operations.
-    /// Each <see cref="SqlPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlPrivateLinkResourceCollection" /> instance call the GetSqlPrivateLinkResources method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlPrivateLinkResource"/> and their operations.
+    /// Each <see cref="SqlPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlPrivateLinkResourceCollection"/> instance call the GetSqlPrivateLinkResources method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlPrivateLinkResourceCollection : ArmCollection, IEnumerable<SqlPrivateLinkResource>, IAsyncEnumerable<SqlPrivateLinkResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlPrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = _sqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("SqlPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        public virtual NullableResponse<SqlPrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = _sqlPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("SqlPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

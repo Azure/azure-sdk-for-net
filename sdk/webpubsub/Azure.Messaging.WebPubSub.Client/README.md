@@ -26,7 +26,7 @@ Details about the terms used here are described in [Key concepts](#key-concepts)
 Install the client library from [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.Messaging.WebPubSub.Client --prerelease
+dotnet add package Azure.Messaging.WebPubSub.Client
 ```
 
 ### Prerequisites

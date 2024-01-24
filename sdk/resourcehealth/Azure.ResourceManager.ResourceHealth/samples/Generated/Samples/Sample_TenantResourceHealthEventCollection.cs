@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListEventsByTenantId()
         {
-            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/stable/2022-10-01/examples/Events_ListByTenantId.json
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Events_ListByTenantId.json
             // this example is just showing the usage of "Events_ListByTenantId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +57,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_EventByTenantIdAndTrackingId()
         {
-            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/stable/2022-10-01/examples/Event_GetByTenantIdAndTrackingId.json
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Event_GetByTenantIdAndTrackingId.json
             // this example is just showing the usage of "Event_GetByTenantIdAndTrackingId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_EventByTenantIdAndTrackingId()
         {
-            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/stable/2022-10-01/examples/Event_GetByTenantIdAndTrackingId.json
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Event_GetByTenantIdAndTrackingId.json
             // this example is just showing the usage of "Event_GetByTenantIdAndTrackingId" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -111,6 +112,47 @@ namespace Azure.ResourceManager.ResourceHealth.Samples
             bool result = await collection.ExistsAsync(eventTrackingId, filter: filter, queryStartTime: queryStartTime);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // EventByTenantIdAndTrackingId
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_EventByTenantIdAndTrackingId()
+        {
+            // Generated from example definition: specification/resourcehealth/resource-manager/Microsoft.ResourceHealth/preview/2023-10-01-preview/examples/Event_GetByTenantIdAndTrackingId.json
+            // this example is just showing the usage of "Event_GetByTenantIdAndTrackingId" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this TenantResource created on azure
+            // for more information of creating TenantResource, please refer to the document of TenantResource
+            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this TenantResourceHealthEventResource
+            TenantResourceHealthEventCollection collection = tenantResource.GetTenantResourceHealthEvents();
+
+            // invoke the operation
+            string eventTrackingId = "eventTrackingId";
+            string filter = "properties/status eq 'Active'";
+            string queryStartTime = "7/10/2022";
+            NullableResponse<TenantResourceHealthEventResource> response = await collection.GetIfExistsAsync(eventTrackingId, filter: filter, queryStartTime: queryStartTime);
+            TenantResourceHealthEventResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ResourceHealthEventData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

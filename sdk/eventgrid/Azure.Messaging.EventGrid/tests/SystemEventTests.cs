@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using Azure.Messaging.EventGrid.SystemEvents;
@@ -73,6 +74,19 @@ namespace Azure.Messaging.EventGrid.Tests
                             Assert.Fail($"{systemEvent}.{name} is not cased correctly. It should be cased as 'ETag'.");
                         }
                     }
+                }
+            }
+        }
+
+        [Test]
+        public void ModelsAreInCorrectNamespace()
+        {
+            foreach (Type model in Assembly.GetAssembly(typeof(EventGridEvent)).GetTypes())
+            {
+                if (model.IsPublic && model.Namespace == "Azure.Messaging.EventGrid.Models"
+                    && model.GetCustomAttribute<EditorBrowsableAttribute>() == null)
+                {
+                    Assert.Fail($"{model} is not in the correct namespace. It should be in Azure.Messaging.EventGrid.SystemEvents.");
                 }
             }
         }

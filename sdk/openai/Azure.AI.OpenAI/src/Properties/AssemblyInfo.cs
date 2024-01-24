@@ -3,4 +3,4 @@
 
 using Azure.Core;
 
-[assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.Insights")]
+[assembly: Azure.Core.AzureResourceProviderNamespace("Microsoft.CognitiveServices")]

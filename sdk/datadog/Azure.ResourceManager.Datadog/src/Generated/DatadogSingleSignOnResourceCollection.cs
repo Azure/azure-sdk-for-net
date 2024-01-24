@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Datadog
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DatadogSingleSignOnResource" /> and their operations.
-    /// Each <see cref="DatadogSingleSignOnResource" /> in the collection will belong to the same instance of <see cref="DatadogMonitorResource" />.
-    /// To get a <see cref="DatadogSingleSignOnResourceCollection" /> instance call the GetDatadogSingleSignOnResources method from an instance of <see cref="DatadogMonitorResource" />.
+    /// A class representing a collection of <see cref="DatadogSingleSignOnResource"/> and their operations.
+    /// Each <see cref="DatadogSingleSignOnResource"/> in the collection will belong to the same instance of <see cref="DatadogMonitorResource"/>.
+    /// To get a <see cref="DatadogSingleSignOnResourceCollection"/> instance call the GetDatadogSingleSignOnResources method from an instance of <see cref="DatadogMonitorResource"/>.
     /// </summary>
     public partial class DatadogSingleSignOnResourceCollection : ArmCollection, IEnumerable<DatadogSingleSignOnResource>, IAsyncEnumerable<DatadogSingleSignOnResource>
     {
@@ -64,11 +64,19 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> Configuration name. </param>
-        /// <param name="data"> The DatadogSingleSignOnResource to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
@@ -105,11 +113,19 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="configurationName"> Configuration name. </param>
-        /// <param name="data"> The DatadogSingleSignOnResource to use. </param>
+        /// <param name="data"> The <see cref="DatadogSingleSignOnResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> or <paramref name="data"/> is null. </exception>
@@ -145,6 +161,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DatadogSingleSignOnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DatadogSingleSignOnResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DatadogSingleSignOnResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DatadogSingleSignOnResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DatadogSingleSignOnResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> Configuration name. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Datadog
             {
                 var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> Configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DatadogSingleSignOnResource>> GetIfExistsAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DatadogSingleSignOnResource>(response.GetRawResponse());
+                return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Datadog/monitors/{monitorName}/singleSignOnConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SingleSignOnConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> Configuration name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        public virtual NullableResponse<DatadogSingleSignOnResource> GetIfExists(string configurationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(configurationName, nameof(configurationName));
+
+            using var scope = _datadogSingleSignOnResourceSingleSignOnConfigurationsClientDiagnostics.CreateScope("DatadogSingleSignOnResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, configurationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DatadogSingleSignOnResource>(response.GetRawResponse());
+                return Response.FromValue(new DatadogSingleSignOnResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

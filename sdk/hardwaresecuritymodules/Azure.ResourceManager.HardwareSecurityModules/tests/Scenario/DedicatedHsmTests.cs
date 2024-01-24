@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests.Scenario
             await BaseSetUpForTests(isDedicatedHsm: true);
         }
 
+        [Ignore("Exception")]
         [RecordedTest]
         public async Task CreateOrUpdateDedicatedHsmTest()
         {

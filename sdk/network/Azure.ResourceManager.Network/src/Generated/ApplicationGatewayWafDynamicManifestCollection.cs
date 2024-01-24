@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApplicationGatewayWafDynamicManifestResource" /> and their operations.
-    /// Each <see cref="ApplicationGatewayWafDynamicManifestResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="ApplicationGatewayWafDynamicManifestCollection" /> instance call the GetApplicationGatewayWafDynamicManifests method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> and their operations.
+    /// Each <see cref="ApplicationGatewayWafDynamicManifestResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="ApplicationGatewayWafDynamicManifestCollection"/> instance call the GetApplicationGatewayWafDynamicManifests method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ApplicationGatewayWafDynamicManifestCollection : ArmCollection, IEnumerable<ApplicationGatewayWafDynamicManifestResource>, IAsyncEnumerable<ApplicationGatewayWafDynamicManifestResource>
     {
@@ -73,6 +73,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -104,6 +112,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,10 +153,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationGatewayWafDynamicManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationGatewayWafDynamicManifestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifests_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApplicationGatewayWafDynamicManifestResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationGatewayWafDynamicManifestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationGatewayWafDynamicManifestResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationGatewayWafDynamicManifestRestClient.CreateGetRequest(Id.SubscriptionId, new AzureLocation(_location));
@@ -180,6 +212,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +251,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -222,6 +270,86 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ApplicationGatewayWafDynamicManifestResource>> GetIfExistsAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApplicationGatewayWafDynamicManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/locations/{location}/applicationGatewayWafDynamicManifests/dafault</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApplicationGatewayWafDynamicManifestsDefault_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationGatewayWafDynamicManifestResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ApplicationGatewayWafDynamicManifestResource> GetIfExists(CancellationToken cancellationToken = default)
+        {
+            using var scope = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultClientDiagnostics.CreateScope("ApplicationGatewayWafDynamicManifestCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _applicationGatewayWafDynamicManifestApplicationGatewayWafDynamicManifestsDefaultRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApplicationGatewayWafDynamicManifestResource>(response.GetRawResponse());
+                return Response.FromValue(new ApplicationGatewayWafDynamicManifestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

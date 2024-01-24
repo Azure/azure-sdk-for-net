@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceGuardResource" /> and their operations.
-    /// Each <see cref="ResourceGuardResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ResourceGuardCollection" /> instance call the GetResourceGuards method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ResourceGuardResource"/> and their operations.
+    /// Each <see cref="ResourceGuardResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ResourceGuardCollection"/> instance call the GetResourceGuards method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ResourceGuardCollection : ArmCollection, IEnumerable<ResourceGuardResource>, IAsyncEnumerable<ResourceGuardResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Put</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Put</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetResourcesInResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGuardResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGuardResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetResourcesInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetResourcesInResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGuardResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGuardResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGuardResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetResourcesInResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 var response = _resourceGuardRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceGuardsName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceGuardResource>> GetIfExistsAsync(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceGuardRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, resourceGuardsName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGuardResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/resourceGuards/{resourceGuardsName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGuardsName"> The name of ResourceGuard. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGuardsName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGuardsName"/> is null. </exception>
+        public virtual NullableResponse<ResourceGuardResource> GetIfExists(string resourceGuardsName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGuardsName, nameof(resourceGuardsName));
+
+            using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceGuardRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, resourceGuardsName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGuardResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGuardResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

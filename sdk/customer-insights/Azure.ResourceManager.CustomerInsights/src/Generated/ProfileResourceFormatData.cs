@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.CustomerInsights
     /// </summary>
     public partial class ProfileResourceFormatData : ResourceData
     {
-        /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceFormatData"/>. </summary>
         public ProfileResourceFormatData()
         {
             Attributes = new ChangeTrackingDictionary<string, IList<string>>();
@@ -30,7 +62,7 @@ namespace Azure.ResourceManager.CustomerInsights
             StrongIds = new ChangeTrackingList<StrongId>();
         }
 
-        /// <summary> Initializes a new instance of ProfileResourceFormatData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceFormatData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -53,7 +85,8 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <param name="timestampFieldName"> The timestamp property name. Represents the time when the interaction or profile update happened. </param>
         /// <param name="typeName"> The name of the entity. </param>
         /// <param name="strongIds"> The strong IDs. </param>
-        internal ProfileResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, IList<string>> attributes, IDictionary<string, string> description, IDictionary<string, string> displayName, IDictionary<string, IDictionary<string, string>> localizedAttributes, string smallImage, string mediumImage, string largeImage, string apiEntitySetName, EntityType? entityType, IList<PropertyDefinition> fields, int? instancesCount, DateTimeOffset? lastChangedUtc, ProvisioningState? provisioningState, string schemaItemTypeLink, Guid? tenantId, string timestampFieldName, string typeName, IList<StrongId> strongIds) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProfileResourceFormatData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, IList<string>> attributes, IDictionary<string, string> description, IDictionary<string, string> displayName, IDictionary<string, IDictionary<string, string>> localizedAttributes, string smallImage, string mediumImage, string largeImage, string apiEntitySetName, EntityType? entityType, IList<PropertyDefinition> fields, int? instancesCount, DateTimeOffset? lastChangedUtc, ProvisioningState? provisioningState, string schemaItemTypeLink, Guid? tenantId, string timestampFieldName, string typeName, IList<StrongId> strongIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Attributes = attributes;
             Description = description;
@@ -73,6 +106,7 @@ namespace Azure.ResourceManager.CustomerInsights
             TimestampFieldName = timestampFieldName;
             TypeName = typeName;
             StrongIds = strongIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The attributes for the Type. </summary>

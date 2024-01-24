@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.HybridContainerService.Models;
+using Azure.ResourceManager.HybridContainerService.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HybridContainerService
@@ -19,505 +19,303 @@ namespace Azure.ResourceManager.HybridContainerService
     /// <summary> A class to add extension methods to Azure.ResourceManager.HybridContainerService. </summary>
     public static partial class HybridContainerServiceExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableHybridContainerServiceArmClient GetMockableHybridContainerServiceArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableHybridContainerServiceArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableHybridContainerServiceResourceGroupResource GetMockableHybridContainerServiceResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableHybridContainerServiceResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableHybridContainerServiceSubscriptionResource GetMockableHybridContainerServiceSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableHybridContainerServiceSubscriptionResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        /// <summary>
+        /// Gets an object representing a ProvisionedClusterResource along with the instance operations that can be performed on it in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetProvisionedCluster(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
+        public static ProvisionedClusterResource GetProvisionedCluster(this ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridContainerServiceArmClient(client).GetProvisionedCluster(scope);
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        /// <summary>
+        /// Gets an object representing a KubernetesVersionProfileResource along with the instance operations that can be performed on it in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetKubernetesVersionProfile(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KubernetesVersionProfileResource"/> object. </returns>
+        public static KubernetesVersionProfileResource GetKubernetesVersionProfile(this ArmClient client, ResourceIdentifier scope)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridContainerServiceArmClient(client).GetKubernetesVersionProfile(scope);
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        /// <summary>
+        /// Gets an object representing a HybridContainerServiceVmSkuResource along with the instance operations that can be performed on it in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridContainerServiceVmSku(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
+        public static HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSku(this ArmClient client, ResourceIdentifier scope)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceVmSku(scope);
         }
-        #region ProvisionedClusterResource
+
         /// <summary>
         /// Gets an object representing a <see cref="ProvisionedClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProvisionedClusterResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetProvisionedClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisionedClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProvisionedClusterResource"/> object. </returns>
         public static ProvisionedClusterResource GetProvisionedClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProvisionedClusterResource.ValidateResourceId(id);
-                return new ProvisionedClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region ProvisionedClusterUpgradeProfileResource
+            return GetMockableHybridContainerServiceArmClient(client).GetProvisionedClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="ProvisionedClusterUpgradeProfileResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ProvisionedClusterUpgradeProfileResource.CreateResourceIdentifier" /> to create a <see cref="ProvisionedClusterUpgradeProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetProvisionedClusterUpgradeProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ProvisionedClusterUpgradeProfileResource"/> object. </returns>
         public static ProvisionedClusterUpgradeProfileResource GetProvisionedClusterUpgradeProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                ProvisionedClusterUpgradeProfileResource.ValidateResourceId(id);
-                return new ProvisionedClusterUpgradeProfileResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HybridIdentityMetadataResource
+            return GetMockableHybridContainerServiceArmClient(client).GetProvisionedClusterUpgradeProfileResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HybridIdentityMetadataResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridIdentityMetadataResource.CreateResourceIdentifier" /> to create a <see cref="HybridIdentityMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridIdentityMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridIdentityMetadataResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridIdentityMetadataResource"/> object. </returns>
         public static HybridIdentityMetadataResource GetHybridIdentityMetadataResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridIdentityMetadataResource.ValidateResourceId(id);
-                return new HybridIdentityMetadataResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HybridContainerServiceAgentPoolResource
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridIdentityMetadataResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HybridContainerServiceAgentPoolResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridContainerServiceAgentPoolResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceAgentPoolResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridContainerServiceAgentPoolResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridContainerServiceAgentPoolResource"/> object. </returns>
         public static HybridContainerServiceAgentPoolResource GetHybridContainerServiceAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridContainerServiceAgentPoolResource.ValidateResourceId(id);
-                return new HybridContainerServiceAgentPoolResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region StorageSpaceResource
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceAgentPoolResource(id);
+        }
+
         /// <summary>
-        /// Gets an object representing a <see cref="StorageSpaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageSpaceResource.CreateResourceIdentifier" /> to create a <see cref="StorageSpaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="KubernetesVersionProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="KubernetesVersionProfileResource.CreateResourceIdentifier" /> to create a <see cref="KubernetesVersionProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetKubernetesVersionProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageSpaceResource" /> object. </returns>
-        public static StorageSpaceResource GetStorageSpaceResource(this ArmClient client, ResourceIdentifier id)
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KubernetesVersionProfileResource"/> object. </returns>
+        public static KubernetesVersionProfileResource GetKubernetesVersionProfileResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                StorageSpaceResource.ValidateResourceId(id);
-                return new StorageSpaceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region HybridContainerServiceVirtualNetworkResource
+            return GetMockableHybridContainerServiceArmClient(client).GetKubernetesVersionProfileResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="HybridContainerServiceVmSkuResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="HybridContainerServiceVmSkuResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVmSkuResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridContainerServiceVmSkuResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridContainerServiceVmSkuResource"/> object. </returns>
+        public static HybridContainerServiceVmSkuResource GetHybridContainerServiceVmSkuResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceVmSkuResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="HybridContainerServiceVirtualNetworkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="HybridContainerServiceVirtualNetworkResource.CreateResourceIdentifier" /> to create a <see cref="HybridContainerServiceVirtualNetworkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceArmClient.GetHybridContainerServiceVirtualNetworkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HybridContainerServiceVirtualNetworkResource"/> object. </returns>
         public static HybridContainerServiceVirtualNetworkResource GetHybridContainerServiceVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                HybridContainerServiceVirtualNetworkResource.ValidateResourceId(id);
-                return new HybridContainerServiceVirtualNetworkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary>
-        /// Lists the available orchestrators in a custom location for HybridAKS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/orchestrators</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListOrchestrators</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<OrchestratorVersionProfileListResult>> GetOrchestratorsHybridContainerServiceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return await GetArmResourceExtensionClient(client, scope).GetOrchestratorsHybridContainerServiceAsync(cancellationToken).ConfigureAwait(false);
+            return GetMockableHybridContainerServiceArmClient(client).GetHybridContainerServiceVirtualNetworkResource(id);
         }
 
         /// <summary>
-        /// Lists the available orchestrators in a custom location for HybridAKS
-        /// <list type="bullet">
+        /// Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource.
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/orchestrators</description>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetHybridContainerServiceVirtualNetworks()"/> instead.</description>
         /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListOrchestrators</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<OrchestratorVersionProfileListResult> GetOrchestratorsHybridContainerService(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetOrchestratorsHybridContainerService(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the available VM SKUs in a custom location for HybridAKS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/vmSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListVMSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static async Task<Response<VmSkuListResult>> GetVmSkusHybridContainerServiceAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return await GetArmResourceExtensionClient(client, scope).GetVmSkusHybridContainerServiceAsync(cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Lists the available VM SKUs in a custom location for HybridAKS
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{customLocationResourceUri}/providers/Microsoft.HybridContainerService/vmSkus</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>HybridContainerService_ListVMSkus</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public static Response<VmSkuListResult> GetVmSkusHybridContainerService(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetVmSkusHybridContainerService(cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ProvisionedClusterResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of ProvisionedClusterResources and their operations over a ProvisionedClusterResource. </returns>
-        public static ProvisionedClusterCollection GetProvisionedClusters(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetProvisionedClusters();
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS provisioned cluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_Get</description>
-        /// </item>
-        /// </list>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<ProvisionedClusterResource>> GetProvisionedClusterAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetProvisionedClusters().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS provisioned cluster
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/provisionedClusters/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_Get</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="resourceName"> Parameter for the name of the provisioned cluster. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<ProvisionedClusterResource> GetProvisionedCluster(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetProvisionedClusters().Get(resourceName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of StorageSpaceResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <returns> An object representing collection of StorageSpaceResources and their operations over a StorageSpaceResource. </returns>
-        public static StorageSpaceCollection GetStorageSpaces(this ResourceGroupResource resourceGroupResource)
-        {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetStorageSpaces();
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS storage space object
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>storageSpaces_Retrieve</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="storageSpacesName"> Parameter for the name of the storage object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageSpacesName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageSpacesName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static async Task<Response<StorageSpaceResource>> GetStorageSpaceAsync(this ResourceGroupResource resourceGroupResource, string storageSpacesName, CancellationToken cancellationToken = default)
-        {
-            return await resourceGroupResource.GetStorageSpaces().GetAsync(storageSpacesName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS storage space object
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/storageSpaces/{storageSpacesName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>storageSpaces_Retrieve</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="storageSpacesName"> Parameter for the name of the storage object. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="storageSpacesName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="storageSpacesName"/> is null. </exception>
-        [ForwardsClientCalls]
-        public static Response<StorageSpaceResource> GetStorageSpace(this ResourceGroupResource resourceGroupResource, string storageSpacesName, CancellationToken cancellationToken = default)
-        {
-            return resourceGroupResource.GetStorageSpaces().Get(storageSpacesName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of HybridContainerServiceVirtualNetworkResources in the ResourceGroupResource. </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of HybridContainerServiceVirtualNetworkResources and their operations over a HybridContainerServiceVirtualNetworkResource. </returns>
         public static HybridContainerServiceVirtualNetworkCollection GetHybridContainerServiceVirtualNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetworks();
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS virtual network
+        /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetHybridContainerServiceVirtualNetworkAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
+        /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
+        public static async Task<Response<HybridContainerServiceVirtualNetworkResource>> GetHybridContainerServiceVirtualNetworkAsync(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetHybridContainerServiceVirtualNetworks().GetAsync(virtualNetworksName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetworkAsync(virtualNetworkName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS virtual network
+        /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworksName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HybridContainerService/virtualNetworks/{virtualNetworkName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceResourceGroupResource.GetHybridContainerServiceVirtualNetwork(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="virtualNetworksName"> Parameter for the name of the virtual network. </param>
+        /// <param name="virtualNetworkName"> Parameter for the name of the virtual network. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="virtualNetworksName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="virtualNetworksName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="virtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworksName, CancellationToken cancellationToken = default)
+        public static Response<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetwork(this ResourceGroupResource resourceGroupResource, string virtualNetworkName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetHybridContainerServiceVirtualNetworks().Get(virtualNetworksName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableHybridContainerServiceResourceGroupResource(resourceGroupResource).GetHybridContainerServiceVirtualNetwork(virtualNetworkName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS provisioned cluster in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProvisionedClusterResource> GetProvisionedClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProvisionedClustersAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets the Hybrid AKS provisioned cluster in a subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/provisionedClusters</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ProvisionedClusters_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProvisionedClusterResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProvisionedClusterResource> GetProvisionedClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetProvisionedClusters(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the Hybrid AKS storage object by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>storageSpaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<StorageSpaceResource> GetStorageSpacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSpacesAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// List the Hybrid AKS storage object by subscription
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.HybridContainerService/storageSpaces</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>storageSpaces_ListBySubscription</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StorageSpaceResource" /> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<StorageSpaceResource> GetStorageSpaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
-        {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetStorageSpaces(cancellationToken);
-        }
-
-        /// <summary>
-        /// Lists the Hybrid AKS virtual networks by subscription
+        /// Lists the virtual networks in the specified subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -527,18 +325,33 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetHybridContainerServiceVirtualNetworksAsync(cancellationToken);
         }
 
         /// <summary>
-        /// Lists the Hybrid AKS virtual networks by subscription
+        /// Lists the virtual networks in the specified subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -548,14 +361,29 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableHybridContainerServiceSubscriptionResource.GetHybridContainerServiceVirtualNetworks(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="HybridContainerServiceVirtualNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<HybridContainerServiceVirtualNetworkResource> GetHybridContainerServiceVirtualNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableHybridContainerServiceSubscriptionResource(subscriptionResource).GetHybridContainerServiceVirtualNetworks(cancellationToken);
         }
     }
 }

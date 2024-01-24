@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -18,838 +19,801 @@ namespace Azure.ResourceManager.CosmosDB
     /// <summary> A class to add extension methods to Azure.ResourceManager.CosmosDB. </summary>
     public static partial class CosmosDBExtensions
     {
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableCosmosDBArmClient GetMockableCosmosDBArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableCosmosDBArmClient(client0));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableCosmosDBResourceGroupResource GetMockableCosmosDBResourceGroupResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableCosmosDBResourceGroupResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        private static MockableCosmosDBSubscriptionResource GetMockableCosmosDBSubscriptionResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableCosmosDBSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableCosmosDBTenantResource GetMockableCosmosDBTenantResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableCosmosDBTenantResource(client, resource.Id));
         }
 
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmResource resource)
-        {
-            return resource.GetCachedClient(client =>
-            {
-                return new TenantResourceExtensionClient(client, resource.Id);
-            });
-        }
-
-        private static TenantResourceExtensionClient GetTenantResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new TenantResourceExtensionClient(client, scope);
-            });
-        }
-        #region CosmosDBAccountResource
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBAccountResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBAccountResource"/> object. </returns>
         public static CosmosDBAccountResource GetCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBAccountResource.ValidateResourceId(id);
-                return new CosmosDBAccountResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region GraphResourceGetResultResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBAccountResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="GraphResourceGetResultResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GraphResourceGetResultResource.CreateResourceIdentifier" /> to create a <see cref="GraphResourceGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGraphResourceGetResultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GraphResourceGetResultResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GraphResourceGetResultResource"/> object. </returns>
         public static GraphResourceGetResultResource GetGraphResourceGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GraphResourceGetResultResource.ValidateResourceId(id);
-                return new GraphResourceGetResultResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlDatabaseResource
+            return GetMockableCosmosDBArmClient(client).GetGraphResourceGetResultResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseResource"/> object. </returns>
         public static CosmosDBSqlDatabaseResource GetCosmosDBSqlDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlDatabaseResource.ValidateResourceId(id);
-                return new CosmosDBSqlDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlDatabaseThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlDatabaseResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlDatabaseThroughputSettingResource"/> object. </returns>
         public static CosmosDBSqlDatabaseThroughputSettingResource GetCosmosDBSqlDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new CosmosDBSqlDatabaseThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlContainerThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlDatabaseThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlContainerThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlContainerThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerThroughputSettingResource"/> object. </returns>
         public static CosmosDBSqlContainerThroughputSettingResource GetCosmosDBSqlContainerThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlContainerThroughputSettingResource.ValidateResourceId(id);
-                return new CosmosDBSqlContainerThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region MongoDBDatabaseThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlContainerThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="MongoDBDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MongoDBDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MongoDBDatabaseThroughputSettingResource"/> object. </returns>
         public static MongoDBDatabaseThroughputSettingResource GetMongoDBDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new MongoDBDatabaseThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region MongoDBCollectionThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetMongoDBDatabaseThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="MongoDBCollectionThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MongoDBCollectionThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBCollectionThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBCollectionThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MongoDBCollectionThroughputSettingResource"/> object. </returns>
         public static MongoDBCollectionThroughputSettingResource GetMongoDBCollectionThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBCollectionThroughputSettingResource.ValidateResourceId(id);
-                return new MongoDBCollectionThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosTableThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetMongoDBCollectionThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosTableThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CosmosTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosTableThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosTableThroughputSettingResource"/> object. </returns>
         public static CosmosTableThroughputSettingResource GetCosmosTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosTableThroughputSettingResource.ValidateResourceId(id);
-                return new CosmosTableThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraKeyspaceThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosTableThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CassandraKeyspaceThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraKeyspaceThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspaceThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraKeyspaceThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraKeyspaceThroughputSettingResource"/> object. </returns>
         public static CassandraKeyspaceThroughputSettingResource GetCassandraKeyspaceThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraKeyspaceThroughputSettingResource.ValidateResourceId(id);
-                return new CassandraKeyspaceThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraTableThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetCassandraKeyspaceThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CassandraTableThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraTableThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraTableThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraTableThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraTableThroughputSettingResource"/> object. </returns>
         public static CassandraTableThroughputSettingResource GetCassandraTableThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraTableThroughputSettingResource.ValidateResourceId(id);
-                return new CassandraTableThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraViewThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetCassandraTableThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CassandraViewThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraViewThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="CassandraViewThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraViewThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraViewThroughputSettingResource"/> object. </returns>
         public static CassandraViewThroughputSettingResource GetCassandraViewThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraViewThroughputSettingResource.ValidateResourceId(id);
-                return new CassandraViewThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region GremlinDatabaseThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetCassandraViewThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="GremlinDatabaseThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GremlinDatabaseThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="GremlinDatabaseThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinDatabaseThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GremlinDatabaseThroughputSettingResource"/> object. </returns>
         public static GremlinDatabaseThroughputSettingResource GetGremlinDatabaseThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinDatabaseThroughputSettingResource.ValidateResourceId(id);
-                return new GremlinDatabaseThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region GremlinGraphThroughputSettingResource
+            return GetMockableCosmosDBArmClient(client).GetGremlinDatabaseThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="GremlinGraphThroughputSettingResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GremlinGraphThroughputSettingResource.CreateResourceIdentifier" /> to create a <see cref="GremlinGraphThroughputSettingResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinGraphThroughputSettingResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GremlinGraphThroughputSettingResource"/> object. </returns>
         public static GremlinGraphThroughputSettingResource GetGremlinGraphThroughputSettingResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinGraphThroughputSettingResource.ValidateResourceId(id);
-                return new GremlinGraphThroughputSettingResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlClientEncryptionKeyResource
+            return GetMockableCosmosDBArmClient(client).GetGremlinGraphThroughputSettingResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlClientEncryptionKeyResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlClientEncryptionKeyResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlClientEncryptionKeyResource"/> object. </returns>
         public static CosmosDBSqlClientEncryptionKeyResource GetCosmosDBSqlClientEncryptionKeyResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlClientEncryptionKeyResource.ValidateResourceId(id);
-                return new CosmosDBSqlClientEncryptionKeyResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlContainerResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlClientEncryptionKeyResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlContainerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlContainerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlContainerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlContainerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlContainerResource"/> object. </returns>
         public static CosmosDBSqlContainerResource GetCosmosDBSqlContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlContainerResource.ValidateResourceId(id);
-                return new CosmosDBSqlContainerResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlStoredProcedureResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlContainerResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlStoredProcedureResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlStoredProcedureResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlStoredProcedureResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlStoredProcedureResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlStoredProcedureResource"/> object. </returns>
         public static CosmosDBSqlStoredProcedureResource GetCosmosDBSqlStoredProcedureResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlStoredProcedureResource.ValidateResourceId(id);
-                return new CosmosDBSqlStoredProcedureResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlUserDefinedFunctionResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlStoredProcedureResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlUserDefinedFunctionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlUserDefinedFunctionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlUserDefinedFunctionResource"/> object. </returns>
         public static CosmosDBSqlUserDefinedFunctionResource GetCosmosDBSqlUserDefinedFunctionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlUserDefinedFunctionResource.ValidateResourceId(id);
-                return new CosmosDBSqlUserDefinedFunctionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlTriggerResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlUserDefinedFunctionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlTriggerResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlTriggerResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlTriggerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlTriggerResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlTriggerResource"/> object. </returns>
         public static CosmosDBSqlTriggerResource GetCosmosDBSqlTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlTriggerResource.ValidateResourceId(id);
-                return new CosmosDBSqlTriggerResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlRoleDefinitionResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlTriggerResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleDefinitionResource"/> object. </returns>
         public static CosmosDBSqlRoleDefinitionResource GetCosmosDBSqlRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlRoleDefinitionResource.ValidateResourceId(id);
-                return new CosmosDBSqlRoleDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBSqlRoleAssignmentResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlRoleDefinitionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBSqlRoleAssignmentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBSqlRoleAssignmentResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBSqlRoleAssignmentResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBSqlRoleAssignmentResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBSqlRoleAssignmentResource"/> object. </returns>
         public static CosmosDBSqlRoleAssignmentResource GetCosmosDBSqlRoleAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBSqlRoleAssignmentResource.ValidateResourceId(id);
-                return new CosmosDBSqlRoleAssignmentResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region MongoDBDatabaseResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBSqlRoleAssignmentResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="MongoDBDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MongoDBDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBDatabaseResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MongoDBDatabaseResource"/> object. </returns>
         public static MongoDBDatabaseResource GetMongoDBDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBDatabaseResource.ValidateResourceId(id);
-                return new MongoDBDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region MongoDBCollectionResource
+            return GetMockableCosmosDBArmClient(client).GetMongoDBDatabaseResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="MongoDBCollectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MongoDBCollectionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBCollectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBCollectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBCollectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MongoDBCollectionResource"/> object. </returns>
         public static MongoDBCollectionResource GetMongoDBCollectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBCollectionResource.ValidateResourceId(id);
-                return new MongoDBCollectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region MongoDBRoleDefinitionResource
+            return GetMockableCosmosDBArmClient(client).GetMongoDBCollectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="MongoDBRoleDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MongoDBRoleDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBRoleDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBRoleDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MongoDBRoleDefinitionResource"/> object. </returns>
         public static MongoDBRoleDefinitionResource GetMongoDBRoleDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBRoleDefinitionResource.ValidateResourceId(id);
-                return new MongoDBRoleDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region MongoDBUserDefinitionResource
+            return GetMockableCosmosDBArmClient(client).GetMongoDBRoleDefinitionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="MongoDBUserDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MongoDBUserDefinitionResource.CreateResourceIdentifier" /> to create a <see cref="MongoDBUserDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoDBUserDefinitionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoDBUserDefinitionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MongoDBUserDefinitionResource"/> object. </returns>
         public static MongoDBUserDefinitionResource GetMongoDBUserDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoDBUserDefinitionResource.ValidateResourceId(id);
-                return new MongoDBUserDefinitionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBTableResource
+            return GetMockableCosmosDBArmClient(client).GetMongoDBUserDefinitionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBTableResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBTableResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBTableResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBTableResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBTableResource"/> object. </returns>
         public static CosmosDBTableResource GetCosmosDBTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBTableResource.ValidateResourceId(id);
-                return new CosmosDBTableResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraKeyspaceResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBTableResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CassandraKeyspaceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraKeyspaceResource.CreateResourceIdentifier" /> to create a <see cref="CassandraKeyspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraKeyspaceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraKeyspaceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraKeyspaceResource"/> object. </returns>
         public static CassandraKeyspaceResource GetCassandraKeyspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraKeyspaceResource.ValidateResourceId(id);
-                return new CassandraKeyspaceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraTableResource
+            return GetMockableCosmosDBArmClient(client).GetCassandraKeyspaceResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CassandraTableResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraTableResource.CreateResourceIdentifier" /> to create a <see cref="CassandraTableResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraTableResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraTableResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraTableResource"/> object. </returns>
         public static CassandraTableResource GetCassandraTableResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraTableResource.ValidateResourceId(id);
-                return new CassandraTableResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraViewGetResultResource
+            return GetMockableCosmosDBArmClient(client).GetCassandraTableResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CassandraViewGetResultResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraViewGetResultResource.CreateResourceIdentifier" /> to create a <see cref="CassandraViewGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraViewGetResultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraViewGetResultResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraViewGetResultResource"/> object. </returns>
         public static CassandraViewGetResultResource GetCassandraViewGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraViewGetResultResource.ValidateResourceId(id);
-                return new CassandraViewGetResultResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region GremlinDatabaseResource
+            return GetMockableCosmosDBArmClient(client).GetCassandraViewGetResultResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="GremlinDatabaseResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GremlinDatabaseResource.CreateResourceIdentifier" /> to create a <see cref="GremlinDatabaseResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinDatabaseResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinDatabaseResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GremlinDatabaseResource"/> object. </returns>
         public static GremlinDatabaseResource GetGremlinDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinDatabaseResource.ValidateResourceId(id);
-                return new GremlinDatabaseResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region GremlinGraphResource
+            return GetMockableCosmosDBArmClient(client).GetGremlinDatabaseResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="GremlinGraphResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="GremlinGraphResource.CreateResourceIdentifier" /> to create a <see cref="GremlinGraphResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetGremlinGraphResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="GremlinGraphResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="GremlinGraphResource"/> object. </returns>
         public static GremlinGraphResource GetGremlinGraphResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                GremlinGraphResource.ValidateResourceId(id);
-                return new GremlinGraphResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBLocationResource
+            return GetMockableCosmosDBArmClient(client).GetGremlinGraphResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBLocationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBLocationResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBLocationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBLocationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBLocationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBLocationResource"/> object. </returns>
         public static CosmosDBLocationResource GetCosmosDBLocationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBLocationResource.ValidateResourceId(id);
-                return new CosmosDBLocationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region DataTransferJobGetResultResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBLocationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="DataTransferJobGetResultResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DataTransferJobGetResultResource.CreateResourceIdentifier" /> to create a <see cref="DataTransferJobGetResultResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetDataTransferJobGetResultResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataTransferJobGetResultResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="DataTransferJobGetResultResource"/> object. </returns>
         public static DataTransferJobGetResultResource GetDataTransferJobGetResultResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                DataTransferJobGetResultResource.ValidateResourceId(id);
-                return new DataTransferJobGetResultResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraClusterResource
+            return GetMockableCosmosDBArmClient(client).GetDataTransferJobGetResultResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CassandraClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraClusterResource.CreateResourceIdentifier" /> to create a <see cref="CassandraClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraClusterResource"/> object. </returns>
         public static CassandraClusterResource GetCassandraClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraClusterResource.ValidateResourceId(id);
-                return new CassandraClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CassandraClusterBackupResource
-        /// <summary>
-        /// Gets an object representing a <see cref="CassandraClusterBackupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="CassandraClusterBackupResource.CreateResourceIdentifier" /> to create a <see cref="CassandraClusterBackupResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraClusterBackupResource" /> object. </returns>
-        public static CassandraClusterBackupResource GetCassandraClusterBackupResource(this ArmClient client, ResourceIdentifier id)
-        {
-            return client.GetResourceClient(() =>
-            {
-                CassandraClusterBackupResource.ValidateResourceId(id);
-                return new CassandraClusterBackupResource(client, id);
-            }
-            );
+            return GetMockableCosmosDBArmClient(client).GetCassandraClusterResource(id);
         }
-        #endregion
 
-        #region CassandraDataCenterResource
         /// <summary>
         /// Gets an object representing a <see cref="CassandraDataCenterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CassandraDataCenterResource.CreateResourceIdentifier" /> to create a <see cref="CassandraDataCenterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCassandraDataCenterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CassandraDataCenterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CassandraDataCenterResource"/> object. </returns>
         public static CassandraDataCenterResource GetCassandraDataCenterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CassandraDataCenterResource.ValidateResourceId(id);
-                return new CassandraDataCenterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region MongoClusterResource
+            return GetMockableCosmosDBArmClient(client).GetCassandraDataCenterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="MongoClusterResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="MongoClusterResource.CreateResourceIdentifier" /> to create a <see cref="MongoClusterResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetMongoClusterResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MongoClusterResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MongoClusterResource"/> object. </returns>
         public static MongoClusterResource GetMongoClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                MongoClusterResource.ValidateResourceId(id);
-                return new MongoClusterResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBFirewallRuleResource
+            return GetMockableCosmosDBArmClient(client).GetMongoClusterResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBFirewallRuleResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBFirewallRuleResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBFirewallRuleResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBFirewallRuleResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBFirewallRuleResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBFirewallRuleResource"/> object. </returns>
         public static CosmosDBFirewallRuleResource GetCosmosDBFirewallRuleResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBFirewallRuleResource.ValidateResourceId(id);
-                return new CosmosDBFirewallRuleResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBPrivateEndpointConnectionResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBFirewallRuleResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBPrivateEndpointConnectionResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBPrivateEndpointConnectionResource"/> object. </returns>
         public static CosmosDBPrivateEndpointConnectionResource GetCosmosDBPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBPrivateEndpointConnectionResource.ValidateResourceId(id);
-                return new CosmosDBPrivateEndpointConnectionResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBPrivateLinkResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBPrivateEndpointConnectionResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBPrivateLinkResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBPrivateLinkResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBPrivateLinkResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBPrivateLinkResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBPrivateLinkResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBPrivateLinkResource"/> object. </returns>
         public static CosmosDBPrivateLinkResource GetCosmosDBPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBPrivateLinkResource.ValidateResourceId(id);
-                return new CosmosDBPrivateLinkResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region RestorableCosmosDBAccountResource
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBPrivateLinkResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="RestorableCosmosDBAccountResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RestorableCosmosDBAccountResource.CreateResourceIdentifier" /> to create a <see cref="RestorableCosmosDBAccountResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetRestorableCosmosDBAccountResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RestorableCosmosDBAccountResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="RestorableCosmosDBAccountResource"/> object. </returns>
         public static RestorableCosmosDBAccountResource GetRestorableCosmosDBAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                RestorableCosmosDBAccountResource.ValidateResourceId(id);
-                return new RestorableCosmosDBAccountResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region CosmosDBServiceResource
+            return GetMockableCosmosDBArmClient(client).GetRestorableCosmosDBAccountResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="CosmosDBServiceResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="CosmosDBServiceResource.CreateResourceIdentifier" /> to create a <see cref="CosmosDBServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBArmClient.GetCosmosDBServiceResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="CosmosDBServiceResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="CosmosDBServiceResource"/> object. </returns>
         public static CosmosDBServiceResource GetCosmosDBServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                CosmosDBServiceResource.ValidateResourceId(id);
-                return new CosmosDBServiceResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets a collection of CosmosDBAccountResources in the ResourceGroupResource. </summary>
+            return GetMockableCosmosDBArmClient(client).GetCosmosDBServiceResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of CosmosDBAccountResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBAccounts()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of CosmosDBAccountResources and their operations over a CosmosDBAccountResource. </returns>
         public static CosmosDBAccountCollection GetCosmosDBAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCosmosDBAccounts();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBAccounts();
         }
 
         /// <summary>
@@ -863,17 +827,31 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBAccountAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBAccountResource>> GetCosmosDBAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCosmosDBAccounts().GetAsync(accountName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -887,25 +865,48 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCosmosDBAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<CosmosDBAccountResource> GetCosmosDBAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCosmosDBAccounts().Get(accountName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCosmosDBAccount(accountName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CassandraClusterResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of CassandraClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCassandraClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of CassandraClusterResources and their operations over a CassandraClusterResource. </returns>
         public static CassandraClusterCollection GetCassandraClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetCassandraClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCassandraClusters();
         }
 
         /// <summary>
@@ -919,17 +920,31 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCassandraClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CassandraClusterResource>> GetCassandraClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetCassandraClusters().GetAsync(clusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCassandraClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -943,25 +958,48 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetCassandraCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="clusterName"> Managed Cassandra cluster name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="clusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<CassandraClusterResource> GetCassandraCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetCassandraClusters().Get(clusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetCassandraCluster(clusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of MongoClusterResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of MongoClusterResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoClusters()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of MongoClusterResources and their operations over a MongoClusterResource. </returns>
         public static MongoClusterCollection GetMongoClusters(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetMongoClusters();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoClusters();
         }
 
         /// <summary>
@@ -975,17 +1013,31 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoClusterAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<MongoClusterResource>> GetMongoClusterAsync(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetMongoClusters().GetAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoClusterAsync(mongoClusterName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -999,25 +1051,48 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoClusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBResourceGroupResource.GetMongoCluster(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="mongoClusterName"> The name of the mongo cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="mongoClusterName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="mongoClusterName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="mongoClusterName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<MongoClusterResource> GetMongoCluster(this ResourceGroupResource resourceGroupResource, string mongoClusterName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetMongoClusters().Get(mongoClusterName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableCosmosDBResourceGroupResource(resourceGroupResource).GetMongoCluster(mongoClusterName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of CosmosDBLocationResources in the SubscriptionResource. </summary>
+        /// <summary>
+        /// Gets a collection of CosmosDBLocationResources in the SubscriptionResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBLocations()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> An object representing collection of CosmosDBLocationResources and their operations over a CosmosDBLocationResource. </returns>
         public static CosmosDBLocationCollection GetCosmosDBLocations(this SubscriptionResource subscriptionResource)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBLocations();
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBLocations();
         }
 
         /// <summary>
@@ -1031,15 +1106,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBLocationAsync(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<CosmosDBLocationResource>> GetCosmosDBLocationAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return await subscriptionResource.GetCosmosDBLocations().GetAsync(location, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return await GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBLocationAsync(location, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1053,15 +1143,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBLocation(AzureLocation,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> Cosmos DB region, with spaces between words and each word capitalized. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<CosmosDBLocationResource> GetCosmosDBLocation(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            return subscriptionResource.GetCosmosDBLocations().Get(location, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBLocation(location, cancellationToken);
         }
 
         /// <summary>
@@ -1075,14 +1180,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CosmosDBAccountResource> GetCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1096,14 +1216,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CosmosDBAccountResource> GetCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1117,14 +1252,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCassandraClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CassandraClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CassandraClusterResource> GetCassandraClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCassandraClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1138,14 +1288,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraClusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetCassandraClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="CassandraClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CassandraClusterResource> GetCassandraClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetCassandraClusters(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetCassandraClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1159,14 +1324,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetMongoClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MongoClusterResource> GetMongoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMongoClustersAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetMongoClustersAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1180,14 +1360,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>MongoClusters_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MongoClusterResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetMongoClusters(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MongoClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="MongoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MongoClusterResource> GetMongoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetMongoClusters(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetMongoClusters(cancellationToken);
         }
 
         /// <summary>
@@ -1201,14 +1396,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetRestorableCosmosDBAccountsAsync(cancellationToken);
         }
 
         /// <summary>
@@ -1222,14 +1432,29 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBSubscriptionResource.GetRestorableCosmosDBAccounts(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="RestorableCosmosDBAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RestorableCosmosDBAccountResource> GetRestorableCosmosDBAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableCosmosDBSubscriptionResource(subscriptionResource).GetRestorableCosmosDBAccounts(cancellationToken);
         }
 
         /// <summary>
@@ -1243,18 +1468,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="accountName"/> is null. </exception>
         public static async Task<Response<bool>> CheckNameExistsDatabaseAccountAsync(this TenantResource tenantResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetTenantResourceExtensionClient(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableCosmosDBTenantResource(tenantResource).CheckNameExistsDatabaseAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1268,18 +1505,30 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>DatabaseAccounts_CheckNameExists</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableCosmosDBTenantResource.CheckNameExistsDatabaseAccount(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="accountName"> Cosmos DB database account name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="accountName"/> is null. </exception>
         public static Response<bool> CheckNameExistsDatabaseAccount(this TenantResource tenantResource, string accountName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetTenantResourceExtensionClient(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
+            return GetMockableCosmosDBTenantResource(tenantResource).CheckNameExistsDatabaseAccount(accountName, cancellationToken);
         }
     }
 }

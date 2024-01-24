@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
     /// </summary>
     public partial class NetworkFabricExternalNetworkData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricExternalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/>. </summary>
         /// <param name="peeringOption"> Peering option list. </param>
         public NetworkFabricExternalNetworkData(PeeringOption peeringOption)
         {
             PeeringOption = peeringOption;
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricExternalNetworkData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricExternalNetworkData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

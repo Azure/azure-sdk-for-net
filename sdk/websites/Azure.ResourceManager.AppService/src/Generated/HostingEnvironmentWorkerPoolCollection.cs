@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HostingEnvironmentWorkerPoolResource" /> and their operations.
-    /// Each <see cref="HostingEnvironmentWorkerPoolResource" /> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource" />.
-    /// To get a <see cref="HostingEnvironmentWorkerPoolCollection" /> instance call the GetHostingEnvironmentWorkerPools method from an instance of <see cref="AppServiceEnvironmentResource" />.
+    /// A class representing a collection of <see cref="HostingEnvironmentWorkerPoolResource"/> and their operations.
+    /// Each <see cref="HostingEnvironmentWorkerPoolResource"/> in the collection will belong to the same instance of <see cref="AppServiceEnvironmentResource"/>.
+    /// To get a <see cref="HostingEnvironmentWorkerPoolCollection"/> instance call the GetHostingEnvironmentWorkerPools method from an instance of <see cref="AppServiceEnvironmentResource"/>.
     /// </summary>
     public partial class HostingEnvironmentWorkerPoolCollection : ArmCollection, IEnumerable<HostingEnvironmentWorkerPoolResource>, IAsyncEnumerable<HostingEnvironmentWorkerPoolResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_CreateOrUpdateWorkerPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_CreateOrUpdateWorkerPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_GetWorkerPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_ListWorkerPools</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HostingEnvironmentWorkerPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HostingEnvironmentWorkerPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HostingEnvironmentWorkerPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_ListWorkerPools</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HostingEnvironmentWorkerPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HostingEnvironmentWorkerPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HostingEnvironmentWorkerPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.CreateListWorkerPoolsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_GetWorkerPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workerPoolName"> Name of the worker pool. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.GetWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerPoolName"> Name of the worker pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HostingEnvironmentWorkerPoolResource>> GetIfExistsAsync(string workerPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+
+            using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.GetWorkerPoolAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HostingEnvironmentWorkerPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/hostingEnvironments/{name}/workerPools/{workerPoolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceEnvironments_GetWorkerPool</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentWorkerPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workerPoolName"> Name of the worker pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workerPoolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerPoolName"/> is null. </exception>
+        public virtual NullableResponse<HostingEnvironmentWorkerPoolResource> GetIfExists(string workerPoolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workerPoolName, nameof(workerPoolName));
+
+            using var scope = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsClientDiagnostics.CreateScope("HostingEnvironmentWorkerPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hostingEnvironmentWorkerPoolAppServiceEnvironmentsRestClient.GetWorkerPool(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workerPoolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HostingEnvironmentWorkerPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new HostingEnvironmentWorkerPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

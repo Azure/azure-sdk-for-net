@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of deployment scripts. </summary>
     internal partial class ArmDeploymentScriptListResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentScriptListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptListResult"/>. </summary>
         internal ArmDeploymentScriptListResult()
         {
             Value = new ChangeTrackingList<ArmDeploymentScriptData>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentScriptListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentScriptListResult"/>. </summary>
         /// <param name="value">
         /// An array of deployment scripts.
         /// Please note <see cref="ArmDeploymentScriptData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

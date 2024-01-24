@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="StreamingPolicyResource" /> and their operations.
-    /// Each <see cref="StreamingPolicyResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
-    /// To get a <see cref="StreamingPolicyCollection" /> instance call the GetStreamingPolicies method from an instance of <see cref="MediaServicesAccountResource" />.
+    /// A class representing a collection of <see cref="StreamingPolicyResource"/> and their operations.
+    /// Each <see cref="StreamingPolicyResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="StreamingPolicyCollection"/> instance call the GetStreamingPolicies method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
     public partial class StreamingPolicyCollection : ArmCollection, IEnumerable<StreamingPolicyResource>, IAsyncEnumerable<StreamingPolicyResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,13 +252,21 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StreamingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="StreamingPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<StreamingPolicyResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
@@ -245,13 +285,21 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StreamingPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="StreamingPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<StreamingPolicyResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _streamingPolicyRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>StreamingPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
@@ -321,6 +385,96 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _streamingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<StreamingPolicyResource>> GetIfExistsAsync(string streamingPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+
+            using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _streamingPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/streamingPolicies/{streamingPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StreamingPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StreamingPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="streamingPolicyName"> The Streaming Policy name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="streamingPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="streamingPolicyName"/> is null. </exception>
+        public virtual NullableResponse<StreamingPolicyResource> GetIfExists(string streamingPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(streamingPolicyName, nameof(streamingPolicyName));
+
+            using var scope = _streamingPolicyClientDiagnostics.CreateScope("StreamingPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _streamingPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, streamingPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<StreamingPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new StreamingPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

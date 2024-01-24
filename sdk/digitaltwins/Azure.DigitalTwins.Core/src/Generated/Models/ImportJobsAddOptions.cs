@@ -10,9 +10,18 @@ namespace Azure.DigitalTwins.Core.Models
     /// <summary> Parameter group. </summary>
     internal partial class ImportJobsAddOptions
     {
-        /// <summary> Initializes a new instance of ImportJobsAddOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportJobsAddOptions"/>. </summary>
         public ImportJobsAddOptions()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImportJobsAddOptions"/>. </summary>
+        /// <param name="traceparent"> Identifies the request in a distributed tracing system. </param>
+        /// <param name="tracestate"> Provides vendor-specific trace identification information and is a companion to traceparent. </param>
+        internal ImportJobsAddOptions(string traceparent, string tracestate)
+        {
+            Traceparent = traceparent;
+            Tracestate = tracestate;
         }
 
         /// <summary> Identifies the request in a distributed tracing system. </summary>

@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Batch
 {
     /// <summary>
     /// A Class representing a BatchAccountDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BatchAccountDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBatchAccountDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource" /> using the GetBatchAccountDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BatchAccountDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBatchAccountDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="BatchAccountResource"/> using the GetBatchAccountDetector method.
     /// </summary>
     public partial class BatchAccountDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BatchAccountDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="accountName"> The accountName. </param>
+        /// <param name="detectorId"> The detectorId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName, string detectorId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Batch/batchAccounts/{accountName}/detectors/{detectorId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Batch
         private readonly BatchAccountRestOperations _batchAccountDetectorBatchAccountRestClient;
         private readonly BatchAccountDetectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="BatchAccountDetectorResource"/> class for mocking. </summary>
         protected BatchAccountDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BatchAccountDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BatchAccountDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BatchAccountDetectorResource(ArmClient client, BatchAccountDetectorData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Batch
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>BatchAccount_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchAccount_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchAccountDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

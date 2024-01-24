@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AuthorizationProviderOperationsMetadataResource" /> and their operations.
-    /// Each <see cref="AuthorizationProviderOperationsMetadataResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get an <see cref="AuthorizationProviderOperationsMetadataCollection" /> instance call the GetAuthorizationProviderOperationsMetadata method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="AuthorizationProviderOperationsMetadataResource"/> and their operations.
+    /// Each <see cref="AuthorizationProviderOperationsMetadataResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get an <see cref="AuthorizationProviderOperationsMetadataCollection"/> instance call the GetAuthorizationProviderOperationsMetadata method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class AuthorizationProviderOperationsMetadataCollection : ArmCollection, IEnumerable<AuthorizationProviderOperationsMetadataResource>, IAsyncEnumerable<AuthorizationProviderOperationsMetadataResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,11 +155,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AuthorizationProviderOperationsMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AuthorizationProviderOperationsMetadataResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AuthorizationProviderOperationsMetadataResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListRequest(expand);
@@ -162,11 +186,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specifies whether to expand the values. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AuthorizationProviderOperationsMetadataResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AuthorizationProviderOperationsMetadataResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AuthorizationProviderOperationsMetadataResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.CreateListRequest(expand);
@@ -184,6 +216,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,6 +260,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>ProviderOperationsMetadata_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -236,6 +284,96 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.Get(resourceProviderNamespace, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> Specifies whether to expand the values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual async Task<NullableResponse<AuthorizationProviderOperationsMetadataResource>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.GetAsync(resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationProviderOperationsMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationProviderOperationsMetadataResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Authorization/providerOperations/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderOperationsMetadata_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AuthorizationProviderOperationsMetadataResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> Specifies whether to expand the values. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual NullableResponse<AuthorizationProviderOperationsMetadataResource> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _authorizationProviderOperationsMetadataProviderOperationsMetadataClientDiagnostics.CreateScope("AuthorizationProviderOperationsMetadataCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _authorizationProviderOperationsMetadataProviderOperationsMetadataRestClient.Get(resourceProviderNamespace, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AuthorizationProviderOperationsMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new AuthorizationProviderOperationsMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

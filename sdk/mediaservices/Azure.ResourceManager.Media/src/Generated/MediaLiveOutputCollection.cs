@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaLiveOutputResource" /> and their operations.
-    /// Each <see cref="MediaLiveOutputResource" /> in the collection will belong to the same instance of <see cref="MediaLiveEventResource" />.
-    /// To get a <see cref="MediaLiveOutputCollection" /> instance call the GetMediaLiveOutputs method from an instance of <see cref="MediaLiveEventResource" />.
+    /// A class representing a collection of <see cref="MediaLiveOutputResource"/> and their operations.
+    /// Each <see cref="MediaLiveOutputResource"/> in the collection will belong to the same instance of <see cref="MediaLiveEventResource"/>.
+    /// To get a <see cref="MediaLiveOutputCollection"/> instance call the GetMediaLiveOutputs method from an instance of <see cref="MediaLiveEventResource"/>.
     /// </summary>
     public partial class MediaLiveOutputCollection : ArmCollection, IEnumerable<MediaLiveOutputResource>, IAsyncEnumerable<MediaLiveOutputResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="liveOutputName"> The name of the live output. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaLiveOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaLiveOutputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaLiveOutputResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaLiveOutputResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaLiveOutputResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaLiveOutputResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveOutputLiveOutputsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveOutputs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="liveOutputName"> The name of the live output. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _mediaLiveOutputLiveOutputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveOutputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveOutputName"> The name of the live output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaLiveOutputResource>> GetIfExistsAsync(string liveOutputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+
+            using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaLiveOutputLiveOutputsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveOutputResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}/liveOutputs/{liveOutputName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveOutputs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveOutputResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveOutputName"> The name of the live output. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveOutputName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveOutputName"/> is null. </exception>
+        public virtual NullableResponse<MediaLiveOutputResource> GetIfExists(string liveOutputName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveOutputName, nameof(liveOutputName));
+
+            using var scope = _mediaLiveOutputLiveOutputsClientDiagnostics.CreateScope("MediaLiveOutputCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaLiveOutputLiveOutputsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, liveOutputName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveOutputResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveOutputResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

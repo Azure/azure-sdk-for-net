@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     /// <summary> Properties of the service impacting event. </summary>
     public partial class ServiceImpactingEventIncidentProperties
     {
-        /// <summary> Initializes a new instance of ServiceImpactingEventIncidentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEventIncidentProperties"/>. </summary>
         internal ServiceImpactingEventIncidentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceImpactingEventIncidentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceImpactingEventIncidentProperties"/>. </summary>
         /// <param name="title"> Title of the incident. </param>
         /// <param name="service"> Service impacted by the event. </param>
         /// <param name="region"> Region impacted by the event. </param>

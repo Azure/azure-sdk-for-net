@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkFabricExternalNetworkResource" /> and their operations.
-    /// Each <see cref="NetworkFabricExternalNetworkResource" /> in the collection will belong to the same instance of <see cref="NetworkFabricL3IsolationDomainResource" />.
-    /// To get a <see cref="NetworkFabricExternalNetworkCollection" /> instance call the GetNetworkFabricExternalNetworks method from an instance of <see cref="NetworkFabricL3IsolationDomainResource" />.
+    /// A class representing a collection of <see cref="NetworkFabricExternalNetworkResource"/> and their operations.
+    /// Each <see cref="NetworkFabricExternalNetworkResource"/> in the collection will belong to the same instance of <see cref="NetworkFabricL3IsolationDomainResource"/>.
+    /// To get a <see cref="NetworkFabricExternalNetworkCollection"/> instance call the GetNetworkFabricExternalNetworks method from an instance of <see cref="NetworkFabricL3IsolationDomainResource"/>.
     /// </summary>
     public partial class NetworkFabricExternalNetworkCollection : ArmCollection, IEnumerable<NetworkFabricExternalNetworkResource>, IAsyncEnumerable<NetworkFabricExternalNetworkResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalNetworkName"> Name of the External Network. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_ListByL3IsolationDomain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkFabricExternalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkFabricExternalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkFabricExternalNetworkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_ListByL3IsolationDomain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkFabricExternalNetworkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkFabricExternalNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkFabricExternalNetworkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkFabricExternalNetworkExternalNetworksRestClient.CreateListByL3IsolationDomainRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>ExternalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalNetworkName"> Name of the External Network. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 var response = _networkFabricExternalNetworkExternalNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, externalNetworkName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkFabricExternalNetworkResource>> GetIfExistsAsync(string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkFabricExternalNetworkExternalNetworksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, externalNetworkName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricExternalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricExternalNetworkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/l3IsolationDomains/{l3IsolationDomainName}/externalNetworks/{externalNetworkName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExternalNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricExternalNetworkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="externalNetworkName"> Name of the External Network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="externalNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalNetworkName"/> is null. </exception>
+        public virtual NullableResponse<NetworkFabricExternalNetworkResource> GetIfExists(string externalNetworkName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalNetworkName, nameof(externalNetworkName));
+
+            using var scope = _networkFabricExternalNetworkExternalNetworksClientDiagnostics.CreateScope("NetworkFabricExternalNetworkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkFabricExternalNetworkExternalNetworksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, externalNetworkName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkFabricExternalNetworkResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkFabricExternalNetworkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

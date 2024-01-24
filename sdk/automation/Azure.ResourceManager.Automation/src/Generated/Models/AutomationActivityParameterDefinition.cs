@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,13 +14,45 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Definition of the activity parameter. </summary>
     public partial class AutomationActivityParameterDefinition
     {
-        /// <summary> Initializes a new instance of AutomationActivityParameterDefinition. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterDefinition"/>. </summary>
         internal AutomationActivityParameterDefinition()
         {
             ValidationSet = new ChangeTrackingList<AutomationActivityParameterValidationSet>();
         }
 
-        /// <summary> Initializes a new instance of AutomationActivityParameterDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutomationActivityParameterDefinition"/>. </summary>
         /// <param name="name"> Gets or sets the name of the activity parameter. </param>
         /// <param name="activityParameterType"> Gets or sets the type of the activity parameter. </param>
         /// <param name="isMandatory"> Gets or sets a Boolean value that indicates true if the parameter is required. If the value is false, the parameter is optional. </param>
@@ -30,7 +63,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="canTakeValueValueFromRemainingArguments"> Gets or sets a Boolean value that indicates true if the cmdlet parameter accepts all the remaining command-line arguments that are associated with this parameter in the form of an array. false if the cmdlet parameter does not accept all the remaining argument values. </param>
         /// <param name="description"> Gets or sets the description of the activity parameter. </param>
         /// <param name="validationSet"> Gets or sets the validation set of activity parameter. </param>
-        internal AutomationActivityParameterDefinition(string name, string activityParameterType, bool? isMandatory, bool? isDynamic, long? position, bool? canTakeValueFromPipeline, bool? canTakeValueFromPipelineByPropertyName, bool? canTakeValueValueFromRemainingArguments, string description, IReadOnlyList<AutomationActivityParameterValidationSet> validationSet)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationActivityParameterDefinition(string name, string activityParameterType, bool? isMandatory, bool? isDynamic, long? position, bool? canTakeValueFromPipeline, bool? canTakeValueFromPipelineByPropertyName, bool? canTakeValueValueFromRemainingArguments, string description, IReadOnlyList<AutomationActivityParameterValidationSet> validationSet, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ActivityParameterType = activityParameterType;
@@ -42,6 +76,7 @@ namespace Azure.ResourceManager.Automation.Models
             CanTakeValueValueFromRemainingArguments = canTakeValueValueFromRemainingArguments;
             Description = description;
             ValidationSet = validationSet;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the name of the activity parameter. </summary>

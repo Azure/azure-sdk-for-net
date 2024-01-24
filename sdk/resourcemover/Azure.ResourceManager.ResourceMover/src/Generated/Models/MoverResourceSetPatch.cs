@@ -14,10 +14,19 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Defines the request body for updating move collection. </summary>
     public partial class MoverResourceSetPatch
     {
-        /// <summary> Initializes a new instance of MoverResourceSetPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetPatch"/>. </summary>
         public MoverResourceSetPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSetPatch"/>. </summary>
+        /// <param name="tags"> Gets or sets the Resource tags. </param>
+        /// <param name="identity"> Defines the MSI properties of the Move Collection. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        internal MoverResourceSetPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity)
+        {
+            Tags = tags;
+            Identity = identity;
         }
 
         /// <summary> Gets or sets the Resource tags. </summary>

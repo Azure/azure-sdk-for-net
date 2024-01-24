@@ -13,7 +13,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Translation result. </summary>
     public partial class Translation
     {
-        /// <summary> Initializes a new instance of Translation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Translation"/>. </summary>
         /// <param name="to"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="text"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.AI.Translation.Text
             Text = text;
         }
 
-        /// <summary> Initializes a new instance of Translation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Translation"/>. </summary>
         /// <param name="to"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>

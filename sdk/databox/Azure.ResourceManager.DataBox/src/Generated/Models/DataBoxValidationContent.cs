@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.DataBox.Models
     /// </summary>
     public abstract partial class DataBoxValidationContent
     {
-        /// <summary> Initializes a new instance of DataBoxValidationContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationContent"/>. </summary>
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
         /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -31,6 +63,26 @@ namespace Azure.ResourceManager.DataBox.Models
             Argument.AssertNotNull(individualRequestDetails, nameof(individualRequestDetails));
 
             IndividualRequestDetails = individualRequestDetails.ToList();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationContent"/>. </summary>
+        /// <param name="validationCategory"> Identify the nature of validation. </param>
+        /// <param name="individualRequestDetails">
+        /// List of request details contain validationType and its request as key and value respectively.
+        /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="DataBoxValidateAddressContent"/>.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxValidationContent(DataBoxValidationCategory validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ValidationCategory = validationCategory;
+            IndividualRequestDetails = individualRequestDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxValidationContent"/> for deserialization. </summary>
+        internal DataBoxValidationContent()
+        {
         }
 
         /// <summary> Identify the nature of validation. </summary>

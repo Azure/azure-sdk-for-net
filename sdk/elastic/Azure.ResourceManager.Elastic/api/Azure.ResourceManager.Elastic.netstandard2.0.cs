@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Elastic
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse> GetDeploymentInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.Models.DeploymentInfoResponse>> GetDeploymentInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.Elastic.Models.MonitoredResource> GetMonitoredResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.Elastic.Models.MonitoredResource> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Elastic.Models.MonitoredResourceContent> GetMonitoredResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Elastic.Models.MonitoredResourceContent> GetMonitoredResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Elastic.MonitoringTagRuleResource> GetMonitoringTagRule(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.MonitoringTagRuleResource>> GetMonitoringTagRuleAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.Elastic.MonitoringTagRuleCollection GetMonitoringTagRules() { throw null; }
@@ -54,13 +54,15 @@ namespace Azure.ResourceManager.Elastic
         public virtual Azure.Pageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource>> GetAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetIfExists(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Elastic.ElasticMonitorResource>> GetIfExistsAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Elastic.ElasticMonitorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Elastic.ElasticMonitorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Elastic.ElasticMonitorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Elastic.ElasticMonitorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class ElasticMonitorResourceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ElasticMonitorResourceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ElasticMonitorResourceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Elastic.Models.MonitorProperties Properties { get { throw null; } set { } }
         public string SkuName { get { throw null; } set { } }
@@ -76,6 +78,8 @@ namespace Azure.ResourceManager.Elastic
         public virtual Azure.Pageable<Azure.ResourceManager.Elastic.MonitoringTagRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Elastic.MonitoringTagRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.MonitoringTagRuleResource>> GetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Elastic.MonitoringTagRuleResource> GetIfExists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Elastic.MonitoringTagRuleResource>> GetIfExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Elastic.MonitoringTagRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Elastic.MonitoringTagRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Elastic.MonitoringTagRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Elastic.MonitoringTagRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -100,6 +104,28 @@ namespace Azure.ResourceManager.Elastic
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Elastic.MonitoringTagRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Elastic.MonitoringTagRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Elastic.Mocking
+{
+    public partial class MockableElasticArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableElasticArmClient() { }
+        public virtual Azure.ResourceManager.Elastic.ElasticMonitorResource GetElasticMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Elastic.MonitoringTagRuleResource GetMonitoringTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableElasticResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableElasticResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResource(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Elastic.ElasticMonitorResource>> GetElasticMonitorResourceAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Elastic.ElasticMonitorResourceCollection GetElasticMonitorResources() { throw null; }
+    }
+    public partial class MockableElasticSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableElasticSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Elastic.ElasticMonitorResource> GetElasticMonitorResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.Elastic.Models
 {
     public static partial class ArmElasticModelFactory
@@ -108,7 +134,7 @@ namespace Azure.ResourceManager.Elastic.Models
         public static Azure.ResourceManager.Elastic.Models.ElasticCloudDeployment ElasticCloudDeployment(string name = null, string deploymentId = null, string azureSubscriptionId = null, string elasticsearchRegion = null, System.Uri elasticsearchServiceUri = null, System.Uri kibanaServiceUri = null, System.Uri kibanaSsoUri = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.ElasticCloudUser ElasticCloudUser(string emailAddress = null, string id = null, System.Uri elasticCloudSsoDefaultUri = null) { throw null; }
         public static Azure.ResourceManager.Elastic.ElasticMonitorResourceData ElasticMonitorResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string skuName = null, Azure.ResourceManager.Elastic.Models.MonitorProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.Elastic.Models.MonitoredResource MonitoredResource(string id = null, Azure.ResourceManager.Elastic.Models.SendingLog? sendingLogs = default(Azure.ResourceManager.Elastic.Models.SendingLog?), string reasonForLogsStatus = null) { throw null; }
+        public static Azure.ResourceManager.Elastic.Models.MonitoredResourceContent MonitoredResourceContent(string id = null, Azure.ResourceManager.Elastic.Models.SendingLog? sendingLogs = default(Azure.ResourceManager.Elastic.Models.SendingLog?), string reasonForLogsStatus = null) { throw null; }
         public static Azure.ResourceManager.Elastic.MonitoringTagRuleData MonitoringTagRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Elastic.Models.MonitoringTagRulesProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.MonitorProperties MonitorProperties(Azure.ResourceManager.Elastic.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.Elastic.Models.ProvisioningState?), Azure.ResourceManager.Elastic.Models.MonitoringStatus? monitoringStatus = default(Azure.ResourceManager.Elastic.Models.MonitoringStatus?), Azure.ResourceManager.Elastic.Models.ElasticProperties elasticProperties = null, Azure.ResourceManager.Elastic.Models.UserInfo userInfo = null, Azure.ResourceManager.Elastic.Models.LiftrResourceCategory? liftrResourceCategory = default(Azure.ResourceManager.Elastic.Models.LiftrResourceCategory?), int? liftrResourcePreference = default(int?)) { throw null; }
         public static Azure.ResourceManager.Elastic.Models.VmIngestionDetailsResponse VmIngestionDetailsResponse(string cloudId = null, string ingestionKey = null) { throw null; }
@@ -211,9 +237,9 @@ namespace Azure.ResourceManager.Elastic.Models
         public bool? SendActivityLogs { get { throw null; } set { } }
         public bool? SendSubscriptionLogs { get { throw null; } set { } }
     }
-    public partial class MonitoredResource
+    public partial class MonitoredResourceContent
     {
-        internal MonitoredResource() { }
+        internal MonitoredResourceContent() { }
         public string Id { get { throw null; } }
         public string ReasonForLogsStatus { get { throw null; } }
         public Azure.ResourceManager.Elastic.Models.SendingLog? SendingLogs { get { throw null; } }

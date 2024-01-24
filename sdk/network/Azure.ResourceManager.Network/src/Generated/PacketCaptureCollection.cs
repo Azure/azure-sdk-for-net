@@ -21,9 +21,9 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PacketCaptureResource" /> and their operations.
-    /// Each <see cref="PacketCaptureResource" /> in the collection will belong to the same instance of <see cref="NetworkWatcherResource" />.
-    /// To get a <see cref="PacketCaptureCollection" /> instance call the GetPacketCaptures method from an instance of <see cref="NetworkWatcherResource" />.
+    /// A class representing a collection of <see cref="PacketCaptureResource"/> and their operations.
+    /// Each <see cref="PacketCaptureResource"/> in the collection will belong to the same instance of <see cref="NetworkWatcherResource"/>.
+    /// To get a <see cref="PacketCaptureCollection"/> instance call the GetPacketCaptures method from an instance of <see cref="NetworkWatcherResource"/>.
     /// </summary>
     public partial class PacketCaptureCollection : ArmCollection, IEnumerable<PacketCaptureResource>, IAsyncEnumerable<PacketCaptureResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PacketCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PacketCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PacketCaptureResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PacketCaptureResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PacketCaptureResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PacketCaptureResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _packetCaptureRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -262,6 +310,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +354,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>PacketCaptures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="packetCaptureName"> The name of the packet capture session. </param>
@@ -314,6 +378,96 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PacketCaptureResource>> GetIfExistsAsync(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _packetCaptureRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PacketCaptureResource>(response.GetRawResponse());
+                return Response.FromValue(new PacketCaptureResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/packetCaptures/{packetCaptureName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCaptures_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PacketCaptureResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="packetCaptureName"> The name of the packet capture session. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="packetCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="packetCaptureName"/> is null. </exception>
+        public virtual NullableResponse<PacketCaptureResource> GetIfExists(string packetCaptureName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(packetCaptureName, nameof(packetCaptureName));
+
+            using var scope = _packetCaptureClientDiagnostics.CreateScope("PacketCaptureCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _packetCaptureRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, packetCaptureName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PacketCaptureResource>(response.GetRawResponse());
+                return Response.FromValue(new PacketCaptureResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Connector properties of a CDC table in terms of name / value pairs. </summary>
     public partial class MapperDslConnectorProperties
     {
-        /// <summary> Initializes a new instance of MapperDslConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperDslConnectorProperties"/>. </summary>
         public MapperDslConnectorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MapperDslConnectorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapperDslConnectorProperties"/>. </summary>
         /// <param name="name"> Name of the property. </param>
         /// <param name="value"> Value of the property. </param>
         internal MapperDslConnectorProperties(string name, BinaryData value)
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

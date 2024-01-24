@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Kusto.Models
     /// <summary> Collection of Outbound Environment Endpoints. </summary>
     internal partial class OutboundNetworkDependenciesEndpointListResult
     {
-        /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpointListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal OutboundNetworkDependenciesEndpointListResult(IEnumerable<OutboundNetworkDependenciesEndpoint> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Kusto.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of OutboundNetworkDependenciesEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutboundNetworkDependenciesEndpointListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal OutboundNetworkDependenciesEndpointListResult(IReadOnlyList<OutboundNetworkDependenciesEndpoint> value, string nextLink)

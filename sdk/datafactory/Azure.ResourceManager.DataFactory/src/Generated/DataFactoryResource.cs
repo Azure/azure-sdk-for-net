@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.DataFactory
 {
     /// <summary>
     /// A Class representing a DataFactory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataFactoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataFactoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetDataFactory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataFactoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataFactoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDataFactory method.
     /// </summary>
     public partial class DataFactoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataFactoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="factoryName"> The factoryName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string factoryName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataFactory/factories/{factoryName}";
@@ -53,12 +56,15 @@ namespace Azure.ResourceManager.DataFactory
         private readonly PrivateLinkResourcesRestOperations _privateLinkResourcesRestClient;
         private readonly DataFactoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories";
+
         /// <summary> Initializes a new instance of the <see cref="DataFactoryResource"/> class for mocking. </summary>
         protected DataFactoryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataFactoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataFactoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataFactoryResource(ArmClient client, DataFactoryData data) : this(client, data.Id)
@@ -95,9 +101,6 @@ namespace Azure.ResourceManager.DataFactory
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataFactory/factories";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
@@ -123,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryIntegrationRuntimeResources and their operations over a DataFactoryIntegrationRuntimeResource. </returns>
         public virtual DataFactoryIntegrationRuntimeCollection GetDataFactoryIntegrationRuntimes()
         {
-            return GetCachedClient(Client => new DataFactoryIntegrationRuntimeCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryIntegrationRuntimeCollection(client, Id));
         }
 
         /// <summary>
@@ -137,13 +140,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationRuntimeName"> The integration runtime name. </param>
         /// <param name="ifNoneMatch"> ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryIntegrationRuntimeResource>> GetDataFactoryIntegrationRuntimeAsync(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -161,13 +172,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>IntegrationRuntimes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryIntegrationRuntimeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationRuntimeName"> The integration runtime name. </param>
         /// <param name="ifNoneMatch"> ETag of the integration runtime entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="integrationRuntimeName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="integrationRuntimeName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryIntegrationRuntimeResource> GetDataFactoryIntegrationRuntime(string integrationRuntimeName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -178,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryLinkedServiceResources and their operations over a DataFactoryLinkedServiceResource. </returns>
         public virtual DataFactoryLinkedServiceCollection GetDataFactoryLinkedServices()
         {
-            return GetCachedClient(Client => new DataFactoryLinkedServiceCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryLinkedServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -192,13 +211,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>LinkedServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryLinkedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
         /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryLinkedServiceResource>> GetDataFactoryLinkedServiceAsync(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -216,13 +243,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>LinkedServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryLinkedServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedServiceName"> The linked service name. </param>
         /// <param name="ifNoneMatch"> ETag of the linked service entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="linkedServiceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryLinkedServiceResource> GetDataFactoryLinkedService(string linkedServiceName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -233,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryDatasetResources and their operations over a DataFactoryDatasetResource. </returns>
         public virtual DataFactoryDatasetCollection GetDataFactoryDatasets()
         {
-            return GetCachedClient(Client => new DataFactoryDatasetCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryDatasetCollection(client, Id));
         }
 
         /// <summary>
@@ -247,13 +282,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Datasets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryDatasetResource>> GetDataFactoryDatasetAsync(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -271,13 +314,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Datasets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDatasetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datasetName"> The dataset name. </param>
         /// <param name="ifNoneMatch"> ETag of the dataset entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="datasetName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="datasetName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryDatasetResource> GetDataFactoryDataset(string datasetName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -288,7 +339,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryPipelineResources and their operations over a DataFactoryPipelineResource. </returns>
         public virtual DataFactoryPipelineCollection GetDataFactoryPipelines()
         {
-            return GetCachedClient(Client => new DataFactoryPipelineCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryPipelineCollection(client, Id));
         }
 
         /// <summary>
@@ -302,13 +353,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Pipelines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryPipelineResource>> GetDataFactoryPipelineAsync(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -326,13 +385,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Pipelines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPipelineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pipelineName"> The pipeline name. </param>
         /// <param name="ifNoneMatch"> ETag of the pipeline entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="pipelineName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="pipelineName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryPipelineResource> GetDataFactoryPipeline(string pipelineName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -343,7 +410,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryTriggerResources and their operations over a DataFactoryTriggerResource. </returns>
         public virtual DataFactoryTriggerCollection GetDataFactoryTriggers()
         {
-            return GetCachedClient(Client => new DataFactoryTriggerCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryTriggerCollection(client, Id));
         }
 
         /// <summary>
@@ -357,13 +424,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryTriggerResource>> GetDataFactoryTriggerAsync(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -381,13 +456,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The trigger name. </param>
         /// <param name="ifNoneMatch"> ETag of the trigger entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="triggerName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryTriggerResource> GetDataFactoryTrigger(string triggerName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -398,7 +481,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryDataFlowResources and their operations over a DataFactoryDataFlowResource. </returns>
         public virtual DataFactoryDataFlowCollection GetDataFactoryDataFlows()
         {
-            return GetCachedClient(Client => new DataFactoryDataFlowCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryDataFlowCollection(client, Id));
         }
 
         /// <summary>
@@ -412,13 +495,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDataFlowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryDataFlowResource>> GetDataFactoryDataFlowAsync(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -436,13 +527,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryDataFlowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataFlowName"> The data flow name. </param>
         /// <param name="ifNoneMatch"> ETag of the data flow entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="dataFlowName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="dataFlowName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryDataFlowResource> GetDataFactoryDataFlow(string dataFlowName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -453,7 +552,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryManagedVirtualNetworkResources and their operations over a DataFactoryManagedVirtualNetworkResource. </returns>
         public virtual DataFactoryManagedVirtualNetworkCollection GetDataFactoryManagedVirtualNetworks()
         {
-            return GetCachedClient(Client => new DataFactoryManagedVirtualNetworkCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryManagedVirtualNetworkCollection(client, Id));
         }
 
         /// <summary>
@@ -467,13 +566,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryManagedVirtualNetworkResource>> GetDataFactoryManagedVirtualNetworkAsync(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -491,13 +598,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ManagedVirtualNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedVirtualNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedVirtualNetworkName"> Managed virtual network name. </param>
         /// <param name="ifNoneMatch"> ETag of the managed Virtual Network entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="managedVirtualNetworkName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="managedVirtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryManagedVirtualNetworkResource> GetDataFactoryManagedVirtualNetwork(string managedVirtualNetworkName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -508,7 +623,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryManagedIdentityCredentialResources and their operations over a DataFactoryManagedIdentityCredentialResource. </returns>
         public virtual DataFactoryManagedIdentityCredentialCollection GetDataFactoryManagedIdentityCredentials()
         {
-            return GetCachedClient(Client => new DataFactoryManagedIdentityCredentialCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryManagedIdentityCredentialCollection(client, Id));
         }
 
         /// <summary>
@@ -522,13 +637,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>CredentialOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> Credential name. </param>
         /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryManagedIdentityCredentialResource>> GetDataFactoryManagedIdentityCredentialAsync(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -546,13 +669,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>CredentialOperations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryManagedIdentityCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> Credential name. </param>
         /// <param name="ifNoneMatch"> ETag of the credential entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="credentialName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="credentialName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryManagedIdentityCredentialResource> GetDataFactoryManagedIdentityCredential(string credentialName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -563,7 +694,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryPrivateEndpointConnectionResources and their operations over a DataFactoryPrivateEndpointConnectionResource. </returns>
         public virtual DataFactoryPrivateEndpointConnectionCollection GetDataFactoryPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new DataFactoryPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -577,13 +708,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
         /// <param name="ifNoneMatch"> ETag of the private endpoint connection entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryPrivateEndpointConnectionResource>> GetDataFactoryPrivateEndpointConnectionAsync(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -601,13 +740,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
         /// <param name="ifNoneMatch"> ETag of the private endpoint connection entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryPrivateEndpointConnectionResource> GetDataFactoryPrivateEndpointConnection(string privateEndpointConnectionName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -618,7 +765,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryGlobalParameterResources and their operations over a DataFactoryGlobalParameterResource. </returns>
         public virtual DataFactoryGlobalParameterCollection GetDataFactoryGlobalParameters()
         {
-            return GetCachedClient(Client => new DataFactoryGlobalParameterCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryGlobalParameterCollection(client, Id));
         }
 
         /// <summary>
@@ -632,12 +779,20 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>GlobalParameters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryGlobalParameterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="globalParameterName"> The global parameter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryGlobalParameterResource>> GetDataFactoryGlobalParameterAsync(string globalParameterName, CancellationToken cancellationToken = default)
         {
@@ -655,12 +810,20 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>GlobalParameters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryGlobalParameterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="globalParameterName"> The global parameter name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="globalParameterName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="globalParameterName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryGlobalParameterResource> GetDataFactoryGlobalParameter(string globalParameterName, CancellationToken cancellationToken = default)
         {
@@ -671,7 +834,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryChangeDataCaptureResources and their operations over a DataFactoryChangeDataCaptureResource. </returns>
         public virtual DataFactoryChangeDataCaptureCollection GetDataFactoryChangeDataCaptures()
         {
-            return GetCachedClient(Client => new DataFactoryChangeDataCaptureCollection(Client, Id));
+            return GetCachedClient(client => new DataFactoryChangeDataCaptureCollection(client, Id));
         }
 
         /// <summary>
@@ -685,13 +848,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="changeDataCaptureName"> The change data capture name. </param>
         /// <param name="ifNoneMatch"> ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DataFactoryChangeDataCaptureResource>> GetDataFactoryChangeDataCaptureAsync(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -709,13 +880,21 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ChangeDataCapture_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryChangeDataCaptureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="changeDataCaptureName"> The change data capture name. </param>
         /// <param name="ifNoneMatch"> ETag of the change data capture entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="changeDataCaptureName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="changeDataCaptureName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DataFactoryChangeDataCaptureResource> GetDataFactoryChangeDataCapture(string changeDataCaptureName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
@@ -732,6 +911,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -766,6 +953,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ifNoneMatch"> ETag of the factory entity. Should only be specified for get. If the ETag matches the existing entity tag, or if * was provided, then no content will be returned. </param>
@@ -798,6 +993,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -833,6 +1036,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -866,6 +1077,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -901,6 +1120,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters for updating a factory. </param>
@@ -934,6 +1161,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_GetGitHubAccessToken</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -969,6 +1204,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_GetGitHubAccessToken</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Get GitHub access token request definition. </param>
@@ -1002,6 +1245,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_GetDataPlaneAccess</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1037,6 +1288,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_GetDataPlaneAccess</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policy"> Data Plane user access policy definition. </param>
@@ -1070,6 +1329,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExposureControl_GetFeatureValueByFactory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1105,6 +1368,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ExposureControl_GetFeatureValueByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The exposure control request. </param>
@@ -1138,6 +1405,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExposureControl_QueryFeatureValuesByFactory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1173,6 +1444,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ExposureControl_QueryFeatureValuesByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The exposure control request for list of features. </param>
@@ -1207,12 +1482,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataFactoryPipelineRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryPipelineRunInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryPipelineRunInfo> GetPipelineRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1232,12 +1511,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataFactoryPipelineRunInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryPipelineRunInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryPipelineRunInfo> GetPipelineRuns(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1256,6 +1539,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1292,6 +1579,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
@@ -1326,6 +1617,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Cancel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1363,6 +1658,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>PipelineRuns_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
@@ -1399,6 +1698,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ActivityRuns_QueryByPipelineRun</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
@@ -1406,7 +1709,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PipelineActivityRunInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PipelineActivityRunInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PipelineActivityRunInformation> GetActivityRunAsync(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -1427,6 +1730,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>ActivityRuns_QueryByPipelineRun</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The pipeline run identifier. </param>
@@ -1434,7 +1741,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="PipelineActivityRunInformation" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PipelineActivityRunInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PipelineActivityRunInformation> GetActivityRun(string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
@@ -1455,12 +1762,20 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to filter the triggers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataFactoryTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryTriggerResource> GetTriggersAsync(TriggerFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1480,12 +1795,20 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Triggers_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to filter the triggers. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataFactoryTriggerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryTriggerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryTriggerResource> GetTriggers(TriggerFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1505,12 +1828,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>TriggerRuns_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DataFactoryTriggerRun" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryTriggerRun"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryTriggerRun> GetTriggerRunsAsync(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1530,12 +1857,16 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>TriggerRuns_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Parameters to filter the pipeline run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        /// <returns> A collection of <see cref="DataFactoryTriggerRun" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryTriggerRun"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryTriggerRun> GetTriggerRuns(RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
@@ -1554,6 +1885,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1593,6 +1928,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1631,10 +1970,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFlowDebugSessionInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFlowDebugSessionInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFlowDebugSessionInfo> GetDataFlowDebugSessionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1653,10 +1996,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_QueryByFactory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFlowDebugSessionInfo" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFlowDebugSessionInfo"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFlowDebugSessionInfo> GetDataFlowDebugSessions(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataFlowDebugSessionRestClient.CreateQueryByFactoryRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1674,6 +2021,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_AddDataFlow</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1709,6 +2060,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_AddDataFlow</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Data flow debug session definition with debug content. </param>
@@ -1742,6 +2097,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1777,6 +2136,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Data flow debug session definition for deletion. </param>
@@ -1810,6 +2173,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_ExecuteCommand</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1849,6 +2216,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>DataFlowDebugSession_ExecuteCommand</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1887,10 +2258,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>privateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataFactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataFactoryPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataFactoryPrivateLinkResource> GetPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1908,10 +2283,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>privateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataFactoryPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataFactoryPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataFactoryPrivateLinkResource> GetPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -1928,6 +2307,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1983,6 +2370,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -2037,6 +2432,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2086,6 +2489,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2134,6 +2545,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2186,6 +2605,14 @@ namespace Azure.ResourceManager.DataFactory
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Factories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataFactoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

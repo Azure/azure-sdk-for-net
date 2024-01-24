@@ -2,7 +2,8 @@ namespace Azure.Storage.Files.DataLake
 {
     public partial class DataLakeClientOptions : Azure.Core.ClientOptions
     {
-        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2023_08_03) { }
+        public DataLakeClientOptions(Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion version = Azure.Storage.Files.DataLake.DataLakeClientOptions.ServiceVersion.V2024_02_04) { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeCustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
@@ -29,6 +30,8 @@ namespace Azure.Storage.Files.DataLake
             V2023_01_03 = 17,
             V2023_05_03 = 18,
             V2023_08_03 = 19,
+            V2023_11_03 = 20,
+            V2024_02_04 = 21,
         }
     }
     public partial class DataLakeDirectoryClient : Azure.Storage.Files.DataLake.DataLakePathClient
@@ -529,6 +532,24 @@ namespace Azure.Storage.Files.DataLake.Models
         public Azure.Storage.Files.DataLake.Models.DataLakeRetentionPolicy RetentionPolicy { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
         public bool Write { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DataLakeAudience : System.IEquatable<Azure.Storage.Files.DataLake.Models.DataLakeAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DataLakeAudience(string value) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience DefaultAudience { get { throw null; } }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeAudience CreateDataLakeServiceAccountAudience(string storageAccountName) { throw null; }
+        public bool Equals(Azure.Storage.Files.DataLake.Models.DataLakeAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Files.DataLake.Models.DataLakeAudience left, Azure.Storage.Files.DataLake.Models.DataLakeAudience right) { throw null; }
+        public static implicit operator Azure.Storage.Files.DataLake.Models.DataLakeAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Files.DataLake.Models.DataLakeAudience left, Azure.Storage.Files.DataLake.Models.DataLakeAudience right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class DataLakeCorsRule
     {

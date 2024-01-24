@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
     /// <summary> List of orderItems. </summary>
     internal partial class OrderItemResourceList
     {
-        /// <summary> Initializes a new instance of OrderItemResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemResourceList"/>. </summary>
         internal OrderItemResourceList()
         {
             Value = new ChangeTrackingList<EdgeOrderItemData>();
         }
 
-        /// <summary> Initializes a new instance of OrderItemResourceList. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrderItemResourceList"/>. </summary>
         /// <param name="value"> List of order item resources. </param>
         /// <param name="nextLink"> Link for the next set of order item resources. </param>
         internal OrderItemResourceList(IReadOnlyList<EdgeOrderItemData> value, string nextLink)

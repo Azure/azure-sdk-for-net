@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ConfidentialLedger
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfidentialLedgerResource" /> and their operations.
-    /// Each <see cref="ConfidentialLedgerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ConfidentialLedgerCollection" /> instance call the GetConfidentialLedgers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ConfidentialLedgerResource"/> and their operations.
+    /// Each <see cref="ConfidentialLedgerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ConfidentialLedgerCollection"/> instance call the GetConfidentialLedgers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ConfidentialLedgerCollection : ArmCollection, IEnumerable<ConfidentialLedgerResource>, IAsyncEnumerable<ConfidentialLedgerResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Ledger_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>Ledger_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>Ledger_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConfidentialLedgerResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -244,11 +284,19 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>Ledger_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the list operation. eg. $filter=ledgerType eq 'Public'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfidentialLedgerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConfidentialLedgerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConfidentialLedgerResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _confidentialLedgerLedgerRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, filter);
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -318,6 +382,96 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 var response = _confidentialLedgerLedgerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConfidentialLedgerResource>> GetIfExistsAsync(string ledgerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+
+            using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _confidentialLedgerLedgerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConfidentialLedgerResource>(response.GetRawResponse());
+                return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ConfidentialLedger/ledgers/{ledgerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="ledgerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="ledgerName"/> is null. </exception>
+        public virtual NullableResponse<ConfidentialLedgerResource> GetIfExists(string ledgerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ledgerName, nameof(ledgerName));
+
+            using var scope = _confidentialLedgerLedgerClientDiagnostics.CreateScope("ConfidentialLedgerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _confidentialLedgerLedgerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, ledgerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConfidentialLedgerResource>(response.GetRawResponse());
+                return Response.FromValue(new ConfidentialLedgerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

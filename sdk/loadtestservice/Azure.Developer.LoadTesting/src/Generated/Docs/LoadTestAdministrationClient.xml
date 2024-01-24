@@ -2,58 +2,67 @@
 <doc>
   <members>
     <member name="CreateOrUpdateTestAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateTestAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateTestAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {};
-
-Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateTestAsync("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateTestAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateTestAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {
-    passFailCriteria = new {
-        passFailMetrics = new {
-            key = new {
+using RequestContent content = RequestContent.Create(new
+{
+    passFailCriteria = new
+    {
+        passFailMetrics = new
+        {
+            key = new
+            {
                 clientMetric = "response_time_ms",
                 aggregate = "count",
                 condition = "<condition>",
                 requestName = "<requestName>",
-                value = 123.45d,
+                value = 123.45,
                 action = "continue",
             },
         },
     },
-    secrets = new {
-        key = new {
+    secrets = new
+    {
+        key = new
+        {
             value = "<value>",
             type = "AKV_SECRET_URI",
         },
     },
-    certificate = new {
+    certificate = new
+    {
         value = "<value>",
         type = "AKV_CERT_URI",
         name = "<name>",
     },
-    environmentVariables = new {
-        key = "<String>",
+    environmentVariables = new
+    {
+        key = "<environmentVariables>",
     },
-    loadTestConfiguration = new {
+    loadTestConfiguration = new
+    {
         engineInstances = 1234,
         splitAllCSVs = true,
         quickStartTest = true,
-        optionalLoadTestConfig = new {
+        optionalLoadTestConfig = new
+        {
             endpointUrl = "<endpointUrl>",
             virtualUsers = 1234,
             rampUpTime = 1234,
@@ -65,25 +74,24 @@ var data = new {
     subnetId = "<subnetId>",
     keyvaultReferenceIdentityType = "<keyvaultReferenceIdentityType>",
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
-};
-
-Response response = await client.CreateOrUpdateTestAsync("<testId>", RequestContent.Create(data));
+});
+Response response = await client.CreateOrUpdateTestAsync("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
@@ -131,62 +139,70 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CreateOrUpdateTest(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateTest with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateTest and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {};
-
-Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdateTest("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateTest with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateTest with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {
-    passFailCriteria = new {
-        passFailMetrics = new {
-            key = new {
+using RequestContent content = RequestContent.Create(new
+{
+    passFailCriteria = new
+    {
+        passFailMetrics = new
+        {
+            key = new
+            {
                 clientMetric = "response_time_ms",
                 aggregate = "count",
                 condition = "<condition>",
                 requestName = "<requestName>",
-                value = 123.45d,
+                value = 123.45,
                 action = "continue",
             },
         },
     },
-    secrets = new {
-        key = new {
+    secrets = new
+    {
+        key = new
+        {
             value = "<value>",
             type = "AKV_SECRET_URI",
         },
     },
-    certificate = new {
+    certificate = new
+    {
         value = "<value>",
         type = "AKV_CERT_URI",
         name = "<name>",
     },
-    environmentVariables = new {
-        key = "<String>",
+    environmentVariables = new
+    {
+        key = "<environmentVariables>",
     },
-    loadTestConfiguration = new {
+    loadTestConfiguration = new
+    {
         engineInstances = 1234,
         splitAllCSVs = true,
         quickStartTest = true,
-        optionalLoadTestConfig = new {
+        optionalLoadTestConfig = new
+        {
             endpointUrl = "<endpointUrl>",
             virtualUsers = 1234,
             rampUpTime = 1234,
@@ -198,25 +214,24 @@ var data = new {
     subnetId = "<subnetId>",
     keyvaultReferenceIdentityType = "<keyvaultReferenceIdentityType>",
     keyvaultReferenceIdentityId = "<keyvaultReferenceIdentityId>",
-};
-
-Response response = client.CreateOrUpdateTest("<testId>", RequestContent.Create(data));
+});
+Response response = client.CreateOrUpdateTest("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
@@ -264,60 +279,90 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="DeleteTestAsync(string,RequestContext)">
-<example>
-This sample shows how to call DeleteTestAsync with required parameters.
+      <example>
+This sample shows how to call DeleteTestAsync.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.DeleteTestAsync("<testId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteTestAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = await client.DeleteTestAsync("<testId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="DeleteTest(string,RequestContext)">
-<example>
-This sample shows how to call DeleteTest with required parameters.
+      <example>
+This sample shows how to call DeleteTest.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.DeleteTest("<testId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteTest with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = client.DeleteTest("<testId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="GetTestAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetTestAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetTestAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.GetTestAsync("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTestAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = await client.GetTestAsync("<testId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
@@ -365,34 +410,44 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetTest(string,RequestContext)">
-<example>
-This sample shows how to call GetTest with required parameters and parse the result.
+      <example>
+This sample shows how to call GetTest and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.GetTest("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("clientMetric").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("aggregate").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("condition").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("requestName").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("action").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("actualValue").ToString());
-Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<test>").GetProperty("result").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("value").ToString());
-Console.WriteLine(result.GetProperty("secrets").GetProperty("<test>").GetProperty("type").ToString());
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTest with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = client.GetTest("<testId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("clientMetric").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("aggregate").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("condition").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("requestName").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("action").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("actualValue").ToString());
+Console.WriteLine(result.GetProperty("passFailCriteria").GetProperty("passFailMetrics").GetProperty("<key>").GetProperty("result").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("secrets").GetProperty("<key>").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("type").ToString());
 Console.WriteLine(result.GetProperty("certificate").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<test>").ToString());
+Console.WriteLine(result.GetProperty("environmentVariables").GetProperty("<key>").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("engineInstances").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("splitAllCSVs").ToString());
 Console.WriteLine(result.GetProperty("loadTestConfiguration").GetProperty("quickStartTest").ToString());
@@ -440,20 +495,26 @@ Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="UploadTestFileAsync(string,string,RequestContent,string,RequestContext)">
-    </member>
-    <member name="UploadTestFile(string,string,RequestContent,string,RequestContext)">
+]]></code></example>
     </member>
     <member name="GetTestFileAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetTestFileAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetTestFileAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTestFileAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.GetTestFileAsync("<testId>", "<fileName>");
 
@@ -464,16 +525,26 @@ Console.WriteLine(result.GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetTestFile(string,string,RequestContext)">
-<example>
-This sample shows how to call GetTestFile with required parameters and parse the result.
+      <example>
+This sample shows how to call GetTestFile and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = client.GetTestFile("<testId>", "<fileName>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetTestFile with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.GetTestFile("<testId>", "<fileName>");
 
@@ -484,185 +555,264 @@ Console.WriteLine(result.GetProperty("fileType").ToString());
 Console.WriteLine(result.GetProperty("expireDateTime").ToString());
 Console.WriteLine(result.GetProperty("validationStatus").ToString());
 Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="DeleteTestFileAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call DeleteTestFileAsync with required parameters.
+      <example>
+This sample shows how to call DeleteTestFileAsync.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteTestFileAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = await client.DeleteTestFileAsync("<testId>", "<fileName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="DeleteTestFile(string,string,RequestContext)">
-<example>
-This sample shows how to call DeleteTestFile with required parameters.
+      <example>
+This sample shows how to call DeleteTestFile.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.DeleteTestFile("<testId>", "<fileName>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteTestFile with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = client.DeleteTestFile("<testId>", "<fileName>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="CreateOrUpdateAppComponentsAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateAppComponentsAsync with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateAppComponentsAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {
-    components = new {
-        key = new {
+using RequestContent content = RequestContent.Create(new
+{
+    components = new
+    {
+        key = new object(),
+    },
+});
+Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAppComponentsAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    components = new
+    {
+        key = new
+        {
             resourceName = "<resourceName>",
             resourceType = "<resourceType>",
             displayName = "<displayName>",
             kind = "<kind>",
         },
     },
-};
-
-Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", RequestContent.Create(data));
+});
+Response response = await client.CreateOrUpdateAppComponentsAsync("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("testId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CreateOrUpdateAppComponents(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateAppComponents with required parameters and request content and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateAppComponents and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {
-    components = new {
-        key = new {
+using RequestContent content = RequestContent.Create(new
+{
+    components = new
+    {
+        key = new object(),
+    },
+});
+Response response = client.CreateOrUpdateAppComponents("<testId>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call CreateOrUpdateAppComponents with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    components = new
+    {
+        key = new
+        {
             resourceName = "<resourceName>",
             resourceType = "<resourceType>",
             displayName = "<displayName>",
             kind = "<kind>",
         },
     },
-};
-
-Response response = client.CreateOrUpdateAppComponents("<testId>", RequestContent.Create(data));
+});
+Response response = client.CreateOrUpdateAppComponents("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("testId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetAppComponentsAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetAppComponentsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetAppComponentsAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.GetAppComponentsAsync("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetAppComponentsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = await client.GetAppComponentsAsync("<testId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("testId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetAppComponents(string,RequestContext)">
-<example>
-This sample shows how to call GetAppComponents with required parameters and parse the result.
+      <example>
+This sample shows how to call GetAppComponents and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.GetAppComponents("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceType").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("displayName").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("resourceGroup").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("subscriptionId").ToString());
-Console.WriteLine(result.GetProperty("components").GetProperty("<test>").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").ToString());
+]]></code>
+This sample shows how to call GetAppComponents with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = client.GetAppComponents("<testId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("displayName").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("resourceGroup").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("subscriptionId").ToString());
+Console.WriteLine(result.GetProperty("components").GetProperty("<key>").GetProperty("kind").ToString());
 Console.WriteLine(result.GetProperty("testId").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CreateOrUpdateServerMetricsConfigAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateServerMetricsConfigAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {};
-
-Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateServerMetricsConfigAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {
-    metrics = new {
-        key = new {
+using RequestContent content = RequestContent.Create(new
+{
+    metrics = new
+    {
+        key = new
+        {
             resourceId = "<resourceId>",
             metricNamespace = "<metricNamespace>",
             displayDescription = "<displayDescription>",
@@ -672,51 +822,51 @@ var data = new {
             resourceType = "<resourceType>",
         },
     },
-};
-
-Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", RequestContent.Create(data));
+});
+Response response = await client.CreateOrUpdateServerMetricsConfigAsync("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="CreateOrUpdateServerMetricsConfig(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateServerMetricsConfig with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateServerMetricsConfig and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {};
-
-Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateServerMetricsConfig with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-var data = new {
-    metrics = new {
-        key = new {
+using RequestContent content = RequestContent.Create(new
+{
+    metrics = new
+    {
+        key = new
+        {
             resourceId = "<resourceId>",
             metricNamespace = "<metricNamespace>",
             displayDescription = "<displayDescription>",
@@ -726,94 +876,120 @@ var data = new {
             resourceType = "<resourceType>",
         },
     },
-};
-
-Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", RequestContent.Create(data));
+});
+Response response = client.CreateOrUpdateServerMetricsConfig("<testId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetServerMetricsConfigAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetServerMetricsConfigAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetServerMetricsConfigAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = await client.GetServerMetricsConfigAsync("<testId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetServerMetricsConfigAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = await client.GetServerMetricsConfigAsync("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetServerMetricsConfig(string,RequestContext)">
-<example>
-This sample shows how to call GetServerMetricsConfig with required parameters and parse the result.
+      <example>
+This sample shows how to call GetServerMetricsConfig and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+Response response = client.GetServerMetricsConfig("<testId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetServerMetricsConfig with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
 Response response = client.GetServerMetricsConfig("<testId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("testId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("id").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceId").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("metricNamespace").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("displayDescription").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("name").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("aggregation").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("metrics").GetProperty("<test>").GetProperty("resourceType").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("id").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceId").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("metricNamespace").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("displayDescription").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("name").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("aggregation").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("metrics").GetProperty("<key>").GetProperty("resourceType").ToString());
 Console.WriteLine(result.GetProperty("createdDateTime").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedDateTime").ToString());
 Console.WriteLine(result.GetProperty("lastModifiedBy").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="GetTestsAsync(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)">
-    </member>
-    <member name="GetTests(string,string,DateTimeOffset?,DateTimeOffset?,int?,RequestContext)">
+]]></code></example>
     </member>
     <member name="GetTestFilesAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetTestFilesAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetTestFilesAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-await foreach (var item in client.GetTestFilesAsync("<testId>"))
+await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetTestFilesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetTestFilesAsync("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());
@@ -823,18 +999,29 @@ await foreach (var item in client.GetTestFilesAsync("<testId>"))
     Console.WriteLine(result.GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetTestFiles(string,RequestContext)">
-<example>
-This sample shows how to call GetTestFiles with required parameters and parse the result.
+      <example>
+This sample shows how to call GetTestFiles and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new LoadTestAdministrationClient(endpoint, credential);
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-foreach (var item in client.GetTestFiles("<testId>"))
+foreach (BinaryData item in client.GetTestFiles("<testId>"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetTestFiles with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetTestFiles("<testId>"))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("url").ToString());
@@ -844,8 +1031,7 @@ foreach (var item in client.GetTestFiles("<testId>"))
     Console.WriteLine(result.GetProperty("validationStatus").ToString());
     Console.WriteLine(result.GetProperty("validationFailureDetails").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
   </members>
 </doc>

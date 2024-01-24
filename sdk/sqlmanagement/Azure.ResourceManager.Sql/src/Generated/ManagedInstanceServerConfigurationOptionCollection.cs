@@ -21,9 +21,9 @@ using Azure.ResourceManager.Sql.Models;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedInstanceServerConfigurationOptionResource" /> and their operations.
-    /// Each <see cref="ManagedInstanceServerConfigurationOptionResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get a <see cref="ManagedInstanceServerConfigurationOptionCollection" /> instance call the GetManagedInstanceServerConfigurationOptions method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="ManagedInstanceServerConfigurationOptionResource"/> and their operations.
+    /// Each <see cref="ManagedInstanceServerConfigurationOptionResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get a <see cref="ManagedInstanceServerConfigurationOptionCollection"/> instance call the GetManagedInstanceServerConfigurationOptions method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class ManagedInstanceServerConfigurationOptionCollection : ArmCollection, IEnumerable<ManagedInstanceServerConfigurationOptionResource>, IAsyncEnumerable<ManagedInstanceServerConfigurationOptionResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -103,6 +111,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
@@ -175,6 +199,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,10 +241,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_ListByManagedInstance</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedInstanceServerConfigurationOptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedInstanceServerConfigurationOptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedInstanceServerConfigurationOptionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -231,10 +271,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_ListByManagedInstance</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedInstanceServerConfigurationOptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedInstanceServerConfigurationOptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedInstanceServerConfigurationOptionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.CreateListByManagedInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +340,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerConfigurationOptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
@@ -296,6 +360,88 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverConfigurationOptionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConfigurationOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ManagedInstanceServerConfigurationOptionResource>> GetIfExistsAsync(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics.CreateScope("ManagedInstanceServerConfigurationOptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverConfigurationOptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceServerConfigurationOptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceServerConfigurationOptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/serverConfigurationOptions/{serverConfigurationOptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerConfigurationOptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceServerConfigurationOptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverConfigurationOptionName"> The name of the server configuration option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ManagedInstanceServerConfigurationOptionResource> GetIfExists(ManagedInstanceServerConfigurationOptionName serverConfigurationOptionName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _managedInstanceServerConfigurationOptionServerConfigurationOptionsClientDiagnostics.CreateScope("ManagedInstanceServerConfigurationOptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedInstanceServerConfigurationOptionServerConfigurationOptionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, serverConfigurationOptionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedInstanceServerConfigurationOptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedInstanceServerConfigurationOptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

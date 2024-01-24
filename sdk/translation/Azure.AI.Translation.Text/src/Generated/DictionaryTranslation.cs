@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Translation source term. </summary>
     public partial class DictionaryTranslation
     {
-        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/>. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.
@@ -62,7 +62,7 @@ namespace Azure.AI.Translation.Text
             BackTranslations = backTranslations.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryTranslation"/>. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.

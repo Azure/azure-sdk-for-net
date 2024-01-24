@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ServiceFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceFabricClusterResource" /> and their operations.
-    /// Each <see cref="ServiceFabricClusterResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ServiceFabricClusterCollection" /> instance call the GetServiceFabricClusters method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ServiceFabricClusterResource"/> and their operations.
+    /// Each <see cref="ServiceFabricClusterResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ServiceFabricClusterCollection"/> instance call the GetServiceFabricClusters method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ServiceFabricClusterCollection : ArmCollection, IEnumerable<ServiceFabricClusterResource>, IAsyncEnumerable<ServiceFabricClusterResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>Clusters_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>Clusters_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricClusterResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>Clusters_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricClusterResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricClusterResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricClusterClustersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -262,6 +310,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +354,14 @@ namespace Azure.ResourceManager.ServiceFabric
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster resource. </param>
@@ -314,6 +378,96 @@ namespace Azure.ResourceManager.ServiceFabric
             {
                 var response = _serviceFabricClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ServiceFabricClusterResource>> GetIfExistsAsync(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceFabricClusterClustersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceFabricClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricClusterResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/clusters/{clusterName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricClusterResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="clusterName"> The name of the cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="clusterName"/> is null. </exception>
+        public virtual NullableResponse<ServiceFabricClusterResource> GetIfExists(string clusterName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+
+            using var scope = _serviceFabricClusterClustersClientDiagnostics.CreateScope("ServiceFabricClusterCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceFabricClusterClustersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, clusterName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceFabricClusterResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a RegulatoryComplianceControl along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RegulatoryComplianceControlResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRegulatoryComplianceControlResource method.
-    /// Otherwise you can get one from its parent resource <see cref="RegulatoryComplianceStandardResource" /> using the GetRegulatoryComplianceControl method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RegulatoryComplianceControlResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRegulatoryComplianceControlResource method.
+    /// Otherwise you can get one from its parent resource <see cref="RegulatoryComplianceStandardResource"/> using the GetRegulatoryComplianceControl method.
     /// </summary>
     public partial class RegulatoryComplianceControlResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RegulatoryComplianceControlResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="regulatoryComplianceStandardName"> The regulatoryComplianceStandardName. </param>
+        /// <param name="regulatoryComplianceControlName"> The regulatoryComplianceControlName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string regulatoryComplianceStandardName, string regulatoryComplianceControlName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}/regulatoryComplianceControls/{regulatoryComplianceControlName}";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly RegulatoryComplianceControlsRestOperations _regulatoryComplianceControlRestClient;
         private readonly RegulatoryComplianceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls";
+
         /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceControlResource"/> class for mocking. </summary>
         protected RegulatoryComplianceControlResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RegulatoryComplianceControlResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceControlResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RegulatoryComplianceControlResource(ArmClient client, RegulatoryComplianceControlData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <returns> An object representing collection of RegulatoryComplianceAssessmentResources and their operations over a RegulatoryComplianceAssessmentResource. </returns>
         public virtual RegulatoryComplianceAssessmentCollection GetRegulatoryComplianceAssessments()
         {
-            return GetCachedClient(Client => new RegulatoryComplianceAssessmentCollection(Client, Id));
+            return GetCachedClient(client => new RegulatoryComplianceAssessmentCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +107,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<RegulatoryComplianceAssessmentResource>> GetRegulatoryComplianceAssessmentAsync(string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +138,20 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="regulatoryComplianceAssessmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="regulatoryComplianceAssessmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<RegulatoryComplianceAssessmentResource> GetRegulatoryComplianceAssessment(string regulatoryComplianceAssessmentName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +168,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +208,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

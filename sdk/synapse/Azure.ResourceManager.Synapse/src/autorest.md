@@ -26,6 +26,9 @@ modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true   # Mitigate the duplication schema 'ErrorResponse' issue
 
+# mgmt-debug:
+#   show-serialized-names: true
+
 rename-mapping:
   AzureADOnlyAuthentication: SynapseAadOnlyAuthentication
   AzureADOnlyAuthenticationListResult: SynapseAadOnlyAuthenticationListResult
@@ -179,6 +182,8 @@ rename-mapping:
   KustoPoolUpdate.properties.workspaceUID: WorkspaceUid|uuid
   PrivateLinkResources: SynapseKustoPoolPrivateLinkList
   KustoPoolPrivateLinkResources: SynapseKustoPoolPrivateLinkData
+  IntegrationRuntimeStatus.type: RuntimeType
+  EntityReference.type: IntegrationRuntimeEntityReferenceType
 
 prepend-rp-prefix:
   - AttachedDatabaseConfiguration
@@ -203,7 +208,7 @@ prepend-rp-prefix:
   - ExtendedSqlPoolBlobAuditingPolicyListResult
   - GeoBackupPolicy
   - GeoBackupPolicyListResult
-  - IPFirewallRuleInfo
+  - IpFirewallRuleInfo
   - Key
   - KustoPool
   - MaintenanceWindows
@@ -289,7 +294,7 @@ prepend-rp-prefix:
   - IntegrationRuntimeEntityReferenceType
   - IntegrationRuntimeInternalChannelEncryptionMode
   - IntegrationRuntimeLicenseType
-  - IntegrationRuntimeNodeIPAddress
+  - IntegrationRuntimeNodeIpAddress
   - IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint
   - IntegrationRuntimeOutboundNetworkDependenciesEndpoint
   - IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails
@@ -302,8 +307,8 @@ prepend-rp-prefix:
   - IntegrationRuntimeUpdateResult
   - IotHubDataConnection
   - IotHubDataFormat
-  - IPFirewallRuleInfoListResult
-  - IPFirewallRuleProperties
+  - IpFirewallRuleInfoListResult
+  - IpFirewallRuleProperties
   - LanguageExtension
   - LanguageExtensionName
   - LanguageExtensionsList
@@ -432,6 +437,12 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/schemas/{schemaName}/tables/{tableName}/columns/{columnName}/sensitivityLabels/{sensitivityLabelSource}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/connectionPolicies/{connectionPolicyName}
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/vulnerabilityAssessments/{vulnerabilityAssessmentName}/rules/{ruleId}/baselines/{baselineName}
+
+suppress-abstract-base-class:
+- SynapseDatabaseData
+- SynapseDataConnectionData
+- SynapseIntegrationRuntimeProperties
+- SynapseIntegrationRuntimeStatus
 
 directive:
   - remove-operation: Get_IntegrationRuntimeStart

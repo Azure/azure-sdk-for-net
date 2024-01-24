@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The SparkServiceError. </summary>
     public partial class SparkServiceError
     {
-        /// <summary> Initializes a new instance of SparkServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkServiceError"/>. </summary>
         internal SparkServiceError()
         {
         }
 
-        /// <summary> Initializes a new instance of SparkServiceError. </summary>
+        /// <summary> Initializes a new instance of <see cref="SparkServiceError"/>. </summary>
         /// <param name="message"></param>
         /// <param name="errorCode"></param>
         /// <param name="source"></param>

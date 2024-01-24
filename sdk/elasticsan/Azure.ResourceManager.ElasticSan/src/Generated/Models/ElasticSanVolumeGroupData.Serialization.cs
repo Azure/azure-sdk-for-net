@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,13 +15,51 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ElasticSan
 {
-    public partial class ElasticSanVolumeGroupData : IUtf8JsonSerializable
+    public partial class ElasticSanVolumeGroupData : IUtf8JsonSerializable, IJsonModel<ElasticSanVolumeGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticSanVolumeGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ElasticSanVolumeGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(ProtocolType))
             {
                 writer.WritePropertyName("protocolType"u8);
@@ -30,32 +70,89 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("encryption"u8);
                 writer.WriteStringValue(Encryption.Value.ToString());
             }
+            if (Optional.IsDefined(EncryptionProperties))
+            {
+                writer.WritePropertyName("encryptionProperties"u8);
+                writer.WriteObjectValue(EncryptionProperties);
+            }
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
                 writer.WriteObjectValue(NetworkAcls);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ElasticSanVolumeGroupData DeserializeElasticSanVolumeGroupData(JsonElement element)
+        ElasticSanVolumeGroupData IJsonModel<ElasticSanVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticSanVolumeGroupData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticSanVolumeGroupData(document.RootElement, options);
+        }
+
+        internal static ElasticSanVolumeGroupData DeserializeElasticSanVolumeGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            Optional<ManagedServiceIdentity> identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<ElasticSanProvisioningState> provisioningState = default;
-            Optional<StorageTargetType> protocolType = default;
+            Optional<ElasticSanStorageTargetType> protocolType = default;
             Optional<ElasticSanEncryptionType> encryption = default;
+            Optional<ElasticSanEncryptionProperties> encryptionProperties = default;
             Optional<NetworkRuleSet> networkAcls = default;
             Optional<IReadOnlyList<ElasticSanPrivateEndpointConnectionData>> privateEndpointConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -104,7 +201,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            protocolType = new StorageTargetType(property0.Value.GetString());
+                            protocolType = new ElasticSanStorageTargetType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("encryption"u8))
@@ -114,6 +211,15 @@ namespace Azure.ResourceManager.ElasticSan
                                 continue;
                             }
                             encryption = new ElasticSanEncryptionType(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("encryptionProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryptionProperties = ElasticSanEncryptionProperties.DeserializeElasticSanEncryptionProperties(property0.Value);
                             continue;
                         }
                         if (property0.NameEquals("networkAcls"u8))
@@ -142,8 +248,44 @@ namespace Azure.ResourceManager.ElasticSan
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), networkAcls.Value, Optional.ToList(privateEndpointConnections));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ElasticSanVolumeGroupData(id, name, type, systemData.Value, identity, Optional.ToNullable(provisioningState), Optional.ToNullable(protocolType), Optional.ToNullable(encryption), encryptionProperties.Value, networkAcls.Value, Optional.ToList(privateEndpointConnections), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticSanVolumeGroupData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ElasticSanVolumeGroupData IPersistableModel<ElasticSanVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeElasticSanVolumeGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticSanVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

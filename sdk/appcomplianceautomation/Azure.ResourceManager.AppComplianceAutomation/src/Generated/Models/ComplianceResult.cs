@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
     /// <summary> A class represent the compliance result. </summary>
     public partial class ComplianceResult
     {
-        /// <summary> Initializes a new instance of ComplianceResult. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ComplianceResult"/>. </summary>
         internal ComplianceResult()
         {
             Categories = new ChangeTrackingList<Category>();
         }
 
-        /// <summary> Initializes a new instance of ComplianceResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ComplianceResult"/>. </summary>
         /// <param name="complianceName"> The name of the compliance. e.g. "M365". </param>
         /// <param name="categories"> List of categories. </param>
-        internal ComplianceResult(string complianceName, IReadOnlyList<Category> categories)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ComplianceResult(string complianceName, IReadOnlyList<Category> categories, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ComplianceName = complianceName;
             Categories = categories;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the compliance. e.g. "M365". </summary>

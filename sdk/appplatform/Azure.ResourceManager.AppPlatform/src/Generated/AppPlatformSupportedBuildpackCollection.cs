@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppPlatformSupportedBuildpackResource" /> and their operations.
-    /// Each <see cref="AppPlatformSupportedBuildpackResource" /> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource" />.
-    /// To get an <see cref="AppPlatformSupportedBuildpackCollection" /> instance call the GetAppPlatformSupportedBuildpacks method from an instance of <see cref="AppPlatformBuildServiceResource" />.
+    /// A class representing a collection of <see cref="AppPlatformSupportedBuildpackResource"/> and their operations.
+    /// Each <see cref="AppPlatformSupportedBuildpackResource"/> in the collection will belong to the same instance of <see cref="AppPlatformBuildServiceResource"/>.
+    /// To get an <see cref="AppPlatformSupportedBuildpackCollection"/> instance call the GetAppPlatformSupportedBuildpacks method from an instance of <see cref="AppPlatformBuildServiceResource"/>.
     /// </summary>
     public partial class AppPlatformSupportedBuildpackCollection : ArmCollection, IEnumerable<AppPlatformSupportedBuildpackResource>, IAsyncEnumerable<AppPlatformSupportedBuildpackResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListSupportedBuildpacks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppPlatformSupportedBuildpackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppPlatformSupportedBuildpackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppPlatformSupportedBuildpackResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedBuildpackBuildServiceRestClient.CreateListSupportedBuildpacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_ListSupportedBuildpacks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppPlatformSupportedBuildpackResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppPlatformSupportedBuildpackResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppPlatformSupportedBuildpackResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appPlatformSupportedBuildpackBuildServiceRestClient.CreateListSupportedBuildpacksRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetSupportedBuildpack</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildpackName"> The name of the buildpack resource. </param>
@@ -231,6 +279,96 @@ namespace Azure.ResourceManager.AppPlatform
             {
                 var response = _appPlatformSupportedBuildpackBuildServiceRestClient.GetSupportedBuildpack(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildpackName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedBuildpacks/{buildpackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildpackName"> The name of the buildpack resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppPlatformSupportedBuildpackResource>> GetIfExistsAsync(string buildpackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+
+            using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appPlatformSupportedBuildpackBuildServiceRestClient.GetSupportedBuildpackAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildpackName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformSupportedBuildpackResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformSupportedBuildpackResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/supportedBuildpacks/{buildpackName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BuildService_GetSupportedBuildpack</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformSupportedBuildpackResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="buildpackName"> The name of the buildpack resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="buildpackName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="buildpackName"/> is null. </exception>
+        public virtual NullableResponse<AppPlatformSupportedBuildpackResource> GetIfExists(string buildpackName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(buildpackName, nameof(buildpackName));
+
+            using var scope = _appPlatformSupportedBuildpackBuildServiceClientDiagnostics.CreateScope("AppPlatformSupportedBuildpackCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appPlatformSupportedBuildpackBuildServiceRestClient.GetSupportedBuildpack(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildpackName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppPlatformSupportedBuildpackResource>(response.GetRawResponse());
+                return Response.FromValue(new AppPlatformSupportedBuildpackResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

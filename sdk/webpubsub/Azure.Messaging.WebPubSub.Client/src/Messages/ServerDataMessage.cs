@@ -26,7 +26,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <summary>
         /// The sequence id. Only availble in reliable protocol.
         /// </summary>
-        public ulong? SequenceId { get; }
+        public long? SequenceId { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ServerDataMessage"/> class.
@@ -34,7 +34,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// <param name="dataType">Type of the data</param>
         /// <param name="data">The data content</param>
         /// <param name="sequenceId">The sequence id. Only availble in reliable protocol.</param>
-        public ServerDataMessage(WebPubSubDataType dataType, BinaryData data, ulong? sequenceId)
+        public ServerDataMessage(WebPubSubDataType dataType, BinaryData data, long? sequenceId)
         {
             DataType = dataType;
             Data = data;

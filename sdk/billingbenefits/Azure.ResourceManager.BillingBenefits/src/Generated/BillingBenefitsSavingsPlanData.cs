@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.BillingBenefits.Models;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.BillingBenefits
     /// </summary>
     public partial class BillingBenefitsSavingsPlanData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/>. </summary>
         /// <param name="sku"> Savings plan SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public BillingBenefitsSavingsPlanData(BillingBenefitsSku sku)
@@ -28,7 +61,7 @@ namespace Azure.ResourceManager.BillingBenefits
             Sku = sku;
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -57,7 +90,8 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <param name="renewSource"> SavingsPlan Id of the SavingsPlan from which this SavingsPlan is renewed. </param>
         /// <param name="renewDestination"> SavingsPlan Id of the SavingsPlan which is purchased because of renew. </param>
         /// <param name="renewProperties"></param>
-        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, BillingBenefitsProvisioningState? provisioningState, string displayProvisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, string customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, string userFriendlyAppliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, BillingBenefitsCommitment commitment, DateTimeOffset? effectOn, DateTimeOffset? expireOn, DateTimeOffset? purchaseOn, DateTimeOffset? benefitStartOn, BillingBenefitsExtendedStatusInfo extendedStatusInfo, bool? isRenewed, BillingBenefitsSavingsPlanUtilization utilization, string renewSource, string renewDestination, RenewProperties renewProperties) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingBenefitsSku sku, string displayName, BillingBenefitsProvisioningState? provisioningState, string displayProvisioningState, ResourceIdentifier billingScopeId, ResourceIdentifier billingProfileId, string customerId, ResourceIdentifier billingAccountId, BillingBenefitsTerm? term, BillingBenefitsBillingPlan? billingPlan, BillingBenefitsAppliedScopeType? appliedScopeType, string userFriendlyAppliedScopeType, BillingBenefitsAppliedScopeProperties appliedScopeProperties, BillingBenefitsCommitment commitment, DateTimeOffset? effectOn, DateTimeOffset? expireOn, DateTimeOffset? purchaseOn, DateTimeOffset? benefitStartOn, BillingBenefitsExtendedStatusInfo extendedStatusInfo, bool? isRenewed, BillingBenefitsSavingsPlanUtilization utilization, string renewSource, string renewDestination, RenewProperties renewProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Sku = sku;
             DisplayName = displayName;
@@ -83,6 +117,12 @@ namespace Azure.ResourceManager.BillingBenefits
             RenewSource = renewSource;
             RenewDestination = renewDestination;
             RenewProperties = renewProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanData"/> for deserialization. </summary>
+        internal BillingBenefitsSavingsPlanData()
+        {
         }
 
         /// <summary> Savings plan SKU. </summary>

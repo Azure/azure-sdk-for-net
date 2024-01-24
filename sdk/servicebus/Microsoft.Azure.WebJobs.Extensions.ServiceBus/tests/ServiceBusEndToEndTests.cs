@@ -27,6 +27,7 @@ using System.Transactions;
 using Azure.Core.Shared;
 using Azure.Core.Tests;
 using Azure.Messaging.ServiceBus.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Constants = Microsoft.Azure.WebJobs.ServiceBus.Constants;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
@@ -239,6 +240,22 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 bool result = _waitHandle1.WaitOne(SBTimeoutMills);
                 Assert.True(result);
                 await host.StopAsync();
+            }
+        }
+
+        [Test]
+        public async Task TestSingle_InfiniteLockRenewal()
+        {
+            await WriteQueueMessage("{'Name': 'Test1', 'Value': 'Value'}");
+            var host = BuildHost<TestSingleInfiniteLockRenewal>(
+                SetInfiniteLockRenewal);
+            using (host)
+            {
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+                await host.StopAsync();
+                var logs = host.GetTestLoggerProvider().GetAllLogMessages();
+                Assert.IsNotEmpty(logs.Where(message => message.FormattedMessage.Contains("RenewMessageLock")));
             }
         }
 
@@ -602,6 +619,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public async Task BindToPoco()
         {
             var host = BuildHost<ServiceBusArgumentBindingJob>();
+            var provider = host.Services.GetService<MessagingProvider>();
+
             using (host)
             {
                 await WriteQueueMessage("{ Name: 'foo', Value: 'bar' }");
@@ -613,6 +632,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.Contains("PocoValues(foo,bar)", logs);
                 await host.StopAsync();
             }
+            Assert.AreEqual(0, provider.ClientCache.Count);
+            Assert.AreEqual(0, provider.MessageReceiverCache.Count);
+            Assert.AreEqual(0, provider.MessageSenderCache.Count);
+            Assert.AreEqual(0, provider.ActionsCache.Count);
         }
 
         [Test]
@@ -829,6 +852,14 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         sbOptions.AutoCompleteMessages = false;
                     }));
 
+        private static Action<IHostBuilder> SetInfiniteLockRenewal =>
+            builder =>
+                builder.ConfigureAppConfiguration(b =>
+                    b.AddInMemoryCollection(new Dictionary<string, string>
+                    {
+                        { "AzureWebJobs:Extensions:ServiceBus:MaxAutoLockRenewalDuration", "-00:00:00.0010000" },
+                    }));
+
         private static Action<IHostBuilder> BuildDrainHost<T>()
         {
             return builder =>
@@ -949,9 +980,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             IEnumerable<LogMessage> logMessages = host.GetTestLoggerProvider().GetAllLogMessages();
 
-            // Filter out Azure SDK and custom processor logs for easier validation.
+            // Filter out Azure SDK, hosting lifetime, and custom processor logs for easier validation.
             logMessages = logMessages.Where(
                 m => !m.Category.StartsWith("Azure.", StringComparison.InvariantCulture) &&
+                     !m.Category.StartsWith("Microsoft.Hosting.Lifetime") &&
                      m.Category != CustomMessagingProvider.CustomMessagingCategory);
 
             string[] consoleOutputLines = logMessages
@@ -1013,6 +1045,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 "  \"MaxBatchWaitTime\":\"00:00:30\",",
                $"  \"MaxConcurrentCalls\": {16 * Utility.GetProcessorCount()},",
                 "  \"MaxConcurrentSessions\": 8,",
+                "  \"MaxConcurrentCallsPerSession\": 1,",
                 "  \"MaxMessageBatchSize\": 1000,",
                 "  \"MinMessageBatchSize\":1,",
                 "  \"SessionIdleTimeout\": \"\"",
@@ -1628,6 +1661,19 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 // we want to validate that this doesn't trigger an exception in the SDK since AutoComplete = true
                 await messageActions.CompleteMessageAsync(message);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class TestSingleInfiniteLockRenewal
+        {
+            public static async Task RunAsync(
+                [ServiceBusTrigger(FirstQueueNameKey)]
+                ServiceBusReceivedMessage message,
+                ServiceBusMessageActions messageActions)
+            {
+                // wait long enough to trigger lock renewal
+                await Task.Delay(TimeSpan.FromSeconds(20));
                 _waitHandle1.Set();
             }
         }

@@ -6,7 +6,6 @@ namespace Azure.ResourceManager.SelfHelp.Tests
     using Azure.Core.TestFramework;
     using Azure.Core;
     using System.Threading.Tasks;
-    using Azure.ResourceManager.SelfHelp.Tests;
     using NUnit.Framework;
     using System;
     using Azure.ResourceManager.SelfHelp.Models;
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var insightsResourceName = Recording.GenerateAssetName("testResource");
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
 
-            var listDisocverySolutionsData = Client.GetSelfHelpDiscoverySolutionsAsync(scope);
+            var listDisocverySolutionsData = Client.GetSelfHelpDiscoverySolutionsAsync(scope, "ProblemClassificationId eq 'a93e16a3-9f43-a003-6ac0-e5f6caa90cb9'");
             var response = await listDisocverySolutionsData.ToEnumerableAsync();
             Assert.NotNull(response.First());
         }

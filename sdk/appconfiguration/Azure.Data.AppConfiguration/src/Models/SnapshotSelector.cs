@@ -24,7 +24,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// A filter for the name of the returned snapshots.
         /// </summary>
-        public string Name { get; set; }
+        public string NameFilter { get; set; }
 
         /// <summary>
         /// A list of fields used to specify which fields are included in the returned resource(s).

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Kubernetes properties. </summary>
     public partial class MachineLearningKubernetesProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningKubernetesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesProperties"/>. </summary>
         public MachineLearningKubernetesProperties()
         {
             InstanceTypes = new ChangeTrackingDictionary<string, MachineLearningInstanceTypeSchema>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningKubernetesProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningKubernetesProperties"/>. </summary>
         /// <param name="relayConnectionString"> Relay connection string. </param>
         /// <param name="serviceBusConnectionString"> ServiceBus connection string. </param>
         /// <param name="extensionPrincipalId"> Extension principal-id. </param>

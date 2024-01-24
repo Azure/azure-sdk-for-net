@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CapacityReservationGroupResource" /> and their operations.
-    /// Each <see cref="CapacityReservationGroupResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="CapacityReservationGroupCollection" /> instance call the GetCapacityReservationGroups method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="CapacityReservationGroupResource"/> and their operations.
+    /// Each <see cref="CapacityReservationGroupResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="CapacityReservationGroupCollection"/> instance call the GetCapacityReservationGroups method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class CapacityReservationGroupCollection : ArmCollection, IEnumerable<CapacityReservationGroupResource>, IAsyncEnumerable<CapacityReservationGroupResource>
     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to create or update a capacity reservation group. When updating a capacity reservation group, only tags may be modified. Please refer to https://aka.ms/CapacityReservation for more details.
+        /// The operation to create or update a capacity reservation group. When updating a capacity reservation group, only tags and sharing profile may be modified. Please refer to https://aka.ms/CapacityReservation for more details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,7 +105,7 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
-        /// The operation to create or update a capacity reservation group. When updating a capacity reservation group, only tags may be modified. Please refer to https://aka.ms/CapacityReservation for more details.
+        /// The operation to create or update a capacity reservation group. When updating a capacity reservation group, only tags and sharing profile may be modified. Please refer to https://aka.ms/CapacityReservation for more details.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -224,11 +256,19 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacityReservationGroupResource> GetAllAsync(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
@@ -247,11 +287,19 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacityReservationGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapacityReservationGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacityReservationGroupResource> GetAll(CapacityReservationGroupGetExpand? expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityReservationGroupRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, expand);
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +362,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CapacityReservationGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
@@ -323,6 +387,98 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _capacityReservationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapacityReservationGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CapacityReservationGroupResource>> GetIfExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+
+            using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _capacityReservationGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CapacityReservationGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/capacityReservationGroups/{capacityReservationGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CapacityReservationGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityReservationGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="capacityReservationGroupName"> The name of the capacity reservation group. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. 'InstanceView' will retrieve the list of instance views of the capacity reservations under the capacity reservation group which is a snapshot of the runtime properties of a capacity reservation that is managed by the platform and can change outside of control plane operations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="capacityReservationGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
+        public virtual NullableResponse<CapacityReservationGroupResource> GetIfExists(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+
+            using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _capacityReservationGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, capacityReservationGroupName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CapacityReservationGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new CapacityReservationGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -98,11 +98,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 #pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 #pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
 
+            // In AOT, StackFrame.GetMethod() can return null.
+            // In this instance, we fall back to StackFrame.ToString()
+            frameMock.Setup(x => x.ToString()).Returns("MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0");
+
             Models.StackFrame stackFrame = new Models.StackFrame(frameMock.Object, 0);
 
             Assert.Equal("unknown", stackFrame.Assembly);
             Assert.Null(stackFrame.FileName);
-            Assert.Equal("unknown", stackFrame.Method);
+            Assert.Equal("MethodName + 0x00 at offset 000 in file:line:column <filename unknown>:0:0", stackFrame.Method);
             Assert.Null(stackFrame.Line);
         }
 

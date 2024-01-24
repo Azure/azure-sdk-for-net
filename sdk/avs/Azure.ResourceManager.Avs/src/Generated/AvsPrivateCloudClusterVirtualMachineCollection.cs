@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> and their operations.
-    /// Each <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudClusterResource" />.
-    /// To get an <see cref="AvsPrivateCloudClusterVirtualMachineCollection" /> instance call the GetAvsPrivateCloudClusterVirtualMachines method from an instance of <see cref="AvsPrivateCloudClusterResource" />.
+    /// A class representing a collection of <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> and their operations.
+    /// Each <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudClusterResource"/>.
+    /// To get an <see cref="AvsPrivateCloudClusterVirtualMachineCollection"/> instance call the GetAvsPrivateCloudClusterVirtualMachines method from an instance of <see cref="AvsPrivateCloudClusterResource"/>.
     /// </summary>
     public partial class AvsPrivateCloudClusterVirtualMachineCollection : ArmCollection, IEnumerable<AvsPrivateCloudClusterVirtualMachineResource>, IAsyncEnumerable<AvsPrivateCloudClusterVirtualMachineResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsPrivateCloudClusterVirtualMachineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsPrivateCloudClusterVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsPrivateCloudClusterVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsPrivateCloudClusterVirtualMachineResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, virtualMachineId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        public virtual async Task<NullableResponse<AvsPrivateCloudClusterVirtualMachineResource>> GetIfExistsAsync(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+
+            using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, virtualMachineId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsPrivateCloudClusterVirtualMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudClusterVirtualMachineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/virtualMachines/{virtualMachineId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudClusterVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineId"> Virtual Machine identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineId"/> is null. </exception>
+        public virtual NullableResponse<AvsPrivateCloudClusterVirtualMachineResource> GetIfExists(string virtualMachineId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineId, nameof(virtualMachineId));
+
+            using var scope = _avsPrivateCloudClusterVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("AvsPrivateCloudClusterVirtualMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _avsPrivateCloudClusterVirtualMachineVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, virtualMachineId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsPrivateCloudClusterVirtualMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudClusterVirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.Support
 {
     /// <summary>
     /// A Class representing a SupportAzureService along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SupportAzureServiceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSupportAzureServiceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetSupportAzureService method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SupportAzureServiceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSupportAzureServiceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetSupportAzureService method.
     /// </summary>
     public partial class SupportAzureServiceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SupportAzureServiceResource"/> instance. </summary>
+        /// <param name="serviceName"> The serviceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string serviceName)
         {
             var resourceId = $"/providers/Microsoft.Support/services/{serviceName}";
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.Support
         private readonly ServicesRestOperations _supportAzureServiceServicesRestClient;
         private readonly SupportAzureServiceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/services";
+
         /// <summary> Initializes a new instance of the <see cref="SupportAzureServiceResource"/> class for mocking. </summary>
         protected SupportAzureServiceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SupportAzureServiceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SupportAzureServiceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SupportAzureServiceResource(ArmClient client, SupportAzureServiceData data) : this(client, data.Id)
@@ -62,9 +66,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/services";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.Support
         /// <returns> An object representing collection of ProblemClassificationResources and their operations over a ProblemClassificationResource. </returns>
         public virtual ProblemClassificationCollection GetProblemClassifications()
         {
-            return GetCachedClient(Client => new ProblemClassificationCollection(Client, Id));
+            return GetCachedClient(client => new ProblemClassificationCollection(client, Id));
         }
 
         /// <summary>
@@ -105,12 +106,20 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ProblemClassificationResource>> GetProblemClassificationAsync(string problemClassificationName, CancellationToken cancellationToken = default)
         {
@@ -128,12 +137,20 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ProblemClassifications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProblemClassificationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="problemClassificationName"> Name of problem classification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="problemClassificationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="problemClassificationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ProblemClassificationResource> GetProblemClassification(string problemClassificationName, CancellationToken cancellationToken = default)
         {
@@ -150,6 +167,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportAzureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +207,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportAzureServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

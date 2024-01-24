@@ -18,6 +18,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -212,6 +216,7 @@ rename-mapping:
   RegistryListResult: ContainerRegistryListResult
   RegistryUsageListResult: ContainerRegistryUsageListResult
   StepType: ContainerRegistryTaskStepType
+  TaskStepProperties.type: ContainerRegistryTaskStepType
   ImageUpdateTrigger.id: -|uuid
   SourceTriggerDescriptor.id: -|uuid
   EventContent.id: -|uuid

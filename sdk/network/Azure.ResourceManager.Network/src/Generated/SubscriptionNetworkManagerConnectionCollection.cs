@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionNetworkManagerConnectionResource" /> and their operations.
-    /// Each <see cref="SubscriptionNetworkManagerConnectionResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SubscriptionNetworkManagerConnectionCollection" /> instance call the GetSubscriptionNetworkManagerConnections method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SubscriptionNetworkManagerConnectionResource"/> and their operations.
+    /// Each <see cref="SubscriptionNetworkManagerConnectionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionNetworkManagerConnectionCollection"/> instance call the GetSubscriptionNetworkManagerConnections method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionNetworkManagerConnectionCollection : ArmCollection, IEnumerable<SubscriptionNetworkManagerConnectionResource>, IAsyncEnumerable<SubscriptionNetworkManagerConnectionResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,12 +253,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionNetworkManagerConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionNetworkManagerConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionNetworkManagerConnectionResource> GetAllAsync(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionNetworkManagerConnectionRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
@@ -245,12 +285,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> An optional query parameter which specifies the maximum number of records to be returned by the server. </param>
         /// <param name="skipToken"> SkipToken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionNetworkManagerConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionNetworkManagerConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionNetworkManagerConnectionResource> GetAll(int? top = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionNetworkManagerConnectionRestClient.CreateListRequest(Id.SubscriptionId, top, skipToken);
@@ -268,6 +316,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +360,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SubscriptionNetworkManagerConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
@@ -320,6 +384,96 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _subscriptionNetworkManagerConnectionRestClient.Get(Id.SubscriptionId, networkManagerConnectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubscriptionNetworkManagerConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SubscriptionNetworkManagerConnectionResource>> GetIfExistsAsync(string networkManagerConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+
+            using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _subscriptionNetworkManagerConnectionRestClient.GetAsync(Id.SubscriptionId, networkManagerConnectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionNetworkManagerConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/networkManagerConnections/{networkManagerConnectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SubscriptionNetworkManagerConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionNetworkManagerConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkManagerConnectionName"> Name for the network manager connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkManagerConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkManagerConnectionName"/> is null. </exception>
+        public virtual NullableResponse<SubscriptionNetworkManagerConnectionResource> GetIfExists(string networkManagerConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkManagerConnectionName, nameof(networkManagerConnectionName));
+
+            using var scope = _subscriptionNetworkManagerConnectionClientDiagnostics.CreateScope("SubscriptionNetworkManagerConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionNetworkManagerConnectionRestClient.Get(Id.SubscriptionId, networkManagerConnectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionNetworkManagerConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionNetworkManagerConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

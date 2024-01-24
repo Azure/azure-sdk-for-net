@@ -18,9 +18,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseDataWarehouseUserActivityResource" /> and their operations.
-    /// Each <see cref="SynapseDataWarehouseUserActivityResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseDataWarehouseUserActivityCollection" /> instance call the GetSynapseDataWarehouseUserActivities method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseDataWarehouseUserActivityResource"/> and their operations.
+    /// Each <see cref="SynapseDataWarehouseUserActivityResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseDataWarehouseUserActivityCollection"/> instance call the GetSynapseDataWarehouseUserActivities method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseDataWarehouseUserActivityCollection : ArmCollection
     {
@@ -62,6 +62,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
@@ -94,6 +102,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +144,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
@@ -159,6 +183,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
@@ -171,6 +203,88 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SynapseDataWarehouseUserActivityResource>> GetIfExistsAsync(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesClientDiagnostics.CreateScope("SynapseDataWarehouseUserActivityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDataWarehouseUserActivityResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataWarehouseUserActivities/{dataWarehouseUserActivityName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolDataWarehouseUserActivities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataWarehouseUserActivityResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataWarehouseUserActivityName"> The activity name of the Sql pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SynapseDataWarehouseUserActivityResource> GetIfExists(SynapseDataWarehouseUserActivityName dataWarehouseUserActivityName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesClientDiagnostics.CreateScope("SynapseDataWarehouseUserActivityCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseDataWarehouseUserActivitySqlPoolDataWarehouseUserActivitiesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataWarehouseUserActivityName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDataWarehouseUserActivityResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDataWarehouseUserActivityResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

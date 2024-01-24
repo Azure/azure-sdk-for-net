@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.8.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,49 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.7.0 (2024-01-12)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-06' to 'package-2023-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2f74f79b243484837a6d7b6dfa78b3e16274d006/specification/network/resource-manager/readme.md
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+## 1.6.0 (2023-11-21)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-05' to 'package-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/4b55e2d0e29fb2e829985485c9150f46157c3b80/specification/network/resource-manager/readme.md
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Bugs Fixed
+
+- Fix an issue that the `DeserializeHopLink` can't handle empty `resourceId`.
+
+### Other Changes
+
+- Upgraded Azure.ResourceManager to 1.9.0.
+
+## 1.6.0-beta.1 (2023-09-25)
+
+### Features Added
+- Add support to VMSS features.
+
+## 1.5.0 (2023-09-16)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-04' to 'package-2023-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0762e82bcccef4a032e29dda5e4c07fd7cc822a6/specification/network/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.34.0 to 1.35.0
+
+## 1.5.0-beta.1 (2023-08-14)
+
+### Features Added
+
+- Make `NetworkArmClientMockingExtension`, `NetworkManagementGroupMockingExtension`, `NetworkResourceGroupMockingExtension`, `NetworkSubscriptionMockingExtension` public for mocking the extension methods.
 
 ## 1.4.0 (2023-07-31)
 

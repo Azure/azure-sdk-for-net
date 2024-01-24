@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetworkCloud
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkCloudVirtualMachineConsoleResource" /> and their operations.
-    /// Each <see cref="NetworkCloudVirtualMachineConsoleResource" /> in the collection will belong to the same instance of <see cref="NetworkCloudVirtualMachineResource" />.
-    /// To get a <see cref="NetworkCloudVirtualMachineConsoleCollection" /> instance call the GetNetworkCloudVirtualMachineConsoles method from an instance of <see cref="NetworkCloudVirtualMachineResource" />.
+    /// A class representing a collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> and their operations.
+    /// Each <see cref="NetworkCloudVirtualMachineConsoleResource"/> in the collection will belong to the same instance of <see cref="NetworkCloudVirtualMachineResource"/>.
+    /// To get a <see cref="NetworkCloudVirtualMachineConsoleCollection"/> instance call the GetNetworkCloudVirtualMachineConsoles method from an instance of <see cref="NetworkCloudVirtualMachineResource"/>.
     /// </summary>
     public partial class NetworkCloudVirtualMachineConsoleCollection : ArmCollection, IEnumerable<NetworkCloudVirtualMachineConsoleResource>, IAsyncEnumerable<NetworkCloudVirtualMachineConsoleResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Consoles_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Consoles_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Consoles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Consoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Consoles_ListByVirtualMachine</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineConsoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkCloudVirtualMachineConsoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudVirtualMachineConsoleConsolesRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Consoles_ListByVirtualMachine</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineConsoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkCloudVirtualMachineConsoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkCloudVirtualMachineConsoleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkCloudVirtualMachineConsoleConsolesRestClient.CreateListByVirtualMachineRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Consoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <term>Operation Id</term>
         /// <description>Consoles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="consoleName"> The name of the virtual machine console. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 var response = _networkCloudVirtualMachineConsoleConsolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consoleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}/consoles/{consoleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Consoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="consoleName"> The name of the virtual machine console. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkCloudVirtualMachineConsoleResource>> GetIfExistsAsync(string consoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
+
+            using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkCloudVirtualMachineConsoleConsolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consoleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudVirtualMachineConsoleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudVirtualMachineConsoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetworkCloud/virtualMachines/{virtualMachineName}/consoles/{consoleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Consoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkCloudVirtualMachineConsoleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="consoleName"> The name of the virtual machine console. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="consoleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="consoleName"/> is null. </exception>
+        public virtual NullableResponse<NetworkCloudVirtualMachineConsoleResource> GetIfExists(string consoleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(consoleName, nameof(consoleName));
+
+            using var scope = _networkCloudVirtualMachineConsoleConsolesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineConsoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkCloudVirtualMachineConsoleConsolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, consoleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkCloudVirtualMachineConsoleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkCloudVirtualMachineConsoleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

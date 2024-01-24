@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Workloads
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SapProviderInstanceResource" /> and their operations.
-    /// Each <see cref="SapProviderInstanceResource" /> in the collection will belong to the same instance of <see cref="SapMonitorResource" />.
-    /// To get a <see cref="SapProviderInstanceCollection" /> instance call the GetSapProviderInstances method from an instance of <see cref="SapMonitorResource" />.
+    /// A class representing a collection of <see cref="SapProviderInstanceResource"/> and their operations.
+    /// Each <see cref="SapProviderInstanceResource"/> in the collection will belong to the same instance of <see cref="SapMonitorResource"/>.
+    /// To get a <see cref="SapProviderInstanceCollection"/> instance call the GetSapProviderInstances method from an instance of <see cref="SapMonitorResource"/>.
     /// </summary>
     public partial class SapProviderInstanceCollection : ArmCollection, IEnumerable<SapProviderInstanceResource>, IAsyncEnumerable<SapProviderInstanceResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerInstanceName"> Name of the provider instance. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SapProviderInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapProviderInstanceResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapProviderInstanceProviderInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SapProviderInstanceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapProviderInstanceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapProviderInstanceResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sapProviderInstanceProviderInstancesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Workloads
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Workloads
         /// <term>Operation Id</term>
         /// <description>ProviderInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerInstanceName"> Name of the provider instance. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Workloads
             {
                 var response = _sapProviderInstanceProviderInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerInstanceName"> Name of the provider instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SapProviderInstanceResource>> GetIfExistsAsync(string providerInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
+
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sapProviderInstanceProviderInstancesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SapProviderInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SapProviderInstanceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Workloads/monitors/{monitorName}/providerInstances/{providerInstanceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProviderInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapProviderInstanceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerInstanceName"> Name of the provider instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerInstanceName"/> is null. </exception>
+        public virtual NullableResponse<SapProviderInstanceResource> GetIfExists(string providerInstanceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerInstanceName, nameof(providerInstanceName));
+
+            using var scope = _sapProviderInstanceProviderInstancesClientDiagnostics.CreateScope("SapProviderInstanceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sapProviderInstanceProviderInstancesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, providerInstanceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SapProviderInstanceResource>(response.GetRawResponse());
+                return Response.FromValue(new SapProviderInstanceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

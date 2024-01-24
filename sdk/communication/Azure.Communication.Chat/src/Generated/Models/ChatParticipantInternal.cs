@@ -14,8 +14,8 @@ namespace Azure.Communication.Chat
     /// <summary> A participant of the chat thread. </summary>
     internal partial class ChatParticipantInternal
     {
-        /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
-        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <summary> Initializes a new instance of <see cref="ChatParticipantInternal"/>. </summary>
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> is null. </exception>
         public ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier)
         {
@@ -24,8 +24,8 @@ namespace Azure.Communication.Chat
             CommunicationIdentifier = communicationIdentifier;
         }
 
-        /// <summary> Initializes a new instance of ChatParticipantInternal. </summary>
-        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </param>
+        /// <summary> Initializes a new instance of <see cref="ChatParticipantInternal"/>. </summary>
+        /// <param name="communicationIdentifier"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="displayName"> Display name for the chat participant. </param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the participant. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         internal ChatParticipantInternal(CommunicationIdentifierModel communicationIdentifier, string displayName, DateTimeOffset? shareHistoryTime)
@@ -35,7 +35,7 @@ namespace Azure.Communication.Chat
             ShareHistoryTime = shareHistoryTime;
         }
 
-        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model must be interpreted as a union: Apart from rawId, at most one further property may be set. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel CommunicationIdentifier { get; set; }
         /// <summary> Display name for the chat participant. </summary>
         public string DisplayName { get; set; }

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow debug session info. </summary>
     public partial class DataFlowDebugSessionInfo
     {
-        /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugSessionInfo"/>. </summary>
         internal DataFlowDebugSessionInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFlowDebugSessionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugSessionInfo"/>. </summary>
         /// <param name="dataFlowName"> The name of the data flow. </param>
         /// <param name="computeType"> Compute type of the cluster. </param>
         /// <param name="coreCount"> Core count of the cluster. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

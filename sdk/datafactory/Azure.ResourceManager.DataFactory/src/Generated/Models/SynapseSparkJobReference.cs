@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Synapse spark job reference type. </summary>
     public partial class SynapseSparkJobReference
     {
-        /// <summary> Initializes a new instance of SynapseSparkJobReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/>. </summary>
         /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
         /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

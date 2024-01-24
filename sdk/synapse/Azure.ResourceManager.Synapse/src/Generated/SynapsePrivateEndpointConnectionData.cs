@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapsePrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionData"/>. </summary>
         public SynapsePrivateEndpointConnectionData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapsePrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapsePrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

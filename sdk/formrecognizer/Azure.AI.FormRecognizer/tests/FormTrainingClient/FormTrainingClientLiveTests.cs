@@ -299,8 +299,9 @@ namespace Azure.AI.FormRecognizer.Tests
         {
             var client = CreateFormTrainingClient(useTokenCredential);
 
-            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
-            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            // Make the models slightly different to make sure the cache won't return copies of the same model.
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.Singleforms);
+            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.MultipageFiles);
 
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 
@@ -579,8 +580,9 @@ namespace Azure.AI.FormRecognizer.Tests
             var resourceId = TestEnvironment.ResourceId;
             var region = TestEnvironment.ResourceRegion;
 
-            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
-            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true);
+            // Make the models slightly different to make sure the cache won't return copies of the same model.
+            await using var trainedModelA = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.Singleforms);
+            await using var trainedModelB = await CreateDisposableTrainedModelAsync(useTrainingLabels: true, ContainerType.MultipageFiles);
 
             var modelIds = new List<string> { trainedModelA.ModelId, trainedModelB.ModelId };
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,26 @@
 
 ### Bugs Fixed
 
-- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `SelfHostedIntegrationRuntimeStatus`.
-
 ### Other Changes
+
+## 1.0.0-beta.5 (2023-11-16)
+
+### Features Added
+
+- Upgraded API version.
+  - Added Some Properties on GoogleAds Connector.
+  - Added Support LakeHouse Connector In ADF.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+## 1.0.0-beta.4 (2023-09-26)
+
+### Features Added
+
+- Upgraded API version.
+
+### Bugs Fixed
+
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `SelfHostedIntegrationRuntimeStatus`.
 
 ## 1.0.0-beta.3 (2023-08-02)
 

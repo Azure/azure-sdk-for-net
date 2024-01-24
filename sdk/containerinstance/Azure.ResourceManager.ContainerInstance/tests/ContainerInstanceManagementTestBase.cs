@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ContainerInstance.Tests
                 Diagnostics = new ContainerGroupDiagnostics(
                         logAnalytics: new ContainerGroupLogAnalytics(
                             workspaceId: "workspaceid",
-                            workspaceKey: "workspacekey")),
+                            workspaceKey: "workspacekey"), null),
                 InitContainers = {
                     new InitContainerDefinitionContent($"{containerGroupName}init")
                     {

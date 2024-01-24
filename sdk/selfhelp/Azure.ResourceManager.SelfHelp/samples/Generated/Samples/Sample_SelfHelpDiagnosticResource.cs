@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreatesADiagnosticForAKeyVaultResource()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/stable/2023-06-01/examples/CreateDiagnosticForKeyVaultResource.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/CreateDiagnosticForKeyVaultResource.json
             // this example is just showing the usage of "Diagnostics_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // this example assumes you already have this SelfHelpDiagnosticResource created on azure
             // for more information of creating SelfHelpDiagnosticResource, please refer to the document of SelfHelpDiagnosticResource
-            string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
+            string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
             string diagnosticsResourceName = "VMNotWorkingInsight";
             ResourceIdentifier selfHelpDiagnosticResourceId = SelfHelpDiagnosticResource.CreateResourceIdentifier(scope, diagnosticsResourceName);
             SelfHelpDiagnosticResource selfHelpDiagnostic = client.GetSelfHelpDiagnosticResource(selfHelpDiagnosticResourceId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetsADiagnosticForAKeyVaultResource()
         {
-            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/stable/2023-06-01/examples/GetDiagnosticForKeyVaultResource.json
+            // Generated from example definition: specification/help/resource-manager/Microsoft.Help/preview/2023-09-01-preview/examples/GetDiagnosticForKeyVaultResource.json
             // this example is just showing the usage of "Diagnostics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SelfHelp.Samples
 
             // this example assumes you already have this SelfHelpDiagnosticResource created on azure
             // for more information of creating SelfHelpDiagnosticResource, please refer to the document of SelfHelpDiagnosticResource
-            string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
+            string scope = "subscriptions/0d0fcd2e-c4fd-4349-8497-200edb3923c6/resourceGroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-non-read";
             string diagnosticsResourceName = "VMNotWorkingInsight";
             ResourceIdentifier selfHelpDiagnosticResourceId = SelfHelpDiagnosticResource.CreateResourceIdentifier(scope, diagnosticsResourceName);
             SelfHelpDiagnosticResource selfHelpDiagnostic = client.GetSelfHelpDiagnosticResource(selfHelpDiagnosticResourceId);

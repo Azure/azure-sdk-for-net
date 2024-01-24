@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceFabricManagedClusters
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceFabricManagedApplicationResource" /> and their operations.
-    /// Each <see cref="ServiceFabricManagedApplicationResource" /> in the collection will belong to the same instance of <see cref="ServiceFabricManagedClusterResource" />.
-    /// To get a <see cref="ServiceFabricManagedApplicationCollection" /> instance call the GetServiceFabricManagedApplications method from an instance of <see cref="ServiceFabricManagedClusterResource" />.
+    /// A class representing a collection of <see cref="ServiceFabricManagedApplicationResource"/> and their operations.
+    /// Each <see cref="ServiceFabricManagedApplicationResource"/> in the collection will belong to the same instance of <see cref="ServiceFabricManagedClusterResource"/>.
+    /// To get a <see cref="ServiceFabricManagedApplicationCollection"/> instance call the GetServiceFabricManagedApplications method from an instance of <see cref="ServiceFabricManagedClusterResource"/>.
     /// </summary>
     public partial class ServiceFabricManagedApplicationCollection : ArmCollection, IEnumerable<ServiceFabricManagedApplicationResource>, IAsyncEnumerable<ServiceFabricManagedApplicationResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>Applications_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The name of the application resource. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>Applications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceFabricManagedApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceFabricManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceFabricManagedApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>Applications_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceFabricManagedApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceFabricManagedApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceFabricManagedApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceFabricManagedApplicationApplicationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The name of the application resource. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             {
                 var response = _serviceFabricManagedApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ServiceFabricManagedApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            using var scope = _serviceFabricManagedApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceFabricManagedApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceFabricManagedApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceFabric/managedclusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceFabricManagedApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationName"> The name of the application resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        public virtual NullableResponse<ServiceFabricManagedApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            using var scope = _serviceFabricManagedApplicationApplicationsClientDiagnostics.CreateScope("ServiceFabricManagedApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceFabricManagedApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceFabricManagedApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceFabricManagedApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

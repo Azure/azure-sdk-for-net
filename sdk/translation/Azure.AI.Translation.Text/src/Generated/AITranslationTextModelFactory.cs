@@ -14,7 +14,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Model factory for models. </summary>
     public static partial class AITranslationTextModelFactory
     {
-        /// <summary> Initializes a new instance of GetLanguagesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.GetLanguagesResult"/>. </summary>
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="dictionary"> Languages that support dictionary API. </param>
@@ -28,7 +28,7 @@ namespace Azure.AI.Translation.Text
             return new GetLanguagesResult(translation, transliteration, dictionary);
         }
 
-        /// <summary> Initializes a new instance of TranslationLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
@@ -52,7 +52,7 @@ namespace Azure.AI.Translation.Text
             return new TranslationLanguage(name, nativeName, dir);
         }
 
-        /// <summary> Initializes a new instance of TransliterationLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TransliterationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="scripts"> List of scripts to convert from. </param>
@@ -64,7 +64,7 @@ namespace Azure.AI.Translation.Text
             return new TransliterationLanguage(name, nativeName, scripts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of CommonScriptModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.CommonScriptModel"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
@@ -93,7 +93,7 @@ namespace Azure.AI.Translation.Text
             return new CommonScriptModel(code, name, nativeName, dir);
         }
 
-        /// <summary> Initializes a new instance of TransliterableScript. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TransliterableScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
@@ -124,7 +124,7 @@ namespace Azure.AI.Translation.Text
             return new TransliterableScript(code, name, nativeName, dir, toScripts?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SourceDictionaryLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
@@ -137,7 +137,7 @@ namespace Azure.AI.Translation.Text
             return new SourceDictionaryLanguage(name, nativeName, dir, translations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of TargetDictionaryLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TargetDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
@@ -166,7 +166,7 @@ namespace Azure.AI.Translation.Text
             return new TargetDictionaryLanguage(name, nativeName, dir, code);
         }
 
-        /// <summary> Initializes a new instance of TranslatedTextItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="translations">
         /// An array of translation results. The size of the array matches the number of target
@@ -186,7 +186,7 @@ namespace Azure.AI.Translation.Text
             return new TranslatedTextItem(detectedLanguage, translations?.ToList(), sourceText);
         }
 
-        /// <summary> Initializes a new instance of DetectedLanguage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
         /// <param name="score">
         /// A float value indicating the confidence in the result.
@@ -204,7 +204,7 @@ namespace Azure.AI.Translation.Text
             return new DetectedLanguage(language, score);
         }
 
-        /// <summary> Initializes a new instance of Translation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.Translation"/>. </summary>
         /// <param name="to"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
@@ -216,7 +216,7 @@ namespace Azure.AI.Translation.Text
             return new Translation(to, text, transliteration, alignment, sentLen);
         }
 
-        /// <summary> Initializes a new instance of TransliteratedText. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TransliteratedText"/>. </summary>
         /// <param name="text"> A string which is the result of converting the input string to the output script. </param>
         /// <param name="script"> A string specifying the script used in the output. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="script"/> is null. </exception>
@@ -235,7 +235,7 @@ namespace Azure.AI.Translation.Text
             return new TransliteratedText(text, script);
         }
 
-        /// <summary> Initializes a new instance of TranslatedTextAlignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextAlignment"/>. </summary>
         /// <param name="proj">
         /// Maps input text to translated text. The alignment information is only provided when the request
         /// parameter includeAlignment is true. Alignment is returned as a string value of the following
@@ -256,7 +256,7 @@ namespace Azure.AI.Translation.Text
             return new TranslatedTextAlignment(proj);
         }
 
-        /// <summary> Initializes a new instance of SentenceLength. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.SentenceLength"/>. </summary>
         /// <param name="srcSentLen">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
@@ -274,7 +274,7 @@ namespace Azure.AI.Translation.Text
             return new SentenceLength(srcSentLen?.ToList(), transSentLen?.ToList());
         }
 
-        /// <summary> Initializes a new instance of SourceText. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.SourceText"/>. </summary>
         /// <param name="text"> Input text in the default script of the source language. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         /// <returns> A new <see cref="Text.SourceText"/> instance for mocking. </returns>
@@ -288,7 +288,7 @@ namespace Azure.AI.Translation.Text
             return new SourceText(text);
         }
 
-        /// <summary> Initializes a new instance of BreakSentenceItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.BreakSentenceItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
         /// <param name="sentLen">
         /// An integer array representing the lengths of the sentences in the input text.
@@ -302,7 +302,7 @@ namespace Azure.AI.Translation.Text
             return new BreakSentenceItem(detectedLanguage, sentLen?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DictionaryLookupItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.DictionaryLookupItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term.
         /// For example, if the request is "JOHN", the normalized form will be "john".
@@ -322,7 +322,7 @@ namespace Azure.AI.Translation.Text
             return new DictionaryLookupItem(normalizedSource, displaySource, translations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DictionaryTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.DictionaryTranslation"/>. </summary>
         /// <param name="normalizedTarget">
         /// A string giving the normalized form of this term in the target language.
         /// This value should be used as input to lookup examples.
@@ -360,7 +360,7 @@ namespace Azure.AI.Translation.Text
             return new DictionaryTranslation(normalizedTarget, displayTarget, posTag, confidence, prefixWord, backTranslations?.ToList());
         }
 
-        /// <summary> Initializes a new instance of BackTranslation. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.BackTranslation"/>. </summary>
         /// <param name="normalizedText">
         /// A string giving the normalized form of the source term that is a back-translation of the target.
         /// This value should be used as input to lookup examples.
@@ -398,7 +398,7 @@ namespace Azure.AI.Translation.Text
             return new BackTranslation(normalizedText, displayText, numExamples, frequencyCount);
         }
 
-        /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.DictionaryExampleItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term. Generally, this should be identical
         /// to the value of the Text field at the matching list index in the body of the request.
@@ -416,7 +416,7 @@ namespace Azure.AI.Translation.Text
             return new DictionaryExampleItem(normalizedSource, normalizedTarget, examples?.ToList());
         }
 
-        /// <summary> Initializes a new instance of DictionaryExample. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.DictionaryExample"/>. </summary>
         /// <param name="sourcePrefix">
         /// The string to concatenate before the value of sourceTerm to form a complete example.
         /// Do not add a space character, since it is already there when it should be.

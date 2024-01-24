@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GitHubOwnerResource" /> and their operations.
-    /// Each <see cref="GitHubOwnerResource" /> in the collection will belong to the same instance of <see cref="GitHubConnectorResource" />.
-    /// To get a <see cref="GitHubOwnerCollection" /> instance call the GetGitHubOwners method from an instance of <see cref="GitHubConnectorResource" />.
+    /// A class representing a collection of <see cref="GitHubOwnerResource"/> and their operations.
+    /// Each <see cref="GitHubOwnerResource"/> in the collection will belong to the same instance of <see cref="GitHubConnectorResource"/>.
+    /// To get a <see cref="GitHubOwnerCollection"/> instance call the GetGitHubOwners method from an instance of <see cref="GitHubConnectorResource"/>.
     /// </summary>
     public partial class GitHubOwnerCollection : ArmCollection, IEnumerable<GitHubOwnerResource>, IAsyncEnumerable<GitHubOwnerResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitHubOwnerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GitHubOwnerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubOwnerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitHubOwnerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GitHubOwnerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubOwnerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubOwnerRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 var response = _gitHubOwnerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GitHubOwnerResource>> GetIfExistsAsync(string gitHubOwnerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+
+            using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _gitHubOwnerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubOwnerResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubOwnerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubOwnerName"> Name of the GitHub Owner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubOwnerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubOwnerName"/> is null. </exception>
+        public virtual NullableResponse<GitHubOwnerResource> GetIfExists(string gitHubOwnerName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubOwnerName, nameof(gitHubOwnerName));
+
+            using var scope = _gitHubOwnerClientDiagnostics.CreateScope("GitHubOwnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _gitHubOwnerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, gitHubOwnerName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubOwnerResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubOwnerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

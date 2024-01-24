@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The UnknownProtectionContainer. </summary>
     internal partial class UnknownProtectionContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of UnknownProtectionContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownProtectionContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

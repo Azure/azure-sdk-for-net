@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseRestorePointResource" /> and their operations.
-    /// Each <see cref="SynapseRestorePointResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseRestorePointCollection" /> instance call the GetSynapseRestorePoints method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseRestorePointResource"/> and their operations.
+    /// Each <see cref="SynapseRestorePointResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseRestorePointCollection"/> instance call the GetSynapseRestorePoints method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseRestorePointCollection : ArmCollection, IEnumerable<SynapseRestorePointResource>, IAsyncEnumerable<SynapseRestorePointResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseRestorePointResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorePointSqlPoolRestorePointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseRestorePointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseRestorePointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseRestorePointResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseRestorePointSqlPoolRestorePointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolRestorePoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="restorePointName"> The name of the restore point. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseRestorePointSqlPoolRestorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/restorePoints/{restorePointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolRestorePoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseRestorePointResource>> GetIfExistsAsync(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+
+            using var scope = _synapseRestorePointSqlPoolRestorePointsClientDiagnostics.CreateScope("SynapseRestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseRestorePointSqlPoolRestorePointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseRestorePointResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseRestorePointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/restorePoints/{restorePointName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolRestorePoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorePointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorePointName"> The name of the restore point. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorePointName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorePointName"/> is null. </exception>
+        public virtual NullableResponse<SynapseRestorePointResource> GetIfExists(string restorePointName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorePointName, nameof(restorePointName));
+
+            using var scope = _synapseRestorePointSqlPoolRestorePointsClientDiagnostics.CreateScope("SynapseRestorePointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseRestorePointSqlPoolRestorePointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, restorePointName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseRestorePointResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseRestorePointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

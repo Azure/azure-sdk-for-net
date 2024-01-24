@@ -6,35 +6,59 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Verticals.AgriFood.Farming;
 using NUnit.Framework;
 
 namespace Azure.Verticals.AgriFood.Farming.Samples
 {
-    internal class Samples_WeatherData
+    public partial class Samples_WeatherData
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetWeatherData()
+        public void Example_GetWeatherData_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",
                 extensionApiName = "<extensionApiName>",
                 units = "<units>",
-            };
+            });
+            Response response = client.GetWeatherData(content);
 
-            Response response = client.GetWeatherData(RequestContent.Create(data));
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
+            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_GetWeatherData_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                providerApiKey = "<providerApiKey>",
+                extensionId = "<extensionId>",
+                extensionApiName = "<extensionApiName>",
+                units = "<units>",
+            });
+            Response response = await client.GetWeatherDataAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
@@ -48,17 +72,20 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_GetWeatherData_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
-                locations = new[] {
-        new {
-            type = "LatLong",
-            value = "<value>",
-        }
-    },
+                locations = new object[]
+            {
+new
+{
+type = "LatLong",
+value = "<value>",
+}
+            },
                 providerAppId = "<providerAppId>",
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",
@@ -73,9 +100,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     iconResolution = "<iconResolution>",
                     details = true,
                 },
-            };
-
-            Response response = client.GetWeatherData(RequestContent.Create(data));
+            });
+            Response response = client.GetWeatherData(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
@@ -132,7 +158,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("values")[0].ToString());
             Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseLong")[0].ToString());
             Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseShort")[0].ToString());
-            Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());
@@ -142,44 +168,22 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetWeatherData_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
-
-            var data = new
-            {
-                providerApiKey = "<providerApiKey>",
-                extensionId = "<extensionId>",
-                extensionApiName = "<extensionApiName>",
-                units = "<units>",
-            };
-
-            Response response = await client.GetWeatherDataAsync(RequestContent.Create(data));
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("weatherDataType").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionId").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionApiName").ToString());
-            Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("units").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Example_GetWeatherData_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var client = new FarmBeatsClient(credential).GetWeatherDataClient("2022-11-01-preview");
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            TokenCredential credential = new DefaultAzureCredential();
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
 
-            var data = new
+            using RequestContent content = RequestContent.Create(new
             {
-                locations = new[] {
-        new {
-            type = "LatLong",
-            value = "<value>",
-        }
-    },
+                locations = new object[]
+            {
+new
+{
+type = "LatLong",
+value = "<value>",
+}
+            },
                 providerAppId = "<providerAppId>",
                 providerApiKey = "<providerApiKey>",
                 extensionId = "<extensionId>",
@@ -194,9 +198,8 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
                     iconResolution = "<iconResolution>",
                     details = true,
                 },
-            };
-
-            Response response = await client.GetWeatherDataAsync(RequestContent.Create(data));
+            });
+            Response response = await client.GetWeatherDataAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("weatherMetadata").GetProperty("extensionVersion").ToString());
@@ -253,7 +256,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
             Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("windSpeed").GetProperty("values")[0].ToString());
             Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseLong")[0].ToString());
             Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("wxPhraseShort")[0].ToString());
-            Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<test>").ToString());
+            Console.WriteLine(result.GetProperty("locations")[0].GetProperty("data").GetProperty("additionalAttributes").GetProperty("<key>").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("type").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("location").GetProperty("value").ToString());
             Console.WriteLine(result.GetProperty("errors").GetProperty("locations")[0].GetProperty("code").ToString());

@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
     /// <summary> Description of NetWorkRuleSet - IpRules resource. </summary>
     public partial class ServiceBusNetworkRuleSetIPRules
     {
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetIPRules"/>. </summary>
         public ServiceBusNetworkRuleSetIPRules()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceBusNetworkRuleSetIPRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNetworkRuleSetIPRules"/>. </summary>
         /// <param name="ipMask"> IP Mask. </param>
         /// <param name="action"> The IP Filter Action. </param>
         internal ServiceBusNetworkRuleSetIPRules(string ipMask, ServiceBusNetworkRuleIPAction? action)

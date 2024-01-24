@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Hci
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PublisherResource" /> and their operations.
-    /// Each <see cref="PublisherResource" /> in the collection will belong to the same instance of <see cref="HciClusterResource" />.
-    /// To get a <see cref="PublisherCollection" /> instance call the GetPublishers method from an instance of <see cref="HciClusterResource" />.
+    /// A class representing a collection of <see cref="PublisherResource"/> and their operations.
+    /// Each <see cref="PublisherResource"/> in the collection will belong to the same instance of <see cref="HciClusterResource"/>.
+    /// To get a <see cref="PublisherCollection"/> instance call the GetPublishers method from an instance of <see cref="HciClusterResource"/>.
     /// </summary>
     public partial class PublisherCollection : ArmCollection, IEnumerable<PublisherResource>, IAsyncEnumerable<PublisherResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Publishers_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PublisherResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _publisherRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Publishers_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PublisherResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PublisherResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PublisherResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _publisherRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Hci
             {
                 var response = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publisherName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PublisherResource>> GetIfExistsAsync(string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _publisherRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publisherName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PublisherResource>(response.GetRawResponse());
+                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="publisherName"> The name of the publisher available within HCI cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="publisherName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="publisherName"/> is null. </exception>
+        public virtual NullableResponse<PublisherResource> GetIfExists(string publisherName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(publisherName, nameof(publisherName));
+
+            using var scope = _publisherClientDiagnostics.CreateScope("PublisherCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _publisherRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, publisherName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PublisherResource>(response.GetRawResponse());
+                return Response.FromValue(new PublisherResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

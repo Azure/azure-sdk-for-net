@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_P2SVpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/P2SVpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/P2SVpnGatewayGet.json
             // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_P2SVpnGatewayGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/P2SVpnGatewayGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/P2SVpnGatewayGet.json
             // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,12 +84,54 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // P2SVpnGatewayGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_P2SVpnGatewayGet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/P2SVpnGatewayGet.json
+            // this example is just showing the usage of "P2sVpnGateways_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this P2SVpnGatewayResource
+            P2SVpnGatewayCollection collection = resourceGroupResource.GetP2SVpnGateways();
+
+            // invoke the operation
+            string gatewayName = "p2sVpnGateway1";
+            NullableResponse<P2SVpnGatewayResource> response = await collection.GetIfExistsAsync(gatewayName);
+            P2SVpnGatewayResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                P2SVpnGatewayData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // P2SVpnGatewayPut
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_P2SVpnGatewayPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/P2SVpnGatewayPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/P2SVpnGatewayPut.json
             // this example is just showing the usage of "P2sVpnGateways_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -182,7 +224,7 @@ Name = "P2SConnectionConfig1",
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_P2SVpnGatewayListByResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/P2SVpnGatewayListByResourceGroup.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/P2SVpnGatewayListByResourceGroup.json
             // this example is just showing the usage of "P2sVpnGateways_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

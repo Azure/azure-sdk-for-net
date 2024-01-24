@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> The response of the List Namespace IDs operation. </summary>
     internal partial class EHNamespaceIdListResult
     {
-        /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EHNamespaceIdListResult"/>. </summary>
         internal EHNamespaceIdListResult()
         {
             Value = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of EHNamespaceIdListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="EHNamespaceIdListResult"/>. </summary>
         /// <param name="value"> Result of the List Namespace IDs operation. </param>
         internal EHNamespaceIdListResult(IReadOnlyList<SubResource> value)
         {

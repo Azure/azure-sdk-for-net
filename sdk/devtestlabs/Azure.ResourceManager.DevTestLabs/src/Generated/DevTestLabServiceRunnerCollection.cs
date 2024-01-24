@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevTestLabServiceRunnerResource" /> and their operations.
-    /// Each <see cref="DevTestLabServiceRunnerResource" /> in the collection will belong to the same instance of <see cref="DevTestLabResource" />.
-    /// To get a <see cref="DevTestLabServiceRunnerCollection" /> instance call the GetDevTestLabServiceRunners method from an instance of <see cref="DevTestLabResource" />.
+    /// A class representing a collection of <see cref="DevTestLabServiceRunnerResource"/> and their operations.
+    /// Each <see cref="DevTestLabServiceRunnerResource"/> in the collection will belong to the same instance of <see cref="DevTestLabResource"/>.
+    /// To get a <see cref="DevTestLabServiceRunnerCollection"/> instance call the GetDevTestLabServiceRunners method from an instance of <see cref="DevTestLabResource"/>.
     /// </summary>
     public partial class DevTestLabServiceRunnerCollection : ArmCollection
     {
@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the service runner. </param>
@@ -179,6 +203,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +249,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the service runner. </param>
@@ -252,6 +292,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ServiceRunners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the service runner. </param>
@@ -268,6 +316,96 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 var response = _devTestLabServiceRunnerServiceRunnersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRunners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the service runner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevTestLabServiceRunnerResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devTestLabServiceRunnerServiceRunnersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabServiceRunnerResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/servicerunners/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServiceRunners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabServiceRunnerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the service runner. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DevTestLabServiceRunnerResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabServiceRunnerServiceRunnersClientDiagnostics.CreateScope("DevTestLabServiceRunnerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devTestLabServiceRunnerServiceRunnersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabServiceRunnerResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabServiceRunnerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

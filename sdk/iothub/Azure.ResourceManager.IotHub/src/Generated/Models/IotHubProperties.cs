@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of an IoT hub. </summary>
     public partial class IotHubProperties
     {
-        /// <summary> Initializes a new instance of IotHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubProperties"/>. </summary>
         public IotHubProperties()
         {
             AuthorizationPolicies = new ChangeTrackingList<SharedAccessSignatureAuthorizationRule>();
@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.IotHub.Models
             Locations = new ChangeTrackingList<IotHubLocationDescription>();
         }
 
-        /// <summary> Initializes a new instance of IotHubProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubProperties"/>. </summary>
         /// <param name="authorizationPolicies"> The shared access policies you can use to secure a connection to the IoT hub. </param>
         /// <param name="disableLocalAuth"> If true, SAS tokens with Iot hub scoped SAS keys cannot be used for authentication. </param>
         /// <param name="disableDeviceSas"> If true, all device(including Edge devices but excluding modules) scoped SAS keys cannot be used for authentication. </param>
@@ -49,14 +49,10 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="enableFileUploadNotifications"> If True, file upload notifications are enabled. </param>
         /// <param name="cloudToDevice"> The IoT hub cloud-to-device messaging properties. </param>
         /// <param name="comments"> IoT hub comments. </param>
-        /// <param name="deviceStreams"> The device streams properties of iothub. </param>
         /// <param name="features"> The capabilities and features enabled for the IoT hub. </param>
-        /// <param name="encryption"> The encryption properties for the IoT hub. </param>
         /// <param name="locations"> Primary and secondary location for iot hub. </param>
         /// <param name="enableDataResidency"> This property when set to true, will enable data residency, thus, disabling disaster recovery. </param>
-        /// <param name="rootCertificate"> This property store root certificate related information. </param>
-        /// <param name="ipVersion"> This property specifies the IP Version the hub is currently utilizing. </param>
-        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubPropertiesDeviceStreams deviceStreams, IotHubCapability? features, EncryptionPropertiesDescription encryption, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency, RootCertificateProperties rootCertificate, IotHubIPVersion? ipVersion)
+        internal IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies, bool? disableLocalAuth, bool? disableDeviceSas, bool? disableModuleSas, bool? restrictOutboundNetworkAccess, IList<string> allowedFqdns, IotHubPublicNetworkAccess? publicNetworkAccess, IList<IotHubIPFilterRule> ipFilterRules, IotHubNetworkRuleSetProperties networkRuleSets, string minTlsVersion, IList<IotHubPrivateEndpointConnectionData> privateEndpointConnections, string provisioningState, string state, string hostName, IDictionary<string, EventHubCompatibleEndpointProperties> eventHubEndpoints, IotHubRoutingProperties routing, IDictionary<string, IotHubStorageEndpointProperties> storageEndpoints, IDictionary<string, MessagingEndpointProperties> messagingEndpoints, bool? enableFileUploadNotifications, CloudToDeviceProperties cloudToDevice, string comments, IotHubCapability? features, IReadOnlyList<IotHubLocationDescription> locations, bool? enableDataResidency)
         {
             AuthorizationPolicies = authorizationPolicies;
             DisableLocalAuth = disableLocalAuth;
@@ -79,13 +75,9 @@ namespace Azure.ResourceManager.IotHub.Models
             EnableFileUploadNotifications = enableFileUploadNotifications;
             CloudToDevice = cloudToDevice;
             Comments = comments;
-            DeviceStreams = deviceStreams;
             Features = features;
-            Encryption = encryption;
             Locations = locations;
             EnableDataResidency = enableDataResidency;
-            RootCertificate = rootCertificate;
-            IPVersion = ipVersion;
         }
 
         /// <summary> The shared access policies you can use to secure a connection to the IoT hub. </summary>
@@ -130,30 +122,11 @@ namespace Azure.ResourceManager.IotHub.Models
         public CloudToDeviceProperties CloudToDevice { get; set; }
         /// <summary> IoT hub comments. </summary>
         public string Comments { get; set; }
-        /// <summary> The device streams properties of iothub. </summary>
-        internal IotHubPropertiesDeviceStreams DeviceStreams { get; set; }
-        /// <summary> List of Device Streams Endpoints. </summary>
-        public IList<string> DeviceStreamsStreamingEndpoints
-        {
-            get
-            {
-                if (DeviceStreams is null)
-                    DeviceStreams = new IotHubPropertiesDeviceStreams();
-                return DeviceStreams.StreamingEndpoints;
-            }
-        }
-
         /// <summary> The capabilities and features enabled for the IoT hub. </summary>
         public IotHubCapability? Features { get; set; }
-        /// <summary> The encryption properties for the IoT hub. </summary>
-        public EncryptionPropertiesDescription Encryption { get; set; }
         /// <summary> Primary and secondary location for iot hub. </summary>
         public IReadOnlyList<IotHubLocationDescription> Locations { get; }
         /// <summary> This property when set to true, will enable data residency, thus, disabling disaster recovery. </summary>
         public bool? EnableDataResidency { get; set; }
-        /// <summary> This property store root certificate related information. </summary>
-        public RootCertificateProperties RootCertificate { get; set; }
-        /// <summary> This property specifies the IP Version the hub is currently utilizing. </summary>
-        public IotHubIPVersion? IPVersion { get; set; }
     }
 }

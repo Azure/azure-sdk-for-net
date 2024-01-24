@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAzureWebCategoryByName()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/AzureWebCategoryGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/AzureWebCategoryGet.json
             // this example is just showing the usage of "WebCategories_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAzureWebCategoryByName()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/AzureWebCategoryGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/AzureWebCategoryGet.json
             // this example is just showing the usage of "WebCategories_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -79,12 +80,53 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get Azure Web Category by name
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAzureWebCategoryByName()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/AzureWebCategoryGet.json
+            // this example is just showing the usage of "WebCategories_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "4de8428a-4a92-4cea-90ff-b47128b8cab8";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this AzureWebCategoryResource
+            AzureWebCategoryCollection collection = subscriptionResource.GetAzureWebCategories();
+
+            // invoke the operation
+            string name = "Arts";
+            NullableResponse<AzureWebCategoryResource> response = await collection.GetIfExistsAsync(name);
+            AzureWebCategoryResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AzureWebCategoryData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // List all Azure Web Categories for a given subscription
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListAllAzureWebCategoriesForAGivenSubscription()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/AzureWebCategoriesListBySubscription.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/AzureWebCategoriesListBySubscription.json
             // this example is just showing the usage of "WebCategories_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

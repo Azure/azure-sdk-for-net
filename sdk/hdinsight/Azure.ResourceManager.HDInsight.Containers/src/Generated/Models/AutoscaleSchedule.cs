@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> Schedule definition. </summary>
     public partial class AutoscaleSchedule
     {
-        /// <summary> Initializes a new instance of AutoscaleSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSchedule"/>. </summary>
         /// <param name="startOn"> User has to set the start time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="endOn"> User has to set the end time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="count"> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             Days = days.ToList();
         }
 
-        /// <summary> Initializes a new instance of AutoscaleSchedule. </summary>
+        /// <summary> Initializes a new instance of <see cref="AutoscaleSchedule"/>. </summary>
         /// <param name="startOn"> User has to set the start time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="endOn"> User has to set the end time of current schedule configuration, format like 10:30 (HH:MM). </param>
         /// <param name="count"> User has to set the node count anticipated at end of the scaling operation of the set current schedule configuration, format is integer. </param>

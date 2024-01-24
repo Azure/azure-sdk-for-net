@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using Azure.Data.Tables.Models;
+using System.Runtime.Serialization;
 
 namespace Azure.Data.Tables.Queryable
 {
@@ -90,7 +91,7 @@ namespace Azure.Data.Tables.Queryable
             }
             else
             {
-                _builder.Append(TranslateMemberName(m.Member.Name));
+                _builder.Append(TranslateMemberName(m.Member));
             }
 
             return m;
@@ -199,9 +200,16 @@ namespace Azure.Data.Tables.Queryable
             return _builder.ToString();
         }
 
-        protected virtual string TranslateMemberName(string memberName)
+        protected virtual string TranslateMemberName(MemberInfo memberInfo)
         {
-            return memberName;
+            if (memberInfo.GetCustomAttribute<DataMemberAttribute>() is DataMemberAttribute dataMemberAttribute)
+            {
+                return dataMemberAttribute.Name;
+            }
+            else
+            {
+                return memberInfo.Name;
+            }
         }
 
         protected virtual string TranslateOperator(ExpressionType type)

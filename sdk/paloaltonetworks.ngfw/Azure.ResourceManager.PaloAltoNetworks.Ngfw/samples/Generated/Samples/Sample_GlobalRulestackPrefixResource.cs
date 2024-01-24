@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PrefixListGlobalRulestackGetMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/PrefixListGlobalRulestack_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PrefixListGlobalRulestack_Get_MaximumSet_Gen.json
             // this example is just showing the usage of "PrefixListGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_PrefixListGlobalRulestackGetMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/PrefixListGlobalRulestack_Get_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PrefixListGlobalRulestack_Get_MinimumSet_Gen.json
             // this example is just showing the usage of "PrefixListGlobalRulestack_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PrefixListGlobalRulestackCreateOrUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/PrefixListGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PrefixListGlobalRulestack_CreateOrUpdate_MaximumSet_Gen.json
             // this example is just showing the usage of "PrefixListGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_PrefixListGlobalRulestackCreateOrUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/PrefixListGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PrefixListGlobalRulestack_CreateOrUpdate_MinimumSet_Gen.json
             // this example is just showing the usage of "PrefixListGlobalRulestack_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PrefixListGlobalRulestackDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/PrefixListGlobalRulestack_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PrefixListGlobalRulestack_Delete_MaximumSet_Gen.json
             // this example is just showing the usage of "PrefixListGlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_PrefixListGlobalRulestackDeleteMinimumSetGen()
         {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2022-08-29/examples/PrefixListGlobalRulestack_Delete_MinimumSet_Gen.json
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PrefixListGlobalRulestack_Delete_MinimumSet_Gen.json
             // this example is just showing the usage of "PrefixListGlobalRulestack_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

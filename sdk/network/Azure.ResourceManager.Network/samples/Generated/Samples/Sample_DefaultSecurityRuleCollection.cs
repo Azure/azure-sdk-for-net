@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager;
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_DefaultSecurityRuleList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/DefaultSecurityRuleList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/DefaultSecurityRuleList.json
             // this example is just showing the usage of "DefaultSecurityRules_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_DefaultSecurityRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/DefaultSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/DefaultSecurityRuleGet.json
             // this example is just showing the usage of "DefaultSecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +94,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_DefaultSecurityRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/DefaultSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/DefaultSecurityRuleGet.json
             // this example is just showing the usage of "DefaultSecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -117,6 +118,49 @@ namespace Azure.ResourceManager.Network.Samples
             bool result = await collection.ExistsAsync(defaultSecurityRuleName);
 
             Console.WriteLine($"Succeeded: {result}");
+        }
+
+        // DefaultSecurityRuleGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_DefaultSecurityRuleGet()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/DefaultSecurityRuleGet.json
+            // this example is just showing the usage of "DefaultSecurityRules_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkSecurityGroupResource created on azure
+            // for more information of creating NetworkSecurityGroupResource, please refer to the document of NetworkSecurityGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "testrg";
+            string networkSecurityGroupName = "nsg1";
+            ResourceIdentifier networkSecurityGroupResourceId = NetworkSecurityGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkSecurityGroupName);
+            NetworkSecurityGroupResource networkSecurityGroup = client.GetNetworkSecurityGroupResource(networkSecurityGroupResourceId);
+
+            // get the collection of this DefaultSecurityRuleResource
+            DefaultSecurityRuleCollection collection = networkSecurityGroup.GetDefaultSecurityRules();
+
+            // invoke the operation
+            string defaultSecurityRuleName = "AllowVnetInBound";
+            NullableResponse<DefaultSecurityRuleResource> response = await collection.GetIfExistsAsync(defaultSecurityRuleName);
+            DefaultSecurityRuleResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityRuleData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

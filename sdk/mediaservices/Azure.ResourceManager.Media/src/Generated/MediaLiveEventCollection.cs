@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaLiveEventResource" /> and their operations.
-    /// Each <see cref="MediaLiveEventResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
-    /// To get a <see cref="MediaLiveEventCollection" /> instance call the GetMediaLiveEvents method from an instance of <see cref="MediaServicesAccountResource" />.
+    /// A class representing a collection of <see cref="MediaLiveEventResource"/> and their operations.
+    /// Each <see cref="MediaLiveEventResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="MediaLiveEventCollection"/> instance call the GetMediaLiveEvents method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
     public partial class MediaLiveEventCollection : ArmCollection, IEnumerable<MediaLiveEventResource>, IAsyncEnumerable<MediaLiveEventResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,10 +254,18 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaLiveEventResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaLiveEventResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaLiveEventResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,10 +284,18 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaLiveEventResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaLiveEventResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaLiveEventResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaLiveEventLiveEventsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>LiveEvents_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
@@ -317,6 +381,96 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _mediaLiveEventLiveEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaLiveEventResource>> GetIfExistsAsync(string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaLiveEventLiveEventsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveEventResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveEventResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaservices/{accountName}/liveEvents/{liveEventName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LiveEvents_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaLiveEventResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="liveEventName"> The name of the live event, maximum length is 32. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="liveEventName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="liveEventName"/> is null. </exception>
+        public virtual NullableResponse<MediaLiveEventResource> GetIfExists(string liveEventName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(liveEventName, nameof(liveEventName));
+
+            using var scope = _mediaLiveEventLiveEventsClientDiagnostics.CreateScope("MediaLiveEventCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaLiveEventLiveEventsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, liveEventName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaLiveEventResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaLiveEventResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachinePowerOffParameters represents the body of the request to power off bare metal machine. </summary>
     public partial class BareMetalMachinePowerOffContent
     {
-        /// <summary> Initializes a new instance of BareMetalMachinePowerOffContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachinePowerOffContent"/>. </summary>
         public BareMetalMachinePowerOffContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachinePowerOffContent"/>. </summary>
+        /// <param name="skipShutdown"> The indicator of whether to skip the graceful OS shutdown and power off the bare metal machine immediately. </param>
+        internal BareMetalMachinePowerOffContent(BareMetalMachineSkipShutdown? skipShutdown)
+        {
+            SkipShutdown = skipShutdown;
         }
 
         /// <summary> The indicator of whether to skip the graceful OS shutdown and power off the bare metal machine immediately. </summary>

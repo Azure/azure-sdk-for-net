@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagedServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> and their operations.
-    /// Each <see cref="ManagedServicesMarketplaceRegistrationResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="ManagedServicesMarketplaceRegistrationCollection" /> instance call the GetManagedServicesMarketplaceRegistrations method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="ManagedServicesMarketplaceRegistrationResource"/> and their operations.
+    /// Each <see cref="ManagedServicesMarketplaceRegistrationResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="ManagedServicesMarketplaceRegistrationCollection"/> instance call the GetManagedServicesMarketplaceRegistrations method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class ManagedServicesMarketplaceRegistrationCollection : ArmCollection, IEnumerable<ManagedServicesMarketplaceRegistrationResource>, IAsyncEnumerable<ManagedServicesMarketplaceRegistrationResource>
     {
@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,6 +99,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
@@ -128,11 +144,19 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ManagedServicesMarketplaceRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ManagedServicesMarketplaceRegistrationResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
@@ -151,11 +175,19 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter query parameter to filter managed services resources by. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagedServicesMarketplaceRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ManagedServicesMarketplaceRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ManagedServicesMarketplaceRegistrationResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.CreateListRequest(Id, filter);
@@ -173,6 +205,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +249,14 @@ namespace Azure.ResourceManager.ManagedServices
         /// <term>Operation Id</term>
         /// <description>MarketplaceRegistrationDefinitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
@@ -225,6 +273,96 @@ namespace Azure.ResourceManager.ManagedServices
             {
                 var response = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.Get(Id, marketplaceIdentifier, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagedServicesMarketplaceRegistrationResource>> GetIfExistsAsync(string marketplaceIdentifier, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+
+            using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.GetAsync(Id, marketplaceIdentifier, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServicesMarketplaceRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesMarketplaceRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MarketplaceRegistrationDefinitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedServicesMarketplaceRegistrationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="marketplaceIdentifier"> The Azure Marketplace identifier. Expected formats: {publisher}.{product[-preview]}.{planName}.{version} or {publisher}.{product[-preview]}.{planName} or {publisher}.{product[-preview]} or {publisher}). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="marketplaceIdentifier"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplaceIdentifier"/> is null. </exception>
+        public virtual NullableResponse<ManagedServicesMarketplaceRegistrationResource> GetIfExists(string marketplaceIdentifier, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(marketplaceIdentifier, nameof(marketplaceIdentifier));
+
+            using var scope = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsClientDiagnostics.CreateScope("ManagedServicesMarketplaceRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managedServicesMarketplaceRegistrationMarketplaceRegistrationDefinitionsRestClient.Get(Id, marketplaceIdentifier, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagedServicesMarketplaceRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagedServicesMarketplaceRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

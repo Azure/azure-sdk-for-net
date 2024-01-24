@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceGroupSecurityTaskResource" /> and their operations.
-    /// Each <see cref="ResourceGroupSecurityTaskResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ResourceGroupSecurityTaskCollection" /> instance call the GetResourceGroupSecurityTasks method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ResourceGroupSecurityTaskResource"/> and their operations.
+    /// Each <see cref="ResourceGroupSecurityTaskResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ResourceGroupSecurityTaskCollection"/> instance call the GetResourceGroupSecurityTasks method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ResourceGroupSecurityTaskCollection : ArmCollection, IEnumerable<ResourceGroupSecurityTaskResource>, IAsyncEnumerable<ResourceGroupSecurityTaskResource>
     {
@@ -68,6 +68,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
@@ -104,6 +112,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,11 +158,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Tasks_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGroupSecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGroupSecurityTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGroupSecurityTaskResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
@@ -165,11 +189,19 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Tasks_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupSecurityTaskResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGroupSecurityTaskResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGroupSecurityTaskResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupSecurityTaskTasksRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), filter);
@@ -187,6 +219,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +263,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Tasks_GetResourceGroupLevelTask</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="taskName"> Name of the task object, will be a GUID. </param>
@@ -239,6 +287,96 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceGroupSecurityTaskResource>> GetIfExistsAsync(string taskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
+            using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTaskAsync(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGroupSecurityTaskResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/locations/{ascLocation}/tasks/{taskName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tasks_GetResourceGroupLevelTask</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupSecurityTaskResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="taskName"> Name of the task object, will be a GUID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="taskName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="taskName"/> is null. </exception>
+        public virtual NullableResponse<ResourceGroupSecurityTaskResource> GetIfExists(string taskName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(taskName, nameof(taskName));
+
+            using var scope = _resourceGroupSecurityTaskTasksClientDiagnostics.CreateScope("ResourceGroupSecurityTaskCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceGroupSecurityTaskTasksRestClient.GetResourceGroupLevelTask(Id.SubscriptionId, Id.ResourceGroupName, new AzureLocation(_ascLocation), taskName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGroupSecurityTaskResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupSecurityTaskResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

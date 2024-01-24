@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Windows Java Container settings. </summary>
     public partial class WindowsJavaContainerSettings
     {
-        /// <summary> Initializes a new instance of WindowsJavaContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsJavaContainerSettings"/>. </summary>
         internal WindowsJavaContainerSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of WindowsJavaContainerSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="WindowsJavaContainerSettings"/>. </summary>
         /// <param name="javaContainer"> Java container (runtime only). </param>
         /// <param name="javaContainerVersion"> Java container version (runtime only). </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>

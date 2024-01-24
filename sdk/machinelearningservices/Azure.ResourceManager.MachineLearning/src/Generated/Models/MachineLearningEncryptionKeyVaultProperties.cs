@@ -10,38 +10,44 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MachineLearningEncryptionKeyVaultProperties. </summary>
+    /// <summary> Customer Key vault properties. </summary>
     public partial class MachineLearningEncryptionKeyVaultProperties
     {
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
-        /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
-        /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultArmId"/> or <paramref name="keyIdentifier"/> is null. </exception>
-        public MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier)
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
+        /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
+        /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyIdentifier"/> or <paramref name="keyVaultArmId"/> is null. </exception>
+        public MachineLearningEncryptionKeyVaultProperties(string keyIdentifier, ResourceIdentifier keyVaultArmId)
         {
-            Argument.AssertNotNull(keyVaultArmId, nameof(keyVaultArmId));
             Argument.AssertNotNull(keyIdentifier, nameof(keyIdentifier));
+            Argument.AssertNotNull(keyVaultArmId, nameof(keyVaultArmId));
 
-            KeyVaultArmId = keyVaultArmId;
             KeyIdentifier = keyIdentifier;
+            KeyVaultArmId = keyVaultArmId;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningEncryptionKeyVaultProperties. </summary>
-        /// <param name="keyVaultArmId"> The ArmId of the keyVault where the customer owned encryption key is present. </param>
-        /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
-        /// <param name="identityClientId"> For future use - The client id of the identity which will be used to access key vault. </param>
-        internal MachineLearningEncryptionKeyVaultProperties(ResourceIdentifier keyVaultArmId, string keyIdentifier, string identityClientId)
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionKeyVaultProperties"/>. </summary>
+        /// <param name="identityClientId">
+        /// Currently, we support only SystemAssigned MSI.
+        /// We need this when we support UserAssignedIdentities
+        /// </param>
+        /// <param name="keyIdentifier"> KeyVault key identifier to encrypt the data. </param>
+        /// <param name="keyVaultArmId"> KeyVault Arm Id that contains the data encryption key. </param>
+        internal MachineLearningEncryptionKeyVaultProperties(string identityClientId, string keyIdentifier, ResourceIdentifier keyVaultArmId)
         {
-            KeyVaultArmId = keyVaultArmId;
-            KeyIdentifier = keyIdentifier;
             IdentityClientId = identityClientId;
+            KeyIdentifier = keyIdentifier;
+            KeyVaultArmId = keyVaultArmId;
         }
 
-        /// <summary> The ArmId of the keyVault where the customer owned encryption key is present. </summary>
-        public ResourceIdentifier KeyVaultArmId { get; set; }
-        /// <summary> Key vault uri to access the encryption key. </summary>
-        public string KeyIdentifier { get; set; }
-        /// <summary> For future use - The client id of the identity which will be used to access key vault. </summary>
+        /// <summary>
+        /// Currently, we support only SystemAssigned MSI.
+        /// We need this when we support UserAssignedIdentities
+        /// </summary>
         public string IdentityClientId { get; set; }
+        /// <summary> KeyVault key identifier to encrypt the data. </summary>
+        public string KeyIdentifier { get; set; }
+        /// <summary> KeyVault Arm Id that contains the data encryption key. </summary>
+        public ResourceIdentifier KeyVaultArmId { get; set; }
     }
 }

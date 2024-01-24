@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This property allows you to specify the permission of sharing gallery. &lt;br&gt;&lt;br&gt; Possible values are: &lt;br&gt;&lt;br&gt; **Private** &lt;br&gt;&lt;br&gt; **Groups** &lt;br&gt;&lt;br&gt; **Community**. </summary>
+    /// <summary> This property allows you to specify the permission of sharing gallery. Possible values are: **Private,** **Groups,** **Community.**. </summary>
     public readonly partial struct GallerySharingPermissionType : IEquatable<GallerySharingPermissionType>
     {
         private readonly string _value;

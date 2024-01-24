@@ -15,7 +15,7 @@ namespace Azure.AI.Translation.Text
     /// <summary> Dictionary Example element. </summary>
     public partial class DictionaryExampleItem
     {
-        /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryExampleItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term. Generally, this should be identical
         /// to the value of the Text field at the matching list index in the body of the request.
@@ -37,7 +37,7 @@ namespace Azure.AI.Translation.Text
             Examples = examples.ToList();
         }
 
-        /// <summary> Initializes a new instance of DictionaryExampleItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="DictionaryExampleItem"/>. </summary>
         /// <param name="normalizedSource">
         /// A string giving the normalized form of the source term. Generally, this should be identical
         /// to the value of the Text field at the matching list index in the body of the request.

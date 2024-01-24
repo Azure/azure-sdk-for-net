@@ -11,8 +11,8 @@ See the [Contributing guidelines](https://github.com/Azure/azure-sdk-for-net/blo
 ```yaml
 title: SearchServiceClient
 input-file:
- - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchindex.json
- - https://github.com/Azure/azure-rest-api-specs/blob/9383e81389c2b1c64da07cc70c66f8c54b9ad4f5/specification/search/data-plane/Azure.Search/preview/2023-07-01-Preview/searchservice.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchindex.json
+ - https://github.com/Azure/azure-rest-api-specs/blob/58e92dd03733bc175e6a9540f4bc53703b57fcc9/specification/search/data-plane/Azure.Search/preview/2023-10-01-Preview/searchservice.json
 generation1-convenience-client: true
 deserialize-null-collection-as-null-value: true
 ```
@@ -92,70 +92,60 @@ directive:
   transform: $["x-ms-client-name"] = "SearchServiceError"
 ```
 
-### Rename Vector definition
-
- It conflicts with https://learn.microsoft.com/dotnet/api/system.numerics.vector?view=net-7.0 which is likely to be used by customers integrating with other .NET AI libraries.
-
-``` yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.Vector
-  transform: $["x-ms-client-name"] = "SearchQueryVector";
-```
-
-### Rename Dimensions
-
- To ensure alignment with `VectorSearchConfiguration` in intellisense and documentation, rename the `Dimensions` to `VectorSearchDimensions`.
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.SearchField.properties.dimensions
-  transform: $["x-ms-client-name"] = "vectorSearchDimensions";
-```
-
-### Add `arm-id` format for `AuthResourceId`
-
- Add `"format": "arm-id"` for `AuthResourceId` to generate as [Azure.Core.ResourceIdentifier](https://learn.microsoft.com/dotnet/api/azure.core.resourceidentifier?view=azure-dotnet).
-
-```yaml
-directive:
-- from: searchservice.json
-  where: $.definitions.WebApiSkill.properties.authResourceId
-  transform: $["x-ms-format"] = "arm-id";
-```
-
-### Rename Vector property `K`
-
- Rename Vector property `K` to `KNearestNeighborsCount`
+### Enable `RawVectorQuery.vector` as embedding field
 
 ```yaml
 directive:
 - from: searchindex.json
-  where: $.definitions.Vector.properties.k
+  where: $.definitions.RawVectorQuery.properties.vector
+  transform: $["x-ms-embedding-vector"] = true;
+```
+
+### Make `VectorSearchAlgorithmKind` internal
+
+```yaml
+directive:
+- from: searchservice.json
+  where: $.definitions.VectorSearchAlgorithmKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Make `VectorQueryKind` internal
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.VectorQueryKind
+  transform: $["x-accessibility"] = "internal"
+```
+
+### Rename `RawVectorQuery` to `VectorizedQuery`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.RawVectorQuery
+  transform: $["x-ms-client-name"] = "VectorizedQuery";
+```
+
+### Rename `PIIDetectionSkill.minimumPrecision` to `PIIDetectionSkill.MinPrecision`
+
+```yaml
+directive:
+  - from: searchservice.json
+    where: $.definitions.PIIDetectionSkill
+    transform: $.properties.minimumPrecision["x-ms-client-name"] = "MinPrecision";
+```
+
+### Rename `VectorQuery` property `K`
+
+ Rename `VectorQuery` property `K` to `KNearestNeighborsCount`
+
+```yaml
+directive:
+- from: searchindex.json
+  where: $.definitions.VectorQuery.properties.k
   transform: $["x-ms-client-name"] = "KNearestNeighborsCount";
-```
-
-### Rename QueryResultDocumentSemanticFieldState
-
- Simplify `QueryResultDocumentSemanticFieldState` name by renaming it to `SemanticFieldState`
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.QueryResultDocumentSemanticFieldState
-  transform: $["x-ms-enum"].name = "SemanticFieldState";
-```
-
-### Remove `Vector` Property
-
- Remove the `Vector` Property from `SearchRequest` in favor of the `Vectors` Array
-
-```yaml
-directive:
-- from: searchindex.json
-  where: $.definitions.SearchRequest
-  transform: delete $.properties.vector;
 ```
 
 ### Rename one of SearchMode definitions

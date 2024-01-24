@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> AzureBackupServer (DPMVenus) workload-specific protection container. </summary>
     public partial class BackupServerContainer : DpmContainer
     {
-        /// <summary> Initializes a new instance of BackupServerContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupServerContainer"/>. </summary>
         public BackupServerContainer()
         {
             ContainerType = ProtectableContainerType.AzureBackupServerContainer;
         }
 
-        /// <summary> Initializes a new instance of BackupServerContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupServerContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

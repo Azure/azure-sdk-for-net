@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Details of a diagnostics data provider. </summary>
     public partial class ContainerAppDiagnosticDataProviderMetadata
     {
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadata"/>. </summary>
         public ContainerAppDiagnosticDataProviderMetadata()
         {
             PropertyBag = new ChangeTrackingList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppDiagnosticDataProviderMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppDiagnosticDataProviderMetadata"/>. </summary>
         /// <param name="providerName"> Name of data provider. </param>
         /// <param name="propertyBag"> Collection of properties. </param>
-        internal ContainerAppDiagnosticDataProviderMetadata(string providerName, IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppDiagnosticDataProviderMetadata(string providerName, IList<ContainerAppDiagnosticDataProviderMetadataPropertyBagItem> propertyBag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProviderName = providerName;
             PropertyBag = propertyBag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of data provider. </summary>

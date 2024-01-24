@@ -6,32 +6,48 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Identity;
+using Azure.Monitor.Ingestion;
 using NUnit.Framework;
 
 namespace Azure.Monitor.Ingestion.Samples
 {
-    public class Samples_LogsIngestionClient
+    public partial class Samples_LogsIngestionClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Upload()
+        public void Example_Upload_ShortVersion()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LogsIngestionClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-            var data = new[] {
-    new {}
-};
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = client.Upload("<ruleId>", "<streamName>", content);
 
-            Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data));
+            Console.WriteLine(response.Status);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Upload_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = await client.UploadAsync("<ruleId>", "<streamName>", content);
+
             Console.WriteLine(response.Status);
         }
 
@@ -39,31 +55,16 @@ namespace Azure.Monitor.Ingestion.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_Upload_AllParameters()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LogsIngestionClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-            var data = new[] {
-    new {}
-};
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = client.Upload("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
 
-            Response response = client.Upload("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Upload_Async()
-        {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LogsIngestionClient(endpoint, credential);
-
-            var data = new[] {
-    new {}
-};
-
-            Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data));
             Console.WriteLine(response.Status);
         }
 
@@ -71,15 +72,16 @@ namespace Azure.Monitor.Ingestion.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Example_Upload_AllParameters_Async()
         {
-            var credential = new DefaultAzureCredential();
-            var endpoint = new Uri("<https://my-service.azure.com>");
-            var client = new LogsIngestionClient(endpoint, credential);
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LogsIngestionClient client = new LogsIngestionClient(endpoint, credential);
 
-            var data = new[] {
-    new {}
-};
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new object()
+            });
+            Response response = await client.UploadAsync("<ruleId>", "<streamName>", content, contentEncoding: "<contentEncoding>");
 
-            Response response = await client.UploadAsync("<ruleId>", "<streamName>", RequestContent.Create(data), "<contentEncoding>");
             Console.WriteLine(response.Status);
         }
     }

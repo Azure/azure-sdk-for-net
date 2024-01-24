@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Virtual Machine image for Windows AML Compute. </summary>
     internal partial class VirtualMachineImage
     {
-        /// <summary> Initializes a new instance of VirtualMachineImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineImage"/>. </summary>
         /// <param name="id"> Virtual Machine image path. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public VirtualMachineImage(string id)

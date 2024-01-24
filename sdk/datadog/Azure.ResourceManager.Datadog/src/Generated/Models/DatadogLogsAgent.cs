@@ -5,21 +5,58 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Datadog.Models
 {
     /// <summary> The DatadogLogsAgent. </summary>
     internal partial class DatadogLogsAgent
     {
-        /// <summary> Initializes a new instance of DatadogLogsAgent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DatadogLogsAgent"/>. </summary>
         internal DatadogLogsAgent()
         {
         }
 
-        /// <summary> Initializes a new instance of DatadogLogsAgent. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatadogLogsAgent"/>. </summary>
         /// <param name="transport"> The transport. </param>
-        internal DatadogLogsAgent(string transport)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatadogLogsAgent(string transport, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Transport = transport;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The transport. </summary>

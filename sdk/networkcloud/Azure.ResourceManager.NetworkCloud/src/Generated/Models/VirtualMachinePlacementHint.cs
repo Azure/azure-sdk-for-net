@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> VirtualMachinePlacementHint represents a single scheduling hint of the virtual machine. </summary>
     public partial class VirtualMachinePlacementHint
     {
-        /// <summary> Initializes a new instance of VirtualMachinePlacementHint. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachinePlacementHint"/>. </summary>
         /// <param name="hintType"> The specification of whether this hint supports affinity or anti-affinity with the referenced resources. </param>
         /// <param name="resourceId"> The resource ID of the target object that the placement hints will be checked against, e.g., the bare metal node to host the virtual machine. </param>
         /// <param name="schedulingExecution"> The indicator of whether the hint is a hard or soft requirement during scheduling. </param>

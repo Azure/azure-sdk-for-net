@@ -21,9 +21,9 @@ using Azure.ResourceManager.SecurityInsights.Models;
 namespace Azure.ResourceManager.SecurityInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> and their operations.
-    /// Each <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
-    /// To get a <see cref="SecurityInsightsThreatIntelligenceIndicatorCollection" /> instance call the GetSecurityInsightsThreatIntelligenceIndicators method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource" />.
+    /// A class representing a collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> and their operations.
+    /// Each <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
+    /// To get a <see cref="SecurityInsightsThreatIntelligenceIndicatorCollection"/> instance call the GetSecurityInsightsThreatIntelligenceIndicators method from an instance of <see cref="OperationalInsightsWorkspaceSecurityInsightsResource"/>.
     /// </summary>
     public partial class SecurityInsightsThreatIntelligenceIndicatorCollection : ArmCollection, IEnumerable<SecurityInsightsThreatIntelligenceIndicatorResource>, IAsyncEnumerable<SecurityInsightsThreatIntelligenceIndicatorResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Threat intelligence indicator name field. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +155,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
@@ -146,7 +170,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAllAsync(string filter = null, int? top = null, string skipToken = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skipToken, orderBy);
@@ -165,6 +189,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filters the results, based on a Boolean condition. Optional. </param>
@@ -172,7 +204,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <param name="skipToken"> Skiptoken is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skiptoken parameter that specifies a starting point to use for subsequent calls. Optional. </param>
         /// <param name="orderBy"> Sorts the results. Optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityInsightsThreatIntelligenceIndicatorResource> GetAll(string filter = null, int? top = null, string skipToken = null, string orderBy = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skipToken, orderBy);
@@ -190,6 +222,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,6 +266,14 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <term>Operation Id</term>
         /// <description>ThreatIntelligenceIndicators_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Threat intelligence indicator name field. </param>
@@ -242,6 +290,96 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Threat intelligence indicator name field. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityInsightsThreatIntelligenceIndicatorResource>> GetIfExistsAsync(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsThreatIntelligenceIndicatorResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ThreatIntelligenceIndicators_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityInsightsThreatIntelligenceIndicatorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> Threat intelligence indicator name field. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<SecurityInsightsThreatIntelligenceIndicatorResource> GetIfExists(string name, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsClientDiagnostics.CreateScope("SecurityInsightsThreatIntelligenceIndicatorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityInsightsThreatIntelligenceIndicatorThreatIntelligenceIndicatorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityInsightsThreatIntelligenceIndicatorResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityInsightsThreatIntelligenceIndicatorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

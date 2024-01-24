@@ -27,7 +27,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests.Listeners
         [TestCase(100, true, true, null, 4)]
         [TestCase(100, false, true, 19, 6)]
         [TestCase(100, false, false, null, 3)]
-        public void ServiceBusTargetScaler_Returns_Expected(int messageCount, bool isSessionEnabled, bool singleDispatch, int? concurrency,int expected)
+        [TestCase(100, false, false, null, 3)]
+        [TestCase(2147483650, false, false, 1, 2147483647)] // cap targetWorkerCount at int.MaxValue
+        [TestCase(2147483650, false, false, 2, 1073741825)]
+        public void ServiceBusTargetScaler_Returns_Expected(long messageCount, bool isSessionEnabled, bool singleDispatch, int? concurrency, int expected)
         {
             ServiceBusOptions options = new ServiceBusOptions
             {

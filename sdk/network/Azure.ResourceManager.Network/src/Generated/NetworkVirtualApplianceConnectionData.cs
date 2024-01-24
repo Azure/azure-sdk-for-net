@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
@@ -17,24 +18,25 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class NetworkVirtualApplianceConnectionData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         public NetworkVirtualApplianceConnectionData()
         {
             BgpPeerAddress = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkVirtualApplianceConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkVirtualApplianceConnectionData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="namePropertiesName"> The name of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the NetworkVirtualApplianceConnection resource. </param>
         /// <param name="asn"> Network Virtual Appliance ASN. </param>
         /// <param name="tunnelIdentifier"> Unique identifier for the connection. </param>
         /// <param name="bgpPeerAddress"> List of bgpPeerAddresses for the NVA instances. </param>
         /// <param name="enableInternetSecurity"> Enable internet security. </param>
-        /// <param name="routingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
-        internal NetworkVirtualApplianceConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfigurationNfv routingConfiguration) : base(id, name, resourceType)
+        /// <param name="connectionRoutingConfiguration"> The Routing Configuration indicating the associated and propagated route tables on this connection. </param>
+        internal NetworkVirtualApplianceConnectionData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string namePropertiesName, NetworkProvisioningState? provisioningState, long? asn, long? tunnelIdentifier, IList<string> bgpPeerAddress, bool? enableInternetSecurity, RoutingConfiguration connectionRoutingConfiguration) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             NamePropertiesName = namePropertiesName;
             ProvisioningState = provisioningState;
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.Network
             TunnelIdentifier = tunnelIdentifier;
             BgpPeerAddress = bgpPeerAddress;
             EnableInternetSecurity = enableInternetSecurity;
-            RoutingConfiguration = routingConfiguration;
+            ConnectionRoutingConfiguration = connectionRoutingConfiguration;
         }
 
         /// <summary> The name of the resource. </summary>
@@ -58,6 +60,6 @@ namespace Azure.ResourceManager.Network
         /// <summary> Enable internet security. </summary>
         public bool? EnableInternetSecurity { get; set; }
         /// <summary> The Routing Configuration indicating the associated and propagated route tables on this connection. </summary>
-        public RoutingConfigurationNfv RoutingConfiguration { get; set; }
+        public RoutingConfiguration ConnectionRoutingConfiguration { get; set; }
     }
 }

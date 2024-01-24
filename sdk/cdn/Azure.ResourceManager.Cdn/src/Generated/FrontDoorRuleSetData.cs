@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Cdn.Models;
 using Azure.ResourceManager.Models;
@@ -17,12 +19,44 @@ namespace Azure.ResourceManager.Cdn
     /// </summary>
     public partial class FrontDoorRuleSetData : ResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorRuleSetData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleSetData"/>. </summary>
         public FrontDoorRuleSetData()
         {
         }
 
-        /// <summary> Initializes a new instance of FrontDoorRuleSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorRuleSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,11 +64,13 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="provisioningState"> Provisioning status. </param>
         /// <param name="deploymentStatus"></param>
         /// <param name="profileName"> The name of the profile which holds the rule set. </param>
-        internal FrontDoorRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorRuleSetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, string profileName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeploymentStatus = deploymentStatus;
             ProfileName = profileName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning status. </summary>

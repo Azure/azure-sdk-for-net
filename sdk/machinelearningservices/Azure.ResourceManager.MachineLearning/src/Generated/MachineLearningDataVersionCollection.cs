@@ -21,9 +21,9 @@ using Azure.ResourceManager.MachineLearning.Models;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningDataVersionResource" /> and their operations.
-    /// Each <see cref="MachineLearningDataVersionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningDataContainerResource" />.
-    /// To get a <see cref="MachineLearningDataVersionCollection" /> instance call the GetMachineLearningDataVersions method from an instance of <see cref="MachineLearningDataContainerResource" />.
+    /// A class representing a collection of <see cref="MachineLearningDataVersionResource"/> and their operations.
+    /// Each <see cref="MachineLearningDataVersionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningDataContainerResource"/>.
+    /// To get a <see cref="MachineLearningDataVersionCollection"/> instance call the GetMachineLearningDataVersions method from an instance of <see cref="MachineLearningDataContainerResource"/>.
     /// </summary>
     public partial class MachineLearningDataVersionCollection : ArmCollection, IEnumerable<MachineLearningDataVersionResource>, IAsyncEnumerable<MachineLearningDataVersionResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataVersions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>DataVersions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>DataVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,22 +253,25 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>DataVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
-        /// <param name="top">
-        /// Top count of results, top count cannot be greater than the page size.
-        ///                               If topCount &gt; page size, results with be default page size count will be returned
-        /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="MachineLearningDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(MachineLearningDataVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
+            options ??= new MachineLearningDataVersionCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDataVersionResource(Client, MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(e)), _machineLearningDataVersionDataVersionsClientDiagnostics, Pipeline, "MachineLearningDataVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -251,22 +286,25 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>DataVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
-        /// <param name="top">
-        /// Top count of results, top count cannot be greater than the page size.
-        ///                               If topCount &gt; page size, results with be default page size count will be returned
-        /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy = null, int? top = null, string skip = null, string tags = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MachineLearningDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MachineLearningDataVersionResource> GetAll(MachineLearningDataVersionCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip, tags, listViewType);
+            options ??= new MachineLearningDataVersionCollectionGetAllOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningDataVersionDataVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningDataVersionDataVersionsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, options.OrderBy, options.Top, options.Skip, options.Tags, options.ListViewType, options.Stage);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new MachineLearningDataVersionResource(Client, MachineLearningDataVersionData.DeserializeMachineLearningDataVersionData(e)), _machineLearningDataVersionDataVersionsClientDiagnostics, Pipeline, "MachineLearningDataVersionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -280,6 +318,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -316,6 +362,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>DataVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="version"> Version identifier. </param>
@@ -340,19 +394,109 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="version"> Version identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        public virtual async Task<NullableResponse<MachineLearningDataVersionResource>> GetIfExistsAsync(string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningDataVersionDataVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningDataVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions/{version}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningDataVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="version"> Version identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="version"/> is null. </exception>
+        public virtual NullableResponse<MachineLearningDataVersionResource> GetIfExists(string version, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(version, nameof(version));
+
+            using var scope = _machineLearningDataVersionDataVersionsClientDiagnostics.CreateScope("MachineLearningDataVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningDataVersionDataVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningDataVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningDataVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         IEnumerator<MachineLearningDataVersionResource> IEnumerable<MachineLearningDataVersionResource>.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return GetAll().GetEnumerator();
+            return GetAll(options: null).GetEnumerator();
         }
 
         IAsyncEnumerator<MachineLearningDataVersionResource> IAsyncEnumerable<MachineLearningDataVersionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
+            return GetAllAsync(options: null, cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetworkTapRuleResource" /> and their operations.
-    /// Each <see cref="NetworkTapRuleResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="NetworkTapRuleCollection" /> instance call the GetNetworkTapRules method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="NetworkTapRuleResource"/> and their operations.
+    /// Each <see cref="NetworkTapRuleResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="NetworkTapRuleCollection"/> instance call the GetNetworkTapRules method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class NetworkTapRuleCollection : ArmCollection, IEnumerable<NetworkTapRuleResource>, IAsyncEnumerable<NetworkTapRuleResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetworkTapRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetworkTapRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetworkTapRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetworkTapRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetworkTapRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetworkTapRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkTapRuleRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkTapRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 var response = _networkTapRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTapRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetworkTapRuleResource>> GetIfExistsAsync(string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            using var scope = _networkTapRuleClientDiagnostics.CreateScope("NetworkTapRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _networkTapRuleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkTapRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkTapRules/{networkTapRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkTapRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkTapRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="networkTapRuleName"> Name of the Network Tap Rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="networkTapRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkTapRuleName"/> is null. </exception>
+        public virtual NullableResponse<NetworkTapRuleResource> GetIfExists(string networkTapRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkTapRuleName, nameof(networkTapRuleName));
+
+            using var scope = _networkTapRuleClientDiagnostics.CreateScope("NetworkTapRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _networkTapRuleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, networkTapRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetworkTapRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new NetworkTapRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

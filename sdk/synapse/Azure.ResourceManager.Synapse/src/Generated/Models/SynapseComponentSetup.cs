@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> The custom setup of installing 3rd party components. </summary>
     public partial class SynapseComponentSetup : SynapseCustomSetupBase
     {
-        /// <summary> Initializes a new instance of SynapseComponentSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseComponentSetup"/>. </summary>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="componentName"/> is null. </exception>
         public SynapseComponentSetup(string componentName)
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse.Models
             CustomSetupBaseType = "ComponentSetup";
         }
 
-        /// <summary> Initializes a new instance of SynapseComponentSetup. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseComponentSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <param name="licenseKey">

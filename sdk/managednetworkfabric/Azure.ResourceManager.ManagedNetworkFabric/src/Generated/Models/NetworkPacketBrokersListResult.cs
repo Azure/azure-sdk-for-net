@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> List of NetworkPacketBrokers. </summary>
     internal partial class NetworkPacketBrokersListResult
     {
-        /// <summary> Initializes a new instance of NetworkPacketBrokersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokersListResult"/>. </summary>
         internal NetworkPacketBrokersListResult()
         {
             Value = new ChangeTrackingList<NetworkPacketBrokerData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkPacketBrokersListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokersListResult"/>. </summary>
         /// <param name="value"> List of NetworkPacketBroker resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkPacketBrokersListResult(IReadOnlyList<NetworkPacketBrokerData> value, string nextLink)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,24 +14,58 @@ namespace Azure.ResourceManager.Batch.Models
     /// <summary> The network configuration for a pool. </summary>
     public partial class BatchNetworkConfiguration
     {
-        /// <summary> Initializes a new instance of BatchNetworkConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchNetworkConfiguration"/>. </summary>
         public BatchNetworkConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchNetworkConfiguration"/>. </summary>
         /// <param name="subnetId"> The virtual network must be in the same region and subscription as the Azure Batch account. The specified subnet should have enough free IP addresses to accommodate the number of nodes in the pool. If the subnet doesn't have enough free IP addresses, the pool will partially allocate compute nodes and a resize error will occur. The 'MicrosoftAzureBatch' service principal must have the 'Classic Virtual Machine Contributor' Role-Based Access Control (RBAC) role for the specified VNet. The specified subnet must allow communication from the Azure Batch service to be able to schedule tasks on the compute nodes. This can be verified by checking if the specified VNet has any associated Network Security Groups (NSG). If communication to the compute nodes in the specified subnet is denied by an NSG, then the Batch service will set the state of the compute nodes to unusable. If the specified VNet has any associated Network Security Groups (NSG), then a few reserved system ports must be enabled for inbound communication. For pools created with a virtual machine configuration, enable ports 29876 and 29877, as well as port 22 for Linux and port 3389 for Windows. For pools created with a cloud service configuration, enable ports 10100, 20100, and 30100. Also enable outbound connections to Azure Storage on port 443. For cloudServiceConfiguration pools, only 'classic' VNETs are supported. For more details see: https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </param>
         /// <param name="dynamicVNetAssignmentScope"> The scope of dynamic vnet assignment. </param>
         /// <param name="endpointConfiguration"> Pool endpoint configuration is only supported on pools with the virtualMachineConfiguration property. </param>
         /// <param name="publicIPAddressConfiguration"> This property is only supported on Pools with the virtualMachineConfiguration property. </param>
         /// <param name="enableAcceleratedNetworking"> Accelerated networking enables single root I/O virtualization (SR-IOV) to a VM, which may lead to improved networking performance. For more details, see: https://learn.microsoft.com/azure/virtual-network/accelerated-networking-overview. </param>
-        internal BatchNetworkConfiguration(ResourceIdentifier subnetId, DynamicVNetAssignmentScope? dynamicVNetAssignmentScope, PoolEndpointConfiguration endpointConfiguration, BatchPublicIPAddressConfiguration publicIPAddressConfiguration, bool? enableAcceleratedNetworking)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchNetworkConfiguration(ResourceIdentifier subnetId, DynamicVNetAssignmentScope? dynamicVNetAssignmentScope, PoolEndpointConfiguration endpointConfiguration, BatchPublicIPAddressConfiguration publicIPAddressConfiguration, bool? enableAcceleratedNetworking, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetId = subnetId;
             DynamicVNetAssignmentScope = dynamicVNetAssignmentScope;
             EndpointConfiguration = endpointConfiguration;
             PublicIPAddressConfiguration = publicIPAddressConfiguration;
             EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The virtual network must be in the same region and subscription as the Azure Batch account. The specified subnet should have enough free IP addresses to accommodate the number of nodes in the pool. If the subnet doesn't have enough free IP addresses, the pool will partially allocate compute nodes and a resize error will occur. The 'MicrosoftAzureBatch' service principal must have the 'Classic Virtual Machine Contributor' Role-Based Access Control (RBAC) role for the specified VNet. The specified subnet must allow communication from the Azure Batch service to be able to schedule tasks on the compute nodes. This can be verified by checking if the specified VNet has any associated Network Security Groups (NSG). If communication to the compute nodes in the specified subnet is denied by an NSG, then the Batch service will set the state of the compute nodes to unusable. If the specified VNet has any associated Network Security Groups (NSG), then a few reserved system ports must be enabled for inbound communication. For pools created with a virtual machine configuration, enable ports 29876 and 29877, as well as port 22 for Linux and port 3389 for Windows. For pools created with a cloud service configuration, enable ports 10100, 20100, and 30100. Also enable outbound connections to Azure Storage on port 443. For cloudServiceConfiguration pools, only 'classic' VNETs are supported. For more details see: https://docs.microsoft.com/en-us/azure/batch/batch-api-basics#virtual-network-vnet-and-firewall-configuration. </summary>

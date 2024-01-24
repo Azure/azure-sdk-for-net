@@ -15,11 +15,6 @@ namespace Azure.ResourceManager.NetApp.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ReplicationId))
-            {
-                writer.WritePropertyName("replicationId"u8);
-                writer.WriteStringValue(ReplicationId);
-            }
             if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("endpointType"u8);

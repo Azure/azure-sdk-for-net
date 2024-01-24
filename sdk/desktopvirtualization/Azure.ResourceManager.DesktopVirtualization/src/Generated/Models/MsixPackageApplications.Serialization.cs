@@ -47,7 +47,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RawIcon);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RawIcon.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(RawIcon))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(RawPng))
@@ -56,7 +59,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(RawPng);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RawPng.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(RawPng))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

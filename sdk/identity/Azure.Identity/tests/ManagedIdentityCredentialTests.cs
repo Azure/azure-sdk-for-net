@@ -279,11 +279,14 @@ namespace Azure.Identity.Tests
 
         [NonParallelizable]
         [Test]
-        public void VerifyImdsRequestFailureForDockerDesktopThrowsCUE()
+        [TestCase("host")]
+        [TestCase("network")]
+        [TestCase("foo")]
+        public void VerifyImdsRequestFailureForDockerDesktopThrowsCUE(string errorEnding)
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
 
-            var expectedMessage = "connecting to 169.254.169.254:80: connecting to 169.254.169.254:80: dial tcp 169.254.169.254:80: connectex: A socket operation was attempted to an unreachable network.";
+            var expectedMessage = $"connecting to 169.254.169.254:80: connecting to 169.254.169.254:80: dial tcp 169.254.169.254:80: connectex: A socket operation was attempted to an unreachable {errorEnding}.";
             var response = CreateInvalidJsonResponse(403, expectedMessage);
             var mockTransport = new MockTransport(response);
             var options = new TokenCredentialOptions() { Transport = mockTransport };
@@ -872,6 +875,39 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             Assert.IsInstanceOf(typeof(RequestFailedException), ex.InnerException);
             Assert.That(ex.Message, Does.Contain(errorMessage));
+
+            await Task.CompletedTask;
+        }
+
+        [Test]
+        public async Task RetriesOnRetriableStatusCode([Values(404, 410, 500)] int status)
+        {
+            int retryCount = 0;
+            using var environment = new TestEnvVar(
+                new()
+                {
+                    { "MSI_ENDPOINT", null },
+                    { "MSI_SECRET", null },
+                    { "IDENTITY_ENDPOINT", null },
+                    { "IDENTITY_HEADER", null },
+                    { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
+                });
+            var errorMessage = "Some error happened";
+            var mockTransport = new MockTransport(request =>
+            {
+                retryCount++;
+                return CreateErrorMockResponse(status, errorMessage);
+            });
+            var options = new TokenCredentialOptions { Transport = mockTransport };
+            options.Retry.MaxDelay = TimeSpan.Zero;
+            var pipeline = CredentialPipeline.GetInstance(options);
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline));
+
+            var ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+            Assert.IsInstanceOf(typeof(RequestFailedException), ex.InnerException);
+            Assert.That(ex.Message, Does.Contain(errorMessage));
+            Assert.That(retryCount, Is.EqualTo(4));
 
             await Task.CompletedTask;
         }

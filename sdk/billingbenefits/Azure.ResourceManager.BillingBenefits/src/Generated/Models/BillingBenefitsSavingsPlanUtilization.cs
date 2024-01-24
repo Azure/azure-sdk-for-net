@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.BillingBenefits.Models
     /// <summary> Savings plan utilization. </summary>
     public partial class BillingBenefitsSavingsPlanUtilization
     {
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilization"/>. </summary>
         internal BillingBenefitsSavingsPlanUtilization()
         {
             Aggregates = new ChangeTrackingList<BillingBenefitsSavingsPlanUtilizationAggregate>();
         }
 
-        /// <summary> Initializes a new instance of BillingBenefitsSavingsPlanUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingBenefitsSavingsPlanUtilization"/>. </summary>
         /// <param name="trend"> The number of days trend for a savings plan. </param>
         /// <param name="aggregates"> The array of aggregates of a savings plan's utilization. </param>
-        internal BillingBenefitsSavingsPlanUtilization(string trend, IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingBenefitsSavingsPlanUtilization(string trend, IReadOnlyList<BillingBenefitsSavingsPlanUtilizationAggregate> aggregates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Trend = trend;
             Aggregates = aggregates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The number of days trend for a savings plan. </summary>

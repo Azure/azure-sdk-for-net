@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteInstanceProcessModuleResource" /> and their operations.
-    /// Each <see cref="SiteInstanceProcessModuleResource" /> in the collection will belong to the same instance of <see cref="SiteInstanceProcessResource" />.
-    /// To get a <see cref="SiteInstanceProcessModuleCollection" /> instance call the GetSiteInstanceProcessModules method from an instance of <see cref="SiteInstanceProcessResource" />.
+    /// A class representing a collection of <see cref="SiteInstanceProcessModuleResource"/> and their operations.
+    /// Each <see cref="SiteInstanceProcessModuleResource"/> in the collection will belong to the same instance of <see cref="SiteInstanceProcessResource"/>.
+    /// To get a <see cref="SiteInstanceProcessModuleCollection"/> instance call the GetSiteInstanceProcessModules method from an instance of <see cref="SiteInstanceProcessResource"/>.
     /// </summary>
     public partial class SiteInstanceProcessModuleCollection : ArmCollection, IEnumerable<SiteInstanceProcessModuleResource>, IAsyncEnumerable<SiteInstanceProcessModuleResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcessModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListInstanceProcessModules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteInstanceProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteInstanceProcessModuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteInstanceProcessModuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceProcessModuleWebAppsRestClient.CreateListInstanceProcessModulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListInstanceProcessModules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteInstanceProcessModuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteInstanceProcessModuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteInstanceProcessModuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteInstanceProcessModuleWebAppsRestClient.CreateListInstanceProcessModulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetInstanceProcessModule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="baseAddress"> Module base address. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="baseAddress"> Module base address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteInstanceProcessModuleResource>> GetIfExistsAsync(string baseAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+
+            using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteInstanceProcessModuleResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/processes/{processId}/modules/{baseAddress}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetInstanceProcessModule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteInstanceProcessModuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="baseAddress"> Module base address. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="baseAddress"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="baseAddress"/> is null. </exception>
+        public virtual NullableResponse<SiteInstanceProcessModuleResource> GetIfExists(string baseAddress, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(baseAddress, nameof(baseAddress));
+
+            using var scope = _siteInstanceProcessModuleWebAppsClientDiagnostics.CreateScope("SiteInstanceProcessModuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteInstanceProcessModuleWebAppsRestClient.GetInstanceProcessModule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, baseAddress, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteInstanceProcessModuleResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteInstanceProcessModuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

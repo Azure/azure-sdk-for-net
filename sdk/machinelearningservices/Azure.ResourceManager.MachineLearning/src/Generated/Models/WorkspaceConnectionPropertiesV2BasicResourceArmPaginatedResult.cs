@@ -14,24 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
     internal partial class WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult
     {
-        /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult"/>. </summary>
         internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult()
         {
             Value = new ChangeTrackingList<MachineLearningWorkspaceConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult. </summary>
-        /// <param name="value"></param>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult"/>. </summary>
         /// <param name="nextLink"></param>
-        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(IReadOnlyList<MachineLearningWorkspaceConnectionData> value, string nextLink)
+        /// <param name="value"></param>
+        internal WorkspaceConnectionPropertiesV2BasicResourceArmPaginatedResult(string nextLink, IReadOnlyList<MachineLearningWorkspaceConnectionData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
-        /// <summary> Gets the value. </summary>
-        public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
         /// <summary> Gets the next link. </summary>
         public string NextLink { get; }
+        /// <summary> Gets the value. </summary>
+        public IReadOnlyList<MachineLearningWorkspaceConnectionData> Value { get; }
     }
 }

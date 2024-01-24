@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List all the bookmarks. </summary>
     internal partial class BookmarkList
     {
-        /// <summary> Initializes a new instance of BookmarkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BookmarkList"/>. </summary>
         /// <param name="value"> Array of bookmarks. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal BookmarkList(IEnumerable<SecurityInsightsBookmarkData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of BookmarkList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BookmarkList"/>. </summary>
         /// <param name="nextLink"> URL to fetch the next set of cases. </param>
         /// <param name="value"> Array of bookmarks. </param>
         internal BookmarkList(string nextLink, IReadOnlyList<SecurityInsightsBookmarkData> value)

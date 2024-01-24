@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for an HTTP source. </summary>
     public partial class HttpLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of HttpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
         /// <param name="uri"> The base URL of the HTTP endpoint, e.g. https://www.microsoft.com. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public HttpLinkedService(DataFactoryElement<string> uri)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "HttpServer";
         }
 
-        /// <summary> Initializes a new instance of HttpLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HttpLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

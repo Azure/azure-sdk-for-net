@@ -16,15 +16,11 @@ namespace Azure.Storage.DataMovement
     {
         private Uri _uri;
 
-        /// <summary>
-        /// The identifier for the type of storage resource.
-        /// </summary>
         protected internal override string ResourceId => "LocalFile";
 
-        /// <summary>
-        /// Gets the Uri of the resource.
-        /// </summary>
         public override Uri Uri => _uri;
+
+        public override string ProviderId => "local";
 
         /// <summary>
         /// Defines the recommended Transfer Type of the resource
@@ -35,7 +31,7 @@ namespace Azure.Storage.DataMovement
         /// Defines the maximum chunk size for the storage resource.
         /// </summary>
         /// TODO: consider changing this.
-        protected internal override long MaxChunkSize => Constants.Blob.Block.MaxStageBytes;
+        protected internal override long MaxSupportedChunkSize => Constants.Blob.Block.MaxStageBytes;
 
         /// <summary>
         /// Length of the storage resource. This information is can obtained during a GetStorageResources API call.
@@ -61,11 +57,12 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Intenral Constructor for uri
+        /// Internal Constructor for uri
         /// </summary>
         /// <param name="uri"></param>
         internal LocalFileStorageResource(Uri uri)
         {
+            Argument.AssertNotNull(uri, nameof(uri));
             Argument.AssertNotNullOrWhiteSpace(uri.AbsoluteUri, nameof(uri));
             _uri = uri;
         }
@@ -212,10 +209,10 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Get properties of the resource.
         ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        protected internal override Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns the properties of the Local File Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
+        protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
             FileInfo fileInfo = new FileInfo(_uri.LocalPath);
             if (fileInfo.Exists)
@@ -277,6 +274,16 @@ namespace Azure.Storage.DataMovement
                 return Task.FromResult(true);
             }
             return Task.FromResult(false);
+        }
+
+        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        {
+            return new LocalSourceCheckpointData();
+        }
+
+        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        {
+            return new LocalDestinationCheckpointData();
         }
     }
 }

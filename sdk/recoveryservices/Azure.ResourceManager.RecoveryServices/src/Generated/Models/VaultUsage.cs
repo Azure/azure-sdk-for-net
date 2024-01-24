@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Usages of a vault. </summary>
     public partial class VaultUsage
     {
-        /// <summary> Initializes a new instance of VaultUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsage"/>. </summary>
         internal VaultUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of VaultUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="VaultUsage"/>. </summary>
         /// <param name="unit"> Unit of the usage. </param>
         /// <param name="quotaPeriod"> Quota period of usage. </param>
         /// <param name="nextResetOn"> Next reset time of usage. </param>

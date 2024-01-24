@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation purchase details. </summary>
     public partial class ReservationToPurchaseExchange
     {
-        /// <summary> Initializes a new instance of ReservationToPurchaseExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToPurchaseExchange"/>. </summary>
         internal ReservationToPurchaseExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationToPurchaseExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToPurchaseExchange"/>. </summary>
         /// <param name="reservationOrderId"> Fully qualified id of the reservationOrder being purchased. </param>
         /// <param name="reservationId"> Fully qualified id of the reservation being purchased. This value is only guaranteed to be non-null if the purchase is successful. </param>
         /// <param name="properties"> The request for reservation purchase. </param>

@@ -10,14 +10,14 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The sku type. </summary>
     public partial class LogicSku
     {
-        /// <summary> Initializes a new instance of LogicSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicSku"/>. </summary>
         /// <param name="name"> The name. </param>
         internal LogicSku(LogicSkuName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of LogicSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogicSku"/>. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
         internal LogicSku(LogicSkuName name, LogicResourceReference plan)

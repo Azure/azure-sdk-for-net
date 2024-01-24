@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Input for task that validates migration input for SQL sync migrations. </summary>
     public partial class ValidateSyncMigrationInputSqlServerTaskInput
     {
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source SQL server. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
@@ -31,15 +63,22 @@ namespace Azure.ResourceManager.DataMigration.Models
             SelectedDatabases = selectedDatabases.ToList();
         }
 
-        /// <summary> Initializes a new instance of ValidateSyncMigrationInputSqlServerTaskInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source SQL server. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
         /// <param name="selectedDatabases"> Databases to migrate. </param>
-        internal ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateSyncMigrationInputSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo, SqlConnectionInfo targetConnectionInfo, IList<MigrateSqlServerSqlDBSyncDatabaseInput> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SourceConnectionInfo = sourceConnectionInfo;
             TargetConnectionInfo = targetConnectionInfo;
             SelectedDatabases = selectedDatabases;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ValidateSyncMigrationInputSqlServerTaskInput"/> for deserialization. </summary>
+        internal ValidateSyncMigrationInputSqlServerTaskInput()
+        {
         }
 
         /// <summary> Information for connecting to source SQL server. </summary>

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The TenantResourceByExternalCloudProviderTypeDimensionsOptions. </summary>
     public partial class TenantResourceByExternalCloudProviderTypeDimensionsOptions
     {
-        /// <summary> Initializes a new instance of TenantResourceByExternalCloudProviderTypeDimensionsOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="TenantResourceByExternalCloudProviderTypeDimensionsOptions"/>. </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
         /// <param name="externalCloudProviderId"> This can be '{externalSubscriptionId}' for linked account or '{externalBillingAccountId}' for consolidated account used with dimension/query operations. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="externalCloudProviderId"/> is null. </exception>
@@ -23,6 +23,11 @@ namespace Azure.ResourceManager.CostManagement.Models
 
             ExternalCloudProviderType = externalCloudProviderType;
             ExternalCloudProviderId = externalCloudProviderId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TenantResourceByExternalCloudProviderTypeDimensionsOptions"/> for deserialization. </summary>
+        internal TenantResourceByExternalCloudProviderTypeDimensionsOptions()
+        {
         }
 
         /// <summary> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </summary>

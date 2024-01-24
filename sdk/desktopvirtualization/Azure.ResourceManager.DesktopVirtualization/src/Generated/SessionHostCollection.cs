@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SessionHostResource" /> and their operations.
-    /// Each <see cref="SessionHostResource" /> in the collection will belong to the same instance of <see cref="HostPoolResource" />.
-    /// To get a <see cref="SessionHostCollection" /> instance call the GetSessionHosts method from an instance of <see cref="HostPoolResource" />.
+    /// A class representing a collection of <see cref="SessionHostResource"/> and their operations.
+    /// Each <see cref="SessionHostResource"/> in the collection will belong to the same instance of <see cref="HostPoolResource"/>.
+    /// To get a <see cref="SessionHostCollection"/> instance call the GetSessionHosts method from an instance of <see cref="HostPoolResource"/>.
     /// </summary>
     public partial class SessionHostCollection : ArmCollection, IEnumerable<SessionHostResource>, IAsyncEnumerable<SessionHostResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>SessionHosts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SessionHosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,13 +154,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>SessionHosts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SessionHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SessionHostResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sessionHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -163,13 +187,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>SessionHosts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SessionHostResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SessionHostResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SessionHostResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sessionHostRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, pageSizeHint, isDescending, initialSkip);
@@ -187,6 +219,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SessionHosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +263,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>SessionHosts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
@@ -239,6 +287,96 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SessionHosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SessionHostResource>> GetIfExistsAsync(string sessionHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+
+            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sessionHostRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SessionHostResource>(response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/hostPools/{hostPoolName}/sessionHosts/{sessionHostName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SessionHosts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SessionHostResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sessionHostName"> The name of the session host within the specified host pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="sessionHostName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="sessionHostName"/> is null. </exception>
+        public virtual NullableResponse<SessionHostResource> GetIfExists(string sessionHostName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sessionHostName, nameof(sessionHostName));
+
+            using var scope = _sessionHostClientDiagnostics.CreateScope("SessionHostCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sessionHostRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sessionHostName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SessionHostResource>(response.GetRawResponse());
+                return Response.FromValue(new SessionHostResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

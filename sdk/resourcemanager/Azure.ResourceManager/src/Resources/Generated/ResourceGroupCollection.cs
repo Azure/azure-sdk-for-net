@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceGroupResource" /> and their operations.
-    /// Each <see cref="ResourceGroupResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="ResourceGroupCollection" /> instance call the GetResourceGroups method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ResourceGroupResource"/> and their operations.
+    /// Each <see cref="ResourceGroupResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ResourceGroupCollection"/> instance call the GetResourceGroups method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ResourceGroupCollection : ArmCollection, IEnumerable<ResourceGroupResource>, IAsyncEnumerable<ResourceGroupResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,12 +252,20 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq 'tag1' and tagValue eq 'Value1'. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceGroupResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
@@ -244,12 +284,20 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation.&lt;br&gt;&lt;br&gt;You can filter by tag names and values. For example, to filter for a tag name and value, use $filter=tagName eq 'tag1' and tagValue eq 'Value1'. </param>
         /// <param name="top"> The number of results to return. If null is passed, returns all resource groups. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceGroupResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGroupRestClient.CreateListRequest(Id.SubscriptionId, filter, top);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +359,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
@@ -319,6 +383,96 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceGroupRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceGroupResource>> GetIfExistsAsync(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceGroupRestClient.GetAsync(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ResourceGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceGroupName"> The name of the resource group to get. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
+        public virtual NullableResponse<ResourceGroupResource> GetIfExists(string resourceGroupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+
+            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceGroupRestClient.Get(Id.SubscriptionId, resourceGroupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

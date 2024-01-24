@@ -13,13 +13,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Forecasting specific parameters. </summary>
     public partial class ForecastingSettings
     {
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         public ForecastingSettings()
         {
+            FeaturesUnknownAtForecastTime = new ChangeTrackingList<string>();
             TimeSeriesIdColumnNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ForecastingSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForecastingSettings"/>. </summary>
         /// <param name="countryOrRegionForHolidays">
         /// Country or region for holidays for forecasting tasks.
         /// These should be ISO 3166 two-letter country/region codes, for example 'US' or 'GB'.
@@ -30,9 +31,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// three days apart.
         /// </param>
         /// <param name="featureLags"> Flag for generating lags for the numeric features with 'auto' or null. </param>
+        /// <param name="featuresUnknownAtForecastTime">
+        /// The feature columns that are available for training but unknown at the time of forecast/inference.
+        /// If features_unknown_at_forecast_time is not set, it is assumed that all the feature columns in the dataset are known at inference time.
+        /// </param>
         /// <param name="forecastHorizon">
         /// The desired maximum forecast horizon in units of time-series frequency.
-        /// Please note <see cref="ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
         /// </param>
         /// <param name="frequency"> When forecasting, this parameter represents the period with which the forecast is desired, for example daily, weekly, yearly, etc. The forecast frequency is dataset frequency by default. </param>
@@ -49,12 +54,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="targetLags">
         /// The number of past periods to lag from the target column.
-        /// Please note <see cref="TargetLags"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.TargetLags"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoTargetLags"/> and <see cref="CustomTargetLags"/>.
         /// </param>
         /// <param name="targetRollingWindowSize">
         /// The number of past periods used to create a rolling window average of the target column.
-        /// Please note <see cref="TargetRollingWindowSize"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.TargetRollingWindowSize"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoTargetRollingWindowSize"/> and <see cref="CustomTargetRollingWindowSize"/>.
         /// </param>
         /// <param name="timeColumnName"> The name of the time column. This parameter is required when forecasting to specify the datetime column in the input data used for building the time series and inferring its frequency. </param>
@@ -63,11 +68,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If grain is not defined, the data set is assumed to be one time-series. This parameter is used with task type forecasting.
         /// </param>
         /// <param name="useStl"> Configure STL Decomposition of the time-series target column. </param>
-        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl)
+        internal ForecastingSettings(string countryOrRegionForHolidays, int? cvStepSize, MachineLearningFeatureLag? featureLags, IList<string> featuresUnknownAtForecastTime, ForecastHorizon forecastHorizon, string frequency, ForecastingSeasonality seasonality, MachineLearningShortSeriesHandlingConfiguration? shortSeriesHandlingConfig, TargetAggregationFunction? targetAggregateFunction, TargetLags targetLags, TargetRollingWindowSize targetRollingWindowSize, string timeColumnName, IList<string> timeSeriesIdColumnNames, MachineLearningUseStl? useStl)
         {
             CountryOrRegionForHolidays = countryOrRegionForHolidays;
             CvStepSize = cvStepSize;
             FeatureLags = featureLags;
+            FeaturesUnknownAtForecastTime = featuresUnknownAtForecastTime;
             ForecastHorizon = forecastHorizon;
             Frequency = frequency;
             Seasonality = seasonality;
@@ -94,8 +100,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Flag for generating lags for the numeric features with 'auto' or null. </summary>
         public MachineLearningFeatureLag? FeatureLags { get; set; }
         /// <summary>
+        /// The feature columns that are available for training but unknown at the time of forecast/inference.
+        /// If features_unknown_at_forecast_time is not set, it is assumed that all the feature columns in the dataset are known at inference time.
+        /// </summary>
+        public IList<string> FeaturesUnknownAtForecastTime { get; set; }
+        /// <summary>
         /// The desired maximum forecast horizon in units of time-series frequency.
-        /// Please note <see cref="ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.ForecastHorizon"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
         /// </summary>
         public ForecastHorizon ForecastHorizon { get; set; }
@@ -117,13 +128,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public TargetAggregationFunction? TargetAggregateFunction { get; set; }
         /// <summary>
         /// The number of past periods to lag from the target column.
-        /// Please note <see cref="TargetLags"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.TargetLags"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoTargetLags"/> and <see cref="CustomTargetLags"/>.
         /// </summary>
         public TargetLags TargetLags { get; set; }
         /// <summary>
         /// The number of past periods used to create a rolling window average of the target column.
-        /// Please note <see cref="TargetRollingWindowSize"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.TargetRollingWindowSize"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AutoTargetRollingWindowSize"/> and <see cref="CustomTargetRollingWindowSize"/>.
         /// </summary>
         public TargetRollingWindowSize TargetRollingWindowSize { get; set; }

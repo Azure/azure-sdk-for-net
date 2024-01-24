@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ServiceBus
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ServiceBusTopicResource" /> and their operations.
-    /// Each <see cref="ServiceBusTopicResource" /> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource" />.
-    /// To get a <see cref="ServiceBusTopicCollection" /> instance call the GetServiceBusTopics method from an instance of <see cref="ServiceBusNamespaceResource" />.
+    /// A class representing a collection of <see cref="ServiceBusTopicResource"/> and their operations.
+    /// Each <see cref="ServiceBusTopicResource"/> in the collection will belong to the same instance of <see cref="ServiceBusNamespaceResource"/>.
+    /// To get a <see cref="ServiceBusTopicCollection"/> instance call the GetServiceBusTopics method from an instance of <see cref="ServiceBusNamespaceResource"/>.
     /// </summary>
     public partial class ServiceBusTopicCollection : ArmCollection, IEnumerable<ServiceBusTopicResource>, IAsyncEnumerable<ServiceBusTopicResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Topics_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Topics_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,12 +252,20 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Topics_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceBusTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ServiceBusTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ServiceBusTopicResource> GetAllAsync(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusTopicTopicsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
@@ -244,12 +284,20 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Topics_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skip"> Skip is only used if a previous operation returned a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skip parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="top"> May be used to limit the number of results to the most recent N usageDetails. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceBusTopicResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ServiceBusTopicResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ServiceBusTopicResource> GetAll(int? skip = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _serviceBusTopicTopicsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skip, top);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +359,14 @@ namespace Azure.ResourceManager.ServiceBus
         /// <term>Operation Id</term>
         /// <description>Topics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicName"> The topic name. </param>
@@ -319,6 +383,96 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 var response = _serviceBusTopicTopicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> The topic name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ServiceBusTopicResource>> GetIfExistsAsync(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _serviceBusTopicTopicsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceBusTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopicResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Topics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceBusTopicResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> The topic name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> is null. </exception>
+        public virtual NullableResponse<ServiceBusTopicResource> GetIfExists(string topicName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+
+            using var scope = _serviceBusTopicTopicsClientDiagnostics.CreateScope("ServiceBusTopicCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _serviceBusTopicTopicsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, topicName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ServiceBusTopicResource>(response.GetRawResponse());
+                return Response.FromValue(new ServiceBusTopicResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

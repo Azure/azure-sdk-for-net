@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppContainers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerAppDetectorResource" /> and their operations.
-    /// Each <see cref="ContainerAppDetectorResource" /> in the collection will belong to the same instance of <see cref="ContainerAppResource" />.
-    /// To get a <see cref="ContainerAppDetectorCollection" /> instance call the GetContainerAppDetectors method from an instance of <see cref="ContainerAppResource" />.
+    /// A class representing a collection of <see cref="ContainerAppDetectorResource"/> and their operations.
+    /// Each <see cref="ContainerAppDetectorResource"/> in the collection will belong to the same instance of <see cref="ContainerAppResource"/>.
+    /// To get a <see cref="ContainerAppDetectorCollection"/> instance call the GetContainerAppDetectors method from an instance of <see cref="ContainerAppResource"/>.
     /// </summary>
     public partial class ContainerAppDetectorCollection : ArmCollection, IEnumerable<ContainerAppDetectorResource>, IAsyncEnumerable<ContainerAppDetectorResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Name of the Container App Detector. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_ListDetectors</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerAppDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerAppDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppDetectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorContainerAppsDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_ListDetectors</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerAppDetectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerAppDetectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppDetectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerAppDetectorContainerAppsDiagnosticsRestClient.CreateListDetectorsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ContainerAppsDiagnostics_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detectorName"> Name of the Container App Detector. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.AppContainers
             {
                 var response = _containerAppDetectorContainerAppsDiagnosticsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsDiagnostics_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Name of the Container App Detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerAppDetectorResource>> GetIfExistsAsync(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerAppDetectorContainerAppsDiagnosticsRestClient.GetDetectorAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppDetectorResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppDetectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/detectors/{detectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ContainerAppsDiagnostics_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppDetectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="detectorName"> Name of the Container App Detector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="detectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="detectorName"/> is null. </exception>
+        public virtual NullableResponse<ContainerAppDetectorResource> GetIfExists(string detectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(detectorName, nameof(detectorName));
+
+            using var scope = _containerAppDetectorContainerAppsDiagnosticsClientDiagnostics.CreateScope("ContainerAppDetectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerAppDetectorContainerAppsDiagnosticsRestClient.GetDetector(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, detectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerAppDetectorResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerAppDetectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

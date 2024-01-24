@@ -20,6 +20,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -53,5 +54,8 @@ acronym-mapping:
 
 list-exception:
   - /{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}
+
+rename-mapping:
+  AssignmentJobCreatedResource: AssignmentJobCreatedResult
 
 ```

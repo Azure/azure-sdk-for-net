@@ -117,7 +117,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 };
 
                 FunctionResult result = await listener.Value.FunctionExecutor.TryExecuteAsync(triggerData, cancellationToken).ConfigureAwait(false);
-                return result.Succeeded ? (HttpResponseMessage)eventsResponseHandler.Response : Helpers.HttpErrorResponse(result.Exception);
+
+                return result.Succeeded ?
+                    eventsResponseHandler.Response :
+                    Helpers.HttpErrorResponse(result.Exception);
             }
             catch (Exception ex)
             {

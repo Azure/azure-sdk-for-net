@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkloadNetworkPortMirroringProfileResource" /> and their operations.
-    /// Each <see cref="WorkloadNetworkPortMirroringProfileResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="WorkloadNetworkPortMirroringProfileCollection" /> instance call the GetWorkloadNetworkPortMirroringProfiles method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="WorkloadNetworkPortMirroringProfileResource"/> and their operations.
+    /// Each <see cref="WorkloadNetworkPortMirroringProfileResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="WorkloadNetworkPortMirroringProfileCollection"/> instance call the GetWorkloadNetworkPortMirroringProfiles method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class WorkloadNetworkPortMirroringProfileCollection : ArmCollection, IEnumerable<WorkloadNetworkPortMirroringProfileResource>, IAsyncEnumerable<WorkloadNetworkPortMirroringProfileResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_CreatePortMirroring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_CreatePortMirroring</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetPortMirroring</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_ListPortMirroring</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadNetworkPortMirroringProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadNetworkPortMirroringProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkPortMirroringProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_ListPortMirroring</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadNetworkPortMirroringProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadNetworkPortMirroringProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkPortMirroringProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.CreateListPortMirroringRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetPortMirroring</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.GetPortMirroring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        public virtual async Task<NullableResponse<WorkloadNetworkPortMirroringProfileResource>> GetIfExistsAsync(string portMirroringId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+
+            using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.GetPortMirroringAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkPortMirroringProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkPortMirroringProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/portMirroringProfiles/{portMirroringId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetPortMirroring</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkPortMirroringProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="portMirroringId"> NSX Port Mirroring identifier. Generally the same as the Port Mirroring display name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="portMirroringId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="portMirroringId"/> is null. </exception>
+        public virtual NullableResponse<WorkloadNetworkPortMirroringProfileResource> GetIfExists(string portMirroringId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(portMirroringId, nameof(portMirroringId));
+
+            using var scope = _workloadNetworkPortMirroringProfileWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkPortMirroringProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworkPortMirroringProfileWorkloadNetworksRestClient.GetPortMirroring(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, portMirroringId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkPortMirroringProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkPortMirroringProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

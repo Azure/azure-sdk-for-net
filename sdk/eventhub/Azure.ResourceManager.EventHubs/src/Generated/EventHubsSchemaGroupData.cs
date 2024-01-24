@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsSchemaGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsSchemaGroupData"/>. </summary>
         public EventHubsSchemaGroupData()
         {
             GroupProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsSchemaGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsSchemaGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

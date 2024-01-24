@@ -17,8 +17,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
- 
+rename-mapping:
+  AssessmentResource: AssessmentResourceContent
 
 format-by-name-rules:
   'tenantId': 'uuid'

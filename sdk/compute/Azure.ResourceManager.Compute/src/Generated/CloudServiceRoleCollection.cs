@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CloudServiceRoleResource" /> and their operations.
-    /// Each <see cref="CloudServiceRoleResource" /> in the collection will belong to the same instance of <see cref="CloudServiceResource" />.
-    /// To get a <see cref="CloudServiceRoleCollection" /> instance call the GetCloudServiceRoles method from an instance of <see cref="CloudServiceResource" />.
+    /// A class representing a collection of <see cref="CloudServiceRoleResource"/> and their operations.
+    /// Each <see cref="CloudServiceRoleResource"/> in the collection will belong to the same instance of <see cref="CloudServiceResource"/>.
+    /// To get a <see cref="CloudServiceRoleCollection"/> instance call the GetCloudServiceRoles method from an instance of <see cref="CloudServiceResource"/>.
     /// </summary>
     public partial class CloudServiceRoleCollection : ArmCollection, IEnumerable<CloudServiceRoleResource>, IAsyncEnumerable<CloudServiceRoleResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleName"> Name of the role. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CloudServiceRoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CloudServiceRoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CloudServiceRoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CloudServiceRoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CloudServiceRoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CloudServiceRoleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudServiceRoleRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CloudServiceRoles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleName"> Name of the role. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _cloudServiceRoleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceRoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleName"> Name of the role. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CloudServiceRoleResource>> GetIfExistsAsync(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+
+            using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cloudServiceRoleRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CloudServiceRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/cloudServices/{cloudServiceName}/roles/{roleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CloudServiceRoles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudServiceRoleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleName"> Name of the role. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        public virtual NullableResponse<CloudServiceRoleResource> GetIfExists(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+
+            using var scope = _cloudServiceRoleClientDiagnostics.CreateScope("CloudServiceRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cloudServiceRoleRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CloudServiceRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new CloudServiceRoleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

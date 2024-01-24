@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Defines the response of a provision trigger dependency operation. </summary>
     public partial class TriggerDependencyProvisioningStatus
     {
-        /// <summary> Initializes a new instance of TriggerDependencyProvisioningStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="TriggerDependencyProvisioningStatus"/>. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="provisioningStatus"> Provisioning status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="triggerName"/> or <paramref name="provisioningStatus"/> is null. </exception>

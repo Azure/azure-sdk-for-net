@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProbeResource" /> and their operations.
-    /// Each <see cref="ProbeResource" /> in the collection will belong to the same instance of <see cref="LoadBalancerResource" />.
-    /// To get a <see cref="ProbeCollection" /> instance call the GetProbes method from an instance of <see cref="LoadBalancerResource" />.
+    /// A class representing a collection of <see cref="ProbeResource"/> and their operations.
+    /// Each <see cref="ProbeResource"/> in the collection will belong to the same instance of <see cref="LoadBalancerResource"/>.
+    /// To get a <see cref="ProbeCollection"/> instance call the GetProbes method from an instance of <see cref="LoadBalancerResource"/>.
     /// </summary>
     public partial class ProbeCollection : ArmCollection, IEnumerable<ProbeResource>, IAsyncEnumerable<ProbeResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProbeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProbeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProbeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _probeLoadBalancerProbesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProbeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProbeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProbeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _probeLoadBalancerProbesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>LoadBalancerProbes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="probeName"> The name of the probe. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _probeLoadBalancerProbesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancerProbes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="probeName"> The name of the probe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProbeResource>> GetIfExistsAsync(string probeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(probeName, nameof(probeName));
+
+            using var scope = _probeLoadBalancerProbesClientDiagnostics.CreateScope("ProbeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _probeLoadBalancerProbesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProbeResource>(response.GetRawResponse());
+                return Response.FromValue(new ProbeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/probes/{probeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LoadBalancerProbes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProbeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="probeName"> The name of the probe. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="probeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="probeName"/> is null. </exception>
+        public virtual NullableResponse<ProbeResource> GetIfExists(string probeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(probeName, nameof(probeName));
+
+            using var scope = _probeLoadBalancerProbesClientDiagnostics.CreateScope("ProbeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _probeLoadBalancerProbesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, probeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProbeResource>(response.GetRawResponse());
+                return Response.FromValue(new ProbeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

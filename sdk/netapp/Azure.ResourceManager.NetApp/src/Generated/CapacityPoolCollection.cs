@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CapacityPoolResource" /> and their operations.
-    /// Each <see cref="CapacityPoolResource" /> in the collection will belong to the same instance of <see cref="NetAppAccountResource" />.
-    /// To get a <see cref="CapacityPoolCollection" /> instance call the GetCapacityPools method from an instance of <see cref="NetAppAccountResource" />.
+    /// A class representing a collection of <see cref="CapacityPoolResource"/> and their operations.
+    /// Each <see cref="CapacityPoolResource"/> in the collection will belong to the same instance of <see cref="NetAppAccountResource"/>.
+    /// To get a <see cref="CapacityPoolCollection"/> instance call the GetCapacityPools method from an instance of <see cref="NetAppAccountResource"/>.
     /// </summary>
     public partial class CapacityPoolCollection : ArmCollection, IEnumerable<CapacityPoolResource>, IAsyncEnumerable<CapacityPoolResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pools_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Pools_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Pools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Pools_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CapacityPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CapacityPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CapacityPoolResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Pools_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CapacityPoolResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CapacityPoolResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CapacityPoolResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _capacityPoolPoolsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Pools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Pools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="poolName"> The name of the capacity pool. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.NetApp
             {
                 var response = _capacityPoolPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolName"> The name of the capacity pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CapacityPoolResource>> GetIfExistsAsync(string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _capacityPoolPoolsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CapacityPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new CapacityPoolResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Pools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CapacityPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolName"> The name of the capacity pool. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        public virtual NullableResponse<CapacityPoolResource> GetIfExists(string poolName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
+
+            using var scope = _capacityPoolPoolsClientDiagnostics.CreateScope("CapacityPoolCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _capacityPoolPoolsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CapacityPoolResource>(response.GetRawResponse());
+                return Response.FromValue(new CapacityPoolResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

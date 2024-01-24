@@ -20,13 +20,17 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A Class representing a ScriptExecution along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScriptExecutionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScriptExecutionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource" /> using the GetScriptExecution method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScriptExecutionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScriptExecutionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetScriptExecution method.
     /// </summary>
     public partial class ScriptExecutionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScriptExecutionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="privateCloudName"> The privateCloudName. </param>
+        /// <param name="scriptExecutionName"> The scriptExecutionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateCloudName, string scriptExecutionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/scriptExecutions/{scriptExecutionName}";
@@ -37,12 +41,15 @@ namespace Azure.ResourceManager.Avs
         private readonly ScriptExecutionsRestOperations _scriptExecutionRestClient;
         private readonly ScriptExecutionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptExecutions";
+
         /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class for mocking. </summary>
         protected ScriptExecutionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScriptExecutionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScriptExecutionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScriptExecutionResource(ArmClient client, ScriptExecutionData data) : this(client, data.Id)
@@ -63,9 +70,6 @@ namespace Azure.ResourceManager.Avs
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AVS/privateClouds/scriptExecutions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +103,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +143,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +182,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -197,6 +225,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -230,6 +266,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +313,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -307,6 +359,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_GetExecutionLogs</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scriptOutputStreamType"> Name of the desired output stream to return. If not provided, will return all. An empty array will return nothing. </param>
@@ -337,6 +397,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScriptExecutions_GetExecutionLogs</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScriptExecutionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

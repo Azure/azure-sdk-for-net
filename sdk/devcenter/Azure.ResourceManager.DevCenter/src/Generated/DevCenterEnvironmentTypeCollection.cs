@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterEnvironmentTypeResource" /> and their operations.
-    /// Each <see cref="DevCenterEnvironmentTypeResource" /> in the collection will belong to the same instance of <see cref="DevCenterResource" />.
-    /// To get a <see cref="DevCenterEnvironmentTypeCollection" /> instance call the GetDevCenterEnvironmentTypes method from an instance of <see cref="DevCenterResource" />.
+    /// A class representing a collection of <see cref="DevCenterEnvironmentTypeResource"/> and their operations.
+    /// Each <see cref="DevCenterEnvironmentTypeResource"/> in the collection will belong to the same instance of <see cref="DevCenterResource"/>.
+    /// To get a <see cref="DevCenterEnvironmentTypeCollection"/> instance call the GetDevCenterEnvironmentTypes method from an instance of <see cref="DevCenterResource"/>.
     /// </summary>
     public partial class DevCenterEnvironmentTypeCollection : ArmCollection, IEnumerable<DevCenterEnvironmentTypeResource>, IAsyncEnumerable<DevCenterEnvironmentTypeResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,11 +252,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_ListByDevCenter</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterEnvironmentTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterEnvironmentTypeResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -243,11 +283,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_ListByDevCenter</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterEnvironmentTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterEnvironmentTypeResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterEnvironmentTypeEnvironmentTypesRestClient.CreateListByDevCenterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>EnvironmentTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -317,6 +381,96 @@ namespace Azure.ResourceManager.DevCenter
             {
                 var response = _devCenterEnvironmentTypeEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/environmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevCenterEnvironmentTypeResource>> GetIfExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devCenterEnvironmentTypeEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterEnvironmentTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/environmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterEnvironmentTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual NullableResponse<DevCenterEnvironmentTypeResource> GetIfExists(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _devCenterEnvironmentTypeEnvironmentTypesClientDiagnostics.CreateScope("DevCenterEnvironmentTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devCenterEnvironmentTypeEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterEnvironmentTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

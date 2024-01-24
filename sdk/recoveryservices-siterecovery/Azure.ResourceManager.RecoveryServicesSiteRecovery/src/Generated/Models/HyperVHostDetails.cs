@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Hyper-V host details. </summary>
     public partial class HyperVHostDetails
     {
-        /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVHostDetails"/>. </summary>
         internal HyperVHostDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of HyperVHostDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="HyperVHostDetails"/>. </summary>
         /// <param name="id"> The Hyper-V host Id. </param>
         /// <param name="name"> The Hyper-V host name. </param>
         /// <param name="marsAgentVersion"> The Mars agent version. </param>

@@ -24,12 +24,12 @@ namespace Azure.Core.Sse
         {
             while (true)
             {
-                var line = TryReadLine();
+                SseLine? line = TryReadLine();
                 if (line == null)
                     return null;
                 if (line.Value.IsEmpty)
                     throw new InvalidDataException("event expected.");
-                var empty = TryReadLine();
+                SseLine? empty = TryReadLine();
                 if (empty != null && !empty.Value.IsEmpty)
                     throw new NotSupportedException("Multi-filed events not supported.");
                 if (!line.Value.IsComment)
@@ -42,12 +42,12 @@ namespace Azure.Core.Sse
         {
             while (true)
             {
-                var line = await TryReadLineAsync().ConfigureAwait(false);
+                SseLine? line = await TryReadLineAsync().ConfigureAwait(false);
                 if (line == null)
                     return null;
                 if (line.Value.IsEmpty)
                     throw new InvalidDataException("event expected.");
-                var empty = await TryReadLineAsync().ConfigureAwait(false);
+                SseLine? empty = await TryReadLineAsync().ConfigureAwait(false);
                 if (empty != null && !empty.Value.IsEmpty)
                     throw new NotSupportedException("Multi-filed events not supported.");
                 if (!line.Value.IsComment)

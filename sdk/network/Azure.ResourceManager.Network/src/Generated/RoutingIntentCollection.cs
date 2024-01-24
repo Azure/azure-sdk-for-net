@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoutingIntentResource" /> and their operations.
-    /// Each <see cref="RoutingIntentResource" /> in the collection will belong to the same instance of <see cref="VirtualHubResource" />.
-    /// To get a <see cref="RoutingIntentCollection" /> instance call the GetRoutingIntents method from an instance of <see cref="VirtualHubResource" />.
+    /// A class representing a collection of <see cref="RoutingIntentResource"/> and their operations.
+    /// Each <see cref="RoutingIntentResource"/> in the collection will belong to the same instance of <see cref="VirtualHubResource"/>.
+    /// To get a <see cref="RoutingIntentCollection"/> instance call the GetRoutingIntents method from an instance of <see cref="VirtualHubResource"/>.
     /// </summary>
     public partial class RoutingIntentCollection : ArmCollection, IEnumerable<RoutingIntentResource>, IAsyncEnumerable<RoutingIntentResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoutingIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoutingIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoutingIntentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routingIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoutingIntentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoutingIntentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoutingIntentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _routingIntentRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>RoutingIntent_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _routingIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutingIntent_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoutingIntentResource>> GetIfExistsAsync(string routingIntentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
+
+            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _routingIntentRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoutingIntentResource>(response.GetRawResponse());
+                return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualHubs/{virtualHubName}/routingIntent/{routingIntentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoutingIntent_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoutingIntentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routingIntentName"> The name of the RoutingIntent. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="routingIntentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
+        public virtual NullableResponse<RoutingIntentResource> GetIfExists(string routingIntentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
+
+            using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _routingIntentRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, routingIntentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoutingIntentResource>(response.GetRawResponse());
+                return Response.FromValue(new RoutingIntentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

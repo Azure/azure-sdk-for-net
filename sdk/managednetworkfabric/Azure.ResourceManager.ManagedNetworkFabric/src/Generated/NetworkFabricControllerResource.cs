@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A Class representing a NetworkFabricController along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkFabricControllerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkFabricControllerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkFabricController method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkFabricControllerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkFabricControllerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkFabricController method.
     /// </summary>
     public partial class NetworkFabricControllerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkFabricControllerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkFabricControllerName"> The networkFabricControllerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkFabricControllerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/{networkFabricControllerName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         private readonly NetworkFabricControllersRestOperations _networkFabricControllerRestClient;
         private readonly NetworkFabricControllerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabricControllers";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkFabricControllerResource"/> class for mocking. </summary>
         protected NetworkFabricControllerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkFabricControllerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkFabricControllerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkFabricControllerResource(ArmClient client, NetworkFabricControllerData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ManagedNetworkFabric/networkFabricControllers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +103,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +143,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +182,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +225,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -231,6 +266,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +313,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -307,6 +358,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,6 +421,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -416,6 +483,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -465,6 +540,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -513,6 +596,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -565,6 +656,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFabricControllers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFabricControllerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

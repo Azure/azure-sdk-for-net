@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class VirtualMachinePublicIPAddressConfiguration : IUtf8JsonSerializable
+    public partial class VirtualMachinePublicIPAddressConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachinePublicIPAddressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachinePublicIPAddressConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachinePublicIPAddressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -67,11 +77,40 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStringValue(PublicIPAllocationMethod.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachinePublicIPAddressConfiguration DeserializeVirtualMachinePublicIPAddressConfiguration(JsonElement element)
+        VirtualMachinePublicIPAddressConfiguration IJsonModel<VirtualMachinePublicIPAddressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachinePublicIPAddressConfiguration(document.RootElement, options);
+        }
+
+        internal static VirtualMachinePublicIPAddressConfiguration DeserializeVirtualMachinePublicIPAddressConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,6 +124,8 @@ namespace Azure.ResourceManager.Compute.Models
             Optional<WritableSubResource> publicIPPrefix = default;
             Optional<IPVersion> publicIPAddressVersion = default;
             Optional<PublicIPAllocationMethod> publicIPAllocationMethod = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -181,8 +222,44 @@ namespace Azure.ResourceManager.Compute.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachinePublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(deleteOption), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(publicIPAllocationMethod));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualMachinePublicIPAddressConfiguration(name, sku.Value, Optional.ToNullable(idleTimeoutInMinutes), Optional.ToNullable(deleteOption), dnsSettings.Value, Optional.ToList(ipTags), publicIPPrefix, Optional.ToNullable(publicIPAddressVersion), Optional.ToNullable(publicIPAllocationMethod), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachinePublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachinePublicIPAddressConfiguration IPersistableModel<VirtualMachinePublicIPAddressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachinePublicIPAddressConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachinePublicIPAddressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

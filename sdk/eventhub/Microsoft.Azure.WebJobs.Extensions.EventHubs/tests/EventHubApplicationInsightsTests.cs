@@ -79,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             List<DependencyTelemetry> dependencies = _channel.Telemetries.OfType<DependencyTelemetry>().ToList();
 
             // We expect 1 message span and 1 send span
-            var messageDependencies = dependencies.Where(d => d.Name == "EventHubs.Message").ToList();
+            var messageDependencies = dependencies.Where(d => d.Name == "Message").ToList();
             var sendDependency = dependencies.Single(d => d.Name == "EventHubProducerClient.Send");
 
             var sendRequest = requests.Single(r => r.Context.Operation.Name == nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub));
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             List<DependencyTelemetry> dependencies = _channel.Telemetries.OfType<DependencyTelemetry>().ToList();
 
             // We expect 5 message spans and 1 send span
-            var messageDependencies = dependencies.Where(d => d.Name == "EventHubs.Message").ToList();
+            var messageDependencies = dependencies.Where(d => d.Name == "Message").ToList();
             var sendDependency = dependencies.Single(d => d.Name == "EventHubProducerClient.Send");
 
             Assert.AreEqual(5, messageDependencies.Count);

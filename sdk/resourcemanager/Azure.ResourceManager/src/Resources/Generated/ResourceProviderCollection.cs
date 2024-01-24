@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Resources
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ResourceProviderResource" /> and their operations.
-    /// Each <see cref="ResourceProviderResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="ResourceProviderCollection" /> instance call the GetResourceProviders method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ResourceProviderResource"/> and their operations.
+    /// Each <see cref="ResourceProviderResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ResourceProviderCollection"/> instance call the GetResourceProviders method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ResourceProviderCollection : ArmCollection, IEnumerable<ResourceProviderResource>, IAsyncEnumerable<ResourceProviderResource>
     {
@@ -50,6 +50,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -89,6 +97,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -127,11 +143,19 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ResourceProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ResourceProviderResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -150,11 +174,19 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ResourceProviderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ResourceProviderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ResourceProviderResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListRequest(Id.SubscriptionId, expand);
@@ -172,6 +204,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +249,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
@@ -226,6 +274,98 @@ namespace Azure.ResourceManager.Resources
             {
                 var response = _resourceProviderProvidersRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual async Task<NullableResponse<ResourceProviderResource>> GetIfExistsAsync(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _resourceProviderProvidersRestClient.GetAsync(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/{resourceProviderNamespace}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Providers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceProviderNamespace"> The namespace of the resource provider. </param>
+        /// <param name="expand"> The $expand query parameter. For example, to include property aliases in response, use $expand=resourceTypes/aliases. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceProviderNamespace"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceProviderNamespace"/> is null. </exception>
+        public virtual NullableResponse<ResourceProviderResource> GetIfExists(string resourceProviderNamespace, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceProviderNamespace, nameof(resourceProviderNamespace));
+
+            using var scope = _resourceProviderProvidersClientDiagnostics.CreateScope("ResourceProviderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _resourceProviderProvidersRestClient.Get(Id.SubscriptionId, resourceProviderNamespace, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ResourceProviderResource>(response.GetRawResponse());
+                return Response.FromValue(new ResourceProviderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

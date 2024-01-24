@@ -6,26 +6,61 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Sku change info of account. </summary>
     public partial class CognitiveServicesSkuChangeInfo
     {
-        /// <summary> Initializes a new instance of CognitiveServicesSkuChangeInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuChangeInfo"/>. </summary>
         internal CognitiveServicesSkuChangeInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of CognitiveServicesSkuChangeInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesSkuChangeInfo"/>. </summary>
         /// <param name="countOfDowngrades"> Gets the count of downgrades. </param>
         /// <param name="countOfUpgradesAfterDowngrades"> Gets the count of upgrades after downgrades. </param>
         /// <param name="lastChangedOn"> Gets the last change date. </param>
-        internal CognitiveServicesSkuChangeInfo(float? countOfDowngrades, float? countOfUpgradesAfterDowngrades, DateTimeOffset? lastChangedOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CognitiveServicesSkuChangeInfo(float? countOfDowngrades, float? countOfUpgradesAfterDowngrades, DateTimeOffset? lastChangedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CountOfDowngrades = countOfDowngrades;
             CountOfUpgradesAfterDowngrades = countOfUpgradesAfterDowngrades;
             LastChangedOn = lastChangedOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the count of downgrades. </summary>

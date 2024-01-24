@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteLoadBalancer()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancerDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancerDelete.json
             // this example is just showing the usage of "LoadBalancers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetLoadBalancer()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancerGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancerGet.json
             // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetLoadBalancerWithInboundNATRulePortMapping()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
             // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateLoadBalancerTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancerUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancerUpdateTags.json
             // this example is just showing the usage of "LoadBalancers_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLoadBalancers_ListAllLoadBalancers()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancerListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancerListAll.json
             // this example is just showing the usage of "LoadBalancers_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SwapPublicIPAddressesLoadBalancer_SwapVIPsBetweenTwoLoadBalancers()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancersSwapPublicIpAddresses.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancersSwapPublicIpAddresses.json
             // this example is just showing the usage of "LoadBalancers_SwapPublicIpAddresses" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -225,7 +225,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task MigrateToIPBased_MigrateLoadBalancerToIPBased()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/MigrateLoadBalancerToIPBased.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/MigrateLoadBalancerToIPBased.json
             // this example is just showing the usage of "LoadBalancers_MigrateToIpBased" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -259,7 +259,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLoadBalancerNetworkInterfaces_LoadBalancerNetworkInterfaceListSimple()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancerNetworkInterfaceListSimple.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancerNetworkInterfaceListSimple.json
             // this example is just showing the usage of "LoadBalancerNetworkInterfaces_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -293,7 +293,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLoadBalancerNetworkInterfaces_LoadBalancerNetworkInterfaceListVmss()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/LoadBalancerNetworkInterfaceListVmss.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/LoadBalancerNetworkInterfaceListVmss.json
             // this example is just showing the usage of "LoadBalancerNetworkInterfaces_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

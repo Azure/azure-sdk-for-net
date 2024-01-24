@@ -81,6 +81,14 @@ namespace Azure.Storage.Files.Shares.Tests
             return options;
         }
 
+        public ShareClientOptions GetOptionsWithAudience(ShareAudience audience)
+        {
+            ShareClientOptions options = SharesClientBuilder.GetOptions(false);
+            options.Audience = audience;
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            return options;
+        }
+
         public ShareServiceClient GetServiceClient_AccountSas(StorageSharedKeyCredential sharedKeyCredentials = default, SasQueryParameters sasCredentials = default)
             => InstrumentClient(
                 new ShareServiceClient(

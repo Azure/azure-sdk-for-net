@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
     /// <summary> Branch onboarding info. </summary>
     internal partial class TargetBranchConfiguration
     {
-        /// <summary> Initializes a new instance of TargetBranchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetBranchConfiguration"/>. </summary>
         public TargetBranchConfiguration()
         {
             Names = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TargetBranchConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetBranchConfiguration"/>. </summary>
         /// <param name="names">
         /// Gets or sets branches that should have annotations.
         ///

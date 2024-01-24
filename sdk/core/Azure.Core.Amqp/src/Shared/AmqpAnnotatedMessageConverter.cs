@@ -91,11 +91,6 @@ namespace Azure.Core.Amqp.Shared
                     message.Header.Priority = sourceMessage.Header.Priority;
                 }
 
-                if (sourceMessage.Header.TimeToLive.HasValue)
-                {
-                    message.Header.Ttl = (uint?)sourceMessage.Header.TimeToLive.Value.TotalMilliseconds;
-                }
-
                 if (sourceMessage.Header.FirstAcquirer.HasValue)
                 {
                     message.Header.FirstAcquirer = sourceMessage.Header.FirstAcquirer;
@@ -249,6 +244,29 @@ namespace Azure.Core.Amqp.Shared
                 }
             }
 
+            // There is a loss of fidelity in the TTL header if larger than uint.MaxValue. As a workaround
+            // we set the AbsoluteExpiryTime and CreationTime on the message based on the TTL. These
+            // values are then used to reconstruct the accurate TTL for received messages.
+            if (sourceMessage.Header.TimeToLive.HasValue)
+            {
+                var ttl = sourceMessage.Header.TimeToLive.Value;
+
+                message.Header.Ttl = ttl.TotalMilliseconds > uint.MaxValue
+                    ? uint.MaxValue
+                    : (uint) ttl.TotalMilliseconds;
+
+                message.Properties.CreationTime = DateTime.UtcNow;
+
+                if (AmqpConstants.MaxAbsoluteExpiryTime - message.Properties.CreationTime.Value > ttl)
+                {
+                    message.Properties.AbsoluteExpiryTime = message.Properties.CreationTime.Value + ttl;
+                }
+                else
+                {
+                    message.Properties.AbsoluteExpiryTime = AmqpConstants.MaxAbsoluteExpiryTime;
+                }
+            }
+
             return message;
         }
 
@@ -311,10 +329,21 @@ namespace Azure.Core.Amqp.Shared
             {
                 if (source.Properties.AbsoluteExpiryTime.HasValue)
                 {
-                    message.Properties.AbsoluteExpiryTime =
-                        source.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
-                            ? DateTimeOffset.MaxValue
-                            : source.Properties.AbsoluteExpiryTime;
+                    DateTimeOffset absoluteExpiryTime = source.Properties.AbsoluteExpiryTime >= DateTimeOffset.MaxValue.UtcDateTime
+                        ? DateTimeOffset.MaxValue
+                        : source.Properties.AbsoluteExpiryTime.Value;
+
+                    message.Properties.AbsoluteExpiryTime = absoluteExpiryTime;
+
+                    // The TTL from the header can be at most approximately 49 days (Uint32.MaxValue milliseconds) due
+                    // to the AMQP spec. In order to allow for larger TTLs set by the user, we take the difference of the AbsoluteExpiryTime
+                    // and the CreationTime (if both are set). If either of those properties is not set, we fall back to the
+                    // TTL from the header.
+
+                    if (source.Properties.CreationTime.HasValue)
+                    {
+                        message.Header.TimeToLive = absoluteExpiryTime- source.Properties.CreationTime.Value;
+                    }
                 }
 
                 if (!string.IsNullOrEmpty(source.Properties.ContentEncoding.Value))
@@ -329,7 +358,7 @@ namespace Azure.Core.Amqp.Shared
 
                 if (source.Properties.CorrelationId != null)
                 {
-                    message.Properties.CorrelationId = new AmqpMessageId(source.Properties.CorrelationId.ToString());
+                    message.Properties.CorrelationId = new AmqpMessageId(source.Properties.CorrelationId.ToString()!);
                 }
 
                 if (source.Properties.CreationTime.HasValue)
@@ -349,12 +378,12 @@ namespace Azure.Core.Amqp.Shared
 
                 if (source.Properties.MessageId != null)
                 {
-                    message.Properties.MessageId = new AmqpMessageId(source.Properties.MessageId.ToString());
+                    message.Properties.MessageId = new AmqpMessageId(source.Properties.MessageId.ToString()!);
                 }
 
                 if (source.Properties.ReplyTo != null)
                 {
-                    message.Properties.ReplyTo = new AmqpAddress(source.Properties.ReplyTo.ToString());
+                    message.Properties.ReplyTo = new AmqpAddress(source.Properties.ReplyTo.ToString()!);
                 }
 
                 if (!string.IsNullOrEmpty(source.Properties.ReplyToGroupId))
@@ -369,10 +398,10 @@ namespace Azure.Core.Amqp.Shared
 
                 if (source.Properties.To != null)
                 {
-                    message.Properties.To = new AmqpAddress(source.Properties.To.ToString());
+                    message.Properties.To = new AmqpAddress(source.Properties.To.ToString()!);
                 }
 
-                if (source.Properties.UserId != null)
+                if (source.Properties.UserId != default)
                 {
                     message.Properties.UserId = source.Properties.UserId;
                 }
@@ -431,6 +460,187 @@ namespace Azure.Core.Amqp.Shared
             }
 
             return message;
+        }
+
+        /// <summary>
+        ///   Attempts to create an AMQP property value for a given event property.
+        /// </summary>
+        ///
+        /// <param name="propertyValue">The value of the event property to create an AMQP property value for.</param>
+        /// <param name="amqpPropertyValue">The AMQP property value that was created.</param>
+        /// <param name="allowBodyTypes"><c>true</c> to allow an AMQP map to be translated to additional types supported only by a message body; otherwise, <c>false</c>.</param>
+        ///
+        /// <returns><c>true</c> if an AMQP property value was able to be created; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool TryCreateAmqpPropertyValueFromNetProperty(
+            object? propertyValue,
+            out object? amqpPropertyValue,
+            bool allowBodyTypes = false)
+        {
+            amqpPropertyValue = null;
+
+            if (propertyValue == null)
+            {
+                return true;
+            }
+
+            switch (GetTypeIdentifier(propertyValue))
+            {
+                case AmqpType.Byte:
+                case AmqpType.SByte:
+                case AmqpType.Int16:
+                case AmqpType.Int32:
+                case AmqpType.Int64:
+                case AmqpType.UInt16:
+                case AmqpType.UInt32:
+                case AmqpType.UInt64:
+                case AmqpType.Single:
+                case AmqpType.Double:
+                case AmqpType.Boolean:
+                case AmqpType.Decimal:
+                case AmqpType.Char:
+                case AmqpType.Guid:
+                case AmqpType.DateTime:
+                case AmqpType.String:
+                    amqpPropertyValue = propertyValue;
+                    break;
+
+                case AmqpType.Stream:
+                case AmqpType.Unknown when propertyValue is Stream:
+                    amqpPropertyValue = ReadStreamToArraySegment((Stream)propertyValue);
+                    break;
+
+                case AmqpType.Uri:
+                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, ((Uri)propertyValue).AbsoluteUri);
+                    break;
+
+                case AmqpType.DateTimeOffset:
+                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.DateTimeOffset, ((DateTimeOffset)propertyValue).UtcTicks);
+                    break;
+
+                case AmqpType.TimeSpan:
+                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.TimeSpan, ((TimeSpan)propertyValue).Ticks);
+                    break;
+
+                case AmqpType.Unknown when allowBodyTypes && propertyValue is byte[] byteArray:
+                    amqpPropertyValue = new ArraySegment<byte>(byteArray);
+                    break;
+
+                case AmqpType.Unknown when allowBodyTypes && propertyValue is IDictionary dict:
+                    amqpPropertyValue = new AmqpMap(dict);
+                    break;
+
+                case AmqpType.Unknown when allowBodyTypes && propertyValue is IList:
+                    amqpPropertyValue = propertyValue;
+                    break;
+
+                case AmqpType.Unknown:
+                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, "Serialization failed due to an unsupported type, {0}.", propertyValue.GetType().FullName));
+                    throw exception;
+            }
+
+            return (amqpPropertyValue != null);
+        }
+
+        /// <summary>
+        ///   Attempts to create a message property value for a given AMQP property.
+        /// </summary>
+        ///
+        /// <param name="amqpPropertyValue">The value of the AMQP property to create a message property value for.</param>
+        /// <param name="convertedPropertyValue">The message property value that was created.</param>
+        /// <param name="allowBodyTypes"><c>true</c> to allow an AMQP map to be translated to additional types supported only by a message body; otherwise, <c>false</c>.</param>
+        ///
+        /// <returns><c>true</c> if a message property value was able to be created; otherwise, <c>false</c>.</returns>
+        ///
+        public static bool TryCreateNetPropertyFromAmqpProperty(
+            object? amqpPropertyValue,
+            out object? convertedPropertyValue,
+            bool allowBodyTypes = false)
+        {
+            convertedPropertyValue = null;
+
+            if (amqpPropertyValue == null)
+            {
+                return true;
+            }
+
+            // If the property is a simple type, then use it directly.
+
+            switch (GetTypeIdentifier(amqpPropertyValue))
+            {
+                case AmqpType.Byte:
+                case AmqpType.SByte:
+                case AmqpType.Int16:
+                case AmqpType.Int32:
+                case AmqpType.Int64:
+                case AmqpType.UInt16:
+                case AmqpType.UInt32:
+                case AmqpType.UInt64:
+                case AmqpType.Single:
+                case AmqpType.Double:
+                case AmqpType.Boolean:
+                case AmqpType.Decimal:
+                case AmqpType.Char:
+                case AmqpType.Guid:
+                case AmqpType.DateTime:
+                case AmqpType.String:
+                    convertedPropertyValue = amqpPropertyValue;
+                    return true;
+
+                case AmqpType.Unknown:
+                    // An explicitly unknown type will be considered for additional
+                    // scenarios below.
+                    break;
+
+                default:
+                    return false;
+            }
+
+            // Attempt to parse the value against other well-known value scenarios.
+
+            switch (amqpPropertyValue)
+            {
+                case AmqpSymbol symbol:
+                    convertedPropertyValue = symbol.Value;
+                    break;
+
+                case IList listOrArray:
+                    convertedPropertyValue = listOrArray;
+                    break;
+
+                case ArraySegment<byte> segment when segment.Count == segment.Array!.Length:
+                    convertedPropertyValue = segment.Array;
+                    break;
+
+                case ArraySegment<byte> segment:
+                    var buffer = new byte[segment.Count];
+                    Buffer.BlockCopy(segment.Array!, segment.Offset, buffer, 0, segment.Count);
+                    convertedPropertyValue = buffer;
+                    break;
+
+                case DescribedType described when (described.Descriptor is AmqpSymbol):
+                    convertedPropertyValue = TranslateSymbol((AmqpSymbol)described.Descriptor, described.Value);
+                    break;
+
+                case AmqpMap map when allowBodyTypes:
+                {
+                    var dict = new Dictionary<string, object>(map.Count);
+
+                    foreach (var pair in map)
+                    {
+                        dict.Add(pair.Key.ToString(), pair.Value);
+                    }
+
+                    convertedPropertyValue = dict;
+                    break;
+                }
+
+                default:
+                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, "Serialization operation failed due to unsupported type {0}.", amqpPropertyValue.GetType().FullName));
+                    throw exception;
+            }
+
+            return (convertedPropertyValue != null);
         }
 
         /// <summary>
@@ -567,187 +777,6 @@ namespace Azure.Core.Amqp.Shared
             }
 
             throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "{0} is not a supported value body type.", source.ValueBody.Value.GetType().Name));
-        }
-
-        /// <summary>
-        ///   Attempts to create an AMQP property value for a given event property.
-        /// </summary>
-        ///
-        /// <param name="propertyValue">The value of the event property to create an AMQP property value for.</param>
-        /// <param name="amqpPropertyValue">The AMQP property value that was created.</param>
-        /// <param name="allowBodyTypes"><c>true</c> to allow an AMQP map to be translated to additional types supported only by a message body; otherwise, <c>false</c>.</param>
-        ///
-        /// <returns><c>true</c> if an AMQP property value was able to be created; otherwise, <c>false</c>.</returns>
-        ///
-        private static bool TryCreateAmqpPropertyValueFromNetProperty(
-            object? propertyValue,
-            out object? amqpPropertyValue,
-            bool allowBodyTypes = false)
-        {
-            amqpPropertyValue = null;
-
-            if (propertyValue == null)
-            {
-                return true;
-            }
-
-            switch (GetTypeIdentifier(propertyValue))
-            {
-                case AmqpType.Byte:
-                case AmqpType.SByte:
-                case AmqpType.Int16:
-                case AmqpType.Int32:
-                case AmqpType.Int64:
-                case AmqpType.UInt16:
-                case AmqpType.UInt32:
-                case AmqpType.UInt64:
-                case AmqpType.Single:
-                case AmqpType.Double:
-                case AmqpType.Boolean:
-                case AmqpType.Decimal:
-                case AmqpType.Char:
-                case AmqpType.Guid:
-                case AmqpType.DateTime:
-                case AmqpType.String:
-                    amqpPropertyValue = propertyValue;
-                    break;
-
-                case AmqpType.Stream:
-                case AmqpType.Unknown when propertyValue is Stream:
-                    amqpPropertyValue = ReadStreamToArraySegment((Stream)propertyValue);
-                    break;
-
-                case AmqpType.Uri:
-                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.Uri, ((Uri)propertyValue).AbsoluteUri);
-                    break;
-
-                case AmqpType.DateTimeOffset:
-                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.DateTimeOffset, ((DateTimeOffset)propertyValue).UtcTicks);
-                    break;
-
-                case AmqpType.TimeSpan:
-                    amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.TimeSpan, ((TimeSpan)propertyValue).Ticks);
-                    break;
-
-                case AmqpType.Unknown when allowBodyTypes && propertyValue is byte[] byteArray:
-                    amqpPropertyValue = new ArraySegment<byte>(byteArray);
-                    break;
-
-                case AmqpType.Unknown when allowBodyTypes && propertyValue is IDictionary dict:
-                    amqpPropertyValue = new AmqpMap(dict);
-                    break;
-
-                case AmqpType.Unknown when allowBodyTypes && propertyValue is IList:
-                    amqpPropertyValue = propertyValue;
-                    break;
-
-                case AmqpType.Unknown:
-                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, "Serialization failed due to an unsupported type, {0}.", propertyValue.GetType().FullName));
-                    throw exception;
-            }
-
-            return (amqpPropertyValue != null);
-        }
-
-        /// <summary>
-        ///   Attempts to create a message property value for a given AMQP property.
-        /// </summary>
-        ///
-        /// <param name="amqpPropertyValue">The value of the AMQP property to create a message property value for.</param>
-        /// <param name="convertedPropertyValue">The message property value that was created.</param>
-        /// <param name="allowBodyTypes"><c>true</c> to allow an AMQP map to be translated to additional types supported only by a message body; otherwise, <c>false</c>.</param>
-        ///
-        /// <returns><c>true</c> if a message property value was able to be created; otherwise, <c>false</c>.</returns>
-        ///
-        private static bool TryCreateNetPropertyFromAmqpProperty(
-            object? amqpPropertyValue,
-            out object? convertedPropertyValue,
-            bool allowBodyTypes = false)
-        {
-            convertedPropertyValue = null;
-
-            if (amqpPropertyValue == null)
-            {
-                return true;
-            }
-
-            // If the property is a simple type, then use it directly.
-
-            switch (GetTypeIdentifier(amqpPropertyValue))
-            {
-                case AmqpType.Byte:
-                case AmqpType.SByte:
-                case AmqpType.Int16:
-                case AmqpType.Int32:
-                case AmqpType.Int64:
-                case AmqpType.UInt16:
-                case AmqpType.UInt32:
-                case AmqpType.UInt64:
-                case AmqpType.Single:
-                case AmqpType.Double:
-                case AmqpType.Boolean:
-                case AmqpType.Decimal:
-                case AmqpType.Char:
-                case AmqpType.Guid:
-                case AmqpType.DateTime:
-                case AmqpType.String:
-                    convertedPropertyValue = amqpPropertyValue;
-                    return true;
-
-                case AmqpType.Unknown:
-                    // An explicitly unknown type will be considered for additional
-                    // scenarios below.
-                    break;
-
-                default:
-                    return false;
-            }
-
-            // Attempt to parse the value against other well-known value scenarios.
-
-            switch (amqpPropertyValue)
-            {
-                case AmqpSymbol symbol:
-                    convertedPropertyValue = symbol.Value;
-                    break;
-
-                case IList listOrArray:
-                    convertedPropertyValue = listOrArray;
-                    break;
-
-                case ArraySegment<byte> segment when segment.Count == segment.Array.Length:
-                    convertedPropertyValue = segment.Array;
-                    break;
-
-                case ArraySegment<byte> segment:
-                    var buffer = new byte[segment.Count];
-                    Buffer.BlockCopy(segment.Array, segment.Offset, buffer, 0, segment.Count);
-                    convertedPropertyValue = buffer;
-                    break;
-
-                case DescribedType described when (described.Descriptor is AmqpSymbol):
-                    convertedPropertyValue = TranslateSymbol((AmqpSymbol)described.Descriptor, described.Value);
-                    break;
-
-                case AmqpMap map when allowBodyTypes:
-                {
-                    var dict = new Dictionary<string, object>(map.Count);
-
-                    foreach (var pair in map)
-                    {
-                        dict.Add(pair.Key.ToString(), pair.Value);
-                    }
-
-                    convertedPropertyValue = dict;
-                    break;
-                }
-
-                default:
-                    var exception = new SerializationException(string.Format(CultureInfo.CurrentCulture, "Serialization operation failed due to unsupported type {0}.", amqpPropertyValue.GetType().FullName));
-                    throw exception;
-            }
-
-            return (convertedPropertyValue != null);
         }
 
         private static void ThrowSerializationFailed(string propertyName, KeyValuePair<string, object?> pair)

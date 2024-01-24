@@ -31,6 +31,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 switch (discriminator.GetString())
                 {
                     case "Certificate": return MachineLearningCertificateDatastoreSecrets.DeserializeMachineLearningCertificateDatastoreSecrets(element);
+                    case "KerberosKeytab": return KerberosKeytabSecrets.DeserializeKerberosKeytabSecrets(element);
+                    case "KerberosPassword": return KerberosPasswordSecrets.DeserializeKerberosPasswordSecrets(element);
                     case "Sas": return MachineLearningSasDatastoreSecrets.DeserializeMachineLearningSasDatastoreSecrets(element);
                     case "ServicePrincipal": return MachineLearningServicePrincipalDatastoreSecrets.DeserializeMachineLearningServicePrincipalDatastoreSecrets(element);
                     case "AccountKey": return MachineLearningAccountKeyDatastoreSecrets.DeserializeMachineLearningAccountKeyDatastoreSecrets(element);

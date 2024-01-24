@@ -13,10 +13,17 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An update to an Instance pool. </summary>
     public partial class InstancePoolPatch
     {
-        /// <summary> Initializes a new instance of InstancePoolPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="InstancePoolPatch"/>. </summary>
         public InstancePoolPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InstancePoolPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        internal InstancePoolPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
         }
 
         /// <summary> Resource tags. </summary>

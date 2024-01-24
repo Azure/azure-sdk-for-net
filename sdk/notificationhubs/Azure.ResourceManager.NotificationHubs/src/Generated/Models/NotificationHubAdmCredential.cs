@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
     /// <summary> Description of a NotificationHub AdmCredential. </summary>
     public partial class NotificationHubAdmCredential
     {
-        /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
         public NotificationHubAdmCredential()
         {
         }
 
-        /// <summary> Initializes a new instance of NotificationHubAdmCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationHubAdmCredential"/>. </summary>
         /// <param name="clientId"> The client identifier. </param>
         /// <param name="clientSecret"> The credential secret access key. </param>
         /// <param name="authTokenUri"> The URL of the authorization token. </param>

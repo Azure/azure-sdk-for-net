@@ -13,7 +13,7 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Request to get the event schema of all events within a given search span. </summary>
     internal partial class GetEventSchemaRequest
     {
-        /// <summary> Initializes a new instance of GetEventSchemaRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetEventSchemaRequest"/>. </summary>
         /// <param name="searchSpan"> The range of time on which the query is executed. Cannot be null. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="searchSpan"/> is null. </exception>
         public GetEventSchemaRequest(DateTimeRange searchSpan)

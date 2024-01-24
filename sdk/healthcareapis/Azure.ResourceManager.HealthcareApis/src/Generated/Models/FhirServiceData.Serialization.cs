@@ -50,16 +50,6 @@ namespace Azure.ResourceManager.HealthcareApis
             writer.WriteStringValue(Location);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(AccessPolicies))
-            {
-                writer.WritePropertyName("accessPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in AccessPolicies)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(AcrConfiguration))
             {
                 writer.WritePropertyName("acrConfiguration"u8);
@@ -95,6 +85,16 @@ namespace Azure.ResourceManager.HealthcareApis
                 writer.WritePropertyName("importConfiguration"u8);
                 writer.WriteObjectValue(ImportConfiguration);
             }
+            if (Optional.IsDefined(ImplementationGuidesConfiguration))
+            {
+                writer.WritePropertyName("implementationGuidesConfiguration"u8);
+                writer.WriteObjectValue(ImplementationGuidesConfiguration);
+            }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -115,7 +115,6 @@ namespace Azure.ResourceManager.HealthcareApis
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<HealthcareApisProvisioningState> provisioningState = default;
-            Optional<IList<FhirServiceAccessPolicyEntry>> accessPolicies = default;
             Optional<FhirServiceAcrConfiguration> acrConfiguration = default;
             Optional<FhirServiceAuthenticationConfiguration> authenticationConfiguration = default;
             Optional<FhirServiceCorsConfiguration> corsConfiguration = default;
@@ -125,6 +124,8 @@ namespace Azure.ResourceManager.HealthcareApis
             Optional<FhirServiceEventState> eventState = default;
             Optional<FhirServiceResourceVersionPolicyConfiguration> resourceVersionPolicyConfiguration = default;
             Optional<FhirServiceImportConfiguration> importConfiguration = default;
+            Optional<ImplementationGuidesConfiguration> implementationGuidesConfiguration = default;
+            Optional<Encryption> encryption = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -216,20 +217,6 @@ namespace Azure.ResourceManager.HealthcareApis
                             provisioningState = new HealthcareApisProvisioningState(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("accessPolicies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<FhirServiceAccessPolicyEntry> array = new List<FhirServiceAccessPolicyEntry>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(FhirServiceAccessPolicyEntry.DeserializeFhirServiceAccessPolicyEntry(item));
-                            }
-                            accessPolicies = array;
-                            continue;
-                        }
                         if (property0.NameEquals("acrConfiguration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -316,11 +303,29 @@ namespace Azure.ResourceManager.HealthcareApis
                             importConfiguration = FhirServiceImportConfiguration.DeserializeFhirServiceImportConfiguration(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("implementationGuidesConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            implementationGuidesConfiguration = ImplementationGuidesConfiguration.DeserializeImplementationGuidesConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = Encryption.DeserializeEncryption(property0.Value);
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new FhirServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), Optional.ToList(accessPolicies), acrConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), resourceVersionPolicyConfiguration.Value, importConfiguration.Value, identity, Optional.ToNullable(etag));
+            return new FhirServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(kind), Optional.ToNullable(provisioningState), acrConfiguration.Value, authenticationConfiguration.Value, corsConfiguration.Value, exportConfiguration.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(eventState), resourceVersionPolicyConfiguration.Value, importConfiguration.Value, implementationGuidesConfiguration.Value, encryption.Value, identity, Optional.ToNullable(etag));
         }
     }
 }

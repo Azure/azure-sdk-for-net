@@ -21,9 +21,9 @@ using Azure.ResourceManager.Automation.Models;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DscCompilationJobResource" /> and their operations.
-    /// Each <see cref="DscCompilationJobResource" /> in the collection will belong to the same instance of <see cref="AutomationAccountResource" />.
-    /// To get a <see cref="DscCompilationJobCollection" /> instance call the GetDscCompilationJobs method from an instance of <see cref="AutomationAccountResource" />.
+    /// A class representing a collection of <see cref="DscCompilationJobResource"/> and their operations.
+    /// Each <see cref="DscCompilationJobResource"/> in the collection will belong to the same instance of <see cref="AutomationAccountResource"/>.
+    /// To get a <see cref="DscCompilationJobCollection"/> instance call the GetDscCompilationJobs method from an instance of <see cref="AutomationAccountResource"/>.
     /// </summary>
     public partial class DscCompilationJobCollection : ArmCollection, IEnumerable<DscCompilationJobResource>, IAsyncEnumerable<DscCompilationJobResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DscCompilationJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DscCompilationJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DscCompilationJobResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -244,11 +284,19 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DscCompilationJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DscCompilationJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DscCompilationJobResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
@@ -318,6 +382,96 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _dscCompilationJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="compilationJobName"> The DSC configuration Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DscCompilationJobResource>> GetIfExistsAsync(string compilationJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+
+            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dscCompilationJobRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DscCompilationJobResource>(response.GetRawResponse());
+                return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}/compilationjobs/{compilationJobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="compilationJobName"> The DSC configuration Id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="compilationJobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="compilationJobName"/> is null. </exception>
+        public virtual NullableResponse<DscCompilationJobResource> GetIfExists(string compilationJobName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(compilationJobName, nameof(compilationJobName));
+
+            using var scope = _dscCompilationJobClientDiagnostics.CreateScope("DscCompilationJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dscCompilationJobRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, compilationJobName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DscCompilationJobResource>(response.GetRawResponse());
+                return Response.FromValue(new DscCompilationJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

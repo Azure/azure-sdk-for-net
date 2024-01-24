@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Service principal credential. </summary>
     public partial class ServicePrincipalCredential : DataFactoryCredential
     {
-        /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredential"/>. </summary>
         public ServicePrincipalCredential()
         {
             CredentialType = "ServicePrincipal";
         }
 
-        /// <summary> Initializes a new instance of ServicePrincipalCredential. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCredential"/>. </summary>
         /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="servicePrincipalId"> The app ID of the service principal used to authenticate. </param>
         /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate. </param>
         /// <param name="tenant"> The ID of the tenant to which the service principal belongs. </param>
-        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, BinaryData servicePrincipalId, DataFactoryKeyVaultSecretReference servicePrincipalKey, BinaryData tenant) : base(credentialType, description, annotations, additionalProperties)
+        internal ServicePrincipalCredential(string credentialType, string description, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> servicePrincipalId, DataFactoryKeyVaultSecretReference servicePrincipalKey, DataFactoryElement<string> tenant) : base(credentialType, description, annotations, additionalProperties)
         {
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
@@ -36,69 +36,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             CredentialType = credentialType ?? "ServicePrincipal";
         }
 
-        /// <summary>
-        /// The app ID of the service principal used to authenticate
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData ServicePrincipalId { get; set; }
+        /// <summary> The app ID of the service principal used to authenticate. </summary>
+        public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The key of the service principal used to authenticate. </summary>
         public DataFactoryKeyVaultSecretReference ServicePrincipalKey { get; set; }
-        /// <summary>
-        /// The ID of the tenant to which the service principal belongs
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Tenant { get; set; }
+        /// <summary> The ID of the tenant to which the service principal belongs. </summary>
+        public DataFactoryElement<string> Tenant { get; set; }
     }
 }

@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
     /// <summary> Describes a VM Sizes. </summary>
     public partial class ServiceFabricManagedUnsupportedVmSize : ResourceData
     {
-        /// <summary> Initializes a new instance of ServiceFabricManagedUnsupportedVmSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedUnsupportedVmSize"/>. </summary>
         internal ServiceFabricManagedUnsupportedVmSize()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceFabricManagedUnsupportedVmSize. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedUnsupportedVmSize"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

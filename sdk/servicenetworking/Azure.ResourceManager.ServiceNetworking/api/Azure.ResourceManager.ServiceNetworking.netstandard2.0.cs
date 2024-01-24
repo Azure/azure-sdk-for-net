@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.AssociationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.AssociationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.AssociationResource>> GetAsync(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.AssociationResource> GetIfExists(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.AssociationResource>> GetIfExistsAsync(string associationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceNetworking.AssociationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.AssociationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.AssociationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.AssociationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class AssociationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public AssociationData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public AssociationData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ServiceNetworking.Models.AssociationType? AssociationType { get { throw null; } set { } }
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
@@ -53,13 +55,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource>> GetAsync(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetIfExists(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.FrontendResource>> GetIfExistsAsync(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceNetworking.FrontendResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.FrontendResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.FrontendResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class FrontendData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontendData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontendData(Azure.Core.AzureLocation location) { }
         public string Fqdn { get { throw null; } }
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -105,13 +109,15 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetAsync(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetIfExists(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetIfExistsAsync(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class TrafficControllerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public TrafficControllerData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public TrafficControllerData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Associations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> ConfigurationEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Frontends { get { throw null; } }
@@ -142,6 +148,29 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> Update(Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> UpdateAsync(Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.ServiceNetworking.Mocking
+{
+    public partial class MockableServiceNetworkingArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableServiceNetworkingArmClient() { }
+        public virtual Azure.ResourceManager.ServiceNetworking.AssociationResource GetAssociationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceNetworking.FrontendResource GetFrontendResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceNetworking.TrafficControllerResource GetTrafficControllerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableServiceNetworkingResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableServiceNetworkingResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficController(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetTrafficControllerAsync(string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ServiceNetworking.TrafficControllerCollection GetTrafficControllers() { throw null; }
+    }
+    public partial class MockableServiceNetworkingSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableServiceNetworkingSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficControllers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficControllersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.ServiceNetworking.Models

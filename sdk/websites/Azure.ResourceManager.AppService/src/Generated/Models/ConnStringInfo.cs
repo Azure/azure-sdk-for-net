@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Database connection string information. </summary>
     public partial class ConnStringInfo
     {
-        /// <summary> Initializes a new instance of ConnStringInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnStringInfo"/>. </summary>
         public ConnStringInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of ConnStringInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnStringInfo"/>. </summary>
         /// <param name="name"> Name of connection string. </param>
         /// <param name="connectionString"> Connection string value. </param>
         /// <param name="connectionStringType"> Type of database. </param>

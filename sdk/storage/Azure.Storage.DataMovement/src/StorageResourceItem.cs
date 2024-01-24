@@ -28,9 +28,9 @@ namespace Azure.Storage.DataMovement
         protected internal abstract DataTransferOrder TransferType { get; }
 
         /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
+        /// Defines the maximum supported chunk size for the storage resource.
         /// </summary>
-        protected internal abstract long MaxChunkSize { get; }
+        protected internal abstract long MaxSupportedChunkSize { get; }
 
         /// <summary>
         /// Storage Resource is a container.
@@ -43,6 +43,11 @@ namespace Azure.Storage.DataMovement
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
         protected internal abstract long? Length { get; }
+
+        /// <summary>
+        /// Properties of the Storage Resource Item.
+        /// </summary>
+        protected StorageResourceItemProperties ResourceProperties { get; set; }
 
         /// <summary>
         /// Consumes the readable stream to upload
@@ -141,10 +146,10 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Get properties of the resource.
         ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        protected internal abstract Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken token = default);
+        /// <returns>Returns the properties of the Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
+        protected internal abstract Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default);
 
         /// <summary>
         /// Gets the Authorization Header for the storage resource if available.

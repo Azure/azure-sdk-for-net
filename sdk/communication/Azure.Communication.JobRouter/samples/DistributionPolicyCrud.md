@@ -4,7 +4,6 @@
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_UsingStatements
 using Azure.Communication.JobRouter;
-using Azure.Communication.JobRouter.Models;
 ```
 
 ## Create a client
@@ -46,7 +45,7 @@ Console.WriteLine($"Successfully fetched distribution policy with id: {queriedDi
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicy
 Response<DistributionPolicy> updatedDistributionPolicy = routerAdministrationClient.UpdateDistributionPolicy(
-    new UpdateDistributionPolicyOptions(distributionPolicyId)
+    new DistributionPolicy(distributionPolicyId)
     {
         // you can update one or more properties of distribution policy
         Mode = new RoundRobinMode(),
@@ -55,26 +54,15 @@ Response<DistributionPolicy> updatedDistributionPolicy = routerAdministrationCli
 Console.WriteLine($"Distribution policy successfully update with new distribution mode. Mode Type: {updatedDistributionPolicy.Value.Mode.Kind}");
 ```
 
-## Remove from distribution policy
-
-```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_UpdateDistributionPolicyRemoveProp
-Response updatedDistributionPolicyWithoutName = routerAdministrationClient.UpdateDistributionPolicy(distributionPolicyId,
-    RequestContent.Create(new { Name = (string?)null }));
-
-Response<DistributionPolicy> queriedDistributionPolicyWithoutName = routerAdministrationClient.GetDistributionPolicy(distributionPolicyId);
-
-Console.WriteLine($"Distribution policy successfully updated: 'Name' has been removed. Status: Status: {string.IsNullOrWhiteSpace(queriedDistributionPolicyWithoutName.Value.Name)}");
-```
-
 ## List distribution policies
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_Crud_GetDistributionPolicies
-Pageable<DistributionPolicyItem> distributionPolicies = routerAdministrationClient.GetDistributionPolicies();
-foreach (Page<DistributionPolicyItem> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
+Pageable<DistributionPolicy> distributionPolicies = routerAdministrationClient.GetDistributionPolicies(cancellationToken: default);
+foreach (Page<DistributionPolicy> asPage in distributionPolicies.AsPages(pageSizeHint: 10))
 {
-    foreach (DistributionPolicyItem? policy in asPage.Values)
+    foreach (DistributionPolicy? policy in asPage.Values)
     {
-        Console.WriteLine($"Listing distribution policy with id: {policy.DistributionPolicy.Id}");
+        Console.WriteLine($"Listing distribution policy with id: {policy.Id}");
     }
 }
 ```

@@ -13,13 +13,13 @@ namespace Azure.Containers.ContainerRegistry
     /// <summary> Returns the requested OCI index file. </summary>
     internal partial class OCIIndex : Manifest
     {
-        /// <summary> Initializes a new instance of OCIIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="OCIIndex"/>. </summary>
         internal OCIIndex()
         {
             Manifests = new ChangeTrackingList<ManifestListAttributes>();
         }
 
-        /// <summary> Initializes a new instance of OCIIndex. </summary>
+        /// <summary> Initializes a new instance of <see cref="OCIIndex"/>. </summary>
         /// <param name="schemaVersion"> Schema version. </param>
         /// <param name="manifests"> List of OCI image layer information. </param>
         /// <param name="annotations"> Additional information provided through arbitrary metadata. </param>

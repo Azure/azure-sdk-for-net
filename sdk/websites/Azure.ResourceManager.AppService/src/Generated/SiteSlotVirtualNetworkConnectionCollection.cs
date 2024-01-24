@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteSlotVirtualNetworkConnectionResource" /> and their operations.
-    /// Each <see cref="SiteSlotVirtualNetworkConnectionResource" /> in the collection will belong to the same instance of <see cref="WebSiteSlotResource" />.
-    /// To get a <see cref="SiteSlotVirtualNetworkConnectionCollection" /> instance call the GetSiteSlotVirtualNetworkConnections method from an instance of <see cref="WebSiteSlotResource" />.
+    /// A class representing a collection of <see cref="SiteSlotVirtualNetworkConnectionResource"/> and their operations.
+    /// Each <see cref="SiteSlotVirtualNetworkConnectionResource"/> in the collection will belong to the same instance of <see cref="WebSiteSlotResource"/>.
+    /// To get a <see cref="SiteSlotVirtualNetworkConnectionCollection"/> instance call the GetSiteSlotVirtualNetworkConnections method from an instance of <see cref="WebSiteSlotResource"/>.
     /// </summary>
     public partial class SiteSlotVirtualNetworkConnectionCollection : ArmCollection, IEnumerable<SiteSlotVirtualNetworkConnectionResource>, IAsyncEnumerable<SiteSlotVirtualNetworkConnectionResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_CreateOrUpdateVnetConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_CreateOrUpdateVnetConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListVnetConnectionsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteSlotVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteSlotVirtualNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteSlotVirtualNetworkConnectionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateListVnetConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -241,10 +281,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_ListVnetConnectionsSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteSlotVirtualNetworkConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteSlotVirtualNetworkConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteSlotVirtualNetworkConnectionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotVirtualNetworkConnectionWebAppsRestClient.CreateListVnetConnectionsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -261,6 +309,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +353,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetVnetConnectionSlot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vnetName"> Name of the virtual network. </param>
@@ -313,6 +377,96 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteSlotVirtualNetworkConnectionResource>> GetIfExistsAsync(string vnetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteSlotVirtualNetworkConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WebApps_GetVnetConnectionSlot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteSlotVirtualNetworkConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vnetName"> Name of the virtual network. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vnetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vnetName"/> is null. </exception>
+        public virtual NullableResponse<SiteSlotVirtualNetworkConnectionResource> GetIfExists(string vnetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vnetName, nameof(vnetName));
+
+            using var scope = _siteSlotVirtualNetworkConnectionWebAppsClientDiagnostics.CreateScope("SiteSlotVirtualNetworkConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteSlotVirtualNetworkConnectionWebAppsRestClient.GetVnetConnectionSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, vnetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteSlotVirtualNetworkConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteSlotVirtualNetworkConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

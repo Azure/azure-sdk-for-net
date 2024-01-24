@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoPrivateLinkResource" /> and their operations.
-    /// Each <see cref="KustoPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="KustoPrivateLinkResourceCollection" /> instance call the GetKustoPrivateLinkResources method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="KustoPrivateLinkResource"/> and their operations.
+    /// Each <see cref="KustoPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="KustoPrivateLinkResourceCollection"/> instance call the GetKustoPrivateLinkResources method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class KustoPrivateLinkResourceCollection : ArmCollection, IEnumerable<KustoPrivateLinkResource>, IAsyncEnumerable<KustoPrivateLinkResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KustoPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KustoPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KustoPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KustoPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KustoPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
@@ -231,6 +279,96 @@ namespace Azure.ResourceManager.Kusto
             {
                 var response = _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<KustoPrivateLinkResource>> GetIfExistsAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            using var scope = _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("KustoPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<KustoPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new KustoPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/privateLinkResources/{privateLinkResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="privateLinkResourceName"> The name of the private link resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
+        public virtual NullableResponse<KustoPrivateLinkResource> GetIfExists(string privateLinkResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(privateLinkResourceName, nameof(privateLinkResourceName));
+
+            using var scope = _kustoPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("KustoPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _kustoPrivateLinkResourcePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateLinkResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<KustoPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new KustoPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

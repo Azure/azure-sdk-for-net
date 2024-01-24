@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowRunActionRequestHistoryResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowRunActionRequestHistoryResource" /> in the collection will belong to the same instance of <see cref="LogicWorkflowRunActionResource" />.
-    /// To get a <see cref="LogicWorkflowRunActionRequestHistoryCollection" /> instance call the GetLogicWorkflowRunActionRequestHistories method from an instance of <see cref="LogicWorkflowRunActionResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowRunActionRequestHistoryResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowRunActionRequestHistoryResource"/> in the collection will belong to the same instance of <see cref="LogicWorkflowRunActionResource"/>.
+    /// To get a <see cref="LogicWorkflowRunActionRequestHistoryCollection"/> instance call the GetLogicWorkflowRunActionRequestHistories method from an instance of <see cref="LogicWorkflowRunActionResource"/>.
     /// </summary>
     public partial class LogicWorkflowRunActionRequestHistoryCollection : ArmCollection, IEnumerable<LogicWorkflowRunActionRequestHistoryResource>, IAsyncEnumerable<LogicWorkflowRunActionRequestHistoryResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestHistoryName"> The request history name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowRunActionRequestHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicWorkflowRunActionRequestHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowRunActionRequestHistoryResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowRunActionRequestHistoryResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicWorkflowRunActionRequestHistoryResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowRunActionRequestHistoryResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionRequestHistories_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestHistoryName"> The request history name. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Logic
             {
                 var response = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, requestHistoryName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/requestHistories/{requestHistoryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowRunActionRequestHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestHistoryName"> The request history name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LogicWorkflowRunActionRequestHistoryResource>> GetIfExistsAsync(string requestHistoryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
+
+            using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, requestHistoryName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowRunActionRequestHistoryResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunActionRequestHistoryResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/runs/{runName}/actions/{actionName}/requestHistories/{requestHistoryName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowRunActionRequestHistories_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionRequestHistoryResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="requestHistoryName"> The request history name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="requestHistoryName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
+        public virtual NullableResponse<LogicWorkflowRunActionRequestHistoryResource> GetIfExists(string requestHistoryName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
+
+            using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, requestHistoryName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowRunActionRequestHistoryResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowRunActionRequestHistoryResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

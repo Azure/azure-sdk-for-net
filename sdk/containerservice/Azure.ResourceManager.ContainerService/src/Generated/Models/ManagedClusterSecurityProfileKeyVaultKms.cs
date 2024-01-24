@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
@@ -12,22 +14,56 @@ namespace Azure.ResourceManager.ContainerService.Models
     /// <summary> Azure Key Vault key management service settings for the security profile. </summary>
     public partial class ManagedClusterSecurityProfileKeyVaultKms
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileKeyVaultKms. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileKeyVaultKms"/>. </summary>
         public ManagedClusterSecurityProfileKeyVaultKms()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileKeyVaultKms. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileKeyVaultKms"/>. </summary>
         /// <param name="isEnabled"> Whether to enable Azure Key Vault key management service. The default is false. </param>
         /// <param name="keyId"> Identifier of Azure Key Vault key. See [key identifier format](https://docs.microsoft.com/en-us/azure/key-vault/general/about-keys-secrets-certificates#vault-name-and-object-name) for more details. When Azure Key Vault key management service is enabled, this field is required and must be a valid key identifier. When Azure Key Vault key management service is disabled, leave the field empty. </param>
         /// <param name="keyVaultNetworkAccess"> Network access of key vault. The possible values are `Public` and `Private`. `Public` means the key vault allows public access from all networks. `Private` means the key vault disables public access and enables private link. The default value is `Public`. </param>
         /// <param name="keyVaultResourceId"> Resource ID of key vault. When keyVaultNetworkAccess is `Private`, this field is required and must be a valid resource ID. When keyVaultNetworkAccess is `Public`, leave the field empty. </param>
-        internal ManagedClusterSecurityProfileKeyVaultKms(bool? isEnabled, string keyId, ManagedClusterKeyVaultNetworkAccessType? keyVaultNetworkAccess, ResourceIdentifier keyVaultResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileKeyVaultKms(bool? isEnabled, string keyId, ManagedClusterKeyVaultNetworkAccessType? keyVaultNetworkAccess, ResourceIdentifier keyVaultResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             KeyId = keyId;
             KeyVaultNetworkAccess = keyVaultNetworkAccess;
             KeyVaultResourceId = keyVaultResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether to enable Azure Key Vault key management service. The default is false. </summary>

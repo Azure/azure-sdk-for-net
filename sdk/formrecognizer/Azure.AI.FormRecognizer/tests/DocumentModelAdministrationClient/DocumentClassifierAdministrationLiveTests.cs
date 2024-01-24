@@ -107,7 +107,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
-            AssertDocumentTypeDictionariesAreEquivalent(documentTypes, classifier.DocumentTypes);
+            DocumentAssert.AreEquivalent(documentTypes, classifier.DocumentTypes);
         }
 
         [RecordedTest]
@@ -152,7 +152,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             Assert.Greater(classifier.CreatedOn, startTime);
             Assert.Greater(classifier.ExpiresOn, classifier.CreatedOn);
 
-            AssertDocumentTypeDictionariesAreEquivalent(documentTypes, classifier.DocumentTypes);
+            DocumentAssert.AreEquivalent(documentTypes, classifier.DocumentTypes);
         }
 
         #endregion Build
@@ -172,13 +172,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
             DocumentClassifierDetails expected = disposableClassifier.Value;
             DocumentClassifierDetails classifier = await client.GetDocumentClassifierAsync(classifierId);
 
-            Assert.AreEqual(expected.ClassifierId, classifier.ClassifierId);
-            Assert.AreEqual(expected.Description, classifier.Description);
-            Assert.AreEqual(expected.ServiceVersion, classifier.ServiceVersion);
-            Assert.AreEqual(expected.CreatedOn, classifier.CreatedOn);
-            Assert.AreEqual(expected.ExpiresOn, classifier.ExpiresOn);
-
-            AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypes, classifier.DocumentTypes);
+            DocumentAssert.AreEqual(expected, classifier);
         }
 
         [RecordedTest]
@@ -234,13 +228,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
                 DocumentClassifierDetails classifier = idMapping[id];
                 DocumentClassifierDetails expected = expectedIdMapping[id];
 
-                Assert.AreEqual(expected.ClassifierId, classifier.ClassifierId);
-                Assert.AreEqual(expected.Description, classifier.Description);
-                Assert.AreEqual(expected.ServiceVersion, classifier.ServiceVersion);
-                Assert.AreEqual(expected.CreatedOn, classifier.CreatedOn);
-                Assert.AreEqual(expected.ExpiresOn, classifier.ExpiresOn);
-
-                AssertDocumentTypeDictionariesAreEquivalent(expected.DocumentTypes, classifier.DocumentTypes);
+                DocumentAssert.AreEqual(expected, classifier);
             }
         }
 
@@ -274,45 +262,5 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         }
 
         #endregion Delete
-
-        private void AssertDocumentTypeDictionariesAreEquivalent(IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes1, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes2)
-        {
-            Assert.AreEqual(docTypes1.Count, docTypes2.Count);
-
-            foreach (string key in docTypes1.Keys)
-            {
-                ClassifierDocumentTypeDetails docType1 = docTypes1[key];
-                ClassifierDocumentTypeDetails docType2 = docTypes2[key];
-
-                Assert.AreEqual(docType1.TrainingDataSource.Kind, docType2.TrainingDataSource.Kind);
-
-                if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.Blob)
-                {
-                    var source1 = docType1.TrainingDataSource as BlobContentSource;
-                    var source2 = docType2.TrainingDataSource as BlobContentSource;
-
-                    // The URI returned by the service does not include query parameters, so we're
-                    // making sure they're not included in our comparison.
-                    string uri1 = source1.ContainerUri.GetLeftPart(UriPartial.Path);
-                    string uri2 = source2.ContainerUri.GetLeftPart(UriPartial.Path);
-
-                    Assert.AreEqual(uri1, uri2);
-                    Assert.AreEqual(source1.Prefix, source2.Prefix);
-                }
-                else if (docType1.TrainingDataSource.Kind == DocumentContentSourceKind.BlobFileList)
-                {
-                    var source1 = docType1.TrainingDataSource as BlobFileListContentSource;
-                    var source2 = docType2.TrainingDataSource as BlobFileListContentSource;
-
-                    // The URI returned by the service does not include query parameters, so we're
-                    // making sure they're not included in our comparison.
-                    string uri1 = source1.ContainerUri.GetLeftPart(UriPartial.Path);
-                    string uri2 = source2.ContainerUri.GetLeftPart(UriPartial.Path);
-
-                    Assert.AreEqual(uri1, uri2);
-                    Assert.AreEqual(source1.FileList, source2.FileList);
-                }
-            }
-        }
     }
 }

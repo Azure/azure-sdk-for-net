@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
+using Azure.ResourceManager.ManagedServiceIdentities.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities
@@ -18,133 +19,133 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
     /// <summary> A class to add extension methods to Azure.ResourceManager.ManagedServiceIdentities. </summary>
     public static partial class ManagedServiceIdentitiesExtensions
     {
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmResource resource)
+        private static MockableManagedServiceIdentitiesArmClient GetMockableManagedServiceIdentitiesArmClient(ArmClient client)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ArmResourceExtensionClient(client, resource.Id);
-            });
+            return client.GetCachedClient(client0 => new MockableManagedServiceIdentitiesArmClient(client0));
         }
 
-        private static ArmResourceExtensionClient GetArmResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableManagedServiceIdentitiesArmResource GetMockableManagedServiceIdentitiesArmResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ArmResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableManagedServiceIdentitiesArmResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
+        private static MockableManagedServiceIdentitiesResourceGroupResource GetMockableManagedServiceIdentitiesResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, resource.Id);
-            });
+            return resource.GetCachedClient(client => new MockableManagedServiceIdentitiesResourceGroupResource(client, resource.Id));
         }
 
-        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        private static MockableManagedServiceIdentitiesSubscriptionResource GetMockableManagedServiceIdentitiesSubscriptionResource(ArmResource resource)
         {
-            return client.GetResourceClient(() =>
-            {
-                return new ResourceGroupResourceExtensionClient(client, scope);
-            });
+            return resource.GetCachedClient(client => new MockableManagedServiceIdentitiesSubscriptionResource(client, resource.Id));
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
+        /// <summary>
+        /// Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmClient.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesArmClient.GetSystemAssignedIdentity(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
+        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
         {
-            return resource.GetCachedClient(client =>
-            {
-                return new SubscriptionResourceExtensionClient(client, resource.Id);
-            });
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableManagedServiceIdentitiesArmClient(client).GetSystemAssignedIdentity(scope);
         }
 
-        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
-        {
-            return client.GetResourceClient(() =>
-            {
-                return new SubscriptionResourceExtensionClient(client, scope);
-            });
-        }
-        #region SystemAssignedIdentityResource
         /// <summary>
         /// Gets an object representing a <see cref="SystemAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SystemAssignedIdentityResource.CreateResourceIdentifier" /> to create a <see cref="SystemAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesArmClient.GetSystemAssignedIdentityResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                SystemAssignedIdentityResource.ValidateResourceId(id);
-                return new SystemAssignedIdentityResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region UserAssignedIdentityResource
+            return GetMockableManagedServiceIdentitiesArmClient(client).GetSystemAssignedIdentityResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="UserAssignedIdentityResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="UserAssignedIdentityResource.CreateResourceIdentifier" /> to create an <see cref="UserAssignedIdentityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesArmClient.GetUserAssignedIdentityResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UserAssignedIdentityResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="UserAssignedIdentityResource"/> object. </returns>
         public static UserAssignedIdentityResource GetUserAssignedIdentityResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                UserAssignedIdentityResource.ValidateResourceId(id);
-                return new UserAssignedIdentityResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region FederatedIdentityCredentialResource
+            return GetMockableManagedServiceIdentitiesArmClient(client).GetUserAssignedIdentityResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="FederatedIdentityCredentialResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="FederatedIdentityCredentialResource.CreateResourceIdentifier" /> to create a <see cref="FederatedIdentityCredentialResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesArmClient.GetFederatedIdentityCredentialResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FederatedIdentityCredentialResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FederatedIdentityCredentialResource"/> object. </returns>
         public static FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                FederatedIdentityCredentialResource.ValidateResourceId(id);
-                return new FederatedIdentityCredentialResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
+            return GetMockableManagedServiceIdentitiesArmClient(client).GetFederatedIdentityCredentialResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesArmResource.GetSystemAssignedIdentity()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="armResource"> The <see cref="ArmResource" /> instance the method will execute against. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="armResource"/> is null. </exception>
+        /// <returns> Returns a <see cref="SystemAssignedIdentityResource"/> object. </returns>
         public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmResource armResource)
         {
-            return GetArmResourceExtensionClient(armResource).GetSystemAssignedIdentity();
+            Argument.AssertNotNull(armResource, nameof(armResource));
+
+            return GetMockableManagedServiceIdentitiesArmResource(armResource).GetSystemAssignedIdentity();
         }
 
-        /// <summary> Gets an object representing a SystemAssignedIdentityResource along with the instance operations that can be performed on it in the ArmResource. </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="scope"> The scope that the resource will apply against. </param>
-        /// <returns> Returns a <see cref="SystemAssignedIdentityResource" /> object. </returns>
-        public static SystemAssignedIdentityResource GetSystemAssignedIdentity(this ArmClient client, ResourceIdentifier scope)
-        {
-            return GetArmResourceExtensionClient(client, scope).GetSystemAssignedIdentity();
-        }
-
-        /// <summary> Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource. </summary>
+        /// <summary>
+        /// Gets a collection of UserAssignedIdentityResources in the ResourceGroupResource.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesResourceGroupResource.GetUserAssignedIdentities()"/> instead.</description>
+        /// </item>
+        /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of UserAssignedIdentityResources and their operations over a UserAssignedIdentityResource. </returns>
         public static UserAssignedIdentityCollection GetUserAssignedIdentities(this ResourceGroupResource resourceGroupResource)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetUserAssignedIdentities();
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedServiceIdentitiesResourceGroupResource(resourceGroupResource).GetUserAssignedIdentities();
         }
 
         /// <summary>
@@ -158,17 +159,31 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesResourceGroupResource.GetUserAssignedIdentityAsync(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return await resourceGroupResource.GetUserAssignedIdentities().GetAsync(resourceName, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableManagedServiceIdentitiesResourceGroupResource(resourceGroupResource).GetUserAssignedIdentityAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -182,17 +197,31 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesResourceGroupResource.GetUserAssignedIdentity(string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="resourceName"> The name of the identity resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="resourceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<UserAssignedIdentityResource> GetUserAssignedIdentity(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            return resourceGroupResource.GetUserAssignedIdentities().Get(resourceName, cancellationToken);
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableManagedServiceIdentitiesResourceGroupResource(resourceGroupResource).GetUserAssignedIdentity(resourceName, cancellationToken);
         }
 
         /// <summary>
@@ -206,14 +235,29 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedServiceIdentitiesSubscriptionResource(subscriptionResource).GetUserAssignedIdentitiesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -227,14 +271,29 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableManagedServiceIdentitiesSubscriptionResource.GetUserAssignedIdentities(CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UserAssignedIdentityResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="UserAssignedIdentityResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<UserAssignedIdentityResource> GetUserAssignedIdentities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableManagedServiceIdentitiesSubscriptionResource(subscriptionResource).GetUserAssignedIdentities(cancellationToken);
         }
     }
 }

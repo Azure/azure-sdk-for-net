@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevTestLabs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevTestLabArmTemplateResource" /> and their operations.
-    /// Each <see cref="DevTestLabArmTemplateResource" /> in the collection will belong to the same instance of <see cref="DevTestLabArtifactSourceResource" />.
-    /// To get a <see cref="DevTestLabArmTemplateCollection" /> instance call the GetDevTestLabArmTemplates method from an instance of <see cref="DevTestLabArtifactSourceResource" />.
+    /// A class representing a collection of <see cref="DevTestLabArmTemplateResource"/> and their operations.
+    /// Each <see cref="DevTestLabArmTemplateResource"/> in the collection will belong to the same instance of <see cref="DevTestLabArtifactSourceResource"/>.
+    /// To get a <see cref="DevTestLabArmTemplateCollection"/> instance call the GetDevTestLabArmTemplates method from an instance of <see cref="DevTestLabArtifactSourceResource"/>.
     /// </summary>
     public partial class DevTestLabArmTemplateCollection : ArmCollection, IEnumerable<DevTestLabArmTemplateResource>, IAsyncEnumerable<DevTestLabArmTemplateResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ArmTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the azure resource manager template. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ArmTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -140,6 +156,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ArmTemplates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
@@ -147,7 +171,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevTestLabArmTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevTestLabArmTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevTestLabArmTemplateResource> GetAllAsync(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
@@ -166,6 +190,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ArmTemplates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
@@ -173,7 +205,7 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="orderby"> The ordering expression for the results, using OData notation. Example: '$orderby=name desc'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevTestLabArmTemplateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevTestLabArmTemplateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevTestLabArmTemplateResource> GetAll(string expand = null, string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devTestLabArmTemplateArmTemplatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, expand, filter, top, orderby);
@@ -191,6 +223,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ArmTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -228,6 +268,14 @@ namespace Azure.ResourceManager.DevTestLabs
         /// <term>Operation Id</term>
         /// <description>ArmTemplates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the azure resource manager template. </param>
@@ -245,6 +293,98 @@ namespace Azure.ResourceManager.DevTestLabs
             {
                 var response = _devTestLabArmTemplateArmTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArmTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevTestLabArmTemplateResource>> GetIfExistsAsync(string name, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabArmTemplateArmTemplatesClientDiagnostics.CreateScope("DevTestLabArmTemplateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devTestLabArmTemplateArmTemplatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabArmTemplateResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevTestLab/labs/{labName}/artifactsources/{artifactSourceName}/armtemplates/{name}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ArmTemplates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevTestLabArmTemplateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="name"> The name of the azure resource manager template. </param>
+        /// <param name="expand"> Specify the $expand query. Example: 'properties($select=displayName)'. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public virtual NullableResponse<DevTestLabArmTemplateResource> GetIfExists(string name, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+
+            using var scope = _devTestLabArmTemplateArmTemplatesClientDiagnostics.CreateScope("DevTestLabArmTemplateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devTestLabArmTemplateArmTemplatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, name, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevTestLabArmTemplateResource>(response.GetRawResponse());
+                return Response.FromValue(new DevTestLabArmTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

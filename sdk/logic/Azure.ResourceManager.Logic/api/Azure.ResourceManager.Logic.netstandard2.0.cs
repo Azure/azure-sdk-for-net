@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> GetAsync(string agreementName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> GetIfExists(string agreementName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>> GetIfExistsAsync(string agreementName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAgreementResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountAgreementData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountAgreementData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity hostIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity guestIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementContent content) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountAgreementData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementType agreementType, string hostPartner, string guestPartner, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity hostIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity guestIdentity, Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementContent content) { }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementType AgreementType { get { throw null; } set { } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountAgreementContent Content { get { throw null; } set { } }
@@ -61,13 +63,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> GetAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> GetIfExists(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>> GetIfExistsAsync(string assemblyArtifactName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountAssemblyDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountAssemblyDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAssemblyProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountAssemblyDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountAssemblyProperties properties) { }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountAssemblyProperties Properties { get { throw null; } set { } }
     }
     public partial class IntegrationAccountAssemblyDefinitionResource : Azure.ResourceManager.ArmResource
@@ -103,13 +107,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> GetAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> GetIfExists(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>> GetIfExistsAsync(string batchConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountBatchConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountBatchConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountBatchConfigurationProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountBatchConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountBatchConfigurationProperties properties) { }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountBatchConfigurationProperties Properties { get { throw null; } set { } }
     }
     public partial class IntegrationAccountBatchConfigurationResource : Azure.ResourceManager.ArmResource
@@ -143,13 +149,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource> GetIfExists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource>> GetIfExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountCertificateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountCertificateData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountCertificateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountCertificateData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountKeyVaultKeyReference Key { get { throw null; } set { } }
@@ -187,13 +195,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> GetAsync(string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIfExists(string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountResource>> GetIfExistsAsync(string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Logic.Models.LogicResourceReference IntegrationServiceEnvironment { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationAccountSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowState? State { get { throw null; } set { } }
@@ -209,13 +219,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountMapResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountMapResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountMapResource>> GetAsync(string mapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountMapResource> GetIfExists(string mapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountMapResource>> GetIfExistsAsync(string mapName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountMapResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountMapResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountMapResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountMapResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountMapData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType mapType) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountMapData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountMapType mapType) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
@@ -258,13 +270,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource>> GetAsync(string partnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> GetIfExists(string partnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource>> GetIfExistsAsync(string partnerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountPartnerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountPartnerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountPartnerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType partnerType, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerContent content) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountPartnerData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerType partnerType, Azure.ResourceManager.Logic.Models.IntegrationAccountPartnerContent content) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Logic.Models.IntegrationAccountBusinessIdentity> B2BBusinessIdentities { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -356,13 +370,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource>> GetAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> GetIfExists(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource>> GetIfExistsAsync(string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountSchemaResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountSchemaData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType schemaType) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountSchemaData(Azure.Core.AzureLocation location, Azure.ResourceManager.Logic.Models.IntegrationAccountSchemaType schemaType) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.BinaryData Content { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicContentLink ContentLink { get { throw null; } }
@@ -407,13 +423,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountSessionResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountSessionResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountSessionResource>> GetAsync(string sessionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountSessionResource> GetIfExists(string sessionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationAccountSessionResource>> GetIfExistsAsync(string sessionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationAccountSessionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationAccountSessionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationAccountSessionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationAccountSessionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationAccountSessionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationAccountSessionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationAccountSessionData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
         public System.BinaryData Content { get { throw null; } set { } }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -449,13 +467,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource>> GetAsync(string integrationServiceEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetIfExists(string integrationServiceEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource>> GetIfExistsAsync(string integrationServiceEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationServiceEnvironmentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationServiceEnvironmentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationServiceEnvironmentData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentProperties Properties { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.IntegrationServiceEnvironmentSku Sku { get { throw null; } set { } }
@@ -471,13 +491,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>> GetAsync(string apiName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> GetIfExists(string apiName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>> GetIfExistsAsync(string apiName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class IntegrationServiceEnvironmentManagedApiData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public IntegrationServiceEnvironmentManagedApiData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public IntegrationServiceEnvironmentManagedApiData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Logic.Models.LogicApiResourceDefinitions ApiDefinitions { get { throw null; } }
         public System.Uri ApiDefinitionUri { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Capabilities { get { throw null; } }
@@ -597,13 +619,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> GetAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowResource> GetIfExists(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowResource>> GetIfExistsAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class LogicWorkflowData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LogicWorkflowData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicWorkflowData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Logic.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } set { } }
         public string AccessEndpoint { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
@@ -621,7 +645,7 @@ namespace Azure.ResourceManager.Logic
     }
     public partial class LogicWorkflowRequestHistoryData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LogicWorkflowRequestHistoryData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicWorkflowRequestHistoryData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowRequestHistoryProperties Properties { get { throw null; } set { } }
     }
     public partial class LogicWorkflowResource : Azure.ResourceManager.ArmResource
@@ -684,6 +708,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>> GetAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> GetIfExists(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>> GetIfExistsAsync(string actionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -712,13 +738,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> GetIfExists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>> GetIfExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class LogicWorkflowRunActionRepetitionDefinitionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LogicWorkflowRunActionRepetitionDefinitionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicWorkflowRunActionRepetitionDefinitionData(Azure.Core.AzureLocation location) { }
         public string Code { get { throw null; } set { } }
         public Azure.ResourceManager.Logic.Models.LogicWorkflowRunActionCorrelation Correlation { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
@@ -744,6 +772,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> GetIfExists(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>> GetIfExistsAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -782,6 +812,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>> GetAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> GetIfExists(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>> GetIfExistsAsync(string requestHistoryName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -826,6 +858,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>> GetAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> GetIfExists(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>> GetIfExistsAsync(string repetitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -849,6 +883,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowRunResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowRunResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunResource>> GetAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunResource> GetIfExists(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunResource>> GetIfExistsAsync(string runName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowRunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowRunResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -876,6 +912,8 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource> Get(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource>> GetAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource> GetIfExists(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource>> GetIfExistsAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class LogicWorkflowRunOperationResource : Azure.ResourceManager.ArmResource
     {
@@ -914,6 +952,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>> GetAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> GetIfExists(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>> GetIfExistsAsync(string triggerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -940,6 +980,8 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> GetAll(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> GetAllAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>> GetAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> GetIfExists(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>> GetIfExistsAsync(string historyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -1004,13 +1046,15 @@ namespace Azure.ResourceManager.Logic
         public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> GetAll(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> GetAllAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>> GetAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> GetIfExists(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>> GetIfExistsAsync(string versionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Logic.LogicWorkflowVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class LogicWorkflowVersionData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LogicWorkflowVersionData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicWorkflowVersionData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Logic.Models.FlowAccessControlConfiguration AccessControl { get { throw null; } set { } }
         public string AccessEndpoint { get { throw null; } }
         public System.DateTimeOffset? ChangedOn { get { throw null; } }
@@ -1035,6 +1079,60 @@ namespace Azure.ResourceManager.Logic
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowVersionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri> GetCallbackUrlWorkflowVersionTrigger(string triggerName, Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.Models.LogicWorkflowTriggerCallbackUri>> GetCallbackUrlWorkflowVersionTriggerAsync(string triggerName, Azure.ResourceManager.Logic.Models.ListOperationCallbackUrlParameterInfo info = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Logic.Mocking
+{
+    public partial class MockableLogicArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableLogicArmClient() { }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountAgreementResource GetIntegrationAccountAgreementResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountAssemblyDefinitionResource GetIntegrationAccountAssemblyDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountBatchConfigurationResource GetIntegrationAccountBatchConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountCertificateResource GetIntegrationAccountCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountMapResource GetIntegrationAccountMapResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountPartnerResource GetIntegrationAccountPartnerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountResource GetIntegrationAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountSchemaResource GetIntegrationAccountSchemaResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountSessionResource GetIntegrationAccountSessionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationServiceEnvironmentManagedApiResource GetIntegrationServiceEnvironmentManagedApiResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource GetIntegrationServiceEnvironmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowResource GetLogicWorkflowResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionRequestHistoryResource GetLogicWorkflowRunActionRepetitionRequestHistoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRepetitionResource GetLogicWorkflowRunActionRepetitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionRequestHistoryResource GetLogicWorkflowRunActionRequestHistoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionResource GetLogicWorkflowRunActionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunActionScopeRepetitionResource GetLogicWorkflowRunActionScopeRepetitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunOperationResource GetLogicWorkflowRunOperationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowRunResource GetLogicWorkflowRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowTriggerHistoryResource GetLogicWorkflowTriggerHistoryResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowTriggerResource GetLogicWorkflowTriggerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowVersionResource GetLogicWorkflowVersionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableLogicResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableLogicResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIntegrationAccount(string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationAccountResource>> GetIntegrationAccountAsync(string integrationAccountName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationAccountCollection GetIntegrationAccounts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironment(string integrationServiceEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource>> GetIntegrationServiceEnvironmentAsync(string integrationServiceEnvironmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.IntegrationServiceEnvironmentCollection GetIntegrationServiceEnvironments() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource> GetLogicWorkflow(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Logic.LogicWorkflowResource>> GetLogicWorkflowAsync(string workflowName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Logic.LogicWorkflowCollection GetLogicWorkflows() { throw null; }
+        public virtual Azure.Response ValidateByLocationWorkflow(Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ValidateByLocationWorkflowAsync(Azure.Core.AzureLocation location, string workflowName, Azure.ResourceManager.Logic.LogicWorkflowData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableLogicSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableLogicSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIntegrationAccounts(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationAccountResource> GetIntegrationAccountsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironments(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.IntegrationServiceEnvironmentResource> GetIntegrationServiceEnvironmentsAsync(int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetLogicWorkflows(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Logic.LogicWorkflowResource> GetLogicWorkflowsAsync(int? top = default(int?), string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Logic.Models
@@ -2081,7 +2179,7 @@ namespace Azure.ResourceManager.Logic.Models
     }
     public partial class LogicApiOperationInfo : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LogicApiOperationInfo(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LogicApiOperationInfo(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Logic.Models.LogicApiOperationProperties Properties { get { throw null; } set { } }
     }
     public partial class LogicApiOperationProperties

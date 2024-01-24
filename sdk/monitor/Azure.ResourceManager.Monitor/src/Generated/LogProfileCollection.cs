@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Monitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogProfileResource" /> and their operations.
-    /// Each <see cref="LogProfileResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="LogProfileCollection" /> instance call the GetLogProfiles method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="LogProfileResource"/> and their operations.
+    /// Each <see cref="LogProfileResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="LogProfileCollection"/> instance call the GetLogProfiles method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class LogProfileCollection : ArmCollection, IEnumerable<LogProfileResource>, IAsyncEnumerable<LogProfileResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogProfiles_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>LogProfiles_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>LogProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>LogProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logProfileRestClient.CreateListRequest(Id.SubscriptionId);
@@ -262,6 +310,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +354,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>LogProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="logProfileName"> The name of the log profile. </param>
@@ -314,6 +378,96 @@ namespace Azure.ResourceManager.Monitor
             {
                 var response = _logProfileRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LogProfileResource>> GetIfExistsAsync(string logProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _logProfileRestClient.GetAsync(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LogProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Insights/logprofiles/{logProfileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LogProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="logProfileName"> The name of the log profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="logProfileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="logProfileName"/> is null. </exception>
+        public virtual NullableResponse<LogProfileResource> GetIfExists(string logProfileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(logProfileName, nameof(logProfileName));
+
+            using var scope = _logProfileClientDiagnostics.CreateScope("LogProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logProfileRestClient.Get(Id.SubscriptionId, logProfileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LogProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new LogProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

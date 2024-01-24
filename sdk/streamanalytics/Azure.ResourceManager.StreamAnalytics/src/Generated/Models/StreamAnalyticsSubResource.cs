@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The base sub-resource model definition. </summary>
     public partial class StreamAnalyticsSubResource
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubResource"/>. </summary>
         public StreamAnalyticsSubResource()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsSubResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsSubResource"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

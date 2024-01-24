@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseDedicatedSqlMinimalTlsSetting along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseDedicatedSqlMinimalTlsSettingResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource" /> using the GetSynapseDedicatedSqlMinimalTlsSetting method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseDedicatedSqlMinimalTlsSettingResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseWorkspaceResource"/> using the GetSynapseDedicatedSqlMinimalTlsSetting method.
     /// </summary>
     public partial class SynapseDedicatedSqlMinimalTlsSettingResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="dedicatedSQLminimalTlsSettingsName"> The dedicatedSQLminimalTlsSettingsName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string dedicatedSQLminimalTlsSettingsName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/dedicatedSQLminimalTlsSettings/{dedicatedSQLminimalTlsSettingsName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestOperations _synapseDedicatedSqlMinimalTlsSettingWorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettingsRestClient;
         private readonly SynapseDedicatedSqlMinimalTlsSettingData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> class for mocking. </summary>
         protected SynapseDedicatedSqlMinimalTlsSettingResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseDedicatedSqlMinimalTlsSettingResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseDedicatedSqlMinimalTlsSettingResource(ArmClient client, SynapseDedicatedSqlMinimalTlsSettingData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/dedicatedSQLminimalTlsSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +142,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +181,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +227,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDedicatedSqlMinimalTlsSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

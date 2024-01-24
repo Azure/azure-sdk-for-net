@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlServerAdvisorResource" /> and their operations.
-    /// Each <see cref="SqlServerAdvisorResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="SqlServerAdvisorCollection" /> instance call the GetSqlServerAdvisors method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="SqlServerAdvisorResource"/> and their operations.
+    /// Each <see cref="SqlServerAdvisorResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="SqlServerAdvisorCollection"/> instance call the GetSqlServerAdvisors method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class SqlServerAdvisorCollection : ArmCollection, IEnumerable<SqlServerAdvisorResource>, IAsyncEnumerable<SqlServerAdvisorResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerAdvisors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerAdvisors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerAdvisors_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlServerAdvisorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlServerAdvisorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlServerAdvisorResource> GetAllAsync(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -160,11 +184,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerAdvisors_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlServerAdvisorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlServerAdvisorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlServerAdvisorResource> GetAll(string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlServerAdvisorServerAdvisorsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, expand);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerAdvisors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ServerAdvisors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="advisorName"> The name of the Server Advisor. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlServerAdvisorServerAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerAdvisors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advisorName"> The name of the Server Advisor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlServerAdvisorResource>> GetIfExistsAsync(string advisorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlServerAdvisorServerAdvisorsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerAdvisorResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/advisors/{advisorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerAdvisors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerAdvisorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="advisorName"> The name of the Server Advisor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="advisorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="advisorName"/> is null. </exception>
+        public virtual NullableResponse<SqlServerAdvisorResource> GetIfExists(string advisorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(advisorName, nameof(advisorName));
+
+            using var scope = _sqlServerAdvisorServerAdvisorsClientDiagnostics.CreateScope("SqlServerAdvisorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlServerAdvisorServerAdvisorsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, advisorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlServerAdvisorResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlServerAdvisorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using System.Xml;
-using System.Xml.Linq;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -22,6 +21,21 @@ namespace Azure.Core.Tests
         {
             yield return new TestCaseData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"), DateTimeOffset.Parse("2022-09-26T18:38:00Z"));
         }
+
+        public static IEnumerable<TestCaseData> GetOneDateTimeData()
+        {
+            yield return new TestCaseData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"));
+        }
+
+        public static object[] BinaryDataCases =
+        {
+            new object[] { BinaryData.FromString("\"test\"") },
+            new object[] { new BinaryData(1)},
+            new object[] { new BinaryData(1.1)},
+            new object[] { new BinaryData(true)},
+            new object[] { BinaryData.FromObjectAsJson(new {name="a", age=1})},
+            new object[] { new BinaryData(DateTimeOffset.Parse("2022-08-26T18:38:00Z"))}
+        };
 
         [TestCase(1, 2)]
         [TestCase("a", "b")]
@@ -147,6 +161,51 @@ namespace Azure.Core.Tests
                     Assert.AreEqual(expectedDictionary["k" + count++].ToObjectFromJson(), BinaryData.FromString(property.Value.GetRawText()).ToObjectFromJson());
                 }
             }
+        }
+
+        [TestCase("a")]
+        [TestCase(true)]
+        [TestCase(1)]
+        [TestCase(1.0)]
+        [TestCaseSource("GetOneDateTimeData")]
+        public void TestFromObject<T>(T value)
+        {
+            var content = RequestContentHelper.FromObject(value);
+            var stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Position = 0;
+            var document = JsonDocument.Parse(stream);
+            switch (value)
+            {
+                case string:
+                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
+                    Assert.AreEqual($"\"{value}\"", document.RootElement.GetRawText());
+                    break;
+                case bool:
+                    Assert.AreEqual(value, document.RootElement.GetBoolean());
+                    break;
+                case int:
+                    Assert.AreEqual(value, document.RootElement.GetInt32());
+                    break;
+                case double:
+                    Assert.AreEqual(value, document.RootElement.GetDouble());
+                    break;
+                case DateTimeOffset:
+                    Assert.AreEqual(JsonValueKind.String, document.RootElement.ValueKind);
+                    Assert.AreEqual(value, DateTimeOffset.Parse(document.RootElement.GetString()));
+                    break;
+            }
+        }
+
+        [TestCaseSource(nameof(BinaryDataCases))]
+        public void TestFromObjectForBinaryData(BinaryData value)
+        {
+            var content = RequestContentHelper.FromObject(value);
+            var stream = new MemoryStream();
+            content.WriteTo(stream, default);
+            stream.Position = 0;
+            var document = JsonDocument.Parse(stream);
+            Assert.AreEqual(value.ToObjectFromJson(), BinaryData.FromString(document.RootElement.GetRawText()).ToObjectFromJson());
         }
     }
 }

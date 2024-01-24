@@ -12,6 +12,11 @@
     <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
+  
+  <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompat)' == 'true'">
+    <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'" 
+           Text="Api Compat cannot be disabled."/>
+  </Target>
 
   <!-- Set PackageProjectUrl and PackageReleaseNotes to the package README.md and CHANGELOG.md respectively for DataPlane Libraries -->
   <Target Name="SetPackageProjectUrlandReleaseNotes" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformationFromSourceControlManager" Condition="'$(IsShippingLibrary)' == 'true' and '$(SourceRevisionId)' != ''">
@@ -121,6 +126,11 @@
     </AdditionalFiles>
   </ItemGroup>
 
+  <!-- disable enhanced analysis-->
+  <ItemGroup Condition="'$(DisableEnhancedAnalysis)' == 'true'">
+    <EditorConfigFiles Include="$(RepoEngPath)/globalconfigs/disable_enhanced_analysis.globalconfig" />
+  </ItemGroup>
+
   <!-- Enable SourceLink -->
   <ItemGroup Condition="'$(EnableSourceLink)' == 'true'">
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
@@ -196,6 +206,7 @@
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
@@ -243,8 +254,10 @@
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ClientModel" />
 
     <!-- TODO: Review these file references-->
+    <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ForwardsClientCallsAttribute.cs" LinkBase="Shared/Core" />
@@ -353,10 +366,11 @@
   <Target Name="GetPackageInfo">
     <PropertyGroup>
       <PackageIsNewSdk>false</PackageIsNewSdk>
-      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true'">true</PackageIsNewSdk>
+      <PackageIsNewSdk Condition="'$(IsClientLibrary)' == 'true' or '$(IsFunctionsLibrary)' == 'true'">true</PackageIsNewSdk>
 
       <PackageSdkType>data</PackageSdkType>
       <PackageSdkType Condition="'$(IsClientLibrary)' == 'true'">client</PackageSdkType>
+      <PackageSdkType Condition="'$(IsFunctionsLibrary)' == 'true'">functions</PackageSdkType>
       <PackageSdkType Condition="'$(IsMgmtLibrary)' == 'true'">mgmt</PackageSdkType>
 
       <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
-    /// A class representing a collection of <see cref="TenantResourceHealthEventImpactedResource" /> and their operations.
-    /// Each <see cref="TenantResourceHealthEventImpactedResource" /> in the collection will belong to the same instance of <see cref="TenantResourceHealthEventResource" />.
-    /// To get a <see cref="TenantResourceHealthEventImpactedResourceCollection" /> instance call the GetTenantResourceHealthEventImpactedResources method from an instance of <see cref="TenantResourceHealthEventResource" />.
+    /// A class representing a collection of <see cref="TenantResourceHealthEventImpactedResource"/> and their operations.
+    /// Each <see cref="TenantResourceHealthEventImpactedResource"/> in the collection will belong to the same instance of <see cref="TenantResourceHealthEventResource"/>.
+    /// To get a <see cref="TenantResourceHealthEventImpactedResourceCollection"/> instance call the GetTenantResourceHealthEventImpactedResources method from an instance of <see cref="TenantResourceHealthEventResource"/>.
     /// </summary>
     public partial class TenantResourceHealthEventImpactedResourceCollection : ArmCollection, IEnumerable<TenantResourceHealthEventImpactedResource>, IAsyncEnumerable<TenantResourceHealthEventImpactedResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_ListByTenantIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantResourceHealthEventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TenantResourceHealthEventImpactedResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantResourceHealthEventImpactedResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_ListByTenantIdAndEventId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For more information please see https://docs.microsoft.com/en-us/rest/api/apimanagement/apis?redirectedfrom=MSDN. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantResourceHealthEventImpactedResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TenantResourceHealthEventImpactedResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantResourceHealthEventImpactedResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.CreateListByTenantIdAndEventIdRequest(Id.Name, filter);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>ImpactedResources_GetByTenantId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
@@ -235,6 +283,96 @@ namespace Azure.ResourceManager.ResourceHealth
             {
                 var response = _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.GetByTenantId(Id.Name, impactedResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImpactedResources_GetByTenantId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<TenantResourceHealthEventImpactedResource>> GetIfExistsAsync(string impactedResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
+
+            using var scope = _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("TenantResourceHealthEventImpactedResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.GetByTenantIdAsync(Id.Name, impactedResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantResourceHealthEventImpactedResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.ResourceHealth/events/{eventTrackingId}/impactedResources/{impactedResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ImpactedResources_GetByTenantId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResourceHealthEventImpactedResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="impactedResourceName"> Name of the Impacted Resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="impactedResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="impactedResourceName"/> is null. </exception>
+        public virtual NullableResponse<TenantResourceHealthEventImpactedResource> GetIfExists(string impactedResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(impactedResourceName, nameof(impactedResourceName));
+
+            using var scope = _tenantResourceHealthEventImpactedResourceImpactedResourcesClientDiagnostics.CreateScope("TenantResourceHealthEventImpactedResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _tenantResourceHealthEventImpactedResourceImpactedResourcesRestClient.GetByTenantId(Id.Name, impactedResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<TenantResourceHealthEventImpactedResource>(response.GetRawResponse());
+                return Response.FromValue(new TenantResourceHealthEventImpactedResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

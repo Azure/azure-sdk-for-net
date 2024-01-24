@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The CassandraClusterDataCenterNodeItem. </summary>
     public partial class CassandraClusterDataCenterNodeItem
     {
-        /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterDataCenterNodeItem"/>. </summary>
         internal CassandraClusterDataCenterNodeItem()
         {
             Tokens = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterDataCenterNodeItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterDataCenterNodeItem"/>. </summary>
         /// <param name="address"> The node's IP address. </param>
         /// <param name="state"> The state of the node in Cassandra ring. </param>
         /// <param name="status"></param>
@@ -38,7 +70,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="memoryFreeKB"> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </param>
         /// <param name="memoryTotalKB"> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </param>
         /// <param name="cpuUsage"> A float representing the current system-wide CPU utilization as a percentage. </param>
-        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        /// <param name="isLatestModel"> If node has been updated to latest model. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IReadOnlyList<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage, bool? isLatestModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Address = address;
             State = state;
@@ -57,6 +91,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             MemoryFreeKB = memoryFreeKB;
             MemoryTotalKB = memoryTotalKB;
             CpuUsage = cpuUsage;
+            IsLatestModel = isLatestModel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The node's IP address. </summary>
@@ -93,5 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public long? MemoryTotalKB { get; }
         /// <summary> A float representing the current system-wide CPU utilization as a percentage. </summary>
         public double? CpuUsage { get; }
+        /// <summary> If node has been updated to latest model. </summary>
+        public bool? IsLatestModel { get; }
     }
 }

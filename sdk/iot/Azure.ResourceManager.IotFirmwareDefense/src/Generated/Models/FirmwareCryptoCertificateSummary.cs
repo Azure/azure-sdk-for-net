@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Cryptographic certificate summary values. </summary>
     public partial class FirmwareCryptoCertificateSummary
     {
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummary"/>. </summary>
         internal FirmwareCryptoCertificateSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of FirmwareCryptoCertificateSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCryptoCertificateSummary"/>. </summary>
         /// <param name="totalCertificates"> Total number of certificates found. </param>
         /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
         /// <param name="expired"> Total number of expired certificates found. </param>

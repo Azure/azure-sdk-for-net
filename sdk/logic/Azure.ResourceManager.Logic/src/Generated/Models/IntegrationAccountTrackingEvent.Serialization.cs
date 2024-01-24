@@ -27,7 +27,10 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Record);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Record.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Record))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(Error))

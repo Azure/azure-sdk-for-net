@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> This activity is used for iterating over a collection and execute given activities. </summary>
     public partial class ForEachActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of ForEachActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForEachActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="items"> Collection to iterate. </param>
         /// <param name="activities">
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "ForEach";
         }
 
-        /// <summary> Initializes a new instance of ForEachActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForEachActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

@@ -64,6 +64,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("outputs");
                 }
             }
+            if (Optional.IsDefined(QueueSettings))
+            {
+                if (QueueSettings != null)
+                {
+                    writer.WritePropertyName("queueSettings"u8);
+                    writer.WriteObjectValue(QueueSettings);
+                }
+                else
+                {
+                    writer.WriteNull("queueSettings");
+                }
+            }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
@@ -131,6 +143,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
+            if (Optional.IsDefined(NotificationSetting))
+            {
+                if (NotificationSetting != null)
+                {
+                    writer.WritePropertyName("notificationSetting"u8);
+                    writer.WriteObjectValue(NotificationSetting);
+                }
+                else
+                {
+                    writer.WriteNull("notificationSetting");
+                }
+            }
+            if (Optional.IsCollectionDefined(SecretsConfiguration))
+            {
+                if (SecretsConfiguration != null)
+                {
+                    writer.WritePropertyName("secretsConfiguration"u8);
+                    writer.WriteStartObject();
+                    foreach (var item in SecretsConfiguration)
+                    {
+                        writer.WritePropertyName(item.Key);
+                        writer.WriteObjectValue(item.Value);
+                    }
+                    writer.WriteEndObject();
+                }
+                else
+                {
+                    writer.WriteNull("secretsConfiguration");
+                }
+            }
             if (Optional.IsCollectionDefined(Services))
             {
                 if (Services != null)
@@ -209,6 +251,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<string> environmentId = default;
             Optional<IDictionary<string, string>> environmentVariables = default;
             Optional<IDictionary<string, MachineLearningJobOutput>> outputs = default;
+            Optional<JobQueueSettings> queueSettings = default;
             Optional<MachineLearningJobResourceConfiguration> resources = default;
             AutoMLVertical taskDetails = default;
             Optional<ResourceIdentifier> componentId = default;
@@ -218,6 +261,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningIdentityConfiguration> identity = default;
             Optional<bool> isArchived = default;
             JobType jobType = default;
+            Optional<NotificationSetting> notificationSetting = default;
+            Optional<IDictionary<string, SecretConfiguration>> secretsConfiguration = default;
             Optional<IDictionary<string, MachineLearningJobService>> services = default;
             Optional<MachineLearningJobStatus> status = default;
             Optional<string> description = default;
@@ -263,6 +308,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         dictionary.Add(property0.Name, MachineLearningJobOutput.DeserializeMachineLearningJobOutput(property0.Value));
                     }
                     outputs = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("queueSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        queueSettings = null;
+                        continue;
+                    }
+                    queueSettings = JobQueueSettings.DeserializeJobQueueSettings(property.Value);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -338,6 +393,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     jobType = new JobType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("notificationSetting"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        notificationSetting = null;
+                        continue;
+                    }
+                    notificationSetting = NotificationSetting.DeserializeNotificationSetting(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("secretsConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        secretsConfiguration = null;
+                        continue;
+                    }
+                    Dictionary<string, SecretConfiguration> dictionary = new Dictionary<string, SecretConfiguration>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, SecretConfiguration.DeserializeSecretConfiguration(property0.Value));
+                    }
+                    secretsConfiguration = dictionary;
+                    continue;
+                }
                 if (property.NameEquals("services"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -403,7 +483,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new AutoMLJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, Optional.ToDictionary(services), Optional.ToNullable(status), environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(outputs), resources.Value, taskDetails);
+            return new AutoMLJob(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), componentId.Value, computeId.Value, displayName.Value, experimentName.Value, identity.Value, Optional.ToNullable(isArchived), jobType, notificationSetting.Value, Optional.ToDictionary(secretsConfiguration), Optional.ToDictionary(services), Optional.ToNullable(status), environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(outputs), queueSettings.Value, resources.Value, taskDetails);
         }
     }
 }

@@ -6,20 +6,69 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformLogFileUriResult
+    public partial class AppPlatformLogFileUriResult : IUtf8JsonSerializable, IJsonModel<AppPlatformLogFileUriResult>
     {
-        internal static AppPlatformLogFileUriResult DeserializeAppPlatformLogFileUriResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformLogFileUriResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformLogFileUriResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformLogFileUriResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformLogFileUriResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("url"u8);
+            writer.WriteStringValue(Uri.AbsoluteUri);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppPlatformLogFileUriResult IJsonModel<AppPlatformLogFileUriResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformLogFileUriResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformLogFileUriResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformLogFileUriResult(document.RootElement, options);
+        }
+
+        internal static AppPlatformLogFileUriResult DeserializeAppPlatformLogFileUriResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Uri uri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -27,8 +76,44 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformLogFileUriResult(uri);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AppPlatformLogFileUriResult(uri, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformLogFileUriResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformLogFileUriResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformLogFileUriResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformLogFileUriResult IPersistableModel<AppPlatformLogFileUriResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformLogFileUriResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformLogFileUriResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformLogFileUriResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformLogFileUriResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

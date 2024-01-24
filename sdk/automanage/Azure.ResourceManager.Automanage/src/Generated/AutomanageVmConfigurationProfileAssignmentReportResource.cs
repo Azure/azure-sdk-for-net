@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
     /// A Class representing an AutomanageVmConfigurationProfileAssignmentReport along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAutomanageVmConfigurationProfileAssignmentReportResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AutomanageVmConfigurationProfileAssignmentResource" /> using the GetAutomanageVmConfigurationProfileAssignmentReport method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAutomanageVmConfigurationProfileAssignmentReportResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AutomanageVmConfigurationProfileAssignmentResource"/> using the GetAutomanageVmConfigurationProfileAssignmentReport method.
     /// </summary>
     public partial class AutomanageVmConfigurationProfileAssignmentReportResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vmName"> The vmName. </param>
+        /// <param name="configurationProfileAssignmentName"> The configurationProfileAssignmentName. </param>
+        /// <param name="reportName"> The reportName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vmName, string configurationProfileAssignmentName, string reportName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Automanage
         private readonly ReportsRestOperations _automanageVmConfigurationProfileAssignmentReportreportsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentReportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> class for mocking. </summary>
         protected AutomanageVmConfigurationProfileAssignmentReportResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AutomanageVmConfigurationProfileAssignmentReportResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AutomanageVmConfigurationProfileAssignmentReportResource(ArmClient client, AutomanageConfigurationProfileAssignmentReportData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

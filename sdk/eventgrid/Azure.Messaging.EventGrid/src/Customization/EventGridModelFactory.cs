@@ -5,10 +5,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Messaging.EventGrid.Models;
 using Azure.Messaging.EventGrid.SystemEvents;
+using AcsRouterJobStatus = Azure.Messaging.EventGrid.Models.AcsRouterJobStatus;
 
 namespace Azure.Messaging.EventGrid
 {
@@ -90,7 +92,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants)
         {
-            return AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, (IEnumerable<AcsChatThreadParticipantProperties>) participants);
+            return AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants);
         }
 
         /// <summary> Initializes new instance of AcsChatThreadCreatedEventData class. </summary>
@@ -106,6 +108,70 @@ namespace Azure.Messaging.EventGrid
         public static AcsChatThreadCreatedEventData AcsChatThreadCreatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyList<AcsChatThreadParticipantProperties> participants)
         {
             return AcsChatThreadCreatedEventData(transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, (IEnumerable<AcsChatThreadParticipantProperties>) participants);
+        }
+
+        /// <summary> Initializes a new instance of AcsChatThreadCreatedWithUserEventData. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="createdByCommunicationIdentifier"> The communication identifier of the user who created the thread. </param>
+        /// <param name="properties"> The thread properties. </param>
+        /// <param name="participants"> The list of properties of participants who are part of the thread. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadCreatedWithUserEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadCreatedWithUserEventData AcsChatThreadCreatedWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel createdByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IEnumerable<AcsChatThreadParticipantProperties> participants)
+        {
+            properties ??= new Dictionary<string, object>();
+            participants ??= new List<AcsChatThreadParticipantProperties>();
+
+            return new AcsChatThreadCreatedWithUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, createdByCommunicationIdentifier, properties, new Dictionary<string, string>(), participants?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of AcsChatThreadParticipantProperties. </summary>
+        /// <param name="displayName"> The name of the user. </param>
+        /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadParticipantProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadParticipantProperties AcsChatThreadParticipantProperties(string displayName, CommunicationIdentifierModel participantCommunicationIdentifier)
+        {
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, new Dictionary<string, string>());
+        }
+
+        /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedPerUserEventData. </summary>
+        /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
+        /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
+        /// <param name="properties"> The updated thread properties. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, object> properties = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new AcsChatThreadPropertiesUpdatedPerUserEventData(recipientCommunicationIdentifier, transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, new Dictionary<string, string>(), properties);
+        }
+
+        /// <summary> Initializes a new instance of AcsChatThreadPropertiesUpdatedEventData. </summary>
+        /// <param name="transactionId"> The transaction id will be used as co-relation vector. </param>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="createTime"> The original creation time of the thread. </param>
+        /// <param name="version"> The version of the thread. </param>
+        /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
+        /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
+        /// <param name="properties"> The updated thread properties. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsChatThreadPropertiesUpdatedEventData AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new AcsChatThreadPropertiesUpdatedEventData(transactionId, threadId, createTime, version, editedByCommunicationIdentifier, editTime, properties, new Dictionary<string, string>());
         }
 
         /// <summary> Initializes new instance of AcsSmsDeliveryReportReceivedEventData class. </summary>
@@ -583,6 +649,52 @@ namespace Azure.Messaging.EventGrid
         public static AcsEmailEngagementTrackingReportReceivedEventData AcsEmailEngagementTrackingReportReceivedEventData(string sender, string messageId, DateTimeOffset? userActionTimestamp, string engagementContext, string userAgent, AcsUserEngagement? engagement)
         {
             return new AcsEmailEngagementTrackingReportReceivedEventData(sender, null, messageId, userActionTimestamp, engagementContext, userAgent, engagement);
+        }
+
+        /// <summary> Initializes a new instance of AcsRouterJobReceivedEventData. </summary>
+        /// <param name="jobId"> Router Event Job ID. </param>
+        /// <param name="channelReference"> Router Event Channel Reference. </param>
+        /// <param name="channelId"> Router Event Channel ID. </param>
+        /// <param name="queueId"> Router Job events Queue Id. </param>
+        /// <param name="labels"> Router Job events Labels. </param>
+        /// <param name="tags"> Router Jobs events Tags. </param>
+        /// <param name="jobStatus"> Router Job Received Job Status. </param>
+        /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
+        /// <param name="priority"> Router Job Priority. </param>
+        /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
+        /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
+        /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterJobReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = null, string channelReference = null, string channelId = null, string queueId = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, Azure.Messaging.EventGrid.Models.AcsRouterJobStatus? jobStatus = null, string classificationPolicyId = null, int? priority = null, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = null, DateTimeOffset? scheduledOn = null, bool unavailableForMatching = default)
+        {
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            requestedWorkerSelectors ??= new List<AcsRouterWorkerSelector>();
+            Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus? status = jobStatus.HasValue ? new Azure.Messaging.EventGrid.SystemEvents.AcsRouterJobStatus(jobStatus.ToString()) : null;
+
+            return new AcsRouterJobReceivedEventData(jobId, channelReference, channelId, queueId, labels, tags, status, classificationPolicyId, priority, requestedWorkerSelectors?.ToList(), scheduledOn, unavailableForMatching);
+        }
+
+        /// <summary> Initializes a new instance of ResourceNotificationsResourceUpdatedDetails. </summary>
+        /// <param name="id"> id of the resource for which the event is being emitted. </param>
+        /// <param name="name"> name of the resource for which the event is being emitted. </param>
+        /// <param name="resourceType"> the type of the resource for which the event is being emitted. </param>
+        /// <param name="location"> the location of the resource for which the event is being emitted. </param>
+        /// <param name="tags"> the tags on the resource for which the event is being emitted. </param>
+        /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
+        /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This method is obsolete. Use the other overload ResourceNotificationsResourceUpdatedDetails.")]
+        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string resourceType = null, string location = null, string tags = null, IReadOnlyDictionary<string, object> properties = null)
+        {
+            properties ??= new Dictionary<string, object>();
+
+            return new ResourceNotificationsResourceUpdatedDetails(id, name, resourceType, location,
+                new Dictionary<string, string>(), properties)
+            {
+                Tags = tags
+            };
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

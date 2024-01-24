@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Logs data type. </summary>
     internal partial class AwsCloudTrailDataConnectorDataTypesLogs : DataConnectorDataTypeCommon
     {
-        /// <summary> Initializes a new instance of AwsCloudTrailDataConnectorDataTypesLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsCloudTrailDataConnectorDataTypesLogs"/>. </summary>
         public AwsCloudTrailDataConnectorDataTypesLogs()
         {
         }
 
-        /// <summary> Initializes a new instance of AwsCloudTrailDataConnectorDataTypesLogs. </summary>
+        /// <summary> Initializes a new instance of <see cref="AwsCloudTrailDataConnectorDataTypesLogs"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
         internal AwsCloudTrailDataConnectorDataTypesLogs(SecurityInsightsDataTypeConnectionState? state) : base(state)
         {

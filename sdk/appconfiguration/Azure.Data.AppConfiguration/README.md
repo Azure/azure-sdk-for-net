@@ -163,8 +163,8 @@ client.DeleteConfigurationSetting("some_key");
 To create a snapshot, you need to instantiate the `ConfigurationSnapshot` class and specify filters to determine which configuration settings should be included. The creation process is a Long-Running Operation (LRO) and can be achieved by calling the `CreateSnapshot` method.
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
-var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
-var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);

@@ -14,25 +14,59 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Service health status. </summary>
     public partial class DataMigrationServiceStatusResponse
     {
-        /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceStatusResponse"/>. </summary>
         internal DataMigrationServiceStatusResponse()
         {
             SupportedTaskTypes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of DataMigrationServiceStatusResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataMigrationServiceStatusResponse"/>. </summary>
         /// <param name="agentVersion"> The DMS instance agent version. </param>
         /// <param name="agentConfiguration"> Agent Configuration. </param>
         /// <param name="status"> The machine-readable status, such as 'Initializing', 'Offline', 'Online', 'Deploying', 'Deleting', 'Stopped', 'Stopping', 'Starting', 'FailedToStart', 'FailedToStop' or 'Failed'. </param>
         /// <param name="vmSize"> The services virtual machine size, such as 'Standard_D2_v2'. </param>
         /// <param name="supportedTaskTypes"> The list of supported task types. </param>
-        internal DataMigrationServiceStatusResponse(string agentVersion, BinaryData agentConfiguration, string status, string vmSize, IReadOnlyList<string> supportedTaskTypes)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataMigrationServiceStatusResponse(string agentVersion, BinaryData agentConfiguration, string status, string vmSize, IReadOnlyList<string> supportedTaskTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AgentVersion = agentVersion;
             AgentConfiguration = agentConfiguration;
             Status = status;
             VmSize = vmSize;
             SupportedTaskTypes = supportedTaskTypes;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The DMS instance agent version. </summary>
@@ -43,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

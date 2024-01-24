@@ -21,13 +21,17 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A Class representing a CdnEndpoint along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CdnEndpointResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCdnEndpointResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ProfileResource" /> using the GetCdnEndpoint method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CdnEndpointResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCdnEndpointResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ProfileResource"/> using the GetCdnEndpoint method.
     /// </summary>
     public partial class CdnEndpointResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CdnEndpointResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="profileName"> The profileName. </param>
+        /// <param name="endpointName"> The endpointName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string profileName, string endpointName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}";
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.Cdn
         private readonly CdnEndpointsRestOperations _cdnEndpointRestClient;
         private readonly CdnEndpointData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints";
+
         /// <summary> Initializes a new instance of the <see cref="CdnEndpointResource"/> class for mocking. </summary>
         protected CdnEndpointResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CdnEndpointResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CdnEndpointResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CdnEndpointResource(ArmClient client, CdnEndpointData data) : this(client, data.Id)
@@ -64,9 +71,6 @@ namespace Azure.ResourceManager.Cdn
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Cdn/profiles/endpoints";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +97,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnOriginResources and their operations over a CdnOriginResource. </returns>
         public virtual CdnOriginCollection GetCdnOrigins()
         {
-            return GetCachedClient(Client => new CdnOriginCollection(Client, Id));
+            return GetCachedClient(client => new CdnOriginCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +111,20 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnOrigins_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CdnOriginResource>> GetCdnOriginAsync(string originName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +142,20 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnOrigins_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="originName"> Name of the origin which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CdnOriginResource> GetCdnOrigin(string originName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +166,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnOriginGroupResources and their operations over a CdnOriginGroupResource. </returns>
         public virtual CdnOriginGroupCollection GetCdnOriginGroups()
         {
-            return GetCachedClient(Client => new CdnOriginGroupCollection(Client, Id));
+            return GetCachedClient(client => new CdnOriginGroupCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +180,20 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnOriginGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CdnOriginGroupResource>> GetCdnOriginGroupAsync(string originGroupName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +211,20 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnOriginGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnOriginGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="originGroupName"> Name of the origin group which is unique within the endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="originGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CdnOriginGroupResource> GetCdnOriginGroup(string originGroupName, CancellationToken cancellationToken = default)
         {
@@ -199,7 +235,7 @@ namespace Azure.ResourceManager.Cdn
         /// <returns> An object representing collection of CdnCustomDomainResources and their operations over a CdnCustomDomainResource. </returns>
         public virtual CdnCustomDomainCollection GetCdnCustomDomains()
         {
-            return GetCachedClient(Client => new CdnCustomDomainCollection(Client, Id));
+            return GetCachedClient(client => new CdnCustomDomainCollection(client, Id));
         }
 
         /// <summary>
@@ -213,12 +249,20 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnCustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CdnCustomDomainResource>> GetCdnCustomDomainAsync(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -236,12 +280,20 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnCustomDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnCustomDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="customDomainName"> Name of the custom domain within an endpoint. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="customDomainName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="customDomainName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CdnCustomDomainResource> GetCdnCustomDomain(string customDomainName, CancellationToken cancellationToken = default)
         {
@@ -258,6 +310,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,6 +351,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -322,6 +390,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -357,6 +433,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -390,6 +474,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -429,6 +521,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -467,6 +567,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Start</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -500,6 +608,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Start</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -535,6 +651,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -569,6 +693,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Stop</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -602,6 +734,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_PurgeContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -641,6 +781,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_PurgeContent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -678,6 +826,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_LoadContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -717,6 +873,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_LoadContent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -755,6 +919,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_ValidateCustomDomain</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Custom domain to be validated. </param>
@@ -788,6 +960,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_ValidateCustomDomain</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,15 +1003,23 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_ListResourceUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CdnUsage> GetResourceUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CdnUsage.DeserializeCdnUsage, _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -845,15 +1033,23 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_ListResourceUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CdnUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CdnUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CdnUsage> GetResourceUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CdnUsage.DeserializeCdnUsage, _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -866,6 +1062,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -921,6 +1125,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -975,6 +1187,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1024,6 +1244,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1072,6 +1300,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1124,6 +1360,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CdnEndpoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CdnEndpointResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

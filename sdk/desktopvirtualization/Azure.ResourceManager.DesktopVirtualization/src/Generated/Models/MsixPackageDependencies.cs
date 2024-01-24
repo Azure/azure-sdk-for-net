@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Schema for MSIX Package Dependencies properties. </summary>
     public partial class MsixPackageDependencies
     {
-        /// <summary> Initializes a new instance of MsixPackageDependencies. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageDependencies"/>. </summary>
         public MsixPackageDependencies()
         {
         }
 
-        /// <summary> Initializes a new instance of MsixPackageDependencies. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsixPackageDependencies"/>. </summary>
         /// <param name="dependencyName"> Name of package dependency. </param>
         /// <param name="publisher"> Name of dependency publisher. </param>
         /// <param name="minVersion"> Dependency version required. </param>

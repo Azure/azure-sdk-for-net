@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventGridNamespacePermissionBindingResource" /> and their operations.
-    /// Each <see cref="EventGridNamespacePermissionBindingResource" /> in the collection will belong to the same instance of <see cref="EventGridNamespaceResource" />.
-    /// To get an <see cref="EventGridNamespacePermissionBindingCollection" /> instance call the GetEventGridNamespacePermissionBindings method from an instance of <see cref="EventGridNamespaceResource" />.
+    /// A class representing a collection of <see cref="EventGridNamespacePermissionBindingResource"/> and their operations.
+    /// Each <see cref="EventGridNamespacePermissionBindingResource"/> in the collection will belong to the same instance of <see cref="EventGridNamespaceResource"/>.
+    /// To get an <see cref="EventGridNamespacePermissionBindingCollection"/> instance call the GetEventGridNamespacePermissionBindings method from an instance of <see cref="EventGridNamespaceResource"/>.
     /// </summary>
     public partial class EventGridNamespacePermissionBindingCollection : ArmCollection, IEnumerable<EventGridNamespacePermissionBindingResource>, IAsyncEnumerable<EventGridNamespacePermissionBindingResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="permissionBindingName"> Name of the permission binding. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,12 +252,20 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventGridNamespacePermissionBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventGridNamespacePermissionBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventGridNamespacePermissionBindingResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespacePermissionBindingPermissionBindingsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
@@ -244,12 +284,20 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_ListByNamespace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventGridNamespacePermissionBindingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventGridNamespacePermissionBindingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventGridNamespacePermissionBindingResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventGridNamespacePermissionBindingPermissionBindingsRestClient.CreateListByNamespaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +359,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>PermissionBindings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="permissionBindingName"> Name of the permission binding. </param>
@@ -319,6 +383,96 @@ namespace Azure.ResourceManager.EventGrid
             {
                 var response = _eventGridNamespacePermissionBindingPermissionBindingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, permissionBindingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/permissionBindings/{permissionBindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PermissionBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="permissionBindingName"> Name of the permission binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EventGridNamespacePermissionBindingResource>> GetIfExistsAsync(string permissionBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
+
+            using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _eventGridNamespacePermissionBindingPermissionBindingsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, permissionBindingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespacePermissionBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespacePermissionBindingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/permissionBindings/{permissionBindingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PermissionBindings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventGridNamespacePermissionBindingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="permissionBindingName"> Name of the permission binding. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="permissionBindingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="permissionBindingName"/> is null. </exception>
+        public virtual NullableResponse<EventGridNamespacePermissionBindingResource> GetIfExists(string permissionBindingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(permissionBindingName, nameof(permissionBindingName));
+
+            using var scope = _eventGridNamespacePermissionBindingPermissionBindingsClientDiagnostics.CreateScope("EventGridNamespacePermissionBindingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _eventGridNamespacePermissionBindingPermissionBindingsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, permissionBindingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EventGridNamespacePermissionBindingResource>(response.GetRawResponse());
+                return Response.FromValue(new EventGridNamespacePermissionBindingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

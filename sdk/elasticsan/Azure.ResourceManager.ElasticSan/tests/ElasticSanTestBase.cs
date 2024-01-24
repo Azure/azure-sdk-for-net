@@ -29,8 +29,8 @@ namespace Azure.ResourceManager.ElasticSan.Tests
         {
         }
 
-        protected readonly string ResourceGroupName = "testelasticsan";
-        protected readonly string ElasticSanName = "testsan1";
+        protected readonly string ResourceGroupName = "testelasticsanrg";
+        protected readonly string ElasticSanName = "testelasticsan1";
         protected AzureLocation TestLocation = new("eastus2euap");
 
         [SetUp]
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.ElasticSan.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
         }
 
-        public static ElasticSanData GetDefaultElasticSanParameters(string location = null, long baseSizeTib = 6, long extendedCapacitySizeTib = 1)
+        public static ElasticSanData GetDefaultElasticSanParameters(string location = null, long baseSizeTib = 1, long extendedCapacitySizeTib = 6)
         {
             string locationParameter = location ?? DefaultLocation;
             ElasticSanData parameters = new ElasticSanData(locationParameter,
-                new ElasticSanSku(ElasticSanSkuName.PremiumLrs, null),
+                new ElasticSanSku(ElasticSanSkuName.PremiumLrs, null, null),
                 baseSizeTib,
                 extendedCapacitySizeTib);
             return parameters;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests
 
         public static ElasticSanVolumeData GetDefaultElasticSanVolumeData()
         {
-            ElasticSanVolumeData parameters = new ElasticSanVolumeData(100);
+            ElasticSanVolumeData parameters = new(100);
             return parameters;
         }
 

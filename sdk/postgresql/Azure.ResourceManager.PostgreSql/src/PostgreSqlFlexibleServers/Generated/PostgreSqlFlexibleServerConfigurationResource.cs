@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
     /// A Class representing a PostgreSqlFlexibleServerConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PostgreSqlFlexibleServerConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPostgreSqlFlexibleServerConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource" /> using the GetPostgreSqlFlexibleServerConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PostgreSqlFlexibleServerConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPostgreSqlFlexibleServerConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PostgreSqlFlexibleServerResource"/> using the GetPostgreSqlFlexibleServerConfiguration method.
     /// </summary>
     public partial class PostgreSqlFlexibleServerConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PostgreSqlFlexibleServerConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serverName"> The serverName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}/configurations/{configurationName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly ConfigurationsRestOperations _postgreSqlFlexibleServerConfigurationConfigurationsRestClient;
         private readonly PostgreSqlFlexibleServerConfigurationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/configurations";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerConfigurationResource"/> class for mocking. </summary>
         protected PostgreSqlFlexibleServerConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PostgreSqlFlexibleServerConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PostgreSqlFlexibleServerConfigurationResource(ArmClient client, PostgreSqlFlexibleServerConfigurationData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/configurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Configurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +226,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

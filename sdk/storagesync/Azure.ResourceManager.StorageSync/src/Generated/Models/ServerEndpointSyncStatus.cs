@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Server Endpoint sync status. </summary>
     public partial class ServerEndpointSyncStatus
     {
-        /// <summary> Initializes a new instance of ServerEndpointSyncStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncStatus"/>. </summary>
         internal ServerEndpointSyncStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerEndpointSyncStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerEndpointSyncStatus"/>. </summary>
         /// <param name="downloadHealth"> Download Health Status. </param>
         /// <param name="uploadHealth"> Upload Health Status. </param>
         /// <param name="combinedHealth"> Combined Health Status. </param>

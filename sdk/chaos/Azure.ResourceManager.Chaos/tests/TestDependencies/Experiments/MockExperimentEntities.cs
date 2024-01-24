@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Chaos.Tests.TestDependencies.Experiments
             this.vmssName = vmssName ?? throw new ArgumentNullException(nameof(vmssName));
          }
 
-        public ExperimentData GetVmssShutdownV2v0Experiment()
+        public ChaosExperimentData GetVmssShutdownV2v0Experiment()
         {
             _ = vmssName ?? throw new ArgumentNullException(nameof(vmssName));
-            IEnumerable<Models.KeyValuePair> actionParams = new List<Models.KeyValuePair>() { new Models.KeyValuePair("abruptShutdown", "true") };
-            Models.Action action = new ContinuousAction(
+            IEnumerable<Models.ChaosKeyValuePair> actionParams = new List<Models.ChaosKeyValuePair>() { new Models.ChaosKeyValuePair("abruptShutdown", "true") };
+            Models.ChaosExperimentAction action = new ChaosContinuousAction(
                 "urn:csci:microsoft:virtualMachineScaleSet:shutdown/2.0",
                 TimeSpan.FromMinutes(2),
                 actionParams,
                 "selector1");
-            IEnumerable<Models.Action> actions = new List<Models.Action>() { action };
-            IEnumerable<Models.Branch> branches = new List<Models.Branch>() { new Models.Branch("branch1", actions) };
-            IEnumerable<Models.Step> steps = new List<Models.Step>() { new Models.Step("step1", branches) };
-            IEnumerable<Models.TargetReference> targets = new List<Models.TargetReference>() { new Models.TargetReference($"/subscriptions/{this.subscriptionId}/resourceGroups/{this.resourceGroup}/providers/Microsoft.Compute/virtualMachineScaleSets/{this.vmssName}/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet") };
-            IEnumerable<Models.Selector> selectors = new List<Models.Selector>() { new Models.Selector(SelectorType.List, "selector1", targets) };
-            var experimentData = new ExperimentData(AzureLocation.WestUS2, steps, selectors);
+            IEnumerable<Models.ChaosExperimentAction> actions = new List<Models.ChaosExperimentAction>() { action };
+            IEnumerable<Models.ChaosExperimentBranch> branches = new List<Models.ChaosExperimentBranch>() { new Models.ChaosExperimentBranch("branch1", actions) };
+            IEnumerable<Models.ChaosExperimentStep> steps = new List<Models.ChaosExperimentStep>() { new Models.ChaosExperimentStep ("step1", branches) };
+            IEnumerable<Models.ChaosTargetReference> targets = new List<Models.ChaosTargetReference>() { new Models.ChaosTargetReference(ChaosTargetReferenceType.ChaosTarget, new ResourceIdentifier($"/subscriptions/{this.subscriptionId}/resourceGroups/{this.resourceGroup}/providers/Microsoft.Compute/virtualMachineScaleSets/{this.vmssName}/providers/Microsoft.Chaos/targets/microsoft-virtualMachineScaleSet")) };
+            IEnumerable<Models.ChaosTargetSelector> selectors = new List<Models.ChaosTargetSelector>() { new Models.ChaosTargetListSelector ("selector1", targets) };
+            var experimentData = new ChaosExperimentData(AzureLocation.WestUS2, steps, selectors);
             experimentData.Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned);
             return experimentData;
         }

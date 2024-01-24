@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EndpointCertificateResource" /> and their operations.
-    /// Each <see cref="EndpointCertificateResource" /> in the collection will belong to the same instance of <see cref="ManagedInstanceResource" />.
-    /// To get an <see cref="EndpointCertificateCollection" /> instance call the GetEndpointCertificates method from an instance of <see cref="ManagedInstanceResource" />.
+    /// A class representing a collection of <see cref="EndpointCertificateResource"/> and their operations.
+    /// Each <see cref="EndpointCertificateResource"/> in the collection will belong to the same instance of <see cref="ManagedInstanceResource"/>.
+    /// To get an <see cref="EndpointCertificateCollection"/> instance call the GetEndpointCertificates method from an instance of <see cref="ManagedInstanceResource"/>.
     /// </summary>
     public partial class EndpointCertificateCollection : ArmCollection, IEnumerable<EndpointCertificateResource>, IAsyncEnumerable<EndpointCertificateResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>EndpointCertificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EndpointCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>EndpointCertificates_ListByInstance</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EndpointCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EndpointCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EndpointCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointCertificateRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>EndpointCertificates_ListByInstance</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EndpointCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EndpointCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EndpointCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _endpointCertificateRestClient.CreateListByInstanceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EndpointCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>EndpointCertificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _endpointCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EndpointCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
+        public virtual async Task<NullableResponse<EndpointCertificateResource>> GetIfExistsAsync(string endpointType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+
+            using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _endpointCertificateRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EndpointCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new EndpointCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/endpointCertificates/{endpointType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>EndpointCertificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EndpointCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="endpointType"> Type of the endpoint whose certificate the customer is looking for. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="endpointType"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpointType"/> is null. </exception>
+        public virtual NullableResponse<EndpointCertificateResource> GetIfExists(string endpointType, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(endpointType, nameof(endpointType));
+
+            using var scope = _endpointCertificateClientDiagnostics.CreateScope("EndpointCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _endpointCertificateRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, endpointType, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EndpointCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new EndpointCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

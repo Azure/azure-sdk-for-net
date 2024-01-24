@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> List result for CVE. </summary>
     internal partial class CveList
     {
-        /// <summary> Initializes a new instance of CveList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveList"/>. </summary>
         internal CveList()
         {
             Value = new ChangeTrackingList<FirmwareCve>();
         }
 
-        /// <summary> Initializes a new instance of CveList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CveList"/>. </summary>
         /// <param name="value"> The list of CVE results. </param>
         /// <param name="nextLink"> The uri to fetch the next page of asset. </param>
         internal CveList(IReadOnlyList<FirmwareCve> value, string nextLink)

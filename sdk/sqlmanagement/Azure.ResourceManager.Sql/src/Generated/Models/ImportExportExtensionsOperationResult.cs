@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> An Extension operation result resource. </summary>
     public partial class ImportExportExtensionsOperationResult : ResourceData
     {
-        /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportExportExtensionsOperationResult"/>. </summary>
         public ImportExportExtensionsOperationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of ImportExportExtensionsOperationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportExportExtensionsOperationResult"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

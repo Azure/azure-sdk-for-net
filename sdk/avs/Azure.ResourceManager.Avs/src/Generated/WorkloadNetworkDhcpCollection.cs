@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="WorkloadNetworkDhcpResource" /> and their operations.
-    /// Each <see cref="WorkloadNetworkDhcpResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource" />.
-    /// To get a <see cref="WorkloadNetworkDhcpCollection" /> instance call the GetWorkloadNetworkDhcps method from an instance of <see cref="AvsPrivateCloudResource" />.
+    /// A class representing a collection of <see cref="WorkloadNetworkDhcpResource"/> and their operations.
+    /// Each <see cref="WorkloadNetworkDhcpResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
+    /// To get a <see cref="WorkloadNetworkDhcpCollection"/> instance call the GetWorkloadNetworkDhcps method from an instance of <see cref="AvsPrivateCloudResource"/>.
     /// </summary>
     public partial class WorkloadNetworkDhcpCollection : ArmCollection, IEnumerable<WorkloadNetworkDhcpResource>, IAsyncEnumerable<WorkloadNetworkDhcpResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_CreateDhcp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_CreateDhcp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDhcp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dhcpId"> NSX DHCP identifier. Generally the same as the DHCP display name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDhcp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_ListDhcp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="WorkloadNetworkDhcpResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="WorkloadNetworkDhcpResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<WorkloadNetworkDhcpResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDhcpWorkloadNetworksRestClient.CreateListDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_ListDhcp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="WorkloadNetworkDhcpResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="WorkloadNetworkDhcpResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<WorkloadNetworkDhcpResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workloadNetworkDhcpWorkloadNetworksRestClient.CreateListDhcpRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDhcp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>WorkloadNetworks_GetDhcp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dhcpId"> NSX DHCP identifier. Generally the same as the DHCP display name. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetDhcp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dhcpId"> NSX DHCP identifier. Generally the same as the DHCP display name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
+        public virtual async Task<NullableResponse<WorkloadNetworkDhcpResource>> GetIfExistsAsync(string dhcpId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+
+            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcpAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkDhcpResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkDhcpResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/workloadNetworks/default/dhcpConfigurations/{dhcpId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkloadNetworks_GetDhcp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkloadNetworkDhcpResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dhcpId"> NSX DHCP identifier. Generally the same as the DHCP display name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dhcpId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dhcpId"/> is null. </exception>
+        public virtual NullableResponse<WorkloadNetworkDhcpResource> GetIfExists(string dhcpId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dhcpId, nameof(dhcpId));
+
+            using var scope = _workloadNetworkDhcpWorkloadNetworksClientDiagnostics.CreateScope("WorkloadNetworkDhcpCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _workloadNetworkDhcpWorkloadNetworksRestClient.GetDhcp(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dhcpId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<WorkloadNetworkDhcpResource>(response.GetRawResponse());
+                return Response.FromValue(new WorkloadNetworkDhcpResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

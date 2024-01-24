@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
     public partial class ContainerAppOpenIdConnectRegistration
     {
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectRegistration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectRegistration"/>. </summary>
         public ContainerAppOpenIdConnectRegistration()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppOpenIdConnectRegistration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppOpenIdConnectRegistration"/>. </summary>
         /// <param name="clientId"> The client id of the custom Open ID Connect provider. </param>
         /// <param name="clientCredential"> The authentication credentials of the custom Open ID Connect provider. </param>
         /// <param name="openIdConnectConfiguration"> The configuration settings of the endpoints used for the custom Open ID Connect provider. </param>
-        internal ContainerAppOpenIdConnectRegistration(string clientId, ContainerAppOpenIdConnectClientCredential clientCredential, ContainerAppOpenIdConnectConfig openIdConnectConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppOpenIdConnectRegistration(string clientId, ContainerAppOpenIdConnectClientCredential clientCredential, ContainerAppOpenIdConnectConfig openIdConnectConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientId = clientId;
             ClientCredential = clientCredential;
             OpenIdConnectConfiguration = openIdConnectConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The client id of the custom Open ID Connect provider. </summary>

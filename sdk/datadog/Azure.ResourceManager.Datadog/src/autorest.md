@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -47,5 +48,9 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+rename-mapping:
+  DatadogAgreementResource: DatadogAgreementResourceProperties
+  MonitoredResource: MonitoredResourceContent
 
 ```

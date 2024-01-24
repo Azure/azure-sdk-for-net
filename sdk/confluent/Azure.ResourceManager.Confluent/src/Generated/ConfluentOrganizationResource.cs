@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
     /// A Class representing a ConfluentOrganization along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ConfluentOrganizationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetConfluentOrganizationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetConfluentOrganization method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConfluentOrganizationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetConfluentOrganizationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetConfluentOrganization method.
     /// </summary>
     public partial class ConfluentOrganizationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ConfluentOrganizationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="organizationName"> The organizationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string organizationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/organizations/{organizationName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Confluent
         private readonly OrganizationRestOperations _confluentOrganizationOrganizationRestClient;
         private readonly ConfluentOrganizationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Confluent/organizations";
+
         /// <summary> Initializes a new instance of the <see cref="ConfluentOrganizationResource"/> class for mocking. </summary>
         protected ConfluentOrganizationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ConfluentOrganizationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ConfluentOrganizationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ConfluentOrganizationResource(ArmClient client, ConfluentOrganizationData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Confluent
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Confluent/organizations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +103,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +143,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +182,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +225,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -231,6 +266,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +309,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Updated Organization resource. </param>
@@ -299,6 +350,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,6 +413,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -408,6 +475,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -457,6 +532,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -505,6 +588,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -557,6 +648,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.DnsResolver
     /// </summary>
     public partial class DnsResolverOutboundEndpointData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DnsResolverOutboundEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverOutboundEndpointData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="subnet"> The reference to the subnet used for the outbound endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnet"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DnsResolver
             Subnet = subnet;
         }
 
-        /// <summary> Initializes a new instance of DnsResolverOutboundEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsResolverOutboundEndpointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

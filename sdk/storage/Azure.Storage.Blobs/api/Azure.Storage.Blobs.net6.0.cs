@@ -51,10 +51,12 @@ namespace Azure.Storage.Blobs
     }
     public partial class BlobClientOptions : Azure.Core.ClientOptions
     {
-        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2023_08_03) { }
+        public BlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2024_02_04) { }
+        public Azure.Storage.Blobs.Models.BlobAudience? Audience { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.CustomerProvidedKey? CustomerProvidedKey { get { throw null; } set { } }
         public bool EnableTenantDiscovery { get { throw null; } set { } }
         public string EncryptionScope { get { throw null; } set { } }
+        public Azure.Storage.ExpectContinueOptions ExpectContinueBehavior { get { throw null; } set { } }
         public System.Uri GeoRedundantSecondaryUri { get { throw null; } set { } }
         public Azure.Storage.TransferValidationOptions TransferValidation { get { throw null; } }
         public bool TrimBlobNameSlashes { get { throw null; } set { } }
@@ -80,6 +82,8 @@ namespace Azure.Storage.Blobs
             V2023_01_03 = 17,
             V2023_05_03 = 18,
             V2023_08_03 = 19,
+            V2023_11_03 = 20,
+            V2024_02_04 = 21,
         }
     }
     public partial class BlobContainerClient
@@ -345,6 +349,24 @@ namespace Azure.Storage.Blobs.Models
         public Azure.ETag ETag { get { throw null; } }
         public bool IsServerEncrypted { get { throw null; } }
         public System.DateTimeOffset LastModified { get { throw null; } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct BlobAudience : System.IEquatable<Azure.Storage.Blobs.Models.BlobAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public BlobAudience(string value) { throw null; }
+        public static Azure.Storage.Blobs.Models.BlobAudience DefaultAudience { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobAudience CreateBlobServiceAccountAudience(string storageAccountName) { throw null; }
+        public bool Equals(Azure.Storage.Blobs.Models.BlobAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Storage.Blobs.Models.BlobAudience left, Azure.Storage.Blobs.Models.BlobAudience right) { throw null; }
+        public static implicit operator Azure.Storage.Blobs.Models.BlobAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Storage.Blobs.Models.BlobAudience left, Azure.Storage.Blobs.Models.BlobAudience right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BlobBlock : System.IEquatable<Azure.Storage.Blobs.Models.BlobBlock>
@@ -1788,7 +1810,7 @@ namespace Azure.Storage.Blobs.Specialized
     }
     public partial class SpecializedBlobClientOptions : Azure.Storage.Blobs.BlobClientOptions
     {
-        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2023_08_03) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
+        public SpecializedBlobClientOptions(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion version = Azure.Storage.Blobs.BlobClientOptions.ServiceVersion.V2024_02_04) : base (default(Azure.Storage.Blobs.BlobClientOptions.ServiceVersion)) { }
         public Azure.Storage.ClientSideEncryptionOptions ClientSideEncryption { get { throw null; } set { } }
     }
     public static partial class SpecializedBlobExtensions

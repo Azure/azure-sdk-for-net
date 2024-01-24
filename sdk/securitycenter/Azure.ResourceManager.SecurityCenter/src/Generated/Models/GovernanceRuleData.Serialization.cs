@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,13 +15,46 @@ using Azure.ResourceManager.SecurityCenter.Models;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
-    public partial class GovernanceRuleData : IUtf8JsonSerializable
+    public partial class GovernanceRuleData : IUtf8JsonSerializable, IJsonModel<GovernanceRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GovernanceRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GovernanceRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -85,7 +119,10 @@ namespace Azure.ResourceManager.SecurityCenter
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -111,11 +148,40 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteObjectValue(Metadata);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GovernanceRuleData DeserializeGovernanceRuleData(JsonElement element)
+        GovernanceRuleData IJsonModel<GovernanceRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGovernanceRuleData(document.RootElement, options);
+        }
+
+        internal static GovernanceRuleData DeserializeGovernanceRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -139,6 +205,8 @@ namespace Azure.ResourceManager.SecurityCenter
             Optional<GovernanceRuleOwnerSource> ownerSource = default;
             Optional<GovernanceRuleEmailNotification> governanceEmailNotification = default;
             Optional<GovernanceRuleMetadata> metadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -317,8 +385,44 @@ namespace Azure.ResourceManager.SecurityCenter
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new GovernanceRuleData(id, name, type, systemData.Value, Optional.ToNullable(tenantId), displayName.Value, description.Value, remediationTimeframe.Value, Optional.ToNullable(isGracePeriod), Optional.ToNullable(rulePriority), Optional.ToNullable(isDisabled), Optional.ToNullable(ruleType), Optional.ToNullable(sourceResourceType), Optional.ToList(excludedScopes), Optional.ToList(conditionSets), Optional.ToNullable(includeMemberScopes), ownerSource.Value, governanceEmailNotification.Value, metadata.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GovernanceRuleData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        GovernanceRuleData IPersistableModel<GovernanceRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGovernanceRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GovernanceRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HealthcareApis
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateLinkResource" /> and their operations.
-    /// Each <see cref="HealthcareApisWorkspacePrivateLinkResource" /> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource" />.
-    /// To get a <see cref="HealthcareApisWorkspacePrivateLinkResourceCollection" /> instance call the GetHealthcareApisWorkspacePrivateLinkResources method from an instance of <see cref="HealthcareApisWorkspaceResource" />.
+    /// A class representing a collection of <see cref="HealthcareApisWorkspacePrivateLinkResource"/> and their operations.
+    /// Each <see cref="HealthcareApisWorkspacePrivateLinkResource"/> in the collection will belong to the same instance of <see cref="HealthcareApisWorkspaceResource"/>.
+    /// To get a <see cref="HealthcareApisWorkspacePrivateLinkResourceCollection"/> instance call the GetHealthcareApisWorkspacePrivateLinkResources method from an instance of <see cref="HealthcareApisWorkspaceResource"/>.
     /// </summary>
     public partial class HealthcareApisWorkspacePrivateLinkResourceCollection : ArmCollection, IEnumerable<HealthcareApisWorkspacePrivateLinkResource>, IAsyncEnumerable<HealthcareApisWorkspacePrivateLinkResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthcareApisWorkspacePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthcareApisWorkspacePrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthcareApisWorkspacePrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthcareApisWorkspacePrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <term>Operation Id</term>
         /// <description>WorkspacePrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
@@ -231,6 +279,96 @@ namespace Azure.ResourceManager.HealthcareApis
             {
                 var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspacePrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HealthcareApisWorkspacePrivateLinkResource>> GetIfExistsAsync(string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthcareApisWorkspacePrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HealthcareApis/workspaces/{workspaceName}/privateLinkResources/{groupName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspacePrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthcareApisWorkspacePrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupName"> The name of the private link resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        public virtual NullableResponse<HealthcareApisWorkspacePrivateLinkResource> GetIfExists(string groupName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupName, nameof(groupName));
+
+            using var scope = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesClientDiagnostics.CreateScope("HealthcareApisWorkspacePrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _healthcareApisWorkspacePrivateLinkResourceWorkspacePrivateLinkResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthcareApisWorkspacePrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthcareApisWorkspacePrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

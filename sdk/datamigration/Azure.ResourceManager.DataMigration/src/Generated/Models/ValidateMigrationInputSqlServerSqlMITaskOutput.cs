@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Output for task that validates migration input for SQL to Azure SQL Managed Instance migrations. </summary>
     public partial class ValidateMigrationInputSqlServerSqlMITaskOutput
     {
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
         internal ValidateMigrationInputSqlServerSqlMITaskOutput()
         {
             RestoreDatabaseNameErrors = new ChangeTrackingList<ReportableException>();
@@ -23,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             ExistingBackupErrors = new ChangeTrackingList<ReportableException>();
         }
 
-        /// <summary> Initializes a new instance of ValidateMigrationInputSqlServerSqlMITaskOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="ValidateMigrationInputSqlServerSqlMITaskOutput"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="name"> Name of database. </param>
         /// <param name="restoreDatabaseNameErrors"> Errors associated with the RestoreDatabaseName. </param>
@@ -32,7 +65,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupStorageAccountErrors"> Errors associated with the storage account provided. </param>
         /// <param name="existingBackupErrors"> Errors associated with existing backup files. </param>
         /// <param name="databaseBackupInfo"> Information about backup files when existing backup mode is used. </param>
-        internal ValidateMigrationInputSqlServerSqlMITaskOutput(string id, string name, IReadOnlyList<ReportableException> restoreDatabaseNameErrors, IReadOnlyList<ReportableException> backupFolderErrors, IReadOnlyList<ReportableException> backupShareCredentialsErrors, IReadOnlyList<ReportableException> backupStorageAccountErrors, IReadOnlyList<ReportableException> existingBackupErrors, DatabaseBackupInfo databaseBackupInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ValidateMigrationInputSqlServerSqlMITaskOutput(string id, string name, IReadOnlyList<ReportableException> restoreDatabaseNameErrors, IReadOnlyList<ReportableException> backupFolderErrors, IReadOnlyList<ReportableException> backupShareCredentialsErrors, IReadOnlyList<ReportableException> backupStorageAccountErrors, IReadOnlyList<ReportableException> existingBackupErrors, DatabaseBackupInfo databaseBackupInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -42,6 +76,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupStorageAccountErrors = backupStorageAccountErrors;
             ExistingBackupErrors = existingBackupErrors;
             DatabaseBackupInfo = databaseBackupInfo;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Result identifier. </summary>

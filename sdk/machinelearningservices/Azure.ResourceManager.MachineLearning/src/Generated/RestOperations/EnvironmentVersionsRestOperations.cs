@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.MachineLearning
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-10-01";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy, int? top, string skip, MachineLearningListViewType? listViewType)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy, int? top, string skip, MachineLearningListViewType? listViewType, string stage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -70,6 +70,10 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 uri.AppendQuery("listViewType", listViewType.Value.ToString(), true);
             }
+            if (stage != null)
+            {
+                uri.AppendQuery("stage", stage, true);
+            }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
@@ -85,17 +89,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnvironmentVersionResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EnvironmentVersionResourceArmPaginatedResult>> ListAsync(string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType, stage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -120,17 +125,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnvironmentVersionResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public Response<EnvironmentVersionResourceArmPaginatedResult> List(string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType);
+            using var message = CreateListRequest(subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType, stage);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -422,7 +428,7 @@ namespace Azure.ResourceManager.MachineLearning
             }
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy, int? top, string skip, MachineLearningListViewType? listViewType)
+        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy, int? top, string skip, MachineLearningListViewType? listViewType, string stage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -446,10 +452,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<EnvironmentVersionResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public async Task<Response<EnvironmentVersionResourceArmPaginatedResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -457,7 +464,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType, stage);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -483,10 +490,11 @@ namespace Azure.ResourceManager.MachineLearning
         /// <param name="top"> Maximum number of records to return. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="listViewType"> View type for including/excluding (for example) archived entities. </param>
+        /// <param name="stage"> Stage for including/excluding (for example) archived entities. Takes priority over listViewType. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<EnvironmentVersionResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, CancellationToken cancellationToken = default)
+        public Response<EnvironmentVersionResourceArmPaginatedResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string workspaceName, string name, string orderBy = null, int? top = null, string skip = null, MachineLearningListViewType? listViewType = null, string stage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -494,7 +502,7 @@ namespace Azure.ResourceManager.MachineLearning
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType);
+            using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, workspaceName, name, orderBy, top, skip, listViewType, stage);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Azure.ResourceManager.Resources;
-using System.Threading.Tasks;
 using System.Threading;
-using Azure.Core;
+using System.Threading.Tasks;
 using Azure.ResourceManager.Maintenance.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Maintenance
 {
@@ -39,16 +38,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
         public static async Task<Response<MaintenanceApplyUpdateResource>> GetApplyUpdatesByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
-
-            ResourceGroupResourceGetApplyUpdatesByParentOptions options = new ResourceGroupResourceGetApplyUpdatesByParentOptions(providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName);
-
-            return await resourceGroupResource.GetApplyUpdatesByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetApplyUpdatesByParentAsync(providerName, resourceParentType, resourceParentType, resourceType, resourceName, applyUpdateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -76,16 +66,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="applyUpdateName"/> is null. </exception>
         public static Response<MaintenanceApplyUpdateResource> GetApplyUpdatesByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string applyUpdateName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(applyUpdateName, nameof(applyUpdateName));
-
-            ResourceGroupResourceGetApplyUpdatesByParentOptions options = new ResourceGroupResourceGetApplyUpdatesByParentOptions(providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName);
-
-            return resourceGroupResource.GetApplyUpdatesByParent(options, cancellationToken);
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).GetApplyUpdatesByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, applyUpdateName, cancellationToken);
         }
 
         /// <summary>
@@ -114,17 +95,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> CreateOrUpdateConfigurationAssignmentByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options = new ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data);
-
-            return await resourceGroupResource.CreateOrUpdateConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMaintenanceResourceGroupResource(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -153,17 +124,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/>, <paramref name="configurationAssignmentName"/> or <paramref name="data"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> CreateOrUpdateConfigurationAssignmentByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, MaintenanceConfigurationAssignmentData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions options = new ResourceGroupResourceCreateOrUpdateConfigurationAssignmentByParentOptions(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data);
-
-            return resourceGroupResource.CreateOrUpdateConfigurationAssignmentByParent(options, cancellationToken);
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).CreateOrUpdateConfigurationAssignmentByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, data, cancellationToken);
         }
 
         /// <summary>
@@ -191,16 +152,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public static async Task<Response<MaintenanceConfigurationAssignmentData>> DeleteConfigurationAssignmentByParentAsync(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options = new ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName);
-
-            return await resourceGroupResource.DeleteConfigurationAssignmentByParentAsync(options, cancellationToken).ConfigureAwait(false);
+            return await GetMockableMaintenanceResourceGroupResource(resourceGroupResource).DeleteConfigurationAssignmentByParentAsync(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -228,16 +180,7 @@ namespace Azure.ResourceManager.Maintenance
         /// <exception cref="ArgumentNullException"> <paramref name="providerName"/>, <paramref name="resourceParentType"/>, <paramref name="resourceParentName"/>, <paramref name="resourceType"/>, <paramref name="resourceName"/> or <paramref name="configurationAssignmentName"/> is null. </exception>
         public static Response<MaintenanceConfigurationAssignmentData> DeleteConfigurationAssignmentByParent(this ResourceGroupResource resourceGroupResource, string providerName, string resourceParentType, string resourceParentName, string resourceType, string resourceName, string configurationAssignmentName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(providerName, nameof(providerName));
-            Argument.AssertNotNullOrEmpty(resourceParentType, nameof(resourceParentType));
-            Argument.AssertNotNullOrEmpty(resourceParentName, nameof(resourceParentName));
-            Argument.AssertNotNullOrEmpty(resourceType, nameof(resourceType));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(configurationAssignmentName, nameof(configurationAssignmentName));
-
-            ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions options = new ResourceGroupResourceDeleteConfigurationAssignmentByParentOptions(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName);
-
-            return resourceGroupResource.DeleteConfigurationAssignmentByParent(options, cancellationToken);
+            return GetMockableMaintenanceResourceGroupResource(resourceGroupResource).DeleteConfigurationAssignmentByParent(providerName, resourceParentType, resourceParentName, resourceType, resourceName, configurationAssignmentName, cancellationToken);
         }
     }
 }

@@ -20,14 +20,14 @@ namespace Azure.ResourceManager.Orbital
     /// </summary>
     public partial class OrbitalContactProfileData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileData"/>. </summary>
         /// <param name="location"> The location. </param>
         public OrbitalContactProfileData(AzureLocation location) : base(location)
         {
             Links = new ChangeTrackingList<OrbitalContactProfileLink>();
         }
 
-        /// <summary> Initializes a new instance of OrbitalContactProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="OrbitalContactProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

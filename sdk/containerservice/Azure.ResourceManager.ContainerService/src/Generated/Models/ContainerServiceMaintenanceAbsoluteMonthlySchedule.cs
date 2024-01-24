@@ -5,18 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> For schedules like: 'recur every month on the 15th' or 'recur every 3 months on the 20th'. </summary>
     public partial class ContainerServiceMaintenanceAbsoluteMonthlySchedule
     {
-        /// <summary> Initializes a new instance of ContainerServiceMaintenanceAbsoluteMonthlySchedule. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/>. </summary>
         /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
         /// <param name="dayOfMonth"> The date of the month. </param>
         public ContainerServiceMaintenanceAbsoluteMonthlySchedule(int intervalMonths, int dayOfMonth)
         {
             IntervalMonths = intervalMonths;
             DayOfMonth = dayOfMonth;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/>. </summary>
+        /// <param name="intervalMonths"> Specifies the number of months between each set of occurrences. </param>
+        /// <param name="dayOfMonth"> The date of the month. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceAbsoluteMonthlySchedule(int intervalMonths, int dayOfMonth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            IntervalMonths = intervalMonths;
+            DayOfMonth = dayOfMonth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceAbsoluteMonthlySchedule"/> for deserialization. </summary>
+        internal ContainerServiceMaintenanceAbsoluteMonthlySchedule()
+        {
         }
 
         /// <summary> Specifies the number of months between each set of occurrences. </summary>

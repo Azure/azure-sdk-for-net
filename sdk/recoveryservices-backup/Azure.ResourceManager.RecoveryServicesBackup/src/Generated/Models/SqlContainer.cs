@@ -10,13 +10,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure Sql workload-specific container. </summary>
     public partial class SqlContainer : BackupGenericProtectionContainer
     {
-        /// <summary> Initializes a new instance of SqlContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainer"/>. </summary>
         public SqlContainer()
         {
             ContainerType = ProtectableContainerType.AzureSqlContainer;
         }
 
-        /// <summary> Initializes a new instance of SqlContainer. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlContainer"/>. </summary>
         /// <param name="friendlyName"> Friendly name of the container. </param>
         /// <param name="backupManagementType"> Type of backup management for the container. </param>
         /// <param name="registrationStatus"> Status of registration of the container with the Recovery Services Vault. </param>

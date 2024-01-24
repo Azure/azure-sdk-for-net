@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
     /// A Class representing a CosmosDBForPostgreSqlFirewallRule along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBForPostgreSqlFirewallRuleResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBForPostgreSqlFirewallRuleResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource" /> using the GetCosmosDBForPostgreSqlFirewallRule method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBForPostgreSqlFirewallRuleResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource"/> using the GetCosmosDBForPostgreSqlFirewallRule method.
     /// </summary>
     public partial class CosmosDBForPostgreSqlFirewallRuleResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="firewallRuleName"> The firewallRuleName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string firewallRuleName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/firewallRules/{firewallRuleName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         private readonly FirewallRulesRestOperations _cosmosDBForPostgreSqlFirewallRuleFirewallRulesRestClient;
         private readonly CosmosDBForPostgreSqlFirewallRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules";
+
         /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> class for mocking. </summary>
         protected CosmosDBForPostgreSqlFirewallRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBForPostgreSqlFirewallRuleResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlFirewallRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBForPostgreSqlFirewallRuleResource(ArmClient client, CosmosDBForPostgreSqlFirewallRuleData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/firewallRules";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +180,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +223,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +264,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,6 +310,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

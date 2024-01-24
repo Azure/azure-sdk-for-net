@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,14 +14,14 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the task that validates the connection to and provides information about a MongoDB server. </summary>
     public partial class ConnectToMongoDBTaskProperties : ProjectTaskProperties
     {
-        /// <summary> Initializes a new instance of ConnectToMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToMongoDBTaskProperties"/>. </summary>
         public ConnectToMongoDBTaskProperties()
         {
             Output = new ChangeTrackingList<MongoDBClusterInfo>();
             TaskType = TaskType.ConnectMongoDB;
         }
 
-        /// <summary> Initializes a new instance of ConnectToMongoDBTaskProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectToMongoDBTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
@@ -30,9 +31,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// The available derived classes include <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/>, <see cref="MongoDBCancelCommand"/>, <see cref="MongoDBFinishCommand"/> and <see cref="MongoDBRestartCommand"/>.
         /// </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Describes a connection to a MongoDB data source. </param>
         /// <param name="output"> An array containing a single MongoDbClusterInfo object. </param>
-        internal ConnectToMongoDBTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, MongoDBConnectionInfo input, IReadOnlyList<MongoDBClusterInfo> output) : base(taskType, errors, state, commands, clientData)
+        internal ConnectToMongoDBTaskProperties(TaskType taskType, IReadOnlyList<ODataError> errors, TaskState? state, IReadOnlyList<CommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, MongoDBConnectionInfo input, IReadOnlyList<MongoDBClusterInfo> output) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

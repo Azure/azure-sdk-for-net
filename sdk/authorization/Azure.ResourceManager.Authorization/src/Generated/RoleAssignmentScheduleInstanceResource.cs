@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
     /// A Class representing a RoleAssignmentScheduleInstance along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="RoleAssignmentScheduleInstanceResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetRoleAssignmentScheduleInstanceResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetRoleAssignmentScheduleInstance method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="RoleAssignmentScheduleInstanceResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetRoleAssignmentScheduleInstanceResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetRoleAssignmentScheduleInstance method.
     /// </summary>
     public partial class RoleAssignmentScheduleInstanceResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="RoleAssignmentScheduleInstanceResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="roleAssignmentScheduleInstanceName"> The roleAssignmentScheduleInstanceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string roleAssignmentScheduleInstanceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Authorization/roleAssignmentScheduleInstances/{roleAssignmentScheduleInstanceName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleAssignmentScheduleInstancesRestOperations _roleAssignmentScheduleInstanceRestClient;
         private readonly RoleAssignmentScheduleInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleAssignmentScheduleInstances";
+
         /// <summary> Initializes a new instance of the <see cref="RoleAssignmentScheduleInstanceResource"/> class for mocking. </summary>
         protected RoleAssignmentScheduleInstanceResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "RoleAssignmentScheduleInstanceResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="RoleAssignmentScheduleInstanceResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal RoleAssignmentScheduleInstanceResource(ArmClient client, RoleAssignmentScheduleInstanceData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.Authorization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleAssignmentScheduleInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +138,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentScheduleInstances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

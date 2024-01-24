@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
     /// <summary> Subscription-level properties and limits for Data Lake Store. </summary>
     public partial class DataLakeStoreCapabilityInformation
     {
-        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreCapabilityInformation"/>. </summary>
         internal DataLakeStoreCapabilityInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStoreCapabilityInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStoreCapabilityInformation"/>. </summary>
         /// <param name="subscriptionId"> The subscription credentials that uniquely identifies the subscription. </param>
         /// <param name="state"> The subscription state. </param>
         /// <param name="maxAccountCount"> The maximum supported number of accounts under this subscription. </param>
         /// <param name="accountCount"> The current number of accounts under this subscription. </param>
         /// <param name="isUnderMigrationState"> The Boolean value of true or false to indicate the maintenance state. </param>
-        internal DataLakeStoreCapabilityInformation(Guid? subscriptionId, DataLakeStoreSubscriptionState? state, int? maxAccountCount, int? accountCount, bool? isUnderMigrationState)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataLakeStoreCapabilityInformation(Guid? subscriptionId, DataLakeStoreSubscriptionState? state, int? maxAccountCount, int? accountCount, bool? isUnderMigrationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubscriptionId = subscriptionId;
             State = state;
             MaxAccountCount = maxAccountCount;
             AccountCount = accountCount;
             IsUnderMigrationState = isUnderMigrationState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subscription credentials that uniquely identifies the subscription. </summary>

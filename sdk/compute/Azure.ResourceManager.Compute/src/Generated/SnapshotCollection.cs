@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SnapshotResource" /> and their operations.
-    /// Each <see cref="SnapshotResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SnapshotCollection" /> instance call the GetSnapshots method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SnapshotResource"/> and their operations.
+    /// Each <see cref="SnapshotResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SnapshotCollection"/> instance call the GetSnapshots method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SnapshotCollection : ArmCollection, IEnumerable<SnapshotResource>, IAsyncEnumerable<SnapshotResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Snapshots_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can't be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Snapshots_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SnapshotResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Snapshots_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SnapshotResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>Snapshots_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> The name of the snapshot that is being created. The name can't be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can't be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
+            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshots_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> The name of the snapshot that is being created. The name can't be changed after the snapshot is created. Supported characters for the name are a-z, A-Z, 0-9, _ and -. The max name length is 80 characters. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        public virtual NullableResponse<SnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
+            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, snapshotName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

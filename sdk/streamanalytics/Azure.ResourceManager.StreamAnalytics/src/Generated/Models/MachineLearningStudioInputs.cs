@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The inputs for the Azure Machine Learning Studio endpoint. </summary>
     public partial class MachineLearningStudioInputs
     {
-        /// <summary> Initializes a new instance of MachineLearningStudioInputs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStudioInputs"/>. </summary>
         public MachineLearningStudioInputs()
         {
             ColumnNames = new ChangeTrackingList<MachineLearningStudioInputColumn>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningStudioInputs. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningStudioInputs"/>. </summary>
         /// <param name="name"> The name of the input. This is the name provided while authoring the endpoint. </param>
         /// <param name="columnNames"> A list of input columns for the Azure Machine Learning Studio endpoint. </param>
         internal MachineLearningStudioInputs(string name, IList<MachineLearningStudioInputColumn> columnNames)

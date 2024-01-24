@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> and their operations.
-    /// Each <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> in the collection will belong to the same instance of <see cref="EventHubsDisasterRecoveryResource" />.
-    /// To get an <see cref="EventHubsDisasterRecoveryAuthorizationRuleCollection" /> instance call the GetEventHubsDisasterRecoveryAuthorizationRules method from an instance of <see cref="EventHubsDisasterRecoveryResource" />.
+    /// A class representing a collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> and their operations.
+    /// Each <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> in the collection will belong to the same instance of <see cref="EventHubsDisasterRecoveryResource"/>.
+    /// To get an <see cref="EventHubsDisasterRecoveryAuthorizationRuleCollection"/> instance call the GetEventHubsDisasterRecoveryAuthorizationRules method from an instance of <see cref="EventHubsDisasterRecoveryResource"/>.
     /// </summary>
     public partial class EventHubsDisasterRecoveryAuthorizationRuleCollection : ArmCollection, IEnumerable<EventHubsDisasterRecoveryAuthorizationRuleResource>, IAsyncEnumerable<EventHubsDisasterRecoveryAuthorizationRuleResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_ListAuthorizationRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<EventHubsDisasterRecoveryAuthorizationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_ListAuthorizationRules</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<EventHubsDisasterRecoveryAuthorizationRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.CreateListAuthorizationRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.EventHubs
         /// <term>Operation Id</term>
         /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="authorizationRuleName"> The authorization rule name. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.EventHubs
             {
                 var response = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<EventHubsDisasterRecoveryAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.GetAuthorizationRuleAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<EventHubsDisasterRecoveryAuthorizationRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventHub/namespaces/{namespaceName}/disasterRecoveryConfigs/{alias}/authorizationRules/{authorizationRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DisasterRecoveryConfigs_GetAuthorizationRule</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EventHubsDisasterRecoveryAuthorizationRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="authorizationRuleName"> The authorization rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="authorizationRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
+        public virtual NullableResponse<EventHubsDisasterRecoveryAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+
+            using var scope = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsClientDiagnostics.CreateScope("EventHubsDisasterRecoveryAuthorizationRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _eventHubsDisasterRecoveryAuthorizationRuleDisasterRecoveryConfigsRestClient.GetAuthorizationRule(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, authorizationRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<EventHubsDisasterRecoveryAuthorizationRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new EventHubsDisasterRecoveryAuthorizationRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -234,6 +234,102 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
+        public async Task Ctor_DefaultAudience()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.DefaultAudience);
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = test.FileSystem.Name,
+            };
+
+            DataLakeFileSystemClient aadFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                uriBuilder.ToUri(),
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileSystemClient.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_CustomAudience()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience($"https://{test.FileSystem.AccountName}.blob.core.windows.net/"));
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = test.FileSystem.Name,
+            };
+
+            DataLakeFileSystemClient aadFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                uriBuilder.ToUri(),
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileSystemClient.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_StorageAccountAudience()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(DataLakeAudience.CreateDataLakeServiceAccountAudience(test.FileSystem.AccountName));
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = test.FileSystem.Name,
+            };
+
+            DataLakeFileSystemClient aadFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                uriBuilder.ToUri(),
+                GetOAuthHnsCredential(),
+                options));
+
+            // Assert
+            bool exists = await aadFileSystemClient.ExistsAsync();
+            Assert.IsTrue(exists);
+        }
+
+        [RecordedTest]
+        public async Task Ctor_AudienceError()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Act - Create new blob client with the OAuth Credential and Audience
+            DataLakeClientOptions options = GetOptionsWithAudience(new DataLakeAudience("https://badaudience.blob.core.windows.net"));
+
+            DataLakeUriBuilder uriBuilder = new DataLakeUriBuilder(new Uri(Tenants.TestConfigHierarchicalNamespace.BlobServiceEndpoint))
+            {
+                FileSystemName = test.FileSystem.Name,
+            };
+
+            DataLakeFileSystemClient aadFileSystemClient = InstrumentClient(new DataLakeFileSystemClient(
+                uriBuilder.ToUri(),
+                new MockCredential(),
+                options));
+
+            // Assert
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                aadFileSystemClient.ExistsAsync(),
+                e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
+        }
+
+        [RecordedTest]
         public async Task GetFileClient()
         {
             // Arrange

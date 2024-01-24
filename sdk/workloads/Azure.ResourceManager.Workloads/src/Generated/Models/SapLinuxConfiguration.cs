@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Specifies the Linux operating system settings on the virtual machine. &lt;br&gt;&lt;br&gt;For a list of supported Linux distributions, see [Linux on Azure-Endorsed Distributions](https://docs.microsoft.com/azure/virtual-machines/linux/endorsed-distros). </summary>
     public partial class SapLinuxConfiguration : SapOSConfiguration
     {
-        /// <summary> Initializes a new instance of SapLinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLinuxConfiguration"/>. </summary>
         public SapLinuxConfiguration()
         {
             OSType = SapOSType.Linux;
         }
 
-        /// <summary> Initializes a new instance of SapLinuxConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapLinuxConfiguration"/>. </summary>
         /// <param name="osType"> The OS Type. </param>
         /// <param name="disablePasswordAuthentication"> Specifies whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. (This property is deprecated, please use 'sshKeyPair' instead). </param>

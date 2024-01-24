@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class of paths for streaming. </summary>
     public partial class StreamingPath
     {
-        /// <summary> Initializes a new instance of StreamingPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPath"/>. </summary>
         /// <param name="streamingProtocol"> Streaming protocol. </param>
         /// <param name="encryptionScheme"> Encryption scheme. </param>
         internal StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, StreamingPathEncryptionScheme encryptionScheme)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Media.Models
             Paths = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of StreamingPath. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamingPath"/>. </summary>
         /// <param name="streamingProtocol"> Streaming protocol. </param>
         /// <param name="encryptionScheme"> Encryption scheme. </param>
         /// <param name="paths"> Streaming paths for each protocol and encryptionScheme pair. </param>

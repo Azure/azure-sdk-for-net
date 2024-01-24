@@ -6,23 +6,25 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
     /// <summary> Daily recurrence object. </summary>
     public partial class DailyRecurrence : AlertProcessingRuleRecurrence
     {
-        /// <summary> Initializes a new instance of DailyRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
         public DailyRecurrence()
         {
             RecurrenceType = RecurrenceType.Daily;
         }
 
-        /// <summary> Initializes a new instance of DailyRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="DailyRecurrence"/>. </summary>
         /// <param name="recurrenceType"> Specifies when the recurrence should be applied. </param>
         /// <param name="startOn"> Start time for recurrence. </param>
         /// <param name="endOn"> End time for recurrence. </param>
-        internal DailyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn) : base(recurrenceType, startOn, endOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DailyRecurrence(RecurrenceType recurrenceType, TimeSpan? startOn, TimeSpan? endOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(recurrenceType, startOn, endOn, serializedAdditionalRawData)
         {
             RecurrenceType = recurrenceType;
         }

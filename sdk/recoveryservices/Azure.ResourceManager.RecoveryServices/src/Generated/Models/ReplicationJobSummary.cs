@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Summary of the replication job data for this vault. </summary>
     public partial class ReplicationJobSummary
     {
-        /// <summary> Initializes a new instance of ReplicationJobSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationJobSummary"/>. </summary>
         internal ReplicationJobSummary()
         {
         }
 
-        /// <summary> Initializes a new instance of ReplicationJobSummary. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationJobSummary"/>. </summary>
         /// <param name="failedJobs"> Count of failed jobs. </param>
         /// <param name="suspendedJobs"> Count of suspended jobs. </param>
         /// <param name="inProgressJobs"> Count of in-progress jobs. </param>

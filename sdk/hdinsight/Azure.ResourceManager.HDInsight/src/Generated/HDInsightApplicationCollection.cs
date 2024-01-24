@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.HDInsight
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HDInsightApplicationResource" /> and their operations.
-    /// Each <see cref="HDInsightApplicationResource" /> in the collection will belong to the same instance of <see cref="HDInsightClusterResource" />.
-    /// To get a <see cref="HDInsightApplicationCollection" /> instance call the GetHDInsightApplications method from an instance of <see cref="HDInsightClusterResource" />.
+    /// A class representing a collection of <see cref="HDInsightApplicationResource"/> and their operations.
+    /// Each <see cref="HDInsightApplicationResource"/> in the collection will belong to the same instance of <see cref="HDInsightClusterResource"/>.
+    /// To get a <see cref="HDInsightApplicationCollection"/> instance call the GetHDInsightApplications method from an instance of <see cref="HDInsightClusterResource"/>.
     /// </summary>
     public partial class HDInsightApplicationCollection : ArmCollection, IEnumerable<HDInsightApplicationResource>, IAsyncEnumerable<HDInsightApplicationResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Applications_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Applications_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HDInsightApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HDInsightApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HDInsightApplicationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Applications_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HDInsightApplicationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HDInsightApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HDInsightApplicationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _hdInsightApplicationApplicationsRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.HDInsight
         /// <term>Operation Id</term>
         /// <description>Applications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="applicationName"> The constant value for the application name. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.HDInsight
             {
                 var response = _hdInsightApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationName"> The constant value for the application name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<HDInsightApplicationResource>> GetIfExistsAsync(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _hdInsightApplicationApplicationsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HDInsightApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new HDInsightApplicationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HDInsight/clusters/{clusterName}/applications/{applicationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Applications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HDInsightApplicationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="applicationName"> The constant value for the application name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="applicationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="applicationName"/> is null. </exception>
+        public virtual NullableResponse<HDInsightApplicationResource> GetIfExists(string applicationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(applicationName, nameof(applicationName));
+
+            using var scope = _hdInsightApplicationApplicationsClientDiagnostics.CreateScope("HDInsightApplicationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _hdInsightApplicationApplicationsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, applicationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HDInsightApplicationResource>(response.GetRawResponse());
+                return Response.FromValue(new HDInsightApplicationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

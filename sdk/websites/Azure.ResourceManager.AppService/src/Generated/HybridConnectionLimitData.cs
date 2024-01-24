@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class HybridConnectionLimitData : ResourceData
     {
-        /// <summary> Initializes a new instance of HybridConnectionLimitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionLimitData"/>. </summary>
         public HybridConnectionLimitData()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionLimitData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionLimitData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

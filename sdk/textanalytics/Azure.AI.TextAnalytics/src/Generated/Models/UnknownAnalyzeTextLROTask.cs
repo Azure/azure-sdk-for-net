@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> The UnknownAnalyzeTextLROTask. </summary>
     internal partial class UnknownAnalyzeTextLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of UnknownAnalyzeTextLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAnalyzeTextLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         internal UnknownAnalyzeTextLROTask(string taskName, AnalyzeTextLROTaskKind kind) : base(taskName, kind)

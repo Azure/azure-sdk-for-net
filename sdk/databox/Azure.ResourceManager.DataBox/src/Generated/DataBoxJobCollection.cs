@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DataBox
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataBoxJobResource" /> and their operations.
-    /// Each <see cref="DataBoxJobResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DataBoxJobCollection" /> instance call the GetDataBoxJobs method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DataBoxJobResource"/> and their operations.
+    /// Each <see cref="DataBoxJobResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DataBoxJobCollection"/> instance call the GetDataBoxJobs method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DataBoxJobCollection : ArmCollection, IEnumerable<DataBoxJobResource>, IAsyncEnumerable<DataBoxJobResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DataBox
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.DataBox
         /// <term>Operation Id</term>
         /// <description>Jobs_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.DataBox
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.DataBox
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,11 +255,19 @@ namespace Azure.ResourceManager.DataBox
         /// <term>Operation Id</term>
         /// <description>Jobs_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataBoxJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxJobResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
@@ -246,11 +286,19 @@ namespace Azure.ResourceManager.DataBox
         /// <term>Operation Id</term>
         /// <description>Jobs_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of jobs, which provides the next page in the list of jobs. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataBoxJobResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataBoxJobResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxJobResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataBoxJobJobsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, skipToken);
@@ -268,6 +316,14 @@ namespace Azure.ResourceManager.DataBox
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.DataBox
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
@@ -322,6 +386,98 @@ namespace Azure.ResourceManager.DataBox
             {
                 var response = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataBoxJobResource>> GetIfExistsAsync(string jobName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataBoxJobJobsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxJobResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataBox/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxJobResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The name of the job Resource within the specified resource group. job names must be between 3 and 24 characters in length and use any alphanumeric and underscore only. </param>
+        /// <param name="expand"> $expand is supported on details parameter for job, which provides details on the job stages. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        public virtual NullableResponse<DataBoxJobResource> GetIfExists(string jobName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
+
+            using var scope = _dataBoxJobJobsClientDiagnostics.CreateScope("DataBoxJobCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataBoxJobJobsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, jobName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataBoxJobResource>(response.GetRawResponse());
+                return Response.FromValue(new DataBoxJobResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

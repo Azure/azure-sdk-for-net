@@ -35,5 +35,19 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             Assert.AreEqual(expected, properties.RecoverableDays);
         }
+
+        [TestCase(@"{""kid"":""https://vault/keys/key-name""}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""hsmPlatform"":null}}", null)]
+        [TestCase(@"{""kid"":""https://vault/keys/key-name"",""attributes"":{""hsmPlatform"":""1""}}", "1")]
+        public void DeserializesHsmPlatform(string content, string expected)
+        {
+            KeyProperties properties = new KeyProperties();
+            using (JsonStream json = new JsonStream(content))
+            {
+                properties.Deserialize(json.AsStream());
+            }
+
+            Assert.AreEqual(expected, properties.HsmPlatform);
+        }
     }
 }

@@ -96,7 +96,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             CloseTransmission();
         }
 
-        internal void EnableBackOff(Response response)
+        internal void EnableBackOff(Response? response)
         {
             if (Interlocked.Exchange(ref _syncBackOffIntervalCalculation, 1) == 0)
             {

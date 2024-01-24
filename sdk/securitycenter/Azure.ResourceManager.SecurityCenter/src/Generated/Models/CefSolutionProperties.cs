@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> The external security solution properties for CEF solutions. </summary>
     public partial class CefSolutionProperties : ExternalSecuritySolutionProperties
     {
-        /// <summary> Initializes a new instance of CefSolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CefSolutionProperties"/>. </summary>
         public CefSolutionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of CefSolutionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CefSolutionProperties"/>. </summary>
         /// <param name="deviceVendor"></param>
         /// <param name="deviceType"></param>
         /// <param name="workspace"> Represents an OMS workspace to which the solution is connected. </param>

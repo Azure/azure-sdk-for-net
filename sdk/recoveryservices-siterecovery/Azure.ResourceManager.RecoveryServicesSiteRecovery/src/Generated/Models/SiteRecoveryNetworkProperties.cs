@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Network Properties. </summary>
     public partial class SiteRecoveryNetworkProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkProperties"/>. </summary>
         internal SiteRecoveryNetworkProperties()
         {
             Subnets = new ChangeTrackingList<SiteRecoverySubnet>();
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryNetworkProperties"/>. </summary>
         /// <param name="fabricType"> The Fabric Type. </param>
         /// <param name="subnets"> The List of subnets. </param>
         /// <param name="friendlyName"> The Friendly Name. </param>

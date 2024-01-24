@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> The incident related entities response. </summary>
     public partial class SecurityInsightsIncidentEntitiesResult
     {
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentEntitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentEntitiesResult"/>. </summary>
         internal SecurityInsightsIncidentEntitiesResult()
         {
             Entities = new ChangeTrackingList<SecurityInsightsEntity>();
             MetaData = new ChangeTrackingList<SecurityInsightsIncidentEntitiesMetadata>();
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsIncidentEntitiesResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsIncidentEntitiesResult"/>. </summary>
         /// <param name="entities">
         /// Array of the incident related entities.
         /// Please note <see cref="SecurityInsightsEntity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

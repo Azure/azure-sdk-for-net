@@ -15,8 +15,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("status"u8);
-            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(CosmosDBResourceId))
+            {
+                writer.WritePropertyName("cosmosDbResourceId"u8);
+                writer.WriteStringValue(CosmosDBResourceId);
+            }
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -24,6 +27,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("keyVaultProperties"u8);
             writer.WriteObjectValue(KeyVaultProperties);
+            if (Optional.IsDefined(SearchAccountResourceId))
+            {
+                writer.WritePropertyName("searchAccountResourceId"u8);
+                writer.WriteStringValue(SearchAccountResourceId);
+            }
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(StorageAccountResourceId))
+            {
+                writer.WritePropertyName("storageAccountResourceId"u8);
+                writer.WriteStringValue(StorageAccountResourceId);
+            }
             writer.WriteEndObject();
         }
 
@@ -33,14 +48,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            MachineLearningEncryptionStatus status = default;
+            Optional<ResourceIdentifier> cosmosDbResourceId = default;
             Optional<MachineLearningCmkIdentity> identity = default;
             MachineLearningEncryptionKeyVaultProperties keyVaultProperties = default;
+            Optional<ResourceIdentifier> searchAccountResourceId = default;
+            MachineLearningEncryptionStatus status = default;
+            Optional<ResourceIdentifier> storageAccountResourceId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("status"u8))
+                if (property.NameEquals("cosmosDbResourceId"u8))
                 {
-                    status = new MachineLearningEncryptionStatus(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    cosmosDbResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -57,8 +79,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     keyVaultProperties = MachineLearningEncryptionKeyVaultProperties.DeserializeMachineLearningEncryptionKeyVaultProperties(property.Value);
                     continue;
                 }
+                if (property.NameEquals("searchAccountResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    searchAccountResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("status"u8))
+                {
+                    status = new MachineLearningEncryptionStatus(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageAccountResourceId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageAccountResourceId = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
             }
-            return new MachineLearningEncryptionSetting(status, identity.Value, keyVaultProperties);
+            return new MachineLearningEncryptionSetting(cosmosDbResourceId.Value, identity.Value, keyVaultProperties, searchAccountResourceId.Value, status, storageAccountResourceId.Value);
         }
     }
 }

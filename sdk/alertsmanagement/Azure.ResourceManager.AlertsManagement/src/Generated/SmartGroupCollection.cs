@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AlertsManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SmartGroupResource" /> and their operations.
-    /// Each <see cref="SmartGroupResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SmartGroupCollection" /> instance call the GetSmartGroups method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SmartGroupResource"/> and their operations.
+    /// Each <see cref="SmartGroupResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SmartGroupCollection"/> instance call the GetSmartGroups method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SmartGroupCollection : ArmCollection, IEnumerable<SmartGroupResource>, IAsyncEnumerable<SmartGroupResource>
     {
@@ -66,6 +66,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
@@ -98,6 +106,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,11 +148,19 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SmartGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SmartGroupResource> GetAllAsync(SmartGroupCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SmartGroupCollectionGetAllOptions();
@@ -157,11 +181,19 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SmartGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SmartGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SmartGroupResource> GetAll(SmartGroupCollectionGetAllOptions options, CancellationToken cancellationToken = default)
         {
             options ??= new SmartGroupCollectionGetAllOptions();
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +253,14 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <term>Operation Id</term>
         /// <description>SmartGroups_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="smartGroupId"> Smart group unique id. </param>
@@ -225,6 +273,88 @@ namespace Azure.ResourceManager.AlertsManagement
             {
                 var response = _smartGroupRestClient.GetById(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smartGroupId"> Smart group unique id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SmartGroupResource>> GetIfExistsAsync(Guid smartGroupId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _smartGroupRestClient.GetByIdAsync(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SmartGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AlertsManagement/smartGroups/{smartGroupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SmartGroups_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SmartGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="smartGroupId"> Smart group unique id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SmartGroupResource> GetIfExists(Guid smartGroupId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _smartGroupClientDiagnostics.CreateScope("SmartGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _smartGroupRestClient.GetById(Id.SubscriptionId, smartGroupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SmartGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new SmartGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> GetAsync(string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetIfExists(string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorResource>> GetIfExistsAsync(string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class FrontDoorData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.FrontDoorBackendPool> BackendPools { get { throw null; } }
         public Azure.ResourceManager.FrontDoor.Models.BackendPoolsSettings BackendPoolsSettings { get { throw null; } set { } }
         public string Cname { get { throw null; } }
@@ -44,13 +46,15 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> GetAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> GetIfExists(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>> GetIfExistsAsync(string experimentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class FrontDoorExperimentData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorExperimentData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorExperimentData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentEndpointProperties ExperimentEndpointA { get { throw null; } set { } }
@@ -124,13 +128,15 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> GetAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetIfExists(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> GetIfExistsAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class FrontDoorNetworkExperimentProfileData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorNetworkExperimentProfileData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorNetworkExperimentProfileData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorExperimentState? EnabledState { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.FrontDoor.Models.NetworkExperimentResourceState? ResourceState { get { throw null; } }
@@ -201,6 +207,8 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> GetAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> GetIfExists(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>> GetIfExistsAsync(string rulesEngineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -236,13 +244,15 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> GetAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> GetIfExists(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> GetIfExistsAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class FrontDoorWebApplicationFirewallPolicyData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorWebApplicationFirewallPolicyData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorWebApplicationFirewallPolicyData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> FrontendEndpointLinks { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSet> ManagedRuleSets { get { throw null; } }
@@ -283,6 +293,8 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>> GetAsync(string frontendEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> GetIfExists(string frontendEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>> GetIfExistsAsync(string frontendEndpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -312,6 +324,50 @@ namespace Azure.ResourceManager.FrontDoor
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> EnableHttpsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.FrontDoor.Models.CustomHttpsConfiguration customHttpsConfiguration, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontendEndpointResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.FrontDoor.Mocking
+{
+    public partial class MockableFrontDoorArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableFrontDoorArmClient() { }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorExperimentResource GetFrontDoorExperimentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource GetFrontDoorNetworkExperimentProfileResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorResource GetFrontDoorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorRulesEngineResource GetFrontDoorRulesEngineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource GetFrontDoorWebApplicationFirewallPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontendEndpointResource GetFrontendEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableFrontDoorResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableFrontDoorResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetFrontDoor(string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorResource>> GetFrontDoorAsync(string frontDoorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfile(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource>> GetFrontDoorNetworkExperimentProfileAsync(string profileName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileCollection GetFrontDoorNetworkExperimentProfiles() { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorCollection GetFrontDoors() { throw null; }
+        public virtual Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyCollection GetFrontDoorWebApplicationFirewallPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource> GetFrontDoorWebApplicationFirewallPolicy(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.FrontDoorWebApplicationFirewallPolicyResource>> GetFrontDoorWebApplicationFirewallPolicyAsync(string policyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableFrontDoorSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableFrontDoorSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorNetworkExperimentProfileResource> GetFrontDoorNetworkExperimentProfilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetFrontDoors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.FrontDoorResource> GetFrontDoorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition> GetManagedRuleSets(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.FrontDoor.Models.ManagedRuleSetDefinition> GetManagedRuleSetsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableFrontDoorTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableFrontDoorTenantResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult> CheckFrontDoorNameAvailability(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityResult>> CheckFrontDoorNameAvailabilityAsync(Azure.ResourceManager.FrontDoor.Models.FrontDoorNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.FrontDoor.Models
@@ -877,7 +933,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class FrontDoorTimeSeriesInfo : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public FrontDoorTimeSeriesInfo(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public FrontDoorTimeSeriesInfo(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.FrontDoor.Models.FrontDoorTimeSeriesInfoAggregationInterval? AggregationInterval { get { throw null; } set { } }
         public string Country { get { throw null; } set { } }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
@@ -1089,7 +1145,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class LatencyScorecard : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public LatencyScorecard(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public LatencyScorecard(Azure.Core.AzureLocation location) { }
         public string Country { get { throw null; } }
         public string Description { get { throw null; } }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -1246,7 +1302,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class ManagedRuleSetDefinition : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public ManagedRuleSetDefinition(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedRuleSetDefinition(Azure.Core.AzureLocation location) { }
         public string ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.FrontDoor.Models.ManagedRuleGroupDefinition> RuleGroups { get { throw null; } }
         public string RuleSetId { get { throw null; } }
@@ -1331,7 +1387,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     }
     public partial class PreconfiguredEndpoint : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PreconfiguredEndpoint(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PreconfiguredEndpoint(Azure.Core.AzureLocation location) { }
         public string Backend { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string Endpoint { get { throw null; } set { } }

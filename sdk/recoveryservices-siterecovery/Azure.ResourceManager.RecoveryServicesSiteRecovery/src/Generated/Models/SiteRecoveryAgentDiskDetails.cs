@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Agent disk details. </summary>
     public partial class SiteRecoveryAgentDiskDetails
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDiskDetails"/>. </summary>
         internal SiteRecoveryAgentDiskDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryAgentDiskDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAgentDiskDetails"/>. </summary>
         /// <param name="diskId"> The disk Id. </param>
         /// <param name="diskName"> The disk name. </param>
         /// <param name="isOSDisk"> A value indicating whether the disk is the OS disk. </param>

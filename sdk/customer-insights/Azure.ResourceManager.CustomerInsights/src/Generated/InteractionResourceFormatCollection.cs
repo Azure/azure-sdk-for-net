@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CustomerInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="InteractionResourceFormatResource" /> and their operations.
-    /// Each <see cref="InteractionResourceFormatResource" /> in the collection will belong to the same instance of <see cref="HubResource" />.
-    /// To get an <see cref="InteractionResourceFormatCollection" /> instance call the GetInteractionResourceFormats method from an instance of <see cref="HubResource" />.
+    /// A class representing a collection of <see cref="InteractionResourceFormatResource"/> and their operations.
+    /// Each <see cref="InteractionResourceFormatResource"/> in the collection will belong to the same instance of <see cref="HubResource"/>.
+    /// To get an <see cref="InteractionResourceFormatCollection"/> instance call the GetInteractionResourceFormats method from an instance of <see cref="HubResource"/>.
     /// </summary>
     public partial class InteractionResourceFormatCollection : ArmCollection, IEnumerable<InteractionResourceFormatResource>, IAsyncEnumerable<InteractionResourceFormatResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Interactions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Interactions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Interactions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Interactions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,11 +254,19 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Interactions_ListByHub</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="InteractionResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<InteractionResourceFormatResource> GetAllAsync(string localeCode = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
@@ -245,11 +285,19 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Interactions_ListByHub</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InteractionResourceFormatResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="InteractionResourceFormatResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<InteractionResourceFormatResource> GetAll(string localeCode = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _interactionResourceFormatInteractionsRestClient.CreateListByHubRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, localeCode);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Interactions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +360,14 @@ namespace Azure.ResourceManager.CustomerInsights
         /// <term>Operation Id</term>
         /// <description>Interactions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="interactionName"> The name of the interaction. </param>
@@ -321,6 +385,98 @@ namespace Azure.ResourceManager.CustomerInsights
             {
                 var response = _interactionResourceFormatInteractionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, localeCode, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="interactionName"> The name of the interaction. </param>
+        /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<InteractionResourceFormatResource>> GetIfExistsAsync(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
+
+            using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _interactionResourceFormatInteractionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, localeCode, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<InteractionResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CustomerInsights/hubs/{hubName}/interactions/{interactionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Interactions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-04-26</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="InteractionResourceFormatResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="interactionName"> The name of the interaction. </param>
+        /// <param name="localeCode"> Locale of interaction to retrieve, default is en-us. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="interactionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="interactionName"/> is null. </exception>
+        public virtual NullableResponse<InteractionResourceFormatResource> GetIfExists(string interactionName, string localeCode = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(interactionName, nameof(interactionName));
+
+            using var scope = _interactionResourceFormatInteractionsClientDiagnostics.CreateScope("InteractionResourceFormatCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _interactionResourceFormatInteractionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, interactionName, localeCode, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<InteractionResourceFormatResource>(response.GetRawResponse());
+                return Response.FromValue(new InteractionResourceFormatResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -12,26 +12,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningAssetBase. </summary>
     public partial class MachineLearningAssetBase : MachineLearningResourceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningAssetBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssetBase"/>. </summary>
         public MachineLearningAssetBase()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningAssetBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningAssetBase"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
-        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). </param>
-        /// <param name="isArchived"> Is the asset archived?. </param>
-        internal MachineLearningAssetBase(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, bool? isAnonymous, bool? isArchived) : base(description, properties, tags)
+        /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
+        /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
+        /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
+        internal MachineLearningAssetBase(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived) : base(description, properties, tags)
         {
+            AutoDeleteSetting = autoDeleteSetting;
             IsAnonymous = isAnonymous;
             IsArchived = isArchived;
         }
 
-        /// <summary> If the name version are system generated (anonymous registration). </summary>
+        /// <summary> Specifies the lifecycle setting of managed data asset. </summary>
+        public AutoDeleteSetting AutoDeleteSetting { get; set; }
+        /// <summary> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </summary>
         public bool? IsAnonymous { get; set; }
-        /// <summary> Is the asset archived?. </summary>
+        /// <summary> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </summary>
         public bool? IsArchived { get; set; }
     }
 }

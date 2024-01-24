@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> and their operations.
-    /// Each <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SubscriptionPacketCoreControlPlaneVersionCollection" /> instance call the GetSubscriptionPacketCoreControlPlaneVersions method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> and their operations.
+    /// Each <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SubscriptionPacketCoreControlPlaneVersionCollection"/> instance call the GetSubscriptionPacketCoreControlPlaneVersions method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SubscriptionPacketCoreControlPlaneVersionCollection : ArmCollection, IEnumerable<SubscriptionPacketCoreControlPlaneVersionResource>, IAsyncEnumerable<SubscriptionPacketCoreControlPlaneVersionResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,10 +155,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SubscriptionPacketCoreControlPlaneVersionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -161,10 +185,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionPacketCoreControlPlaneVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SubscriptionPacketCoreControlPlaneVersionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
@@ -182,6 +214,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +258,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The name of the packet core control plane version. </param>
@@ -234,6 +282,96 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.GetBySubscription(Id.SubscriptionId, versionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SubscriptionPacketCoreControlPlaneVersionResource>> GetIfExistsAsync(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            using var scope = _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("SubscriptionPacketCoreControlPlaneVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.GetBySubscriptionAsync(Id.SubscriptionId, versionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionPacketCoreControlPlaneVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPacketCoreControlPlaneVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.MobileNetwork/packetCoreControlPlaneVersions/{versionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PacketCoreControlPlaneVersions_GetBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionPacketCoreControlPlaneVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionName"> The name of the packet core control plane version. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        public virtual NullableResponse<SubscriptionPacketCoreControlPlaneVersionResource> GetIfExists(string versionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionName, nameof(versionName));
+
+            using var scope = _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsClientDiagnostics.CreateScope("SubscriptionPacketCoreControlPlaneVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _subscriptionPacketCoreControlPlaneVersionPacketCoreControlPlaneVersionsRestClient.GetBySubscription(Id.SubscriptionId, versionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SubscriptionPacketCoreControlPlaneVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new SubscriptionPacketCoreControlPlaneVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

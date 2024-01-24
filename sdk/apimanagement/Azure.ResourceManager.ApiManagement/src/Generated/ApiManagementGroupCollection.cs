@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementGroupResource" /> and their operations.
-    /// Each <see cref="ApiManagementGroupResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementGroupCollection" /> instance call the GetApiManagementGroups method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiManagementGroupResource"/> and their operations.
+    /// Each <see cref="ApiManagementGroupResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementGroupCollection"/> instance call the GetApiManagementGroups method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementGroupCollection : ArmCollection, IEnumerable<ApiManagementGroupResource>, IAsyncEnumerable<ApiManagementGroupResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Group_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Group_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -149,6 +165,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Group_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Group_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,13 +255,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Group_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| externalId | filter | eq |     |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementGroupResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGroupGroupRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
@@ -248,13 +288,21 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Group_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| description | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| externalId | filter | eq |     |&lt;/br&gt;. </param>
         /// <param name="top"> Number of records to return. </param>
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementGroupResource> GetAll(string filter = null, int? top = null, int? skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementGroupGroupRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip);
@@ -272,6 +320,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Group_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,6 +364,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Group_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
@@ -324,6 +388,96 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiManagementGroupGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Group_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementGroupResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementGroupGroupRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Group_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Group identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementGroupResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _apiManagementGroupGroupClientDiagnostics.CreateScope("ApiManagementGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementGroupGroupRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

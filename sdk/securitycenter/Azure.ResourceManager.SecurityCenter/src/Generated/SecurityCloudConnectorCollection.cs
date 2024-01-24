@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityCloudConnectorResource" /> and their operations.
-    /// Each <see cref="SecurityCloudConnectorResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityCloudConnectorCollection" /> instance call the GetSecurityCloudConnectors method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityCloudConnectorResource"/> and their operations.
+    /// Each <see cref="SecurityCloudConnectorResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityCloudConnectorCollection"/> instance call the GetSecurityCloudConnectors method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityCloudConnectorCollection : ArmCollection, IEnumerable<SecurityCloudConnectorResource>, IAsyncEnumerable<SecurityCloudConnectorResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Connectors_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Connectors_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Connectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> Name of the cloud account connector. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Connectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Connectors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCloudConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCloudConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Connectors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCloudConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityCloudConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCloudConnectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCloudConnectorConnectorsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Connectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Connectors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectorName"> Name of the cloud account connector. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securityCloudConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SecurityCloudConnectorResource>> GetIfExistsAsync(string connectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+
+            using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityCloudConnectorConnectorsRestClient.GetAsync(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityCloudConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/connectors/{connectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Connectors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCloudConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectorName"> Name of the cloud account connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectorName"/> is null. </exception>
+        public virtual NullableResponse<SecurityCloudConnectorResource> GetIfExists(string connectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectorName, nameof(connectorName));
+
+            using var scope = _securityCloudConnectorConnectorsClientDiagnostics.CreateScope("SecurityCloudConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityCloudConnectorConnectorsRestClient.Get(Id.SubscriptionId, connectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityCloudConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityCloudConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

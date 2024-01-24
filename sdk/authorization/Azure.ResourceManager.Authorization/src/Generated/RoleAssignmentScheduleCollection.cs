@@ -19,9 +19,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Authorization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RoleAssignmentScheduleResource" /> and their operations.
-    /// Each <see cref="RoleAssignmentScheduleResource" /> in the collection will belong to the same instance of <see cref="ArmResource" />.
-    /// To get a <see cref="RoleAssignmentScheduleCollection" /> instance call the GetRoleAssignmentSchedules method from an instance of <see cref="ArmResource" />.
+    /// A class representing a collection of <see cref="RoleAssignmentScheduleResource"/> and their operations.
+    /// Each <see cref="RoleAssignmentScheduleResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="RoleAssignmentScheduleCollection"/> instance call the GetRoleAssignmentSchedules method from an instance of <see cref="ArmResource"/>.
     /// </summary>
     public partial class RoleAssignmentScheduleCollection : ArmCollection, IEnumerable<RoleAssignmentScheduleResource>, IAsyncEnumerable<RoleAssignmentScheduleResource>
     {
@@ -53,6 +53,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,6 +99,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
@@ -128,11 +144,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo('{userId}') to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RoleAssignmentScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RoleAssignmentScheduleResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
@@ -151,11 +175,19 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_ListForScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignment schedules at or above the scope. Use $filter=principalId eq {id} to return all role assignment schedules at, above or below the scope for the specified principal. Use $filter=assignedTo('{userId}') to return all role assignment schedules for the current user. Use $filter=asTarget() to return all role assignment schedules created for the current user. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RoleAssignmentScheduleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RoleAssignmentScheduleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RoleAssignmentScheduleResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _roleAssignmentScheduleRestClient.CreateListForScopeRequest(Id, filter);
@@ -173,6 +205,14 @@ namespace Azure.ResourceManager.Authorization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +249,14 @@ namespace Azure.ResourceManager.Authorization
         /// <term>Operation Id</term>
         /// <description>RoleAssignmentSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
@@ -225,6 +273,96 @@ namespace Azure.ResourceManager.Authorization
             {
                 var response = _roleAssignmentScheduleRestClient.Get(Id, roleAssignmentScheduleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<RoleAssignmentScheduleResource>> GetIfExistsAsync(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
+
+            using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _roleAssignmentScheduleRestClient.GetAsync(Id, roleAssignmentScheduleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{scope}/providers/Microsoft.Authorization/roleAssignmentSchedules/{roleAssignmentScheduleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RoleAssignmentSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RoleAssignmentScheduleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentScheduleName"> The name (guid) of the role assignment schedule to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentScheduleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentScheduleName"/> is null. </exception>
+        public virtual NullableResponse<RoleAssignmentScheduleResource> GetIfExists(string roleAssignmentScheduleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentScheduleName, nameof(roleAssignmentScheduleName));
+
+            using var scope = _roleAssignmentScheduleClientDiagnostics.CreateScope("RoleAssignmentScheduleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _roleAssignmentScheduleRestClient.Get(Id, roleAssignmentScheduleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RoleAssignmentScheduleResource>(response.GetRawResponse());
+                return Response.FromValue(new RoleAssignmentScheduleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -10,12 +10,12 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary> Settings for SMB multichannel. </summary>
     public partial class SmbMultichannel
     {
-        /// <summary> Initializes a new instance of SmbMultichannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmbMultichannel"/>. </summary>
         public SmbMultichannel()
         {
         }
 
-        /// <summary> Initializes a new instance of SmbMultichannel. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmbMultichannel"/>. </summary>
         /// <param name="enabled"> If SMB multichannel is enabled. </param>
         internal SmbMultichannel(bool? enabled)
         {

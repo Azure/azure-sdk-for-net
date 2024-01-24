@@ -8,7 +8,7 @@ azure-arm: true
 title: communication
 namespace: Azure.ResourceManager.Communication
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/d71132a3e8bf8ad22ab77991805e033ed1b66dff/specification/communication/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5775c90db370eb73a5cd7ccb36e16c34630a5c8c/specification/communication/resource-manager/readme.md#tag-package-preview-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,6 +17,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 override-operation-name:
   CommunicationServices_CheckNameAvailability: CheckCommunicationNameAvailability
@@ -74,6 +75,8 @@ rename-mapping:
   DnsRecord: VerificationDnsRecord
   DomainsProvisioningState: DomainProvisioningState
   ProvisioningState: CommunicationServiceProvisioningState
+  SuppressionListResource.properties.createdTimeStamp: -|date-time
+  SuppressionListResource.properties.lastUpdatedTimeStamp: -|date-time
 
 directive:
  - from: types.json

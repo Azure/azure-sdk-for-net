@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Details of the user's elastic deployment associated with the monitor resource. </summary>
     public partial class ElasticCloudDeployment
     {
-        /// <summary> Initializes a new instance of ElasticCloudDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticCloudDeployment"/>. </summary>
         public ElasticCloudDeployment()
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticCloudDeployment. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticCloudDeployment"/>. </summary>
         /// <param name="name"> Elastic deployment name. </param>
         /// <param name="deploymentId"> Elastic deployment Id. </param>
         /// <param name="azureSubscriptionId"> Associated Azure subscription Id for the elastic deployment. </param>

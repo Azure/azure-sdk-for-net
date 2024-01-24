@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -19,7 +20,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class BackendAddressPoolData : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
         public BackendAddressPoolData()
         {
             TunnelInterfaces = new ChangeTrackingList<GatewayLoadBalancerTunnelInterface>();
@@ -30,10 +31,11 @@ namespace Azure.ResourceManager.Network
             InboundNatRules = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of BackendAddressPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendAddressPoolData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="location"> The location of the backend address pool. </param>
         /// <param name="tunnelInterfaces"> An array of gateway load balancer tunnel interfaces. </param>
@@ -47,7 +49,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="drainPeriodInSeconds"> Amount of seconds Load Balancer waits for before sending RESET to client and backend address. </param>
         /// <param name="virtualNetwork"> A reference to a virtual network. </param>
         /// <param name="syncMode"> Backend address synchronous mode for the backend pool. </param>
-        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork, BackendAddressSyncMode? syncMode) : base(id, name, resourceType)
+        internal BackendAddressPoolData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, AzureLocation? location, IList<GatewayLoadBalancerTunnelInterface> tunnelInterfaces, IList<LoadBalancerBackendAddress> loadBalancerBackendAddresses, IReadOnlyList<NetworkInterfaceIPConfigurationData> backendIPConfigurations, IReadOnlyList<WritableSubResource> loadBalancingRules, WritableSubResource outboundRule, IReadOnlyList<WritableSubResource> outboundRules, IReadOnlyList<WritableSubResource> inboundNatRules, NetworkProvisioningState? provisioningState, int? drainPeriodInSeconds, WritableSubResource virtualNetwork, BackendAddressSyncMode? syncMode) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Location = location;

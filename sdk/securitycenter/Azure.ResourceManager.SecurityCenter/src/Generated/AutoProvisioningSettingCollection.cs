@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutoProvisioningSettingResource" /> and their operations.
-    /// Each <see cref="AutoProvisioningSettingResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="AutoProvisioningSettingCollection" /> instance call the GetAutoProvisioningSettings method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="AutoProvisioningSettingResource"/> and their operations.
+    /// Each <see cref="AutoProvisioningSettingResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="AutoProvisioningSettingCollection"/> instance call the GetAutoProvisioningSettings method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class AutoProvisioningSettingCollection : ArmCollection, IEnumerable<AutoProvisioningSettingResource>, IAsyncEnumerable<AutoProvisioningSettingResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutoProvisioningSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutoProvisioningSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutoProvisioningSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoProvisioningSettingRestClient.CreateListRequest(Id.SubscriptionId);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutoProvisioningSettingResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutoProvisioningSettingResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutoProvisioningSettingResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _autoProvisioningSettingRestClient.CreateListRequest(Id.SubscriptionId);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>AutoProvisioningSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="settingName"> Auto provisioning setting key. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _autoProvisioningSettingRestClient.Get(Id.SubscriptionId, settingName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutoProvisioningSettingResource>> GetIfExistsAsync(string settingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _autoProvisioningSettingRestClient.GetAsync(Id.SubscriptionId, settingName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutoProvisioningSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new AutoProvisioningSettingResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/autoProvisioningSettings/{settingName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutoProvisioningSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoProvisioningSettingResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> Auto provisioning setting key. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        public virtual NullableResponse<AutoProvisioningSettingResource> GetIfExists(string settingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            using var scope = _autoProvisioningSettingClientDiagnostics.CreateScope("AutoProvisioningSettingCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _autoProvisioningSettingRestClient.Get(Id.SubscriptionId, settingName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutoProvisioningSettingResource>(response.GetRawResponse());
+                return Response.FromValue(new AutoProvisioningSettingResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

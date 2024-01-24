@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteWebJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteWebJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteWebJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetWebSiteWebJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteWebJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteWebJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetWebSiteWebJob method.
     /// </summary>
     public partial class WebSiteWebJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteWebJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="webJobName"> The webJobName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/webjobs/{webJobName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteWebJobWebAppsRestClient;
         private readonly WebJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/webjobs";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteWebJobResource"/> class for mocking. </summary>
         protected WebSiteWebJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteWebJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteWebJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteWebJobResource(ArmClient client, WebJobData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/webjobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetWebJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteWebJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetWebJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteWebJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

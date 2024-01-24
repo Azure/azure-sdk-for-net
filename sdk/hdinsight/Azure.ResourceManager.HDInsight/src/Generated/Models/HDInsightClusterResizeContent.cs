@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The Resize Cluster request parameters. </summary>
     public partial class HDInsightClusterResizeContent
     {
-        /// <summary> Initializes a new instance of HDInsightClusterResizeContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterResizeContent"/>. </summary>
         public HDInsightClusterResizeContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterResizeContent"/>. </summary>
+        /// <param name="targetInstanceCount"> The target instance count for the operation. </param>
+        internal HDInsightClusterResizeContent(int? targetInstanceCount)
+        {
+            TargetInstanceCount = targetInstanceCount;
         }
 
         /// <summary> The target instance count for the operation. </summary>

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Synapse.Models;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseEncryptionProtectorResource" /> and their operations.
-    /// Each <see cref="SynapseEncryptionProtectorResource" /> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource" />.
-    /// To get a <see cref="SynapseEncryptionProtectorCollection" /> instance call the GetSynapseEncryptionProtectors method from an instance of <see cref="SynapseWorkspaceResource" />.
+    /// A class representing a collection of <see cref="SynapseEncryptionProtectorResource"/> and their operations.
+    /// Each <see cref="SynapseEncryptionProtectorResource"/> in the collection will belong to the same instance of <see cref="SynapseWorkspaceResource"/>.
+    /// To get a <see cref="SynapseEncryptionProtectorCollection"/> instance call the GetSynapseEncryptionProtectors method from an instance of <see cref="SynapseWorkspaceResource"/>.
     /// </summary>
     public partial class SynapseEncryptionProtectorCollection : ArmCollection, IEnumerable<SynapseEncryptionProtectorResource>, IAsyncEnumerable<SynapseEncryptionProtectorResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -103,6 +111,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
@@ -175,6 +199,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,10 +241,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseEncryptionProtectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseEncryptionProtectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseEncryptionProtectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -231,10 +271,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseEncryptionProtectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseEncryptionProtectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseEncryptionProtectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +340,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
@@ -296,6 +360,88 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SynapseEncryptionProtectorResource>> GetIfExistsAsync(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseEncryptionProtectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseEncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/encryptionProtector/{encryptionProtectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceManagedSqlServerEncryptionProtector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseEncryptionProtectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="encryptionProtectorName"> The name of the encryption protector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SynapseEncryptionProtectorResource> GetIfExists(SynapseEncryptionProtectorName encryptionProtectorName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorClientDiagnostics.CreateScope("SynapseEncryptionProtectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseEncryptionProtectorWorkspaceManagedSqlServerEncryptionProtectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, encryptionProtectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseEncryptionProtectorResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseEncryptionProtectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

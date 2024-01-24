@@ -1,12 +1,50 @@
 # Release History
 
-## 7.17.0-beta.1 (Unreleased)
+## 7.18.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 7.17.2 (2024-01-16)
+
+### Bugs Fixed
+
+- Fixed the logic used to set the TimeToLive value of the AmqpMessageHeader for received messages to be based on the difference of the AbsoluteExpiryTime and CreationTime properties of the AmqpMessageProperties.
+- Prevent `NullReferenceException` from being thrown when the `ReceiveMessagesAsync` method is called using a high degree of concurrency.
+
+## 7.17.1 (2023-12-04)
+
+### Bugs Fixed
+
+- Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+- Updated the `ServiceBusMessage` constructor that takes a `ServiceBusReceivedMessage` to no longer copy over the
+  `x-opt-partition-id` key as this is meant to apply only to the original message.
+- Drain excess credits when attempting to receive using sessions to ensure FIFO ordering.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
+- Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
+
+## 7.17.0 (2023-11-14)
+
+### Breaking Changes
+
+The following breaking changes were made for the experimental support of Open Telemetry:
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.ServiceBus` to `Azure.Messaging.ServiceBus.Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+
+## 7.16.2 (2023-10-11)
+
+### Bugs Fixed
+
+- Fixed issue where `ActivitySource` activities were not being created even when the experimental
+  flag was set.
 
 ### Other Changes
 
@@ -27,7 +65,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Features Added
 
-- `ProcessMessageEventArgs` provides a `MessageLockLostAsync` event that can be subscribed to in 
+- `ProcessMessageEventArgs` provides a `MessageLockLostAsync` event that can be subscribed to in
   order to be notified when the message lock is lost.
 - `ProcessSessionMessageEventArgs` provides a `SessionLockLostAsync` event that can be subscribed to in
   order to be notified when the session lock is lost.
@@ -35,7 +73,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Bugs Fixed
 
-- The `CancellationTokenSource` used by the `ServiceBusSessionProcessor` in order to renew session 
+- The `CancellationTokenSource` used by the `ServiceBusSessionProcessor` in order to renew session
   locks is now disposed when the session is no longer being processed, thereby preventing a memory leak.
 
 ## 7.15.0 (2023-06-06)

@@ -14,10 +14,31 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The updatable properties of the LocalRulestackResource. </summary>
     public partial class LocalRulestackUpdateProperties
     {
-        /// <summary> Initializes a new instance of LocalRulestackUpdateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackUpdateProperties"/>. </summary>
         public LocalRulestackUpdateProperties()
         {
             AssociatedSubscriptions = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackUpdateProperties"/>. </summary>
+        /// <param name="panETag"> PanEtag info. </param>
+        /// <param name="panLocation"> Rulestack Location, Required for GlobalRulestacks, Not for LocalRulestacks. </param>
+        /// <param name="scope"> Rulestack Type. </param>
+        /// <param name="associatedSubscriptions"> subscription scope of global rulestack. </param>
+        /// <param name="description"> rulestack description. </param>
+        /// <param name="defaultMode"> Mode for default rules creation. </param>
+        /// <param name="minAppIdVersion"> minimum version. </param>
+        /// <param name="securityServices"> Security Profile. </param>
+        internal LocalRulestackUpdateProperties(ETag? panETag, AzureLocation? panLocation, RulestackScopeType? scope, IList<string> associatedSubscriptions, string description, RuleCreationDefaultMode? defaultMode, string minAppIdVersion, RulestackSecurityServices securityServices)
+        {
+            PanETag = panETag;
+            PanLocation = panLocation;
+            Scope = scope;
+            AssociatedSubscriptions = associatedSubscriptions;
+            Description = description;
+            DefaultMode = defaultMode;
+            MinAppIdVersion = minAppIdVersion;
+            SecurityServices = securityServices;
         }
 
         /// <summary> PanEtag info. </summary>

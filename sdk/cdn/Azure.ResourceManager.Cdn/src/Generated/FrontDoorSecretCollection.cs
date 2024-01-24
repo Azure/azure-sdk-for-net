@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FrontDoorSecretResource" /> and their operations.
-    /// Each <see cref="FrontDoorSecretResource" /> in the collection will belong to the same instance of <see cref="ProfileResource" />.
-    /// To get a <see cref="FrontDoorSecretCollection" /> instance call the GetFrontDoorSecrets method from an instance of <see cref="ProfileResource" />.
+    /// A class representing a collection of <see cref="FrontDoorSecretResource"/> and their operations.
+    /// Each <see cref="FrontDoorSecretResource"/> in the collection will belong to the same instance of <see cref="ProfileResource"/>.
+    /// To get a <see cref="FrontDoorSecretCollection"/> instance call the GetFrontDoorSecrets method from an instance of <see cref="ProfileResource"/>.
     /// </summary>
     public partial class FrontDoorSecretCollection : ArmCollection, IEnumerable<FrontDoorSecretResource>, IAsyncEnumerable<FrontDoorSecretResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_ListByProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FrontDoorSecretResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FrontDoorSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FrontDoorSecretResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_ListByProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FrontDoorSecretResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FrontDoorSecretResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FrontDoorSecretResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _frontDoorSecretRestClient.CreateListByProfileRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>FrontDoorSecrets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="secretName"> Name of the Secret under the profile. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FrontDoorSecretResource>> GetIfExistsAsync(string secretName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+
+            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _frontDoorSecretRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorSecretResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/secrets/{secretName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>FrontDoorSecrets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorSecretResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="secretName"> Name of the Secret under the profile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="secretName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="secretName"/> is null. </exception>
+        public virtual NullableResponse<FrontDoorSecretResource> GetIfExists(string secretName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(secretName, nameof(secretName));
+
+            using var scope = _frontDoorSecretClientDiagnostics.CreateScope("FrontDoorSecretCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _frontDoorSecretRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, secretName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FrontDoorSecretResource>(response.GetRawResponse());
+                return Response.FromValue(new FrontDoorSecretResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProjectResource" /> and their operations.
-    /// Each <see cref="ProjectResource" /> in the collection will belong to the same instance of <see cref="DataMigrationServiceResource" />.
-    /// To get a <see cref="ProjectCollection" /> instance call the GetProjects method from an instance of <see cref="DataMigrationServiceResource" />.
+    /// A class representing a collection of <see cref="ProjectResource"/> and their operations.
+    /// Each <see cref="ProjectResource"/> in the collection will belong to the same instance of <see cref="DataMigrationServiceResource"/>.
+    /// To get a <see cref="ProjectCollection"/> instance call the GetProjects method from an instance of <see cref="DataMigrationServiceResource"/>.
     /// </summary>
     public partial class ProjectCollection : ArmCollection, IEnumerable<ProjectResource>, IAsyncEnumerable<ProjectResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProjectResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProjectResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _projectRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.DataMigration
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> Name of the project. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.DataMigration
             {
                 var response = _projectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProjectResource>> GetIfExistsAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _projectRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{groupName}/providers/Microsoft.DataMigration/services/{serviceName}/projects/{projectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> Name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        public virtual NullableResponse<ProjectResource> GetIfExists(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = _projectClientDiagnostics.CreateScope("ProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _projectRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, projectName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new ProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

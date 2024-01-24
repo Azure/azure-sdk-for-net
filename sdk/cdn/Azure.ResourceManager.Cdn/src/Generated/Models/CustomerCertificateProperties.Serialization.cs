@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,13 +14,22 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class CustomerCertificateProperties : IUtf8JsonSerializable
+    public partial class CustomerCertificateProperties : IUtf8JsonSerializable, IJsonModel<CustomerCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomerCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomerCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomerCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource"u8);
-            JsonSerializer.Serialize(writer, SecretSource); if (Optional.IsDefined(SecretVersion))
+            JsonSerializer.Serialize(writer, SecretSource);
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
@@ -28,6 +38,21 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 writer.WritePropertyName("useLatestVersion"u8);
                 writer.WriteBooleanValue(UseLatestVersion.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
+            {
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpiresOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CertificateAuthority))
+            {
+                writer.WritePropertyName("certificateAuthority"u8);
+                writer.WriteStringValue(CertificateAuthority);
             }
             if (Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
@@ -39,13 +64,47 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+                writer.WriteStringValue(Thumbprint);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomerCertificateProperties DeserializeCustomerCertificateProperties(JsonElement element)
+        CustomerCertificateProperties IJsonModel<CustomerCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomerCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomerCertificateProperties(document.RootElement, options);
+        }
+
+        internal static CustomerCertificateProperties DeserializeCustomerCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,6 +118,8 @@ namespace Azure.ResourceManager.Cdn.Models
             Optional<IList<string>> subjectAlternativeNames = default;
             Optional<string> thumbprint = default;
             SecretType type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretSource"u8))
@@ -123,8 +184,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     type = new SecretType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomerCertificateProperties(type, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomerCertificateProperties(type, serializedAdditionalRawData, secretSource, secretVersion.Value, Optional.ToNullable(useLatestVersion), subject.Value, Optional.ToNullable(expirationDate), certificateAuthority.Value, Optional.ToList(subjectAlternativeNames), thumbprint.Value);
         }
+
+        BinaryData IPersistableModel<CustomerCertificateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomerCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomerCertificateProperties IPersistableModel<CustomerCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomerCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomerCertificateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomerCertificateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlDatabaseResource" /> and their operations.
-    /// Each <see cref="PostgreSqlDatabaseResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlServerResource" />.
-    /// To get a <see cref="PostgreSqlDatabaseCollection" /> instance call the GetPostgreSqlDatabases method from an instance of <see cref="PostgreSqlServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlDatabaseResource"/> and their operations.
+    /// Each <see cref="PostgreSqlDatabaseResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlServerResource"/>.
+    /// To get a <see cref="PostgreSqlDatabaseCollection"/> instance call the GetPostgreSqlDatabases method from an instance of <see cref="PostgreSqlServerResource"/>.
     /// </summary>
     public partial class PostgreSqlDatabaseCollection : ArmCollection, IEnumerable<PostgreSqlDatabaseResource>, IAsyncEnumerable<PostgreSqlDatabaseResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,10 +281,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlDatabaseDatabasesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -261,6 +309,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +353,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database. </param>
@@ -313,6 +377,96 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 var response = _postgreSqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PostgreSqlDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postgreSqlDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlDatabaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual NullableResponse<PostgreSqlDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _postgreSqlDatabaseDatabasesClientDiagnostics.CreateScope("PostgreSqlDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postgreSqlDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

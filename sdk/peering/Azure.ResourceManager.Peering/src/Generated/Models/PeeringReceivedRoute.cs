@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The properties that define a received route. </summary>
     public partial class PeeringReceivedRoute
     {
-        /// <summary> Initializes a new instance of PeeringReceivedRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringReceivedRoute"/>. </summary>
         internal PeeringReceivedRoute()
         {
         }
 
-        /// <summary> Initializes a new instance of PeeringReceivedRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeeringReceivedRoute"/>. </summary>
         /// <param name="prefix"> The prefix. </param>
         /// <param name="nextHop"> The next hop for the prefix. </param>
         /// <param name="asPath"> The AS path for the prefix. </param>

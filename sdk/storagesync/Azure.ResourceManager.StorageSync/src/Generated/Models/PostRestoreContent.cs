@@ -14,10 +14,31 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Post Restore Request. </summary>
     public partial class PostRestoreContent
     {
-        /// <summary> Initializes a new instance of PostRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="PostRestoreContent"/>. </summary>
         public PostRestoreContent()
         {
             RestoreFileSpec = new ChangeTrackingList<RestoreFileSpec>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostRestoreContent"/>. </summary>
+        /// <param name="partition"> Post Restore partition. </param>
+        /// <param name="replicaGroup"> Post Restore replica group. </param>
+        /// <param name="requestId"> Post Restore request id. </param>
+        /// <param name="azureFileShareUri"> Post Restore Azure file share uri. </param>
+        /// <param name="status"> Post Restore Azure status. </param>
+        /// <param name="sourceAzureFileShareUri"> Post Restore Azure source azure file share uri. </param>
+        /// <param name="failedFileList"> Post Restore Azure failed file list. </param>
+        /// <param name="restoreFileSpec"> Post Restore restore file spec array. </param>
+        internal PostRestoreContent(string partition, string replicaGroup, string requestId, Uri azureFileShareUri, string status, Uri sourceAzureFileShareUri, string failedFileList, IList<RestoreFileSpec> restoreFileSpec)
+        {
+            Partition = partition;
+            ReplicaGroup = replicaGroup;
+            RequestId = requestId;
+            AzureFileShareUri = azureFileShareUri;
+            Status = status;
+            SourceAzureFileShareUri = sourceAzureFileShareUri;
+            FailedFileList = failedFileList;
+            RestoreFileSpec = restoreFileSpec;
         }
 
         /// <summary> Post Restore partition. </summary>

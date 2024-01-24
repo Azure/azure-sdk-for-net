@@ -14,6 +14,8 @@ namespace Azure.Storage.Files.Shares
 
         public TransferValidationOptions TransferValidation { get; internal set; }
 
+        public ShareAudience Audience { get; internal set; }
+
         /// <summary>
         /// Create a <see cref="ShareClientConfiguration"/> with shared key authentication.
         /// </summary>

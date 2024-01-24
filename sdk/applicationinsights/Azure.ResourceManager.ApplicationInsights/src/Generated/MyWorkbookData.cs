@@ -17,14 +17,14 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// A class representing the MyWorkbook data model.
     /// An Application Insights private workbook definition.
     /// </summary>
-    public partial class MyWorkbookData : Models.MyWorkbookResource
+    public partial class MyWorkbookData : MyWorkbookResourceContent
     {
-        /// <summary> Initializes a new instance of MyWorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookData"/>. </summary>
         public MyWorkbookData()
         {
         }
 
-        /// <summary> Initializes a new instance of MyWorkbookData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MyWorkbookData"/>. </summary>
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="name"> Azure resource name. </param>
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> Resource etag. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of workbook. Choices are user and shared. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="displayName"> The user-defined name of the private workbook. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="userId"> Unique user id of the specific user that owns this private workbook. </param>
         /// <param name="sourceId"> Optional resourceId for a source resource. </param>
         /// <param name="storageUri"> BYOS Storage Account URI. </param>
-        internal MyWorkbookData(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag, ApplicationInsightsKind? kind, SystemData systemData, string displayName, string serializedData, string version, string timeModified, string category, string userId, string sourceId, Uri storageUri) : base(identity, id, name, resourceType, location, tags, etag)
+        internal MyWorkbookData(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag, IDictionary<string, BinaryData> serializedAdditionalRawData, ApplicationInsightsKind? kind, SystemData systemData, string displayName, string serializedData, string version, string timeModified, string category, string userId, string sourceId, Uri storageUri) : base(identity, id, name, resourceType, location, tags, etag, serializedAdditionalRawData)
         {
             Kind = kind;
             SystemData = systemData;

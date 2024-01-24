@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -63,19 +66,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Host);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Host.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Host);
             writer.WritePropertyName("username"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Username);
-#else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Username.ToString()).RootElement);
-#endif
+            JsonSerializer.Serialize(writer, Username);
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); if (Optional.IsDefined(UseEncryptedEndpoints))
+            JsonSerializer.Serialize(writer, Password);
+            if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
                 JsonSerializer.Serialize(writer, UseEncryptedEndpoints);
@@ -102,7 +98,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -119,8 +118,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            BinaryData host = default;
-            BinaryData username = default;
+            DataFactoryElement<string> host = default;
+            DataFactoryElement<string> username = default;
             DataFactorySecretBaseDefinition password = default;
             Optional<DataFactoryElement<bool>> useEncryptedEndpoints = default;
             Optional<DataFactoryElement<bool>> useHostVerification = default;
@@ -195,12 +194,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("host"u8))
                         {
-                            host = BinaryData.FromString(property0.Value.GetRawText());
+                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("username"u8))
                         {
-                            username = BinaryData.FromString(property0.Value.GetRawText());
+                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("password"u8))

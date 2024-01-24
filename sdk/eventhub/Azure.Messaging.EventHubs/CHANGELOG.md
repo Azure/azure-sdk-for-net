@@ -1,10 +1,66 @@
 # Release History
 
-## 5.10.0-beta.1 (Unreleased)
+## 5.11.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Added a `CheckpointPosition` struct to `Azure.Messaging.EventHubs.Processor` to use when updating a checkpoint. The specified position indicates that an event processor should begin reading from the next event. Added new `UpdateCheckpointAsync` overloads to `CheckpointStore`, `PluggableCheckpointStoreEventProcessor<TPartition` and `EventProcessor<TPartition>` that accept the `CheckpointPosition` struct instead of individual values for offset and sequence number.
+
 ### Breaking Changes
+
+- The type of several existing values in the `EventData.SystemProperties` collection have been changed so that they are properly represented as .NET string types.  Previously, the underlying AMQP types were unintentionally returned, forcing callers to call `ToString()` to read the value.
+
+  This is a behavioral breaking change that will impacts only those callers who were explicitly casting system property values to `AmqpAddress` or `AmqpMessageId` before calling `ToString()`.   The affected system properties are:
+  - MessageId
+  - CorrelationId
+  - To
+  - ReplyTo
+
+- The base implementations of both `UpdateCheckpointAsync` method overloads in `PluggableCheckpointStoreEventProcessor<TPartition>` and `EventProcessor<TPartition>` now choose sequence number over offset when writing a checkpoint and both values are provided. Previously, writing a checkpoint prioritized offset over sequence number.  There is no behavioral change for those using the official checkpoint store implementations.
+
+### Bugs Fixed
+
+- Load balancing is no longer blocked when event processing for a lost partition does not honor the cancellation token.  Previously, long-running processing could cause delays in load balancing that resulted in ownership not being renewed for all partitions.
+
+- Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
+
+- Fixed a race condition that could lead to a synchronization primitive being double-released if `IsRunning` was called concurrently while starting or stopping an event processor.
+
+- Fixed an issue with event processor validation where an exception for quota exceeded may inappropriately be surfaced when starting the processor.
+
+- Reduced the timeout for transient service failures when starting the buffered producer. This ixed an issue where the buffered producer appeared to hang for an extended period of time when starting if it had issues querying Event Hub metadata for the first time.
+
+- Fixed the logic used to set the TimeToLive value of the AmqpMessageHeader for received messages to be based on the difference of the AbsoluteExpiryTime and CreationTime properties of the AmqpMessageProperties.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.4, which enables support for TLS 1.3.
+
+- Removed the custom sizes for the AMQP sending and receiving buffers, allowing the optimized defaults of the host platform to be used.  This offers non-trivial performance increase on Linux-based platforms and a minor improvement on macOS.  Windows performance remains unchanged as the default and custom buffer sizes are equivalent.
+
+- Improved efficiency of partition management during load balancing, reducing the number of operations performed and deferring waiting for lost partitions until the processor is stopped or the partition is reclaimed.  Allocations were also non-trivially reduced.
+
+- The "Event Receive Completed" log now includes the maximum batch size and wait time that were used for the operation.
+
+- A new log has been added to capture the end-to-end performance of the cycle to read and process events for a partition owned by an event processor type.  This is emitted as a verbose ETW event with the Id 129 and is highly recommended to capture when troubleshooting processor scenarios.
+
+## 5.10.0 (2023-11-07)
+
+### Breaking Changes
+
+- Change `ActivitySource` name used to report message activity from `Azure.Messaging.EventHubs.EventHubs` to `Azure.Messaging.EventHubs.Message`
+  and message `Activity` name from `EventHubs.Message` to `Message`.
+- Updated tracing attributes names to conform to OpenTelemetry semantic conventions version 1.23.0.
+
+### Bugs Fixed
+
+- Fixed a parameter type mismatch in ETW #7 (ReceiveComplete) which caused the duration argument of the operation to be interpreted as a Unicode string and fail to render properly in the formatted message.
+
+### Other Changes
+
+- When an Event Hub is disabled, it will now be detected and result in a terminal `EventHubsException` with its reason set to `FailureReason.ResourceNotFound`.
+
+## 5.9.3 (2023-09-12)
 
 ### Bugs Fixed
 

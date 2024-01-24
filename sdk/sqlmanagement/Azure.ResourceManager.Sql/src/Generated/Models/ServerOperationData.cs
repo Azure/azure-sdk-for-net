@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A server operation. </summary>
     public partial class ServerOperationData : ResourceData
     {
-        /// <summary> Initializes a new instance of ServerOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerOperationData"/>. </summary>
         public ServerOperationData()
         {
         }
 
-        /// <summary> Initializes a new instance of ServerOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServerOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

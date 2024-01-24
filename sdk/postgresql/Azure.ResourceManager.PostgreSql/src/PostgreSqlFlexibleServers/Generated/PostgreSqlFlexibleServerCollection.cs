@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerResource" /> and their operations.
-    /// Each <see cref="PostgreSqlFlexibleServerResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="PostgreSqlFlexibleServerCollection" /> instance call the GetPostgreSqlFlexibleServers method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlFlexibleServerResource"/> and their operations.
+    /// Each <see cref="PostgreSqlFlexibleServerResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="PostgreSqlFlexibleServerCollection"/> instance call the GetPostgreSqlFlexibleServers method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class PostgreSqlFlexibleServerCollection : ArmCollection, IEnumerable<PostgreSqlFlexibleServerResource>, IAsyncEnumerable<PostgreSqlFlexibleServerResource>
     {
@@ -69,6 +69,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Servers_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -109,6 +117,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,6 +167,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,10 +257,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Servers_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -247,10 +287,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Servers_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlFlexibleServerServersRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -269,13 +317,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Replicas_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlFlexibleServerResource> GetReplicasAsync(string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
@@ -295,13 +347,17 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Replicas_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
-        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlFlexibleServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlFlexibleServerResource> GetReplicas(string serverName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
@@ -320,6 +376,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,6 +420,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Servers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverName"> The name of the server. </param>
@@ -372,6 +444,96 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             {
                 var response = _postgreSqlFlexibleServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        public virtual async Task<NullableResponse<PostgreSqlFlexibleServerResource>> GetIfExistsAsync(string serverName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
+            using var scope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postgreSqlFlexibleServerServersRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlFlexibleServerResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/flexibleServers/{serverName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Servers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="serverName"> The name of the server. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="serverName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="serverName"/> is null. </exception>
+        public virtual NullableResponse<PostgreSqlFlexibleServerResource> GetIfExists(string serverName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(serverName, nameof(serverName));
+
+            using var scope = _postgreSqlFlexibleServerServersClientDiagnostics.CreateScope("PostgreSqlFlexibleServerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postgreSqlFlexibleServerServersRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, serverName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlFlexibleServerResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlFlexibleServerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

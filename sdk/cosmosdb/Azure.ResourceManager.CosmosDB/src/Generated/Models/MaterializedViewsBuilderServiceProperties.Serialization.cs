@@ -6,17 +6,41 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class MaterializedViewsBuilderServiceProperties : IUtf8JsonSerializable
+    public partial class MaterializedViewsBuilderServiceProperties : IUtf8JsonSerializable, IJsonModel<MaterializedViewsBuilderServiceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaterializedViewsBuilderServiceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MaterializedViewsBuilderServiceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MaterializedViewsBuilderServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MaterializedViewsBuilderServiceProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
+            {
+                writer.WritePropertyName("locations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Locations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
             if (Optional.IsDefined(InstanceSize))
             {
                 writer.WritePropertyName("instanceSize"u8);
@@ -29,20 +53,42 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             writer.WritePropertyName("serviceType"u8);
             writer.WriteStringValue(ServiceType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static MaterializedViewsBuilderServiceProperties DeserializeMaterializedViewsBuilderServiceProperties(JsonElement element)
+        MaterializedViewsBuilderServiceProperties IJsonModel<MaterializedViewsBuilderServiceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MaterializedViewsBuilderServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MaterializedViewsBuilderServiceProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaterializedViewsBuilderServiceProperties(document.RootElement, options);
+        }
+
+        internal static MaterializedViewsBuilderServiceProperties DeserializeMaterializedViewsBuilderServiceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -117,5 +163,36 @@ namespace Azure.ResourceManager.CosmosDB.Models
             additionalProperties = additionalPropertiesDictionary;
             return new MaterializedViewsBuilderServiceProperties(Optional.ToNullable(creationTime), Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), serviceType, Optional.ToNullable(status), additionalProperties, Optional.ToList(locations));
         }
+
+        BinaryData IPersistableModel<MaterializedViewsBuilderServiceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaterializedViewsBuilderServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MaterializedViewsBuilderServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MaterializedViewsBuilderServiceProperties IPersistableModel<MaterializedViewsBuilderServiceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaterializedViewsBuilderServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMaterializedViewsBuilderServiceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MaterializedViewsBuilderServiceProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MaterializedViewsBuilderServiceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

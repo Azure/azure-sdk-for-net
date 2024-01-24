@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Files.DataLake;
 using Azure.Storage.Files.DataLake.Models;
 
@@ -354,6 +355,7 @@ namespace Azure.Storage.Sas
         /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating
         /// requests.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public DataLakeSasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));
@@ -419,6 +421,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The <see cref="DataLakeSasQueryParameters"/> used for authenticating requests.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public DataLakeSasQueryParameters ToSasQueryParameters(UserDelegationKey userDelegationKey, string accountName)
         {
             userDelegationKey = userDelegationKey ?? throw Errors.ArgumentNull(nameof(userDelegationKey));

@@ -6,24 +6,49 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class CostManagementViewData : IUtf8JsonSerializable
+    public partial class CostManagementViewData : IUtf8JsonSerializable, IJsonModel<CostManagementViewData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CostManagementViewData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CostManagementViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -36,6 +61,26 @@ namespace Azure.ResourceManager.CostManagement
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdOn"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("modifiedOn"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(DateRange))
+            {
+                writer.WritePropertyName("dateRange"u8);
+                writer.WriteStringValue(DateRange);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Currency))
+            {
+                writer.WritePropertyName("currency"u8);
+                writer.WriteStringValue(Currency);
             }
             if (Optional.IsDefined(Chart))
             {
@@ -101,7 +146,65 @@ namespace Azure.ResourceManager.CostManagement
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        CostManagementViewData IJsonModel<CostManagementViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCostManagementViewData(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<CostManagementViewData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CostManagementViewData IPersistableModel<CostManagementViewData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCostManagementViewData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CostManagementViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

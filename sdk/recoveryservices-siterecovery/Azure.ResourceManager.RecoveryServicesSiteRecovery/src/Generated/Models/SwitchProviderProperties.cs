@@ -10,9 +10,22 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for switch provider input properties. </summary>
     public partial class SwitchProviderProperties
     {
-        /// <summary> Initializes a new instance of SwitchProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwitchProviderProperties"/>. </summary>
         public SwitchProviderProperties()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SwitchProviderProperties"/>. </summary>
+        /// <param name="targetInstanceType"> Target provider type. </param>
+        /// <param name="providerSpecificDetails">
+        /// Provider specific settings.
+        /// Please note <see cref="SwitchProviderSpecificContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="InMageAzureV2SwitchProviderContent"/>.
+        /// </param>
+        internal SwitchProviderProperties(string targetInstanceType, SwitchProviderSpecificContent providerSpecificDetails)
+        {
+            TargetInstanceType = targetInstanceType;
+            ProviderSpecificDetails = providerSpecificDetails;
         }
 
         /// <summary> Target provider type. </summary>

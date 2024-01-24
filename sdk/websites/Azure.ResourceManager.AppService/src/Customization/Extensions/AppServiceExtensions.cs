@@ -5,10 +5,7 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Resources;
 
@@ -37,9 +34,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<AppServiceIdentifierData> GetAllSiteIdentifierDataAsync(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSiteIdentifierDataAsync(nameIdentifier, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllSiteIdentifierDataAsync(nameIdentifier, cancellationToken);
         }
 
         /// <summary>
@@ -62,9 +57,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="AppServiceIdentifierData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<AppServiceIdentifierData> GetAllSiteIdentifierData(this SubscriptionResource subscriptionResource, AppServiceDomainNameIdentifier nameIdentifier, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(nameIdentifier, nameof(nameIdentifier));
-
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetAllSiteIdentifierData(nameIdentifier, cancellationToken);
+            return GetMockableAppServiceSubscriptionResource(subscriptionResource).GetAllSiteIdentifierData(nameIdentifier, cancellationToken);
         }
 
         /// <summary>
@@ -85,7 +78,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> An async collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataDataAsync(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataDataAsync(cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAllResourceHealthMetadataDataAsync(cancellationToken);
         }
 
         /// <summary>
@@ -106,7 +99,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> A collection of <see cref="ResourceHealthMetadataData" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ResourceHealthMetadataData> GetAllResourceHealthMetadataData(this ResourceGroupResource resourceGroupResource, CancellationToken cancellationToken = default)
         {
-            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetAllResourceHealthMetadataData(cancellationToken);
+            return GetMockableAppServiceResourceGroupResource(resourceGroupResource).GetAllResourceHealthMetadataData(cancellationToken);
         }
 
         /// <summary>
@@ -118,15 +111,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteTriggeredwebJobResource" /> object. </returns>
         public static WebSiteTriggeredwebJobResource GetWebSiteTriggeredwebJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WebSiteTriggeredwebJobResource.ValidateResourceId(id);
-                return new WebSiteTriggeredwebJobResource(client, id);
-            }
-            );
+            return GetMockableAppServiceArmClient(client).GetWebSiteTriggeredwebJobResource(id);
         }
 
-        #region WebSiteSlotTriggeredWebJobResource
         /// <summary>
         /// Gets an object representing a <see cref="WebSiteSlotTriggeredWebJobResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WebSiteSlotTriggeredWebJobResource.CreateResourceIdentifier(string, string, string, string, string)" /> to create a <see cref="WebSiteSlotTriggeredWebJobResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -136,16 +123,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotTriggeredWebJobResource" /> object. </returns>
         public static WebSiteSlotTriggeredWebJobResource GetWebSiteSlotTriggeredWebJobResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WebSiteSlotTriggeredWebJobResource.ValidateResourceId(id);
-                return new WebSiteSlotTriggeredWebJobResource(client, id);
-            }
-            );
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotTriggeredWebJobResource(id);
         }
-        #endregion
 
-        #region WebSiteSlotTriggeredWebJobHistoryResource
         /// <summary>
         /// Gets an object representing a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WebSiteSlotTriggeredWebJobHistoryResource.CreateResourceIdentifier(string, string, string, string, string, string)" /> to create a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -155,16 +135,9 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteSlotTriggeredWebJobHistoryResource" /> object. </returns>
         public static WebSiteSlotTriggeredWebJobHistoryResource GetWebSiteSlotTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WebSiteSlotTriggeredWebJobHistoryResource.ValidateResourceId(id);
-                return new WebSiteSlotTriggeredWebJobHistoryResource(client, id);
-            }
-            );
+            return GetMockableAppServiceArmClient(client).GetWebSiteSlotTriggeredWebJobHistoryResource(id);
         }
-        #endregion
 
-        #region WebSiteTriggeredWebJobHistoryResource
         /// <summary>
         /// Gets an object representing a <see cref="WebSiteTriggeredWebJobHistoryResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="WebSiteTriggeredWebJobHistoryResource.CreateResourceIdentifier(string, string, string, string, string)" /> to create a <see cref="WebSiteTriggeredWebJobHistoryResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -174,13 +147,7 @@ namespace Azure.ResourceManager.AppService
         /// <returns> Returns a <see cref="WebSiteTriggeredWebJobHistoryResource" /> object. </returns>
         public static WebSiteTriggeredWebJobHistoryResource GetWebSiteTriggeredWebJobHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                WebSiteTriggeredWebJobHistoryResource.ValidateResourceId(id);
-                return new WebSiteTriggeredWebJobHistoryResource(client, id);
-            }
-            );
+            return GetMockableAppServiceArmClient(client).GetWebSiteTriggeredWebJobHistoryResource(id);
         }
-        #endregion
     }
 }

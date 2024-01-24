@@ -13,8 +13,8 @@ To create a snapshot, you need to create an instance of `ConfigurationSnapshot` 
 ### Automatic Polling
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_AutomaticPolling
-var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
-var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -25,8 +25,8 @@ Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, Stat
 ### Automatic Polling with `WaitForCompletion`
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_AutomaticPollingLater
-var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
-var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -39,8 +39,8 @@ Console.WriteLine($"Created configuration snapshot: {createdSnapshot.Name}, stat
 ### Manual Polling
 
 ```C# Snippet:AzConfigSample11_CreateSnapshot_ManualPolling
-var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter("some_key") };
-var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter("some_key") };
+var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -111,8 +111,8 @@ client.AddConfigurationSetting(firstSetting);
 var secondSetting = new ConfigurationSetting("second_key", "second_value");
 client.AddConfigurationSetting(secondSetting);
 
-var snapshotFilter = new List<SnapshotSettingFilter> { new SnapshotSettingFilter(firstSetting.Key), new SnapshotSettingFilter(secondSetting.Key) };
-var settingsSnapshot = new ConfigurationSnapshot(snapshotFilter);
+var settingsFilter = new List<ConfigurationSettingsFilter> { new ConfigurationSettingsFilter(firstSetting.Key), new ConfigurationSettingsFilter(secondSetting.Key) };
+var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
 var snapshotName = "some_snapshot";
 var operation = client.CreateSnapshot(WaitUntil.Completed, snapshotName, settingsSnapshot);

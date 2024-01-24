@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,25 +14,59 @@ namespace Azure.ResourceManager.Consumption.Models
     /// <summary> Details about historical usage data that has been used for computing the recommendation. </summary>
     public partial class ConsumptionUsageProperties
     {
-        /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ConsumptionUsageProperties"/>. </summary>
         internal ConsumptionUsageProperties()
         {
             UsageData = new ChangeTrackingList<float>();
         }
 
-        /// <summary> Initializes a new instance of ConsumptionUsageProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConsumptionUsageProperties"/>. </summary>
         /// <param name="firstConsumptionDate"> The first usage date used for looking back for computing the recommendation. </param>
         /// <param name="lastConsumptionDate"> The last usage date used for looking back for computing the recommendation. </param>
         /// <param name="lookBackUnitType"> What the usage data values represent ex: virtual machine instance. </param>
         /// <param name="usageData"> The breakdown of historical resource usage.  The values are in the order of usage between the firstConsumptionDate and the lastConsumptionDate. </param>
         /// <param name="usageGrain"> The grain of the values represented in the usage data ex: hourly. </param>
-        internal ConsumptionUsageProperties(string firstConsumptionDate, string lastConsumptionDate, string lookBackUnitType, IReadOnlyList<float> usageData, string usageGrain)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConsumptionUsageProperties(string firstConsumptionDate, string lastConsumptionDate, string lookBackUnitType, IReadOnlyList<float> usageData, string usageGrain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FirstConsumptionDate = firstConsumptionDate;
             LastConsumptionDate = lastConsumptionDate;
             LookBackUnitType = lookBackUnitType;
             UsageData = usageData;
             UsageGrain = usageGrain;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The first usage date used for looking back for computing the recommendation. </summary>

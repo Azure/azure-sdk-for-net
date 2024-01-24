@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DevCenterProjectResource" /> and their operations.
-    /// Each <see cref="DevCenterProjectResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="DevCenterProjectCollection" /> instance call the GetDevCenterProjects method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="DevCenterProjectResource"/> and their operations.
+    /// Each <see cref="DevCenterProjectResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="DevCenterProjectCollection"/> instance call the GetDevCenterProjects method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class DevCenterProjectCollection : ArmCollection, IEnumerable<DevCenterProjectResource>, IAsyncEnumerable<DevCenterProjectResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the project. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,11 +253,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DevCenterProjectResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectProjectsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -244,11 +284,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DevCenterProjectResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DevCenterProjectResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DevCenterProjectResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _devCenterProjectProjectsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, top);
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>Projects_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="projectName"> The name of the project. </param>
@@ -318,6 +382,96 @@ namespace Azure.ResourceManager.DevCenter
             {
                 var response = _devCenterProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, projectName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        public virtual async Task<NullableResponse<DevCenterProjectResource>> GetIfExistsAsync(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _devCenterProjectProjectsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, projectName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Projects_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterProjectResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="projectName"> The name of the project. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        public virtual NullableResponse<DevCenterProjectResource> GetIfExists(string projectName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            using var scope = _devCenterProjectProjectsClientDiagnostics.CreateScope("DevCenterProjectCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _devCenterProjectProjectsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, projectName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DevCenterProjectResource>(response.GetRawResponse());
+                return Response.FromValue(new DevCenterProjectResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SqlVirtualMachine
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AvailabilityGroupListenerResource" /> and their operations.
-    /// Each <see cref="AvailabilityGroupListenerResource" /> in the collection will belong to the same instance of <see cref="SqlVmGroupResource" />.
-    /// To get an <see cref="AvailabilityGroupListenerCollection" /> instance call the GetAvailabilityGroupListeners method from an instance of <see cref="SqlVmGroupResource" />.
+    /// A class representing a collection of <see cref="AvailabilityGroupListenerResource"/> and their operations.
+    /// Each <see cref="AvailabilityGroupListenerResource"/> in the collection will belong to the same instance of <see cref="SqlVmGroupResource"/>.
+    /// To get an <see cref="AvailabilityGroupListenerCollection"/> instance call the GetAvailabilityGroupListeners method from an instance of <see cref="SqlVmGroupResource"/>.
     /// </summary>
     public partial class AvailabilityGroupListenerCollection : ArmCollection, IEnumerable<AvailabilityGroupListenerResource>, IAsyncEnumerable<AvailabilityGroupListenerResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,10 +254,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_ListByGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvailabilityGroupListenerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvailabilityGroupListenerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvailabilityGroupListenerResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilityGroupListenerRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,10 +284,18 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_ListByGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailabilityGroupListenerResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvailabilityGroupListenerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvailabilityGroupListenerResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _availabilityGroupListenerRestClient.CreateListByGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.SqlVirtualMachine
         /// <term>Operation Id</term>
         /// <description>AvailabilityGroupListeners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
@@ -319,6 +383,98 @@ namespace Azure.ResourceManager.SqlVirtualMachine
             {
                 var response = _availabilityGroupListenerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityGroupListeners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AvailabilityGroupListenerResource>> GetIfExistsAsync(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+
+            using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _availabilityGroupListenerRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AvailabilityGroupListenerResource>(response.GetRawResponse());
+                return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachineGroups/{sqlVirtualMachineGroupName}/availabilityGroupListeners/{availabilityGroupListenerName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AvailabilityGroupListeners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvailabilityGroupListenerResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="availabilityGroupListenerName"> Name of the availability group listener. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="availabilityGroupListenerName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="availabilityGroupListenerName"/> is null. </exception>
+        public virtual NullableResponse<AvailabilityGroupListenerResource> GetIfExists(string availabilityGroupListenerName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(availabilityGroupListenerName, nameof(availabilityGroupListenerName));
+
+            using var scope = _availabilityGroupListenerClientDiagnostics.CreateScope("AvailabilityGroupListenerCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _availabilityGroupListenerRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, availabilityGroupListenerName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AvailabilityGroupListenerResource>(response.GetRawResponse());
+                return Response.FromValue(new AvailabilityGroupListenerResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

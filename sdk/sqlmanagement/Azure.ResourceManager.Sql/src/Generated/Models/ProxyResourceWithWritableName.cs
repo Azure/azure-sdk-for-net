@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> ARM proxy resource. </summary>
     public partial class ProxyResourceWithWritableName : ResourceWithWritableName
     {
-        /// <summary> Initializes a new instance of ProxyResourceWithWritableName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyResourceWithWritableName"/>. </summary>
         public ProxyResourceWithWritableName()
         {
         }
 
-        /// <summary> Initializes a new instance of ProxyResourceWithWritableName. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyResourceWithWritableName"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>

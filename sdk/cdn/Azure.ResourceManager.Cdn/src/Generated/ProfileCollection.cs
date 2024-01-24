@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ProfileResource" /> and their operations.
-    /// Each <see cref="ProfileResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="ProfileCollection" /> instance call the GetProfiles method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ProfileResource"/> and their operations.
+    /// Each <see cref="ProfileResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ProfileCollection"/> instance call the GetProfiles method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ProfileCollection : ArmCollection, IEnumerable<ProfileResource>, IAsyncEnumerable<ProfileResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ProfileResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ProfileResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ProfileResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ProfileResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _profileRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.Cdn
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.Cdn
         /// <term>Operation Id</term>
         /// <description>Profiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.Cdn
             {
                 var response = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ProfileResource>> GetIfExistsAsync(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _profileRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Profiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProfileResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="profileName"> Name of the Azure Front Door Standard or Azure Front Door Premium or CDN profile which is unique within the resource group. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="profileName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="profileName"/> is null. </exception>
+        public virtual NullableResponse<ProfileResource> GetIfExists(string profileName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(profileName, nameof(profileName));
+
+            using var scope = _profileClientDiagnostics.CreateScope("ProfileCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _profileRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, profileName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ProfileResource>(response.GetRawResponse());
+                return Response.FromValue(new ProfileResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

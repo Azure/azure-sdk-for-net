@@ -21,9 +21,9 @@ using Azure.ResourceManager.Kusto.Models;
 namespace Azure.ResourceManager.Kusto
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KustoDatabaseResource" /> and their operations.
-    /// Each <see cref="KustoDatabaseResource" /> in the collection will belong to the same instance of <see cref="KustoClusterResource" />.
-    /// To get a <see cref="KustoDatabaseCollection" /> instance call the GetKustoDatabases method from an instance of <see cref="KustoClusterResource" />.
+    /// A class representing a collection of <see cref="KustoDatabaseResource"/> and their operations.
+    /// Each <see cref="KustoDatabaseResource"/> in the collection will belong to the same instance of <see cref="KustoClusterResource"/>.
+    /// To get a <see cref="KustoDatabaseCollection"/> instance call the GetKustoDatabases method from an instance of <see cref="KustoClusterResource"/>.
     /// </summary>
     public partial class KustoDatabaseCollection : ArmCollection, IEnumerable<KustoDatabaseResource>, IAsyncEnumerable<KustoDatabaseResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -149,6 +165,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +255,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
@@ -258,6 +298,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
@@ -274,6 +322,96 @@ namespace Azure.ResourceManager.Kusto
             {
                 var response = _kustoDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual async Task<NullableResponse<KustoDatabaseResource>> GetIfExistsAsync(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _kustoDatabaseDatabasesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<KustoDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new KustoDatabaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Kusto/clusters/{clusterName}/databases/{databaseName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Databases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="databaseName"> The name of the database in the Kusto cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> is null. </exception>
+        public virtual NullableResponse<KustoDatabaseResource> GetIfExists(string databaseName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+
+            using var scope = _kustoDatabaseDatabasesClientDiagnostics.CreateScope("KustoDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _kustoDatabaseDatabasesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, databaseName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<KustoDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new KustoDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

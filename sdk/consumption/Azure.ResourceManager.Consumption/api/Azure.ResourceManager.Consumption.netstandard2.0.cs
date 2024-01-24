@@ -44,11 +44,13 @@ namespace Azure.ResourceManager.Consumption
         public virtual Azure.Pageable<Azure.ResourceManager.Consumption.ConsumptionBudgetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.ConsumptionBudgetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>> GetAsync(string budgetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Consumption.ConsumptionBudgetResource> GetIfExists(string budgetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>> GetIfExistsAsync(string budgetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Consumption.ConsumptionBudgetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Consumption.ConsumptionBudgetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ConsumptionBudgetData : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionBudgetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.ConsumptionBudgetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.ConsumptionBudgetData>
     {
         public ConsumptionBudgetData() { }
         public decimal? Amount { get { throw null; } set { } }
@@ -60,6 +62,11 @@ namespace Azure.ResourceManager.Consumption
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification> Notifications { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType? TimeGrain { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.BudgetTimePeriod TimePeriod { get { throw null; } set { } }
+        Azure.ResourceManager.Consumption.ConsumptionBudgetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.ConsumptionBudgetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.ConsumptionBudgetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.ConsumptionBudgetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.ConsumptionBudgetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.ConsumptionBudgetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.ConsumptionBudgetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConsumptionBudgetResource : Azure.ResourceManager.ArmResource
     {
@@ -150,6 +157,57 @@ namespace Azure.ResourceManager.Consumption
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>> GetBalanceAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.Consumption.Mocking
+{
+    public partial class MockableConsumptionArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableConsumptionArmClient() { }
+        public virtual Azure.ResourceManager.Consumption.BillingAccountConsumptionResource GetBillingAccountConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.BillingCustomerConsumptionResource GetBillingCustomerConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.BillingProfileConsumptionResource GetBillingProfileConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.ConsumptionBudgetResource> GetConsumptionBudget(Azure.Core.ResourceIdentifier scope, string budgetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.ConsumptionBudgetResource>> GetConsumptionBudgetAsync(Azure.Core.ResourceIdentifier scope, string budgetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.ConsumptionBudgetResource GetConsumptionBudgetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.ConsumptionBudgetCollection GetConsumptionBudgets(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary> GetConsumptionCharges(Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary> GetConsumptionChargesAsync(Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string apply = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace> GetConsumptionMarketPlaces(Azure.Core.ResourceIdentifier scope, string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace> GetConsumptionMarketPlacesAsync(Azure.Core.ResourceIdentifier scope, string filter = null, int? top = default(int?), string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope reservationScope, string region, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm term, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationScope reservationScope, string region, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm term, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation> GetConsumptionReservationRecommendations(Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation> GetConsumptionReservationRecommendationsAsync(Azure.Core.ResourceIdentifier scope, string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetConsumptionReservationsDetails(Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail> GetConsumptionReservationsDetailsAsync(Azure.Core.ResourceIdentifier scope, string startDate = null, string endDate = null, string filter = null, string reservationId = null, string reservationOrderId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetConsumptionReservationsSummaries(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary> GetConsumptionReservationsSummariesAsync(Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.Consumption.Models.ArmResourceGetConsumptionReservationsSummariesOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult> GetConsumptionTags(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>> GetConsumptionTagsAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail> GetConsumptionUsageDetails(Azure.Core.ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = default(int?), Azure.ResourceManager.Consumption.Models.ConsumptionMetricType? metric = default(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail> GetConsumptionUsageDetailsAsync(Azure.Core.ResourceIdentifier scope, string expand = null, string filter = null, string skipToken = null, int? top = default(int?), Azure.ResourceManager.Consumption.Models.ConsumptionMetricType? metric = default(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.ManagementGroupBillingPeriodConsumptionResource GetManagementGroupBillingPeriodConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.ReservationConsumptionResource GetReservationConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.ReservationOrderConsumptionResource GetReservationOrderConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.SubscriptionBillingPeriodConsumptionResource GetSubscriptionBillingPeriodConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Consumption.TenantBillingPeriodConsumptionResource GetTenantBillingPeriodConsumptionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableConsumptionManagementGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableConsumptionManagementGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult> GetAggregatedCost(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>> GetAggregatedCostAsync(string filter = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableConsumptionSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableConsumptionSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult> GetPriceSheet(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Consumption.Models.PriceSheetResult>> GetPriceSheetAsync(string expand = null, string skipToken = null, int? top = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableConsumptionTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableConsumptionTenantResource() { }
+    }
+}
 namespace Azure.ResourceManager.Consumption.Models
 {
     public static partial class ArmConsumptionModelFactory
@@ -203,7 +261,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public string ReservationOrderId { get { throw null; } set { } }
         public string StartDate { get { throw null; } set { } }
     }
-    public partial class BudgetAssociatedNotification
+    public partial class BudgetAssociatedNotification : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification>
     {
         public BudgetAssociatedNotification(bool isEnabled, Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType @operator, decimal threshold, System.Collections.Generic.IEnumerable<string> contactEmails) { }
         public System.Collections.Generic.IList<string> ContactEmails { get { throw null; } }
@@ -214,6 +272,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType Operator { get { throw null; } set { } }
         public decimal Threshold { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.NotificationThresholdType? ThresholdType { get { throw null; } set { } }
+        Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetAssociatedNotification>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BudgetCategory : System.IEquatable<Azure.ResourceManager.Consumption.Models.BudgetCategory>
@@ -232,30 +295,50 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.BudgetCategory left, Azure.ResourceManager.Consumption.Models.BudgetCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BudgetComparisonExpression
+    public partial class BudgetComparisonExpression : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression>
     {
         public BudgetComparisonExpression(string name, Azure.ResourceManager.Consumption.Models.BudgetOperatorType @operator, System.Collections.Generic.IEnumerable<string> values) { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.BudgetOperatorType Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BudgetCurrentSpend
+    public partial class BudgetCurrentSpend : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend>
     {
         internal BudgetCurrentSpend() { }
         public decimal? Amount { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetCurrentSpend>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BudgetFilterProperties
+    public partial class BudgetFilterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties>
     {
         public BudgetFilterProperties() { }
         public Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression Dimensions { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression Tags { get { throw null; } set { } }
+        Azure.ResourceManager.Consumption.Models.BudgetFilterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.BudgetFilterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BudgetForecastSpend
+    public partial class BudgetForecastSpend : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetForecastSpend>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetForecastSpend>
     {
         internal BudgetForecastSpend() { }
         public decimal? Amount { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.BudgetForecastSpend System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetForecastSpend>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetForecastSpend>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.BudgetForecastSpend System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetForecastSpend>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetForecastSpend>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetForecastSpend>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BudgetOperatorType : System.IEquatable<Azure.ResourceManager.Consumption.Models.BudgetOperatorType>
@@ -296,13 +379,18 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType left, Azure.ResourceManager.Consumption.Models.BudgetTimeGrainType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BudgetTimePeriod
+    public partial class BudgetTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetTimePeriod>
     {
         public BudgetTimePeriod(System.DateTimeOffset startOn) { }
         public System.DateTimeOffset? EndOn { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
+        Azure.ResourceManager.Consumption.Models.BudgetTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.BudgetTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.BudgetTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetTimePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.BudgetTimePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionAggregatedCostResult : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionAggregatedCostResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>
     {
         internal ConsumptionAggregatedCostResult() { }
         public decimal? AzureCharges { get { throw null; } }
@@ -317,32 +405,57 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public System.DateTimeOffset? UsageEndOn { get { throw null; } }
         public System.DateTimeOffset? UsageStartOn { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAggregatedCostResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionAmount
+    public partial class ConsumptionAmount : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmount>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmount>
     {
         internal ConsumptionAmount() { }
         public string Currency { get { throw null; } }
         public decimal? Value { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionAmount System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmount>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmount>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionAmount System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmount>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmount>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmount>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionAmountWithExchangeRate : Azure.ResourceManager.Consumption.Models.ConsumptionAmount
+    public partial class ConsumptionAmountWithExchangeRate : Azure.ResourceManager.Consumption.Models.ConsumptionAmount, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate>
     {
         internal ConsumptionAmountWithExchangeRate() { }
         public decimal? ExchangeRate { get { throw null; } }
         public int? ExchangeRateMonth { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionBalanceAdjustmentDetail
+    public partial class ConsumptionBalanceAdjustmentDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail>
     {
         internal ConsumptionBalanceAdjustmentDetail() { }
         public string Name { get { throw null; } }
         public decimal? Value { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionBalanceNewPurchasesDetail
+    public partial class ConsumptionBalanceNewPurchasesDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail>
     {
         internal ConsumptionBalanceNewPurchasesDetail() { }
         public string Name { get { throw null; } }
         public decimal? Value { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceNewPurchasesDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionBalanceResult : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionBalanceResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>
     {
         internal ConsumptionBalanceResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceAdjustmentDetail> AdjustmentDetails { get { throw null; } }
@@ -362,6 +475,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? TotalOverage { get { throw null; } }
         public decimal? TotalUsage { get { throw null; } }
         public decimal? Utilized { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBalanceResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsumptionBillingFrequency : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency>
@@ -382,14 +500,19 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency left, Azure.ResourceManager.Consumption.Models.ConsumptionBillingFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConsumptionBudgetFilter
+    public partial class ConsumptionBudgetFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter>
     {
         public ConsumptionBudgetFilter() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Consumption.Models.BudgetFilterProperties> And { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression Dimensions { get { throw null; } set { } }
         public Azure.ResourceManager.Consumption.Models.BudgetComparisonExpression Tags { get { throw null; } set { } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionBudgetFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionCalculatedSavingsProperties
+    public partial class ConsumptionCalculatedSavingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties>
     {
         internal ConsumptionCalculatedSavingsProperties() { }
         public float? OnDemandCost { get { throw null; } }
@@ -399,13 +522,23 @@ namespace Azure.ResourceManager.Consumption.Models
         public float? ReservedUnitCount { get { throw null; } }
         public float? Savings { get { throw null; } }
         public float? TotalReservationCost { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionChargeSummary : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ConsumptionChargeSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>
     {
-        public ConsumptionChargeSummary() { }
+        protected ConsumptionChargeSummary() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionCreditSummary : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionCreditSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>
     {
         public ConsumptionCreditSummary() { }
         public Azure.ResourceManager.Consumption.Models.CreditBalanceSummary BalanceSummary { get { throw null; } }
@@ -416,8 +549,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount PendingCreditAdjustments { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount PendingEligibleCharges { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionReseller Reseller { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionCreditSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionEventSummary : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionEventSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>
     {
         public ConsumptionEventSummary() { }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount Adjustments { get { throw null; } }
@@ -443,6 +581,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate NewCreditInBillingCurrency { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionReseller Reseller { get { throw null; } }
         public System.DateTimeOffset? TransactOn { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionEventSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsumptionEventType : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionEventType>
@@ -468,7 +611,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionEventType left, Azure.ResourceManager.Consumption.Models.ConsumptionEventType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConsumptionLegacyChargeSummary : Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary
+    public partial class ConsumptionLegacyChargeSummary : Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary>
     {
         public ConsumptionLegacyChargeSummary() { }
         public decimal? AzureCharges { get { throw null; } }
@@ -478,8 +621,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? MarketplaceCharges { get { throw null; } }
         public string UsageEnd { get { throw null; } }
         public string UsageStart { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyChargeSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionLegacyReservationRecommendation : Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation
+    public partial class ConsumptionLegacyReservationRecommendation : Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation>
     {
         internal ConsumptionLegacyReservationRecommendation() { }
         public decimal? CostWithNoReservedInstances { get { throw null; } }
@@ -495,8 +643,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty> SkuProperties { get { throw null; } }
         public string Term { get { throw null; } }
         public decimal? TotalCostWithReservedInstances { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyReservationRecommendation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionLegacyUsageDetail : Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail
+    public partial class ConsumptionLegacyUsageDetail : Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail>
     {
         internal ConsumptionLegacyUsageDetail() { }
         public string AccountName { get { throw null; } }
@@ -545,6 +698,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public string SubscriptionName { get { throw null; } }
         public string Term { get { throw null; } }
         public decimal? UnitPrice { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLegacyUsageDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsumptionLotSource : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionLotSource>
@@ -587,7 +745,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus left, Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConsumptionLotSummary : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionLotSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary>
     {
         public ConsumptionLotSummary() { }
         public string BillingCurrency { get { throw null; } }
@@ -604,8 +762,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public Azure.ResourceManager.Consumption.Models.ConsumptionLotSource? Source { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionLotStatus? Status { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionLotSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionMarketplace : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionMarketplace : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace>
     {
         internal ConsumptionMarketplace() { }
         public string AccountName { get { throw null; } }
@@ -636,8 +799,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public string UnitOfMeasure { get { throw null; } }
         public System.DateTimeOffset? UsageEndOn { get { throw null; } }
         public System.DateTimeOffset? UsageStartOn { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMarketplace>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionMeterDetails
+    public partial class ConsumptionMeterDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails>
     {
         internal ConsumptionMeterDetails() { }
         public string MeterCategory { get { throw null; } }
@@ -649,8 +817,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public string ServiceTier { get { throw null; } }
         public decimal? TotalIncludedQuantity { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionMeterDetailsInfo
+    public partial class ConsumptionMeterDetailsInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo>
     {
         internal ConsumptionMeterDetailsInfo() { }
         public string MeterCategory { get { throw null; } }
@@ -658,6 +831,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public string MeterSubCategory { get { throw null; } }
         public string ServiceFamily { get { throw null; } }
         public string UnitOfMeasure { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetailsInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsumptionMetricType : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionMetricType>
@@ -678,7 +856,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionMetricType left, Azure.ResourceManager.Consumption.Models.ConsumptionMetricType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConsumptionModernChargeSummary : Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary
+    public partial class ConsumptionModernChargeSummary : Azure.ResourceManager.Consumption.Models.ConsumptionChargeSummary, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary>
     {
         public ConsumptionModernChargeSummary() { }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount AzureCharges { get { throw null; } }
@@ -692,8 +870,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount MarketplaceCharges { get { throw null; } }
         public string UsageEnd { get { throw null; } }
         public string UsageStart { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernChargeSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionModernReservationRecommendation : Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation
+    public partial class ConsumptionModernReservationRecommendation : Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation>
     {
         internal ConsumptionModernReservationRecommendation() { }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount CostWithNoReservedInstances { get { throw null; } }
@@ -712,8 +895,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty> SkuProperties { get { throw null; } }
         public string Term { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount TotalCostWithReservedInstances { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationRecommendation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionModernReservationTransaction : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionModernReservationTransaction : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction>
     {
         internal ConsumptionModernReservationTransaction() { }
         public decimal? Amount { get { throw null; } }
@@ -737,8 +925,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
         public string Term { get { throw null; } }
         public System.DateTimeOffset? TransactOn { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernReservationTransaction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionModernUsageDetail : Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail
+    public partial class ConsumptionModernUsageDetail : Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail>
     {
         internal ConsumptionModernUsageDetail() { }
         public string AdditionalInfo { get { throw null; } }
@@ -813,6 +1006,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public string Term { get { throw null; } }
         public string UnitOfMeasure { get { throw null; } }
         public decimal? UnitPrice { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionModernUsageDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsumptionPricingModelType : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType>
@@ -833,13 +1031,18 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType left, Azure.ResourceManager.Consumption.Models.ConsumptionPricingModelType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConsumptionReseller
+    public partial class ConsumptionReseller : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReseller>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReseller>
     {
         internal ConsumptionReseller() { }
         public string ResellerDescription { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResellerId { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReseller System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReseller>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReseller>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReseller System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReseller>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReseller>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReseller>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionReservationDetail : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionReservationDetail : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail>
     {
         internal ConsumptionReservationDetail() { }
         public System.DateTimeOffset? ConsumptionOccurredOn { get { throw null; } }
@@ -855,16 +1058,26 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public decimal? TotalReservedQuantity { get { throw null; } }
         public decimal? UsedHours { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionReservationRecommendation : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ConsumptionReservationRecommendation : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation>
     {
-        internal ConsumptionReservationRecommendation() { }
+        protected ConsumptionReservationRecommendation() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionReservationRecommendationDetails : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionReservationRecommendationDetails : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>
     {
         internal ConsumptionReservationRecommendationDetails() { }
         public string Currency { get { throw null; } }
@@ -877,6 +1090,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public string Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties Usage { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConsumptionReservationRecommendationLookBackPeriod : System.IEquatable<Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationLookBackPeriod>
@@ -933,7 +1151,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm left, Azure.ResourceManager.Consumption.Models.ConsumptionReservationRecommendationTerm right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConsumptionReservationSummary : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionReservationSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary>
     {
         internal ConsumptionReservationSummary() { }
         public decimal? AvgUtilizationPercentage { get { throw null; } }
@@ -953,8 +1171,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public decimal? UsedQuantity { get { throw null; } }
         public System.DateTimeOffset? UseOn { get { throw null; } }
         public decimal? UtilizedPercentage { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionReservationTransaction : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionReservationTransaction : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction>
     {
         internal ConsumptionReservationTransaction() { }
         public string AccountName { get { throw null; } }
@@ -981,8 +1204,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public System.Collections.Generic.IReadOnlyList<string> Tags { get { throw null; } }
         public string Term { get { throw null; } }
         public System.DateTimeOffset? TransactOn { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionReservationTransaction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionResourceProperties
+    public partial class ConsumptionResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties>
     {
         internal ConsumptionResourceProperties() { }
         public System.Collections.Generic.IReadOnlyList<string> AppliedScopes { get { throw null; } }
@@ -991,8 +1219,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public string Region { get { throw null; } }
         public float? ReservationRate { get { throw null; } }
         public string ResourceType { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionSavingsProperties
+    public partial class ConsumptionSavingsProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties>
     {
         internal ConsumptionSavingsProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.ConsumptionCalculatedSavingsProperties> CalculatedSavings { get { throw null; } }
@@ -1001,34 +1234,59 @@ namespace Azure.ResourceManager.Consumption.Models
         public string ReservationOrderTerm { get { throw null; } }
         public string SavingsType { get { throw null; } }
         public string UnitOfMeasure { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSavingsProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionSkuProperty
+    public partial class ConsumptionSkuProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty>
     {
         internal ConsumptionSkuProperty() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionSkuProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionTag
+    public partial class ConsumptionTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>
     {
         public ConsumptionTag() { }
         public string Key { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Value { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionTagsResult : Azure.ResourceManager.Models.ResourceData
+    public partial class ConsumptionTagsResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>
     {
         public ConsumptionTagsResult() { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public string NextLink { get { throw null; } }
         public string PreviousLink { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Consumption.Models.ConsumptionTag> Tags { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionTagsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionUsageDetail : Azure.ResourceManager.Models.ResourceData
+    public abstract partial class ConsumptionUsageDetail : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail>
     {
-        internal ConsumptionUsageDetail() { }
+        protected ConsumptionUsageDetail() { }
         public Azure.ETag? ETag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConsumptionUsageProperties
+    public partial class ConsumptionUsageProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties>
     {
         internal ConsumptionUsageProperties() { }
         public string FirstConsumptionDate { get { throw null; } }
@@ -1036,13 +1294,23 @@ namespace Azure.ResourceManager.Consumption.Models
         public string LookBackUnitType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<float> UsageData { get { throw null; } }
         public string UsageGrain { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.ConsumptionUsageProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CreditBalanceSummary
+    public partial class CreditBalanceSummary : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.CreditBalanceSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.CreditBalanceSummary>
     {
         internal CreditBalanceSummary() { }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount CurrentBalance { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmount EstimatedBalance { get { throw null; } }
         public Azure.ResourceManager.Consumption.Models.ConsumptionAmountWithExchangeRate EstimatedBalanceInBillingCurrency { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.CreditBalanceSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.CreditBalanceSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.CreditBalanceSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.CreditBalanceSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.CreditBalanceSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.CreditBalanceSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.CreditBalanceSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NotificationAlertTriggerType : System.IEquatable<Azure.ResourceManager.Consumption.Models.NotificationAlertTriggerType>
@@ -1081,7 +1349,7 @@ namespace Azure.ResourceManager.Consumption.Models
         public static bool operator !=(Azure.ResourceManager.Consumption.Models.NotificationThresholdType left, Azure.ResourceManager.Consumption.Models.NotificationThresholdType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PriceSheetProperties
+    public partial class PriceSheetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>
     {
         internal PriceSheetProperties() { }
         public Azure.Core.ResourceIdentifier BillingPeriodId { get { throw null; } }
@@ -1093,8 +1361,13 @@ namespace Azure.ResourceManager.Consumption.Models
         public string PartNumber { get { throw null; } }
         public string UnitOfMeasure { get { throw null; } }
         public decimal? UnitPrice { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.PriceSheetProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.PriceSheetProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PriceSheetResult : Azure.ResourceManager.Models.ResourceData
+    public partial class PriceSheetResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.PriceSheetResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetResult>
     {
         internal PriceSheetResult() { }
         public Azure.ResourceManager.Consumption.Models.ConsumptionMeterDetails Download { get { throw null; } }
@@ -1102,6 +1375,11 @@ namespace Azure.ResourceManager.Consumption.Models
         public string NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Consumption.Models.PriceSheetProperties> Pricesheets { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Consumption.Models.PriceSheetResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.PriceSheetResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Consumption.Models.PriceSheetResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Consumption.Models.PriceSheetResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Consumption.Models.PriceSheetResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecipientNotificationLanguageCode : System.IEquatable<Azure.ResourceManager.Consumption.Models.RecipientNotificationLanguageCode>

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Compute.Models;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SharedGalleryImageVersionResource" /> and their operations.
-    /// Each <see cref="SharedGalleryImageVersionResource" /> in the collection will belong to the same instance of <see cref="SharedGalleryImageResource" />.
-    /// To get a <see cref="SharedGalleryImageVersionCollection" /> instance call the GetSharedGalleryImageVersions method from an instance of <see cref="SharedGalleryImageResource" />.
+    /// A class representing a collection of <see cref="SharedGalleryImageVersionResource"/> and their operations.
+    /// Each <see cref="SharedGalleryImageVersionResource"/> in the collection will belong to the same instance of <see cref="SharedGalleryImageResource"/>.
+    /// To get a <see cref="SharedGalleryImageVersionCollection"/> instance call the GetSharedGalleryImageVersions method from an instance of <see cref="SharedGalleryImageResource"/>.
     /// </summary>
     public partial class SharedGalleryImageVersionCollection : ArmCollection, IEnumerable<SharedGalleryImageVersionResource>, IAsyncEnumerable<SharedGalleryImageVersionResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>SharedGalleryImageVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,11 +157,19 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>SharedGalleryImageVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SharedGalleryImageVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SharedGalleryImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SharedGalleryImageVersionResource> GetAllAsync(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, sharedTo);
@@ -164,11 +188,19 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>SharedGalleryImageVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedTo"> The query parameter to decide what shared galleries to fetch when doing listing operations. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SharedGalleryImageVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SharedGalleryImageVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SharedGalleryImageVersionResource> GetAll(SharedToValue? sharedTo = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sharedGalleryImageVersionRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, sharedTo);
@@ -186,6 +218,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +262,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>SharedGalleryImageVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
@@ -238,6 +286,98 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _sharedGalleryImageVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SharedGalleryImageVersionResource>> GetIfExistsAsync(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sharedGalleryImageVersionRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SharedGalleryImageVersionResource>(response.GetRawResponse());
+                response.Value.Id = SharedGalleryImageVersionResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, galleryImageVersionName);
+                return Response.FromValue(new SharedGalleryImageVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}/images/{galleryImageName}/versions/{galleryImageVersionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SharedGalleryImageVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SharedGalleryImageVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="galleryImageVersionName"> The name of the gallery image version to be created. Needs to follow semantic version name pattern: The allowed characters are digit and period. Digits must be within the range of a 32-bit integer. Format: &lt;MajorVersion&gt;.&lt;MinorVersion&gt;.&lt;Patch&gt;. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="galleryImageVersionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="galleryImageVersionName"/> is null. </exception>
+        public virtual NullableResponse<SharedGalleryImageVersionResource> GetIfExists(string galleryImageVersionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(galleryImageVersionName, nameof(galleryImageVersionName));
+
+            using var scope = _sharedGalleryImageVersionClientDiagnostics.CreateScope("SharedGalleryImageVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sharedGalleryImageVersionRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, galleryImageVersionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SharedGalleryImageVersionResource>(response.GetRawResponse());
+                response.Value.Id = SharedGalleryImageVersionResource.CreateResourceIdentifier(Id.SubscriptionId, new AzureLocation(Id.Parent.Parent.Name), Id.Parent.Name, Id.Name, galleryImageVersionName);
+                return Response.FromValue(new SharedGalleryImageVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

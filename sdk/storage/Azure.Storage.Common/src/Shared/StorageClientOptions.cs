@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Shared;
@@ -64,21 +63,23 @@ namespace Azure.Storage
         /// Get an authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credential">Credential to use.</param>
+        /// <param name="scope">Scope to use.</param>
         /// <param name="options"> The <see cref="ISupportsTenantIdChallenges"/> to apply to the credential. </param>
         /// <returns>An authentication policy.</returns>
-        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, ClientOptions options) =>
+        public static HttpPipelinePolicy AsPolicy(this TokenCredential credential, string scope, ClientOptions options) =>
             new StorageBearerTokenChallengeAuthorizationPolicy(
                 credential ?? throw Errors.ArgumentNull(nameof(credential)),
-                StorageScope,
+                scope ?? StorageScope,
                 options is ISupportsTenantIdChallenges { EnableTenantDiscovery: true });
 
         /// <summary>
         /// Get an optional authentication policy to sign Storage requests.
         /// </summary>
         /// <param name="credentials">Optional credentials to use.</param>
+        /// <param name="scope">Optional scope</param>
         /// <param name="options"> The <see cref="ClientOptions"/> </param>
         /// <returns>An optional authentication policy.</returns>
-        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null, ClientOptions options = null)
+        public static HttpPipelinePolicy GetAuthenticationPolicy(object credentials = null, string scope = default, ClientOptions options = null)
         {
             // Use the credentials to decide on the authentication policy
             switch (credentials)
@@ -89,7 +90,7 @@ namespace Azure.Storage
                 case StorageSharedKeyCredential sharedKey:
                     return sharedKey.AsPolicy();
                 case TokenCredential token:
-                    return token.AsPolicy(options);
+                    return token.AsPolicy(scope, options);
                 default:
                     throw Errors.InvalidCredentials(credentials.GetType().FullName);
             }
@@ -101,8 +102,13 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="authentication">Optional authentication policy.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="expectContinue">Options for selecting expect continue policy.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, HttpPipelinePolicy authentication = null, Uri geoRedundantSecondaryStorageUri = null)
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            HttpPipelinePolicy authentication = null,
+            Uri geoRedundantSecondaryStorageUri = null,
+            ExpectContinueOptions expectContinue = null)
         {
             StorageResponseClassifier classifier = new();
             var pipelineOptions = new HttpPipelineOptions(options)
@@ -120,6 +126,33 @@ namespace Azure.Storage
                 classifier.SecondaryStorageUri = geoRedundantSecondaryStorageUri;
             }
 
+            if (expectContinue != null)
+            {
+                switch (expectContinue.Mode)
+                {
+                    case ExpectContinueMode.ApplyOnThrottle:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy()
+                        {
+                            ThrottleInterval = expectContinue.ThrottleInterval,
+                            ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
+                        });
+                        break;
+                    case ExpectContinueMode.On:
+                        pipelineOptions.PerCallPolicies.Add(new ExpectContinuePolicy()
+                        {
+                            ContentLengthThreshold = expectContinue.ContentLengthThreshold ?? 0,
+                        });
+                        break;
+                    case ExpectContinueMode.Off:
+                        break;
+                }
+            }
+            else
+            {
+                // TODO get env config for whether to disable
+                pipelineOptions.PerCallPolicies.Add(new ExpectContinueOnThrottlePolicy() { ThrottleInterval = TimeSpan.FromMinutes(1) });
+            }
+
             pipelineOptions.PerRetryPolicies.Add(new StorageRequestValidationPipelinePolicy());
             pipelineOptions.PerRetryPolicies.Add(authentication); // authentication needs to be the last of the perRetry client policies passed in to Build
 
@@ -132,8 +165,13 @@ namespace Azure.Storage
         /// <param name="options">The Storage ClientOptions.</param>
         /// <param name="credentials">Optional authentication credentials.</param>
         /// <param name="geoRedundantSecondaryStorageUri">The secondary URI to be used for retries on failed read requests</param>
+        /// <param name="expectContinue">Options for selecting expect continue policy.</param>
         /// <returns>An HttpPipeline to use for Storage requests.</returns>
-        public static HttpPipeline Build(this ClientOptions options, object credentials, Uri geoRedundantSecondaryStorageUri = null) =>
-            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri);
+        public static HttpPipeline Build(
+            this ClientOptions options,
+            object credentials,
+            Uri geoRedundantSecondaryStorageUri = null,
+            ExpectContinueOptions expectContinue = null) =>
+            Build(options, GetAuthenticationPolicy(credentials), geoRedundantSecondaryStorageUri, expectContinue);
     }
 }

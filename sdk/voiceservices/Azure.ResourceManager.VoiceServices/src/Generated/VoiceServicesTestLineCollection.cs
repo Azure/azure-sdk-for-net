@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.VoiceServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VoiceServicesTestLineResource" /> and their operations.
-    /// Each <see cref="VoiceServicesTestLineResource" /> in the collection will belong to the same instance of <see cref="VoiceServicesCommunicationsGatewayResource" />.
-    /// To get a <see cref="VoiceServicesTestLineCollection" /> instance call the GetVoiceServicesTestLines method from an instance of <see cref="VoiceServicesCommunicationsGatewayResource" />.
+    /// A class representing a collection of <see cref="VoiceServicesTestLineResource"/> and their operations.
+    /// Each <see cref="VoiceServicesTestLineResource"/> in the collection will belong to the same instance of <see cref="VoiceServicesCommunicationsGatewayResource"/>.
+    /// To get a <see cref="VoiceServicesTestLineCollection"/> instance call the GetVoiceServicesTestLines method from an instance of <see cref="VoiceServicesCommunicationsGatewayResource"/>.
     /// </summary>
     public partial class VoiceServicesTestLineCollection : ArmCollection, IEnumerable<VoiceServicesTestLineResource>, IAsyncEnumerable<VoiceServicesTestLineResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="testLineName"> Unique identifier for this test line. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_ListByCommunicationsGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VoiceServicesTestLineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VoiceServicesTestLineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VoiceServicesTestLineResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_ListByCommunicationsGateway</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VoiceServicesTestLineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VoiceServicesTestLineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VoiceServicesTestLineResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _voiceServicesTestLineTestLinesRestClient.CreateListByCommunicationsGatewayRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.VoiceServices
         /// <term>Operation Id</term>
         /// <description>TestLines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="testLineName"> Unique identifier for this test line. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.VoiceServices
             {
                 var response = _voiceServicesTestLineTestLinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestLines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testLineName"> Unique identifier for this test line. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VoiceServicesTestLineResource>> GetIfExistsAsync(string testLineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+
+            using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _voiceServicesTestLineTestLinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VoiceServicesTestLineResource>(response.GetRawResponse());
+                return Response.FromValue(new VoiceServicesTestLineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.VoiceServices/communicationsGateways/{communicationsGatewayName}/testLines/{testLineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>TestLines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VoiceServicesTestLineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="testLineName"> Unique identifier for this test line. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="testLineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="testLineName"/> is null. </exception>
+        public virtual NullableResponse<VoiceServicesTestLineResource> GetIfExists(string testLineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(testLineName, nameof(testLineName));
+
+            using var scope = _voiceServicesTestLineTestLinesClientDiagnostics.CreateScope("VoiceServicesTestLineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _voiceServicesTestLineTestLinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, testLineName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VoiceServicesTestLineResource>(response.GetRawResponse());
+                return Response.FromValue(new VoiceServicesTestLineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

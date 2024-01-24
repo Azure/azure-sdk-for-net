@@ -70,6 +70,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(BackupHookReferences))
+            {
+                writer.WritePropertyName("backupHookReferences"u8);
+                writer.WriteStartArray();
+                foreach (var item in BackupHookReferences)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
@@ -88,6 +98,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<IList<string>> includedResourceTypes = default;
             Optional<IList<string>> excludedResourceTypes = default;
             Optional<IList<string>> labelSelectors = default;
+            Optional<IList<NamespacedName>> backupHookReferences = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -171,13 +182,27 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     labelSelectors = array;
                     continue;
                 }
+                if (property.NameEquals("backupHookReferences"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<NamespacedName> array = new List<NamespacedName>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(NamespacedName.DeserializeNamespacedName(item));
+                    }
+                    backupHookReferences = array;
+                    continue;
+                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new KubernetesClusterBackupDataSourceSettings(objectType, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors));
+            return new KubernetesClusterBackupDataSourceSettings(objectType, snapshotVolumes, includeClusterScopeResources, Optional.ToList(includedNamespaces), Optional.ToList(excludedNamespaces), Optional.ToList(includedResourceTypes), Optional.ToList(excludedResourceTypes), Optional.ToList(labelSelectors), Optional.ToList(backupHookReferences));
         }
     }
 }

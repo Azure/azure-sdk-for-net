@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Maintenance
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MaintenancePublicConfigurationResource" /> and their operations.
-    /// Each <see cref="MaintenancePublicConfigurationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="MaintenancePublicConfigurationCollection" /> instance call the GetMaintenancePublicConfigurations method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="MaintenancePublicConfigurationResource"/> and their operations.
+    /// Each <see cref="MaintenancePublicConfigurationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="MaintenancePublicConfigurationCollection"/> instance call the GetMaintenancePublicConfigurations method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class MaintenancePublicConfigurationCollection : ArmCollection, IEnumerable<MaintenancePublicConfigurationResource>, IAsyncEnumerable<MaintenancePublicConfigurationResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
@@ -101,6 +109,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,10 +155,18 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MaintenancePublicConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MaintenancePublicConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MaintenancePublicConfigurationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MaintenancePublicConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MaintenancePublicConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MaintenancePublicConfigurationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -180,6 +212,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +256,14 @@ namespace Azure.ResourceManager.Maintenance
         /// <term>Operation Id</term>
         /// <description>PublicMaintenanceConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Maintenance Configuration Name. </param>
@@ -232,6 +280,96 @@ namespace Azure.ResourceManager.Maintenance
             {
                 var response = _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, resourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MaintenancePublicConfigurationResource>> GetIfExistsAsync(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.GetAsync(Id.SubscriptionId, resourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MaintenancePublicConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new MaintenancePublicConfigurationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Maintenance/publicMaintenanceConfigurations/{resourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublicMaintenanceConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MaintenancePublicConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="resourceName"> Maintenance Configuration Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceName"/> is null. </exception>
+        public virtual NullableResponse<MaintenancePublicConfigurationResource> GetIfExists(string resourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+
+            using var scope = _maintenancePublicConfigurationPublicMaintenanceConfigurationsClientDiagnostics.CreateScope("MaintenancePublicConfigurationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _maintenancePublicConfigurationPublicMaintenanceConfigurationsRestClient.Get(Id.SubscriptionId, resourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MaintenancePublicConfigurationResource>(response.GetRawResponse());
+                return Response.FromValue(new MaintenancePublicConfigurationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

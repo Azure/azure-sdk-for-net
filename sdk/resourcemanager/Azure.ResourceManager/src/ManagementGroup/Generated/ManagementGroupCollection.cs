@@ -22,14 +22,16 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ManagementGroups
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ManagementGroupResource" /> and their operations.
-    /// Each <see cref="ManagementGroupResource" /> in the collection will belong to the same instance of <see cref="TenantResource" />.
-    /// To get a <see cref="ManagementGroupCollection" /> instance call the GetManagementGroups method from an instance of <see cref="TenantResource" />.
+    /// A class representing a collection of <see cref="ManagementGroupResource"/> and their operations.
+    /// Each <see cref="ManagementGroupResource"/> in the collection will belong to the same instance of <see cref="TenantResource"/>.
+    /// To get a <see cref="ManagementGroupCollection"/> instance call the GetManagementGroups method from an instance of <see cref="TenantResource"/>.
     /// </summary>
     public partial class ManagementGroupCollection : ArmCollection, IEnumerable<ManagementGroupResource>, IAsyncEnumerable<ManagementGroupResource>
     {
         private readonly ClientDiagnostics _managementGroupClientDiagnostics;
         private readonly ManagementGroupsRestOperations _managementGroupRestClient;
+        private readonly ClientDiagnostics _entitiesClientDiagnostics;
+        private readonly EntitiesRestOperations _entitiesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="ManagementGroupCollection"/> class for mocking. </summary>
         protected ManagementGroupCollection()
@@ -44,6 +46,8 @@ namespace Azure.ResourceManager.ManagementGroups
             _managementGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ManagementGroupResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ManagementGroupResource.ResourceType, out string managementGroupApiVersion);
             _managementGroupRestClient = new ManagementGroupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupApiVersion);
+            _entitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _entitiesRestClient = new EntitiesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -67,6 +71,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,6 +124,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -155,6 +175,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
@@ -196,6 +224,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,21 +275,29 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroupResource> GetAllAsync(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -268,21 +312,29 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
-        /// <param name="skiptoken">
+        /// <param name="skipToken">
         /// Page continuation token is only used if a previous operation returned a partial result.
         /// If a previous response contains a nextLink element, the value of the nextLink element will include a token parameter that specifies a starting point to use for subsequent calls.
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ManagementGroupResource" /> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skiptoken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroupResource> GetAll(string cacheControl = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skiptoken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skiptoken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupRestClient.CreateListRequest(cacheControl, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupRestClient.CreateListNextPageRequest(nextLink, cacheControl, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupResource(Client, ManagementGroupData.DeserializeManagementGroupData(e)), _managementGroupClientDiagnostics, Pipeline, "ManagementGroupCollection.GetAll", "value", "@nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -295,6 +347,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -330,6 +390,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Management group name availability check parameters. </param>
@@ -354,6 +422,66 @@ namespace Azure.ResourceManager.ManagementGroups
         }
 
         /// <summary>
+        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
+        ///
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/getEntities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Entities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="EntityData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<EntityData> GetEntitiesAsync(ManagementGroupCollectionGetEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ManagementGroupCollectionGetEntitiesOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EntityData.DeserializeEntityData(e), _entitiesClientDiagnostics, Pipeline, "ManagementGroupCollection.GetEntities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List all entities (Management Groups, Subscriptions, etc.) for the authenticated user.
+        ///
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/getEntities</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Entities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="EntityData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<EntityData> GetEntities(ManagementGroupCollectionGetEntitiesOptions options, CancellationToken cancellationToken = default)
+        {
+            options ??= new ManagementGroupCollectionGetEntitiesOptions();
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _entitiesRestClient.CreateListRequest(options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _entitiesRestClient.CreateListNextPageRequest(nextLink, options.SkipToken, options.Skip, options.Top, options.Select, options.Search, options.Filter, options.View, options.GroupName, options.CacheControl);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EntityData.DeserializeEntityData(e), _entitiesClientDiagnostics, Pipeline, "ManagementGroupCollection.GetEntities", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -363,6 +491,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -403,6 +539,14 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <term>Operation Id</term>
         /// <description>ManagementGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> Management Group ID. </param>
@@ -423,6 +567,104 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ManagementGroupResource>> GetIfExistsAsync(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _managementGroupRestClient.GetAsync(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagementGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> Management Group ID. </param>
+        /// <param name="expand"> The $expand=children query string parameter allows clients to request inclusion of children in the response payload.  $expand=path includes the path from the root group to the current group.  $expand=ancestors includes the ancestor Ids of the current group. </param>
+        /// <param name="recurse"> The $recurse=true query string parameter allows clients to request inclusion of entire hierarchy in the response payload. Note that  $expand=children must be passed up if $recurse is set to true. </param>
+        /// <param name="filter"> A filter which allows the exclusion of subscriptions from results (i.e. '$filter=children.childType ne Subscription'). </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual NullableResponse<ManagementGroupResource> GetIfExists(string groupId, ManagementGroupExpandType? expand = null, bool? recurse = null, string filter = null, string cacheControl = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _managementGroupClientDiagnostics.CreateScope("ManagementGroupCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _managementGroupRestClient.Get(groupId, expand, recurse, filter, cacheControl, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ManagementGroupResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

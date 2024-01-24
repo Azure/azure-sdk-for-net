@@ -10,7 +10,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/cd53bce8cf73f7e7ba6cf5ab32baffbe529ae1fb/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/d6665aaea57eb608c4142d729d747d75c77e3c14/specification/compute/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -19,6 +19,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 update-required-copy:
   GalleryImage: OSType
@@ -163,6 +164,7 @@ rename-mapping:
   DiskRestorePoint.properties.sourceResourceLocation: -|azure-location
   Encryption: DiskEncryption
   Encryption.diskEncryptionSetId: -|arm-id
+  Encryption.type: EncryptionType
   CreationData: DiskCreationData
   CreationData.storageAccountId: -|arm-id
   CreationData.sourceResourceId: -|arm-id
@@ -273,6 +275,7 @@ rename-mapping:
   CreationData.elasticSanResourceId: -|arm-id
   NetworkInterfaceAuxiliarySku: ComputeNetworkInterfaceAuxiliarySku
   NetworkInterfaceAuxiliaryMode: ComputeNetworkInterfaceAuxiliaryMode
+  CommunityGalleryInfo.publisherUri: PublisherUriString
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -375,4 +378,5 @@ directive:
   - from: restorePoint.json
     where: $.definitions.RestorePointSourceVMStorageProfile.properties.dataDisks
     transform: $["x-ms-client-name"] = "DataDiskList";
+    
 ```

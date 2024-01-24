@@ -14,13 +14,13 @@ namespace Azure.Security.KeyVault.Administration.Models
     /// <summary> Role assignment list operation result. </summary>
     internal partial class RoleAssignmentListResult
     {
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         internal RoleAssignmentListResult()
         {
             Value = new ChangeTrackingList<KeyVaultRoleAssignment>();
         }
 
-        /// <summary> Initializes a new instance of RoleAssignmentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RoleAssignmentListResult"/>. </summary>
         /// <param name="value"> Role assignment list. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal RoleAssignmentListResult(IReadOnlyList<KeyVaultRoleAssignment> value, string nextLink)

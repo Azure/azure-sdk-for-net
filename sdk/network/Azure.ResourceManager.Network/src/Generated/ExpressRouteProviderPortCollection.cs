@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ExpressRouteProviderPortResource" /> and their operations.
-    /// Each <see cref="ExpressRouteProviderPortResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get an <see cref="ExpressRouteProviderPortCollection" /> instance call the GetExpressRouteProviderPorts method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="ExpressRouteProviderPortResource"/> and their operations.
+    /// Each <see cref="ExpressRouteProviderPortResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get an <see cref="ExpressRouteProviderPortCollection"/> instance call the GetExpressRouteProviderPorts method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class ExpressRouteProviderPortCollection : ArmCollection, IEnumerable<ExpressRouteProviderPortResource>, IAsyncEnumerable<ExpressRouteProviderPortResource>
     {
@@ -70,6 +70,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerport"> The name of the provider port. </param>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -144,11 +160,19 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPortsLocation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ExpressRouteProviderPortResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ExpressRouteProviderPortResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ExpressRouteProviderPortResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortExpressRouteProviderPortsLocationRestClient.CreateListRequest(Id.SubscriptionId, filter);
@@ -166,11 +190,19 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPortsLocation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=location eq '{state}'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ExpressRouteProviderPortResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ExpressRouteProviderPortResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ExpressRouteProviderPortResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortExpressRouteProviderPortsLocationRestClient.CreateListRequest(Id.SubscriptionId, filter);
@@ -187,6 +219,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +263,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ExpressRouteProviderPort</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerport"> The name of the provider port. </param>
@@ -239,6 +287,96 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _expressRouteProviderPortRestClient.ExpressRouteProviderPort(Id.SubscriptionId, providerport, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts/{providerport}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerport"> The name of the provider port. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerport"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
+        public virtual async Task<NullableResponse<ExpressRouteProviderPortResource>> GetIfExistsAsync(string providerport, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _expressRouteProviderPortRestClient.ExpressRouteProviderPortAsync(Id.SubscriptionId, providerport, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRouteProviderPortResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteProviderPortResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteProviderPorts/{providerport}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ExpressRouteProviderPort</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExpressRouteProviderPortResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="providerport"> The name of the provider port. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="providerport"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="providerport"/> is null. </exception>
+        public virtual NullableResponse<ExpressRouteProviderPortResource> GetIfExists(string providerport, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(providerport, nameof(providerport));
+
+            using var scope = _expressRouteProviderPortClientDiagnostics.CreateScope("ExpressRouteProviderPortCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _expressRouteProviderPortRestClient.ExpressRouteProviderPort(Id.SubscriptionId, providerport, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ExpressRouteProviderPortResource>(response.GetRawResponse());
+                return Response.FromValue(new ExpressRouteProviderPortResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

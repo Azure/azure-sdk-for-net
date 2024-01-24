@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using a client secret or certificate, or as a user
+    /// Enables authentication to Microsoft Entra ID using a client secret or certificate, or as a user
     /// with a username and password.
     /// <para>
     /// Configuration is attempted in this order, using these environment variables:
@@ -20,7 +20,7 @@ namespace Azure.Identity
     /// <b>Service principal with secret:</b>
     /// <list type="table">
     /// <listheader><term>Variable</term><description>Description</description></listheader>
-    /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant (directory) ID.</description></item>
+    /// <item><term>AZURE_TENANT_ID</term><description>The Microsoft Entra tenant (directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client (application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_SECRET</term><description>A client secret that was generated for the App Registration.</description></item>
     /// </list>
@@ -28,7 +28,7 @@ namespace Azure.Identity
     /// <b>Service principal with certificate:</b>
     /// <list type="table">
     /// <listheader><term>Variable</term><description>Description</description></listheader>
-    /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant (directory) ID.</description></item>
+    /// <item><term>AZURE_TENANT_ID</term><description>The Microsoft Entra tenant (directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client (application) ID of an App Registration in the tenant.</description></item>
     /// <item><term>AZURE_CLIENT_CERTIFICATE_PATH</term><description>A path to certificate and private key pair in PEM or PFX format, which can authenticate the App Registration.</description></item>
     /// <item><term>AZURE_CLIENT_CERTIFICATE_PASSWORD</term><description>(Optional) The password protecting the certificate file (currently only supported for PFX (PKCS12) certificates).</description></item>
@@ -38,10 +38,10 @@ namespace Azure.Identity
     /// <b>Username and password:</b>
     /// <list type="table">
     /// <listheader><term>Variable</term><description>Description</description></listheader>
-    /// <item><term>AZURE_TENANT_ID</term><description>The Azure Active Directory tenant (directory) ID.</description></item>
+    /// <item><term>AZURE_TENANT_ID</term><description>The Microsoft Entra tenant (directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client (application) ID of an App Registration in the tenant.</description></item>
-    /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of an Azure Active Directory user account.</description></item>
-    /// <item><term>AZURE_PASSWORD</term><description>The password of the Azure Active Directory user account. Note this does not support accounts with MFA enabled.</description></item>
+    /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of a Microsoft Entra user account.</description></item>
+    /// <item><term>AZURE_PASSWORD</term><description>The password of the Microsoft Entra user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
     ///
     /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="ClientCertificateCredential"/>, or <see cref="UsernamePasswordCredential"/> to
@@ -67,7 +67,7 @@ namespace Azure.Identity
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public EnvironmentCredential(TokenCredentialOptions options)
             : this(CredentialPipeline.GetInstance(options), options)
@@ -77,7 +77,7 @@ namespace Azure.Identity
         /// Creates an instance of the EnvironmentCredential class and reads client secret details from environment variables.
         /// If the expected environment variables are not found at this time, the GetToken method will return the default <see cref="AccessToken"/> when invoked.
         /// </summary>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public EnvironmentCredential(EnvironmentCredentialOptions options)
             : this(CredentialPipeline.GetInstance(options), options)
         { }
@@ -102,7 +102,7 @@ namespace Azure.Identity
             {
                 if (!string.IsNullOrEmpty(clientSecret))
                 {
-                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, envCredOptions, _pipeline, null);
+                    Credential = new ClientSecretCredential(tenantId, clientId, clientSecret, envCredOptions, _pipeline, envCredOptions.MsalConfidentialClient);
                 }
                 else if (!string.IsNullOrEmpty(clientCertificatePath))
                 {
@@ -110,11 +110,11 @@ namespace Azure.Identity
 
                     clientCertificateCredentialOptions.SendCertificateChain = sendCertificateChain;
 
-                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, null);
+                    Credential = new ClientCertificateCredential(tenantId, clientId, clientCertificatePath, clientCertificatePassword, clientCertificateCredentialOptions, _pipeline, envCredOptions.MsalConfidentialClient);
                 }
                 else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                 {
-                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, envCredOptions, _pipeline, null);
+                    Credential = new UsernamePasswordCredential(username, password, tenantId, clientId, envCredOptions, _pipeline, envCredOptions.MsalPublicClient);
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
+        /// Obtains a token from Microsoft Entra ID, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible,
         /// reuse credential instances to optimize cache effectiveness.
@@ -143,7 +143,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified client details specified in the environment variables
+        /// Obtains a token from Microsoft Entra ID, using the specified client details specified in the environment variables
         /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible,
         /// reuse credential instances to optimize cache effectiveness.

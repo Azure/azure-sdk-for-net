@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Automation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomationAccountResource" /> and their operations.
-    /// Each <see cref="AutomationAccountResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AutomationAccountCollection" /> instance call the GetAutomationAccounts method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AutomationAccountResource"/> and their operations.
+    /// Each <see cref="AutomationAccountResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AutomationAccountCollection"/> instance call the GetAutomationAccounts method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AutomationAccountCollection : ArmCollection, IEnumerable<AutomationAccountResource>, IAsyncEnumerable<AutomationAccountResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -148,6 +164,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,10 +254,18 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomationAccountResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -244,10 +284,18 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomationAccountResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomationAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomationAccountResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automationAccountRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="automationAccountName"> The name of the automation account. </param>
@@ -317,6 +381,96 @@ namespace Azure.ResourceManager.Automation
             {
                 var response = _automationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomationAccountResource>> GetIfExistsAsync(string automationAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
+            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automationAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Automation/automationAccounts/{automationAccountName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="automationAccountName"> The name of the automation account. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="automationAccountName"/> is null. </exception>
+        public virtual NullableResponse<AutomationAccountResource> GetIfExists(string automationAccountName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+
+            using var scope = _automationAccountClientDiagnostics.CreateScope("AutomationAccountCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automationAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, automationAccountName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomationAccountResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomationAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Media
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MediaAssetResource" /> and their operations.
-    /// Each <see cref="MediaAssetResource" /> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource" />.
-    /// To get a <see cref="MediaAssetCollection" /> instance call the GetMediaAssets method from an instance of <see cref="MediaServicesAccountResource" />.
+    /// A class representing a collection of <see cref="MediaAssetResource"/> and their operations.
+    /// Each <see cref="MediaAssetResource"/> in the collection will belong to the same instance of <see cref="MediaServicesAccountResource"/>.
+    /// To get a <see cref="MediaAssetCollection"/> instance call the GetMediaAssets method from an instance of <see cref="MediaServicesAccountResource"/>.
     /// </summary>
     public partial class MediaAssetCollection : ArmCollection, IEnumerable<MediaAssetResource>, IAsyncEnumerable<MediaAssetResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assetName"> The Asset name. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,13 +252,21 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MediaAssetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MediaAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MediaAssetResource> GetAllAsync(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
@@ -245,13 +285,21 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Restricts the set of items returned. </param>
         /// <param name="top"> Specifies a non-negative integer n that limits the number of items returned from a collection. The service returns the number of available items up to but not greater than the specified value n. </param>
         /// <param name="orderby"> Specifies the key by which the result collection should be ordered. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MediaAssetResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MediaAssetResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MediaAssetResource> GetAll(string filter = null, int? top = null, string orderby = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mediaAssetAssetsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, orderby);
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.Media
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.Media
         /// <term>Operation Id</term>
         /// <description>Assets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="assetName"> The Asset name. </param>
@@ -321,6 +385,96 @@ namespace Azure.ResourceManager.Media
             {
                 var response = _mediaAssetAssetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assetName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assetName"> The Asset name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MediaAssetResource>> GetIfExistsAsync(string assetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
+            using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mediaAssetAssetsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assetName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaAssetResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaAssetResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Media/mediaServices/{accountName}/assets/{assetName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Assets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MediaAssetResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="assetName"> The Asset name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="assetName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assetName"/> is null. </exception>
+        public virtual NullableResponse<MediaAssetResource> GetIfExists(string assetName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(assetName, nameof(assetName));
+
+            using var scope = _mediaAssetAssetsClientDiagnostics.CreateScope("MediaAssetCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mediaAssetAssetsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, assetName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MediaAssetResource>(response.GetRawResponse());
+                return Response.FromValue(new MediaAssetResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

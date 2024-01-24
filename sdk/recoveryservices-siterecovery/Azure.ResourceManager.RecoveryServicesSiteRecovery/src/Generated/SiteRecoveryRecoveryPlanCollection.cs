@@ -22,9 +22,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SiteRecoveryRecoveryPlanResource" /> and their operations.
-    /// Each <see cref="SiteRecoveryRecoveryPlanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="SiteRecoveryRecoveryPlanCollection" /> instance call the GetSiteRecoveryRecoveryPlans method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="SiteRecoveryRecoveryPlanResource"/> and their operations.
+    /// Each <see cref="SiteRecoveryRecoveryPlanResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="SiteRecoveryRecoveryPlanCollection"/> instance call the GetSiteRecoveryRecoveryPlans method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class SiteRecoveryRecoveryPlanCollection : ArmCollection, IEnumerable<SiteRecoveryRecoveryPlanResource>, IAsyncEnumerable<SiteRecoveryRecoveryPlanResource>
     {
@@ -71,6 +71,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -111,6 +119,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,6 +169,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
@@ -189,6 +213,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,10 +259,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SiteRecoveryRecoveryPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SiteRecoveryRecoveryPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SiteRecoveryRecoveryPlanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
@@ -249,10 +289,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SiteRecoveryRecoveryPlanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SiteRecoveryRecoveryPlanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SiteRecoveryRecoveryPlanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _resourceName);
@@ -270,6 +318,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +362,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
         /// <term>Operation Id</term>
         /// <description>ReplicationRecoveryPlans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
@@ -322,6 +386,96 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             {
                 var response = _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPlanName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SiteRecoveryRecoveryPlanResource>> GetIfExistsAsync(string recoveryPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPlanName, nameof(recoveryPlanName));
+
+            using var scope = _siteRecoveryRecoveryPlanReplicationRecoveryPlansClientDiagnostics.CreateScope("SiteRecoveryRecoveryPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryRecoveryPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryRecoveryPlanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{resourceName}/replicationRecoveryPlans/{recoveryPlanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ReplicationRecoveryPlans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteRecoveryRecoveryPlanResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPlanName"> Name of the recovery plan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPlanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPlanName"/> is null. </exception>
+        public virtual NullableResponse<SiteRecoveryRecoveryPlanResource> GetIfExists(string recoveryPlanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPlanName, nameof(recoveryPlanName));
+
+            using var scope = _siteRecoveryRecoveryPlanReplicationRecoveryPlansClientDiagnostics.CreateScope("SiteRecoveryRecoveryPlanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _siteRecoveryRecoveryPlanReplicationRecoveryPlansRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _resourceName, recoveryPlanName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SiteRecoveryRecoveryPlanResource>(response.GetRawResponse());
+                return Response.FromValue(new SiteRecoveryRecoveryPlanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

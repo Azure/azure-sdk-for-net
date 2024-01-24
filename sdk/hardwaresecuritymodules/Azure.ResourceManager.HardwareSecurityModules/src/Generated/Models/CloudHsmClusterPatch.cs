@@ -7,21 +7,39 @@
 
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
     /// <summary> Patchable properties of the Cloud HSM Cluster. </summary>
     public partial class CloudHsmClusterPatch
     {
-        /// <summary> Initializes a new instance of CloudHsmClusterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
         public CloudHsmClusterPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudHsmClusterPatch"/>. </summary>
+        /// <param name="tags"> The Cloud HSM Cluster's tags. </param>
+        /// <param name="sku"> SKU details. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="backupProperties"> Cloud Hsm Cluster backup information. </param>
+        internal CloudHsmClusterPatch(IDictionary<string, string> tags, CloudHsmClusterSku sku, ManagedServiceIdentity identity, BackupProperties backupProperties)
+        {
+            Tags = tags;
+            Sku = sku;
+            Identity = identity;
+            BackupProperties = backupProperties;
         }
 
         /// <summary> The Cloud HSM Cluster's tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> SKU details. </summary>
         public CloudHsmClusterSku Sku { get; set; }
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
+        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Cloud Hsm Cluster backup information. </summary>
+        public BackupProperties BackupProperties { get; set; }
     }
 }

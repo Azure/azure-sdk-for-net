@@ -1,7 +1,13 @@
 # Azure SDK for .NET Samples
 
 ## CloudClipboard
-This is sample app illustrates using Storage, Application insights service. It allows users to upload to a newly created blob
+
+This sample app illustrates using the Azure Storage and Application Insights services. It allows users to upload to a newly created blob. This sample app is featured in the following YouTube videos:
+
+- [Exploring the new Azure .NET SDKs](https://www.youtube.com/watch?v=Hxne-iM1CtI)
+- [Understanding the Azure.Core library](https://www.youtube.com/watch?v=0tKXe1wOqI8)
+- [Securing your Azure apps with Azure.Identity](https://www.youtube.com/watch?v=1VRx_Xpvlro)
+
 ### To run the sample.
 1. Replaced "cloudclips" with your Storage Account's Name in appsettings.json
 ```
@@ -10,7 +16,7 @@ This is sample app illustrates using Storage, Application insights service. It a
     "BlobServiceUri": "https://cloudclips.blob.core.windows.net/"
 }
 ```
-2. To light up App Insights, add the [InstrumentationKey value](https://docs.microsoft.com/azure/bot-service/bot-service-resources-app-insights-keys?view=azure-bot-service-4.0#instrumentation-key) in appsettings.json
+2. To light up App Insights, add the [InstrumentationKey value](https://learn.microsoft.com/azure/bot-service/bot-service-resources-app-insights-keys?view=azure-bot-service-4.0#instrumentation-key) in appsettings.json
 ```
 {
     ...

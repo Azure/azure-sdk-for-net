@@ -6,14 +6,15 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    /// <summary> A CosmosDB Cassandra API data source/sink. </summary>
+    /// <summary> A CosmosDB Mongo API data source/sink. </summary>
     public partial class CosmosMongoDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of CosmosMongoDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/>. </summary>
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="collectionName"/> is null. </exception>
@@ -27,20 +28,30 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Component = DataTransferComponent.CosmosDBMongo;
         }
 
-        /// <summary> Initializes a new instance of CosmosMongoDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="databaseName"></param>
         /// <param name="collectionName"></param>
-        internal CosmosMongoDataTransferDataSourceSink(DataTransferComponent component, string databaseName, string collectionName) : base(component)
+        /// <param name="remoteAccountName"></param>
+        internal CosmosMongoDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, string collectionName, string remoteAccountName) : base(component, serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             CollectionName = collectionName;
+            RemoteAccountName = remoteAccountName;
             Component = component;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosMongoDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal CosmosMongoDataTransferDataSourceSink()
+        {
         }
 
         /// <summary> Gets or sets the database name. </summary>
         public string DatabaseName { get; set; }
         /// <summary> Gets or sets the collection name. </summary>
         public string CollectionName { get; set; }
+        /// <summary> Gets or sets the remote account name. </summary>
+        public string RemoteAccountName { get; set; }
     }
 }

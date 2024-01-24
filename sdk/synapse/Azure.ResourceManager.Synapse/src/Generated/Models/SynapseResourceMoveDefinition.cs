@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Contains the information necessary to perform a resource move (rename). </summary>
     public partial class SynapseResourceMoveDefinition
     {
-        /// <summary> Initializes a new instance of SynapseResourceMoveDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseResourceMoveDefinition"/>. </summary>
         /// <param name="id"> The target ID for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public SynapseResourceMoveDefinition(ResourceIdentifier id)

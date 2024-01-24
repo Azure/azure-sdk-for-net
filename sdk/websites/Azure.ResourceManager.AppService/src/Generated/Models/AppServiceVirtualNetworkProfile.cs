@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Specification for using a Virtual Network. </summary>
     public partial class AppServiceVirtualNetworkProfile
     {
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkProfile"/>. </summary>
         /// <param name="id"> Resource id of the Virtual Network. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public AppServiceVirtualNetworkProfile(ResourceIdentifier id)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             Id = id;
         }
 
-        /// <summary> Initializes a new instance of AppServiceVirtualNetworkProfile. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceVirtualNetworkProfile"/>. </summary>
         /// <param name="id"> Resource id of the Virtual Network. </param>
         /// <param name="name"> Name of the Virtual Network (read-only). </param>
         /// <param name="resourceType"> Resource type of the Virtual Network (read-only). </param>

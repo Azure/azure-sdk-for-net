@@ -18,13 +18,19 @@ namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
     /// A Class representing a SynapseSqlPoolTable along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SynapseSqlPoolTableResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSynapseSqlPoolTableResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolSchemaResource" /> using the GetSynapseSqlPoolTable method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SynapseSqlPoolTableResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSynapseSqlPoolTableResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SynapseSqlPoolSchemaResource"/> using the GetSynapseSqlPoolTable method.
     /// </summary>
     public partial class SynapseSqlPoolTableResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SynapseSqlPoolTableResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="sqlPoolName"> The sqlPoolName. </param>
+        /// <param name="schemaName"> The schemaName. </param>
+        /// <param name="tableName"> The tableName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, string schemaName, string tableName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/schemas/{schemaName}/tables/{tableName}";
@@ -35,12 +41,15 @@ namespace Azure.ResourceManager.Synapse
         private readonly SqlPoolTablesRestOperations _synapseSqlPoolTableSqlPoolTablesRestClient;
         private readonly SynapseSqlPoolTableData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolTableResource"/> class for mocking. </summary>
         protected SynapseSqlPoolTableResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SynapseSqlPoolTableResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SynapseSqlPoolTableResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SynapseSqlPoolTableResource(ArmClient client, SynapseSqlPoolTableData data) : this(client, data.Id)
@@ -61,9 +70,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/sqlPools/schemas/tables";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +96,7 @@ namespace Azure.ResourceManager.Synapse
         /// <returns> An object representing collection of SynapseSqlPoolColumnResources and their operations over a SynapseSqlPoolColumnResource. </returns>
         public virtual SynapseSqlPoolColumnCollection GetSynapseSqlPoolColumns()
         {
-            return GetCachedClient(Client => new SynapseSqlPoolColumnCollection(Client, Id));
+            return GetCachedClient(client => new SynapseSqlPoolColumnCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +110,20 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolColumnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SynapseSqlPoolColumnResource>> GetSynapseSqlPoolColumnAsync(string columnName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +141,20 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolColumns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolColumnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="columnName"> The name of the column. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="columnName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="columnName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SynapseSqlPoolColumnResource> GetSynapseSqlPoolColumn(string columnName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +171,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +211,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolTables_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseSqlPoolTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

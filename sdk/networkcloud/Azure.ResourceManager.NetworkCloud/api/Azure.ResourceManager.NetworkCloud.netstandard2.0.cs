@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> GetAsync(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> GetIfExists(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>> GetIfExistsAsync(string agentPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudAgentPoolData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudAgentPoolData(Azure.Core.AzureLocation location, long count, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode, string vmSkuName) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudAgentPoolData(Azure.Core.AzureLocation location, long count, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentPoolMode mode, string vmSkuName) { }
         public Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration AdministratorConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudAgentConfiguration AgentOptions { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AttachedNetworkConfiguration AttachedNetworkConfiguration { get { throw null; } set { } }
@@ -63,13 +65,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> GetAsync(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetIfExists(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> GetIfExistsAsync(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudBareMetalMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudBareMetalMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudBareMetalMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string bmcConnectionString, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials bmcCredentials, string bmcMacAddress, string bootMacAddress, string machineDetails, string machineName, string machineSkuId, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public string BmcConnectionString { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials BmcCredentials { get { throw null; } set { } }
@@ -111,13 +115,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> GetAsync(string bareMetalMachineKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> GetIfExists(string bareMetalMachineKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>> GetIfExistsAsync(string bareMetalMachineKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudBareMetalMachineKeySetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudBareMetalMachineKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudBareMetalMachineKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, System.Collections.Generic.IEnumerable<System.Net.IPAddress> jumpHostsAllowed, Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) { }
         public string AzureGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BareMetalMachineKeySetDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -200,13 +206,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> GetAsync(string bmcKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> GetIfExists(string bmcKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>> GetIfExistsAsync(string bmcKeySetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudBmcKeySetData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudBmcKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudBmcKeySetData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string azureGroupId, System.DateTimeOffset expireOn, Azure.ResourceManager.NetworkCloud.Models.BmcKeySetPrivilegeLevel privilegeLevel, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.KeySetUser> userList) { }
         public string AzureGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.BmcKeySetDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -249,13 +257,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> GetAsync(string cloudServicesNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetIfExists(string cloudServicesNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> GetIfExistsAsync(string cloudServicesNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudCloudServicesNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudCloudServicesNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudCloudServicesNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.NetworkCloud.Models.EgressEndpoint> AdditionalEgressEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
@@ -300,13 +310,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> GetAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetIfExists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> GetIfExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.Core.ResourceIdentifier networkFabricId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, Azure.ResourceManager.NetworkCloud.Models.ClusterType clusterType, string clusterVersion, Azure.Core.ResourceIdentifier networkFabricId) { }
         public Azure.ResourceManager.NetworkCloud.Models.NetworkCloudRackDefinition AggregatorOrSingleRackDefinition { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier AnalyticsWorkspaceId { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableUpgradeVersion> AvailableUpgradeVersions { get { throw null; } }
@@ -343,13 +355,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> GetAsync(string clusterManagerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetIfExists(string clusterManagerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> GetIfExistsAsync(string clusterManagerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudClusterManagerData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudClusterManagerData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier fabricControllerId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudClusterManagerData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier fabricControllerId) { }
         public Azure.Core.ResourceIdentifier AnalyticsWorkspaceId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.NetworkCloud.Models.ClusterAvailableVersion> ClusterVersions { get { throw null; } }
@@ -392,13 +406,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> GetAsync(string metricsConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> GetIfExists(string metricsConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>> GetIfExistsAsync(string metricsConfigurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudClusterMetricsConfigurationData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudClusterMetricsConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long collectionInterval) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudClusterMetricsConfigurationData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long collectionInterval) { }
         public long CollectionInterval { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.ClusterMetricsConfigurationDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -555,13 +571,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> GetAsync(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetIfExists(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> GetIfExistsAsync(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudKubernetesClusterData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudKubernetesClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudKubernetesClusterData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ControlPlaneNodeConfiguration controlPlaneNodeConfiguration, System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.Models.InitialAgentPoolConfiguration> initialAgentPoolConfigurations, string kubernetesVersion, Azure.ResourceManager.NetworkCloud.Models.KubernetesClusterNetworkConfiguration networkConfiguration) { }
         public System.Collections.Generic.IList<string> AadAdminGroupObjectIds { get { throw null; } set { } }
         public Azure.ResourceManager.NetworkCloud.Models.AdministratorConfiguration AdministratorConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AttachedNetworkIds { get { throw null; } }
@@ -617,13 +635,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> GetAsync(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetIfExists(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> GetIfExistsAsync(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudL2NetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudL2NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l2IsolationDomainId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudL2NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l2IsolationDomainId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.L2NetworkDetailedStatus? DetailedStatus { get { throw null; } }
@@ -667,13 +687,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> GetAsync(string l3NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetIfExists(string l3NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> GetIfExistsAsync(string l3NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudL3NetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudL3NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l3IsolationDomainId, long vlan) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudL3NetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.Core.ResourceIdentifier l3IsolationDomainId, long vlan) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.L3NetworkDetailedStatus? DetailedStatus { get { throw null; } }
@@ -720,13 +742,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>> GetAsync(string rackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetIfExists(string rackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>> GetIfExistsAsync(string rackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudRackData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudRackData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string availabilityZone, string rackLocation, string rackSerialNumber, Azure.Core.ResourceIdentifier rackSkuId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudRackData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string availabilityZone, string rackLocation, string rackSerialNumber, Azure.Core.ResourceIdentifier rackSkuId) { }
         public string AvailabilityZone { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.RackDetailedStatus? DetailedStatus { get { throw null; } }
@@ -764,6 +788,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource>> GetAsync(string rackSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource> GetIfExists(string rackSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource>> GetIfExistsAsync(string rackSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -799,13 +825,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>> GetAsync(string storageApplianceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetIfExists(string storageApplianceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>> GetIfExistsAsync(string storageApplianceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudStorageApplianceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudStorageApplianceData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudStorageApplianceData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials administratorCredentials, Azure.Core.ResourceIdentifier rackId, long rackSlot, string serialNumber, string storageApplianceSkuId) { }
         public Azure.ResourceManager.NetworkCloud.Models.AdministrativeCredentials AdministratorCredentials { get { throw null; } set { } }
         public long? Capacity { get { throw null; } }
         public long? CapacityUsed { get { throw null; } }
@@ -855,13 +883,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> GetAsync(string trunkedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetIfExists(string trunkedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> GetIfExistsAsync(string trunkedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudTrunkedNetworkData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudTrunkedNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds, System.Collections.Generic.IEnumerable<long> vlans) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudTrunkedNetworkData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> isolationDomainIds, System.Collections.Generic.IEnumerable<long> vlans) { }
         public System.Collections.Generic.IReadOnlyList<string> AssociatedResourceIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier ClusterId { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.TrunkedNetworkDetailedStatus? DetailedStatus { get { throw null; } }
@@ -906,6 +936,8 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> GetAsync(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetIfExists(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> GetIfExistsAsync(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -921,13 +953,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> GetAsync(string consoleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> GetIfExists(string consoleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>> GetIfExistsAsync(string consoleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudVirtualMachineConsoleData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudVirtualMachineConsoleData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey sshPublicKey) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudVirtualMachineConsoleData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled enabled, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudSshPublicKey sshPublicKey) { }
         public Azure.ResourceManager.NetworkCloud.Models.ConsoleDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.ConsoleEnabled Enabled { get { throw null; } set { } }
@@ -960,7 +994,7 @@ namespace Azure.ResourceManager.NetworkCloud
     }
     public partial class NetworkCloudVirtualMachineData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string adminUsername, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string vmImage) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudVirtualMachineData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, string adminUsername, Azure.ResourceManager.NetworkCloud.Models.NetworkAttachment cloudServicesNetworkAttachment, long cpuCores, long memorySizeInGB, Azure.ResourceManager.NetworkCloud.Models.NetworkCloudStorageProfile storageProfile, string vmImage) { }
         public string AdminUsername { get { throw null; } set { } }
         public string AvailabilityZone { get { throw null; } }
         public Azure.Core.ResourceIdentifier BareMetalMachineId { get { throw null; } }
@@ -1029,13 +1063,15 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> GetAsync(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetIfExists(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> GetIfExistsAsync(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class NetworkCloudVolumeData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public NetworkCloudVolumeData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long sizeInMiB) : base (default(Azure.Core.AzureLocation)) { }
+        public NetworkCloudVolumeData(Azure.Core.AzureLocation location, Azure.ResourceManager.NetworkCloud.Models.ExtendedLocation extendedLocation, long sizeInMiB) { }
         public System.Collections.Generic.IReadOnlyList<string> AttachedTo { get { throw null; } }
         public Azure.ResourceManager.NetworkCloud.Models.VolumeDetailedStatus? DetailedStatus { get { throw null; } }
         public string DetailedStatusMessage { get { throw null; } }
@@ -1063,6 +1099,102 @@ namespace Azure.ResourceManager.NetworkCloud
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> Update(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> UpdateAsync(Azure.ResourceManager.NetworkCloud.Models.NetworkCloudVolumePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.NetworkCloud.Mocking
+{
+    public partial class MockableNetworkCloudArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkCloudArmClient() { }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudAgentPoolResource GetNetworkCloudAgentPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineKeySetResource GetNetworkCloudBareMetalMachineKeySetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource GetNetworkCloudBareMetalMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBmcKeySetResource GetNetworkCloudBmcKeySetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource GetNetworkCloudCloudServicesNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource GetNetworkCloudClusterManagerResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterMetricsConfigurationResource GetNetworkCloudClusterMetricsConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource GetNetworkCloudClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource GetNetworkCloudKubernetesClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource GetNetworkCloudL2NetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource GetNetworkCloudL3NetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource GetNetworkCloudRackResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource GetNetworkCloudRackSkuResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource GetNetworkCloudStorageApplianceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource GetNetworkCloudTrunkedNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineConsoleResource GetNetworkCloudVirtualMachineConsoleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource GetNetworkCloudVirtualMachineResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource GetNetworkCloudVolumeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableNetworkCloudResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkCloudResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachine(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource>> GetNetworkCloudBareMetalMachineAsync(string bareMetalMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineCollection GetNetworkCloudBareMetalMachines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetwork(string cloudServicesNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource>> GetNetworkCloudCloudServicesNetworkAsync(string cloudServicesNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkCollection GetNetworkCloudCloudServicesNetworks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetNetworkCloudCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource>> GetNetworkCloudClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetNetworkCloudClusterManager(string clusterManagerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource>> GetNetworkCloudClusterManagerAsync(string clusterManagerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerCollection GetNetworkCloudClusterManagers() { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudClusterCollection GetNetworkCloudClusters() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesCluster(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource>> GetNetworkCloudKubernetesClusterAsync(string kubernetesClusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterCollection GetNetworkCloudKubernetesClusters() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2Network(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource>> GetNetworkCloudL2NetworkAsync(string l2NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkCollection GetNetworkCloudL2Networks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetNetworkCloudL3Network(string l3NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource>> GetNetworkCloudL3NetworkAsync(string l3NetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkCollection GetNetworkCloudL3Networks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetNetworkCloudRack(string rackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource>> GetNetworkCloudRackAsync(string rackName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudRackCollection GetNetworkCloudRacks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliance(string storageApplianceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource>> GetNetworkCloudStorageApplianceAsync(string storageApplianceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceCollection GetNetworkCloudStorageAppliances() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetwork(string trunkedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource>> GetNetworkCloudTrunkedNetworkAsync(string trunkedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkCollection GetNetworkCloudTrunkedNetworks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachine(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource>> GetNetworkCloudVirtualMachineAsync(string virtualMachineName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineCollection GetNetworkCloudVirtualMachines() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetNetworkCloudVolume(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource>> GetNetworkCloudVolumeAsync(string volumeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeCollection GetNetworkCloudVolumes() { throw null; }
+    }
+    public partial class MockableNetworkCloudSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableNetworkCloudSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineResource> GetNetworkCloudBareMetalMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudCloudServicesNetworkResource> GetNetworkCloudCloudServicesNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterManagerResource> GetNetworkCloudClusterManagersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetNetworkCloudClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudClusterResource> GetNetworkCloudClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClusters(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudKubernetesClusterResource> GetNetworkCloudKubernetesClustersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2Networks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL2NetworkResource> GetNetworkCloudL2NetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetNetworkCloudL3Networks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudL3NetworkResource> GetNetworkCloudL3NetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetNetworkCloudRacks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudRackResource> GetNetworkCloudRacksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource> GetNetworkCloudRackSku(string rackSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuResource>> GetNetworkCloudRackSkuAsync(string rackSkuName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.NetworkCloud.NetworkCloudRackSkuCollection GetNetworkCloudRackSkus() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliances(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceResource> GetNetworkCloudStorageAppliancesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudTrunkedNetworkResource> GetNetworkCloudTrunkedNetworksAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachines(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineResource> GetNetworkCloudVirtualMachinesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetNetworkCloudVolumes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.NetworkCloud.NetworkCloudVolumeResource> GetNetworkCloudVolumesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.NetworkCloud.Models

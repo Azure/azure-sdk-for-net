@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetPrivateEndPointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/PrivateLinkServiceGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/PrivateLinkServiceGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateLinkServices_GetPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetPrivateEndPointConnection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/PrivateLinkServiceGetPrivateEndpointConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/PrivateLinkServiceGetPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateLinkServices_GetPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,12 +84,55 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get private end point connection
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetPrivateEndPointConnection()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/PrivateLinkServiceGetPrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateLinkServices_GetPrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateLinkServiceResource created on azure
+            // for more information of creating PrivateLinkServiceResource, please refer to the document of PrivateLinkServiceResource
+            string subscriptionId = "subId";
+            string resourceGroupName = "rg1";
+            string serviceName = "testPls";
+            ResourceIdentifier privateLinkServiceResourceId = PrivateLinkServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName);
+            PrivateLinkServiceResource privateLinkService = client.GetPrivateLinkServiceResource(privateLinkServiceResourceId);
+
+            // get the collection of this NetworkPrivateEndpointConnectionResource
+            NetworkPrivateEndpointConnectionCollection collection = privateLinkService.GetNetworkPrivateEndpointConnections();
+
+            // invoke the operation
+            string peConnectionName = "testPlePeConnection";
+            NullableResponse<NetworkPrivateEndpointConnectionResource> response = await collection.GetIfExistsAsync(peConnectionName);
+            NetworkPrivateEndpointConnectionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetworkPrivateEndpointConnectionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // approve or reject private end point connection for a private link service
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ApproveOrRejectPrivateEndPointConnectionForAPrivateLinkService()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/PrivateLinkServiceUpdatePrivateEndpointConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/PrivateLinkServiceUpdatePrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateLinkServices_UpdatePrivateEndpointConnection" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +177,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListPrivateLinkServiceInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-04-01/examples/PrivateLinkServiceListPrivateEndpointConnection.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/PrivateLinkServiceListPrivateEndpointConnection.json
             // this example is just showing the usage of "PrivateLinkServices_ListPrivateEndpointConnections" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

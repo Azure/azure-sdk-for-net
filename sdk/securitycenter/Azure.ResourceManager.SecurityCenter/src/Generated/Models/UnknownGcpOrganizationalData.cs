@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
     /// <summary> The UnknownGcpOrganizationalData. </summary>
     internal partial class UnknownGcpOrganizationalData : GcpOrganizationalInfo
     {
-        /// <summary> Initializes a new instance of UnknownGcpOrganizationalData. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownGcpOrganizationalData"/>. </summary>
         /// <param name="organizationMembershipType"> The multi cloud account's membership type in the organization. </param>
-        internal UnknownGcpOrganizationalData(OrganizationMembershipType organizationMembershipType) : base(organizationMembershipType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownGcpOrganizationalData(OrganizationMembershipType organizationMembershipType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(organizationMembershipType, serializedAdditionalRawData)
         {
             OrganizationMembershipType = organizationMembershipType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownGcpOrganizationalData"/> for deserialization. </summary>
+        internal UnknownGcpOrganizationalData()
+        {
         }
     }
 }

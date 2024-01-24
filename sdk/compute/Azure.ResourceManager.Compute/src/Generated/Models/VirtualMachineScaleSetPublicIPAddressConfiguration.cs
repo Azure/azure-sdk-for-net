@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machines scale set IP Configuration's PublicIPAddress configuration. </summary>
     public partial class VirtualMachineScaleSetPublicIPAddressConfiguration
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetPublicIPAddressConfiguration(string name)
@@ -26,7 +58,7 @@ namespace Azure.ResourceManager.Compute.Models
             IPTags = new ChangeTrackingList<VirtualMachineScaleSetIPTag>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetPublicIPAddressConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/>. </summary>
         /// <param name="name"> The publicIP address configuration name. </param>
         /// <param name="sku"> Describes the public IP Sku. It can only be set with OrchestrationMode as Flexible. </param>
         /// <param name="idleTimeoutInMinutes"> The idle timeout of the public IP address. </param>
@@ -35,7 +67,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="publicIPPrefix"> The PublicIPPrefix from which to allocate publicIP addresses. </param>
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="deleteOption"> Specify what happens to the public IP when the VM is deleted. </param>
-        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, ComputeDeleteOption? deleteOption)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetPublicIPAddressConfiguration(string name, ComputePublicIPAddressSku sku, int? idleTimeoutInMinutes, VirtualMachineScaleSetPublicIPAddressConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPTag> ipTags, WritableSubResource publicIPPrefix, IPVersion? publicIPAddressVersion, ComputeDeleteOption? deleteOption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Sku = sku;
@@ -45,6 +78,12 @@ namespace Azure.ResourceManager.Compute.Models
             PublicIPPrefix = publicIPPrefix;
             PublicIPAddressVersion = publicIPAddressVersion;
             DeleteOption = deleteOption;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetPublicIPAddressConfiguration"/> for deserialization. </summary>
+        internal VirtualMachineScaleSetPublicIPAddressConfiguration()
+        {
         }
 
         /// <summary> The publicIP address configuration name. </summary>

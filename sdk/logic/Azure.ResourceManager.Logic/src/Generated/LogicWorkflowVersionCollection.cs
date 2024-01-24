@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Logic
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LogicWorkflowVersionResource" /> and their operations.
-    /// Each <see cref="LogicWorkflowVersionResource" /> in the collection will belong to the same instance of <see cref="LogicWorkflowResource" />.
-    /// To get a <see cref="LogicWorkflowVersionCollection" /> instance call the GetLogicWorkflowVersions method from an instance of <see cref="LogicWorkflowResource" />.
+    /// A class representing a collection of <see cref="LogicWorkflowVersionResource"/> and their operations.
+    /// Each <see cref="LogicWorkflowVersionResource"/> in the collection will belong to the same instance of <see cref="LogicWorkflowResource"/>.
+    /// To get a <see cref="LogicWorkflowVersionCollection"/> instance call the GetLogicWorkflowVersions method from an instance of <see cref="LogicWorkflowResource"/>.
     /// </summary>
     public partial class LogicWorkflowVersionCollection : ArmCollection, IEnumerable<LogicWorkflowVersionResource>, IAsyncEnumerable<LogicWorkflowVersionResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LogicWorkflowVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LogicWorkflowVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LogicWorkflowVersionResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowVersions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LogicWorkflowVersionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LogicWorkflowVersionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LogicWorkflowVersionResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _logicWorkflowVersionWorkflowVersionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> The workflow versionId. </param>
@@ -235,6 +283,96 @@ namespace Azure.ResourceManager.Logic
             {
                 var response = _logicWorkflowVersionWorkflowVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionId"> The workflow versionId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<LogicWorkflowVersionResource>> GetIfExistsAsync(string versionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+
+            using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _logicWorkflowVersionWorkflowVersionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowVersionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Logic/workflows/{workflowName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkflowVersions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowVersionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionId"> The workflow versionId. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        public virtual NullableResponse<LogicWorkflowVersionResource> GetIfExists(string versionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+
+            using var scope = _logicWorkflowVersionWorkflowVersionsClientDiagnostics.CreateScope("LogicWorkflowVersionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _logicWorkflowVersionWorkflowVersionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, versionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LogicWorkflowVersionResource>(response.GetRawResponse());
+                return Response.FromValue(new LogicWorkflowVersionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

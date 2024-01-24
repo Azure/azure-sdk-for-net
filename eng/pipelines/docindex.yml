@@ -67,9 +67,6 @@ jobs:
           filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
           arguments: >-
             -DocRepoLocation $(DocRepoLocation)
-            -TenantId '$(opensource-aad-tenant-id)'
-            -ClientId '$(opensource-aad-app-id)'
-            -ClientSecret '$(opensource-aad-secret)'
             -ReadmeFolderRoot 'api/overview/azure'
         displayName: Generate Service Level Readme for main branch
         condition: and(succeeded(), or(eq(variables['Build.Reason'], 'Schedule'), eq(variables['Force.MainUpdate'], 'true')))
@@ -143,9 +140,6 @@ jobs:
           filePath: eng/common/scripts/Service-Level-Readme-Automation.ps1
           arguments: >-
             -DocRepoLocation $(DocRepoLocation)
-            -TenantId '$(opensource-aad-tenant-id)'
-            -ClientId '$(opensource-aad-app-id)'
-            -ClientSecret '$(opensource-aad-secret)'
             -ReadmeFolderRoot 'api/overview/azure'
         displayName: Generate Service Level Readme for Daily docs
       - task: Powershell@2

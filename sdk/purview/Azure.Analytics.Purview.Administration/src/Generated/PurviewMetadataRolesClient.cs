@@ -51,7 +51,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataRolesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "values", "nextLink", context);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Purview.Administration
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetMetadataRolesRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetMetadataRolesNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewMetadataRolesClient.GetMetadataRoles", "values", "nextLink", context);
         }
 
         internal HttpMessage CreateGetMetadataRolesRequest(RequestContext context)
@@ -84,7 +84,7 @@ namespace Azure.Analytics.Purview.Administration
             uri.Reset(_endpoint);
             uri.AppendRaw("/policyStore", false);
             uri.AppendPath("/metadataRoles", false);
-            uri.AppendQuery("api-version", "2021-07-01", true);
+            uri.AppendQuery("api-version", "2021-07-01-preview", true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

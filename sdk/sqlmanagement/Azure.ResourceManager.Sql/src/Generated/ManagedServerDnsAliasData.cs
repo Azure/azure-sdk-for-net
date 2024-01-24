@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ManagedServerDnsAliasData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasData"/>. </summary>
         public ManagedServerDnsAliasData()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedServerDnsAliasData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServerDnsAliasData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

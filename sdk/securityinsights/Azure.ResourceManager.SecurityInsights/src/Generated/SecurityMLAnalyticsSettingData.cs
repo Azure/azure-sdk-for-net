@@ -20,12 +20,12 @@ namespace Azure.ResourceManager.SecurityInsights
     /// </summary>
     public partial class SecurityMLAnalyticsSettingData : ResourceData
     {
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingData"/>. </summary>
         public SecurityMLAnalyticsSettingData()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityMLAnalyticsSettingData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityMLAnalyticsSettingData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -21,9 +21,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthMonitorStateChangeResource" /> and their operations.
-    /// Each <see cref="HealthMonitorStateChangeResource" /> in the collection will belong to the same instance of <see cref="HealthMonitorResource" />.
-    /// To get a <see cref="HealthMonitorStateChangeCollection" /> instance call the GetHealthMonitorStateChanges method from an instance of <see cref="HealthMonitorResource" />.
+    /// A class representing a collection of <see cref="HealthMonitorStateChangeResource"/> and their operations.
+    /// Each <see cref="HealthMonitorStateChangeResource"/> in the collection will belong to the same instance of <see cref="HealthMonitorResource"/>.
+    /// To get a <see cref="HealthMonitorStateChangeCollection"/> instance call the GetHealthMonitorStateChanges method from an instance of <see cref="HealthMonitorResource"/>.
     /// </summary>
     public partial class HealthMonitorStateChangeCollection : ArmCollection, IEnumerable<HealthMonitorStateChangeResource>, IAsyncEnumerable<HealthMonitorStateChangeResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,6 +157,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_ListStateChanges</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
@@ -148,7 +172,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="startTimestampUtc"> The start of the time window. </param>
         /// <param name="endTimestampUtc"> The end of the time window. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthMonitorStateChangeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthMonitorStateChangeResource> GetAllAsync(string filter = null, string expand = null, DateTimeOffset? startTimestampUtc = null, DateTimeOffset? endTimestampUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
@@ -167,6 +191,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_ListStateChanges</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by heartbeat condition. Example: $filter=isHeartbeat eq false. </param>
@@ -174,7 +206,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <param name="startTimestampUtc"> The start of the time window. </param>
         /// <param name="endTimestampUtc"> The end of the time window. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthMonitorStateChangeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthMonitorStateChangeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthMonitorStateChangeResource> GetAll(string filter = null, string expand = null, DateTimeOffset? startTimestampUtc = null, DateTimeOffset? endTimestampUtc = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorStateChangeHealthMonitorsRestClient.CreateListStateChangesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, filter, expand, startTimestampUtc, endTimestampUtc);
@@ -192,6 +224,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -229,6 +269,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
@@ -246,6 +294,98 @@ namespace Azure.ResourceManager.WorkloadMonitor
             {
                 var response = _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, timestampUnix, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
+        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
+        public virtual async Task<NullableResponse<HealthMonitorStateChangeResource>> GetIfExistsAsync(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+
+            using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChangeAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, timestampUnix, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthMonitorStateChangeResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}/history/{timestampUnix}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="timestampUnix"> The timestamp of the state change (unix format). </param>
+        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="timestampUnix"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="timestampUnix"/> is null. </exception>
+        public virtual NullableResponse<HealthMonitorStateChangeResource> GetIfExists(string timestampUnix, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(timestampUnix, nameof(timestampUnix));
+
+            using var scope = _healthMonitorStateChangeHealthMonitorsClientDiagnostics.CreateScope("HealthMonitorStateChangeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _healthMonitorStateChangeHealthMonitorsRestClient.GetStateChange(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, timestampUnix, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthMonitorStateChangeResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorStateChangeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -5,16 +5,25 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ApplicationGatewaySslPredefinedPolicy : IUtf8JsonSerializable
+    public partial class ApplicationGatewaySslPredefinedPolicy : IUtf8JsonSerializable, IJsonModel<ApplicationGatewaySslPredefinedPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationGatewaySslPredefinedPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationGatewaySslPredefinedPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPredefinedPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslPredefinedPolicy)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -25,6 +34,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -44,7 +58,65 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(MinProtocolVersion.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        ApplicationGatewaySslPredefinedPolicy IJsonModel<ApplicationGatewaySslPredefinedPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPredefinedPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslPredefinedPolicy)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<ApplicationGatewaySslPredefinedPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPredefinedPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPredefinedPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationGatewaySslPredefinedPolicy IPersistableModel<ApplicationGatewaySslPredefinedPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPredefinedPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationGatewaySslPredefinedPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPredefinedPolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationGatewaySslPredefinedPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

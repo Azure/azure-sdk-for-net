@@ -68,12 +68,12 @@ namespace Azure.Security.KeyVault.Administration
         /// Initiates a full key backup of the Key Vault.
         /// </summary>
         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
-        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultBackupOperation"/> to wait on this long-running operation.</returns>
-        public virtual async Task<KeyVaultBackupOperation> StartBackupAsync(Uri blobStorageUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual async Task<KeyVaultBackupOperation> StartBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
             scope.Start();
@@ -98,12 +98,12 @@ namespace Azure.Security.KeyVault.Administration
         /// Initiates a full key backup of the Key Vault.
         /// </summary>
         /// <param name="blobStorageUri">The <see cref="Uri"/> for the blob storage resource.</param>
-        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="blobStorageUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultBackupOperation"/> to wait on this long-running operation.</returns>
-        public virtual KeyVaultBackupOperation StartBackup(Uri blobStorageUri, string sasToken, CancellationToken cancellationToken = default)
+        public virtual KeyVaultBackupOperation StartBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
             scope.Start();
@@ -131,12 +131,13 @@ namespace Azure.Security.KeyVault.Administration
         /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
         /// An example Uri may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
-        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual async Task<KeyVaultRestoreOperation> StartRestoreAsync(Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        public virtual async Task<KeyVaultRestoreOperation> StartRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
@@ -170,12 +171,13 @@ namespace Azure.Security.KeyVault.Administration
         /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
         /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
-        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultRestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual KeyVaultRestoreOperation StartRestore(Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        public virtual KeyVaultRestoreOperation StartRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
@@ -210,12 +212,13 @@ namespace Azure.Security.KeyVault.Administration
         /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
         /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
-        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultSelectiveKeyRestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual async Task<KeyVaultSelectiveKeyRestoreOperation> StartSelectiveKeyRestoreAsync(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        public virtual async Task<KeyVaultSelectiveKeyRestoreOperation> StartSelectiveKeyRestoreAsync(string keyName, Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
             scope.Start();
@@ -253,12 +256,13 @@ namespace Azure.Security.KeyVault.Administration
         /// This would be the exact value that is returned as the result of a <see cref="KeyVaultBackupOperation"/>.
         /// An example Uri path may look like the following: https://contoso.blob.core.windows.net/backup/mhsm-contoso-2020090117323313.
         /// </param>
-        /// <param name="sasToken">A Shared Access Signature (SAS) token to authorize access to the blob.</param>
+        /// <param name="sasToken">Optional Shared Access Signature (SAS) token to authorize access to the blob. If null, Managed Identity will be used to authenticate instead.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <exception cref="ArgumentNullException"><paramref name="folderUri"/> or <paramref name="sasToken"/> is null.</exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns>A <see cref="KeyVaultSelectiveKeyRestoreOperation"/> to wait on this long-running operation.</returns>
-        public virtual KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, Uri folderUri, string sasToken, CancellationToken cancellationToken = default)
+        [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
+        public virtual KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
             scope.Start();

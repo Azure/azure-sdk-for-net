@@ -18,7 +18,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataNetwork"u8);
-            JsonSerializer.Serialize(writer, DataNetwork); writer.WritePropertyName("sessionAmbr"u8);
+            JsonSerializer.Serialize(writer, DataNetwork);
+            writer.WritePropertyName("sessionAmbr"u8);
             writer.WriteObjectValue(SessionAmbr);
             if (Optional.IsDefined(FiveQi))
             {

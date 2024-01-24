@@ -13,7 +13,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Pipeline reference type. </summary>
     public partial class PipelineReference
     {
-        /// <summary> Initializes a new instance of PipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineReference"/>. </summary>
         /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ReferenceName = referenceName;
         }
 
-        /// <summary> Initializes a new instance of PipelineReference. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineReference"/>. </summary>
         /// <param name="type"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>

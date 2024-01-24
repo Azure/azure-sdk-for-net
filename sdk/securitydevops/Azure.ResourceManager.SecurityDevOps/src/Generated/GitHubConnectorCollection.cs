@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GitHubConnectorResource" /> and their operations.
-    /// Each <see cref="GitHubConnectorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="GitHubConnectorCollection" /> instance call the GetGitHubConnectors method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="GitHubConnectorResource"/> and their operations.
+    /// Each <see cref="GitHubConnectorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="GitHubConnectorCollection"/> instance call the GetGitHubConnectors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class GitHubConnectorCollection : ArmCollection, IEnumerable<GitHubConnectorResource>, IAsyncEnumerable<GitHubConnectorResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubConnectorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -241,10 +281,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitHubConnectorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GitHubConnectorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubConnectorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubConnectorRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -262,6 +310,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +354,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubConnector_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
@@ -314,6 +378,96 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 var response = _gitHubConnectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GitHubConnectorResource>> GetIfExistsAsync(string gitHubConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+
+            using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _gitHubConnectorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubConnectorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubConnector_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubConnectorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubConnectorName"> Name of the GitHub Connector. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubConnectorName"/> is null. </exception>
+        public virtual NullableResponse<GitHubConnectorResource> GetIfExists(string gitHubConnectorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubConnectorName, nameof(gitHubConnectorName));
+
+            using var scope = _gitHubConnectorClientDiagnostics.CreateScope("GitHubConnectorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _gitHubConnectorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, gitHubConnectorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubConnectorResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubConnectorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

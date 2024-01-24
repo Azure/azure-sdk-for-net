@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MobileNetwork
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MobileNetworkSimPolicyResource" /> and their operations.
-    /// Each <see cref="MobileNetworkSimPolicyResource" /> in the collection will belong to the same instance of <see cref="MobileNetworkResource" />.
-    /// To get a <see cref="MobileNetworkSimPolicyCollection" /> instance call the GetMobileNetworkSimPolicies method from an instance of <see cref="MobileNetworkResource" />.
+    /// A class representing a collection of <see cref="MobileNetworkSimPolicyResource"/> and their operations.
+    /// Each <see cref="MobileNetworkSimPolicyResource"/> in the collection will belong to the same instance of <see cref="MobileNetworkResource"/>.
+    /// To get a <see cref="MobileNetworkSimPolicyCollection"/> instance call the GetMobileNetworkSimPolicies method from an instance of <see cref="MobileNetworkResource"/>.
     /// </summary>
     public partial class MobileNetworkSimPolicyCollection : ArmCollection, IEnumerable<MobileNetworkSimPolicyResource>, IAsyncEnumerable<MobileNetworkSimPolicyResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="simPolicyName"> The name of the SIM policy. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimPolicies_ListByMobileNetwork</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MobileNetworkSimPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MobileNetworkSimPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MobileNetworkSimPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimPolicies_ListByMobileNetwork</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MobileNetworkSimPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MobileNetworkSimPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MobileNetworkSimPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mobileNetworkSimPolicySimPoliciesRestClient.CreateListByMobileNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SimPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <term>Operation Id</term>
         /// <description>SimPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="simPolicyName"> The name of the SIM policy. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.MobileNetwork
             {
                 var response = _mobileNetworkSimPolicySimPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simPolicyName"> The name of the SIM policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simPolicyName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MobileNetworkSimPolicyResource>> GetIfExistsAsync(string simPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
+
+            using var scope = _mobileNetworkSimPolicySimPoliciesClientDiagnostics.CreateScope("MobileNetworkSimPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _mobileNetworkSimPolicySimPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MobileNetwork/mobileNetworks/{mobileNetworkName}/simPolicies/{simPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SimPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MobileNetworkSimPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="simPolicyName"> The name of the SIM policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="simPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="simPolicyName"/> is null. </exception>
+        public virtual NullableResponse<MobileNetworkSimPolicyResource> GetIfExists(string simPolicyName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(simPolicyName, nameof(simPolicyName));
+
+            using var scope = _mobileNetworkSimPolicySimPoliciesClientDiagnostics.CreateScope("MobileNetworkSimPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _mobileNetworkSimPolicySimPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, simPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MobileNetworkSimPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new MobileNetworkSimPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

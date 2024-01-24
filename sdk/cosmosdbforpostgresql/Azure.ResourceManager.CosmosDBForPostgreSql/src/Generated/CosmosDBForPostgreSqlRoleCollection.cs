@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlRoleResource" /> and their operations.
-    /// Each <see cref="CosmosDBForPostgreSqlRoleResource" /> in the collection will belong to the same instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
-    /// To get a <see cref="CosmosDBForPostgreSqlRoleCollection" /> instance call the GetCosmosDBForPostgreSqlRoles method from an instance of <see cref="CosmosDBForPostgreSqlClusterResource" />.
+    /// A class representing a collection of <see cref="CosmosDBForPostgreSqlRoleResource"/> and their operations.
+    /// Each <see cref="CosmosDBForPostgreSqlRoleResource"/> in the collection will belong to the same instance of <see cref="CosmosDBForPostgreSqlClusterResource"/>.
+    /// To get a <see cref="CosmosDBForPostgreSqlRoleCollection"/> instance call the GetCosmosDBForPostgreSqlRoles method from an instance of <see cref="CosmosDBForPostgreSqlClusterResource"/>.
     /// </summary>
     public partial class CosmosDBForPostgreSqlRoleCollection : ArmCollection, IEnumerable<CosmosDBForPostgreSqlRoleResource>, IAsyncEnumerable<CosmosDBForPostgreSqlRoleResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Roles_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Roles_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Roles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleName"> The name of the cluster role. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Roles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Roles_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlRoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBForPostgreSqlRoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBForPostgreSqlRoleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlRoleRolesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -241,10 +281,18 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Roles_ListByCluster</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlRoleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBForPostgreSqlRoleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBForPostgreSqlRoleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBForPostgreSqlRoleRolesRestClient.CreateListByClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -261,6 +309,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Roles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +353,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Roles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleName"> The name of the cluster role. </param>
@@ -313,6 +377,96 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             {
                 var response = _cosmosDBForPostgreSqlRoleRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/roles/{roleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleName"> The name of the cluster role. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CosmosDBForPostgreSqlRoleResource>> GetIfExistsAsync(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+
+            using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBForPostgreSqlRoleRolesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBForPostgreSqlRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlRoleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/roles/{roleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Roles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlRoleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleName"> The name of the cluster role. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleName"/> is null. </exception>
+        public virtual NullableResponse<CosmosDBForPostgreSqlRoleResource> GetIfExists(string roleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleName, nameof(roleName));
+
+            using var scope = _cosmosDBForPostgreSqlRoleRolesClientDiagnostics.CreateScope("CosmosDBForPostgreSqlRoleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBForPostgreSqlRoleRolesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBForPostgreSqlRoleResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBForPostgreSqlRoleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

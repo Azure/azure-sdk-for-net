@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Instance view status. </summary>
     public partial class MachineExtensionInstanceViewStatus
     {
-        /// <summary> Initializes a new instance of MachineExtensionInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionInstanceViewStatus"/>. </summary>
         public MachineExtensionInstanceViewStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineExtensionInstanceViewStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineExtensionInstanceViewStatus"/>. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
     public partial class VirtualMachineScaleSetNetworkConfiguration : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/>. </summary>
         /// <param name="name"> The network configuration name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public VirtualMachineScaleSetNetworkConfiguration(string name)
@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.Compute.Models
             IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetIPConfiguration>();
         }
 
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/>. </summary>
         /// <param name="id"> Resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The network configuration name. </param>
         /// <param name="primary"> Specifies the primary network interface in case the virtual machine has more than 1 network interface. </param>
         /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
         /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
         /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
-        internal VirtualMachineScaleSetNetworkConfiguration(ResourceIdentifier id, string name, bool? primary, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, ComputeDeleteOption? deleteOption, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku) : base(id)
+        internal VirtualMachineScaleSetNetworkConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, bool? primary, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetIPConfiguration> ipConfigurations, bool? enableIPForwarding, ComputeDeleteOption? deleteOption, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku) : base(id, serializedAdditionalRawData)
         {
             Name = name;
             Primary = primary;
@@ -54,6 +55,11 @@ namespace Azure.ResourceManager.Compute.Models
             DeleteOption = deleteOption;
             AuxiliaryMode = auxiliaryMode;
             AuxiliarySku = auxiliarySku;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetNetworkConfiguration"/> for deserialization. </summary>
+        internal VirtualMachineScaleSetNetworkConfiguration()
+        {
         }
 
         /// <summary> The network configuration name. </summary>

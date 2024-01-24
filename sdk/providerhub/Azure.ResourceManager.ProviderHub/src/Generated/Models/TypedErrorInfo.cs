@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The TypedErrorInfo. </summary>
     public partial class TypedErrorInfo
     {
-        /// <summary> Initializes a new instance of TypedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
         /// <param name="typedErrorInfoType"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="typedErrorInfoType"/> is null. </exception>
         public TypedErrorInfo(string typedErrorInfoType)
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TypedErrorInfoType = typedErrorInfoType;
         }
 
-        /// <summary> Initializes a new instance of TypedErrorInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TypedErrorInfo"/>. </summary>
         /// <param name="typedErrorInfoType"></param>
         /// <param name="info"> Any object. </param>
         internal TypedErrorInfo(string typedErrorInfoType, BinaryData info)
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

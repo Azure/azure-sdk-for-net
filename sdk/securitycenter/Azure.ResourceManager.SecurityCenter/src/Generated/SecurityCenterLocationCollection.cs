@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityCenterLocationResource" /> and their operations.
-    /// Each <see cref="SecurityCenterLocationResource" /> in the collection will belong to the same instance of <see cref="SubscriptionResource" />.
-    /// To get a <see cref="SecurityCenterLocationCollection" /> instance call the GetSecurityCenterLocations method from an instance of <see cref="SubscriptionResource" />.
+    /// A class representing a collection of <see cref="SecurityCenterLocationResource"/> and their operations.
+    /// Each <see cref="SecurityCenterLocationResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="SecurityCenterLocationCollection"/> instance call the GetSecurityCenterLocations method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
     public partial class SecurityCenterLocationCollection : ArmCollection, IEnumerable<SecurityCenterLocationResource>, IAsyncEnumerable<SecurityCenterLocationResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
@@ -97,6 +105,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,10 +147,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Locations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityCenterLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SecurityCenterLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SecurityCenterLocationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -153,10 +177,18 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Locations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityCenterLocationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SecurityCenterLocationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SecurityCenterLocationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _securityCenterLocationLocationsRestClient.CreateListRequest(Id.SubscriptionId);
@@ -174,6 +206,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +246,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
@@ -218,6 +266,88 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 var response = _securityCenterLocationLocationsRestClient.Get(Id.SubscriptionId, ascLocation, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<SecurityCenterLocationResource>> GetIfExistsAsync(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _securityCenterLocationLocationsRestClient.GetAsync(Id.SubscriptionId, ascLocation, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityCenterLocationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityCenterLocationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="ascLocation"> The location where ASC stores the data of the subscription. can be retrieved from Get locations. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<SecurityCenterLocationResource> GetIfExists(AzureLocation ascLocation, CancellationToken cancellationToken = default)
+        {
+            using var scope = _securityCenterLocationLocationsClientDiagnostics.CreateScope("SecurityCenterLocationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _securityCenterLocationLocationsRestClient.Get(Id.SubscriptionId, ascLocation, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SecurityCenterLocationResource>(response.GetRawResponse());
+                return Response.FromValue(new SecurityCenterLocationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

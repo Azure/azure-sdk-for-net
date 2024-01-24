@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Rule based backup policy. </summary>
     public partial class RuleBasedBackupPolicy : DataProtectionBackupPolicyPropertiesBase
     {
-        /// <summary> Initializes a new instance of RuleBasedBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleBasedBackupPolicy"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="policyRules">
         /// Policy rule dictionary that contains rules for each backuptype i.e Full/Incremental/Logs etc
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             ObjectType = "BackupPolicy";
         }
 
-        /// <summary> Initializes a new instance of RuleBasedBackupPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="RuleBasedBackupPolicy"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
         /// <param name="policyRules">

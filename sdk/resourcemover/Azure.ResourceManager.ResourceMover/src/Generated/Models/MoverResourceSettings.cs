@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary>
@@ -17,28 +14,27 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// </summary>
     public abstract partial class MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of MoverResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        protected MoverResourceSettings(string targetResourceName)
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSettings"/>. </summary>
+        protected MoverResourceSettings()
         {
-            Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-
-            TargetResourceName = targetResourceName;
         }
 
-        /// <summary> Initializes a new instance of MoverResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoverResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        internal MoverResourceSettings(string resourceType, string targetResourceName)
+        /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        internal MoverResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName)
         {
             ResourceType = resourceType;
             TargetResourceName = targetResourceName;
+            TargetResourceGroupName = targetResourceGroupName;
         }
 
         /// <summary> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </summary>
         internal string ResourceType { get; set; }
         /// <summary> Gets or sets the target Resource name. </summary>
         public string TargetResourceName { get; set; }
+        /// <summary> Gets or sets the target resource group name. </summary>
+        public string TargetResourceGroupName { get; set; }
     }
 }

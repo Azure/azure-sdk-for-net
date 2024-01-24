@@ -13,13 +13,13 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Partial list of time series hierarchies returned in a single request. </summary>
     internal partial class GetHierarchiesPage : PagedResponse
     {
-        /// <summary> Initializes a new instance of GetHierarchiesPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetHierarchiesPage"/>. </summary>
         internal GetHierarchiesPage()
         {
             Hierarchies = new ChangeTrackingList<TimeSeriesHierarchy>();
         }
 
-        /// <summary> Initializes a new instance of GetHierarchiesPage. </summary>
+        /// <summary> Initializes a new instance of <see cref="GetHierarchiesPage"/>. </summary>
         /// <param name="continuationToken"> If returned, this means that current results represent a partial result. Continuation token allows to get the next page of results. To get the next page of query results, send the same request with continuation token parameter in "x-ms-continuation" HTTP header. </param>
         /// <param name="hierarchies"> Partial list of time series hierarchies returned in a single request. Can be empty if server was unable to fill the page in this request, or there is no more objects when continuation token is null. </param>
         internal GetHierarchiesPage(string continuationToken, IReadOnlyList<TimeSeriesHierarchy> hierarchies) : base(continuationToken)

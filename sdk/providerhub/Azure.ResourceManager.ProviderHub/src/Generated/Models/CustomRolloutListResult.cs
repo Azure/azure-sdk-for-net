@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The CustomRolloutListResult. </summary>
     internal partial class CustomRolloutListResult
     {
-        /// <summary> Initializes a new instance of CustomRolloutListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutListResult"/>. </summary>
         internal CustomRolloutListResult()
         {
             Value = new ChangeTrackingList<CustomRolloutData>();
         }
 
-        /// <summary> Initializes a new instance of CustomRolloutListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomRolloutListResult"/>. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"> The URL to get to the next set of results, if there are any. </param>
         internal CustomRolloutListResult(IReadOnlyList<CustomRolloutData> value, string nextLink)

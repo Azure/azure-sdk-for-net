@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmFrontDoorModelFactory
     {
-        /// <summary> Initializes a new instance of FrontDoorWebApplicationFirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorWebApplicationFirewallPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorWebApplicationFirewallPolicyData(id, name, resourceType, systemData, tags, location, etag, skuName != null ? new FrontDoorSku(skuName) : null, policySettings, rules != null ? new CustomRuleList(rules?.ToList()) : null, managedRuleSets != null ? new ManagedRuleSetList(managedRuleSets?.ToList()) : null, frontendEndpointLinks?.ToList(), routingRuleLinks?.ToList(), securityPolicyLinks?.ToList(), provisioningState, resourceState);
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleSetDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleSetDefinition"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new ManagedRuleSetDefinition(id, name, resourceType, systemData, tags, location, provisioningState, ruleSetId, ruleSetType, ruleSetVersion, ruleGroups?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleGroupDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleGroupDefinition"/>. </summary>
         /// <param name="ruleGroupName"> Name of the managed rule group. </param>
         /// <param name="description"> Description of the managed rule group. </param>
         /// <param name="rules"> List of rules within the managed rule group. </param>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new ManagedRuleGroupDefinition(ruleGroupName, description, rules?.ToList());
         }
 
-        /// <summary> Initializes a new instance of ManagedRuleDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ManagedRuleDefinition"/>. </summary>
         /// <param name="ruleId"> Identifier for the managed rule. </param>
         /// <param name="defaultState"> Describes the default state for the managed rule. </param>
         /// <param name="defaultAction"> Describes the default action to be applied when the managed rule matches. </param>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new ManagedRuleDefinition(ruleId, defaultState, defaultAction, description);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorNameAvailabilityResult"/>. </summary>
         /// <param name="nameAvailability"> Indicates whether the name is available. </param>
         /// <param name="reason"> The reason why the name is not available. </param>
         /// <param name="message"> The detailed error message describing why the name is not available. </param>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorNameAvailabilityResult(nameAvailability, reason, message);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorData(id, name, resourceType, systemData, tags, location, friendlyName, routingRules?.ToList(), loadBalancingSettings?.ToList(), healthProbeSettings?.ToList(), backendPools?.ToList(), frontendEndpoints?.ToList(), backendPoolsSettings, enabledState, resourceState, provisioningState, cname, frontdoorId, rulesEngines?.ToList(), extendedProperties);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorRulesEngineData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorRulesEngineData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorRulesEngineData(id, name, resourceType, systemData, rules?.ToList(), resourceState);
         }
 
-        /// <summary> Initializes a new instance of RoutingRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RoutingRuleData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new RoutingRuleData(id, name, resourceType, frontendEndpoints?.ToList(), acceptedProtocols?.ToList(), patternsToMatch?.ToList(), enabledState, routeConfiguration, rulesEngineId != null ? ResourceManagerModelFactory.WritableSubResource(rulesEngineId) : null, webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null, resourceState);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorResourceData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorResourceData(id, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorLoadBalancingSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorLoadBalancingSettingsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorLoadBalancingSettingsData(id, name, resourceType, sampleSize, successfulSamplesRequired, additionalLatencyMilliseconds, resourceState);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorHealthProbeSettingsData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorHealthProbeSettingsData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorHealthProbeSettingsData(id, name, resourceType, path, protocol, intervalInSeconds, healthProbeMethod, enabledState, resourceState);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorBackendPool. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorBackendPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorBackendPool(id, name, resourceType, backends?.ToList(), loadBalancingSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(loadBalancingSettingsId) : null, healthProbeSettingsId != null ? ResourceManagerModelFactory.WritableSubResource(healthProbeSettingsId) : null, resourceState);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorBackend. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorBackend"/>. </summary>
         /// <param name="address"> Location of the backend (IP address or FQDN). </param>
         /// <param name="privateLinkAlias"> The Alias of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
         /// <param name="privateLinkResourceId"> The Resource Id of the Private Link resource. Populating this optional field indicates that this backend is 'Private'. </param>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorBackend(address, privateLinkAlias, privateLinkResourceId, privateLinkLocation, privateEndpointStatus, privateLinkApprovalMessage, httpPort, httpsPort, enabledState, priority, weight, backendHostHeader);
         }
 
-        /// <summary> Initializes a new instance of FrontendEndpointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontendEndpointData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontendEndpointData(id, name, resourceType, hostName, sessionAffinityEnabledState, sessionAffinityTtlInSeconds, webApplicationFirewallPolicyLinkId != null ? ResourceManagerModelFactory.WritableSubResource(webApplicationFirewallPolicyLinkId) : null, resourceState, customHttpsProvisioningState, customHttpsProvisioningSubstate, customHttpsConfiguration);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorValidateCustomDomainResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorValidateCustomDomainResult"/>. </summary>
         /// <param name="isCustomDomainValidated"> Indicates whether the custom domain is valid or not. </param>
         /// <param name="reason"> The reason why the custom domain is not valid. </param>
         /// <param name="message"> Error message describing why the custom domain is not valid. </param>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorValidateCustomDomainResult(isCustomDomainValidated, reason, message);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorNetworkExperimentProfileData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorNetworkExperimentProfileData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorNetworkExperimentProfileData(id, name, resourceType, systemData, tags, location, etag, resourceState, enabledState);
         }
 
-        /// <summary> Initializes a new instance of PreconfiguredEndpoint. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PreconfiguredEndpoint"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new PreconfiguredEndpoint(id, name, resourceType, systemData, tags, location, description, endpoint, endpointType, backend);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorExperimentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoor.FrontDoorExperimentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new FrontDoorExperimentData(id, name, resourceType, systemData, tags, location, description, experimentEndpointA, experimentEndpointB, enabledState, resourceState, status, scriptFileUri);
         }
 
-        /// <summary> Initializes a new instance of LatencyScorecard. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LatencyScorecard"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new LatencyScorecard(id, name, resourceType, systemData, tags, location, latencyScorecardId, latencyScorecardName, description, scorecardEndpointA, scorecardEndpointB, startOn, endOn, country, latencyMetrics?.ToList());
         }
 
-        /// <summary> Initializes a new instance of LatencyMetric. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LatencyMetric"/>. </summary>
         /// <param name="name"> The name of the Latency Metric. </param>
         /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="aValue"> The metric value of the A endpoint. </param>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             return new LatencyMetric(name, endOn, aValue, bValue, delta, deltaPercent, acLower95CI, ahUpper95CI, bcLower95CI, bUpper95CI);
         }
 
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

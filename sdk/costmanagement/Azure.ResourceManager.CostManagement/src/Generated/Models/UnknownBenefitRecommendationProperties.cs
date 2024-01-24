@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The UnknownBenefitRecommendationProperties. </summary>
     internal partial class UnknownBenefitRecommendationProperties : BenefitRecommendationProperties
     {
-        /// <summary> Initializes a new instance of UnknownBenefitRecommendationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBenefitRecommendationProperties"/>. </summary>
         /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
         /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
         /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
@@ -26,9 +27,15 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
         /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
         /// <param name="scope"> Benefit scope. For example, Single or Shared. </param>
-        internal UnknownBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope) : base(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn, DateTimeOffset? lastConsumptionOn, LookBackPeriod? lookBackPeriod, int? totalHours, RecommendationUsageDetails usage, string armSkuName, BenefitRecommendationPeriodTerm? term, BenefitRecommendationUsageGrain? commitmentGranularity, string currencyCode, decimal? costWithoutBenefit, AllSavingsBenefitDetails recommendationDetails, AllSavingsList allRecommendationDetails, BenefitRecommendationScope scope, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(firstConsumptionOn, lastConsumptionOn, lookBackPeriod, totalHours, usage, armSkuName, term, commitmentGranularity, currencyCode, costWithoutBenefit, recommendationDetails, allRecommendationDetails, scope, serializedAdditionalRawData)
         {
             Scope = scope;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBenefitRecommendationProperties"/> for deserialization. </summary>
+        internal UnknownBenefitRecommendationProperties()
+        {
         }
     }
 }

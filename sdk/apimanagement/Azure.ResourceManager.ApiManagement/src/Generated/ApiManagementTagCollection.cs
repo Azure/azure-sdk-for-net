@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiManagementTagResource" /> and their operations.
-    /// Each <see cref="ApiManagementTagResource" /> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource" />.
-    /// To get an <see cref="ApiManagementTagCollection" /> instance call the GetApiManagementTags method from an instance of <see cref="ApiManagementServiceResource" />.
+    /// A class representing a collection of <see cref="ApiManagementTagResource"/> and their operations.
+    /// Each <see cref="ApiManagementTagResource"/> in the collection will belong to the same instance of <see cref="ApiManagementServiceResource"/>.
+    /// To get an <see cref="ApiManagementTagCollection"/> instance call the GetApiManagementTags method from an instance of <see cref="ApiManagementServiceResource"/>.
     /// </summary>
     public partial class ApiManagementTagCollection : ArmCollection, IEnumerable<ApiManagementTagResource>, IAsyncEnumerable<ApiManagementTagResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -149,6 +165,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,6 +255,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -230,7 +270,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiManagementTagResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiManagementTagResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiManagementTagResource> GetAllAsync(string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTagTagRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
@@ -249,6 +289,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_ListByService</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> |     Field     |     Usage     |     Supported operators     |     Supported functions     |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;| name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;| displayName | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith, endswith |&lt;/br&gt;. </param>
@@ -256,7 +304,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="skip"> Number of records to skip. </param>
         /// <param name="scope"> Scope like 'apis', 'products' or 'apis/{apiId}. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiManagementTagResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiManagementTagResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiManagementTagResource> GetAll(string filter = null, int? top = null, int? skip = null, string scope = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiManagementTagTagRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top, skip, scope);
@@ -274,6 +322,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,6 +366,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>Tag_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
@@ -326,6 +390,96 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiManagementTagTagRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ApiManagementTagResource>> GetIfExistsAsync(string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiManagementTagTagRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementTagResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementTagResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tags/{tagId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Tag_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiManagementTagResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tagId"> Tag identifier. Must be unique in the current API Management service instance. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tagId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tagId"/> is null. </exception>
+        public virtual NullableResponse<ApiManagementTagResource> GetIfExists(string tagId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tagId, nameof(tagId));
+
+            using var scope = _apiManagementTagTagClientDiagnostics.CreateScope("ApiManagementTagCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiManagementTagTagRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, tagId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiManagementTagResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiManagementTagResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

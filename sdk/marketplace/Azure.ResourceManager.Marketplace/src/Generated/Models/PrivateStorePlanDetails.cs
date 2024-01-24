@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Return plan with request details. </summary>
     public partial class PrivateStorePlanDetails
     {
-        /// <summary> Initializes a new instance of PrivateStorePlanDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanDetails"/>. </summary>
         public PrivateStorePlanDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateStorePlanDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateStorePlanDetails"/>. </summary>
         /// <param name="planId"> Gets or sets Plan Id. </param>
         /// <param name="status"> Gets the plan status. </param>
         /// <param name="requestDate"> Gets request date. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Marketplace.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

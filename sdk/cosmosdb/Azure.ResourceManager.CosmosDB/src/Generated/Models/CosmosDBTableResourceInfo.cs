@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Cosmos DB table resource object. </summary>
     public partial class CosmosDBTableResourceInfo
     {
-        /// <summary> Initializes a new instance of CosmosDBTableResourceInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public CosmosDBTableResourceInfo(string tableName)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
             TableName = tableName;
         }
 
-        /// <summary> Initializes a new instance of CosmosDBTableResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/>. </summary>
         /// <param name="tableName"> Name of the Cosmos DB table. </param>
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
-        internal CosmosDBTableResourceInfo(string tableName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBTableResourceInfo(string tableName, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TableName = tableName;
             RestoreParameters = restoreParameters;
             CreateMode = createMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBTableResourceInfo"/> for deserialization. </summary>
+        internal CosmosDBTableResourceInfo()
+        {
         }
 
         /// <summary> Name of the Cosmos DB table. </summary>

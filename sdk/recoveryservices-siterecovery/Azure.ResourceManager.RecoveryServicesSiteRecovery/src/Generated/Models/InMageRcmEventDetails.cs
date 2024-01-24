@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Event details for InMageRcm provider. </summary>
     public partial class InMageRcmEventDetails : SiteRecoveryEventProviderSpecificDetails
     {
-        /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmEventDetails"/>. </summary>
         internal InMageRcmEventDetails()
         {
             InstanceType = "InMageRcm";
         }
 
-        /// <summary> Initializes a new instance of InMageRcmEventDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="InMageRcmEventDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
         /// <param name="protectedItemName"> The protected item name. </param>
         /// <param name="vmName"> The protected item name. </param>

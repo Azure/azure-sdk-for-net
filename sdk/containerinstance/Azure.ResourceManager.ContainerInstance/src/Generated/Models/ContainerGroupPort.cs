@@ -5,25 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> The port exposed on the container group. </summary>
     public partial class ContainerGroupPort
     {
-        /// <summary> Initializes a new instance of ContainerGroupPort. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPort"/>. </summary>
         /// <param name="port"> The port number. </param>
         public ContainerGroupPort(int port)
         {
             Port = port;
         }
 
-        /// <summary> Initializes a new instance of ContainerGroupPort. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPort"/>. </summary>
         /// <param name="protocol"> The protocol associated with the port. </param>
         /// <param name="port"> The port number. </param>
-        internal ContainerGroupPort(ContainerGroupNetworkProtocol? protocol, int port)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerGroupPort(ContainerGroupNetworkProtocol? protocol, int port, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Protocol = protocol;
             Port = port;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPort"/> for deserialization. </summary>
+        internal ContainerGroupPort()
+        {
         }
 
         /// <summary> The protocol associated with the port. </summary>

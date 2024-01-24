@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NetAppVolumeResource" /> and their operations.
-    /// Each <see cref="NetAppVolumeResource" /> in the collection will belong to the same instance of <see cref="CapacityPoolResource" />.
-    /// To get a <see cref="NetAppVolumeCollection" /> instance call the GetNetAppVolumes method from an instance of <see cref="CapacityPoolResource" />.
+    /// A class representing a collection of <see cref="NetAppVolumeResource"/> and their operations.
+    /// Each <see cref="NetAppVolumeResource"/> in the collection will belong to the same instance of <see cref="CapacityPoolResource"/>.
+    /// To get a <see cref="NetAppVolumeCollection"/> instance call the GetNetAppVolumes method from an instance of <see cref="CapacityPoolResource"/>.
     /// </summary>
     public partial class NetAppVolumeCollection : ArmCollection, IEnumerable<NetAppVolumeResource>, IAsyncEnumerable<NetAppVolumeResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the volume. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NetAppVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NetAppVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppVolumeResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NetAppVolumeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NetAppVolumeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppVolumeResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _netAppVolumeVolumesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.NetApp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.NetApp
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="volumeName"> The name of the volume. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.NetApp
             {
                 var response = _netAppVolumeVolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NetAppVolumeResource>> GetIfExistsAsync(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _netAppVolumeVolumesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NetAppVolumeResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppVolumeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="volumeName"> The name of the volume. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="volumeName"/> is null. </exception>
+        public virtual NullableResponse<NetAppVolumeResource> GetIfExists(string volumeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
+
+            using var scope = _netAppVolumeVolumesClientDiagnostics.CreateScope("NetAppVolumeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _netAppVolumeVolumesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, volumeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NetAppVolumeResource>(response.GetRawResponse());
+                return Response.FromValue(new NetAppVolumeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

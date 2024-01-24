@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The baseline results of a single metric. </summary>
     public partial class MonitorSingleMetricBaseline : ResourceData
     {
-        /// <summary> Initializes a new instance of MonitorSingleMetricBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/>. </summary>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by '/'.  This may be adjusted in the future and returned back from what was originally requested. </param>
         /// <param name="interval"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="baselines"> The baseline for each time series that was queried. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             Baselines = baselines.ToList();
         }
 
-        /// <summary> Initializes a new instance of MonitorSingleMetricBaseline. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorSingleMetricBaseline"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

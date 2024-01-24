@@ -30,7 +30,7 @@ rename-mapping:
   MonitoringSettings: VaultMonitoringSettings
   MonitoringSummary: VaultMonitoringSummary
   NameInfo: VaultUsageNameInfo
-  ProvisioningState: PrivateEndpointConnectionProvisioningState
+  ProvisioningState: RecoveryServicesPrivateEndpointConnectionProvisioningState
   PublicNetworkAccess: VaultPublicNetworkAccess
   ReplicationUsageList: ReplicationUsageListResult
   TriggerType: VaultUpgradeTriggerType

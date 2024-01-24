@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.HealthcareApis.FhirResourceDeleted event. </summary>
     public partial class HealthcareFhirResourceDeletedEventData
     {
-        /// <summary> Initializes a new instance of HealthcareFhirResourceDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceDeletedEventData"/>. </summary>
         internal HealthcareFhirResourceDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of HealthcareFhirResourceDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareFhirResourceDeletedEventData"/>. </summary>
         /// <param name="fhirResourceType"> Type of HL7 FHIR resource. </param>
         /// <param name="fhirServiceHostName"> Domain name of FHIR account for this resource. </param>
         /// <param name="fhirResourceId"> Id of HL7 FHIR resource. </param>

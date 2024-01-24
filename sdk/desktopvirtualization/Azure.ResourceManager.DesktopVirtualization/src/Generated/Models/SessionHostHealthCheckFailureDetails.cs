@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
     /// <summary> Contains details on the failure. </summary>
     public partial class SessionHostHealthCheckFailureDetails
     {
-        /// <summary> Initializes a new instance of SessionHostHealthCheckFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostHealthCheckFailureDetails"/>. </summary>
         internal SessionHostHealthCheckFailureDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of SessionHostHealthCheckFailureDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="SessionHostHealthCheckFailureDetails"/>. </summary>
         /// <param name="message"> Failure message: hints on what is wrong and how to recover. </param>
         /// <param name="errorCode"> Error code corresponding for the failure. </param>
         /// <param name="lastHealthCheckOn"> The timestamp of the last update. </param>

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.DesktopVirtualization
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualWorkspaceResource" /> and their operations.
-    /// Each <see cref="VirtualWorkspaceResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="VirtualWorkspaceCollection" /> instance call the GetVirtualWorkspaces method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="VirtualWorkspaceResource"/> and their operations.
+    /// Each <see cref="VirtualWorkspaceResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="VirtualWorkspaceCollection"/> instance call the GetVirtualWorkspaces method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class VirtualWorkspaceCollection : ArmCollection, IEnumerable<VirtualWorkspaceResource>, IAsyncEnumerable<VirtualWorkspaceResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>Workspaces_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,13 +253,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualWorkspaceResource> GetAllAsync(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
@@ -246,13 +286,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="pageSize"> Number of items per page. </param>
         /// <param name="isDescending"> Indicates whether the collection is descending. </param>
         /// <param name="initialSkip"> Initial number of items to skip. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualWorkspaceResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualWorkspaceResource> GetAll(int? pageSize = null, bool? isDescending = null, int? initialSkip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualWorkspaceWorkspacesRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, pageSizeHint, isDescending, initialSkip);
@@ -270,6 +318,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +362,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -322,6 +386,96 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 var response = _virtualWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VirtualWorkspaceResource>> GetIfExistsAsync(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _virtualWorkspaceWorkspacesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualWorkspaceResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualWorkspaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DesktopVirtualization/workspaces/{workspaceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualWorkspaceResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="workspaceName"> The name of the workspace. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        public virtual NullableResponse<VirtualWorkspaceResource> GetIfExists(string workspaceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
+
+            using var scope = _virtualWorkspaceWorkspacesClientDiagnostics.CreateScope("VirtualWorkspaceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _virtualWorkspaceWorkspacesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, workspaceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualWorkspaceResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualWorkspaceResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

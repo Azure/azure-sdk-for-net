@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Validate restore request object. </summary>
     public partial class BackupValidateRestoreContent
     {
-        /// <summary> Initializes a new instance of BackupValidateRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupValidateRestoreContent"/>. </summary>
         /// <param name="restoreRequestObject">
         /// Gets or sets the restore request object.
         /// Please note <see cref="BackupRestoreContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

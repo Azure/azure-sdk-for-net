@@ -9,7 +9,7 @@ generate-model-factory: false
 csharp: true
 library-name: DataFactory
 namespace: Azure.ResourceManager.DataFactory
-require: https://github.com/Azure/azure-rest-api-specs/blob/6885351bec8d6a2cea85c5aa793e53616e5f517b/specification/datafactory/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/78eac0bd58633028293cb1ec1709baa200bed9e2/specification/datafactory/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -144,6 +144,7 @@ rename-mapping:
   GlobalParameterListResponse: DataFactoryGlobalParameterListResult
   GlobalParameterResource: DataFactoryGlobalParameter
   GlobalParameterSpecification: DataFactoryGlobalParameterProperties
+  GlobalParameterSpecification.type: GlobalParameterType
   HDInsightActivityDebugInfoOption: HDInsightActivityDebugInfoOptionSetting
   HDInsightOnDemandLinkedService.typeProperties.timeToLive: TimeToLiveExpression
   HttpSource: DataFactoryHttpFileSource
@@ -209,11 +210,14 @@ rename-mapping:
   QueryDataFlowDebugSessionsResponse: DataFlowDebugSessionInfoListResult
   ScriptActivityParameterType.Timespan: TimeSpan
   ScriptActivityTypePropertiesLogSettings: ScriptActivityTypeLogSettings
+  ScriptActivityScriptBlock.type: ScriptType
   SecretBase: DataFactorySecret
   SecureInputOutputPolicy.secureInput: IsSecureInputEnabled
   SecureInputOutputPolicy.secureOutput: IsSecureOutputEnabled
-  SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  SelfHostedIntegrationRuntime.typeProperties.selfContainedInteractiveAuthoringEnabled: IsSelfContainedInteractiveAuthoringEnabled
   SelfHostedIntegrationRuntimeNode.expiryTime: ExpireOn
+  SelfHostedIntegrationRuntimeStatus.typeProperties.createTime: CreatedOn
+  SelfHostedIntegrationRuntimeStatus.typeProperties.selfContainedInteractiveAuthoringEnabled: IsSelfContainedInteractiveAuthoringEnabled
   SelfHostedIntegrationRuntimeStatus.typeProperties.taskQueueId: -|uuid
   SelfHostedIntegrationRuntimeStatus.typeProperties.serviceUrls: ServiceUriStringList
   SubResourceDebugResource: DataFactoryDebugInfo

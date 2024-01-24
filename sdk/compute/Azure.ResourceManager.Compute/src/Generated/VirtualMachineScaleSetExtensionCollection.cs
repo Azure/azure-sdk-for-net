@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Compute
 {
     /// <summary>
-    /// A class representing a collection of <see cref="VirtualMachineScaleSetExtensionResource" /> and their operations.
-    /// Each <see cref="VirtualMachineScaleSetExtensionResource" /> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetResource" />.
-    /// To get a <see cref="VirtualMachineScaleSetExtensionCollection" /> instance call the GetVirtualMachineScaleSetExtensions method from an instance of <see cref="VirtualMachineScaleSetResource" />.
+    /// A class representing a collection of <see cref="VirtualMachineScaleSetExtensionResource"/> and their operations.
+    /// Each <see cref="VirtualMachineScaleSetExtensionResource"/> in the collection will belong to the same instance of <see cref="VirtualMachineScaleSetResource"/>.
+    /// To get a <see cref="VirtualMachineScaleSetExtensionCollection"/> instance call the GetVirtualMachineScaleSetExtensions method from an instance of <see cref="VirtualMachineScaleSetResource"/>.
     /// </summary>
     public partial class VirtualMachineScaleSetExtensionCollection : ArmCollection, IEnumerable<VirtualMachineScaleSetExtensionResource>, IAsyncEnumerable<VirtualMachineScaleSetExtensionResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,10 +254,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="VirtualMachineScaleSetExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="VirtualMachineScaleSetExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<VirtualMachineScaleSetExtensionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,10 +284,18 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="VirtualMachineScaleSetExtensionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="VirtualMachineScaleSetExtensionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<VirtualMachineScaleSetExtensionResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _virtualMachineScaleSetExtensionRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +358,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>VirtualMachineScaleSetExtensions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
@@ -319,6 +383,98 @@ namespace Azure.ResourceManager.Compute
             {
                 var response = _virtualMachineScaleSetExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmssExtensionName, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmssExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmssExtensionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<VirtualMachineScaleSetExtensionResource>> GetIfExistsAsync(string vmssExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmssExtensionName, nameof(vmssExtensionName));
+
+            using var scope = _virtualMachineScaleSetExtensionClientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _virtualMachineScaleSetExtensionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmssExtensionName, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualMachineScaleSetExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetExtensionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachineScaleSets/{vmScaleSetName}/extensions/{vmssExtensionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachineScaleSetExtensions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualMachineScaleSetExtensionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="vmssExtensionName"> The name of the VM scale set extension. </param>
+        /// <param name="expand"> The expand expression to apply on the operation. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="vmssExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmssExtensionName"/> is null. </exception>
+        public virtual NullableResponse<VirtualMachineScaleSetExtensionResource> GetIfExists(string vmssExtensionName, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(vmssExtensionName, nameof(vmssExtensionName));
+
+            using var scope = _virtualMachineScaleSetExtensionClientDiagnostics.CreateScope("VirtualMachineScaleSetExtensionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _virtualMachineScaleSetExtensionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, vmssExtensionName, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<VirtualMachineScaleSetExtensionResource>(response.GetRawResponse());
+                return Response.FromValue(new VirtualMachineScaleSetExtensionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -21,9 +21,9 @@ using Azure.ResourceManager.Network.Models;
 namespace Azure.ResourceManager.Network
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConnectionMonitorResource" /> and their operations.
-    /// Each <see cref="ConnectionMonitorResource" /> in the collection will belong to the same instance of <see cref="NetworkWatcherResource" />.
-    /// To get a <see cref="ConnectionMonitorCollection" /> instance call the GetConnectionMonitors method from an instance of <see cref="NetworkWatcherResource" />.
+    /// A class representing a collection of <see cref="ConnectionMonitorResource"/> and their operations.
+    /// Each <see cref="ConnectionMonitorResource"/> in the collection will belong to the same instance of <see cref="NetworkWatcherResource"/>.
+    /// To get a <see cref="ConnectionMonitorCollection"/> instance call the GetConnectionMonitors method from an instance of <see cref="NetworkWatcherResource"/>.
     /// </summary>
     public partial class ConnectionMonitorCollection : ArmCollection, IEnumerable<ConnectionMonitorResource>, IAsyncEnumerable<ConnectionMonitorResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +115,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -149,6 +165,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,10 +255,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ConnectionMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ConnectionMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ConnectionMonitorResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -244,10 +284,18 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConnectionMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ConnectionMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ConnectionMonitorResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _connectionMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>ConnectionMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.Network
             {
                 var response = _connectionMonitorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ConnectionMonitorResource>> GetIfExistsAsync(string connectionMonitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+
+            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _connectionMonitorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectionMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkWatchers/{networkWatcherName}/connectionMonitors/{connectionMonitorName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ConnectionMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectionMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionMonitorName"> The name of the connection monitor. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionMonitorName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionMonitorName"/> is null. </exception>
+        public virtual NullableResponse<ConnectionMonitorResource> GetIfExists(string connectionMonitorName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionMonitorName, nameof(connectionMonitorName));
+
+            using var scope = _connectionMonitorClientDiagnostics.CreateScope("ConnectionMonitorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _connectionMonitorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionMonitorName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ConnectionMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new ConnectionMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

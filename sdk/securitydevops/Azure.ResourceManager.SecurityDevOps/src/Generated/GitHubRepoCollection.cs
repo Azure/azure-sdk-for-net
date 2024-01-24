@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
-    /// A class representing a collection of <see cref="GitHubRepoResource" /> and their operations.
-    /// Each <see cref="GitHubRepoResource" /> in the collection will belong to the same instance of <see cref="GitHubOwnerResource" />.
-    /// To get a <see cref="GitHubRepoCollection" /> instance call the GetGitHubRepos method from an instance of <see cref="GitHubOwnerResource" />.
+    /// A class representing a collection of <see cref="GitHubRepoResource"/> and their operations.
+    /// Each <see cref="GitHubRepoResource"/> in the collection will belong to the same instance of <see cref="GitHubOwnerResource"/>.
+    /// To get a <see cref="GitHubRepoCollection"/> instance call the GetGitHubRepos method from an instance of <see cref="GitHubOwnerResource"/>.
     /// </summary>
     public partial class GitHubRepoCollection : ArmCollection, IEnumerable<GitHubRepoResource>, IAsyncEnumerable<GitHubRepoResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="GitHubRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="GitHubRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<GitHubRepoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="GitHubRepoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="GitHubRepoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<GitHubRepoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _gitHubRepoRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.SecurityDevOps
             {
                 var response = _gitHubRepoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gitHubRepoName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}/repos/{gitHubRepoName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubRepo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
+        public virtual async Task<NullableResponse<GitHubRepoResource>> GetIfExistsAsync(string gitHubRepoName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
+
+            using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _gitHubRepoRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gitHubRepoName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubRepoResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubRepoResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}/repos/{gitHubRepoName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>GitHubRepo_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
+        public virtual NullableResponse<GitHubRepoResource> GetIfExists(string gitHubRepoName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(gitHubRepoName, nameof(gitHubRepoName));
+
+            using var scope = _gitHubRepoClientDiagnostics.CreateScope("GitHubRepoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _gitHubRepoRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, gitHubRepoName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<GitHubRepoResource>(response.GetRawResponse());
+                return Response.FromValue(new GitHubRepoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

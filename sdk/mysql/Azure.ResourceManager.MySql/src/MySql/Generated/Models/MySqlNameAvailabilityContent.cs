@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MySql.Models
     /// <summary> Request from client to check resource name availability. </summary>
     public partial class MySqlNameAvailabilityContent
     {
-        /// <summary> Initializes a new instance of MySqlNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlNameAvailabilityContent"/>. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MySqlNameAvailabilityContent(string name)
@@ -21,6 +21,15 @@ namespace Azure.ResourceManager.MySql.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MySqlNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        internal MySqlNameAvailabilityContent(string name, ResourceType? resourceType)
+        {
+            Name = name;
+            ResourceType = resourceType;
         }
 
         /// <summary> Resource name to verify. </summary>

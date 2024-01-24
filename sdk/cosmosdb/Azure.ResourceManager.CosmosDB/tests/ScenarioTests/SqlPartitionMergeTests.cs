@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             ThroughputSettingData throughputData = (await throughput.MigrateSqlDatabaseToManualThroughputAsync(WaitUntil.Completed)).Value.Data;
             throughput = await database.GetCosmosDBSqlDatabaseThroughputSetting().GetAsync();
             CosmosDBSqlDatabaseThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-               new ThroughputSettingsResourceInfo(1000, null, null, null)))).Value;
+               new ThroughputSettingsResourceInfo(1000, null, null, null, null, null, null)))).Value;
 
             MergeParameters mergeParameters = new MergeParameters() { IsDryRun = true };
             try

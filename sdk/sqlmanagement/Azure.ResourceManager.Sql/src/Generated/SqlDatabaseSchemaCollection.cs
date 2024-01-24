@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SqlDatabaseSchemaResource" /> and their operations.
-    /// Each <see cref="SqlDatabaseSchemaResource" /> in the collection will belong to the same instance of <see cref="SqlDatabaseResource" />.
-    /// To get a <see cref="SqlDatabaseSchemaCollection" /> instance call the GetSqlDatabaseSchemas method from an instance of <see cref="SqlDatabaseResource" />.
+    /// A class representing a collection of <see cref="SqlDatabaseSchemaResource"/> and their operations.
+    /// Each <see cref="SqlDatabaseSchemaResource"/> in the collection will belong to the same instance of <see cref="SqlDatabaseResource"/>.
+    /// To get a <see cref="SqlDatabaseSchemaCollection"/> instance call the GetSqlDatabaseSchemas method from an instance of <see cref="SqlDatabaseResource"/>.
     /// </summary>
     public partial class SqlDatabaseSchemaCollection : ArmCollection, IEnumerable<SqlDatabaseSchemaResource>, IAsyncEnumerable<SqlDatabaseSchemaResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseSchemas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseSchemas_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SqlDatabaseSchemaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SqlDatabaseSchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SqlDatabaseSchemaResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSchemaDatabaseSchemasRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseSchemas_ListByDatabase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SqlDatabaseSchemaResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SqlDatabaseSchemaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SqlDatabaseSchemaResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sqlDatabaseSchemaDatabaseSchemasRestClient.CreateListByDatabaseRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>DatabaseSchemas_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="schemaName"> The name of the schema. </param>
@@ -235,6 +283,96 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _sqlDatabaseSchemaDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SqlDatabaseSchemaResource>> GetIfExistsAsync(string schemaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+
+            using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _sqlDatabaseSchemaDatabaseSchemasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlDatabaseSchemaResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/databases/{databaseName}/schemas/{schemaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DatabaseSchemas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlDatabaseSchemaResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="schemaName"> The name of the schema. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="schemaName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="schemaName"/> is null. </exception>
+        public virtual NullableResponse<SqlDatabaseSchemaResource> GetIfExists(string schemaName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(schemaName, nameof(schemaName));
+
+            using var scope = _sqlDatabaseSchemaDatabaseSchemasClientDiagnostics.CreateScope("SqlDatabaseSchemaCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _sqlDatabaseSchemaDatabaseSchemasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, schemaName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SqlDatabaseSchemaResource>(response.GetRawResponse());
+                return Response.FromValue(new SqlDatabaseSchemaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Sql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="RestorableDroppedDatabaseResource" /> and their operations.
-    /// Each <see cref="RestorableDroppedDatabaseResource" /> in the collection will belong to the same instance of <see cref="SqlServerResource" />.
-    /// To get a <see cref="RestorableDroppedDatabaseCollection" /> instance call the GetRestorableDroppedDatabases method from an instance of <see cref="SqlServerResource" />.
+    /// A class representing a collection of <see cref="RestorableDroppedDatabaseResource"/> and their operations.
+    /// Each <see cref="RestorableDroppedDatabaseResource"/> in the collection will belong to the same instance of <see cref="SqlServerResource"/>.
+    /// To get a <see cref="RestorableDroppedDatabaseCollection"/> instance call the GetRestorableDroppedDatabases method from an instance of <see cref="SqlServerResource"/>.
     /// </summary>
     public partial class RestorableDroppedDatabaseCollection : ArmCollection, IEnumerable<RestorableDroppedDatabaseResource>, IAsyncEnumerable<RestorableDroppedDatabaseResource>
     {
@@ -64,9 +64,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -103,9 +111,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,10 +158,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="RestorableDroppedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="RestorableDroppedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<RestorableDroppedDatabaseResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -164,10 +188,18 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="RestorableDroppedDatabaseResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="RestorableDroppedDatabaseResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<RestorableDroppedDatabaseResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _restorableDroppedDatabaseRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -186,9 +218,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -223,9 +263,17 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedDatabases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="restorableDroppedDatabaseId"> The String to use. </param>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
         /// <param name="expand"> The child resources to include in the response. </param>
         /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -241,6 +289,100 @@ namespace Azure.ResourceManager.Sql
             {
                 var response = _restorableDroppedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, expand, filter, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        public virtual async Task<NullableResponse<RestorableDroppedDatabaseResource>> GetIfExistsAsync(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+
+            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _restorableDroppedDatabaseRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, expand, filter, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<RestorableDroppedDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{serverName}/restorableDroppedDatabases/{restorableDroppedDatabaseId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RestorableDroppedDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableDroppedDatabaseResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="restorableDroppedDatabaseId"> The <see cref="string"/> to use. </param>
+        /// <param name="expand"> The child resources to include in the response. </param>
+        /// <param name="filter"> An OData filter expression that filters elements in the collection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="restorableDroppedDatabaseId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="restorableDroppedDatabaseId"/> is null. </exception>
+        public virtual NullableResponse<RestorableDroppedDatabaseResource> GetIfExists(string restorableDroppedDatabaseId, string expand = null, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(restorableDroppedDatabaseId, nameof(restorableDroppedDatabaseId));
+
+            using var scope = _restorableDroppedDatabaseClientDiagnostics.CreateScope("RestorableDroppedDatabaseCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _restorableDroppedDatabaseRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, restorableDroppedDatabaseId, expand, filter, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<RestorableDroppedDatabaseResource>(response.GetRawResponse());
+                return Response.FromValue(new RestorableDroppedDatabaseResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

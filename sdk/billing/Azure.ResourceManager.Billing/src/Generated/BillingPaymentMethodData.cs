@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Billing.Models;
@@ -18,13 +19,45 @@ namespace Azure.ResourceManager.Billing
     /// </summary>
     public partial class BillingPaymentMethodData : ResourceData
     {
-        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
         public BillingPaymentMethodData()
         {
             Logos = new ChangeTrackingList<PaymentMethodLogo>();
         }
 
-        /// <summary> Initializes a new instance of BillingPaymentMethodData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingPaymentMethodData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -37,7 +70,8 @@ namespace Azure.ResourceManager.Billing
         /// <param name="displayName"> The display name of the payment method. </param>
         /// <param name="logos"> The list of logos for the payment method. </param>
         /// <param name="status"> Status of the payment method. </param>
-        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BillingPaymentMethodData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PaymentMethodFamily? family, string paymentMethodType, string accountHolderName, string expiration, string lastFourDigits, string displayName, IList<PaymentMethodLogo> logos, PaymentMethodStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Family = family;
             PaymentMethodType = paymentMethodType;
@@ -47,6 +81,7 @@ namespace Azure.ResourceManager.Billing
             DisplayName = displayName;
             Logos = logos;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The family of payment method. </summary>

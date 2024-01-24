@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_DomainEventSubscriptionsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/DomainEventSubscriptions_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/DomainEventSubscriptions_Get.json
             // this example is just showing the usage of "DomainEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_DomainEventSubscriptionsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/DomainEventSubscriptions_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/DomainEventSubscriptions_Get.json
             // this example is just showing the usage of "DomainEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,12 +84,55 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // DomainEventSubscriptions_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_DomainEventSubscriptionsGet()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/DomainEventSubscriptions_Get.json
+            // this example is just showing the usage of "DomainEventSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EventGridDomainResource created on azure
+            // for more information of creating EventGridDomainResource, please refer to the document of EventGridDomainResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            string domainName = "exampleDomain1";
+            ResourceIdentifier eventGridDomainResourceId = EventGridDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, domainName);
+            EventGridDomainResource eventGridDomain = client.GetEventGridDomainResource(eventGridDomainResourceId);
+
+            // get the collection of this DomainEventSubscriptionResource
+            DomainEventSubscriptionCollection collection = eventGridDomain.GetDomainEventSubscriptions();
+
+            // invoke the operation
+            string eventSubscriptionName = "examplesubscription1";
+            NullableResponse<DomainEventSubscriptionResource> response = await collection.GetIfExistsAsync(eventSubscriptionName);
+            DomainEventSubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // DomainEventSubscriptions_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_DomainEventSubscriptionsCreateOrUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/DomainEventSubscriptions_CreateOrUpdate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/DomainEventSubscriptions_CreateOrUpdate.json
             // this example is just showing the usage of "DomainEventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -138,7 +181,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_DomainEventSubscriptionsList()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/DomainEventSubscriptions_List.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/DomainEventSubscriptions_List.json
             // this example is just showing the usage of "DomainEventSubscriptions_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
     /// <summary> The response of a GlobalRulestackResource list operation. </summary>
     internal partial class GlobalRulestackListResult
     {
-        /// <summary> Initializes a new instance of GlobalRulestackListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal GlobalRulestackListResult(IEnumerable<GlobalRulestackData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of GlobalRulestackListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="GlobalRulestackListResult"/>. </summary>
         /// <param name="value"> The items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal GlobalRulestackListResult(IReadOnlyList<GlobalRulestackData> value, string nextLink)

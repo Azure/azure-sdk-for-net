@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ContainerRegistry
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ContainerRegistryRunResource" /> and their operations.
-    /// Each <see cref="ContainerRegistryRunResource" /> in the collection will belong to the same instance of <see cref="ContainerRegistryResource" />.
-    /// To get a <see cref="ContainerRegistryRunCollection" /> instance call the GetContainerRegistryRuns method from an instance of <see cref="ContainerRegistryResource" />.
+    /// A class representing a collection of <see cref="ContainerRegistryRunResource"/> and their operations.
+    /// Each <see cref="ContainerRegistryRunResource"/> in the collection will belong to the same instance of <see cref="ContainerRegistryResource"/>.
+    /// To get a <see cref="ContainerRegistryRunCollection"/> instance call the GetContainerRegistryRuns method from an instance of <see cref="ContainerRegistryResource"/>.
     /// </summary>
     public partial class ContainerRegistryRunCollection : ArmCollection, IEnumerable<ContainerRegistryRunResource>, IAsyncEnumerable<ContainerRegistryRunResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The run ID. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,12 +154,20 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ContainerRegistryRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ContainerRegistryRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerRegistryRunResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRunRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
@@ -162,12 +186,20 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The runs filter to apply on the operation. Arithmetic operators are not supported. The allowed string function is 'contains'. All logical operators except 'Not', 'Has', 'All' are allowed. </param>
         /// <param name="top"> $top is supported for get list of runs, which limits the maximum number of runs to return. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ContainerRegistryRunResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ContainerRegistryRunResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerRegistryRunResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _containerRegistryRunRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter, top);
@@ -185,6 +217,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +261,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Runs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runId"> The run ID. </param>
@@ -237,6 +285,96 @@ namespace Azure.ResourceManager.ContainerRegistry
             {
                 var response = _containerRegistryRunRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/runs/{runId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The run ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        public virtual async Task<NullableResponse<ContainerRegistryRunResource>> GetIfExistsAsync(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _containerRegistryRunRunsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryRunResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerRegistry/registries/{registryName}/runs/{runId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Runs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryRunResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="runId"> The run ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="runId"/> is null. </exception>
+        public virtual NullableResponse<ContainerRegistryRunResource> GetIfExists(string runId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var scope = _containerRegistryRunRunsClientDiagnostics.CreateScope("ContainerRegistryRunCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _containerRegistryRunRunsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, runId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ContainerRegistryRunResource>(response.GetRawResponse());
+                return Response.FromValue(new ContainerRegistryRunResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

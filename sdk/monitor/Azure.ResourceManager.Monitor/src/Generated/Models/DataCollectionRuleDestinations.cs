@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The specification of destinations. </summary>
     public partial class DataCollectionRuleDestinations : DestinationsSpec
     {
-        /// <summary> Initializes a new instance of DataCollectionRuleDestinations. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDestinations"/>. </summary>
         public DataCollectionRuleDestinations()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRuleDestinations. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleDestinations"/>. </summary>
         /// <param name="logAnalytics"> List of Log Analytics destinations. </param>
         /// <param name="monitoringAccounts"> List of monitoring account destinations. </param>
         /// <param name="azureMonitorMetrics"> Azure Monitor Metrics destination. </param>

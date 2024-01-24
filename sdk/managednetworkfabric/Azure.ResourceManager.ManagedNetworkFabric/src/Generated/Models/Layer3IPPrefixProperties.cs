@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Layer 3 primary and secondary IP Address prefixes. </summary>
     public partial class Layer3IPPrefixProperties
     {
-        /// <summary> Initializes a new instance of Layer3IPPrefixProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Layer3IPPrefixProperties"/>. </summary>
         public Layer3IPPrefixProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of Layer3IPPrefixProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Layer3IPPrefixProperties"/>. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>

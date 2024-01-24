@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the DevCenter client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation DevCenter for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.4</Version>
     <PackageTags>Azure DevCenter</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>

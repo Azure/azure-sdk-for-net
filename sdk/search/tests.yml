@@ -10,6 +10,12 @@ extends:
     # TODO: change 'Preview' cloud back to public after search RP fixes deletion metadata issue
     # https://github.com/Azure/azure-sdk-tools/issues/2216
     Clouds: 'Preview'
-    SupportedClouds: 'Preview,UsGov,China'
+    SupportedClouds: 'Preview,UsGov'
+    CloudConfig:
+      Preview:
+        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
+        Location: 'westcentralus'
+      UsGov:
+        SubscriptionConfiguration: $(sub-config-gov-test-resources)
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live

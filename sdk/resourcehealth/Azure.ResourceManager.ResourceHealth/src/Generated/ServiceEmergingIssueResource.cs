@@ -20,13 +20,14 @@ namespace Azure.ResourceManager.ResourceHealth
 {
     /// <summary>
     /// A Class representing a ServiceEmergingIssue along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ServiceEmergingIssueResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetServiceEmergingIssueResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetServiceEmergingIssue method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ServiceEmergingIssueResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetServiceEmergingIssueResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetServiceEmergingIssue method.
     /// </summary>
     public partial class ServiceEmergingIssueResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ServiceEmergingIssueResource"/> instance. </summary>
+        /// <param name="issueName"> The issueName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(EmergingIssueNameContent issueName)
         {
             var resourceId = $"/providers/Microsoft.ResourceHealth/emergingIssues/{issueName}";
@@ -37,12 +38,15 @@ namespace Azure.ResourceManager.ResourceHealth
         private readonly EmergingIssuesRestOperations _serviceEmergingIssueEmergingIssuesRestClient;
         private readonly ServiceEmergingIssueData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/emergingIssues";
+
         /// <summary> Initializes a new instance of the <see cref="ServiceEmergingIssueResource"/> class for mocking. </summary>
         protected ServiceEmergingIssueResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ServiceEmergingIssueResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ServiceEmergingIssueResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ServiceEmergingIssueResource(ArmClient client, ServiceEmergingIssueData data) : this(client, data.Id)
@@ -63,9 +67,6 @@ namespace Azure.ResourceManager.ResourceHealth
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ResourceHealth/emergingIssues";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +100,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceEmergingIssueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +139,14 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmergingIssues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceEmergingIssueResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

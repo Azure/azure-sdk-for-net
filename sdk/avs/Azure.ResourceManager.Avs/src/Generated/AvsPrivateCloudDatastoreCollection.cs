@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Avs
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AvsPrivateCloudDatastoreResource" /> and their operations.
-    /// Each <see cref="AvsPrivateCloudDatastoreResource" /> in the collection will belong to the same instance of <see cref="AvsPrivateCloudClusterResource" />.
-    /// To get an <see cref="AvsPrivateCloudDatastoreCollection" /> instance call the GetAvsPrivateCloudDatastores method from an instance of <see cref="AvsPrivateCloudClusterResource" />.
+    /// A class representing a collection of <see cref="AvsPrivateCloudDatastoreResource"/> and their operations.
+    /// Each <see cref="AvsPrivateCloudDatastoreResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudClusterResource"/>.
+    /// To get an <see cref="AvsPrivateCloudDatastoreCollection"/> instance call the GetAvsPrivateCloudDatastores method from an instance of <see cref="AvsPrivateCloudClusterResource"/>.
     /// </summary>
     public partial class AvsPrivateCloudDatastoreCollection : ArmCollection, IEnumerable<AvsPrivateCloudDatastoreResource>, IAsyncEnumerable<AvsPrivateCloudDatastoreResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Datastores_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,10 +252,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AvsPrivateCloudDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AvsPrivateCloudDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AvsPrivateCloudDatastoreResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Datastores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvsPrivateCloudDatastoreResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AvsPrivateCloudDatastoreResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AvsPrivateCloudDatastoreResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _avsPrivateCloudDatastoreDatastoresRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -263,6 +311,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.Avs
         /// <term>Operation Id</term>
         /// <description>Datastores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
@@ -315,6 +379,96 @@ namespace Azure.ResourceManager.Avs
             {
                 var response = _avsPrivateCloudDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/datastores/{datastoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AvsPrivateCloudDatastoreResource>> GetIfExistsAsync(string datastoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
+
+            using var scope = _avsPrivateCloudDatastoreDatastoresClientDiagnostics.CreateScope("AvsPrivateCloudDatastoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _avsPrivateCloudDatastoreDatastoresRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsPrivateCloudDatastoreResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudDatastoreResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AVS/privateClouds/{privateCloudName}/clusters/{clusterName}/datastores/{datastoreName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Datastores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AvsPrivateCloudDatastoreResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="datastoreName"> Name of the datastore in the private cloud cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="datastoreName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="datastoreName"/> is null. </exception>
+        public virtual NullableResponse<AvsPrivateCloudDatastoreResource> GetIfExists(string datastoreName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(datastoreName, nameof(datastoreName));
+
+            using var scope = _avsPrivateCloudDatastoreDatastoresClientDiagnostics.CreateScope("AvsPrivateCloudDatastoreCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _avsPrivateCloudDatastoreDatastoresRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, datastoreName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AvsPrivateCloudDatastoreResource>(response.GetRawResponse());
+                return Response.FromValue(new AvsPrivateCloudDatastoreResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

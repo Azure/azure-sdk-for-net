@@ -22,6 +22,7 @@ namespace Azure.Storage.Files.Shares.Models
             string parentId = default;
             string sessionId = default;
             string clientIp = default;
+            string clientName = default;
             DateTimeOffset openTime = default;
             DateTimeOffset? lastReconnectTime = default;
             IReadOnlyList<AccessRight> accessRightList = default;
@@ -49,6 +50,10 @@ namespace Azure.Storage.Files.Shares.Models
             {
                 clientIp = (string)clientIpElement;
             }
+            if (element.Element("ClientName") is XElement clientNameElement)
+            {
+                clientName = (string)clientNameElement;
+            }
             if (element.Element("OpenTime") is XElement openTimeElement)
             {
                 openTime = openTimeElement.GetDateTimeOffsetValue("R");
@@ -66,7 +71,7 @@ namespace Azure.Storage.Files.Shares.Models
                 }
                 accessRightList = array;
             }
-            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, openTime, lastReconnectTime, accessRightList);
+            return new HandleItem(handleId, path, fileId, parentId, sessionId, clientIp, clientName, openTime, lastReconnectTime, accessRightList);
         }
     }
 }

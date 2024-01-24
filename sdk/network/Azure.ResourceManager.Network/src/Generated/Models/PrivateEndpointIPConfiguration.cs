@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using System.Net;
 using Azure;
 
@@ -13,19 +15,52 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> An IP Configuration of the private endpoint. </summary>
     public partial class PrivateEndpointIPConfiguration
     {
-        /// <summary> Initializes a new instance of PrivateEndpointIPConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
         public PrivateEndpointIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointIPConfiguration"/>. </summary>
         /// <param name="name"> The name of the resource that is unique within a resource group. </param>
         /// <param name="privateEndpointIPConfigurationType"> The resource type. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
         /// <param name="privateIPAddress"> A private ip address obtained from the private endpoint's subnet. </param>
-        internal PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             PrivateEndpointIPConfigurationType = privateEndpointIPConfigurationType;
@@ -33,6 +68,7 @@ namespace Azure.ResourceManager.Network.Models
             GroupId = groupId;
             MemberName = memberName;
             PrivateIPAddress = privateIPAddress;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the resource that is unique within a resource group. </summary>

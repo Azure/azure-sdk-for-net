@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningBatchDeploymentResource" /> and their operations.
-    /// Each <see cref="MachineLearningBatchDeploymentResource" /> in the collection will belong to the same instance of <see cref="MachineLearningBatchEndpointResource" />.
-    /// To get a <see cref="MachineLearningBatchDeploymentCollection" /> instance call the GetMachineLearningBatchDeployments method from an instance of <see cref="MachineLearningBatchEndpointResource" />.
+    /// A class representing a collection of <see cref="MachineLearningBatchDeploymentResource"/> and their operations.
+    /// Each <see cref="MachineLearningBatchDeploymentResource"/> in the collection will belong to the same instance of <see cref="MachineLearningBatchEndpointResource"/>.
+    /// To get a <see cref="MachineLearningBatchDeploymentCollection"/> instance call the GetMachineLearningBatchDeployments method from an instance of <see cref="MachineLearningBatchEndpointResource"/>.
     /// </summary>
     public partial class MachineLearningBatchDeploymentCollection : ArmCollection, IEnumerable<MachineLearningBatchDeploymentResource>, IAsyncEnumerable<MachineLearningBatchDeploymentResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -82,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -123,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.Location);
+                var operation = new MachineLearningArmOperation<MachineLearningBatchDeploymentResource>(new MachineLearningBatchDeploymentOperationSource(Client), _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics, Pipeline, _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, data).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -145,6 +161,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
@@ -220,13 +252,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningBatchDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningBatchDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningBatchDeploymentResource> GetAllAsync(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
@@ -245,13 +285,21 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Ordering of list. </param>
         /// <param name="top"> Top of list. </param>
         /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningBatchDeploymentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningBatchDeploymentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningBatchDeploymentResource> GetAll(string orderBy = null, int? top = null, string skip = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningBatchDeploymentBatchDeploymentsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, orderBy, top, skip);
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -305,6 +361,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>BatchDeployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
@@ -321,6 +385,96 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 var response = _machineLearningBatchDeploymentBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MachineLearningBatchDeploymentResource>> GetIfExistsAsync(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics.CreateScope("MachineLearningBatchDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningBatchDeploymentBatchDeploymentsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningBatchDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningBatchDeploymentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/batchEndpoints/{endpointName}/deployments/{deploymentName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>BatchDeployments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningBatchDeploymentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="deploymentName"> The identifier for the Batch deployments. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
+        public virtual NullableResponse<MachineLearningBatchDeploymentResource> GetIfExists(string deploymentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
+
+            using var scope = _machineLearningBatchDeploymentBatchDeploymentsClientDiagnostics.CreateScope("MachineLearningBatchDeploymentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningBatchDeploymentBatchDeploymentsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, deploymentName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningBatchDeploymentResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningBatchDeploymentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

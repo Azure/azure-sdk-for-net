@@ -17,6 +17,10 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 list-exception:
   - /subscriptions/{subscriptionId}/providers/Microsoft.CognitiveServices/locations/{location}/resourceGroups/{resourceGroupName}/deletedAccounts/{accountName}
@@ -92,7 +96,7 @@ prepend-rp-prefix:
   - AccountProperties
   - AccountSku
   - AccountSkuListResult
-  - IPRule
+  - IpRule
   - NetworkRuleAction
   - NetworkRuleSet
   - SkuCapability

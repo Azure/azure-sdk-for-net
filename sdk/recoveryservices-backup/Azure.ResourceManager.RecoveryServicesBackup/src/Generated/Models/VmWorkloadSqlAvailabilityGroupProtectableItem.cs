@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Azure VM workload-specific protectable item representing SQL Availability Group. </summary>
     public partial class VmWorkloadSqlAvailabilityGroupProtectableItem : VmWorkloadProtectableItem
     {
-        /// <summary> Initializes a new instance of VmWorkloadSqlAvailabilityGroupProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>. </summary>
         public VmWorkloadSqlAvailabilityGroupProtectableItem()
         {
             NodesList = new ChangeTrackingList<DistributedNodesInfo>();
             ProtectableItemType = "SQLAvailabilityGroupContainer";
         }
 
-        /// <summary> Initializes a new instance of VmWorkloadSqlAvailabilityGroupProtectableItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="VmWorkloadSqlAvailabilityGroupProtectableItem"/>. </summary>
         /// <param name="backupManagementType"> Type of backup management to backup an item. </param>
         /// <param name="workloadType"> Type of workload for the backup management. </param>
         /// <param name="protectableItemType"> Type of the backup item. </param>

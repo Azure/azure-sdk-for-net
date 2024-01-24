@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> Class to specify which protocols are enabled. </summary>
     public partial class MediaEnabledProtocols
     {
-        /// <summary> Initializes a new instance of MediaEnabledProtocols. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaEnabledProtocols"/>. </summary>
         /// <param name="isDownloadEnabled"> Enable Download protocol or not. </param>
         /// <param name="isDashEnabled"> Enable DASH protocol or not. </param>
         /// <param name="isHlsEnabled"> Enable HLS protocol or not. </param>

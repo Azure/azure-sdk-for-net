@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Amazon S3 read settings. </summary>
     public partial class AmazonS3ReadSettings : StoreReadSettings
     {
-        /// <summary> Initializes a new instance of AmazonS3ReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3ReadSettings"/>. </summary>
         public AmazonS3ReadSettings()
         {
             StoreReadSettingsType = "AmazonS3ReadSettings";
         }
 
-        /// <summary> Initializes a new instance of AmazonS3ReadSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonS3ReadSettings"/>. </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>

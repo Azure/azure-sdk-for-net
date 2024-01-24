@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests
 {
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_07_01_Preview)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01, SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
     public partial class VectorSearchTests : SearchTestBase
     {
         public VectorSearchTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -39,10 +39,12 @@ namespace Azure.Search.Documents.Tests
             await Task.Delay(TimeSpan.FromSeconds(1));
 
             SearchResults<Hotel> response = await resources.GetSearchClient().SearchAsync<Hotel>(
-                   null,
                    new SearchOptions
                    {
-                       Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                       VectorSearch = new()
+                       {
+                           Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                       },
                        Select = { "hotelId", "hotelName" }
                    });
 
@@ -60,10 +62,12 @@ namespace Azure.Search.Documents.Tests
             var vectorizedResult = VectorSearchEmbeddings.SearchVectorizeDescription; // "Top hotels in town"
 
             SearchResults<Hotel> response = await resources.GetSearchClient().SearchAsync<Hotel>(
-                    null,
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                        },
                         Filter = "category eq 'Budget'",
                         Select = { "hotelId", "hotelName", "category" }
                     });
@@ -85,7 +89,10 @@ namespace Azure.Search.Documents.Tests
                     "Top hotels in town",
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                        },
                         Select = { "hotelId", "hotelName" },
                     });
 
@@ -96,6 +103,7 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2023_10_01_Preview)]
         [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
         public async Task SemanticHybridSearch()
         {
@@ -107,28 +115,36 @@ namespace Azure.Search.Documents.Tests
                     "Is there any hotel located on the main commercial artery of the city in the heart of New York?",
                     new SearchOptions
                     {
-                        Vectors = { new SearchQueryVector { Value = vectorizedResult, KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } },
-                        Select = { "hotelId", "hotelName", "description", "category" },
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 3, Fields = { "descriptionVector" } } }
+                        },
+                        SemanticSearch = new()
+                        {
+                            SemanticConfigurationName = "my-semantic-config",
+                            QueryCaption = new(QueryCaptionType.Extractive),
+                            QueryAnswer = new(QueryAnswerType.Extractive),
+                            MaxWait = TimeSpan.FromMilliseconds(1000),
+                            ErrorMode = SemanticErrorMode.Partial
+                        },
                         QueryType = SearchQueryType.Semantic,
-                        QueryLanguage = QueryLanguage.EnUs,
-                        SemanticConfigurationName = "my-semantic-config",
-                        QueryCaption = QueryCaptionType.Extractive,
-                        QueryAnswer = QueryAnswerType.Extractive,
+                        Select = { "hotelId", "hotelName", "description", "category" },
+                        QueryLanguage = QueryLanguage.EnUs
                     });
 
-            Assert.NotNull(response.Answers);
-            Assert.AreEqual(1, response.Answers.Count);
-            Assert.AreEqual("9", response.Answers[0].Key);
-            Assert.NotNull(response.Answers[0].Highlights);
-            Assert.NotNull(response.Answers[0].Text);
+            Assert.NotNull(response.SemanticSearch.Answers);
+            Assert.AreEqual(1, response.SemanticSearch.Answers.Count);
+            Assert.AreEqual("9", response.SemanticSearch.Answers[0].Key);
+            Assert.NotNull(response.SemanticSearch.Answers[0].Highlights);
+            Assert.NotNull(response.SemanticSearch.Answers[0].Text);
 
             await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
             {
                 Hotel doc = result.Document;
 
-                Assert.NotNull(result.Captions);
+                Assert.NotNull(result.SemanticSearch.Captions);
 
-                var caption = result.Captions.FirstOrDefault();
+                var caption = result.SemanticSearch.Captions.FirstOrDefault();
                 Assert.NotNull(caption.Highlights, "Caption highlight is null");
                 Assert.NotNull(caption.Text, "Caption text is null");
             }
@@ -182,19 +198,18 @@ namespace Azure.Search.Documents.Tests
             SearchIndex createdIndex = await indexClient.GetIndexAsync(indexName);
 
             // Add vector
-            var vectorField = new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-            {
-                IsSearchable = true,
-                VectorSearchDimensions = 1536,
-                VectorSearchConfiguration = "my-vector-config"
-            };
+            var vectorField = new VectorSearchField("descriptionVector", 1536, "my-vector-profile");
             createdIndex.Fields.Add(vectorField);
 
             createdIndex.VectorSearch = new()
             {
-                AlgorithmConfigurations =
+                Profiles =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                Algorithms =
+                    {
+                        new HnswAlgorithmConfiguration("my-hsnw-vector-config")
                     }
             };
 
@@ -224,6 +239,89 @@ namespace Azure.Search.Documents.Tests
         }
 
         [Test]
+        public async Task UpdatingVectorProfileNameThrows()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+
+            string indexName = Recording.Random.GetName();
+            resources.IndexName = indexName;
+
+            // Create Index
+            SearchIndex index = new SearchIndex(indexName)
+            {
+                Fields = new FieldBuilder().Build(typeof(Model)),
+                VectorSearch = new()
+                {
+                    Profiles =
+                    {
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                    Algorithms =
+                    {
+                        new HnswAlgorithmConfiguration("my-hsnw-vector-config")
+                    }
+                },
+            };
+
+            SearchIndexClient indexClient = resources.GetIndexClient();
+            SearchIndex createdIndex = await indexClient.CreateIndexAsync(index);
+
+            createdIndex.VectorSearch.Profiles[0].Name = "updating-vector-profile-name";
+
+            // Update index
+            RequestFailedException ex = await CatchAsync<RequestFailedException>(
+                async () => await indexClient.CreateOrUpdateIndexAsync(createdIndex));
+            Assert.AreEqual(400, ex.Status);
+            Assert.AreEqual("InvalidRequestParameter", ex.ErrorCode);
+        }
+
+        [Test]
+        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
+        public async Task CanContinueWithNextPage()
+        {
+            const int size = 150;
+
+            await using SearchResources resources = await SearchResources.CreateLargeHotelsIndexAsync(this, size, true);
+            SearchClient client = resources.GetQueryClient();
+
+            ReadOnlyMemory<float> vectorizedResult = VectorSearchEmbeddings.DefaultVectorizeDescription;
+            SearchResults<SearchDocument> response = await client.SearchAsync<SearchDocument>("Suggest some hotels",
+                    new SearchOptions
+                    {
+                        VectorSearch = new()
+                        {
+                            Queries = { new VectorizedQuery(vectorizedResult) { KNearestNeighborsCount = 50, Fields = { "descriptionVector" } } }
+                        },
+                        SemanticSearch = new()
+                        {
+                            SemanticConfigurationName = "my-semantic-config",
+                            QueryCaption = new(QueryCaptionType.Extractive),
+                            QueryAnswer = new(QueryAnswerType.Extractive)
+                        },
+                        QueryType = SearchQueryType.Semantic,
+                        Select = new[] { "hotelId" }
+                    });
+
+            int totalDocsCount = 0;
+            int pageCount = 0;
+
+            await foreach (Page<SearchResult<SearchDocument>> page in response.GetResultsAsync().AsPages())
+            {
+                pageCount++;
+                int docsPerPageCount = 0;
+                foreach (SearchResult<SearchDocument> result in page.Values)
+                {
+                    docsPerPageCount++;
+                    totalDocsCount++;
+                }
+                Assert.LessOrEqual(docsPerPageCount, 50);
+            }
+
+            Assert.LessOrEqual(totalDocsCount, 150);
+            Assert.GreaterOrEqual(pageCount, 2);
+        }
+
+        [Test]
         public async Task CreateIndexUsingFieldBuilder()
         {
             await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
@@ -237,11 +335,15 @@ namespace Azure.Search.Documents.Tests
                 Fields = new FieldBuilder().Build(typeof(Model)),
                 VectorSearch = new()
                 {
-                    AlgorithmConfigurations =
+                    Profiles =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                    Algorithms =
+                    {
+                        new HnswAlgorithmConfiguration("my-hsnw-vector-config")
                     }
-                }
+                },
             };
 
             SearchIndexClient indexClient = resources.GetIndexClient();
@@ -263,7 +365,7 @@ namespace Azure.Search.Documents.Tests
             [SearchableField(AnalyzerName = "en.microsoft")]
             public string Description { get; set; }
 
-            [SearchableField(VectorSearchDimensions = "1536", VectorSearchConfiguration = "my-vector-config")]
+            [VectorSearchField(VectorSearchDimensions = 1536, VectorSearchProfileName = "my-vector-profile")]
             public IReadOnlyList<float> DescriptionVector { get; set; }
         }
     }

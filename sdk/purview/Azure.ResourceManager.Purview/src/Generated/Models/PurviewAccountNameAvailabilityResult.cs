@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> The response payload for CheckNameAvailability API. </summary>
     public partial class PurviewAccountNameAvailabilityResult
     {
-        /// <summary> Initializes a new instance of PurviewAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityResult"/>. </summary>
         internal PurviewAccountNameAvailabilityResult()
         {
         }
 
-        /// <summary> Initializes a new instance of PurviewAccountNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountNameAvailabilityResult"/>. </summary>
         /// <param name="message"> Error message. </param>
         /// <param name="isNameAvailable"> Indicates if name is valid and available. </param>
         /// <param name="reason"> The reason the name is not available. </param>

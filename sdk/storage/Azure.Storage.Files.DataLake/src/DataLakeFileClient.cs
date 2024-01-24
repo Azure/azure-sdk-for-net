@@ -236,7 +236,7 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential)
-            : this(fileUri, credential.AsPolicy(new DataLakeClientOptions()), null, tokenCredential: credential)
+            : this(fileUri, credential, new DataLakeClientOptions())
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -258,7 +258,13 @@ namespace Azure.Storage.Files.DataLake
         /// applied to every request.
         /// </param>
         public DataLakeFileClient(Uri fileUri, TokenCredential credential, DataLakeClientOptions options)
-            : this(fileUri, credential.AsPolicy(options), options, credential)
+            : this(
+                fileUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                credential)
         {
             Errors.VerifyHttpsTokenAuth(fileUri);
         }
@@ -1425,6 +1431,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetAccessControlList(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -1489,6 +1496,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetAccessControlListAsync(
             IList<PathAccessControlItem> accessControlList,
             string owner = default,
@@ -1556,6 +1564,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override Response<PathInfo> SetPermissions(
             PathPermissions permissions,
             string owner = default,
@@ -1620,6 +1629,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public override async Task<Response<PathInfo>> SetPermissionsAsync(
             PathPermissions permissions,
             string owner = default,

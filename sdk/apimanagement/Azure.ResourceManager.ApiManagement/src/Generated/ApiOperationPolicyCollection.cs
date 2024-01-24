@@ -21,9 +21,9 @@ using Azure.ResourceManager.ApiManagement.Models;
 namespace Azure.ResourceManager.ApiManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ApiOperationPolicyResource" /> and their operations.
-    /// Each <see cref="ApiOperationPolicyResource" /> in the collection will belong to the same instance of <see cref="ApiOperationResource" />.
-    /// To get an <see cref="ApiOperationPolicyCollection" /> instance call the GetApiOperationPolicies method from an instance of <see cref="ApiOperationResource" />.
+    /// A class representing a collection of <see cref="ApiOperationPolicyResource"/> and their operations.
+    /// Each <see cref="ApiOperationPolicyResource"/> in the collection will belong to the same instance of <see cref="ApiOperationResource"/>.
+    /// To get an <see cref="ApiOperationPolicyCollection"/> instance call the GetApiOperationPolicies method from an instance of <see cref="ApiOperationResource"/>.
     /// </summary>
     public partial class ApiOperationPolicyCollection : ArmCollection, IEnumerable<ApiOperationPolicyResource>, IAsyncEnumerable<ApiOperationPolicyResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -104,6 +112,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +161,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
@@ -178,6 +202,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,10 +245,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_ListByOperation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApiOperationPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ApiOperationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApiOperationPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -234,10 +274,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_ListByOperation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ApiOperationPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApiOperationPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApiOperationPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiOperationPolicyRestClient.CreateListByOperationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
@@ -254,6 +302,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -287,6 +343,14 @@ namespace Azure.ResourceManager.ApiManagement
         /// <term>Operation Id</term>
         /// <description>ApiOperationPolicy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyId"> The identifier of the Policy. </param>
@@ -300,6 +364,90 @@ namespace Azure.ResourceManager.ApiManagement
             {
                 var response = _apiOperationPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiOperationPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<ApiOperationPolicyResource>> GetIfExistsAsync(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _apiOperationPolicyRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiOperationPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/apis/{apiId}/operations/{operationId}/policies/{policyId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ApiOperationPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApiOperationPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="policyId"> The identifier of the Policy. </param>
+        /// <param name="format"> Policy Export Format. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<ApiOperationPolicyResource> GetIfExists(PolicyName policyId, PolicyExportFormat? format = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _apiOperationPolicyClientDiagnostics.CreateScope("ApiOperationPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _apiOperationPolicyRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, policyId, format, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ApiOperationPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new ApiOperationPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

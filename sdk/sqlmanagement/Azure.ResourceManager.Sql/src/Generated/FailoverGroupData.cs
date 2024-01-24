@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class FailoverGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
         public FailoverGroupData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Sql
             FailoverDatabases = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of FailoverGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FailoverGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -58,19 +58,7 @@ namespace Azure.ResourceManager.Sql
         /// <summary> Read-write endpoint of the failover group instance. </summary>
         public FailoverGroupReadWriteEndpoint ReadWriteEndpoint { get; set; }
         /// <summary> Read-only endpoint of the failover group instance. </summary>
-        internal FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
-        /// <summary> Failover policy of the read-only endpoint for the failover group. </summary>
-        public ReadOnlyEndpointFailoverPolicy? ReadOnlyEndpointFailoverPolicy
-        {
-            get => ReadOnlyEndpoint is null ? default : ReadOnlyEndpoint.FailoverPolicy;
-            set
-            {
-                if (ReadOnlyEndpoint is null)
-                    ReadOnlyEndpoint = new FailoverGroupReadOnlyEndpoint();
-                ReadOnlyEndpoint.FailoverPolicy = value;
-            }
-        }
-
+        public FailoverGroupReadOnlyEndpoint ReadOnlyEndpoint { get; set; }
         /// <summary> Local replication role of the failover group instance. </summary>
         public FailoverGroupReplicationRole? ReplicationRole { get; }
         /// <summary> Replication state of the failover group instance. </summary>

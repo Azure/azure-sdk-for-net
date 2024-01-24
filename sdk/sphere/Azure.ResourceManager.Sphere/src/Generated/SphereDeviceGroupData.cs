@@ -14,48 +14,26 @@ namespace Azure.ResourceManager.Sphere
     /// <summary>
     /// A class representing the SphereDeviceGroup data model.
     /// An device group resource belonging to a product resource.
-    /// Serialized Name: DeviceGroup
     /// </summary>
     public partial class SphereDeviceGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SphereDeviceGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
         public SphereDeviceGroupData()
         {
         }
 
-        /// <summary> Initializes a new instance of SphereDeviceGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereDeviceGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="description">
-        /// Description of the device group.
-        /// Serialized Name: DeviceGroup.properties.description
-        /// </param>
-        /// <param name="osFeedType">
-        /// Operating system feed type of the device group.
-        /// Serialized Name: DeviceGroup.properties.osFeedType
-        /// </param>
-        /// <param name="updatePolicy">
-        /// Update policy of the device group.
-        /// Serialized Name: DeviceGroup.properties.updatePolicy
-        /// </param>
-        /// <param name="allowCrashDumpsCollection">
-        /// Flag to define if the user allows for crash dump collection.
-        /// Serialized Name: DeviceGroup.properties.allowCrashDumpsCollection
-        /// </param>
-        /// <param name="regionalDataBoundary">
-        /// Regional data boundary for the device group.
-        /// Serialized Name: DeviceGroup.properties.regionalDataBoundary
-        /// </param>
-        /// <param name="hasDeployment">
-        /// Deployment status for the device group.
-        /// Serialized Name: DeviceGroup.properties.hasDeployment
-        /// </param>
-        /// <param name="provisioningState">
-        /// The status of the last operation.
-        /// Serialized Name: DeviceGroup.properties.provisioningState
-        /// </param>
+        /// <param name="description"> Description of the device group. </param>
+        /// <param name="osFeedType"> Operating system feed type of the device group. </param>
+        /// <param name="updatePolicy"> Update policy of the device group. </param>
+        /// <param name="allowCrashDumpsCollection"> Flag to define if the user allows for crash dump collection. </param>
+        /// <param name="regionalDataBoundary"> Regional data boundary for the device group. </param>
+        /// <param name="hasDeployment"> Deployment status for the device group. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         internal SphereDeviceGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string description, SphereOSFeedType? osFeedType, SphereUpdatePolicy? updatePolicy, SphereAllowCrashDumpCollectionStatus? allowCrashDumpsCollection, RegionalDataBoundary? regionalDataBoundary, bool? hasDeployment, SphereProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             Description = description;
@@ -67,40 +45,19 @@ namespace Azure.ResourceManager.Sphere
             ProvisioningState = provisioningState;
         }
 
-        /// <summary>
-        /// Description of the device group.
-        /// Serialized Name: DeviceGroup.properties.description
-        /// </summary>
+        /// <summary> Description of the device group. </summary>
         public string Description { get; set; }
-        /// <summary>
-        /// Operating system feed type of the device group.
-        /// Serialized Name: DeviceGroup.properties.osFeedType
-        /// </summary>
+        /// <summary> Operating system feed type of the device group. </summary>
         public SphereOSFeedType? OSFeedType { get; set; }
-        /// <summary>
-        /// Update policy of the device group.
-        /// Serialized Name: DeviceGroup.properties.updatePolicy
-        /// </summary>
+        /// <summary> Update policy of the device group. </summary>
         public SphereUpdatePolicy? UpdatePolicy { get; set; }
-        /// <summary>
-        /// Flag to define if the user allows for crash dump collection.
-        /// Serialized Name: DeviceGroup.properties.allowCrashDumpsCollection
-        /// </summary>
+        /// <summary> Flag to define if the user allows for crash dump collection. </summary>
         public SphereAllowCrashDumpCollectionStatus? AllowCrashDumpsCollection { get; set; }
-        /// <summary>
-        /// Regional data boundary for the device group.
-        /// Serialized Name: DeviceGroup.properties.regionalDataBoundary
-        /// </summary>
+        /// <summary> Regional data boundary for the device group. </summary>
         public RegionalDataBoundary? RegionalDataBoundary { get; set; }
-        /// <summary>
-        /// Deployment status for the device group.
-        /// Serialized Name: DeviceGroup.properties.hasDeployment
-        /// </summary>
+        /// <summary> Deployment status for the device group. </summary>
         public bool? HasDeployment { get; }
-        /// <summary>
-        /// The status of the last operation.
-        /// Serialized Name: DeviceGroup.properties.provisioningState
-        /// </summary>
+        /// <summary> The status of the last operation. </summary>
         public SphereProvisioningState? ProvisioningState { get; }
     }
 }

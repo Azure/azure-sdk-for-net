@@ -19,14 +19,46 @@ namespace Azure.ResourceManager.Blueprint
     /// </summary>
     public partial class BlueprintData : ResourceData
     {
-        /// <summary> Initializes a new instance of BlueprintData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BlueprintData"/>. </summary>
         public BlueprintData()
         {
             Parameters = new ChangeTrackingDictionary<string, ParameterDefinition>();
             ResourceGroups = new ChangeTrackingDictionary<string, ResourceGroupDefinition>();
         }
 
-        /// <summary> Initializes a new instance of BlueprintData. </summary>
+        /// <summary> Initializes a new instance of <see cref="BlueprintData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -39,7 +71,8 @@ namespace Azure.ResourceManager.Blueprint
         /// <param name="resourceGroups"> Resource group placeholders defined by this blueprint definition. </param>
         /// <param name="versions"> Published versions of this blueprint definition. </param>
         /// <param name="layout"> Layout view of the blueprint definition for UI reference. </param>
-        internal BlueprintData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, BlueprintStatus status, BlueprintTargetScope? targetScope, IDictionary<string, ParameterDefinition> parameters, IDictionary<string, ResourceGroupDefinition> resourceGroups, BinaryData versions, BinaryData layout) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlueprintData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, string description, BlueprintStatus status, BlueprintTargetScope? targetScope, IDictionary<string, ParameterDefinition> parameters, IDictionary<string, ResourceGroupDefinition> resourceGroups, BinaryData versions, BinaryData layout, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             Description = description;
@@ -49,6 +82,7 @@ namespace Azure.ResourceManager.Blueprint
             ResourceGroups = resourceGroups;
             Versions = versions;
             Layout = layout;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> One-liner string explain this resource. </summary>
@@ -69,7 +103,7 @@ namespace Azure.ResourceManager.Blueprint
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -100,7 +134,7 @@ namespace Azure.ResourceManager.Blueprint
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

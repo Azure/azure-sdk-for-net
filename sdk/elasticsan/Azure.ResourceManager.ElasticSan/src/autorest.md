@@ -9,7 +9,7 @@ csharp: true
 library-name: ElasticSan
 namespace: Azure.ResourceManager.ElasticSan
 # default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/1af2861030243b06ee35172c95899f4809eedfc7/specification/elasticsan/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/afa158ef56a05f6603924f4a493817cec332b113/specification/elasticsan/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -51,6 +52,7 @@ acronym-mapping:
   MBps: Mbps
   LRS: Lrs
   ZRS: Zrs
+  XMs: Xms
 
 prepend-rp-prefix:
   - EncryptionType
@@ -63,10 +65,16 @@ prepend-rp-prefix:
   - VolumeList
   - SkuInformationList
   - SkuLocationInfo
+  - Snapshot
+  - KeyVaultProperties
+  - EncryptionProperties
+  - PublicNetworkAccess
+  - StorageTargetType
 
 rename-mapping:
   Volume.properties.volumeId: -|uuid
   VirtualNetworkRule.id: -|arm-id
+  EncryptionIdentity.userAssignedIdentity: -|arm-id
   Action: ElasticSanVirtualNetworkRuleAction
   OperationalStatus: ResourceOperationalStatus
   ProvisioningStates: ElasticSanProvisioningState
@@ -74,5 +82,16 @@ rename-mapping:
   SKUCapability: ElasticSanSkuCapability
   SourceCreationData: ElasticSanVolumeDataSourceInfo
   VirtualNetworkRule: ElasticSanVirtualNetworkRule
+  SnapshotCreationData: SnapshotCreationInfo
 
+directive:
+- from: elasticsan.json
+  where: $.definitions.SourceCreationData.properties.sourceId
+  transform: $["x-ms-format"] = "arm-id";
+- from: elasticsan.json
+  where: $.definitions.SnapshotCreationData.properties.sourceId
+  transform: $["x-ms-format"] = "arm-id";
+- from: elasticsan.json
+  where: $.definitions.ManagedByInfo.properties.resourceId
+  transform: $["x-ms-format"] = "arm-id";
 ```

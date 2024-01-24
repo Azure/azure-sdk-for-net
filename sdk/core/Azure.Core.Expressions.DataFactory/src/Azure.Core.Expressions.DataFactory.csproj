@@ -3,17 +3,12 @@
   <PropertyGroup>
     <Description>This is the implementation of the DataFactoryExpressions</Description>
     <AssemblyTitle>Microsoft Azure DataFactory Expressions</AssemblyTitle>
-    <Version>1.0.0-beta.6</Version>
+    <Version>1.0.0-beta.7</Version>
     <PackageTags>azure;datafactory</PackageTags>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
-    <!--
-      netcoreapp2.1 is out of support but we'll keep is as a target for a bit
-      to give customers time to migrate without losing perf optimizations
-     -->
-    <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +27,7 @@
     <Compile Include="$(AzureCoreSharedSources)PropertyReferenceTypeAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)InitializationConstructorAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)SerializationConstructorAttribute.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

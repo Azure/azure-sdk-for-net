@@ -4,22 +4,19 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 {
     public class ElasticSanCollectionTests : ElasticSanTestBase
     {
-        private ResourceGroupResource _resourceGroup;
-
         public ElasticSanCollectionTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
         {
@@ -29,27 +26,31 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
         [RecordedTest]
         public async Task CreateOrUpdate()
         {
-            _resourceGroup = await CreateResourceGroupResourceAsync();
-            ElasticSanCollection elasticSanCollection = _resourceGroup.GetElasticSans();
+            ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
 
             ElasticSanData data = GetDefaultElasticSanParameters(TestLocation);
             data.Tags.Add("tag1", "value1");
+            data.PublicNetworkAccess = Models.ElasticSanPublicNetworkAccess.Enabled;
 
             string elasticSanName = Recording.GenerateAssetName("testsan-");
             ElasticSanResource elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data)).Value;
             Assert.AreEqual(elasticSanName, elasticSan1.Id.Name);
-            Assert.AreEqual(6, elasticSan1.Data.BaseSizeTiB);
-            Assert.AreEqual(1, elasticSan1.Data.ExtendedCapacitySizeTiB);
+            Assert.AreEqual(1, elasticSan1.Data.BaseSizeTiB);
+            Assert.AreEqual(6, elasticSan1.Data.ExtendedCapacitySizeTiB);
             Assert.IsTrue(elasticSan1.Data.Tags.ContainsKey("tag1"));
             Assert.AreEqual("value1", elasticSan1.Data.Tags["tag1"]);
+            Assert.AreEqual("Enabled", elasticSan1.Data.PublicNetworkAccess.Value.ToString());
             // Skip the validation for AvailabilityZone as the server won't return the property
 
-            elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, GetDefaultElasticSanParameters(TestLocation, 7, 2))).Value;
+            elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, GetDefaultElasticSanParameters(TestLocation, 2, 7))).Value;
             Assert.AreEqual(elasticSanName, elasticSan1.Id.Name);
-            Assert.AreEqual(7, elasticSan1.Data.BaseSizeTiB);
-            Assert.AreEqual(2, elasticSan1.Data.ExtendedCapacitySizeTiB);
+            Assert.AreEqual(2, elasticSan1.Data.BaseSizeTiB);
+            Assert.AreEqual(7, elasticSan1.Data.ExtendedCapacitySizeTiB);
             Assert.IsEmpty(elasticSan1.Data.Tags);
             Assert.IsEmpty(elasticSan1.Data.AvailabilityZones);
+            Assert.AreEqual(null, elasticSan1.Data.PublicNetworkAccess);
+
+            await elasticSan1.DeleteAsync(WaitUntil.Completed);
         }
 
         [Test]
@@ -63,8 +64,6 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.AreEqual(6, elasticSan1.Data.ExtendedCapacitySizeTiB);
 
             // Test for ElasticSan PE properties
-            elasticSanCollection = (await GetResourceGroupAsync("yifanz1")).GetElasticSans();
-            elasticSan1 = (await elasticSanCollection.GetAsync("testpreviewes2")).Value;
             Assert.AreEqual(3, elasticSan1.Data.PrivateEndpointConnections.Count);
             Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].Name);
             Assert.IsNotEmpty(elasticSan1.Data.PrivateEndpointConnections[0].PrivateEndpointId);

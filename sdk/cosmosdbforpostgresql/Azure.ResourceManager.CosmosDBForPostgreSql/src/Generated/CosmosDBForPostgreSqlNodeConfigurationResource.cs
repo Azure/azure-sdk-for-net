@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 {
     /// <summary>
     /// A Class representing a CosmosDBForPostgreSqlNodeConfiguration along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBForPostgreSqlNodeConfigurationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource" /> using the GetCosmosDBForPostgreSqlNodeConfiguration method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBForPostgreSqlNodeConfigurationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBForPostgreSqlClusterResource"/> using the GetCosmosDBForPostgreSqlNodeConfiguration method.
     /// </summary>
     public partial class CosmosDBForPostgreSqlNodeConfigurationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="configurationName"> The configurationName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/{clusterName}/nodeConfigurations/{configurationName}";
@@ -33,17 +37,20 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 
         private readonly ClientDiagnostics _cosmosDBForPostgreSqlNodeConfigurationConfigurationsClientDiagnostics;
         private readonly ConfigurationsRestOperations _cosmosDBForPostgreSqlNodeConfigurationConfigurationsRestClient;
-        private readonly ServerConfigurationData _data;
+        private readonly CosmosDBForPostgreSqlServerConfigurationData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations";
 
         /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> class for mocking. </summary>
         protected CosmosDBForPostgreSqlNodeConfigurationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBForPostgreSqlNodeConfigurationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal CosmosDBForPostgreSqlNodeConfigurationResource(ArmClient client, ServerConfigurationData data) : this(client, data.Id)
+        internal CosmosDBForPostgreSqlNodeConfigurationResource(ArmClient client, CosmosDBForPostgreSqlServerConfigurationData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -62,15 +69,12 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
 #endif
         }
 
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/serverGroupsv2/nodeConfigurations";
-
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ServerConfigurationData Data
+        public virtual CosmosDBForPostgreSqlServerConfigurationData Data
         {
             get
             {
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_GetNode</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_GetNode</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,13 +181,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_UpdateOnNode</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required parameters for updating a cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>> UpdateAsync(WaitUntil waitUntil, ServerConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBForPostgreSqlServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -199,13 +227,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
         /// <term>Operation Id</term>
         /// <description>Configurations_UpdateOnNode</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-08</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBForPostgreSqlNodeConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="data"> The required parameters for updating a cluster configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> Update(WaitUntil waitUntil, ServerConfigurationData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBForPostgreSqlNodeConfigurationResource> Update(WaitUntil waitUntil, CosmosDBForPostgreSqlServerConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 

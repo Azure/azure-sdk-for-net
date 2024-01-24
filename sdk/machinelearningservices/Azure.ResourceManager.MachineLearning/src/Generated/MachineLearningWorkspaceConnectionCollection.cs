@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.MachineLearning
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MachineLearningWorkspaceConnectionResource" /> and their operations.
-    /// Each <see cref="MachineLearningWorkspaceConnectionResource" /> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource" />.
-    /// To get a <see cref="MachineLearningWorkspaceConnectionCollection" /> instance call the GetMachineLearningWorkspaceConnections method from an instance of <see cref="MachineLearningWorkspaceResource" />.
+    /// A class representing a collection of <see cref="MachineLearningWorkspaceConnectionResource"/> and their operations.
+    /// Each <see cref="MachineLearningWorkspaceConnectionResource"/> in the collection will belong to the same instance of <see cref="MachineLearningWorkspaceResource"/>.
+    /// To get a <see cref="MachineLearningWorkspaceConnectionCollection"/> instance call the GetMachineLearningWorkspaceConnections method from an instance of <see cref="MachineLearningWorkspaceResource"/>.
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionCollection : ArmCollection, IEnumerable<MachineLearningWorkspaceConnectionResource>, IAsyncEnumerable<MachineLearningWorkspaceConnectionResource>
     {
@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Create or update machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -62,6 +63,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,6 +103,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Create or update machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,6 +112,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +152,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -142,6 +161,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -170,6 +197,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists machine learning workspaces connections by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -178,6 +206,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -206,6 +242,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists all the available machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -215,12 +252,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MachineLearningWorkspaceConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MachineLearningWorkspaceConnectionResource> GetAllAsync(string target = null, string category = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
@@ -229,6 +274,7 @@ namespace Azure.ResourceManager.MachineLearning
         }
 
         /// <summary>
+        /// Lists all the available machine learning workspaces connections under the specified workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -238,12 +284,20 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="target"> Target of the workspace connection. </param>
         /// <param name="category"> Category of the workspace connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MachineLearningWorkspaceConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MachineLearningWorkspaceConnectionResource> GetAll(string target = null, string category = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, target, category);
@@ -261,6 +315,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +359,14 @@ namespace Azure.ResourceManager.MachineLearning
         /// <term>Operation Id</term>
         /// <description>WorkspaceConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> Friendly name of the workspace connection. </param>
@@ -313,6 +383,96 @@ namespace Azure.ResourceManager.MachineLearning
             {
                 var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> Friendly name of the workspace connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MachineLearningWorkspaceConnectionResource>> GetIfExistsAsync(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningWorkspaceConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/connections/{connectionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>WorkspaceConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceConnectionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="connectionName"> Friendly name of the workspace connection. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        public virtual NullableResponse<MachineLearningWorkspaceConnectionResource> GetIfExists(string connectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(connectionName, nameof(connectionName));
+
+            using var scope = _machineLearningWorkspaceConnectionWorkspaceConnectionsClientDiagnostics.CreateScope("MachineLearningWorkspaceConnectionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _machineLearningWorkspaceConnectionWorkspaceConnectionsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, connectionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MachineLearningWorkspaceConnectionResource>(response.GetRawResponse());
+                return Response.FromValue(new MachineLearningWorkspaceConnectionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

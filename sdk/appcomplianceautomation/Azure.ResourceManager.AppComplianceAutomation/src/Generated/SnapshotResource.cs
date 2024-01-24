@@ -19,13 +19,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
     /// A Class representing a SnapshotResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SnapshotResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSnapshotResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ReportResource" /> using the GetSnapshotResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SnapshotResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSnapshotResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ReportResource"/> using the GetSnapshotResource method.
     /// </summary>
     public partial class SnapshotResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SnapshotResource"/> instance. </summary>
+        /// <param name="reportName"> The reportName. </param>
+        /// <param name="snapshotName"> The snapshotName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string reportName, string snapshotName)
         {
             var resourceId = $"/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}";
@@ -36,12 +38,15 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         private readonly SnapshotRestOperations _snapshotResourceSnapshotRestClient;
         private readonly SnapshotResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports/snapshots";
+
         /// <summary> Initializes a new instance of the <see cref="SnapshotResource"/> class for mocking. </summary>
         protected SnapshotResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SnapshotResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SnapshotResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SnapshotResource(ArmClient client, SnapshotResourceData data) : this(client, data.Id)
@@ -62,9 +67,6 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppComplianceAutomation/reports/snapshots";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +100,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +140,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -161,6 +179,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Download</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +225,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Download</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

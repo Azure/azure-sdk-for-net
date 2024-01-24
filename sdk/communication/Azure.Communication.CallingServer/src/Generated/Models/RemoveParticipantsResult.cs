@@ -10,12 +10,12 @@ namespace Azure.Communication.CallingServer
     /// <summary> The RemoveParticipantsResponse. </summary>
     public partial class RemoveParticipantsResult
     {
-        /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsResult"/>. </summary>
         internal RemoveParticipantsResult()
         {
         }
 
-        /// <summary> Initializes a new instance of RemoveParticipantsResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemoveParticipantsResult"/>. </summary>
         /// <param name="operationContext"> The operation context provided by client. </param>
         internal RemoveParticipantsResult(string operationContext)
         {

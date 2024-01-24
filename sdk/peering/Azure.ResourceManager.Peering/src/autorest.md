@@ -18,6 +18,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 
+#mgmt-debug: 
+#  show-serialized-names: true
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'
@@ -54,6 +57,12 @@ prepend-rp-prefix:
 - Size
 - Tier
 - Role
+
+models-to-treat-empty-string-as-null:
+  - PeeringBgpSession
+  - ExchangePeeringFacility
+additional-intrinsic-types-to-treat-empty-string-as-null:
+  - IPAddress
 
 override-operation-name:
   CheckServiceProviderAvailability: CheckPeeringServiceProviderAvailability

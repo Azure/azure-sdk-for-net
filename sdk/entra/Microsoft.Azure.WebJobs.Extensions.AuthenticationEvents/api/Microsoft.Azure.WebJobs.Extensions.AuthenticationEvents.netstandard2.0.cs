@@ -8,7 +8,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     }
     public partial class AuthenticationEventResponseHandler : Microsoft.Azure.WebJobs.Host.Bindings.IValueBinder, Microsoft.Azure.WebJobs.Host.Bindings.IValueProvider
     {
-        public AuthenticationEventResponseHandler() { }
+        internal AuthenticationEventResponseHandler() { }
         public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequestBase Request { get { throw null; } }
         public Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse Response { get { throw null; } }
         public System.Type Type { get { throw null; } }
@@ -34,6 +34,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         [Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventMetadataAttribute(typeof(Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.TokenIssuanceStartRequest), "microsoft.graph.authenticationEvent.TokenIssuanceStart", "TokenIssuanceStart", "CloudEventActionableTemplate.json")]
         TokenIssuanceStart = 0,
     }
+    public sealed partial class EventTriggerMetrics
+    {
+        internal EventTriggerMetrics() { }
+        public const string MetricsHeader = "User-Agent";
+        public const string ProductName = "AuthenticationEvents";
+        public static string Framework { get { throw null; } }
+        public static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EventTriggerMetrics Instance { get { throw null; } }
+        public static string Platform { get { throw null; } }
+        public static string ProductVersion { get { throw null; } }
+    }
     public enum EventType
     {
         OnTokenIssuanceStart = 0,
@@ -44,11 +54,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         TokenInvalid = 1,
         Successful = 2,
         ValidationError = 3,
-    }
-    public partial class ResponseValidationException : System.Exception
-    {
-        public ResponseValidationException(string message) { }
-        public ResponseValidationException(string message, System.Exception innerException) { }
     }
 }
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
@@ -128,6 +133,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
     public abstract partial class CloudEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventRequest<TResponse, TData> where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse, new() where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.CloudEventData
     {
         internal CloudEventRequest() { }
+        [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("oDataType")]
         public string ODataType { get { throw null; } set { } }
         [System.ComponentModel.DataAnnotations.RequiredAttribute]

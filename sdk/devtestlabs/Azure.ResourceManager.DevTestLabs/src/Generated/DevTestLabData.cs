@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.DevTestLabs
     /// </summary>
     public partial class DevTestLabData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabData(AzureLocation location) : base(location)
         {
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DevTestLabs
             ExtendedProperties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of DevTestLabData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

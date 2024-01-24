@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Properties of the vault. </summary>
     public partial class RecoveryServicesVaultProperties
     {
-        /// <summary> Initializes a new instance of RecoveryServicesVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultProperties"/>. </summary>
         public RecoveryServicesVaultProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="upgradeDetails"> Details for upgrading vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>

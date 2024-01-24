@@ -47,9 +47,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public async Task CopyModelToOperationPercentageCompletedValue()
         {
             var client = CreateDocumentModelAdministrationClient();
-            var modelId = Recording.GenerateId();
 
-            await using var trainedModel = await BuildDisposableDocumentModelAsync(modelId);
+            await using var trainedModel = await BuildDisposableDocumentModelAsync();
 
             var targetModelId = Recording.GenerateId();
             DocumentModelCopyAuthorization targetAuth = await client.GetCopyAuthorizationAsync(targetModelId);

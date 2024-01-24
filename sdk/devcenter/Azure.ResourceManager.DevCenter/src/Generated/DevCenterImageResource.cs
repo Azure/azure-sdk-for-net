@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a DevCenterImage along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DevCenterImageResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDevCenterImageResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterGalleryResource" /> using the GetDevCenterImage method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DevCenterImageResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDevCenterImageResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterGalleryResource"/> using the GetDevCenterImage method.
     /// </summary>
     public partial class DevCenterImageResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DevCenterImageResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="devCenterName"> The devCenterName. </param>
+        /// <param name="galleryName"> The galleryName. </param>
+        /// <param name="imageName"> The imageName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/devcenters/{devCenterName}/galleries/{galleryName}/images/{imageName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly ImagesRestOperations _devCenterImageImagesRestClient;
         private readonly DevCenterImageData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/galleries/images";
+
         /// <summary> Initializes a new instance of the <see cref="DevCenterImageResource"/> class for mocking. </summary>
         protected DevCenterImageResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DevCenterImageResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DevCenterImageResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DevCenterImageResource(ArmClient client, DevCenterImageData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/devcenters/galleries/images";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <returns> An object representing collection of ImageVersionResources and their operations over a ImageVersionResource. </returns>
         public virtual ImageVersionCollection GetImageVersions()
         {
-            return GetCachedClient(Client => new ImageVersionCollection(Client, Id));
+            return GetCachedClient(client => new ImageVersionCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +109,20 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ImageVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ImageVersionResource>> GetImageVersionAsync(string versionName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +140,20 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ImageVersions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ImageVersionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionName"> The version of the image. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="versionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="versionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ImageVersionResource> GetImageVersion(string versionName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +170,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -181,6 +210,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Images_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DevCenterImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

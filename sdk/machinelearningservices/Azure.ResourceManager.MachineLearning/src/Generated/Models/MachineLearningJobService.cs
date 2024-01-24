@@ -13,24 +13,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Job endpoint definition. </summary>
     public partial class MachineLearningJobService
     {
-        /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         public MachineLearningJobService()
         {
             Properties = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningJobService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningJobService"/>. </summary>
         /// <param name="endpoint"> Url for endpoint. </param>
         /// <param name="errorMessage"> Any error in the service. </param>
         /// <param name="jobServiceType"> Endpoint type. </param>
-        /// <param name="port"> Port for endpoint. </param>
+        /// <param name="nodes">
+        /// Nodes that user would like to start the service on.
+        /// If Nodes is not set or set to null, the service will only be started on leader node.
+        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobAllNodes"/>.
+        /// </param>
+        /// <param name="port"> Port for endpoint set by user. </param>
         /// <param name="properties"> Additional properties to set on the endpoint. </param>
         /// <param name="status"> Status of endpoint. </param>
-        internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, int? port, IDictionary<string, string> properties, string status)
+        internal MachineLearningJobService(string endpoint, string errorMessage, string jobServiceType, JobNodes nodes, int? port, IDictionary<string, string> properties, string status)
         {
             Endpoint = endpoint;
             ErrorMessage = errorMessage;
             JobServiceType = jobServiceType;
+            Nodes = nodes;
             Port = port;
             Properties = properties;
             Status = status;
@@ -42,7 +49,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public string ErrorMessage { get; }
         /// <summary> Endpoint type. </summary>
         public string JobServiceType { get; set; }
-        /// <summary> Port for endpoint. </summary>
+        /// <summary>
+        /// Nodes that user would like to start the service on.
+        /// If Nodes is not set or set to null, the service will only be started on leader node.
+        /// Please note <see cref="JobNodes"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="JobAllNodes"/>.
+        /// </summary>
+        public JobNodes Nodes { get; set; }
+        /// <summary> Port for endpoint set by user. </summary>
         public int? Port { get; set; }
         /// <summary> Additional properties to set on the endpoint. </summary>
         public IDictionary<string, string> Properties { get; set; }

@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> List of available columns for sorting. </summary>
     public partial class ThreatIntelligenceSortingCriteria
     {
-        /// <summary> Initializes a new instance of ThreatIntelligenceSortingCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceSortingCriteria"/>. </summary>
         public ThreatIntelligenceSortingCriteria()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ThreatIntelligenceSortingCriteria"/>. </summary>
+        /// <param name="itemKey"> Column name. </param>
+        /// <param name="sortOrder"> Sorting order (ascending/descending/unsorted). </param>
+        internal ThreatIntelligenceSortingCriteria(string itemKey, ThreatIntelligenceSortingOrder? sortOrder)
+        {
+            ItemKey = itemKey;
+            SortOrder = sortOrder;
         }
 
         /// <summary> Column name. </summary>

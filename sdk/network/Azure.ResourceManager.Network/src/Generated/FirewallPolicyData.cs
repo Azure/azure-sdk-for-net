@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure;
 using Azure.Core;
@@ -20,7 +21,7 @@ namespace Azure.ResourceManager.Network
     /// </summary>
     public partial class FirewallPolicyData : NetworkTrackedResourceData
     {
-        /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         public FirewallPolicyData()
         {
             RuleCollectionGroups = new ChangeTrackingList<WritableSubResource>();
@@ -28,14 +29,16 @@ namespace Azure.ResourceManager.Network
             ChildPolicies = new ChangeTrackingList<WritableSubResource>();
         }
 
-        /// <summary> Initializes a new instance of FirewallPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirewallPolicyData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="identity"> The identity of the firewall policy. </param>
+        /// <param name="size"> A read-only string that represents the size of the FirewallPolicyPropertiesFormat in MB. (ex 0.5MB). </param>
         /// <param name="ruleCollectionGroups"> List of references to FirewallPolicyRuleCollectionGroups. </param>
         /// <param name="provisioningState"> The provisioning state of the firewall policy resource. </param>
         /// <param name="basePolicy"> The parent firewall policy from which rules are inherited. </param>
@@ -51,10 +54,11 @@ namespace Azure.ResourceManager.Network
         /// <param name="intrusionDetection"> The configuration for Intrusion detection. </param>
         /// <param name="transportSecurity"> TLS Configuration definition. </param>
         /// <param name="sku"> The Firewall Policy SKU. </param>
-        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, ManagedServiceIdentity identity, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags)
+        internal FirewallPolicyData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, ManagedServiceIdentity identity, string size, IReadOnlyList<WritableSubResource> ruleCollectionGroups, NetworkProvisioningState? provisioningState, WritableSubResource basePolicy, IReadOnlyList<WritableSubResource> firewalls, IReadOnlyList<WritableSubResource> childPolicies, AzureFirewallThreatIntelMode? threatIntelMode, FirewallPolicyThreatIntelWhitelist threatIntelWhitelist, FirewallPolicyInsights insights, FirewallPolicySnat snat, FirewallPolicySQL sql, DnsSettings dnsSettings, FirewallPolicyExplicitProxy explicitProxy, FirewallPolicyIntrusionDetection intrusionDetection, FirewallPolicyTransportSecurity transportSecurity, FirewallPolicySku sku) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Identity = identity;
+            Size = size;
             RuleCollectionGroups = ruleCollectionGroups;
             ProvisioningState = provisioningState;
             BasePolicy = basePolicy;
@@ -76,6 +80,8 @@ namespace Azure.ResourceManager.Network
         public ETag? ETag { get; }
         /// <summary> The identity of the firewall policy. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> A read-only string that represents the size of the FirewallPolicyPropertiesFormat in MB. (ex 0.5MB). </summary>
+        public string Size { get; }
         /// <summary> List of references to FirewallPolicyRuleCollectionGroups. </summary>
         public IReadOnlyList<WritableSubResource> RuleCollectionGroups { get; }
         /// <summary> The provisioning state of the firewall policy resource. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -27,20 +28,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
+            if (Optional.IsDefined(ExpiryOn))
+            {
+                writer.WritePropertyName("expiryTime"u8);
+                writer.WriteStringValue(ExpiryOn.Value, "O");
+            }
+            if (Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Metadata);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Metadata))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
-            }
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
-            if (Optional.IsDefined(ValueFormat))
-            {
-                writer.WritePropertyName("valueFormat"u8);
-                writer.WriteStringValue(ValueFormat.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -54,9 +62,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<MachineLearningWorkspaceConnectionManagedIdentity> credentials = default;
             MachineLearningConnectionAuthType authType = default;
             Optional<MachineLearningConnectionCategory> category = default;
+            Optional<DateTimeOffset> expiryTime = default;
+            Optional<BinaryData> metadata = default;
             Optional<string> target = default;
-            Optional<string> value = default;
-            Optional<MachineLearningValueFormat> valueFormat = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("credentials"u8))
@@ -82,27 +90,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     category = new MachineLearningConnectionCategory(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("target"u8))
-                {
-                    target = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("value"u8))
-                {
-                    value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("valueFormat"u8))
+                if (property.NameEquals("expiryTime"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    valueFormat = new MachineLearningValueFormat(property.Value.GetString());
+                    expiryTime = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    metadata = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("target"u8))
+                {
+                    target = property.Value.GetString();
                     continue;
                 }
             }
-            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), target.Value, value.Value, Optional.ToNullable(valueFormat), credentials.Value);
+            return new MachineLearningManagedIdentityAuthTypeWorkspaceConnection(authType, Optional.ToNullable(category), Optional.ToNullable(expiryTime), metadata.Value, target.Value, credentials.Value);
         }
     }
 }

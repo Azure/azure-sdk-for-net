@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Monitor.Models
     /// <summary> The DataCollectionRulePrivateLinkScopedResourceInfo. </summary>
     public partial class DataCollectionRulePrivateLinkScopedResourceInfo
     {
-        /// <summary> Initializes a new instance of DataCollectionRulePrivateLinkScopedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRulePrivateLinkScopedResourceInfo"/>. </summary>
         internal DataCollectionRulePrivateLinkScopedResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DataCollectionRulePrivateLinkScopedResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRulePrivateLinkScopedResourceInfo"/>. </summary>
         /// <param name="resourceId"> The resourceId of the Azure Monitor Private Link Scope Scoped Resource through which this DCE is associated with a Azure Monitor Private Link Scope. </param>
         /// <param name="scopeId"> The immutableId of the Azure Monitor Private Link Scope Resource to which the association is. </param>
         internal DataCollectionRulePrivateLinkScopedResourceInfo(ResourceIdentifier resourceId, string scopeId)

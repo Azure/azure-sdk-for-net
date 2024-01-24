@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The service objectives capability. </summary>
     public partial class ServiceObjectiveCapability
     {
-        /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveCapability"/>. </summary>
         internal ServiceObjectiveCapability()
         {
             SupportedMaxSizes = new ChangeTrackingList<MaxSizeRangeCapability>();
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             SupportedMaintenanceConfigurations = new ChangeTrackingList<MaintenanceConfigurationCapability>();
         }
 
-        /// <summary> Initializes a new instance of ServiceObjectiveCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceObjectiveCapability"/>. </summary>
         /// <param name="id"> The unique ID of the service objective. </param>
         /// <param name="name"> The service objective name. </param>
         /// <param name="supportedMaxSizes"> The list of supported maximum database sizes. </param>

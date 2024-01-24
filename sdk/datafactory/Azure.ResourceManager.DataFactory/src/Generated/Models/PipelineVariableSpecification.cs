@@ -12,14 +12,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Definition of a single variable for a Pipeline. </summary>
     public partial class PipelineVariableSpecification
     {
-        /// <summary> Initializes a new instance of PipelineVariableSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineVariableSpecification"/>. </summary>
         /// <param name="variableType"> Variable type. </param>
         public PipelineVariableSpecification(PipelineVariableType variableType)
         {
             VariableType = variableType;
         }
 
-        /// <summary> Initializes a new instance of PipelineVariableSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineVariableSpecification"/>. </summary>
         /// <param name="variableType"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
         internal PipelineVariableSpecification(PipelineVariableType variableType, BinaryData defaultValue)
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

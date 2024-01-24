@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.ElasticSan
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ElasticSanResource" /> and their operations.
-    /// Each <see cref="ElasticSanResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="ElasticSanCollection" /> instance call the GetElasticSans method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="ElasticSanResource"/> and their operations.
+    /// Each <see cref="ElasticSanResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="ElasticSanCollection"/> instance call the GetElasticSans method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ElasticSanCollection : ArmCollection, IEnumerable<ElasticSanResource>, IAsyncEnumerable<ElasticSanResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>ElasticSans_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="ElasticSanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ElasticSanResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>ElasticSans_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ElasticSanResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ElasticSanResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ElasticSanResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _elasticSanRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.ElasticSan
             {
                 var response = _elasticSanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/> is null. </exception>
+        public virtual async Task<NullableResponse<ElasticSanResource>> GetIfExistsAsync(string elasticSanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+
+            using var scope = _elasticSanClientDiagnostics.CreateScope("ElasticSanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _elasticSanRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<ElasticSanResource>(response.GetRawResponse());
+                return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="elasticSanName"> The name of the ElasticSan. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="elasticSanName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="elasticSanName"/> is null. </exception>
+        public virtual NullableResponse<ElasticSanResource> GetIfExists(string elasticSanName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(elasticSanName, nameof(elasticSanName));
+
+            using var scope = _elasticSanClientDiagnostics.CreateScope("ElasticSanCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _elasticSanRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, elasticSanName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<ElasticSanResource>(response.GetRawResponse());
+                return Response.FromValue(new ElasticSanResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

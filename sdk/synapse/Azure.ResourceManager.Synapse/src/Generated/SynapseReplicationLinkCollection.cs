@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseReplicationLinkResource" /> and their operations.
-    /// Each <see cref="SynapseReplicationLinkResource" /> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource" />.
-    /// To get a <see cref="SynapseReplicationLinkCollection" /> instance call the GetSynapseReplicationLinks method from an instance of <see cref="SynapseSqlPoolResource" />.
+    /// A class representing a collection of <see cref="SynapseReplicationLinkResource"/> and their operations.
+    /// Each <see cref="SynapseReplicationLinkResource"/> in the collection will belong to the same instance of <see cref="SynapseSqlPoolResource"/>.
+    /// To get a <see cref="SynapseReplicationLinkCollection"/> instance call the GetSynapseReplicationLinks method from an instance of <see cref="SynapseSqlPoolResource"/>.
     /// </summary>
     public partial class SynapseReplicationLinkCollection : ArmCollection, IEnumerable<SynapseReplicationLinkResource>, IAsyncEnumerable<SynapseReplicationLinkResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseReplicationLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -160,10 +184,18 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseReplicationLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseReplicationLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseReplicationLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseReplicationLinkSqlPoolReplicationLinksRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -181,6 +213,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +257,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>SqlPoolReplicationLinks_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkId"> The ID of the replication link. </param>
@@ -233,6 +281,96 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseReplicationLinkSqlPoolReplicationLinksRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkId"> The ID of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseReplicationLinkResource>> GetIfExistsAsync(string linkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
+
+            using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseReplicationLinkSqlPoolReplicationLinksRestClient.GetByNameAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseReplicationLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/replicationLinks/{linkId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlPoolReplicationLinks_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseReplicationLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="linkId"> The ID of the replication link. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="linkId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="linkId"/> is null. </exception>
+        public virtual NullableResponse<SynapseReplicationLinkResource> GetIfExists(string linkId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(linkId, nameof(linkId));
+
+            using var scope = _synapseReplicationLinkSqlPoolReplicationLinksClientDiagnostics.CreateScope("SynapseReplicationLinkCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseReplicationLinkSqlPoolReplicationLinksRestClient.GetByName(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, linkId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseReplicationLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseReplicationLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

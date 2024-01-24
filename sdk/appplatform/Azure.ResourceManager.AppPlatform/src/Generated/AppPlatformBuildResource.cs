@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppPlatform
 {
     /// <summary>
     /// A Class representing an AppPlatformBuild along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppPlatformBuildResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppPlatformBuildResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource" /> using the GetAppPlatformBuild method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppPlatformBuildResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppPlatformBuildResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppPlatformBuildServiceResource"/> using the GetAppPlatformBuild method.
     /// </summary>
     public partial class AppPlatformBuildResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppPlatformBuildResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="serviceName"> The serviceName. </param>
+        /// <param name="buildServiceName"> The buildServiceName. </param>
+        /// <param name="buildName"> The buildName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serviceName, string buildServiceName, string buildName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppPlatform/Spring/{serviceName}/buildServices/{buildServiceName}/builds/{buildName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppPlatform
         private readonly BuildServiceRestOperations _appPlatformBuildBuildServiceRestClient;
         private readonly AppPlatformBuildData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builds";
+
         /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildResource"/> class for mocking. </summary>
         protected AppPlatformBuildResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppPlatformBuildResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppPlatformBuildResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppPlatformBuildResource(ArmClient client, AppPlatformBuildData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppPlatform/Spring/buildServices/builds";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.AppPlatform
         /// <returns> An object representing collection of AppPlatformBuildResultResources and their operations over a AppPlatformBuildResultResource. </returns>
         public virtual AppPlatformBuildResultCollection GetAppPlatformBuildResults()
         {
-            return GetCachedClient(Client => new AppPlatformBuildResultCollection(Client, Id));
+            return GetCachedClient(client => new AppPlatformBuildResultCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +109,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildResultName"> The name of the build result resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppPlatformBuildResultResource>> GetAppPlatformBuildResultAsync(string buildResultName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +140,20 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuildResult</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="buildResultName"> The name of the build result resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="buildResultName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="buildResultName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppPlatformBuildResultResource> GetAppPlatformBuildResult(string buildResultName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +170,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +211,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <term>Operation Id</term>
         /// <description>BuildService_GetBuild</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,6 +250,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_CreateOrUpdateBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +296,14 @@ namespace Azure.ResourceManager.AppPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BuildService_CreateOrUpdateBuild</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppPlatformBuildResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

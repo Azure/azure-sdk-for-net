@@ -22,7 +22,4 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
 </Project>

@@ -19,7 +19,7 @@ namespace Azure.Storage.Blobs.Models
             {
                 encoded = (bool?)encodedAttribute;
             }
-            content = element.Value;
+            content = (string)element;
             return new BlobName(encoded, content);
         }
     }

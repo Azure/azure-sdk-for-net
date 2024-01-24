@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Automanage
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> and their operations.
-    /// Each <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> in the collection will belong to the same instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource" />.
-    /// To get an <see cref="AutomanageVmConfigurationProfileAssignmentReportCollection" /> instance call the GetAutomanageVmConfigurationProfileAssignmentReports method from an instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource" />.
+    /// A class representing a collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> and their operations.
+    /// Each <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> in the collection will belong to the same instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource"/>.
+    /// To get an <see cref="AutomanageVmConfigurationProfileAssignmentReportCollection"/> instance call the GetAutomanageVmConfigurationProfileAssignmentReports method from an instance of <see cref="AutomanageVmConfigurationProfileAssignmentResource"/>.
     /// </summary>
     public partial class AutomanageVmConfigurationProfileAssignmentReportCollection : ArmCollection, IEnumerable<AutomanageVmConfigurationProfileAssignmentReportResource>, IAsyncEnumerable<AutomanageVmConfigurationProfileAssignmentReportResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> The report name. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,10 +154,18 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_ListByConfigurationProfileAssignments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AutomanageVmConfigurationProfileAssignmentReportResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentReportreportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -159,10 +183,18 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_ListByConfigurationProfileAssignments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AutomanageVmConfigurationProfileAssignmentReportResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _automanageVmConfigurationProfileAssignmentReportreportsRestClient.CreateListByConfigurationProfileAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -179,6 +211,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +255,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>reports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reportName"> The report name. </param>
@@ -231,6 +279,96 @@ namespace Azure.ResourceManager.Automanage
             {
                 var response = _automanageVmConfigurationProfileAssignmentReportreportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> The report name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AutomanageVmConfigurationProfileAssignmentReportResource>> GetIfExistsAsync(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var scope = _automanageVmConfigurationProfileAssignmentReportreportsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentReportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _automanageVmConfigurationProfileAssignmentReportreportsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageVmConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>reports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageVmConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="reportName"> The report name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="reportName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="reportName"/> is null. </exception>
+        public virtual NullableResponse<AutomanageVmConfigurationProfileAssignmentReportResource> GetIfExists(string reportName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(reportName, nameof(reportName));
+
+            using var scope = _automanageVmConfigurationProfileAssignmentReportreportsClientDiagnostics.CreateScope("AutomanageVmConfigurationProfileAssignmentReportCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _automanageVmConfigurationProfileAssignmentReportreportsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, reportName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AutomanageVmConfigurationProfileAssignmentReportResource>(response.GetRawResponse());
+                return Response.FromValue(new AutomanageVmConfigurationProfileAssignmentReportResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

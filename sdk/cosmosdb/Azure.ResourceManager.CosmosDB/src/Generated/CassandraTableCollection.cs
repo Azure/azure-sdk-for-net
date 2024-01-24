@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CassandraTableResource" /> and their operations.
-    /// Each <see cref="CassandraTableResource" /> in the collection will belong to the same instance of <see cref="CassandraKeyspaceResource" />.
-    /// To get a <see cref="CassandraTableCollection" /> instance call the GetCassandraTables method from an instance of <see cref="CassandraKeyspaceResource" />.
+    /// A class representing a collection of <see cref="CassandraTableResource"/> and their operations.
+    /// Each <see cref="CassandraTableResource"/> in the collection will belong to the same instance of <see cref="CassandraKeyspaceResource"/>.
+    /// To get a <see cref="CassandraTableCollection"/> instance call the GetCassandraTables method from an instance of <see cref="CassandraKeyspaceResource"/>.
     /// </summary>
     public partial class CassandraTableCollection : ArmCollection, IEnumerable<CassandraTableResource>, IAsyncEnumerable<CassandraTableResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CassandraResources_CreateUpdateCassandraTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraResources_CreateUpdateCassandraTable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraResources_GetCassandraTable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CassandraResources_GetCassandraTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraResources_ListCassandraTables</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CassandraTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CassandraTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CassandraTableResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraTableCassandraResourcesRestClient.CreateListCassandraTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraResources_ListCassandraTables</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CassandraTableResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CassandraTableResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CassandraTableResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cassandraTableCassandraResourcesRestClient.CreateListCassandraTablesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
@@ -262,6 +310,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CassandraResources_GetCassandraTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +354,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>CassandraResources_GetCassandraTable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tableName"> Cosmos DB table name. </param>
@@ -314,6 +378,96 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cassandraTableCassandraResourcesRestClient.GetCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tableName"> Cosmos DB table name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual async Task<NullableResponse<CassandraTableResource>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cassandraTableCassandraResourcesRestClient.GetCassandraTableAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CassandraTableResource>(response.GetRawResponse());
+                return Response.FromValue(new CassandraTableResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/tables/{tableName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CassandraResources_GetCassandraTable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CassandraTableResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="tableName"> Cosmos DB table name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="tableName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
+        public virtual NullableResponse<CassandraTableResource> GetIfExists(string tableName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+
+            using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cassandraTableCassandraResourcesRestClient.GetCassandraTable(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, tableName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CassandraTableResource>(response.GetRawResponse());
+                return Response.FromValue(new CassandraTableResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

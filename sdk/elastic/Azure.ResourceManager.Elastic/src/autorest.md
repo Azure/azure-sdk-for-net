@@ -49,4 +49,7 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
 
+rename-mapping:
+  MonitoredResource: MonitoredResourceContent
+
 ```

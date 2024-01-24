@@ -40,6 +40,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("validationType"u8);
                 writer.WriteStringValue(ValidationType.Value.ToString());
             }
+            if (Optional.IsDefined(IdentityDetails))
+            {
+                writer.WritePropertyName("identityDetails"u8);
+                writer.WriteObjectValue(IdentityDetails);
+            }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WriteEndObject();
@@ -61,6 +66,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             Optional<string> provisioningState = default;
             Optional<DataProtectionBackupAuthCredentials> datasourceAuthCredentials = default;
             Optional<BackupValidationType> validationType = default;
+            Optional<DataProtectionIdentityDetails> identityDetails = default;
             string objectType = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -138,13 +144,22 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     validationType = new BackupValidationType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("identityDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityDetails = DataProtectionIdentityDetails.DeserializeDataProtectionIdentityDetails(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("objectType"u8))
                 {
                     objectType = property.Value.GetString();
                     continue;
                 }
             }
-            return new DataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), objectType);
+            return new DataProtectionBackupInstanceProperties(friendlyName.Value, dataSourceInfo, dataSourceSetInfo.Value, policyInfo, protectionStatus.Value, Optional.ToNullable(currentProtectionState), protectionErrorDetails.Value, provisioningState.Value, datasourceAuthCredentials.Value, Optional.ToNullable(validationType), identityDetails.Value, objectType);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A set of rules describing access policies applied to NFSv3 clients of the cache. </summary>
     public partial class NfsAccessPolicy
     {
-        /// <summary> Initializes a new instance of NfsAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfsAccessPolicy"/>. </summary>
         /// <param name="name"> Name identifying this policy. Access Policy names are not case sensitive. </param>
         /// <param name="accessRules"> The set of rules describing client accesses allowed under this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accessRules"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             AccessRules = accessRules.ToList();
         }
 
-        /// <summary> Initializes a new instance of NfsAccessPolicy. </summary>
+        /// <summary> Initializes a new instance of <see cref="NfsAccessPolicy"/>. </summary>
         /// <param name="name"> Name identifying this policy. Access Policy names are not case sensitive. </param>
         /// <param name="accessRules"> The set of rules describing client accesses allowed under this policy. </param>
         internal NfsAccessPolicy(string name, IList<NfsAccessRule> accessRules)

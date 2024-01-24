@@ -14,7 +14,7 @@ namespace Azure.Communication.Chat
     /// <summary> Details of the message to send. </summary>
     internal partial class SendChatMessageRequest
     {
-        /// <summary> Initializes a new instance of SendChatMessageRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="SendChatMessageRequest"/>. </summary>
         /// <param name="content"> Chat message content. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public SendChatMessageRequest(string content)
@@ -23,6 +23,19 @@ namespace Azure.Communication.Chat
 
             Content = content;
             Metadata = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SendChatMessageRequest"/>. </summary>
+        /// <param name="content"> Chat message content. </param>
+        /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
+        /// <param name="type"> The chat message type. </param>
+        /// <param name="metadata"> Message metadata. </param>
+        internal SendChatMessageRequest(string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata)
+        {
+            Content = content;
+            SenderDisplayName = senderDisplayName;
+            Type = type;
+            Metadata = metadata;
         }
 
         /// <summary> Chat message content. </summary>

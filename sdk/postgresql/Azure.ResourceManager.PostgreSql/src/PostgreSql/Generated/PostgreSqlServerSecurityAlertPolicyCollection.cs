@@ -21,9 +21,9 @@ using Azure.ResourceManager.PostgreSql.Models;
 namespace Azure.ResourceManager.PostgreSql
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> and their operations.
-    /// Each <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> in the collection will belong to the same instance of <see cref="PostgreSqlServerResource" />.
-    /// To get a <see cref="PostgreSqlServerSecurityAlertPolicyCollection" /> instance call the GetPostgreSqlServerSecurityAlertPolicies method from an instance of <see cref="PostgreSqlServerResource" />.
+    /// A class representing a collection of <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> and their operations.
+    /// Each <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> in the collection will belong to the same instance of <see cref="PostgreSqlServerResource"/>.
+    /// To get a <see cref="PostgreSqlServerSecurityAlertPolicyCollection"/> instance call the GetPostgreSqlServerSecurityAlertPolicies method from an instance of <see cref="PostgreSqlServerResource"/>.
     /// </summary>
     public partial class PostgreSqlServerSecurityAlertPolicyCollection : ArmCollection, IEnumerable<PostgreSqlServerSecurityAlertPolicyResource>, IAsyncEnumerable<PostgreSqlServerSecurityAlertPolicyResource>
     {
@@ -65,6 +65,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -103,6 +111,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
@@ -175,6 +199,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,10 +241,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PostgreSqlServerSecurityAlertPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -231,10 +271,18 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_ListByServer</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PostgreSqlServerSecurityAlertPolicyResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PostgreSqlServerSecurityAlertPolicyResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PostgreSqlServerSecurityAlertPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -252,6 +300,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +340,14 @@ namespace Azure.ResourceManager.PostgreSql
         /// <term>Operation Id</term>
         /// <description>ServerSecurityAlertPolicies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
@@ -296,6 +360,88 @@ namespace Azure.ResourceManager.PostgreSql
             {
                 var response = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<PostgreSqlServerSecurityAlertPolicyResource>> GetIfExistsAsync(PostgreSqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("PostgreSqlServerSecurityAlertPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlServerSecurityAlertPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DBforPostgreSQL/servers/{serverName}/securityAlertPolicies/{securityAlertPolicyName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ServerSecurityAlertPolicies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlServerSecurityAlertPolicyResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="securityAlertPolicyName"> The name of the security alert policy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<PostgreSqlServerSecurityAlertPolicyResource> GetIfExists(PostgreSqlSecurityAlertPolicyName securityAlertPolicyName, CancellationToken cancellationToken = default)
+        {
+            using var scope = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesClientDiagnostics.CreateScope("PostgreSqlServerSecurityAlertPolicyCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _postgreSqlServerSecurityAlertPolicyServerSecurityAlertPoliciesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityAlertPolicyName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PostgreSqlServerSecurityAlertPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new PostgreSqlServerSecurityAlertPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StorageCache.Models
     /// <summary> A resource SKU. </summary>
     public partial class StorageCacheSku
     {
-        /// <summary> Initializes a new instance of StorageCacheSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSku"/>. </summary>
         internal StorageCacheSku()
         {
             Capabilities = new ChangeTrackingList<StorageCacheSkuCapability>();
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             Restrictions = new ChangeTrackingList<StorageCacheRestriction>();
         }
 
-        /// <summary> Initializes a new instance of StorageCacheSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageCacheSku"/>. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="capabilities"> A list of capabilities of this SKU, such as throughput or ops/sec. </param>
         /// <param name="locations"> The set of locations where the SKU is available. This is the supported and registered Azure Geo Regions (e.g., West US, East US, Southeast Asia, etc.). </param>

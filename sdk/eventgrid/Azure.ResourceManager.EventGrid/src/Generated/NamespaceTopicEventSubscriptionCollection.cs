@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NamespaceTopicEventSubscriptionResource" /> and their operations.
-    /// Each <see cref="NamespaceTopicEventSubscriptionResource" /> in the collection will belong to the same instance of <see cref="NamespaceTopicResource" />.
-    /// To get a <see cref="NamespaceTopicEventSubscriptionCollection" /> instance call the GetNamespaceTopicEventSubscriptions method from an instance of <see cref="NamespaceTopicResource" />.
+    /// A class representing a collection of <see cref="NamespaceTopicEventSubscriptionResource"/> and their operations.
+    /// Each <see cref="NamespaceTopicEventSubscriptionResource"/> in the collection will belong to the same instance of <see cref="NamespaceTopicResource"/>.
+    /// To get a <see cref="NamespaceTopicEventSubscriptionCollection"/> instance call the GetNamespaceTopicEventSubscriptions method from an instance of <see cref="NamespaceTopicResource"/>.
     /// </summary>
     public partial class NamespaceTopicEventSubscriptionCollection : ArmCollection, IEnumerable<NamespaceTopicEventSubscriptionResource>, IAsyncEnumerable<NamespaceTopicEventSubscriptionResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,12 +252,20 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_ListByNamespaceTopic</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NamespaceTopicEventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NamespaceTopicEventSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NamespaceTopicEventSubscriptionResource> GetAllAsync(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
@@ -244,12 +284,20 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_ListByNamespaceTopic</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The query used to filter the search results using OData syntax. Filtering is permitted on the 'name' property only and with limited number of OData operations. These operations are: the 'contains' function as well as the following logical operations: not, and, or, eq (for equal), and ne (for not equal). No arithmetic operations are supported. The following is a valid filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The following is not a valid filter example: $filter=location eq 'westus'. </param>
         /// <param name="top"> The number of results to return per page for the list operation. Valid range for top parameter is 1 to 100. If not specified, the default number of results to be returned is 20 items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NamespaceTopicEventSubscriptionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NamespaceTopicEventSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NamespaceTopicEventSubscriptionResource> GetAll(string filter = null, int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateListByNamespaceTopicRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, top);
@@ -267,6 +315,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,6 +359,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NamespaceTopicEventSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
@@ -319,6 +383,96 @@ namespace Azure.ResourceManager.EventGrid
             {
                 var response = _namespaceTopicEventSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamespaceTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NamespaceTopicEventSubscriptionResource>> GetIfExistsAsync(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+
+            using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _namespaceTopicEventSubscriptionRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NamespaceTopicEventSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/namespaces/{namespaceName}/topics/{topicName}/eventSubscriptions/{eventSubscriptionName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NamespaceTopicEventSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NamespaceTopicEventSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="eventSubscriptionName"> Name of the event subscription to be created. Event subscription names must be between 3 and 100 characters in length and use alphanumeric letters only. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="eventSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="eventSubscriptionName"/> is null. </exception>
+        public virtual NullableResponse<NamespaceTopicEventSubscriptionResource> GetIfExists(string eventSubscriptionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(eventSubscriptionName, nameof(eventSubscriptionName));
+
+            using var scope = _namespaceTopicEventSubscriptionClientDiagnostics.CreateScope("NamespaceTopicEventSubscriptionCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _namespaceTopicEventSubscriptionRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, eventSubscriptionName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NamespaceTopicEventSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new NamespaceTopicEventSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

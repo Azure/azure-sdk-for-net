@@ -6,21 +6,23 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel. </summary>
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel : MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel()
         {
             ResultType = "MigrationLevelOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="state"> Overall state of the schema migration. </param>
         /// <param name="startedOn"> Migration start time. </param>
         /// <param name="endedOn"> Migration end time. </param>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="sourceServerBrandVersion"> Source server brand version. </param>
         /// <param name="targetServerVersion"> Target server version. </param>
         /// <param name="targetServerBrandVersion"> Target server brand version. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(string id, string resultType, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion) : base(id, resultType)
+        internal MigrateSchemaSqlServerSqlDBTaskOutputMigrationLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrationState? state, DateTimeOffset? startedOn, DateTimeOffset? endedOn, string sourceServerVersion, string sourceServerBrandVersion, string targetServerVersion, string targetServerBrandVersion) : base(id, resultType, serializedAdditionalRawData)
         {
             State = state;
             StartedOn = startedOn;

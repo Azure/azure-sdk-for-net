@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Properties to configure Encryption. </summary>
     public partial class EventHubsEncryption
     {
-        /// <summary> Initializes a new instance of EventHubsEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsEncryption"/>. </summary>
         public EventHubsEncryption()
         {
             KeyVaultProperties = new ChangeTrackingList<EventHubsKeyVaultProperties>();
         }
 
-        /// <summary> Initializes a new instance of EventHubsEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsEncryption"/>. </summary>
         /// <param name="keyVaultProperties"> Properties of KeyVault. </param>
         /// <param name="keySource"> Enumerates the possible value of keySource for Encryption. </param>
         /// <param name="requireInfrastructureEncryption"> Enable Infrastructure Encryption (Double Encryption). </param>

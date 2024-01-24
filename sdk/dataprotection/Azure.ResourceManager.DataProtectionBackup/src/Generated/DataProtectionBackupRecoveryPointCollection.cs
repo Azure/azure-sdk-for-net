@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
-    /// A class representing a collection of <see cref="DataProtectionBackupRecoveryPointResource" /> and their operations.
-    /// Each <see cref="DataProtectionBackupRecoveryPointResource" /> in the collection will belong to the same instance of <see cref="DataProtectionBackupInstanceResource" />.
-    /// To get a <see cref="DataProtectionBackupRecoveryPointCollection" /> instance call the GetDataProtectionBackupRecoveryPoints method from an instance of <see cref="DataProtectionBackupInstanceResource" />.
+    /// A class representing a collection of <see cref="DataProtectionBackupRecoveryPointResource"/> and their operations.
+    /// Each <see cref="DataProtectionBackupRecoveryPointResource"/> in the collection will belong to the same instance of <see cref="DataProtectionBackupInstanceResource"/>.
+    /// To get a <see cref="DataProtectionBackupRecoveryPointCollection"/> instance call the GetDataProtectionBackupRecoveryPoints method from an instance of <see cref="DataProtectionBackupInstanceResource"/>.
     /// </summary>
     public partial class DataProtectionBackupRecoveryPointCollection : ArmCollection, IEnumerable<DataProtectionBackupRecoveryPointResource>, IAsyncEnumerable<DataProtectionBackupRecoveryPointResource>
     {
@@ -64,9 +64,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
@@ -101,9 +109,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
@@ -138,12 +154,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="DataProtectionBackupRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataProtectionBackupRecoveryPointResource> GetAllAsync(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken);
@@ -162,12 +186,20 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> OData filter options. </param>
         /// <param name="skipToken"> skipToken Filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DataProtectionBackupRecoveryPointResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataProtectionBackupRecoveryPointResource> GetAll(string filter = null, string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dataProtectionBackupRecoveryPointRecoveryPointsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter, skipToken);
@@ -186,9 +218,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
@@ -221,9 +261,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>RecoveryPoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="recoveryPointId"> The String to use. </param>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
@@ -237,6 +285,96 @@ namespace Azure.ResourceManager.DataProtectionBackup
             {
                 var response = _dataProtectionBackupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        public virtual async Task<NullableResponse<DataProtectionBackupRecoveryPointResource>> GetIfExistsAsync(string recoveryPointId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
+
+            using var scope = _dataProtectionBackupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _dataProtectionBackupRecoveryPointRecoveryPointsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<DataProtectionBackupRecoveryPointResource>(response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupInstances/{backupInstanceName}/recoveryPoints/{recoveryPointId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>RecoveryPoints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupRecoveryPointResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="recoveryPointId"> The <see cref="string"/> to use. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="recoveryPointId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="recoveryPointId"/> is null. </exception>
+        public virtual NullableResponse<DataProtectionBackupRecoveryPointResource> GetIfExists(string recoveryPointId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(recoveryPointId, nameof(recoveryPointId));
+
+            using var scope = _dataProtectionBackupRecoveryPointRecoveryPointsClientDiagnostics.CreateScope("DataProtectionBackupRecoveryPointCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _dataProtectionBackupRecoveryPointRecoveryPointsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, recoveryPointId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<DataProtectionBackupRecoveryPointResource>(response.GetRawResponse());
+                return Response.FromValue(new DataProtectionBackupRecoveryPointResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

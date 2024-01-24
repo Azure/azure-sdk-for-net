@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -12,22 +14,61 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The JSON object that contains the properties to secure a domain. </summary>
     public partial class FrontDoorCustomDomainHttpsContent
     {
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainHttpsContent. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
         /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
         public FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType)
         {
             CertificateType = certificateType;
         }
 
-        /// <summary> Initializes a new instance of FrontDoorCustomDomainHttpsContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/>. </summary>
         /// <param name="certificateType"> Defines the source of the SSL certificate. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
         /// <param name="secret"> Resource reference to the secret. ie. subs/rg/profile/secret. </param>
-        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsContentSecret secret)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorCustomDomainHttpsContent(FrontDoorCertificateType certificateType, FrontDoorMinimumTlsVersion? minimumTlsVersion, FrontDoorCustomDomainHttpsContentSecret secret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateType = certificateType;
             MinimumTlsVersion = minimumTlsVersion;
             Secret = secret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorCustomDomainHttpsContent"/> for deserialization. </summary>
+        internal FrontDoorCustomDomainHttpsContent()
+        {
         }
 
         /// <summary> Defines the source of the SSL certificate. </summary>

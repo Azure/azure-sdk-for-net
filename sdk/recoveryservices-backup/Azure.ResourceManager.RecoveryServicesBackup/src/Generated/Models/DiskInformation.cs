@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> Disk information. </summary>
     public partial class DiskInformation
     {
-        /// <summary> Initializes a new instance of DiskInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskInformation"/>. </summary>
         public DiskInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of DiskInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="DiskInformation"/>. </summary>
         /// <param name="lun"></param>
         /// <param name="name"></param>
         internal DiskInformation(int? lun, string name)

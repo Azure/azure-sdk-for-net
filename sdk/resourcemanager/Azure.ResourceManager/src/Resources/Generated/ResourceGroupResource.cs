@@ -21,13 +21,15 @@ namespace Azure.ResourceManager.Resources
 {
     /// <summary>
     /// A Class representing a ResourceGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ResourceGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetResourceGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetResourceGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ResourceGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetResourceGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetResourceGroup method.
     /// </summary>
     public partial class ResourceGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ResourceGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}";
@@ -40,12 +42,15 @@ namespace Azure.ResourceManager.Resources
         private readonly ResourcesRestOperations _resourceGroupResourcesRestClient;
         private readonly ResourceGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class for mocking. </summary>
         protected ResourceGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ResourceGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ResourceGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ResourceGroupResource(ArmClient client, ResourceGroupData data) : this(client, data.Id)
@@ -69,9 +74,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/resourceGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -105,6 +107,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -137,6 +147,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -168,6 +186,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +230,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -239,6 +273,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to update a resource group. </param>
@@ -273,6 +315,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to update a resource group. </param>
@@ -297,6 +347,190 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
+        /// The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources_MoveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> MoveResourcesAsync(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.MoveResources");
+            scope.Start();
+            try
+            {
+                var response = await _resourceGroupResourcesRestClient.MoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation(_resourceGroupResourcesClientDiagnostics, Pipeline, _resourceGroupResourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources_MoveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation MoveResources(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.MoveResources");
+            scope.Start();
+            try
+            {
+                var response = _resourceGroupResourcesRestClient.MoveResources(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                var operation = new ResourcesArmOperation(_resourceGroupResourcesClientDiagnostics, Pipeline, _resourceGroupResourcesRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources_ValidateMoveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ValidateMoveResourcesAsync(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.ValidateMoveResources");
+            scope.Start();
+            try
+            {
+                var response = await _resourceGroupResourcesRestClient.ValidateMoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
+                var operation = new ResourcesArmOperation(_resourceGroupResourcesClientDiagnostics, Pipeline, _resourceGroupResourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Resources_ValidateMoveResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> Parameters for moving resources. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ValidateMoveResources(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _resourceGroupResourcesClientDiagnostics.CreateScope("ResourceGroupResource.ValidateMoveResources");
+            scope.Start();
+            try
+            {
+                var response = _resourceGroupResourcesRestClient.ValidateMoveResources(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
+                var operation = new ResourcesArmOperation(_resourceGroupResourcesClientDiagnostics, Pipeline, _resourceGroupResourcesRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                    operation.WaitForCompletionResponse(cancellationToken);
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Captures the specified resource group as a template.
         /// <list type="bullet">
         /// <item>
@@ -306,6 +540,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_ExportTemplate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -345,6 +587,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_ExportTemplate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -373,158 +623,6 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary>
-        /// The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGroups_MoveResources</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> MoveResourcesAsync(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.MoveResources");
-            scope.Start();
-            try
-            {
-                var response = await _resourceGroupRestClient.MoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. When moving resources, both the source group and the target group are locked for the duration of the operation. Write and delete operations are blocked on the groups until the move completes.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/moveResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGroups_MoveResources</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation MoveResources(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.MoveResources");
-            scope.Start();
-            try
-            {
-                var response = _resourceGroupRestClient.MoveResources(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGroups_ValidateMoveResources</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> ValidateMoveResourcesAsync(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.ValidateMoveResources");
-            scope.Start();
-            try
-            {
-                var response = await _resourceGroupRestClient.ValidateMoveResourcesAsync(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken).ConfigureAwait(false);
-                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// This operation checks whether the specified resources can be moved to the target. The resources to be moved must be in the same source resource group in the source subscription being used. The target resource group may be in a different subscription. If validation succeeds, it returns HTTP response code 204 (no content). If validation fails, it returns HTTP response code 409 (Conflict) with an error message. Retrieve the URL in the Location header value to check the result of the long-running operation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{sourceResourceGroupName}/validateMoveResources</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ResourceGroups_ValidateMoveResources</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters for moving resources. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation ValidateMoveResources(WaitUntil waitUntil, ResourcesMoveContent content, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = _resourceGroupClientDiagnostics.CreateScope("ResourceGroupResource.ValidateMoveResources");
-            scope.Start();
-            try
-            {
-                var response = _resourceGroupRestClient.ValidateMoveResources(Id.SubscriptionId, Id.ResourceGroupName, content, cancellationToken);
-                var operation = new ResourcesArmOperation(_resourceGroupClientDiagnostics, Pipeline, _resourceGroupRestClient.CreateValidateMoveResourcesRequest(Id.SubscriptionId, Id.ResourceGroupName, content).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletionResponse(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Add a tag to the current resource.
         /// <list type="bullet">
         /// <item>
@@ -534,6 +632,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -589,6 +695,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -643,6 +757,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -692,6 +814,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -740,6 +870,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -792,6 +930,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

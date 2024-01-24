@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ResourceMover
 {
     /// <summary>
-    /// A class representing a collection of <see cref="MoverResource" /> and their operations.
-    /// Each <see cref="MoverResource" /> in the collection will belong to the same instance of <see cref="MoverResourceSetResource" />.
-    /// To get a <see cref="MoverResourceCollection" /> instance call the GetMoverResources method from an instance of <see cref="MoverResourceSetResource" />.
+    /// A class representing a collection of <see cref="MoverResource"/> and their operations.
+    /// Each <see cref="MoverResource"/> in the collection will belong to the same instance of <see cref="MoverResourceSetResource"/>.
+    /// To get a <see cref="MoverResourceCollection"/> instance call the GetMoverResources method from an instance of <see cref="MoverResourceSetResource"/>.
     /// </summary>
     public partial class MoverResourceCollection : ArmCollection, IEnumerable<MoverResource>, IAsyncEnumerable<MoverResource>
     {
@@ -64,11 +64,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
@@ -105,11 +113,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
-        /// <param name="data"> The MoverResource to use. </param>
+        /// <param name="data"> The <see cref="MoverResourceData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> or <paramref name="data"/> is null. </exception>
@@ -145,6 +161,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
@@ -220,11 +252,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="MoverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="MoverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MoverResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -243,11 +283,19 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. For example, you can use $filter=Properties/ProvisioningState eq 'Succeeded'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MoverResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="MoverResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MoverResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _moverResourceMoveResourcesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="moverResourceName"> The Move Resource Name. </param>
@@ -317,6 +381,96 @@ namespace Azure.ResourceManager.ResourceMover
             {
                 var response = _moverResourceMoveResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moverResourceName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        public virtual async Task<NullableResponse<MoverResource>> GetIfExistsAsync(string moverResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _moverResourceMoveResourcesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moverResourceName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<MoverResource>(response.GetRawResponse());
+                return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Migrate/moveCollections/{moveCollectionName}/moveResources/{moveResourceName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MoveResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="moverResourceName"> The Move Resource Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="moverResourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="moverResourceName"/> is null. </exception>
+        public virtual NullableResponse<MoverResource> GetIfExists(string moverResourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(moverResourceName, nameof(moverResourceName));
+
+            using var scope = _moverResourceMoveResourcesClientDiagnostics.CreateScope("MoverResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _moverResourceMoveResourcesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, moverResourceName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<MoverResource>(response.GetRawResponse());
+                return Response.FromValue(new MoverResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

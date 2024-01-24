@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Peering.Models
     /// <summary> The contact detail class. </summary>
     public partial class PeerAsnContactDetail
     {
-        /// <summary> Initializes a new instance of PeerAsnContactDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerAsnContactDetail"/>. </summary>
         public PeerAsnContactDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of PeerAsnContactDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="PeerAsnContactDetail"/>. </summary>
         /// <param name="role"> The role of the contact. </param>
         /// <param name="email"> The e-mail address of the contact. </param>
         /// <param name="phone"> The phone number of the contact. </param>

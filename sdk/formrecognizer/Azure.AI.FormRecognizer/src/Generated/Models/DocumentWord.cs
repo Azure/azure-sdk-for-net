@@ -14,7 +14,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> A word object consisting of a contiguous sequence of characters.  For non-space delimited languages, such as Chinese, Japanese, and Korean, each character is represented as its own word. </summary>
     public partial class DocumentWord
     {
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
@@ -29,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Confidence = confidence;
         }
 
-        /// <summary> Initializes a new instance of DocumentWord. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentWord"/>. </summary>
         /// <param name="content"> Text content of the word. </param>
         /// <param name="polygon"> Bounding polygon of the word. </param>
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>

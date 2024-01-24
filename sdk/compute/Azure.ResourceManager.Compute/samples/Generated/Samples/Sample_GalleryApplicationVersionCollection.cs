@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CreateOrUpdateASimpleGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Create.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_Create.json
             // this example is just showing the usage of "GalleryApplicationVersions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -97,7 +97,7 @@ IsExcludedFromLatest = false,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryApplicationVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ IsExcludedFromLatest = false,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryApplicationVersionWithReplicationStatus()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -162,12 +162,57 @@ IsExcludedFromLatest = false,
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a gallery Application Version with replication status.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAGalleryApplicationVersionWithReplicationStatus()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_Get_WithReplicationStatus.json
+            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryApplicationResource created on azure
+            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryApplicationName = "myGalleryApplicationName";
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+
+            // get the collection of this GalleryApplicationVersionResource
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+
+            // invoke the operation
+            string galleryApplicationVersionName = "1.0.0";
+            ReplicationStatusType? expand = ReplicationStatusType.ReplicationStatus;
+            NullableResponse<GalleryApplicationVersionResource> response = await collection.GetIfExistsAsync(galleryApplicationVersionName, expand: expand);
+            GalleryApplicationVersionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GalleryApplicationVersionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Get a gallery Application Version.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +248,7 @@ IsExcludedFromLatest = false,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetAGalleryApplicationVersion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
             // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -230,12 +275,56 @@ IsExcludedFromLatest = false,
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get a gallery Application Version.
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetAGalleryApplicationVersion()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_Get.json
+            // this example is just showing the usage of "GalleryApplicationVersions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GalleryApplicationResource created on azure
+            // for more information of creating GalleryApplicationResource, please refer to the document of GalleryApplicationResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            string galleryName = "myGalleryName";
+            string galleryApplicationName = "myGalleryApplicationName";
+            ResourceIdentifier galleryApplicationResourceId = GalleryApplicationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, galleryName, galleryApplicationName);
+            GalleryApplicationResource galleryApplication = client.GetGalleryApplicationResource(galleryApplicationResourceId);
+
+            // get the collection of this GalleryApplicationVersionResource
+            GalleryApplicationVersionCollection collection = galleryApplication.GetGalleryApplicationVersions();
+
+            // invoke the operation
+            string galleryApplicationVersionName = "1.0.0";
+            NullableResponse<GalleryApplicationVersionResource> response = await collection.GetIfExistsAsync(galleryApplicationVersionName);
+            GalleryApplicationVersionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GalleryApplicationVersionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // List gallery Application Versions in a gallery Application Definition.
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListGalleryApplicationVersionsInAGalleryApplicationDefinition()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-03-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/GalleryRP/stable/2022-08-03/examples/galleryExamples/GalleryApplicationVersion_ListByGalleryApplication.json
             // this example is just showing the usage of "GalleryApplicationVersions_ListByGalleryApplication" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

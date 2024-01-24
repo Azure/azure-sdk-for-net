@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.AppService
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AppServiceCertificateOrderResource" /> and their operations.
-    /// Each <see cref="AppServiceCertificateOrderResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get an <see cref="AppServiceCertificateOrderCollection" /> instance call the GetAppServiceCertificateOrders method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="AppServiceCertificateOrderResource"/> and their operations.
+    /// Each <see cref="AppServiceCertificateOrderResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get an <see cref="AppServiceCertificateOrderCollection"/> instance call the GetAppServiceCertificateOrders method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class AppServiceCertificateOrderCollection : ArmCollection, IEnumerable<AppServiceCertificateOrderResource>, IAsyncEnumerable<AppServiceCertificateOrderResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppServiceCertificateOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppServiceCertificateOrderResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -243,10 +283,18 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppServiceCertificateOrderResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppServiceCertificateOrderResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppServiceCertificateOrderResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appServiceCertificateOrderRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +356,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateOrderName"> Name of the certificate order.. </param>
@@ -316,6 +380,96 @@ namespace Azure.ResourceManager.AppService
             {
                 var response = _appServiceCertificateOrderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AppServiceCertificateOrderResource>> GetIfExistsAsync(string certificateOrderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+
+            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _appServiceCertificateOrderRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AppServiceCertificateOrderResource>(response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrderResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CertificateRegistration/certificateOrders/{certificateOrderName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AppServiceCertificateOrders_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateOrderName"> Name of the certificate order.. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateOrderName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateOrderName"/> is null. </exception>
+        public virtual NullableResponse<AppServiceCertificateOrderResource> GetIfExists(string certificateOrderName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateOrderName, nameof(certificateOrderName));
+
+            using var scope = _appServiceCertificateOrderClientDiagnostics.CreateScope("AppServiceCertificateOrderCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _appServiceCertificateOrderRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AppServiceCertificateOrderResource>(response.GetRawResponse());
+                return Response.FromValue(new AppServiceCertificateOrderResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

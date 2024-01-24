@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
@@ -48,30 +49,6 @@ namespace Azure.Data.AppConfiguration
             catch (FormatException)
             {
                 throw new InvalidOperationException("Specified Secret value isn't a valid base64 string");
-            }
-        }
-
-        internal static void BuildBatchQuery(RequestUriBuilder builder, SettingSelector selector, string pageLink)
-        {
-            if (!string.IsNullOrEmpty(selector.KeyFilter))
-            {
-                builder.AppendQuery(KeyQueryFilter, selector.KeyFilter);
-            }
-
-            if (!string.IsNullOrEmpty(selector.LabelFilter))
-            {
-                builder.AppendQuery(LabelQueryFilter, selector.LabelFilter);
-            }
-
-            if (selector.Fields != SettingFields.All)
-            {
-                var filter = selector.Fields.ToString().ToLowerInvariant().Replace("isreadonly", "locked");
-                builder.AppendQuery(FieldsQueryFilter, filter);
-            }
-
-            if (!string.IsNullOrEmpty(pageLink))
-            {
-                builder.AppendQuery("after", pageLink, escapeValue: false);
             }
         }
 

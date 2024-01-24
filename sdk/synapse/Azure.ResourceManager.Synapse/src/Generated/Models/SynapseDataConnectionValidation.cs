@@ -12,9 +12,22 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Class representing an data connection validation. </summary>
     public partial class SynapseDataConnectionValidation
     {
-        /// <summary> Initializes a new instance of SynapseDataConnectionValidation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidation"/>. </summary>
         public SynapseDataConnectionValidation()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseDataConnectionValidation"/>. </summary>
+        /// <param name="dataConnectionName"> The name of the data connection. </param>
+        /// <param name="properties">
+        /// The data connection properties to validate.
+        /// Please note <see cref="SynapseDataConnectionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SynapseEventGridDataConnection"/>, <see cref="SynapseEventHubDataConnection"/> and <see cref="SynapseIotHubDataConnection"/>.
+        /// </param>
+        internal SynapseDataConnectionValidation(string dataConnectionName, SynapseDataConnectionData properties)
+        {
+            DataConnectionName = dataConnectionName;
+            Properties = properties;
         }
 
         /// <summary> The name of the data connection. </summary>

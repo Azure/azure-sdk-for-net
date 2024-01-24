@@ -17,11 +17,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class BackupRestoreContent
     {
-        /// <summary> Initializes a new instance of BackupRestoreContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupRestoreContent"/>. </summary>
         /// <param name="restoreTargetInfo">
         /// Gets or sets the restore target information.
         /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="Models.RestoreTargetInfo"/>.
         /// </param>
         /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="restoreTargetInfo"/> is null. </exception>
@@ -33,17 +33,44 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             SourceDataStoreType = sourceDataStoreType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="BackupRestoreContent"/>. </summary>
+        /// <param name="objectType"></param>
+        /// <param name="restoreTargetInfo">
+        /// Gets or sets the restore target information.
+        /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="Models.RestoreTargetInfo"/>.
+        /// </param>
+        /// <param name="sourceDataStoreType"> Gets or sets the type of the source data store. </param>
+        /// <param name="sourceResourceId"> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </param>
+        /// <param name="identityDetails">
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </param>
+        internal BackupRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails)
+        {
+            ObjectType = objectType;
+            RestoreTargetInfo = restoreTargetInfo;
+            SourceDataStoreType = sourceDataStoreType;
+            SourceResourceId = sourceResourceId;
+            IdentityDetails = identityDetails;
+        }
+
         /// <summary> Gets or sets the object type. </summary>
         internal string ObjectType { get; set; }
         /// <summary>
         /// Gets or sets the restore target information.
         /// Please note <see cref="RestoreTargetInfoBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="RestoreTargetInfo"/>.
+        /// The available derived classes include <see cref="ItemLevelRestoreTargetInfo"/>, <see cref="RestoreFilesTargetInfo"/> and <see cref="Models.RestoreTargetInfo"/>.
         /// </summary>
         public RestoreTargetInfoBase RestoreTargetInfo { get; }
         /// <summary> Gets or sets the type of the source data store. </summary>
         public SourceDataStoreType SourceDataStoreType { get; }
         /// <summary> Fully qualified Azure Resource Manager ID of the datasource which is being recovered. </summary>
         public ResourceIdentifier SourceResourceId { get; set; }
+        /// <summary>
+        /// Contains information of the Identity Details for the BI.
+        /// If it is null, default will be considered as System Assigned.
+        /// </summary>
+        public DataProtectionIdentityDetails IdentityDetails { get; set; }
     }
 }

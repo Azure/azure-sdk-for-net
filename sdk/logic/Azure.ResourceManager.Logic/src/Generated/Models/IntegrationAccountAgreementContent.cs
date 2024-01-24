@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The integration account agreement content. </summary>
     public partial class IntegrationAccountAgreementContent
     {
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementContent"/>. </summary>
         public IntegrationAccountAgreementContent()
         {
         }
 
-        /// <summary> Initializes a new instance of IntegrationAccountAgreementContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="IntegrationAccountAgreementContent"/>. </summary>
         /// <param name="aS2"> The AS2 agreement content. </param>
         /// <param name="x12"> The X12 agreement content. </param>
         /// <param name="edifact"> The EDIFACT agreement content. </param>

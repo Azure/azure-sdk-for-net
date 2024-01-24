@@ -21,9 +21,9 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.WorkloadMonitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="HealthMonitorResource" /> and their operations.
-    /// Each <see cref="HealthMonitorResource" /> in the collection will belong to the same instance of <see cref="ResourceGroupResource" />.
-    /// To get a <see cref="HealthMonitorCollection" /> instance call the GetHealthMonitors method from an instance of <see cref="ResourceGroupResource" />.
+    /// A class representing a collection of <see cref="HealthMonitorResource"/> and their operations.
+    /// Each <see cref="HealthMonitorResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="HealthMonitorCollection"/> instance call the GetHealthMonitors method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class HealthMonitorCollection : ArmCollection, IEnumerable<HealthMonitorResource>, IAsyncEnumerable<HealthMonitorResource>
     {
@@ -76,6 +76,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
@@ -113,6 +121,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,12 +168,20 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="HealthMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<HealthMonitorResource> GetAllAsync(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
@@ -176,12 +200,20 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Optionally filter by monitor name. Example: $filter=monitorName eq 'logical-disks|C:|disk-free-space-mb.'. </param>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HealthMonitorResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="HealthMonitorResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<HealthMonitorResource> GetAll(string filter = null, string expand = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _healthMonitorRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, filter, expand);
@@ -199,6 +231,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,6 +276,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
@@ -253,6 +301,98 @@ namespace Azure.ResourceManager.WorkloadMonitor
             {
                 var response = _healthMonitorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, monitorId, expand, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
+        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        public virtual async Task<NullableResponse<HealthMonitorResource>> GetIfExistsAsync(string monitorId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _healthMonitorRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, monitorId, expand, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceCollectionName}/{resourceName}/providers/Microsoft.WorkloadMonitor/monitors/{monitorId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>HealthMonitors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="monitorId"> The monitor Id of the virtual machine. </param>
+        /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="monitorId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="monitorId"/> is null. </exception>
+        public virtual NullableResponse<HealthMonitorResource> GetIfExists(string monitorId, string expand = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(monitorId, nameof(monitorId));
+
+            using var scope = _healthMonitorClientDiagnostics.CreateScope("HealthMonitorCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _healthMonitorRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, _providerName, _resourceCollectionName, _resourceName, monitorId, expand, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<HealthMonitorResource>(response.GetRawResponse());
+                return Response.FromValue(new HealthMonitorResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

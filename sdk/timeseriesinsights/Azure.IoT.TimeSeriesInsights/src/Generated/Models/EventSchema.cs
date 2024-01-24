@@ -13,13 +13,13 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Event schema of all events within a given search span. Event schema is a set of property definitions. Properties are identified by both name and type. Different events can have properties with same name, but different type. Event schema may not be contain all persisted properties when there are too many properties. </summary>
     internal partial class EventSchema
     {
-        /// <summary> Initializes a new instance of EventSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSchema"/>. </summary>
         internal EventSchema()
         {
             Properties = new ChangeTrackingList<TimeSeriesInsightsEventProperty>();
         }
 
-        /// <summary> Initializes a new instance of EventSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventSchema"/>. </summary>
         /// <param name="properties"> A set of property definitions. When environment has no data, the returned array is empty. </param>
         internal EventSchema(IReadOnlyList<TimeSeriesInsightsEventProperty> properties)
         {

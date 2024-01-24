@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> ConnectionState information. </summary>
     public partial class EventHubsPrivateLinkServiceConnectionState
     {
-        /// <summary> Initializes a new instance of EventHubsPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateLinkServiceConnectionState"/>. </summary>
         public EventHubsPrivateLinkServiceConnectionState()
         {
         }
 
-        /// <summary> Initializes a new instance of EventHubsPrivateLinkServiceConnectionState. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsPrivateLinkServiceConnectionState"/>. </summary>
         /// <param name="status"> Status of the connection. </param>
         /// <param name="description"> Description of the connection state. </param>
         internal EventHubsPrivateLinkServiceConnectionState(EventHubsPrivateLinkConnectionStatus? status, string description)

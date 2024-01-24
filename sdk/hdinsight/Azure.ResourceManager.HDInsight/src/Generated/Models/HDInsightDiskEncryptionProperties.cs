@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The disk encryption properties. </summary>
     public partial class HDInsightDiskEncryptionProperties
     {
-        /// <summary> Initializes a new instance of HDInsightDiskEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightDiskEncryptionProperties"/>. </summary>
         public HDInsightDiskEncryptionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightDiskEncryptionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightDiskEncryptionProperties"/>. </summary>
         /// <param name="vaultUri"> Base key vault URI where the customers key is located eg. https://myvault.vault.azure.net. </param>
         /// <param name="keyName"> Key name that is used for enabling disk encryption. </param>
         /// <param name="keyVersion"> Specific key version that is used for enabling disk encryption. </param>

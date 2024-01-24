@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -14,7 +15,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> The ExtendedCosmosDBSqlContainerResourceInfo. </summary>
     public partial class ExtendedCosmosDBSqlContainerResourceInfo : CosmosDBSqlContainerResourceInfo
     {
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlContainerResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>
         /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="containerName"/> is null. </exception>
         public ExtendedCosmosDBSqlContainerResourceInfo(string containerName) : base(containerName)
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Argument.AssertNotNull(containerName, nameof(containerName));
         }
 
-        /// <summary> Initializes a new instance of ExtendedCosmosDBSqlContainerResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlContainerResourceInfo"/>. </summary>
         /// <param name="containerName"> Name of the Cosmos DB SQL container. </param>
         /// <param name="indexingPolicy"> The configuration of the indexing policy. By default, the indexing is automatic for all document paths within the container. </param>
         /// <param name="partitionKey"> The configuration of the partition key to be used for partitioning data into multiple partitions. </param>
@@ -34,14 +35,20 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="restoreParameters"> Parameters to indicate the information about the restore. </param>
         /// <param name="createMode"> Enum to indicate the mode of resource creation. </param>
         /// <param name="materializedViewDefinition"> The configuration for defining Materialized Views. This must be specified only for creating a Materialized View container. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="rid"> A system generated property. A unique identifier. </param>
         /// <param name="timestamp"> A system generated property that denotes the last updated timestamp of the resource. </param>
         /// <param name="etag"> A system generated property representing the resource etag required for optimistic concurrency control. </param>
-        internal ExtendedCosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, string rid, float? timestamp, ETag? etag) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, materializedViewDefinition)
+        internal ExtendedCosmosDBSqlContainerResourceInfo(string containerName, CosmosDBIndexingPolicy indexingPolicy, CosmosDBContainerPartitionKey partitionKey, int? defaultTtl, CosmosDBUniqueKeyPolicy uniqueKeyPolicy, ConflictResolutionPolicy conflictResolutionPolicy, CosmosDBClientEncryptionPolicy clientEncryptionPolicy, long? analyticalStorageTtl, ResourceRestoreParameters restoreParameters, CosmosDBAccountCreateMode? createMode, MaterializedViewDefinition materializedViewDefinition, IDictionary<string, BinaryData> serializedAdditionalRawData, string rid, float? timestamp, ETag? etag) : base(containerName, indexingPolicy, partitionKey, defaultTtl, uniqueKeyPolicy, conflictResolutionPolicy, clientEncryptionPolicy, analyticalStorageTtl, restoreParameters, createMode, materializedViewDefinition, serializedAdditionalRawData)
         {
             Rid = rid;
             Timestamp = timestamp;
             ETag = etag;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExtendedCosmosDBSqlContainerResourceInfo"/> for deserialization. </summary>
+        internal ExtendedCosmosDBSqlContainerResourceInfo()
+        {
         }
 
         /// <summary> A system generated property. A unique identifier. </summary>

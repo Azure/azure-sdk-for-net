@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsUsage
     {
-        /// <summary> Initializes a new instance of CompletionsUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="CompletionsUsage"/>. </summary>
         /// <param name="completionTokens"> The number of tokens generated across all completions emissions. </param>
         /// <param name="promptTokens"> The number of tokens in the provided prompts for the completions request. </param>
         /// <param name="totalTokens"> The total number of tokens processed for the completions request and response. </param>

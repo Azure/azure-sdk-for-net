@@ -2,10 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents.Models;
 using Azure.Search.Documents.Indexes.Models;
@@ -204,22 +202,6 @@ namespace Azure.Search.Documents.Tests.Samples
             SearchResults<Hotel> response = client.Search<Hotel>("luxury", options);
             // ...
             #endregion Snippet:Azure_Search_Tests_Samples_Readme_Options
-        }
-
-        public async Task GetEmbeddings()
-        {
-            #region Snippet:Azure_Search_Tests_Samples_Readme_GetEmbeddings
-            Uri endpoint = new Uri(Environment.GetEnvironmentVariable("OpenAI_ENDPOINT"));
-            string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
-            AzureKeyCredential credential = new AzureKeyCredential(key);
-
-            OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-            string description = "Very popular hotel in town.";
-            EmbeddingsOptions embeddingsOptions = new(description);
-
-            Embeddings embeddings = await openAIClient.GetEmbeddingsAsync("EmbeddingsModelName", embeddingsOptions);
-            IReadOnlyList<float> descriptionVector = embeddings.Data[0].Embedding;
-            #endregion
         }
 
         [Test]

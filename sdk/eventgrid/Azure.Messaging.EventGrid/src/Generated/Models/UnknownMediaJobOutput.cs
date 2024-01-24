@@ -12,7 +12,7 @@ namespace Azure.Messaging.EventGrid.Models
     /// <summary> The UnknownMediaJobOutput. </summary>
     internal partial class UnknownMediaJobOutput : MediaJobOutput
     {
-        /// <summary> Initializes a new instance of UnknownMediaJobOutput. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownMediaJobOutput"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="error"> Gets the Job output error. </param>
         /// <param name="label"> Gets the Job output label. </param>

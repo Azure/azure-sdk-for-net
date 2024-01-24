@@ -13,14 +13,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> The ONVIF device DNS properties. </summary>
     public partial class OnvifDns
     {
-        /// <summary> Initializes a new instance of OnvifDns. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifDns"/>. </summary>
         public OnvifDns()
         {
             Ipv4Address = new ChangeTrackingList<string>();
             Ipv6Address = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of OnvifDns. </summary>
+        /// <summary> Initializes a new instance of <see cref="OnvifDns"/>. </summary>
         /// <param name="fromDhcp"> Result value showing if the ONVIF device is configured to use DHCP. </param>
         /// <param name="ipv4Address"> An array of IPv4 address for the discovered ONVIF device. </param>
         /// <param name="ipv6Address"> An array of IPv6 address for the discovered ONVIF device. </param>

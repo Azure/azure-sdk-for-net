@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.StorageSync
 {
     /// <summary>
     /// A Class representing a StorageSyncGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="StorageSyncGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetStorageSyncGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource" /> using the GetStorageSyncGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="StorageSyncGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetStorageSyncGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="StorageSyncServiceResource"/> using the GetStorageSyncGroup method.
     /// </summary>
     public partial class StorageSyncGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="StorageSyncGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="storageSyncServiceName"> The storageSyncServiceName. </param>
+        /// <param name="syncGroupName"> The syncGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StorageSync/storageSyncServices/{storageSyncServiceName}/syncGroups/{syncGroupName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.StorageSync
         private readonly SyncGroupsRestOperations _storageSyncGroupSyncGroupsRestClient;
         private readonly StorageSyncGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/syncGroups";
+
         /// <summary> Initializes a new instance of the <see cref="StorageSyncGroupResource"/> class for mocking. </summary>
         protected StorageSyncGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "StorageSyncGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="StorageSyncGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal StorageSyncGroupResource(ArmClient client, StorageSyncGroupData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.StorageSync
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageSync/storageSyncServices/syncGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +95,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An object representing collection of CloudEndpointResources and their operations over a CloudEndpointResource. </returns>
         public virtual CloudEndpointCollection GetCloudEndpoints()
         {
-            return GetCachedClient(Client => new CloudEndpointCollection(Client, Id));
+            return GetCachedClient(client => new CloudEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -105,12 +109,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>CloudEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<CloudEndpointResource>> GetCloudEndpointAsync(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
@@ -128,12 +140,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>CloudEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CloudEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cloudEndpointName"> Name of Cloud Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="cloudEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cloudEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<CloudEndpointResource> GetCloudEndpoint(string cloudEndpointName, CancellationToken cancellationToken = default)
         {
@@ -144,7 +164,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <returns> An object representing collection of StorageSyncServerEndpointResources and their operations over a StorageSyncServerEndpointResource. </returns>
         public virtual StorageSyncServerEndpointCollection GetStorageSyncServerEndpoints()
         {
-            return GetCachedClient(Client => new StorageSyncServerEndpointCollection(Client, Id));
+            return GetCachedClient(client => new StorageSyncServerEndpointCollection(client, Id));
         }
 
         /// <summary>
@@ -158,12 +178,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>ServerEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServerEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<StorageSyncServerEndpointResource>> GetStorageSyncServerEndpointAsync(string serverEndpointName, CancellationToken cancellationToken = default)
         {
@@ -181,12 +209,20 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>ServerEndpoints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncServerEndpointResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serverEndpointName"> Name of Server Endpoint object. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serverEndpointName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<StorageSyncServerEndpointResource> GetStorageSyncServerEndpoint(string serverEndpointName, CancellationToken cancellationToken = default)
         {
@@ -203,6 +239,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -236,6 +280,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -267,6 +319,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,6 +362,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -335,6 +403,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -373,6 +449,14 @@ namespace Azure.ResourceManager.StorageSync
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SyncGroups_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageSyncGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

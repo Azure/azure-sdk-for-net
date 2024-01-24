@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.Hci
 {
     /// <summary>
     /// A Class representing an Offer along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="OfferResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetOfferResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PublisherResource" /> using the GetOffer method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="OfferResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetOfferResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PublisherResource"/> using the GetOffer method.
     /// </summary>
     public partial class OfferResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="OfferResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="clusterName"> The clusterName. </param>
+        /// <param name="publisherName"> The publisherName. </param>
+        /// <param name="offerName"> The offerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string clusterName, string publisherName, string offerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/clusters/{clusterName}/publishers/{publisherName}/offers/{offerName}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.Hci
         private readonly OffersRestOperations _offerRestClient;
         private readonly OfferData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers/offers";
+
         /// <summary> Initializes a new instance of the <see cref="OfferResource"/> class for mocking. </summary>
         protected OfferResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "OfferResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="OfferResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal OfferResource(ArmClient client, OfferData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.Hci
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AzureStackHCI/clusters/publishers/offers";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.Hci
         /// <returns> An object representing collection of HciSkuResources and their operations over a HciSkuResource. </returns>
         public virtual HciSkuCollection GetHciSkus()
         {
-            return GetCachedClient(Client => new HciSkuCollection(Client, Id));
+            return GetCachedClient(client => new HciSkuCollection(client, Id));
         }
 
         /// <summary>
@@ -104,13 +109,21 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HciSkuResource>> GetHciSkuAsync(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -128,13 +141,21 @@ namespace Azure.ResourceManager.Hci
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skuName"> The name of the SKU available within HCI cluster. </param>
         /// <param name="expand"> Specify $expand=content,contentVersion to populate additional fields related to the marketplace offer. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="skuName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="skuName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HciSkuResource> GetHciSku(string skuName, string expand = null, CancellationToken cancellationToken = default)
         {
@@ -151,6 +172,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +213,14 @@ namespace Azure.ResourceManager.Hci
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Offers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OfferResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

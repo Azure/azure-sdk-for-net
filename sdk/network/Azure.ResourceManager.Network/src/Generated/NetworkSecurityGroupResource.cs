@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a NetworkSecurityGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="NetworkSecurityGroupResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetNetworkSecurityGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetNetworkSecurityGroup method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="NetworkSecurityGroupResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetNetworkSecurityGroupResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetNetworkSecurityGroup method.
     /// </summary>
     public partial class NetworkSecurityGroupResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="NetworkSecurityGroupResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="networkSecurityGroupName"> The networkSecurityGroupName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string networkSecurityGroupName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkSecurityGroups/{networkSecurityGroupName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly NetworkSecurityGroupsRestOperations _networkSecurityGroupRestClient;
         private readonly NetworkSecurityGroupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups";
+
         /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroupResource"/> class for mocking. </summary>
         protected NetworkSecurityGroupResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "NetworkSecurityGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="NetworkSecurityGroupResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal NetworkSecurityGroupResource(ArmClient client, NetworkSecurityGroupData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/networkSecurityGroups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of SecurityRuleResources and their operations over a SecurityRuleResource. </returns>
         public virtual SecurityRuleCollection GetSecurityRules()
         {
-            return GetCachedClient(Client => new SecurityRuleCollection(Client, Id));
+            return GetCachedClient(client => new SecurityRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +110,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<SecurityRuleResource>> GetSecurityRuleAsync(string securityRuleName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +141,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>SecurityRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecurityRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="securityRuleName"> The name of the security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="securityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<SecurityRuleResource> GetSecurityRule(string securityRuleName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of DefaultSecurityRuleResources and their operations over a DefaultSecurityRuleResource. </returns>
         public virtual DefaultSecurityRuleCollection GetDefaultSecurityRules()
         {
-            return GetCachedClient(Client => new DefaultSecurityRuleCollection(Client, Id));
+            return GetCachedClient(client => new DefaultSecurityRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +179,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>DefaultSecurityRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DefaultSecurityRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultSecurityRuleName"> The name of the default security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<DefaultSecurityRuleResource>> GetDefaultSecurityRuleAsync(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +210,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>DefaultSecurityRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DefaultSecurityRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultSecurityRuleName"> The name of the default security rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="defaultSecurityRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="defaultSecurityRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<DefaultSecurityRuleResource> GetDefaultSecurityRule(string defaultSecurityRuleName, CancellationToken cancellationToken = default)
         {
@@ -205,6 +240,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -239,6 +282,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Expands referenced resources. </param>
@@ -271,6 +322,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -306,6 +365,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -339,6 +406,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -374,6 +449,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkTagsObject"> Parameters supplied to update network security group tags. </param>
@@ -407,6 +490,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -462,6 +553,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -516,6 +615,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -565,6 +672,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -613,6 +728,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -665,6 +788,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityGroups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkSecurityGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -72,7 +72,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("trainedModelName"u8);
             JsonSerializer.Serialize(writer, TrainedModelName);
             writer.WritePropertyName("trainedModelLinkedServiceName"u8);
-            JsonSerializer.Serialize(writer, TrainedModelLinkedServiceName); writer.WritePropertyName("trainedModelFilePath"u8);
+            JsonSerializer.Serialize(writer, TrainedModelLinkedServiceName);
+            writer.WritePropertyName("trainedModelFilePath"u8);
             JsonSerializer.Serialize(writer, TrainedModelFilePath);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -81,7 +82,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();

@@ -5,14 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> Describes a virtual machine scale set virtual machine profile. </summary>
     public partial class VirtualMachineScaleSetUpdateVmProfile
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateVmProfile. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateVmProfile"/>. </summary>
         public VirtualMachineScaleSetUpdateVmProfile()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateVmProfile"/>. </summary>
+        /// <param name="osProfile"> The virtual machine scale set OS profile. </param>
+        /// <param name="storageProfile"> The virtual machine scale set storage profile. </param>
+        /// <param name="networkProfile"> The virtual machine scale set network profile. </param>
+        /// <param name="securityProfile"> The virtual machine scale set Security profile. </param>
+        /// <param name="diagnosticsProfile"> The virtual machine scale set diagnostics profile. </param>
+        /// <param name="extensionProfile"> The virtual machine scale set extension profile. </param>
+        /// <param name="licenseType"> The license type, which is for bring your own license scenario. </param>
+        /// <param name="billingProfile"> Specifies the billing related details of a Azure Spot VMSS. Minimum api-version: 2019-03-01. </param>
+        /// <param name="scheduledEventsProfile"> Specifies Scheduled Event related configurations. </param>
+        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. &lt;br&gt;&lt;br&gt;Minimum api-version: 2021-03-01. </param>
+        /// <param name="hardwareProfile"> Specifies the hardware profile related details of a scale set. Minimum api-version: 2021-11-01. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetUpdateVmProfile(VirtualMachineScaleSetUpdateOSProfile osProfile, VirtualMachineScaleSetUpdateStorageProfile storageProfile, VirtualMachineScaleSetUpdateNetworkProfile networkProfile, SecurityProfile securityProfile, DiagnosticsProfile diagnosticsProfile, VirtualMachineScaleSetExtensionProfile extensionProfile, string licenseType, BillingProfile billingProfile, ComputeScheduledEventsProfile scheduledEventsProfile, string userData, VirtualMachineScaleSetHardwareProfile hardwareProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OSProfile = osProfile;
+            StorageProfile = storageProfile;
+            NetworkProfile = networkProfile;
+            SecurityProfile = securityProfile;
+            DiagnosticsProfile = diagnosticsProfile;
+            ExtensionProfile = extensionProfile;
+            LicenseType = licenseType;
+            BillingProfile = billingProfile;
+            ScheduledEventsProfile = scheduledEventsProfile;
+            UserData = userData;
+            HardwareProfile = hardwareProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The virtual machine scale set OS profile. </summary>

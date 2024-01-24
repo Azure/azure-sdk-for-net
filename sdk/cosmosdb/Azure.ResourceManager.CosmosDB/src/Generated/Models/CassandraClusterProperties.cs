@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of a managed Cassandra cluster. </summary>
     public partial class CassandraClusterProperties
     {
-        /// <summary> Initializes a new instance of CassandraClusterProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterProperties"/>. </summary>
         public CassandraClusterProperties()
         {
             ClientCertificates = new ChangeTrackingList<CassandraCertificate>();
@@ -21,9 +54,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             GossipCertificates = new ChangeTrackingList<CassandraCertificate>();
             ExternalSeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
             SeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
+            Extensions = new ChangeTrackingList<string>();
+            BackupSchedules = new ChangeTrackingList<CassandraClusterBackupSchedule>();
         }
 
-        /// <summary> Initializes a new instance of CassandraClusterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraClusterProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
         /// <param name="restoreFromBackupId"> To create an empty cluster, omit this field or set it to null. To restore a backup into a new cluster, set this field to the resource id of the backup. </param>
         /// <param name="delegatedManagementSubnetId"> Resource id of a subnet that this cluster's management service should have its network interface attached to. The subnet must be routable to all subnets that will be delegated to data centers. The resource id must be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </param>
@@ -41,8 +76,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="hoursBetweenBackups"> (Deprecated) Number of hours to wait between taking a backup of the cluster. </param>
         /// <param name="isDeallocated"> Whether the cluster and associated data centers has been deallocated. </param>
         /// <param name="isCassandraAuditLoggingEnabled"> Whether Cassandra audit logging is enabled. </param>
+        /// <param name="clusterType"> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </param>
         /// <param name="provisionError"> Error related to resource provisioning. </param>
-        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraError provisionError)
+        /// <param name="extensions"> Extensions to be added or updated on cluster. </param>
+        /// <param name="backupSchedules"> List of backup schedules that define when you want to back up your data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -61,7 +100,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             HoursBetweenBackups = hoursBetweenBackups;
             IsDeallocated = isDeallocated;
             IsCassandraAuditLoggingEnabled = isCassandraAuditLoggingEnabled;
+            ClusterType = clusterType;
             ProvisionError = provisionError;
+            Extensions = extensions;
+            BackupSchedules = backupSchedules;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the resource at the time the operation was called. </summary>
@@ -110,7 +153,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsDeallocated { get; set; }
         /// <summary> Whether Cassandra audit logging is enabled. </summary>
         public bool? IsCassandraAuditLoggingEnabled { get; set; }
+        /// <summary> Type of the cluster. If set to Production, some operations might not be permitted on cluster. </summary>
+        public CassandraClusterType? ClusterType { get; set; }
         /// <summary> Error related to resource provisioning. </summary>
         public CassandraError ProvisionError { get; set; }
+        /// <summary> Extensions to be added or updated on cluster. </summary>
+        public IList<string> Extensions { get; }
+        /// <summary> List of backup schedules that define when you want to back up your data. </summary>
+        public IList<CassandraClusterBackupSchedule> BackupSchedules { get; }
     }
 }

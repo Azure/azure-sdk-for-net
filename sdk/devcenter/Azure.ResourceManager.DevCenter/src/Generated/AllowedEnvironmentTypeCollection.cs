@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AllowedEnvironmentTypeResource" /> and their operations.
-    /// Each <see cref="AllowedEnvironmentTypeResource" /> in the collection will belong to the same instance of <see cref="DevCenterProjectResource" />.
-    /// To get an <see cref="AllowedEnvironmentTypeCollection" /> instance call the GetAllowedEnvironmentTypes method from an instance of <see cref="DevCenterProjectResource" />.
+    /// A class representing a collection of <see cref="AllowedEnvironmentTypeResource"/> and their operations.
+    /// Each <see cref="AllowedEnvironmentTypeResource"/> in the collection will belong to the same instance of <see cref="DevCenterProjectResource"/>.
+    /// To get an <see cref="AllowedEnvironmentTypeCollection"/> instance call the GetAllowedEnvironmentTypes method from an instance of <see cref="DevCenterProjectResource"/>.
     /// </summary>
     public partial class AllowedEnvironmentTypeCollection : ArmCollection, IEnumerable<AllowedEnvironmentTypeResource>, IAsyncEnumerable<AllowedEnvironmentTypeResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllowedEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AllowedEnvironmentTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AllowedEnvironmentTypeResource> GetAllAsync(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of resources to return from the operation. Example: '$top=10'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllowedEnvironmentTypeResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AllowedEnvironmentTypeResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AllowedEnvironmentTypeResource> GetAll(int? top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>ProjectAllowedEnvironmentTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentTypeName"> The name of the environment type. </param>
@@ -235,6 +283,96 @@ namespace Azure.ResourceManager.DevCenter
             {
                 var response = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual async Task<NullableResponse<AllowedEnvironmentTypeResource>> GetIfExistsAsync(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<AllowedEnvironmentTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new AllowedEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/allowedEnvironmentTypes/{environmentTypeName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ProjectAllowedEnvironmentTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AllowedEnvironmentTypeResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="environmentTypeName"> The name of the environment type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="environmentTypeName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentTypeName"/> is null. </exception>
+        public virtual NullableResponse<AllowedEnvironmentTypeResource> GetIfExists(string environmentTypeName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(environmentTypeName, nameof(environmentTypeName));
+
+            using var scope = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesClientDiagnostics.CreateScope("AllowedEnvironmentTypeCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _allowedEnvironmentTypeProjectAllowedEnvironmentTypesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, environmentTypeName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<AllowedEnvironmentTypeResource>(response.GetRawResponse());
+                return Response.FromValue(new AllowedEnvironmentTypeResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

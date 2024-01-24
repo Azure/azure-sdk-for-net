@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> A list of private endpoints. </summary>
     internal partial class StreamAnalyticsPrivateEndpointListResult
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointListResult"/>. </summary>
         internal StreamAnalyticsPrivateEndpointListResult()
         {
             Value = new ChangeTrackingList<StreamAnalyticsPrivateEndpointData>();
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsPrivateEndpointListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsPrivateEndpointListResult"/>. </summary>
         /// <param name="value"> A list of private endpoints. </param>
         /// <param name="nextLink"> The URL to fetch the next set of private endpoints. </param>
         internal StreamAnalyticsPrivateEndpointListResult(IReadOnlyList<StreamAnalyticsPrivateEndpointData> value, string nextLink)

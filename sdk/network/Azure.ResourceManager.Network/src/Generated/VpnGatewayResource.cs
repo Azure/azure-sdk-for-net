@@ -21,13 +21,16 @@ namespace Azure.ResourceManager.Network
 {
     /// <summary>
     /// A Class representing a VpnGateway along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="VpnGatewayResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetVpnGatewayResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetVpnGateway method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="VpnGatewayResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetVpnGatewayResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetVpnGateway method.
     /// </summary>
     public partial class VpnGatewayResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="VpnGatewayResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gatewayName"> The gatewayName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gatewayName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/vpnGateways/{gatewayName}";
@@ -38,12 +41,15 @@ namespace Azure.ResourceManager.Network
         private readonly VpnGatewaysRestOperations _vpnGatewayRestClient;
         private readonly VpnGatewayData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnGateways";
+
         /// <summary> Initializes a new instance of the <see cref="VpnGatewayResource"/> class for mocking. </summary>
         protected VpnGatewayResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "VpnGatewayResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="VpnGatewayResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal VpnGatewayResource(ArmClient client, VpnGatewayData data) : this(client, data.Id)
@@ -64,9 +70,6 @@ namespace Azure.ResourceManager.Network
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Network/vpnGateways";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -93,7 +96,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnConnectionResources and their operations over a VpnConnectionResource. </returns>
         public virtual VpnConnectionCollection GetVpnConnections()
         {
-            return GetCachedClient(Client => new VpnConnectionCollection(Client, Id));
+            return GetCachedClient(client => new VpnConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -107,12 +110,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnConnectionResource>> GetVpnConnectionAsync(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -130,12 +141,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of the vpn connection. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="connectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VpnConnectionResource> GetVpnConnection(string connectionName, CancellationToken cancellationToken = default)
         {
@@ -146,7 +165,7 @@ namespace Azure.ResourceManager.Network
         /// <returns> An object representing collection of VpnGatewayNatRuleResources and their operations over a VpnGatewayNatRuleResource. </returns>
         public virtual VpnGatewayNatRuleCollection GetVpnGatewayNatRules()
         {
-            return GetCachedClient(Client => new VpnGatewayNatRuleCollection(Client, Id));
+            return GetCachedClient(client => new VpnGatewayNatRuleCollection(client, Id));
         }
 
         /// <summary>
@@ -160,12 +179,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NatRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayNatRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<VpnGatewayNatRuleResource>> GetVpnGatewayNatRuleAsync(string natRuleName, CancellationToken cancellationToken = default)
         {
@@ -183,12 +210,20 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>NatRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayNatRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="natRuleName"> The name of the nat rule. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="natRuleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="natRuleName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<VpnGatewayNatRuleResource> GetVpnGatewayNatRule(string natRuleName, CancellationToken cancellationToken = default)
         {
@@ -205,6 +240,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,6 +281,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +320,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +363,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -337,6 +404,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,6 +451,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -414,6 +497,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Reset</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -448,6 +539,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Reset</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -484,6 +583,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_StartPacketCapture</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -518,6 +625,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_StartPacketCapture</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -554,6 +669,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_StopPacketCapture</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -589,6 +712,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_StopPacketCapture</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -623,6 +754,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -678,6 +817,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -732,6 +879,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -781,6 +936,14 @@ namespace Azure.ResourceManager.Network
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -829,6 +992,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -881,6 +1052,14 @@ namespace Azure.ResourceManager.Network
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VpnGateways_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VpnGatewayResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

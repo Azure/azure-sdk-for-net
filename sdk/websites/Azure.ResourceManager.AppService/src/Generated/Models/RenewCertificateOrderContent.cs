@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Class representing certificate renew request. </summary>
     public partial class RenewCertificateOrderContent : ResourceData
     {
-        /// <summary> Initializes a new instance of RenewCertificateOrderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewCertificateOrderContent"/>. </summary>
         public RenewCertificateOrderContent()
         {
         }
 
-        /// <summary> Initializes a new instance of RenewCertificateOrderContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="RenewCertificateOrderContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

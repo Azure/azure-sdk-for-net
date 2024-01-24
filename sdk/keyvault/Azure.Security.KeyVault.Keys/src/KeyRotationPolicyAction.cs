@@ -62,11 +62,13 @@ namespace Azure.Security.KeyVault.Keys
         public override bool Equals(object obj) => obj is KeyRotationPolicyAction other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(KeyRotationPolicyAction other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+        // Comparison is case-insensitive due to https://github.com/Azure/azure-rest-api-specs/pull/24475.
+        public bool Equals(KeyRotationPolicyAction other) => string.Equals(_value, other._value, StringComparison.OrdinalIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        // Comparison is case-insensitive due to https://github.com/Azure/azure-rest-api-specs/pull/24475.
+        public override int GetHashCode() => _value?.ToLowerInvariant().GetHashCode() ?? 0;
 
         /// <inheritdoc/>
         public override string ToString() => _value;

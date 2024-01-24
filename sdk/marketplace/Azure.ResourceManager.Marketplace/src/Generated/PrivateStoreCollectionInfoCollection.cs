@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Marketplace
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PrivateStoreCollectionInfoResource" /> and their operations.
-    /// Each <see cref="PrivateStoreCollectionInfoResource" /> in the collection will belong to the same instance of <see cref="PrivateStoreResource" />.
-    /// To get a <see cref="PrivateStoreCollectionInfoCollection" /> instance call the GetPrivateStoreCollectionInfos method from an instance of <see cref="PrivateStoreResource" />.
+    /// A class representing a collection of <see cref="PrivateStoreCollectionInfoResource"/> and their operations.
+    /// Each <see cref="PrivateStoreCollectionInfoResource"/> in the collection will belong to the same instance of <see cref="PrivateStoreResource"/>.
+    /// To get a <see cref="PrivateStoreCollectionInfoCollection"/> instance call the GetPrivateStoreCollectionInfos method from an instance of <see cref="PrivateStoreResource"/>.
     /// </summary>
     public partial class PrivateStoreCollectionInfoCollection : ArmCollection, IEnumerable<PrivateStoreCollectionInfoResource>, IAsyncEnumerable<PrivateStoreCollectionInfoResource>
     {
@@ -64,11 +64,19 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="info"> The PrivateStoreCollectionInfo to use. </param>
+        /// <param name="info"> The <see cref="PrivateStoreCollectionInfoData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<PrivateStoreCollectionInfoResource>> CreateOrUpdateAsync(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
@@ -103,11 +111,19 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="collectionId"> The collection ID. </param>
-        /// <param name="info"> The PrivateStoreCollectionInfo to use. </param>
+        /// <param name="info"> The <see cref="PrivateStoreCollectionInfoData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<PrivateStoreCollectionInfoResource> CreateOrUpdate(WaitUntil waitUntil, Guid collectionId, PrivateStoreCollectionInfoData info, CancellationToken cancellationToken = default)
@@ -142,6 +158,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
@@ -174,6 +198,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,10 +240,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateStoreCollectionInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PrivateStoreCollectionInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PrivateStoreCollectionInfoResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
@@ -229,10 +269,18 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateStoreCollectionInfoResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PrivateStoreCollectionInfoResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PrivateStoreCollectionInfoResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateStoreCollectionInfoPrivateStoreCollectionRestClient.CreateListRequest(Guid.Parse(Id.Name));
@@ -249,6 +297,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,6 +337,14 @@ namespace Azure.ResourceManager.Marketplace
         /// <term>Operation Id</term>
         /// <description>PrivateStoreCollection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="collectionId"> The collection ID. </param>
@@ -293,6 +357,88 @@ namespace Azure.ResourceManager.Marketplace
             {
                 var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Get(Guid.Parse(Id.Name), collectionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<PrivateStoreCollectionInfoResource>> GetIfExistsAsync(Guid collectionId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _privateStoreCollectionInfoPrivateStoreCollectionRestClient.GetAsync(Guid.Parse(Id.Name), collectionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreCollectionInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Marketplace/privateStores/{privateStoreId}/collections/{collectionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateStoreCollection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateStoreCollectionInfoResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> The collection ID. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<PrivateStoreCollectionInfoResource> GetIfExists(Guid collectionId, CancellationToken cancellationToken = default)
+        {
+            using var scope = _privateStoreCollectionInfoPrivateStoreCollectionClientDiagnostics.CreateScope("PrivateStoreCollectionInfoCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _privateStoreCollectionInfoPrivateStoreCollectionRestClient.Get(Guid.Parse(Id.Name), collectionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PrivateStoreCollectionInfoResource>(response.GetRawResponse());
+                return Response.FromValue(new PrivateStoreCollectionInfoResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes how an individual MongoDB collection should be migrated. </summary>
     public partial class MongoDBCollectionSettings
     {
-        /// <summary> Initializes a new instance of MongoDBCollectionSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionSettings"/>. </summary>
         public MongoDBCollectionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MongoDBCollectionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCollectionSettings"/>. </summary>
         /// <param name="canDelete"> Whether the migrator is allowed to drop the target collection in the course of performing a migration. The default is true. </param>
         /// <param name="shardKey"> Describes a MongoDB shard key. </param>
         /// <param name="targetRUs"> The RUs that should be configured on a CosmosDB target, or null to use the default. This has no effect on non-CosmosDB targets. </param>
-        internal MongoDBCollectionSettings(bool? canDelete, MongoDBShardKeySetting shardKey, int? targetRUs)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBCollectionSettings(bool? canDelete, MongoDBShardKeySetting shardKey, int? targetRUs, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CanDelete = canDelete;
             ShardKey = shardKey;
             TargetRUs = targetRUs;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether the migrator is allowed to drop the target collection in the course of performing a migration. The default is true. </summary>

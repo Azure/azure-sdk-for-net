@@ -67,7 +67,7 @@ namespace Azure.Messaging.WebPubSub.Clients
             return new Memory<byte>(writer.ToArray());
         }
 
-        public virtual WebPubSubMessage ParseMessage(ReadOnlySequence<byte> input)
+        public virtual IReadOnlyList<WebPubSubMessage> ParseMessage(ReadOnlySequence<byte> input)
         {
             try
             {
@@ -76,8 +76,8 @@ namespace Azure.Messaging.WebPubSub.Clients
                 string group = null;
                 string @event = null;
                 SystemEventType systemEventType = SystemEventType.Connected;
-                ulong? ackId = null;
-                ulong? sequenceId = null;
+                long? ackId = null;
+                long? sequenceId = null;
                 bool? success = null;
                 string from = null;
                 FromType fromType = FromType.Server;
@@ -143,7 +143,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                             {
                                 try
                                 {
-                                    ackId = reader.ReadAsUlong(AckIdPropertyName);
+                                    ackId = reader.ReadAsLongNonNegtive(AckIdPropertyName);
                                 }
                                 catch (FormatException)
                                 {
@@ -161,7 +161,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                             {
                                 try
                                 {
-                                    sequenceId = reader.ReadAsUlong(SequenceIdPropertyName);
+                                    sequenceId = reader.ReadAsLongNonNegtive(SequenceIdPropertyName);
                                 }
                                 catch (FormatException)
                                 {
@@ -264,7 +264,7 @@ namespace Azure.Messaging.WebPubSub.Clients
                     case DownstreamEventType.Ack:
                         AssertNotNull(ackId, AckIdPropertyName);
                         AssertNotNull(success, SuccessPropertyName);
-                        return new AckMessage(ackId.Value, success.Value, errorDetail);
+                        return new List<WebPubSubMessage> { new AckMessage(ackId.Value, success.Value, errorDetail) };
 
                     case DownstreamEventType.Message:
                         AssertNotNull(from, FromPropertyName);
@@ -273,10 +273,10 @@ namespace Azure.Messaging.WebPubSub.Clients
                         switch (fromType)
                         {
                             case FromType.Server:
-                                return new ServerDataMessage(dataType, data, sequenceId);
+                                return new List<WebPubSubMessage> { new ServerDataMessage(dataType, data, sequenceId) };
                             case FromType.Group:
                                 AssertNotNull(group, GroupPropertyName);
-                                return new GroupDataMessage(group, dataType, data, sequenceId, fromUserId);
+                                return new List<WebPubSubMessage> { new GroupDataMessage(group, dataType, data, sequenceId, fromUserId) };
                             // Forward compatible
                             default:
                                 return null;
@@ -288,9 +288,9 @@ namespace Azure.Messaging.WebPubSub.Clients
                         switch (systemEventType)
                         {
                             case SystemEventType.Connected:
-                                return new ConnectedMessage(userId, connectionId, reconnectionToken);
+                                return new List<WebPubSubMessage> { new ConnectedMessage(userId, connectionId, reconnectionToken) };
                             case SystemEventType.Disconnected:
-                                return new DisconnectedMessage(message);
+                                return new List<WebPubSubMessage> { new DisconnectedMessage(message) };
                             // Forward compatible
                             default:
                                 return null;

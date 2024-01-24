@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a SiteDetector along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SiteDetectorResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSiteDetectorResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource" /> using the GetSiteDetector method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SiteDetectorResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSiteDetectorResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteResource"/> using the GetSiteDetector method.
     /// </summary>
     public partial class SiteDetectorResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SiteDetectorResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="siteName"> The siteName. </param>
+        /// <param name="detectorName"> The detectorName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string siteName, string detectorName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{siteName}/detectors/{detectorName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.AppService
         private readonly DiagnosticsRestOperations _siteDetectorDiagnosticsRestClient;
         private readonly AppServiceDetectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="SiteDetectorResource"/> class for mocking. </summary>
         protected SiteDetectorResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SiteDetectorResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SiteDetectorResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SiteDetectorResource(ArmClient client, AppServiceDetectorData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -96,6 +100,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorResponse</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +143,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetSiteDetectorResponse</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

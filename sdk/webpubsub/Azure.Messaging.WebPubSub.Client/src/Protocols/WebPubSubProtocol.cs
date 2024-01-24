@@ -29,7 +29,7 @@ namespace Azure.Messaging.WebPubSub.Clients
         /// </summary>
         /// <param name="input">The serialized representation of the message.</param>
         /// <returns>A <see cref="WebPubSubMessage"/></returns>
-        public abstract WebPubSubMessage ParseMessage(ReadOnlySequence<byte> input);
+        public abstract IReadOnlyList<WebPubSubMessage> ParseMessage(ReadOnlySequence<byte> input);
 
         /// <summary>
         /// Writes the specified <see cref="WebPubSubMessage"/> to a writer.

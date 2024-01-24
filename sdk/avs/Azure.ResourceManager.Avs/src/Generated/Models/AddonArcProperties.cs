@@ -5,22 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of an Arc addon. </summary>
     public partial class AddonArcProperties : AvsPrivateCloudAddonProperties
     {
-        /// <summary> Initializes a new instance of AddonArcProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
         public AddonArcProperties()
         {
             AddonType = AddonType.Arc;
         }
 
-        /// <summary> Initializes a new instance of AddonArcProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AddonArcProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vCenter"> The VMware vCenter resource ID. </param>
-        internal AddonArcProperties(AddonType addonType, AddonProvisioningState? provisioningState, string vCenter) : base(addonType, provisioningState)
+        internal AddonArcProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string vCenter) : base(addonType, provisioningState, serializedAdditionalRawData)
         {
             VCenter = vCenter;
             AddonType = addonType;

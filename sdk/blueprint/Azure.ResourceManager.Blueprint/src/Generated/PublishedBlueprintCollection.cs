@@ -17,9 +17,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Blueprint
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PublishedBlueprintResource" /> and their operations.
-    /// Each <see cref="PublishedBlueprintResource" /> in the collection will belong to the same instance of <see cref="BlueprintResource" />.
-    /// To get a <see cref="PublishedBlueprintCollection" /> instance call the GetPublishedBlueprints method from an instance of <see cref="BlueprintResource" />.
+    /// A class representing a collection of <see cref="PublishedBlueprintResource"/> and their operations.
+    /// Each <see cref="PublishedBlueprintResource"/> in the collection will belong to the same instance of <see cref="BlueprintResource"/>.
+    /// To get a <see cref="PublishedBlueprintCollection"/> instance call the GetPublishedBlueprints method from an instance of <see cref="BlueprintResource"/>.
     /// </summary>
     public partial class PublishedBlueprintCollection : ArmCollection
     {
@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublishedBlueprints_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +110,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedBlueprints_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedBlueprints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
@@ -179,6 +203,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PublishedBlueprints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -217,6 +249,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedBlueprints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
@@ -252,6 +292,14 @@ namespace Azure.ResourceManager.Blueprint
         /// <term>Operation Id</term>
         /// <description>PublishedBlueprints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="versionId"> Version of the published blueprint definition. </param>
@@ -268,6 +316,96 @@ namespace Azure.ResourceManager.Blueprint
             {
                 var response = _publishedBlueprintRestClient.Get(Id.Parent, Id.Name, versionId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionId"> Version of the published blueprint definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        public virtual async Task<NullableResponse<PublishedBlueprintResource>> GetIfExistsAsync(string versionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+
+            using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _publishedBlueprintRestClient.GetAsync(Id.Parent, Id.Name, versionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PublishedBlueprintResource>(response.GetRawResponse());
+                return Response.FromValue(new PublishedBlueprintResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/{resourceScope}/providers/Microsoft.Blueprint/blueprints/{blueprintName}/versions/{versionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PublishedBlueprints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublishedBlueprintResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="versionId"> Version of the published blueprint definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="versionId"/> is null. </exception>
+        public virtual NullableResponse<PublishedBlueprintResource> GetIfExists(string versionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+
+            using var scope = _publishedBlueprintClientDiagnostics.CreateScope("PublishedBlueprintCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _publishedBlueprintRestClient.Get(Id.Parent, Id.Name, versionId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PublishedBlueprintResource>(response.GetRawResponse());
+                return Response.FromValue(new PublishedBlueprintResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

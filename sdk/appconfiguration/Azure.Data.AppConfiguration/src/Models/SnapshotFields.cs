@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration
         private const string NameValue = "name";
         private const string StatusValue = "status";
         private const string FiltersValue = "filters";
-        private const string CompositionTypeValue = "composition_type";
+        private const string SnapshotCompositionValue = "composition_type";
         private const string CreatedOnValue = "created";
         private const string ExpiresOnValue = "expires";
         private const string RetentionPeriodValue = "retention_period";
@@ -39,7 +39,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> filters. </summary>
         public static SnapshotFields Filters { get; } = new SnapshotFields(FiltersValue);
         /// <summary> composition_type. </summary>
-        public static SnapshotFields CompositionType { get; } = new SnapshotFields(CompositionTypeValue);
+        public static SnapshotFields SnapshotComposition { get; } = new SnapshotFields(SnapshotCompositionValue);
         /// <summary> created. </summary>
         public static SnapshotFields CreatedOn { get; } = new SnapshotFields(CreatedOnValue);
         /// <summary> expires. </summary>

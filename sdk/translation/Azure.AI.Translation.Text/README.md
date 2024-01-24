@@ -65,6 +65,26 @@ string region = "<Text Translator Azure Region>";
 TextTranslationClient client = new TextTranslationClient(new AzureKeyCredential(apiKey), new Uri(endpoint), region);
 ```
 
+#### Create `TextTranslationClient` with Microsoft Entra ID
+
+Client API key authentication is used in most of the examples, but you can also authenticate with Microsoft Entra ID using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][DefaultAzureCredential] provider shown below, install the Azure.Identity package:
+
+```dotnetcli
+dotnet add package Azure.Identity
+```
+
+Create a [custom subdomain][custom_subdomain] for your resource in order to use this type of authentication.  Use this value for the `endpoint` variable for `Text Translator Custom Endpoint`.  Only custom subdomains are supported by the SDK.  Outside of the SDK, you can use Microsoft Entra authorization for Machine Translation endpoints, as detailed [here][mt_endpoints].
+
+You will also need to [register a new Microsoft Entra application][register_aad_app] and [grant access][aad_grant_access] to your Translator resource by assigning the `"Cognitive Services User"` role to your service principal.  Additional information about Microsoft Entra authentication is available [here][custom_details].
+
+Set the values of the `client ID`, `tenant ID`, and `client secret` of the Microsoft Entra application as environment variables: `AZURE_CLIENT_ID`, `AZURE_TENANT_ID`, `AZURE_CLIENT_SECRET`.  The `DefaultAzureCredential` constructor uses these variables to create your credentials.
+
+```C# Snippet:CreateTextTranslationClientWithAad
+string endpoint = "<Text Translator Custom Endpoint>";
+DefaultAzureCredential credential = new DefaultAzureCredential();
+TextTranslationClient client = new TextTranslationClient(credential, new Uri(endpoint));
+```
+
 ## Key concepts
 
 ### `TextTranslationClient`
@@ -123,8 +143,7 @@ For samples on using the `languages` endpoint refer to more samples [here][langu
 Please refer to the service documentation for a conceptual discussion of [languages][languages_doc].
 
 ### Translate
-
-Renders single source-language text to multiple target-language texts with a single request.
+The simplest use of the Translate method is to invoke it with a single target language and one input string.
 
 ```C# Snippet:GetTextTranslation
 try
@@ -138,6 +157,62 @@ try
 
     Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
     Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+A convenience overload of Translate is provided using a TextTranslationTranslateOptions parameter.  This sample demonstrates rendering a single source-language to multiple target languages with a single request using the options overload.
+
+```C# Snippet:GetTextTranslationMatrixOptions
+try
+{
+    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+        targetLanguages: new[] { "cs", "es", "de" },
+        content: new[] { "This is a test." }
+    );
+
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+
+    foreach (TranslatedTextItem translation in translations)
+    {
+        Console.WriteLine($"Detected languages of the input text: {translation?.DetectedLanguage?.Language} with score: {translation?.DetectedLanguage?.Score}.");
+
+        Console.WriteLine($"Text was translated to: '{translation?.Translations?.FirstOrDefault().To}' and the result is: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    }
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
+This sample demonstrates Translation and Transliteration in a single call using the TextTranslationTranslateOptions parameter.  Required parameters are passed to the constructor, optional parameters are set using an object initializer.
+
+```C# Snippet:GetTranslationTextTransliteratedOptions
+try
+{
+    TextTranslationTranslateOptions options = new TextTranslationTranslateOptions(
+        targetLanguage: "zh-Hans",
+        content: "hudha akhtabar.")
+    {
+        FromScript = "Latn",
+        SourceLanguage = "ar",
+        ToScript = "Latn"
+    };
+
+    Response<IReadOnlyList<TranslatedTextItem>> response = client.Translate(options);
+    IReadOnlyList<TranslatedTextItem> translations = response.Value;
+    TranslatedTextItem translation = translations.FirstOrDefault();
+
+    Console.WriteLine($"Source Text: {translation.SourceText.Text}");
+    Console.WriteLine($"Translation: '{translation?.Translations?.FirstOrDefault()?.Text}'.");
+    Console.WriteLine($"Transliterated text ({translation?.Translations?.FirstOrDefault()?.Transliteration?.Script}): {translation?.Translations?.FirstOrDefault()?.Transliteration?.Text}");
 }
 catch (RequestFailedException exception)
 {
@@ -176,6 +251,31 @@ catch (RequestFailedException exception)
 }
 ```
 
+A convenience overload of Transliterate is provided using a single TextTranslationTransliterateOptions parameter.  A modified version of the preceding sample is provided here demonstrating its use.
+
+```C# Snippet:GetTransliteratedTextOptions
+try
+{
+    TextTranslationTransliterateOptions options = new TextTranslationTransliterateOptions(
+        language: "zh-Hans",
+        fromScript: "Hans",
+        toScript: "Latn",
+        content: "这是个测试。"
+    );
+
+    Response<IReadOnlyList<TransliteratedText>> response = client.Transliterate(options);
+    IReadOnlyList<TransliteratedText> transliterations = response.Value;
+    TransliteratedText transliteration = transliterations.FirstOrDefault();
+
+    Console.WriteLine($"Input text was transliterated to '{transliteration?.Script}' script. Transliterated text: '{transliteration?.Text}'.");
+}
+catch (RequestFailedException exception)
+{
+    Console.WriteLine($"Error Code: {exception.ErrorCode}");
+    Console.WriteLine($"Message: {exception.Message}");
+}
+```
+
 For samples on using the `transliterate` endpoint refer to more samples [here][transliterate_sample].
 
 Please refer to the service documentation for a conceptual discussion of [transliterate][transliterate_doc].
@@ -194,7 +294,7 @@ try
     BreakSentenceItem brokenSentence = brokenSentences.FirstOrDefault();
 
     Console.WriteLine($"Detected languages of the input text: {brokenSentence?.DetectedLanguage?.Language} with score: {brokenSentence?.DetectedLanguage?.Score}.");
-    Console.WriteLine($"The detected sentece boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
+    Console.WriteLine($"The detected sentence boundaries: '{string.Join(",", brokenSentence?.SentLen)}'.");
 }
 catch (RequestFailedException exception)
 {
@@ -369,10 +469,15 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [dictionaryexamples_sample]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/translation/Azure.AI.Translation.Text/samples/Sample6_DictionaryExamples.md
 
 [translator_resource_create]: https://learn.microsoft.com/azure/cognitive-services/Translator/create-translator-resource
-
+[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/identity/Azure.Identity/README.md
+[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+[register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_details]: https://learn.microsoft.com/azure/ai-services/translator/reference/v3-0-reference#authentication-with-microsoft-entra-id
 [logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure/
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com

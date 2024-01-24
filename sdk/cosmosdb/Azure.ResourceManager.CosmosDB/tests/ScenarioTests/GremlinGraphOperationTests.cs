@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _resourceGroup = await GlobalClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>();
-            capabilities.Add(new CosmosDBAccountCapability("EnableGremlin"));
+            capabilities.Add(new CosmosDBAccountCapability("EnableGremlin", null));
             _databaseAccount = await CreateDatabaseAccount(SessionRecording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.GlobalDocumentDB, capabilities, true);
 
             _gremlinDatabaseId = (await GremlinDatabaseTests.CreateGremlinDatabase(SessionRecording.GenerateAssetName("gremlin-db-"), null, _databaseAccount.GetGremlinDatabases())).Id;
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
             DateTimeOffset timestampInUtc = DateTimeOffset.FromUnixTimeSeconds((int)graph.Data.Resource.Timestamp.Value);
-            AddDelayInSeconds(60);
+            AddDelayInSeconds(180);
 
             String restoreSource = restorableDatabaseAccount.Id;
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
             {
                 RestoreSource = restoreSource,
-                RestoreTimestampInUtc = timestampInUtc.AddSeconds(60)
+                RestoreTimestampInUtc = timestampInUtc.AddSeconds(100)
             };
 
             await graph.DeleteAsync(WaitUntil.Completed);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(TestThroughput1, throughput.Data.Resource.Throughput);
 
             GremlinGraphThroughputSettingResource throughput2 = (await throughput.CreateOrUpdateAsync(WaitUntil.Completed, new ThroughputSettingsUpdateData(AzureLocation.WestUS,
-                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null)))).Value;
+                new ThroughputSettingsResourceInfo(TestThroughput2, null, null, null, null, null, null)))).Value;
 
             Assert.AreEqual(TestThroughput2, throughput2.Data.Resource.Throughput);
         }
@@ -254,18 +254,18 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                         new CosmosDBCompositePath { Path = "/orderByPath4", Order = CompositePathSortOrder.Descending }
                     }
                 },
-                SpatialIndexes = { new SpatialSpec("/*", new List<CosmosDBSpatialType> { new CosmosDBSpatialType("Point") }) }
+                SpatialIndexes = { new SpatialSpec("/*", new List<CosmosDBSpatialType> { new CosmosDBSpatialType("Point") }, null) }
             };
 
-            var containerPartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address" }, CosmosDBPartitionKind.Hash, null, null);
+            var containerPartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address" }, CosmosDBPartitionKind.Hash, null, null, null);
             var uniqueKeyPolicy = new CosmosDBUniqueKeyPolicy()
             {
-                UniqueKeys = { new CosmosDBUniqueKey(new List<string>() { "/testpath" }) },
+                UniqueKeys = { new CosmosDBUniqueKey(new List<string>() { "/testpath" }, null) },
             };
 
-            var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "");
+            var conflictResolutionPolicy = new ConflictResolutionPolicy(ConflictResolutionMode.LastWriterWins, "/path", "", null);
 
-            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResourceInfo(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy, null, restoreParameters: null, createMode: null)) {
+            return new GremlinGraphCreateOrUpdateContent(AzureLocation.WestUS, new Models.GremlinGraphResourceInfo(_graphName, indexingPolicy, containerPartitionKey, -1, uniqueKeyPolicy, conflictResolutionPolicy, null, restoreParameters: null, createMode: null, null)) {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),
             };
         }

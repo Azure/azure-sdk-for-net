@@ -22,13 +22,16 @@ namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
     /// A Class representing an AppConfigurationStore along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="AppConfigurationStoreResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetAppConfigurationStoreResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetAppConfigurationStore method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationStoreResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationStoreResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetAppConfigurationStore method.
     /// </summary>
     public partial class AppConfigurationStoreResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="AppConfigurationStoreResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="configStoreName"> The configStoreName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string configStoreName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AppConfiguration/configurationStores/{configStoreName}";
@@ -39,12 +42,15 @@ namespace Azure.ResourceManager.AppConfiguration
         private readonly ConfigurationStoresRestOperations _appConfigurationStoreConfigurationStoresRestClient;
         private readonly AppConfigurationStoreData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores";
+
         /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreResource"/> class for mocking. </summary>
         protected AppConfigurationStoreResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "AppConfigurationStoreResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationStoreResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal AppConfigurationStoreResource(ArmClient client, AppConfigurationStoreData data) : this(client, data.Id)
@@ -65,9 +71,6 @@ namespace Azure.ResourceManager.AppConfiguration
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -94,7 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationPrivateEndpointConnectionResources and their operations over a AppConfigurationPrivateEndpointConnectionResource. </returns>
         public virtual AppConfigurationPrivateEndpointConnectionCollection GetAppConfigurationPrivateEndpointConnections()
         {
-            return GetCachedClient(Client => new AppConfigurationPrivateEndpointConnectionCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary>
@@ -108,12 +111,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationPrivateEndpointConnectionResource>> GetAppConfigurationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -131,12 +142,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> Private endpoint connection name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationPrivateEndpointConnectionResource> GetAppConfigurationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
@@ -147,7 +166,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationPrivateLinkResources and their operations over a AppConfigurationPrivateLinkResource. </returns>
         public virtual AppConfigurationPrivateLinkResourceCollection GetAppConfigurationPrivateLinkResources()
         {
-            return GetCachedClient(Client => new AppConfigurationPrivateLinkResourceCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationPrivateLinkResourceCollection(client, Id));
         }
 
         /// <summary>
@@ -161,12 +180,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationPrivateLinkResource>> GetAppConfigurationPrivateLinkResourceAsync(string groupName, CancellationToken cancellationToken = default)
         {
@@ -184,12 +211,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupName"> The name of the private link resource group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="groupName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="groupName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationPrivateLinkResource> GetAppConfigurationPrivateLinkResource(string groupName, CancellationToken cancellationToken = default)
         {
@@ -200,7 +235,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <returns> An object representing collection of AppConfigurationKeyValueResources and their operations over a AppConfigurationKeyValueResource. </returns>
         public virtual AppConfigurationKeyValueCollection GetAppConfigurationKeyValues()
         {
-            return GetCachedClient(Client => new AppConfigurationKeyValueCollection(Client, Id));
+            return GetCachedClient(client => new AppConfigurationKeyValueCollection(client, Id));
         }
 
         /// <summary>
@@ -214,12 +249,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<AppConfigurationKeyValueResource>> GetAppConfigurationKeyValueAsync(string keyValueName, CancellationToken cancellationToken = default)
         {
@@ -237,12 +280,20 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>KeyValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationKeyValueResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyValueName"> Identifier of key and label combination. Key and label are joined by $ character. Label is optional. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="keyValueName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="keyValueName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<AppConfigurationKeyValueResource> GetAppConfigurationKeyValue(string keyValueName, CancellationToken cancellationToken = default)
         {
@@ -259,6 +310,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,6 +351,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -323,6 +390,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -358,6 +433,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -391,6 +474,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -430,6 +521,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -468,16 +567,24 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="AppConfigurationStoreApiKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<AppConfigurationStoreApiKey> GetKeysAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(e), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -491,16 +598,24 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AppConfigurationStoreApiKey" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="AppConfigurationStoreApiKey"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<AppConfigurationStoreApiKey> GetKeys(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationStoreConfigurationStoresRestClient.CreateListKeysNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey, _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppConfigurationStoreApiKey.DeserializeAppConfigurationStoreApiKey(e), _appConfigurationStoreConfigurationStoresClientDiagnostics, Pipeline, "AppConfigurationStoreResource.GetKeys", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -513,6 +628,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -548,6 +671,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The parameters for regenerating an access key. </param>
@@ -581,6 +712,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -636,6 +775,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -690,6 +837,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -739,6 +894,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -787,6 +950,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -839,6 +1010,14 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

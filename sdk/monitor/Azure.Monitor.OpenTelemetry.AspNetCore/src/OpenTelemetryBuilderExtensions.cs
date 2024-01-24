@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -23,6 +26,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     /// </summary>
     public static class OpenTelemetryBuilderExtensions
     {
+        private const string SqlClientInstrumentationPackageName = "OpenTelemetry.Instrumentation.SqlClient";
+
         /// <summary>
         /// Configures Azure Monitor for logging, distributed tracing, and metrics.
         /// </summary>
@@ -35,24 +40,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
-        /// <item>SQL Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.sqlclient"/>.</item>
-        /// </list>
-        ///
-        /// <para>The following instrumentations are added for metrics:</para>
-        /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
+        /// <item>ASP.NET Core.</item>
+        /// <item>HTTP Client.</item>
+        /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder)
         {
             builder.Services.TryAddSingleton<IConfigureOptions<AzureMonitorOptions>,
                         DefaultAzureMonitorOptions>();
-            return builder.UseAzureMonitor(o => o = new AzureMonitorOptions());
+            return builder.UseAzureMonitor(o => { });
         }
 
         /// <summary>
@@ -68,17 +67,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// parsed state values.
         /// </para>
         ///
-        /// <para>The following instrumentations are added for distributed tracing:</para>
+        /// <para>The following vendored instrumentations are added for distributed tracing:</para>
         /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
-        /// <item>SQL Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.sqlclient"/>.</item>
-        /// </list>
-        ///
-        /// <para>The following instrumentations are added for metrics:</para>
-        /// <list type="bullet">
-        /// <item>ASP.NET Core: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/"/>.</item>
-        /// <item>HTTP Client: <see href="https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http"/>.</item>
+        /// <item>ASP.NET Core.</item>
+        /// <item>HTTP Client.</item>
+        /// <item>SQL Client.</item>
         /// </list>
         /// </remarks>
         public static OpenTelemetryBuilder UseAzureMonitor(this OpenTelemetryBuilder builder, Action<AzureMonitorOptions> configureAzureMonitor)
@@ -102,6 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
             builder.WithTracing(b => b
                             .AddSource("Azure.*")
+                            .AddVendorInstrumentationIfPackageNotReferenced()
                             .AddAspNetCoreInstrumentation()
                             .AddHttpClientInstrumentation(o => o.FilterHttpRequestMessage = (_) =>
                             {
@@ -115,15 +109,11 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 {
                                     return false;
                                 }
-
                                 return true;
                             })
-                            .AddSqlClientInstrumentation()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
-                            .AddAspNetCoreInstrumentation()
-                            .AddHttpClientInstrumentation()
                             .AddAzureMonitorMetricExporter());
 
             builder.Services.AddLogging(logging =>
@@ -159,6 +149,37 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     });
 
             return builder;
+        }
+
+        private static TracerProviderBuilder AddVendorInstrumentationIfPackageNotReferenced(this TracerProviderBuilder tracerProviderBuilder)
+        {
+            var vendorInstrumentationActions = new Dictionary<string, Action>
+            {
+                { SqlClientInstrumentationPackageName, () => tracerProviderBuilder.AddSqlClientInstrumentation() },
+            };
+
+            foreach (var packageActionPair in vendorInstrumentationActions)
+            {
+                Assembly? instrumentationAssembly = null;
+
+                try
+                {
+                    instrumentationAssembly = Assembly.Load(packageActionPair.Key);
+                    AzureMonitorAspNetCoreEventSource.Log.FoundInstrumentationPackageReference(packageActionPair.Key);
+                }
+                catch
+                {
+                    AzureMonitorAspNetCoreEventSource.Log.NoInstrumentationPackageReference(packageActionPair.Key);
+                }
+
+                if (instrumentationAssembly == null)
+                {
+                    packageActionPair.Value.Invoke();
+                    AzureMonitorAspNetCoreEventSource.Log.VendorInstrumentationAdded(packageActionPair.Key);
+                }
+            }
+
+            return tracerProviderBuilder;
         }
     }
 }

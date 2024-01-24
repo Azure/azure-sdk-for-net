@@ -21,9 +21,9 @@ using Azure.ResourceManager.CosmosDB.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CosmosDBSqlRoleAssignmentResource" /> and their operations.
-    /// Each <see cref="CosmosDBSqlRoleAssignmentResource" /> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource" />.
-    /// To get a <see cref="CosmosDBSqlRoleAssignmentCollection" /> instance call the GetCosmosDBSqlRoleAssignments method from an instance of <see cref="CosmosDBAccountResource" />.
+    /// A class representing a collection of <see cref="CosmosDBSqlRoleAssignmentResource"/> and their operations.
+    /// Each <see cref="CosmosDBSqlRoleAssignmentResource"/> in the collection will belong to the same instance of <see cref="CosmosDBAccountResource"/>.
+    /// To get a <see cref="CosmosDBSqlRoleAssignmentCollection"/> instance call the GetCosmosDBSqlRoleAssignments method from an instance of <see cref="CosmosDBAccountResource"/>.
     /// </summary>
     public partial class CosmosDBSqlRoleAssignmentCollection : ArmCollection, IEnumerable<CosmosDBSqlRoleAssignmentResource>, IAsyncEnumerable<CosmosDBSqlRoleAssignmentResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_CreateUpdateSqlRoleAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +114,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_CreateUpdateSqlRoleAssignment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -147,6 +163,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleAssignment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,10 +253,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_ListSqlRoleAssignments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="CosmosDBSqlRoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="CosmosDBSqlRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CosmosDBSqlRoleAssignmentResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateListSqlRoleAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -242,10 +282,18 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_ListSqlRoleAssignments</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CosmosDBSqlRoleAssignmentResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="CosmosDBSqlRoleAssignmentResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CosmosDBSqlRoleAssignmentResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.CreateListSqlRoleAssignmentsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -262,6 +310,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +354,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>SqlResources_GetSqlRoleAssignment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
@@ -314,6 +378,96 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 var response = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.GetSqlRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleAssignmentId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleAssignments/{roleAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlRoleAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        public virtual async Task<NullableResponse<CosmosDBSqlRoleAssignmentResource>> GetIfExistsAsync(string roleAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using var scope = _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.GetSqlRoleAssignmentAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleAssignmentId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlRoleAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/sqlRoleAssignments/{roleAssignmentId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>SqlResources_GetSqlRoleAssignment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBSqlRoleAssignmentResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="roleAssignmentId"> The GUID for the Role Assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="roleAssignmentId"/> is null. </exception>
+        public virtual NullableResponse<CosmosDBSqlRoleAssignmentResource> GetIfExists(string roleAssignmentId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(roleAssignmentId, nameof(roleAssignmentId));
+
+            using var scope = _cosmosDBSqlRoleAssignmentSqlResourcesClientDiagnostics.CreateScope("CosmosDBSqlRoleAssignmentCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _cosmosDBSqlRoleAssignmentSqlResourcesRestClient.GetSqlRoleAssignment(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, roleAssignmentId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<CosmosDBSqlRoleAssignmentResource>(response.GetRawResponse());
+                return Response.FromValue(new CosmosDBSqlRoleAssignmentResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

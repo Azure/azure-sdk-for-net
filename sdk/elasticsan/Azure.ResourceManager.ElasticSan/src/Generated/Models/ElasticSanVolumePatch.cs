@@ -5,17 +5,77 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+using Azure.Core;
+
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> Response for Volume request. </summary>
     public partial class ElasticSanVolumePatch
     {
-        /// <summary> Initializes a new instance of ElasticSanVolumePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
         public ElasticSanVolumePatch()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ElasticSanVolumePatch"/>. </summary>
+        /// <param name="sizeGiB"> Volume size. </param>
+        /// <param name="managedBy"> Parent resource information. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanVolumePatch(long? sizeGiB, ManagedByInfo managedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SizeGiB = sizeGiB;
+            ManagedBy = managedBy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> Volume size. </summary>
         public long? SizeGiB { get; set; }
+        /// <summary> Parent resource information. </summary>
+        internal ManagedByInfo ManagedBy { get; set; }
+        /// <summary> Resource ID of the resource managing the volume, this is a restricted field and can only be set for internal use. </summary>
+        public ResourceIdentifier ManagedByResourceId
+        {
+            get => ManagedBy is null ? default : ManagedBy.ResourceId;
+            set
+            {
+                if (ManagedBy is null)
+                    ManagedBy = new ManagedByInfo();
+                ManagedBy.ResourceId = value;
+            }
+        }
     }
 }

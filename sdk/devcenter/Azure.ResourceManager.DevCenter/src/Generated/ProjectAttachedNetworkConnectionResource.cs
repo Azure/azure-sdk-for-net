@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     /// <summary>
     /// A Class representing a ProjectAttachedNetworkConnection along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ProjectAttachedNetworkConnectionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetProjectAttachedNetworkConnectionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource" /> using the GetProjectAttachedNetworkConnection method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ProjectAttachedNetworkConnectionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetProjectAttachedNetworkConnectionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DevCenterProjectResource"/> using the GetProjectAttachedNetworkConnection method.
     /// </summary>
     public partial class ProjectAttachedNetworkConnectionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ProjectAttachedNetworkConnectionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="projectName"> The projectName. </param>
+        /// <param name="attachedNetworkConnectionName"> The attachedNetworkConnectionName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string projectName, string attachedNetworkConnectionName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DevCenter/projects/{projectName}/attachednetworks/{attachedNetworkConnectionName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DevCenter
         private readonly AttachedNetworksRestOperations _projectAttachedNetworkConnectionAttachedNetworksRestClient;
         private readonly AttachedNetworkConnectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/attachednetworks";
+
         /// <summary> Initializes a new instance of the <see cref="ProjectAttachedNetworkConnectionResource"/> class for mocking. </summary>
         protected ProjectAttachedNetworkConnectionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ProjectAttachedNetworkConnectionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ProjectAttachedNetworkConnectionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ProjectAttachedNetworkConnectionResource(ArmClient client, AttachedNetworkConnectionData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DevCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DevCenter/projects/attachednetworks";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <term>Operation Id</term>
         /// <description>AttachedNetworks_GetByProject</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectAttachedNetworkConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.DevCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AttachedNetworks_GetByProject</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProjectAttachedNetworkConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

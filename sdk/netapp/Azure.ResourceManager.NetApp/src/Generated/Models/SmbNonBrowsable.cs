@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary> Enables non browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
+    /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
     public readonly partial struct SmbNonBrowsable : IEquatable<SmbNonBrowsable>
     {
         private readonly string _value;

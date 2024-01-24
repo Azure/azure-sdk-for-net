@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Known CVEs of a firmware. </summary>
     public partial class FirmwareCve
     {
-        /// <summary> Initializes a new instance of FirmwareCve. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCve"/>. </summary>
         internal FirmwareCve()
         {
             Links = new ChangeTrackingList<CveLink>();
         }
 
-        /// <summary> Initializes a new instance of FirmwareCve. </summary>
+        /// <summary> Initializes a new instance of <see cref="FirmwareCve"/>. </summary>
         /// <param name="cveId"> ID of CVE. </param>
         /// <param name="component"> Component of CVE. </param>
         /// <param name="severity"> Severity of CVE. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

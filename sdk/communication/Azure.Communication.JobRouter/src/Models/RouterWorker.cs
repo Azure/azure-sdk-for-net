@@ -1,57 +1,59 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json.Serialization;
+using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterWorker")]
-    public partial class RouterWorker
+    public partial class RouterWorker : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of RouterWorker. </summary>
-        internal RouterWorker()
+        /// <summary> Initializes a new instance of a worker. </summary>
+        /// <param name="workerId"> Id of a worker. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="workerId"/> is null. </exception>
+        public RouterWorker(string workerId)
         {
-            _queueAssignments = new ChangeTrackingDictionary<string, object>();
-            _labels = new ChangeTrackingDictionary<string, object>();
-            _tags = new ChangeTrackingDictionary<string, object>();
-            _channelConfigurations = new ChangeTrackingDictionary<string, ChannelConfiguration>();
-            Offers = new ChangeTrackingList<RouterJobOffer>();
-            AssignedJobs = new ChangeTrackingList<RouterWorkerAssignment>();
+            Argument.AssertNotNullOrWhiteSpace(workerId, nameof(workerId));
+
+            Id = workerId;
+
+            _labels = new ChangeTrackingDictionary<string, BinaryData>();
+            _tags = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary>
-        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions.
+        /// A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Labels { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Labels { get; } = new Dictionary<string, RouterValue>();
 
         /// <summary>
-        /// A set of non-identifying attributes attached to this worker.
+        /// A set of non-identifying attributes attached to this worker. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, LabelValue> Tags { get; } = new Dictionary<string, LabelValue>();
+        public IDictionary<string, RouterValue> Tags { get; } = new Dictionary<string, RouterValue>();
 
-        /// <summary> The channel(s) this worker can handle and their impact on the workers capacity. </summary>
-        public IDictionary<string, ChannelConfiguration> ChannelConfigurations { get; } = new Dictionary<string, ChannelConfiguration>();
+        /// <summary> Collection of channel(s) this worker can handle and their impact on the workers capacity. </summary>
+        public IList<RouterChannel> Channels { get; } = new List<RouterChannel>();
 
-        /// <summary> The queue(s) that this worker can receive work from. </summary>
-        public IDictionary<string, RouterQueueAssignment> QueueAssignments { get; } = new Dictionary<string, RouterQueueAssignment>();
+        /// <summary> Collection of queue(s) that this worker can receive work from. </summary>
+        public IList<string> Queues { get; } = new List<string>();
 
         /// <summary> The total capacity score this worker has to manage multiple concurrent jobs. </summary>
-        public int? TotalCapacity { get; internal set; }
+        public int? Capacity { get; set; }
 
-        /// <summary> A flag indicating this worker is open to receive offers or not. </summary>
-        public bool? AvailableForOffers { get; internal set; }
+        /// <summary> A flag indicating whether this worker is open to receive offers or not. </summary>
+        public bool? AvailableForOffers { get; set; }
 
         [CodeGenMember("Labels")]
-        internal IDictionary<string, object> _labels
+        internal IDictionary<string, BinaryData> _labels
         {
             get
             {
                 return Labels != null && Labels.Count != 0
-                    ? Labels?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Labels?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -59,20 +61,20 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var label in value)
                     {
-                        Labels[label.Key] = new LabelValue(label.Value);
+                        Labels[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
                     }
                 }
             }
         }
 
         [CodeGenMember("Tags")]
-        internal IDictionary<string, object> _tags
+        internal IDictionary<string, BinaryData> _tags
         {
             get
             {
                 return Tags != null && Tags.Count != 0
-                    ? Tags?.ToDictionary(x => x.Key, x => x.Value?.Value)
-                    : new ChangeTrackingDictionary<string, object>();
+                    ? Tags?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
+                    : new ChangeTrackingDictionary<string, BinaryData>();
             }
             set
             {
@@ -80,47 +82,94 @@ namespace Azure.Communication.JobRouter.Models
                 {
                     foreach (var tag in value)
                     {
-                        Tags[tag.Key] = new LabelValue(tag.Value);
+                        Tags[tag.Key] = new RouterValue(tag.Value.ToObjectFromJson());
                     }
                 }
             }
         }
 
-        [CodeGenMember("ChannelConfigurations")]
-        internal IDictionary<string, ChannelConfiguration> _channelConfigurations {
-            get
+        /// <summary> The entity tag for this resource. </summary>
+        [CodeGenMember("Etag")]
+        public ETag ETag { get; }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Queues))
             {
-                return ChannelConfigurations ?? new ChangeTrackingDictionary<string, ChannelConfiguration>();
-            }
-            set
-            {
-                foreach (var channelConfiguration in value)
+                writer.WritePropertyName("queues"u8);
+                writer.WriteStartArray();
+                foreach (var item in Queues)
                 {
-                    ChannelConfigurations[channelConfiguration.Key] = new ChannelConfiguration(channelConfiguration.Value.CapacityCostPerJob)
-                    {
-                        MaxNumberOfJobs = channelConfiguration.Value.MaxNumberOfJobs
-                    };
+                    writer.WriteStringValue(item);
                 }
+                writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Capacity))
+            {
+                writer.WritePropertyName("capacity"u8);
+                writer.WriteNumberValue(Capacity.Value);
+            }
+            if (Optional.IsCollectionDefined(_labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in _tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Channels))
+            {
+                writer.WritePropertyName("channels"u8);
+                writer.WriteStartArray();
+                foreach (var item in Channels)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AvailableForOffers))
+            {
+                writer.WritePropertyName("availableForOffers"u8);
+                writer.WriteBooleanValue(AvailableForOffers.Value);
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
+            }
+            writer.WriteEndObject();
         }
 
-        [CodeGenMember("QueueAssignments")]
-        internal IDictionary<string, object> _queueAssignments
+        internal virtual RequestContent ToRequestContent()
         {
-            get
-            {
-                return QueueAssignments != null
-                    ? QueueAssignments.ToDictionary(x => x.Key,
-                        x => (object)x.Value)
-                    : new ChangeTrackingDictionary<string, object>();
-            }
-            set
-            {
-                foreach (var queueAssignment in value)
-                {
-                    QueueAssignments[queueAssignment.Key] = new RouterQueueAssignment();
-                }
-            }
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

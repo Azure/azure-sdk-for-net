@@ -5,17 +5,52 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Operation Entity contract Properties. </summary>
     public partial class AssociatedOperationProperties
     {
-        /// <summary> Initializes a new instance of AssociatedOperationProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
         internal AssociatedOperationProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of AssociatedOperationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AssociatedOperationProperties"/>. </summary>
         /// <param name="id"> Identifier of the operation in form /operations/{operationId}. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="apiName"> API Name. </param>
@@ -24,7 +59,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="description"> Operation Description. </param>
         /// <param name="method"> A Valid HTTP Operation Method. Typical Http Methods like GET, PUT, POST but not limited by only them. </param>
         /// <param name="uriTemplate"> Relative URL template identifying the target resource for this operation. May include parameters. Example: /customers/{cid}/orders/{oid}/?date={date}. </param>
-        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string uriTemplate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssociatedOperationProperties(string id, string name, string apiName, string apiRevision, string apiVersion, string description, string method, string uriTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Name = name;
@@ -34,6 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Description = description;
             Method = method;
             UriTemplate = uriTemplate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Identifier of the operation in form /operations/{operationId}. </summary>

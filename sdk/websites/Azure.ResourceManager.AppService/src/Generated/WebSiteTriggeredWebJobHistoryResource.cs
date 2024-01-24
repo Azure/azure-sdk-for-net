@@ -18,13 +18,18 @@ namespace Azure.ResourceManager.AppService
 {
     /// <summary>
     /// A Class representing a WebSiteTriggeredWebJobHistory along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WebSiteTriggeredWebJobHistoryResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWebSiteTriggeredWebJobHistoryResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WebSiteTriggeredwebJobResource" /> using the GetWebSiteTriggeredWebJobHistory method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WebSiteTriggeredWebJobHistoryResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWebSiteTriggeredWebJobHistoryResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WebSiteTriggeredwebJobResource"/> using the GetWebSiteTriggeredWebJobHistory method.
     /// </summary>
     public partial class WebSiteTriggeredWebJobHistoryResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WebSiteTriggeredWebJobHistoryResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="webJobName"> The webJobName. </param>
+        /// <param name="id"> The id. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, string webJobName, string id)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/triggeredwebjobs/{webJobName}/history/{id}";
@@ -35,12 +40,15 @@ namespace Azure.ResourceManager.AppService
         private readonly WebAppsRestOperations _webSiteTriggeredWebJobHistoryWebAppsRestClient;
         private readonly TriggeredJobHistoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/triggeredwebjobs/history";
+
         /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredWebJobHistoryResource"/> class for mocking. </summary>
         protected WebSiteTriggeredWebJobHistoryResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WebSiteTriggeredWebJobHistoryResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WebSiteTriggeredWebJobHistoryResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WebSiteTriggeredWebJobHistoryResource(ArmClient client, TriggeredJobHistoryData data) : this(client, data.Id)
@@ -61,9 +69,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/sites/triggeredwebjobs/history";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistory</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredWebJobHistoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +141,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_GetTriggeredWebJobHistory</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteTriggeredWebJobHistoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

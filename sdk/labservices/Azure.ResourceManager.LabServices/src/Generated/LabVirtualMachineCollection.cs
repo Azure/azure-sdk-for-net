@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.LabServices
 {
     /// <summary>
-    /// A class representing a collection of <see cref="LabVirtualMachineResource" /> and their operations.
-    /// Each <see cref="LabVirtualMachineResource" /> in the collection will belong to the same instance of <see cref="LabResource" />.
-    /// To get a <see cref="LabVirtualMachineCollection" /> instance call the GetLabVirtualMachines method from an instance of <see cref="LabResource" />.
+    /// A class representing a collection of <see cref="LabVirtualMachineResource"/> and their operations.
+    /// Each <see cref="LabVirtualMachineResource"/> in the collection will belong to the same instance of <see cref="LabResource"/>.
+    /// To get a <see cref="LabVirtualMachineCollection"/> instance call the GetLabVirtualMachines method from an instance of <see cref="LabResource"/>.
     /// </summary>
     public partial class LabVirtualMachineCollection : ArmCollection, IEnumerable<LabVirtualMachineResource>, IAsyncEnumerable<LabVirtualMachineResource>
     {
@@ -64,6 +64,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineName"> The ID of the virtual machine that uniquely identifies it within the containing lab. Used in resource URIs. </param>
@@ -100,6 +108,14 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,11 +154,19 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListByLab</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="LabVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="LabVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<LabVirtualMachineResource> GetAllAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -161,11 +185,19 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_ListByLab</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply to the operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LabVirtualMachineResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="LabVirtualMachineResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<LabVirtualMachineResource> GetAll(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _labVirtualMachineVirtualMachinesRestClient.CreateListByLabRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
@@ -183,6 +215,14 @@ namespace Azure.ResourceManager.LabServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,6 +259,14 @@ namespace Azure.ResourceManager.LabServices
         /// <term>Operation Id</term>
         /// <description>VirtualMachines_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualMachineName"> The ID of the virtual machine that uniquely identifies it within the containing lab. Used in resource URIs. </param>
@@ -235,6 +283,96 @@ namespace Azure.ResourceManager.LabServices
             {
                 var response = _labVirtualMachineVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineName"> The ID of the virtual machine that uniquely identifies it within the containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        public virtual async Task<NullableResponse<LabVirtualMachineResource>> GetIfExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+
+            using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _labVirtualMachineVirtualMachinesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<LabVirtualMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.LabServices/labs/{labName}/virtualMachines/{virtualMachineName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>VirtualMachines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LabVirtualMachineResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="virtualMachineName"> The ID of the virtual machine that uniquely identifies it within the containing lab. Used in resource URIs. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="virtualMachineName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
+        public virtual NullableResponse<LabVirtualMachineResource> GetIfExists(string virtualMachineName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+
+            using var scope = _labVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("LabVirtualMachineCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _labVirtualMachineVirtualMachinesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, virtualMachineName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<LabVirtualMachineResource>(response.GetRawResponse());
+                return Response.FromValue(new LabVirtualMachineResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class AppServiceWorkerPoolData : ResourceData
     {
-        /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceWorkerPoolData"/>. </summary>
         public AppServiceWorkerPoolData()
         {
             InstanceNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServiceWorkerPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServiceWorkerPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

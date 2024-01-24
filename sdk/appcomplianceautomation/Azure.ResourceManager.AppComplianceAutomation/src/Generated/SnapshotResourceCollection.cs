@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppComplianceAutomation
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SnapshotResource" /> and their operations.
-    /// Each <see cref="SnapshotResource" /> in the collection will belong to the same instance of <see cref="ReportResource" />.
-    /// To get a <see cref="SnapshotResourceCollection" /> instance call the GetSnapshotResources method from an instance of <see cref="ReportResource" />.
+    /// A class representing a collection of <see cref="SnapshotResource"/> and their operations.
+    /// Each <see cref="SnapshotResource"/> in the collection will belong to the same instance of <see cref="ReportResource"/>.
+    /// To get a <see cref="SnapshotResourceCollection"/> instance call the GetSnapshotResources method from an instance of <see cref="ReportResource"/>.
     /// </summary>
     public partial class SnapshotResourceCollection : ArmCollection, IEnumerable<SnapshotResource>, IAsyncEnumerable<SnapshotResource>
     {
@@ -69,6 +69,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +159,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
@@ -151,7 +175,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SnapshotResource> GetAllAsync(string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotsRestClient.CreateListRequest(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
@@ -170,6 +194,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Skip over when retrieving results. </param>
@@ -178,7 +210,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <param name="reportCreatorTenantId"> The tenant id of the report creator. </param>
         /// <param name="offerGuid"> The offerGuid which mapping to the reports. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SnapshotResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SnapshotResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SnapshotResource> GetAll(string skipToken = null, int? top = null, string select = null, string reportCreatorTenantId = null, string offerGuid = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _snapshotResourceSnapshotsRestClient.CreateListRequest(Id.Name, skipToken, top, select, reportCreatorTenantId, offerGuid);
@@ -196,6 +228,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,6 +272,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         /// <term>Operation Id</term>
         /// <description>Snapshot_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="snapshotName"> Snapshot Name. </param>
@@ -248,6 +296,96 @@ namespace Azure.ResourceManager.AppComplianceAutomation
             {
                 var response = _snapshotResourceSnapshotRestClient.Get(Id.Name, snapshotName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> Snapshot Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
+            using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _snapshotResourceSnapshotRestClient.GetAsync(Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.AppComplianceAutomation/reports/{reportName}/snapshots/{snapshotName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Snapshot_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SnapshotResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="snapshotName"> Snapshot Name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
+        public virtual NullableResponse<SnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
+
+            using var scope = _snapshotResourceSnapshotClientDiagnostics.CreateScope("SnapshotResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _snapshotResourceSnapshotRestClient.Get(Id.Name, snapshotName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

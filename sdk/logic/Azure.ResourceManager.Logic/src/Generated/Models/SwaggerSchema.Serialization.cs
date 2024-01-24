@@ -54,7 +54,10 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AdditionalProperties);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalProperties.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(AdditionalProperties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(RequiredProperties))
@@ -113,7 +116,10 @@ namespace Azure.ResourceManager.Logic.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Example);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Example.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Example))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(IsNotificationUrlExtension))

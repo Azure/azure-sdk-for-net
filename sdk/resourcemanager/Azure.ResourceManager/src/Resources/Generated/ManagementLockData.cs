@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.Resources
     /// </summary>
     public partial class ManagementLockData : ResourceData
     {
-        /// <summary> Initializes a new instance of ManagementLockData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagementLockData"/>. </summary>
         /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
         public ManagementLockData(ManagementLockLevel level)
         {
@@ -26,7 +59,7 @@ namespace Azure.ResourceManager.Resources
             Owners = new ChangeTrackingList<ManagementLockOwner>();
         }
 
-        /// <summary> Initializes a new instance of ManagementLockData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementLockData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -34,11 +67,18 @@ namespace Azure.ResourceManager.Resources
         /// <param name="level"> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </param>
         /// <param name="notes"> Notes about the lock. Maximum of 512 characters. </param>
         /// <param name="owners"> The owners of the lock. </param>
-        internal ManagementLockData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagementLockLevel level, string notes, IList<ManagementLockOwner> owners) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagementLockData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ManagementLockLevel level, string notes, IList<ManagementLockOwner> owners, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Level = level;
             Notes = notes;
             Owners = owners;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagementLockData"/> for deserialization. </summary>
+        internal ManagementLockData()
+        {
         }
 
         /// <summary> The level of the lock. Possible values are: NotSpecified, CanNotDelete, ReadOnly. CanNotDelete means authorized users are able to read and modify the resources, but not delete. ReadOnly means authorized users can only read from a resource, but they can't modify or delete it. </summary>
