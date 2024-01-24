@@ -27,5 +27,10 @@ namespace Azure.ResourceManager.DataShare.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataSetMapping"/> for deserialization. </summary>
+        internal UnknownDataSetMapping()
+        {
+        }
     }
 }

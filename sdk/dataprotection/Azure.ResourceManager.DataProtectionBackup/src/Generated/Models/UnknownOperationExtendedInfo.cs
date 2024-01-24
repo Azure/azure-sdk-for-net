@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             ObjectType = objectType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownOperationExtendedInfo"/> for deserialization. </summary>
+        internal UnknownOperationExtendedInfo()
+        {
+        }
     }
 }
