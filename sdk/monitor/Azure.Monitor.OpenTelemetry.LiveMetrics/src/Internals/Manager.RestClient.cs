@@ -18,6 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// This is a unique identifier that comes from the LiveMetrics service and identifies our connected session.
         /// </summary>
         private string _etag = string.Empty;
+        private CollectionConfigurationInfo? _collectionConfigurationInfo = null;
 
         private DateTimeOffset _lastSuccessfulPing = DateTimeOffset.UtcNow;
         private DateTimeOffset _lastSuccessfulPost = DateTimeOffset.UtcNow;
@@ -101,10 +102,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     _lastSuccessfulPost = DateTimeOffset.UtcNow;
 
+                    bool etagUpdated = false;
                     if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
                     {
                         Debug.WriteLine($"OnPost: updated etag: {response.ConfigurationEtag}");
                         _etag = response.ConfigurationEtag;
+                        etagUpdated = true;
                     }
 
                     if (response.Subscribed)
@@ -112,7 +115,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}");
                         _etag = string.Empty;
                         SetPingState();
+                        // TODO: double check if subscribedValue is false, we should stop collecting properly: (QuickPulseTelemetryModule.OnStopCollection).
                     }
+                    else
+                    {
+                        if (etagUpdated && response.CollectionConfigurationInfo != null)
+                        {
+                            _collectionConfigurationInfo = response.CollectionConfigurationInfo;
+                        }
+                    }
+
+                    // TODO: if parsing "x-ms-qps-subscribed" failed, what should do we with the data which was supposed to be sent? (QuickPulseTelemetryModule.OnReturnFailedSamples).
                 }
             }
             catch (System.Exception ex)
