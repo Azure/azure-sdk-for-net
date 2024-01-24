@@ -41,6 +41,7 @@ directive:
     $["x-ms-enum"].name = "ErrorMessage";
 ```
 
+# Removed Models
 ``` yaml
 directive:
   - remove-operation-match: /.*Reservation.*/i
@@ -51,4 +52,7 @@ directive:
   - remove-model: PhoneNumbersBrowseResult
   - remove-model: PhoneNumberBrowseCapabilitiesRequest
   - remove-model: PhoneNumbersReservationPurchaseRequest
+  - remove-model: Error
+  - remove-model: AvailablePhoneNumber
+  - remove-model: AvailablePhoneNumberCost
 ```
