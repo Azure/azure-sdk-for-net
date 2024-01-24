@@ -41,6 +41,7 @@ directive:
     $["x-ms-enum"].name = "ErrorMessage";
 ```
 
+# Removed Models
 ``` yaml
 directive:
   from: swagger-document
