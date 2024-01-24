@@ -39,6 +39,37 @@ public partial class AssistantsClient
         CancellationToken cancellationToken = default)
         => CreateThreadAsync(new AssistantThreadCreationOptions(), cancellationToken);
 
+    /// <summary>
+    /// Creates a new run of the specified thread using a specified assistant.
+    /// </summary>
+    /// <remarks>
+    /// This method will create the run with default configuration.
+    /// To customize the run, use <see cref="AssistantsClient.CreateRun(string, CreateRunOptions, CancellationToken)"/>.
+    /// </remarks>
+    /// <param name="thread"> The thread that should be run. </param>
+    /// <param name="assistant"> The assistant that should run the thread. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
+    public virtual Response<ThreadRun> CreateRun(AssistantThread thread, Assistant assistant, CancellationToken cancellationToken = default)
+        => CreateRun(thread.Id, new CreateRunOptions(assistant.Id), cancellationToken);
+
+    /// <summary>
+    /// Creates a new run of the specified thread using a specified assistant.
+    /// </summary>
+    /// <remarks>
+    /// This method will create the run with default configuration.
+    /// To customize the run, use <see cref="AssistantsClient.CreateRun(string, CreateRunOptions, CancellationToken)"/>.
+    /// </remarks>
+    /// <param name="thread"> The thread that should be run. </param>
+    /// <param name="assistant"> The assistant that should run the thread. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
+    public virtual Task<Response<ThreadRun>> CreateRunAsync(
+        AssistantThread thread,
+        Assistant assistant,
+        CancellationToken cancellationToken = default)
+        => CreateRunAsync(thread.Id, new CreateRunOptions(assistant.Id), cancellationToken);
+
     /// <summary> Returns a list of run steps associated an assistant thread run. </summary>
     /// <param name="run"> The <see cref="ThreadRun"/> instance from which run steps should be listed. </param>
     /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>

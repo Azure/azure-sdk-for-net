@@ -583,10 +583,6 @@ public partial class AssistantsClient
         if (_isConfiguredForAzure)
         {
             uri.AppendPath("openai");
-            if (operationPath.ToLowerInvariant().StartsWith("/files"))
-            {
-                uri.AppendPath("/beta", escape: false);
-            }
             uri.AppendPath(operationPath, escape: false);
             uri.AppendQuery("api-version", _apiVersion, true);
         }
@@ -629,7 +625,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateGetAssistantRequest(string assistantId, RequestContext context)
         => CreateRequestMessage($"/assistants/{assistantId}", content: null, context, RequestMethod.Get);
 
-    internal HttpMessage CreateModifyAssistantRequest(string assistantId, RequestContent content, RequestContext context)
+    internal HttpMessage CreateUpdateAssistantRequest(string assistantId, RequestContent content, RequestContext context)
         => CreateRequestMessage($"/assistants/{assistantId}", content, context, RequestMethod.Post);
 
     internal HttpMessage CreateInternalDeleteAssistantRequest(string assistantId, RequestContext context)
@@ -662,7 +658,7 @@ public partial class AssistantsClient
 
     internal HttpMessage CreateGetThreadRequest(string threadId, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}", content: null, context, RequestMethod.Get);
-    internal HttpMessage CreateModifyThreadRequest(string threadId, RequestContent content, RequestContext context)
+    internal HttpMessage CreateUpdateThreadRequest(string threadId, RequestContent content, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}", content, context, RequestMethod.Post);
     internal HttpMessage CreateInternalDeleteThreadRequest(string threadId, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}", content: null, context, RequestMethod.Delete);
@@ -684,7 +680,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateGetMessageRequest(string threadId, string messageId, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}/messages/{messageId}", content: null, context, RequestMethod.Get);
 
-    internal HttpMessage CreateModifyMessageRequest(string threadId, string messageId, RequestContent content, RequestContext context)
+    internal HttpMessage CreateUpdateMessageRequest(string threadId, string messageId, RequestContent content, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}/messages/{messageId}", content, context, RequestMethod.Post);
     internal HttpMessage CreateInternalGetMessageFilesRequest(string threadId, string messageId, int? limit, string order, string after, string before, RequestContext context)
         => CreateRequestMessage(
@@ -721,9 +717,9 @@ public partial class AssistantsClient
     internal HttpMessage CreateGetRunRequest(string threadId, string runId, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}/runs/{runId}", content: null, context, RequestMethod.Get);
 
-    internal HttpMessage CreateModifyRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
+    internal HttpMessage CreateUpdateRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
         => CreateRequestMessage($"/threads/{threadId}/runs/{runId}", content, context, RequestMethod.Post);
-    internal HttpMessage CreateSubmitToolOuputsToRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
+    internal HttpMessage CreateSubmitToolOutputsToRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
         => CreateRequestMessage(
             $"/threads/{threadId}/runs/{runId}/submit_tool_outputs",
             content,
@@ -767,7 +763,7 @@ public partial class AssistantsClient
     internal HttpMessage CreateInternalDeleteFileRequest(string fileId, RequestContext context)
         => CreateRequestMessage($"/files/{fileId}", content: null, context, RequestMethod.Delete);
 
-    internal HttpMessage CreateRetrieveFileRequest(string fileId, RequestContext context)
+    internal HttpMessage CreateGetFileRequest(string fileId, RequestContext context)
         => CreateRequestMessage($"/files/{fileId}", content: null, context, RequestMethod.Get);
 
     private static TokenCredential CreateDelegatedToken(string token)

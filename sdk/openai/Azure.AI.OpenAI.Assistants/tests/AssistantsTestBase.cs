@@ -21,11 +21,20 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
     protected KeyValuePair<string, string> TestMetadataPair => new(s_testMetadataKey, TestMetadataValue);
 
     private static readonly string s_placeholderAzureResourceUrl = "https://my-resource.openai.azure.com";
-    protected readonly string _azureResourceUrl;
+    protected string AzureResourceUrl
+        => Recording?.Mode == RecordedTestMode.Record || Recording?.Mode == RecordedTestMode.Live
+            ? TestEnvironment.AzureOpenAIResourceUri
+            : s_placeholderAzureResourceUrl;
 
     private static readonly string s_placeholderApiKey = "placeholder";
-    protected readonly string _nonAzureApiKey;
-    protected readonly AzureKeyCredential _azureApiKeyCredential;
+    protected string NonAzureApiKey
+        => Recording?.Mode == RecordedTestMode.Record || Recording?.Mode == RecordedTestMode.Live
+            ? TestEnvironment.NonAzureOpenAIApiKey
+            : s_placeholderApiKey;
+    protected AzureKeyCredential AzureApiKeyCredential
+        => Recording?.Mode == RecordedTestMode.Record || Recording?.Mode == RecordedTestMode.Live
+            ? new(TestEnvironment.AzureOpenAIApiKey)
+            : new(s_placeholderApiKey);
 
     public List<(AssistantsClient, string)> EnsuredFileDeletions = new();
     public List<(AssistantsClient, string)> EnsuredThreadDeletions = new();
@@ -37,21 +46,8 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         BodyRegexSanitizers.Add(new BodyRegexSanitizer("(\"key\" *: *\")[^ \n\"]*(\")", "$1placeholder$2"));
         HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
         UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
+        UriRegexSanitizers.Add(new(TestEnvironment.AzureOpenAIResourceUri ?? s_placeholderAzureResourceUrl, s_placeholderAzureResourceUrl));
         SanitizedQueryParameters.Add("sig");
-
-        if (mode == RecordedTestMode.Record || mode == RecordedTestMode.Live)
-        {
-            _nonAzureApiKey = TestEnvironment.NonAzureOpenAIApiKey;
-            _azureResourceUrl = TestEnvironment.AzureOpenAIResourceUri;
-            _azureApiKeyCredential = new(TestEnvironment.AzureOpenAIApiKey);
-            UriRegexSanitizers.Add(new(_azureResourceUrl, s_placeholderAzureResourceUrl));
-        }
-        else
-        {
-            _nonAzureApiKey = s_placeholderApiKey;
-            _azureResourceUrl = s_placeholderAzureResourceUrl;
-            _azureApiKeyCredential = new(s_placeholderApiKey);
-        }
     }
 
     [OneTimeTearDown]

@@ -10,24 +10,24 @@ using Azure;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class MessageFileCitationTextAnnotation
+    public partial class MessageTextFilePathAnnotation
     {
-        internal static MessageFileCitationTextAnnotation DeserializeMessageFileCitationTextAnnotation(JsonElement element)
+        internal static MessageTextFilePathAnnotation DeserializeMessageTextFilePathAnnotation(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            InternalMessageTextFileCitationDetails fileCitation = default;
+            InternalMessageTextFilePathDetails filePath = default;
             string type = default;
             string text = default;
             int startIndex = default;
             int endIndex = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("file_citation"u8))
+                if (property.NameEquals("file_path"u8))
                 {
-                    fileCitation = InternalMessageTextFileCitationDetails.DeserializeInternalMessageTextFileCitationDetails(property.Value);
+                    filePath = InternalMessageTextFilePathDetails.DeserializeInternalMessageTextFilePathDetails(property.Value);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -51,15 +51,15 @@ namespace Azure.AI.OpenAI.Assistants
                     continue;
                 }
             }
-            return new MessageFileCitationTextAnnotation(type, text, startIndex, endIndex, fileCitation);
+            return new MessageTextFilePathAnnotation(type, text, startIndex, endIndex, filePath);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new MessageFileCitationTextAnnotation FromResponse(Response response)
+        internal static new MessageTextFilePathAnnotation FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMessageFileCitationTextAnnotation(document.RootElement);
+            return DeserializeMessageTextFilePathAnnotation(document.RootElement);
         }
     }
 }

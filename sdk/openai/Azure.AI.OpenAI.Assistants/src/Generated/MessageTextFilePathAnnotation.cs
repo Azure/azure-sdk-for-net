@@ -11,15 +11,15 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> A citation within the message that points to a file located at a specific path. </summary>
-    public partial class MessageFilePathTextAnnotation : MessageTextAnnotation
+    public partial class MessageTextFilePathAnnotation : MessageTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="MessageFilePathTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <param name="internalDetails"> A URL for the file that's generated when the assistant used the code_interpreter tool to generate a file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="internalDetails"/> is null. </exception>
-        internal MessageFilePathTextAnnotation(string text, int startIndex, int endIndex, InternalMessageFilePathDetails internalDetails) : base(text, startIndex, endIndex)
+        internal MessageTextFilePathAnnotation(string text, int startIndex, int endIndex, InternalMessageTextFilePathDetails internalDetails) : base(text, startIndex, endIndex)
         {
             Argument.AssertNotNull(text, nameof(text));
             Argument.AssertNotNull(internalDetails, nameof(internalDetails));
@@ -28,13 +28,13 @@ namespace Azure.AI.OpenAI.Assistants
             InternalDetails = internalDetails;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MessageFilePathTextAnnotation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
         /// <param name="internalDetails"> A URL for the file that's generated when the assistant used the code_interpreter tool to generate a file. </param>
-        internal MessageFilePathTextAnnotation(string type, string text, int startIndex, int endIndex, InternalMessageFilePathDetails internalDetails) : base(type, text, startIndex, endIndex)
+        internal MessageTextFilePathAnnotation(string type, string text, int startIndex, int endIndex, InternalMessageTextFilePathDetails internalDetails) : base(type, text, startIndex, endIndex)
         {
             InternalDetails = internalDetails;
         }

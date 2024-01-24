@@ -10,18 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The ModifyMessageRequest. </summary>
-    internal partial class ModifyMessageRequest
+    /// <summary> The UpdateMessageRequest. </summary>
+    internal partial class UpdateMessageRequest
     {
-        /// <summary> Initializes a new instance of <see cref="ModifyMessageRequest"/>. </summary>
-        public ModifyMessageRequest()
+        /// <summary> Initializes a new instance of <see cref="UpdateMessageRequest"/>. </summary>
+        public UpdateMessageRequest()
         {
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModifyMessageRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateMessageRequest"/>. </summary>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal ModifyMessageRequest(IDictionary<string, string> metadata)
+        internal UpdateMessageRequest(IDictionary<string, string> metadata)
         {
             Metadata = metadata;
         }

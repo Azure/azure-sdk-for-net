@@ -16,7 +16,7 @@ namespace Azure.AI.OpenAI.Assistants
     public partial class RunStepToolCallDetails : RunStepDetails
     {
         /// <summary> Initializes a new instance of <see cref="RunStepToolCallDetails"/>. </summary>
-        /// <param name="toolCalls"> A list tool call details for this run step. </param>
+        /// <param name="toolCalls"> A list of tool call details for this run step. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="toolCalls"/> is null. </exception>
         internal RunStepToolCallDetails(IEnumerable<ToolCall> toolCalls)
         {
@@ -28,14 +28,14 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="RunStepToolCallDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
-        /// <param name="toolCalls"> A list tool call details for this run step. </param>
+        /// <param name="toolCalls"> A list of tool call details for this run step. </param>
         internal RunStepToolCallDetails(RunStepType type, IReadOnlyList<ToolCall> toolCalls) : base(type)
         {
             ToolCalls = toolCalls;
         }
 
         /// <summary>
-        /// A list tool call details for this run step.
+        /// A list of tool call details for this run step.
         /// Please note <see cref="ToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CodeInterpreterToolCall"/>, <see cref="RetrievalToolCall"/> and <see cref="FunctionToolCall"/>.
         /// </summary>

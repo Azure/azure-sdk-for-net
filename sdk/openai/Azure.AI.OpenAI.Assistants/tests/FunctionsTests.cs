@@ -108,8 +108,11 @@ public class FunctionsTests : AssistantsTestBase
         // Create a run of the thread
         Response<ThreadRun> runCreationResponse = await client.CreateRunAsync(
             thread.Id,
-            assistant.Id,
-            metadata: new Dictionary<string, string> { [s_testMetadataKey] = TestMetadataValue });
+            new CreateRunOptions(assistant.Id)
+            {
+                Metadata = new Dictionary<string, string> { [s_testMetadataKey] = TestMetadataValue },
+            });
+
         AssertSuccessfulResponse(runCreationResponse);
         ThreadRun run = runCreationResponse.Value;
 
@@ -127,7 +130,7 @@ public class FunctionsTests : AssistantsTestBase
         SubmitToolOutputsAction outputsAction = run.RequiredAction as SubmitToolOutputsAction;
         Assert.That(outputsAction, Is.Not.Null);
         Assert.That(outputsAction.ToolCalls, Is.Not.Null.Or.Empty);
-        FunctionToolCall functionCall = outputsAction.ToolCalls[0] as FunctionToolCall;
+        RequiredFunctionToolCall functionCall = outputsAction.ToolCalls[0] as RequiredFunctionToolCall;
         Assert.That(functionCall, Is.Not.Null);
 
         Response<PageableList<RunStep>> listRunStepResponse = await client.GetRunStepsAsync(run);

@@ -11,8 +11,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary>
-    /// An abstract representation a tool call, issued by the model in evaluation of a configured tool definition, that must
-    /// be fulfilled and have its outputs submitted before the model can continue.
+    /// An abstract representation of a detailed tool call as recorded within a run step for an existing run.
     /// Please note <see cref="ToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="CodeInterpreterToolCall"/>, <see cref="RetrievalToolCall"/> and <see cref="FunctionToolCall"/>.
     /// </summary>

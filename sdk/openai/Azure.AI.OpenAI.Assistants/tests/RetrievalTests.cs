@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Assistants.Tests;
 public class RetrievalTests : AssistantsTestBase
 {
     public RetrievalTests(bool isAsync)
-        : base(isAsync) // , RecordedTestMode.Live)
+        : base(isAsync) // RecordedTestMode.Live)
     {
     }
 

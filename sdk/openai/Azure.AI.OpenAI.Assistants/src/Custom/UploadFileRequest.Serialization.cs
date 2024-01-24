@@ -8,7 +8,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants;
 
-internal partial class CreateFileRequest : IUtf8JsonSerializable
+internal partial class UploadFileRequest : IUtf8JsonSerializable
 {
     /*
      * CUSTOM CODE DESCRIPTION:
@@ -21,12 +21,12 @@ internal partial class CreateFileRequest : IUtf8JsonSerializable
     {
         MultipartFormDataContent content = new();
 
-        content.Add(MultipartContent.Create(Purpose.ToString()), "purpose", new Dictionary<string, string>());
-        content.Add(MultipartContent.Create(Data), new Dictionary<string, string>()
-        {
-            ["Content-Disposition"] = $"form-data; name=file; filename={(string.IsNullOrEmpty(Filename) ? "file" : Filename)}",
-            ["Content-Type"] = "text/plain",
-        });
+        content.Add(MultipartContent.Create(Purpose.ToString()), "\"purpose\"", new Dictionary<string, string>());
+        content.Add(
+            MultipartContent.Create(Data),
+            name: "file",
+            fileName: string.IsNullOrEmpty(Filename) ? "file" : Filename,
+            headers: new Dictionary<string, string>());
 
         return content;
     }

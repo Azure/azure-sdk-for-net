@@ -10,71 +10,65 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class AssistantModificationOptions : IUtf8JsonSerializable
+    public partial class CreateRunOptions : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Model))
+            writer.WritePropertyName("assistant_id"u8);
+            writer.WriteStringValue(AssistantId);
+            if (Optional.IsDefined(OverrideModelName))
             {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                if (Name != null)
+                if (OverrideModelName != null)
                 {
-                    writer.WritePropertyName("name"u8);
-                    writer.WriteStringValue(Name);
+                    writer.WritePropertyName("model"u8);
+                    writer.WriteStringValue(OverrideModelName);
                 }
                 else
                 {
-                    writer.WriteNull("name");
+                    writer.WriteNull("model");
                 }
             }
-            if (Optional.IsDefined(Description))
+            if (Optional.IsDefined(OverrideInstructions))
             {
-                if (Description != null)
-                {
-                    writer.WritePropertyName("description"u8);
-                    writer.WriteStringValue(Description);
-                }
-                else
-                {
-                    writer.WriteNull("description");
-                }
-            }
-            if (Optional.IsDefined(Instructions))
-            {
-                if (Instructions != null)
+                if (OverrideInstructions != null)
                 {
                     writer.WritePropertyName("instructions"u8);
-                    writer.WriteStringValue(Instructions);
+                    writer.WriteStringValue(OverrideInstructions);
                 }
                 else
                 {
                     writer.WriteNull("instructions");
                 }
             }
-            if (Optional.IsCollectionDefined(Tools))
+            if (Optional.IsDefined(AdditionalInstructions))
             {
-                writer.WritePropertyName("tools"u8);
-                writer.WriteStartArray();
-                foreach (var item in Tools)
+                if (AdditionalInstructions != null)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WritePropertyName("additional_instructions"u8);
+                    writer.WriteStringValue(AdditionalInstructions);
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("additional_instructions");
+                }
             }
-            if (Optional.IsCollectionDefined(FileIds))
+            if (Optional.IsCollectionDefined(OverrideTools))
             {
-                writer.WritePropertyName("file_ids"u8);
-                writer.WriteStartArray();
-                foreach (var item in FileIds)
+                if (OverrideTools != null)
                 {
-                    writer.WriteStringValue(item);
+                    writer.WritePropertyName("tools"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in OverrideTools)
+                    {
+                        writer.WriteObjectValue(item);
+                    }
+                    writer.WriteEndArray();
                 }
-                writer.WriteEndArray();
+                else
+                {
+                    writer.WriteNull("tools");
+                }
             }
             if (Optional.IsCollectionDefined(Metadata))
             {

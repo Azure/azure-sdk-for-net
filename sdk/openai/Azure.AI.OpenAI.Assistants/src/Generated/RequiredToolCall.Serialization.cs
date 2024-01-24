@@ -10,9 +10,9 @@ using Azure;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class MessageTextAnnotation
+    public partial class RequiredToolCall
     {
-        internal static MessageTextAnnotation DeserializeMessageTextAnnotation(JsonElement element)
+        internal static RequiredToolCall DeserializeRequiredToolCall(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,19 +22,18 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 switch (discriminator.GetString())
                 {
-                    case "file_citation": return MessageTextFileCitationAnnotation.DeserializeMessageTextFileCitationAnnotation(element);
-                    case "file_path": return MessageTextFilePathAnnotation.DeserializeMessageTextFilePathAnnotation(element);
+                    case "function": return RequiredFunctionToolCall.DeserializeRequiredFunctionToolCall(element);
                 }
             }
-            return UnknownMessageTextAnnotation.DeserializeUnknownMessageTextAnnotation(element);
+            return UnknownRequiredToolCall.DeserializeUnknownRequiredToolCall(element);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MessageTextAnnotation FromResponse(Response response)
+        internal static RequiredToolCall FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMessageTextAnnotation(document.RootElement);
+            return DeserializeRequiredToolCall(document.RootElement);
         }
     }
 }

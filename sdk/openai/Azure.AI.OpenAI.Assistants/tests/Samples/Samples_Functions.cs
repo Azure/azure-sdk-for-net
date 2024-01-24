@@ -88,15 +88,15 @@ public partial class Samples_Functions
         #endregion
 
         #region Snippet:FunctionsHandleFunctionCalls
-        ToolOutput GetResolvedToolOutput(ToolCall toolCall)
+        ToolOutput GetResolvedToolOutput(RequiredToolCall toolCall)
         {
-            if (toolCall is FunctionToolCall functionToolCall)
+            if (toolCall is RequiredFunctionToolCall functionToolCall)
             {
                 if (functionToolCall.Name == getUserFavoriteCityTool.Name)
                 {
                     return new ToolOutput(toolCall, GetUserFavoriteCity());
                 }
-                using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
+                using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Parameters);
                 if (functionToolCall.Name == getCityNicknameTool.Name)
                 {
                     string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
@@ -145,7 +145,7 @@ public partial class Samples_Functions
             "What's the weather like in my favorite city?");
         ThreadMessage message = messageResponse.Value;
 
-        Response<ThreadRun> runResponse = await client.CreateRunAsync(thread.Id, assistant.Id);
+        Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, assistant);
 
         #region Snippet:FunctionsHandlePollingWithRequiredAction
         do
@@ -157,7 +157,7 @@ public partial class Samples_Functions
                 && runResponse.Value.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
             {
                 List<ToolOutput> toolOutputs = new();
-                foreach (ToolCall toolCall in submitToolOutputsAction.ToolCalls)
+                foreach (RequiredToolCall toolCall in submitToolOutputsAction.ToolCalls)
                 {
                     toolOutputs.Add(GetResolvedToolOutput(toolCall));
                 }

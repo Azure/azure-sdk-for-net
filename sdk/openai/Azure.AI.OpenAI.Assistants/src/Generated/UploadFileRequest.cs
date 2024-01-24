@@ -10,14 +10,14 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The CreateFileRequest. </summary>
-    internal partial class CreateFileRequest
+    /// <summary> The UploadFileRequest. </summary>
+    internal partial class UploadFileRequest
     {
-        /// <summary> Initializes a new instance of <see cref="CreateFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data (not filename) to upload. </param>
         /// <param name="purpose"> The intended purpose of the file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public CreateFileRequest(BinaryData data, OpenAIFilePurpose purpose)
+        public UploadFileRequest(BinaryData data, OpenAIFilePurpose purpose)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -25,11 +25,11 @@ namespace Azure.AI.OpenAI.Assistants
             Purpose = purpose;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CreateFileRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data (not filename) to upload. </param>
         /// <param name="purpose"> The intended purpose of the file. </param>
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
-        internal CreateFileRequest(BinaryData data, OpenAIFilePurpose purpose, string filename)
+        internal UploadFileRequest(BinaryData data, OpenAIFilePurpose purpose, string filename)
         {
             Data = data;
             Purpose = purpose;

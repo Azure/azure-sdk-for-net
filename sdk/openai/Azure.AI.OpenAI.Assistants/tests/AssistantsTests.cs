@@ -69,9 +69,9 @@ public class AssistantsTests : AssistantsTestBase
         Assert.That(retrievalResponse.Value.Metadata.ContainsKey("modification_key"), Is.False);
 
         // Now modify the assistant by adding a k/v
-        Response<Assistant> modificationResponse = await client.ModifyAssistantAsync(
+        Response<Assistant> modificationResponse = await client.UpdateAssistantAsync(
             assistantCreationResponse.Value.Id,
-            new AssistantModificationOptions()
+            new UpdateAssistantOptions()
             {
                 Model = deploymentName,
                 Metadata =
@@ -150,7 +150,7 @@ public class AssistantsTests : AssistantsTestBase
         Assert.That(retrievalResponse.Value.Metadata.ContainsKey("test_modification_key"), Is.False);
 
         Response<ThreadMessage> modificationResponse
-            = await client.ModifyMessageAsync(
+            = await client.UpdateMessageAsync(
                 threadCreationResponse.Value.Id,
                 messageCreationResponse.Value.Id,
                 new Dictionary<string, string>
@@ -216,8 +216,11 @@ public class AssistantsTests : AssistantsTestBase
         // Create a run of the thread
         Response<ThreadRun> runCreationResponse = await client.CreateRunAsync(
             thread.Id,
-            assistant.Id,
-            metadata: new Dictionary<string, string> { [s_testMetadataKey] = TestMetadataValue });
+            new CreateRunOptions(assistant.Id)
+            {
+                Metadata = new Dictionary<string, string> { [s_testMetadataKey] = TestMetadataValue },
+            });
+
         AssertSuccessfulResponse(runCreationResponse);
         ThreadRun run = runCreationResponse.Value;
 

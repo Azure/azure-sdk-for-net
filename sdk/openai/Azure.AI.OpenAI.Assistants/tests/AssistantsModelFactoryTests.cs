@@ -296,9 +296,9 @@ public class AssistantsModelFactoryTests
             "assistantId",
             RunStatus.Completed,
             AssistantsModelFactory.SubmitToolOutputsAction(
-                new ToolCall[]
+                new RequiredToolCall[]
                 {
-                    AssistantsModelFactory.FunctionToolCall("id", "name", "arguments", "output"),
+                    AssistantsModelFactory.RequiredFunctionToolCall("id", "name", BinaryData.FromString("parameters")),
                 }),
                 mockRunError,
                 "model",

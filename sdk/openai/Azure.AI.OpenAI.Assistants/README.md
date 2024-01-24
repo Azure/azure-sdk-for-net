@@ -85,8 +85,10 @@ A run can then be started that evaluates the thread against an assistant:
 ```C# Snippet:OverviewCreateRun
 Response<ThreadRun> runResponse = await client.CreateRunAsync(
     thread.Id,
-    assistant.Id,
-    overrideInstructions: "Please address the user as Jane Doe. The user has a premium account.");
+    new CreateRunOptions(assistant.Id)
+    {
+        AdditionalInstructions = "Please address the user as Jane Doe. The user has a premium account.",
+    });
 ThreadRun run = runResponse.Value;
 ```
 
@@ -263,15 +265,15 @@ If the assistant calls tools, the calling code will need to resolve `ToolCall` i
 `ToolOutput` instances. For convenience, a basic example is extracted here:
 
 ```C# Snippet:FunctionsHandleFunctionCalls
-ToolOutput GetResolvedToolOutput(ToolCall toolCall)
+ToolOutput GetResolvedToolOutput(RequiredToolCall toolCall)
 {
-    if (toolCall is FunctionToolCall functionToolCall)
+    if (toolCall is RequiredFunctionToolCall functionToolCall)
     {
         if (functionToolCall.Name == getUserFavoriteCityTool.Name)
         {
             return new ToolOutput(toolCall, GetUserFavoriteCity());
         }
-        using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Arguments);
+        using JsonDocument argumentsJson = JsonDocument.Parse(functionToolCall.Parameters);
         if (functionToolCall.Name == getCityNicknameTool.Name)
         {
             string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
@@ -307,7 +309,7 @@ do
         && runResponse.Value.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
     {
         List<ToolOutput> toolOutputs = new();
-        foreach (ToolCall toolCall in submitToolOutputsAction.ToolCalls)
+        foreach (RequiredToolCall toolCall in submitToolOutputsAction.ToolCalls)
         {
             toolOutputs.Add(GetResolvedToolOutput(toolCall));
         }

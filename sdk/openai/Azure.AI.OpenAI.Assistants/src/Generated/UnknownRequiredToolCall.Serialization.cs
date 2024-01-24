@@ -10,32 +10,38 @@ using Azure;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalMessageFilePathDetails
+    internal partial class UnknownRequiredToolCall
     {
-        internal static InternalMessageFilePathDetails DeserializeInternalMessageFilePathDetails(JsonElement element)
+        internal static UnknownRequiredToolCall DeserializeUnknownRequiredToolCall(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string fileId = default;
+            string type = "Unknown";
+            string id = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("file_id"u8))
+                if (property.NameEquals("type"u8))
                 {
-                    fileId = property.Value.GetString();
+                    type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
             }
-            return new InternalMessageFilePathDetails(fileId);
+            return new UnknownRequiredToolCall(type, id);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static InternalMessageFilePathDetails FromResponse(Response response)
+        internal static new UnknownRequiredToolCall FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeInternalMessageFilePathDetails(document.RootElement);
+            return DeserializeUnknownRequiredToolCall(document.RootElement);
         }
     }
 }

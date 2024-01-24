@@ -73,8 +73,10 @@ public partial class Samples_AssistantsClient
         #region Snippet:OverviewCreateRun
         Response<ThreadRun> runResponse = await client.CreateRunAsync(
             thread.Id,
-            assistant.Id,
-            overrideInstructions: "Please address the user as Jane Doe. The user has a premium account.");
+            new CreateRunOptions(assistant.Id)
+            {
+                AdditionalInstructions = "Please address the user as Jane Doe. The user has a premium account.",
+            });
         ThreadRun run = runResponse.Value;
         #endregion
 

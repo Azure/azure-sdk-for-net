@@ -48,6 +48,15 @@ namespace Azure.AI.OpenAI.Assistants
             return new RunStepError(code, message);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Assistants.RequiredToolCall"/>. </summary>
+        /// <param name="type"> The object type for the required tool call. </param>
+        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
+        /// <returns> A new <see cref="Assistants.RequiredToolCall"/> instance for mocking. </returns>
+        public static RequiredToolCall RequiredToolCall(string type = null, string id = null)
+        {
+            return new UnknownRequiredToolCall(type, id);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Assistants.ToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
@@ -132,7 +141,7 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Initializes a new instance of <see cref="Assistants.RunStepToolCallDetails"/>. </summary>
-        /// <param name="toolCalls"> A list tool call details for this run step. </param>
+        /// <param name="toolCalls"> A list of tool call details for this run step. </param>
         /// <returns> A new <see cref="Assistants.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<ToolCall> toolCalls = null)
         {

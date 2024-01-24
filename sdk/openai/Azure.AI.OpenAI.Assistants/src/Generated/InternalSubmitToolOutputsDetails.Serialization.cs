@@ -19,15 +19,15 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            IReadOnlyList<ToolCall> toolCalls = default;
+            IReadOnlyList<RequiredToolCall> toolCalls = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tool_calls"u8))
                 {
-                    List<ToolCall> array = new List<ToolCall>();
+                    List<RequiredToolCall> array = new List<RequiredToolCall>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ToolCall.DeserializeToolCall(item));
+                        array.Add(RequiredToolCall.DeserializeRequiredToolCall(item));
                     }
                     toolCalls = array;
                     continue;

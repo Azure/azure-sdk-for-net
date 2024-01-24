@@ -37,7 +37,7 @@ public partial class ToolOutput
     /// <remarks>
     /// When using this constructor, the <see cref="Output"/> property should be set prior to submission.
     /// </remarks>
-    public ToolOutput(ToolCall toolCall)
+    public ToolOutput(RequiredToolCall toolCall)
     {
         ToolCallId = toolCall.Id;
     }
@@ -48,7 +48,7 @@ public partial class ToolOutput
     /// <remarks>
     /// When using this constructor, the <see cref="Output"/> property should be set prior to submission.
     /// </remarks>
-    public ToolOutput(ToolCall toolCall, string output)
+    public ToolOutput(RequiredToolCall toolCall, string output)
     {
         ToolCallId = toolCall.Id;
         Output = output;

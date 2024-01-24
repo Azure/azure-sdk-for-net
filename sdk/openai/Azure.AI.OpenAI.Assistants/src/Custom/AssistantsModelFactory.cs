@@ -158,6 +158,11 @@ public static partial class AssistantsModelFactory
         return new ThreadMessage(id, @object: null, createdAt, threadId, role, contentItems?.ToList(), assistantId, runId, fileIds?.ToList(), metadata);
     }
 
+    public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, BinaryData functionParameters)
+    {
+        return new RequiredFunctionToolCall(toolCallId, new InternalFunctionDefinition(functionName, functionParameters));
+    }
+
     public static FunctionToolCall FunctionToolCall(string id, string name, string arguments, string output)
     {
         return new FunctionToolCall(id, new InternalFunctionToolCallDetails(name, arguments, output));
@@ -173,7 +178,7 @@ public static partial class AssistantsModelFactory
     /// </summary>
     /// <param name="toolCalls"> The tool calls to include in the mocked action. </param>
     /// <returns> A new instance of SubmitToolOutputsAction. </returns>
-    public static SubmitToolOutputsAction SubmitToolOutputsAction(IEnumerable<ToolCall> toolCalls)
+    public static SubmitToolOutputsAction SubmitToolOutputsAction(IEnumerable<RequiredToolCall> toolCalls)
     {
         return new SubmitToolOutputsAction(new InternalSubmitToolOutputsDetails(toolCalls));
     }
@@ -208,9 +213,9 @@ public static partial class AssistantsModelFactory
     /// <param name="fileId"> The file ID for the citation. </param>
     /// <param name="quote"> The quote for the citation. </param>
     /// <returns> A new instance of MessageFileCitationTextAnnotation. </returns>
-    public static MessageFileCitationTextAnnotation MessageFileCitationTextAnnotation(string text, int startIndex, int endIndex, string fileId, string quote)
+    public static MessageTextFileCitationAnnotation MessageFileCitationTextAnnotation(string text, int startIndex, int endIndex, string fileId, string quote)
     {
-        return new MessageFileCitationTextAnnotation(text, startIndex, endIndex, new InternalMessageTextFileCitationDetails(fileId, quote));
+        return new MessageTextFileCitationAnnotation(text, startIndex, endIndex, new InternalMessageTextFileCitationDetails(fileId, quote));
     }
 
     /// <summary>
@@ -221,9 +226,9 @@ public static partial class AssistantsModelFactory
     /// <param name="endIndex"> The end index for the annotation. </param>
     /// <param name="fileId"> The file ID for the annotation. </param>
     /// <returns> A new instance of MessageFilePathTextAnnotation. </returns>
-    public static MessageFilePathTextAnnotation MessageFilePathTextAnnotation(string text, int startIndex, int endIndex, string fileId)
+    public static MessageTextFilePathAnnotation MessageFilePathTextAnnotation(string text, int startIndex, int endIndex, string fileId)
     {
-        return new MessageFilePathTextAnnotation(text, startIndex, endIndex, new InternalMessageFilePathDetails(fileId));
+        return new MessageTextFilePathAnnotation(text, startIndex, endIndex, new InternalMessageTextFilePathDetails(fileId));
     }
 
     /// <summary>

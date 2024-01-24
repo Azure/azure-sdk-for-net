@@ -63,7 +63,7 @@ public class FilesTests : AssistantsTestBase
         }
 
         // Retrieving file information should work
-        Response<OpenAIFile> retrieveFileResponse = await client.RetrieveFileAsync(uploadedFile.Id);
+        Response<OpenAIFile> retrieveFileResponse = await client.GetFileAsync(uploadedFile.Id);
         AssertSuccessfulResponse(retrieveFileResponse);
         OpenAIFile retrievedFile = retrieveFileResponse.Value;
         Assert.That(retrievedFile.Id, Is.EqualTo(uploadedFile.Id));

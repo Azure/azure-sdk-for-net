@@ -332,35 +332,35 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="modificationOptions"> The details of the modification to perform on the specified assistant. </param>
+        /// <param name="updateAssistantOptions"> The request details to use when modifying an existing assistant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="modificationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="updateAssistantOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<Assistant>> ModifyAssistantAsync(string assistantId, AssistantModificationOptions modificationOptions, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Assistant>> UpdateAssistantAsync(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(modificationOptions, nameof(modificationOptions));
+            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = modificationOptions.ToRequestContent();
-            Response response = await ModifyAssistantAsync(assistantId, content, context).ConfigureAwait(false);
+            using RequestContent content = updateAssistantOptions.ToRequestContent();
+            Response response = await UpdateAssistantAsync(assistantId, content, context).ConfigureAwait(false);
             return Response.FromValue(Assistant.FromResponse(response), response);
         }
 
         /// <summary> Modifies an existing assistant. </summary>
         /// <param name="assistantId"> The ID of the assistant to modify. </param>
-        /// <param name="modificationOptions"> The details of the modification to perform on the specified assistant. </param>
+        /// <param name="updateAssistantOptions"> The request details to use when modifying an existing assistant. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="modificationOptions"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> or <paramref name="updateAssistantOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<Assistant> ModifyAssistant(string assistantId, AssistantModificationOptions modificationOptions, CancellationToken cancellationToken = default)
+        public virtual Response<Assistant> UpdateAssistant(string assistantId, UpdateAssistantOptions updateAssistantOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
-            Argument.AssertNotNull(modificationOptions, nameof(modificationOptions));
+            Argument.AssertNotNull(updateAssistantOptions, nameof(updateAssistantOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = modificationOptions.ToRequestContent();
-            Response response = ModifyAssistant(assistantId, content, context);
+            using RequestContent content = updateAssistantOptions.ToRequestContent();
+            Response response = UpdateAssistant(assistantId, content, context);
             return Response.FromValue(Assistant.FromResponse(response), response);
         }
 
@@ -381,16 +381,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ModifyAssistantAsync(string assistantId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> UpdateAssistantAsync(string assistantId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyAssistant");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateAssistant");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyAssistantRequest(assistantId, content, context);
+                using HttpMessage message = CreateUpdateAssistantRequest(assistantId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -417,16 +417,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="assistantId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ModifyAssistant(string assistantId, RequestContent content, RequestContext context = null)
+        internal virtual Response UpdateAssistant(string assistantId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(assistantId, nameof(assistantId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyAssistant");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateAssistant");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyAssistantRequest(assistantId, content, context);
+                using HttpMessage message = CreateUpdateAssistantRequest(assistantId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1192,16 +1192,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AssistantThread>> ModifyThreadAsync(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AssistantThread>> UpdateThreadAsync(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ModifyThreadRequest modifyThreadRequest = new ModifyThreadRequest()
+            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest()
             {
                 Metadata = metadata
             };
-            Response response = await ModifyThreadAsync(threadId, modifyThreadRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UpdateThreadAsync(threadId, updateThreadRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
@@ -1211,16 +1211,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AssistantThread> ModifyThread(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<AssistantThread> UpdateThread(string threadId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ModifyThreadRequest modifyThreadRequest = new ModifyThreadRequest()
+            UpdateThreadRequest updateThreadRequest = new UpdateThreadRequest()
             {
                 Metadata = metadata
             };
-            Response response = ModifyThread(threadId, modifyThreadRequest.ToRequestContent(), context);
+            Response response = UpdateThread(threadId, updateThreadRequest.ToRequestContent(), context);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
@@ -1241,16 +1241,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ModifyThreadAsync(string threadId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> UpdateThreadAsync(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyThread");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateThread");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyThreadRequest(threadId, content, context);
+                using HttpMessage message = CreateUpdateThreadRequest(threadId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1277,16 +1277,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ModifyThread(string threadId, RequestContent content, RequestContext context = null)
+        internal virtual Response UpdateThread(string threadId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyThread");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateThread");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyThreadRequest(threadId, content, context);
+                using HttpMessage message = CreateUpdateThreadRequest(threadId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1769,17 +1769,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadMessage>> ModifyMessageAsync(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ModifyMessageRequest modifyMessageRequest = new ModifyMessageRequest()
+            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest()
             {
                 Metadata = metadata
             };
-            Response response = await ModifyMessageAsync(threadId, messageId, modifyMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UpdateMessageAsync(threadId, messageId, updateMessageRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
@@ -1790,17 +1790,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="messageId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadMessage> ModifyMessage(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadMessage> UpdateMessage(string threadId, string messageId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ModifyMessageRequest modifyMessageRequest = new ModifyMessageRequest()
+            UpdateMessageRequest updateMessageRequest = new UpdateMessageRequest()
             {
                 Metadata = metadata
             };
-            Response response = ModifyMessage(threadId, messageId, modifyMessageRequest.ToRequestContent(), context);
+            Response response = UpdateMessage(threadId, messageId, updateMessageRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadMessage.FromResponse(response), response);
         }
 
@@ -1822,17 +1822,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ModifyMessageAsync(string threadId, string messageId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> UpdateMessageAsync(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyMessage");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateMessage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyMessageRequest(threadId, messageId, content, context);
+                using HttpMessage message = CreateUpdateMessageRequest(threadId, messageId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1860,17 +1860,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="messageId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ModifyMessage(string threadId, string messageId, RequestContent content, RequestContext context = null)
+        internal virtual Response UpdateMessage(string threadId, string messageId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(messageId, nameof(messageId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyMessage");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateMessage");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyMessageRequest(threadId, messageId, content, context);
+                using HttpMessage message = CreateUpdateMessageRequest(threadId, messageId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -2124,69 +2124,35 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Creates a new run for an assistant thread. </summary>
         /// <param name="threadId"> The ID of the thread to run. </param>
-        /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
-        /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
-        /// <param name="overrideInstructions"> The overridden system instructions that the assistant should use to run the thread. </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools that the assistant should use to run the thread. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="createRunOptions"> The details for the run to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="createRunOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> CreateRunAsync(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(createRunOptions, nameof(createRunOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            CreateRunRequest createRunRequest = new CreateRunRequest(assistantId)
-            {
-                OverrideModelName = overrideModelName,
-                OverrideInstructions = overrideInstructions,
-                Metadata = metadata
-            };
-            if (overrideTools != null)
-            {
-                foreach (var value in overrideTools)
-                {
-                    createRunRequest.OverrideTools.Add(value);
-                }
-            }
-            CreateRunRequest createRunRequest0 = createRunRequest;
-            Response response = await CreateRunAsync(threadId, createRunRequest0.ToRequestContent(), context).ConfigureAwait(false);
+            using RequestContent content = createRunOptions.ToRequestContent();
+            Response response = await CreateRunAsync(threadId, content, context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
         /// <summary> Creates a new run for an assistant thread. </summary>
         /// <param name="threadId"> The ID of the thread to run. </param>
-        /// <param name="assistantId"> The ID of the assistant that should run the thread. </param>
-        /// <param name="overrideModelName"> The overridden model name that the assistant should use to run the thread. </param>
-        /// <param name="overrideInstructions"> The overridden system instructions that the assistant should use to run the thread. </param>
-        /// <param name="overrideTools"> The overridden list of enabled tools that the assistant should use to run the thread. </param>
-        /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
+        /// <param name="createRunOptions"> The details for the run to create. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="assistantId"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="createRunOptions"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> CreateRun(string threadId, string assistantId, string overrideModelName = null, string overrideInstructions = null, IEnumerable<ToolDefinition> overrideTools = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> CreateRun(string threadId, CreateRunOptions createRunOptions, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-            Argument.AssertNotNull(assistantId, nameof(assistantId));
+            Argument.AssertNotNull(createRunOptions, nameof(createRunOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            CreateRunRequest createRunRequest = new CreateRunRequest(assistantId)
-            {
-                OverrideModelName = overrideModelName,
-                OverrideInstructions = overrideInstructions,
-                Metadata = metadata
-            };
-            if (overrideTools != null)
-            {
-                foreach (var value in overrideTools)
-                {
-                    createRunRequest.OverrideTools.Add(value);
-                }
-            }
-            CreateRunRequest createRunRequest0 = createRunRequest;
-            Response response = CreateRun(threadId, createRunRequest0.ToRequestContent(), context);
+            using RequestContent content = createRunOptions.ToRequestContent();
+            Response response = CreateRun(threadId, content, context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
@@ -2495,17 +2461,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ThreadRun>> ModifyRunAsync(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ThreadRun>> UpdateRunAsync(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ModifyRunRequest modifyRunRequest = new ModifyRunRequest()
+            UpdateRunRequest updateRunRequest = new UpdateRunRequest()
             {
                 Metadata = metadata
             };
-            Response response = await ModifyRunAsync(threadId, runId, modifyRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UpdateRunAsync(threadId, runId, updateRunRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
@@ -2516,17 +2482,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ThreadRun> ModifyRun(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public virtual Response<ThreadRun> UpdateRun(string threadId, string runId, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            ModifyRunRequest modifyRunRequest = new ModifyRunRequest()
+            UpdateRunRequest updateRunRequest = new UpdateRunRequest()
             {
                 Metadata = metadata
             };
-            Response response = ModifyRun(threadId, runId, modifyRunRequest.ToRequestContent(), context);
+            Response response = UpdateRun(threadId, runId, updateRunRequest.ToRequestContent(), context);
             return Response.FromValue(ThreadRun.FromResponse(response), response);
         }
 
@@ -2548,17 +2514,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> ModifyRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> UpdateRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyRun");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyRunRequest(threadId, runId, content, context);
+                using HttpMessage message = CreateUpdateRunRequest(threadId, runId, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -2586,17 +2552,17 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response ModifyRun(string threadId, string runId, RequestContent content, RequestContext context = null)
+        internal virtual Response UpdateRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.ModifyRun");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.UpdateRun");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateModifyRunRequest(threadId, runId, content, context);
+                using HttpMessage message = CreateUpdateRunRequest(threadId, runId, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3261,11 +3227,11 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNull(data, nameof(data));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            CreateFileRequest createFileRequest = new CreateFileRequest(data, purpose)
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
             {
                 Filename = filename
             };
-            Response response = await UploadFileAsync(createFileRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await UploadFileAsync(uploadFileRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3280,11 +3246,11 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNull(data, nameof(data));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            CreateFileRequest createFileRequest = new CreateFileRequest(data, purpose)
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
             {
                 Filename = filename
             };
-            Response response = UploadFile(createFileRequest.ToRequestContent(), context);
+            Response response = UploadFile(uploadFileRequest.ToRequestContent(), context);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3465,12 +3431,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OpenAIFile>> RetrieveFileAsync(string fileId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<OpenAIFile>> GetFileAsync(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await RetrieveFileAsync(fileId, context).ConfigureAwait(false);
+            Response response = await GetFileAsync(fileId, context).ConfigureAwait(false);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3479,12 +3445,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OpenAIFile> RetrieveFile(string fileId, CancellationToken cancellationToken = default)
+        public virtual Response<OpenAIFile> GetFile(string fileId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = RetrieveFile(fileId, context);
+            Response response = GetFile(fileId, context);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3504,15 +3470,15 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> RetrieveFileAsync(string fileId, RequestContext context)
+        internal virtual async Task<Response> GetFileAsync(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.RetrieveFile");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRetrieveFileRequest(fileId, context);
+                using HttpMessage message = CreateGetFileRequest(fileId, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3538,15 +3504,15 @@ namespace Azure.AI.OpenAI.Assistants
         /// <exception cref="ArgumentException"> <paramref name="fileId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response RetrieveFile(string fileId, RequestContext context)
+        internal virtual Response GetFile(string fileId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
 
-            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.RetrieveFile");
+            using var scope = ClientDiagnostics.CreateScope("AssistantsClient.GetFile");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateRetrieveFileRequest(fileId, context);
+                using HttpMessage message = CreateGetFileRequest(fileId, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3554,25 +3520,6 @@ namespace Azure.AI.OpenAI.Assistants
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateSubmitToolOutputsToRunRequest(string threadId, string runId, RequestContent content, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Post;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/threads/", false);
-            uri.AppendPath(threadId, true);
-            uri.AppendPath("/runs/", false);
-            uri.AppendPath(runId, true);
-            uri.AppendPath("/submit_tool_outputs", false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            request.Content = content;
-            return message;
         }
 
         private static RequestContext DefaultRequestContext = new RequestContext();

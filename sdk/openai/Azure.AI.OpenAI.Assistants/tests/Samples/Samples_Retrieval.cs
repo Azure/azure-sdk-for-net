@@ -61,7 +61,7 @@ public partial class Samples_AssistantsClient
             "Can you give me the documented codes for 'banana' and 'orange'?");
         ThreadMessage message = messageResponse.Value;
 
-        Response<ThreadRun> runResponse = await client.CreateRunAsync(thread.Id, assistant.Id);
+        Response<ThreadRun> runResponse = await client.CreateRunAsync(thread, assistant);
 
         do
         {

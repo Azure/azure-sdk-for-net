@@ -11,8 +11,8 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary>
-    /// A tool call to a function tool, issued by the model in evaluation of a configured function tool, that represents
-    /// given function inputs and submitted function outputs needed or already fulfilled by the tool for the model to continue.
+    /// A record of a call to a function tool, issued by the model in evaluation of a defined tool, that represents the inputs
+    /// and output consumed and emitted by the specified function.
     /// </summary>
     public partial class FunctionToolCall : ToolCall
     {

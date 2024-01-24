@@ -11,12 +11,12 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> An encapsulation of an image file ID, as used by message image content. </summary>
-    internal partial class InternalMessageFilePathDetails
+    internal partial class InternalMessageTextFilePathDetails
     {
-        /// <summary> Initializes a new instance of <see cref="InternalMessageFilePathDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="InternalMessageTextFilePathDetails"/>. </summary>
         /// <param name="fileId"> The ID of the specific file that the citation is from. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> is null. </exception>
-        internal InternalMessageFilePathDetails(string fileId)
+        internal InternalMessageTextFilePathDetails(string fileId)
         {
             Argument.AssertNotNull(fileId, nameof(fileId));
 

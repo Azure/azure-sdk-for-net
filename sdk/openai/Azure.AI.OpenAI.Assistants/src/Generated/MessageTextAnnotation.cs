@@ -13,7 +13,7 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary>
     /// An abstract representation of an annotation to text thread message content.
     /// Please note <see cref="MessageTextAnnotation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="MessageFileCitationTextAnnotation"/> and <see cref="MessageFilePathTextAnnotation"/>.
+    /// The available derived classes include <see cref="MessageTextFileCitationAnnotation"/> and <see cref="MessageTextFilePathAnnotation"/>.
     /// </summary>
     public abstract partial class MessageTextAnnotation
     {

@@ -12,13 +12,10 @@ namespace Azure.AI.OpenAI.Assistants;
  * is to avoid having types that contain nothing meaningful beyond a property to another type.
  */
 
-public partial class MessageFileCitationTextAnnotation
+public partial class MessageTextFilePathAnnotation : MessageTextAnnotation
 {
-    /// <inheritdoc cref="InternalMessageTextFileCitationDetails.FileId"/>
+    /// <inheritdoc cref="InternalMessageTextFilePathDetails.FileId"/>
     public string FileId => InternalDetails.FileId;
 
-    /// <inheritdoc cref="InternalMessageTextFileCitationDetails.Quote"/>
-    public string Quote => InternalDetails.Quote;
-
-    internal InternalMessageTextFileCitationDetails InternalDetails { get; }
+    internal InternalMessageTextFilePathDetails InternalDetails { get; }
 }
