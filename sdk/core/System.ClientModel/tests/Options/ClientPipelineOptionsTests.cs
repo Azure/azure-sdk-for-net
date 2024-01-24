@@ -6,6 +6,7 @@ using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Tests.Options;
@@ -143,6 +144,38 @@ public class ClientPipelineOptionsTests : SyncAsyncTestBase
 
         Assert.AreEqual("Response:PerCallPolicyB", observations[index++]);
         Assert.AreEqual("Response:PerCallPolicyA", observations[index++]);
+    }
+
+    [Test]
+    public void CannotModifyOptionsAfterFrozen()
+    {
+        ClientPipelineOptions options = new();
+        ClientPipeline pipeline = ClientPipeline.Create(options);
+
+        Assert.Throws<InvalidOperationException>(()
+            => options.RetryPolicy = new MockRetryPolicy());
+        Assert.Throws<InvalidOperationException>(()
+            => options.Transport = new MockPipelineTransport("Transport"));
+        Assert.Throws<InvalidOperationException>(()
+            => options.NetworkTimeout = TimeSpan.MinValue);
+        Assert.Throws<InvalidOperationException>(()
+            => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
+    }
+
+    [Test]
+    public void CannotModifyOptionsAfterExplicitlyFrozen()
+    {
+        ClientPipelineOptions options = new();
+        options.Freeze();
+
+        Assert.Throws<InvalidOperationException>(()
+            => options.RetryPolicy = new MockRetryPolicy());
+        Assert.Throws<InvalidOperationException>(()
+            => options.Transport = new MockPipelineTransport("Transport"));
+        Assert.Throws<InvalidOperationException>(()
+            => options.NetworkTimeout = TimeSpan.MinValue);
+        Assert.Throws<InvalidOperationException>(()
+            => options.AddPolicy(new ObservablePolicy("A"), PipelinePosition.PerCall));
     }
 
     #region Helpers

@@ -16,6 +16,9 @@ public class RequestOptions
 {
     private bool _frozen;
 
+    private CancellationToken _cancellationToken = CancellationToken.None;
+    private ClientErrorBehaviors _errorOptions = ClientErrorBehaviors.Default;
+
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
@@ -24,13 +27,29 @@ public class RequestOptions
 
     public RequestOptions()
     {
-        CancellationToken = CancellationToken.None;
-        ErrorOptions = ClientErrorBehaviors.Default;
     }
 
-    public CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken
+    {
+        get => _cancellationToken;
+        set
+        {
+            AssertNotFrozen();
 
-    public ClientErrorBehaviors ErrorOptions { get; set; }
+            _cancellationToken = value;
+        }
+    }
+
+    public ClientErrorBehaviors ErrorOptions
+    {
+        get => _errorOptions;
+        set
+        {
+            AssertNotFrozen();
+
+            _errorOptions = value;
+        }
+    }
 
     public void AddHeader(string name, string value)
     {
