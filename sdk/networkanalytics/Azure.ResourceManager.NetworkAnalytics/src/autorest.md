@@ -8,7 +8,7 @@ csharp: true
 library-name: NetworkAnalytics
 namespace: Azure.ResourceManager.NetworkAnalytics
 require: https://github.com/Azure/azure-rest-api-specs/blob/c67016198d67ef0d833f12fe867b1adbad513315/specification/networkanalytics/resource-manager/readme.md
-tag: package-2023-11-15
+#tag: package-2023-11-15
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
