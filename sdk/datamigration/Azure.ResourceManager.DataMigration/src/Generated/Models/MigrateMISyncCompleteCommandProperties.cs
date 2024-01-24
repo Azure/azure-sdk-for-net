@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -22,9 +23,10 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
         /// <param name="output"> Command output. This is ignored if submitted. </param>
-        internal MigrateMISyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output) : base(commandType, errors, state)
+        internal MigrateMISyncCompleteCommandProperties(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MigrateMISyncCompleteCommandInput input, MigrateMISyncCompleteCommandOutput output) : base(commandType, errors, state, serializedAdditionalRawData)
         {
             Input = input;
             Output = output;

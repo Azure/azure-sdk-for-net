@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -435,7 +435,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -603,7 +603,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -645,7 +645,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveConnectivityConfigurationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ActiveConnectivityConfiguration.DeserializeActiveConnectivityConfiguration(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveConnectivityConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _expressRouteProviderPortRestClient.CreateListActiveSecurityAdminRulesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule, _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ActiveBaseSecurityAdminRule.DeserializeActiveBaseSecurityAdminRule(e), _expressRouteProviderPortClientDiagnostics, Pipeline, "NetworkManagerResource.GetActiveSecurityAdminRules", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -823,7 +823,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(e), _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -895,7 +895,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -909,7 +909,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkManagerDeploymentStatusRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus, _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkManagerDeploymentStatus.DeserializeNetworkManagerDeploymentStatus(e), _networkManagerDeploymentStatusClientDiagnostics, Pipeline, "NetworkManagerResource.GetNetworkManagerDeploymentStatus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -987,7 +987,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1163,7 +1163,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1223,7 +1223,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <description>2023-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

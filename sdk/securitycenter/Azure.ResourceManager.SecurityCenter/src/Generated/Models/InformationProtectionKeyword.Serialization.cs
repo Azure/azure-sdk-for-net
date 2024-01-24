@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InformationProtectionKeyword : IUtf8JsonSerializable
+    public partial class InformationProtectionKeyword : IUtf8JsonSerializable, IJsonModel<InformationProtectionKeyword>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionKeyword>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InformationProtectionKeyword>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Pattern))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("excluded"u8);
                 writer.WriteBooleanValue(Excluded.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InformationProtectionKeyword DeserializeInformationProtectionKeyword(JsonElement element)
+        InformationProtectionKeyword IJsonModel<InformationProtectionKeyword>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInformationProtectionKeyword(document.RootElement, options);
+        }
+
+        internal static InformationProtectionKeyword DeserializeInformationProtectionKeyword(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> custom = default;
             Optional<bool> canBeNumeric = default;
             Optional<bool> excluded = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pattern"u8))
@@ -82,8 +124,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     excluded = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InformationProtectionKeyword(pattern.Value, Optional.ToNullable(custom), Optional.ToNullable(canBeNumeric), Optional.ToNullable(excluded), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InformationProtectionKeyword>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InformationProtectionKeyword IPersistableModel<InformationProtectionKeyword>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionKeyword>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInformationProtectionKeyword(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InformationProtectionKeyword)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InformationProtectionKeyword>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

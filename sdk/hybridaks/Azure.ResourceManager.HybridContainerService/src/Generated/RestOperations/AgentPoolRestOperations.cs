@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-11-15-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Gets the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Gets the specified agent pool in the provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="agentPoolName"/> is null. </exception>
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Gets the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Gets the specified agent pool in the provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="agentPoolName"/> is null. </exception>
@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Creates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Creates or updates the agent pool in the provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
+        /// <param name="data"> Agent Pool resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -160,10 +160,10 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Creates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Creates or updates the agent pool in the provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="data"> The <see cref="HybridContainerServiceAgentPoolData"/> to use. </param>
+        /// <param name="data"> Agent Pool resource definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Deletes the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Deletes the specified agent pool in the provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="agentPoolName"/> is null. </exception>
@@ -226,8 +226,8 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Deletes the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Deletes the specified agent pool in the provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> or <paramref name="agentPoolName"/> is null. </exception>
@@ -243,78 +243,6 @@ namespace Azure.ResourceManager.HybridContainerService
             {
                 case 202:
                 case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateUpdateRequest(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolPatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(connectedClusterResourceUri, false);
-            uri.AppendPath("/providers/Microsoft.HybridContainerService/provisionedClusterInstances/default/agentPools/", false);
-            uri.AppendPath(agentPoolName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
-            request.Content = content;
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Updates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
-        /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(connectedClusterResourceUri, agentPoolName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates the agent pool in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
-        /// <param name="agentPoolName"> Parameter for the name of the agent pool in the provisioned cluster. </param>
-        /// <param name="patch"> The <see cref="HybridContainerServiceAgentPoolPatch"/> to use. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/>, <paramref name="agentPoolName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="agentPoolName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string connectedClusterResourceUri, string agentPoolName, HybridContainerServiceAgentPoolPatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
-            Argument.AssertNotNullOrEmpty(agentPoolName, nameof(agentPoolName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(connectedClusterResourceUri, agentPoolName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -338,8 +266,8 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Gets the agent pools in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Gets the list of agent pools in the specified provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public async Task<Response<AgentPoolListResult>> ListByProvisionedClusterAsync(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -362,8 +290,8 @@ namespace Azure.ResourceManager.HybridContainerService
             }
         }
 
-        /// <summary> Gets the agent pools in the Hybrid AKS provisioned cluster instance. </summary>
-        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource manager identifier of the connected cluster resource. </param>
+        /// <summary> Gets the list of agent pools in the specified provisioned cluster. </summary>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectedClusterResourceUri"/> is null. </exception>
         public Response<AgentPoolListResult> ListByProvisionedCluster(string connectedClusterResourceUri, CancellationToken cancellationToken = default)
@@ -371,6 +299,72 @@ namespace Azure.ResourceManager.HybridContainerService
             Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
 
             using var message = CreateListByProvisionedClusterRequest(connectedClusterResourceUri);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AgentPoolListResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = AgentPoolListResult.DeserializeAgentPoolListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateListByProvisionedClusterNextPageRequest(string nextLink, string connectedClusterResourceUri)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Gets the list of agent pools in the specified provisioned cluster. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public async Task<Response<AgentPoolListResult>> ListByProvisionedClusterNextPageAsync(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+
+            using var message = CreateListByProvisionedClusterNextPageRequest(nextLink, connectedClusterResourceUri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        AgentPoolListResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = AgentPoolListResult.DeserializeAgentPoolListResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the list of agent pools in the specified provisioned cluster. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="connectedClusterResourceUri"> The fully qualified Azure Resource Manager identifier of the connected cluster resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="connectedClusterResourceUri"/> is null. </exception>
+        public Response<AgentPoolListResult> ListByProvisionedClusterNextPage(string nextLink, string connectedClusterResourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(connectedClusterResourceUri, nameof(connectedClusterResourceUri));
+
+            using var message = CreateListByProvisionedClusterNextPageRequest(nextLink, connectedClusterResourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

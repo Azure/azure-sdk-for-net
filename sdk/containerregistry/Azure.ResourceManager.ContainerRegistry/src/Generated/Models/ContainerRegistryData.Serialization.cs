@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
-    public partial class ContainerRegistryData : IUtf8JsonSerializable
+    public partial class ContainerRegistryData : IUtf8JsonSerializable, IJsonModel<ContainerRegistryData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerRegistryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku);
@@ -39,8 +48,48 @@ namespace Azure.ResourceManager.ContainerRegistry
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LoginServer))
+            {
+                writer.WritePropertyName("loginServer"u8);
+                writer.WriteStringValue(LoginServer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationDate"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status);
+            }
             if (Optional.IsDefined(IsAdminUserEnabled))
             {
                 writer.WritePropertyName("adminUserEnabled"u8);
@@ -66,6 +115,26 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataEndpointHostNames))
+            {
+                writer.WritePropertyName("dataEndpointHostNames"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataEndpointHostNames)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
@@ -82,11 +151,40 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStringValue(ZoneRedundancy.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerRegistryData DeserializeContainerRegistryData(JsonElement element)
+        ContainerRegistryData IJsonModel<ContainerRegistryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerRegistryData(document.RootElement, options);
+        }
+
+        internal static ContainerRegistryData DeserializeContainerRegistryData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -113,6 +211,8 @@ namespace Azure.ResourceManager.ContainerRegistry
             Optional<ContainerRegistryPublicNetworkAccess> publicNetworkAccess = default;
             Optional<ContainerRegistryNetworkRuleBypassOption> networkRuleBypassOptions = default;
             Optional<ContainerRegistryZoneRedundancy> zoneRedundancy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -316,8 +416,44 @@ namespace Azure.ResourceManager.ContainerRegistry
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToList(dataEndpointHostNames), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerRegistryData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku, identity, loginServer.Value, Optional.ToNullable(creationDate), Optional.ToNullable(provisioningState), status.Value, Optional.ToNullable(adminUserEnabled), networkRuleSet.Value, policies.Value, encryption.Value, Optional.ToNullable(dataEndpointEnabled), Optional.ToList(dataEndpointHostNames), Optional.ToList(privateEndpointConnections), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(networkRuleBypassOptions), Optional.ToNullable(zoneRedundancy), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerRegistryData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerRegistryData IPersistableModel<ContainerRegistryData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerRegistryData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerRegistryData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerRegistryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

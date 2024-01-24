@@ -160,6 +160,13 @@ namespace Azure.ResourceManager.SecurityCenter
             return GetSecurityConnectorApplications().Get(applicationId, cancellationToken);
         }
 
+        /// <summary> Gets an object representing a DevOpsConfigurationResource along with the instance operations that can be performed on it in the SecurityConnector. </summary>
+        /// <returns> Returns a <see cref="DevOpsConfigurationResource"/> object. </returns>
+        public virtual DevOpsConfigurationResource GetDevOpsConfiguration()
+        {
+            return new DevOpsConfigurationResource(Client, Id.AppendChildResource("devops", "default"));
+        }
+
         /// <summary>
         /// Retrieves details of a specific security connector
         /// <list type="bullet">
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -213,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -253,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -295,7 +302,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -337,7 +344,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -379,7 +386,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -421,7 +428,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,7 +490,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -545,7 +552,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -602,7 +609,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -659,7 +666,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -719,7 +726,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-08-01-preview</description>
+        /// <description>2023-10-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
