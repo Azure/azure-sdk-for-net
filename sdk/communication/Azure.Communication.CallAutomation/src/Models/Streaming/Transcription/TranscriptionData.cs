@@ -21,7 +21,7 @@ namespace Azure.Communication.CallAutomation
             Words = words;
             if (participantRawID != null)
             {
-                Participant = new CommunicationUserIdentifier(participantRawID);
+                Participant = CommunicationIdentifier.FromRawId(participantRawID);
             }
             ResultStatus = ConvertToResultStatusEnum(resultStatus);
         }
@@ -60,7 +60,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The identified speaker based on participant raw ID
         /// </summary>
-        public CommunicationUserIdentifier Participant { get; set; }
+        public CommunicationIdentifier Participant { get; set; }
 
         /// <summary>
         /// Status of the result of transcription
