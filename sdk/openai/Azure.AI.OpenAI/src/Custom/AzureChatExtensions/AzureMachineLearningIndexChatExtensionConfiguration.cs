@@ -18,7 +18,9 @@ public partial class AzureMachineLearningIndexChatExtensionConfiguration : Azure
 
     /// <summary> Initializes a new instance of <see cref="AzureMachineLearningIndexChatExtensionConfiguration"/>. </summary>
     public AzureMachineLearningIndexChatExtensionConfiguration()
-        : this(AzureChatExtensionType.AzureMachineLearningIndex, null, new AzureMachineLearningIndexChatExtensionParameters())
+        : this(AzureChatExtensionType.AzureMachineLearningIndex,
+               serializedAdditionalRawData: null,
+               new AzureMachineLearningIndexChatExtensionParameters())
     { }
 
     internal AzureMachineLearningIndexChatExtensionParameters Parameters { get; }

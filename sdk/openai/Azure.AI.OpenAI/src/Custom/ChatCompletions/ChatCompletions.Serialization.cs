@@ -74,6 +74,12 @@ public partial class ChatCompletions
                 continue;
             }
         }
-        return new ChatCompletions(id, created, choices, Optional.ToList(promptFilterResults), systemFingerprint, usage, null);
+        return new ChatCompletions(id,
+                                   created,
+                                   choices,
+                                   Optional.ToList(promptFilterResults),
+                                   systemFingerprint,
+                                   usage,
+                                   serializedAdditionalRawData: null);
     }
 }

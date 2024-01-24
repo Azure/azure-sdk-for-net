@@ -18,7 +18,9 @@ public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConf
 
     /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionConfiguration"/>. </summary>
     public PineconeChatExtensionConfiguration()
-        : this(AzureChatExtensionType.Pinecone, null, new PineconeChatExtensionParameters())
+        : this(AzureChatExtensionType.Pinecone,
+               serializedAdditionalRawData: null,
+               new PineconeChatExtensionParameters())
     { }
 
     internal PineconeChatExtensionParameters Parameters { get; }
