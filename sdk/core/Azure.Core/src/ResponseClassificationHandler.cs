@@ -27,5 +27,34 @@ namespace Azure.Core
         /// <param name="isError">Whether the message's response should be considered an error.</param>
         /// <returns><code>true</code> if the handler had a classification for this message; <code>false</code> otherwise.</returns>
         public abstract bool TryClassify(HttpMessage message, out bool isError);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="isRetriable"></param>
+        /// <returns></returns>
+        public virtual bool TryClassifyRetriable(HttpMessage message, out bool isRetriable)
+        {
+            isRetriable = false;
+
+            // Don't classify for retries unless overridden.
+            return false;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <param name="isRetriable"></param>
+        /// <returns></returns>
+        public virtual bool TryClassifyRetriable(HttpMessage message, Exception exception, out bool isRetriable)
+        {
+            isRetriable = false;
+
+            // Don't classify for retries unless overridden.
+            return false;
+        }
     }
 }

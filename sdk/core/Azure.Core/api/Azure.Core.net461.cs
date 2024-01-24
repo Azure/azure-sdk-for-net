@@ -673,6 +673,8 @@ namespace Azure.Core
     {
         protected ResponseClassificationHandler() { }
         public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
+        public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, out bool isRetriable) { throw null; }
+        public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, System.Exception exception, out bool isRetriable) { throw null; }
     }
     public partial class ResponseClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {

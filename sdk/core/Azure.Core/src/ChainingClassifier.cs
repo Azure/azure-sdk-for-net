@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
 
 namespace Azure.Core
 {
@@ -55,6 +54,38 @@ namespace Azure.Core
             }
 
             return _endOfChain.IsErrorResponse(message);
+        }
+
+        public override bool IsRetriable(HttpMessage message, Exception exception)
+        {
+            if (_handlers != null)
+            {
+                foreach (var handler in _handlers)
+                {
+                    if (handler.TryClassifyRetriable(message, exception, out bool isRetriable))
+                    {
+                        return isRetriable;
+                    }
+                }
+            }
+
+            return _endOfChain.IsRetriable(message, exception);
+        }
+
+        public override bool IsRetriableResponse(HttpMessage message)
+        {
+            if (_handlers != null)
+            {
+                foreach (var handler in _handlers)
+                {
+                    if (handler.TryClassifyRetriable(message, out bool isRetriable))
+                    {
+                        return isRetriable;
+                    }
+                }
+            }
+
+            return _endOfChain.IsRetriableResponse(message);
         }
 
         private void AddClassifiers(ReadOnlySpan<ResponseClassificationHandler> handlers)
