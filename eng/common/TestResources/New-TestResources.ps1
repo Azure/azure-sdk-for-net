@@ -93,7 +93,7 @@ param (
     [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID),
 
     [Parameter()]
-    [switch] $UseUserCredentials,
+    [switch] $UserAuth,
 
     # Captures any arguments not declared here (no parameter errors)
     # This enables backwards compatibility with old script versions in
@@ -614,9 +614,9 @@ try {
         }
     }
 
-    if ($UseUserCredentials) {
+    if ($UserAuth) {
         if ($TestApplicationId) {
-            Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UseUserCredentials is set."
+            Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UserAuth is set."
         }
 
         $TestApplicationOid = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account).Id
@@ -1013,7 +1013,7 @@ The environment file will be named for the test resources template that it was
 generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
 
-.PARAMETER UseUserCredentials
+.PARAMETER UserAuth
 Create the resource group and deploy the template using the signed in user's credentials.
 No service principal will be created or used.
 

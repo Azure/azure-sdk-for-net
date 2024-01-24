@@ -19,7 +19,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationOid <String>] [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UseUserCredentials] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UseUserCredentials] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -629,7 +629,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UseUserCredentials
+### -UserAuth
 Create the resource group and deploy the template using the signed in user's credentials.
 No service principal will be created or used.
 
