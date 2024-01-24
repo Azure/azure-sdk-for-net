@@ -24,7 +24,6 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
     using Microsoft.Identity.Client;
 
     using Constants = Microsoft.Azure.Batch.Constants;
-    using Microsoft.Identity.Client;
 
     public static class TestUtilities
     {
