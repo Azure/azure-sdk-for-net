@@ -1,5 +1,7 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
+#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -7,8 +9,72 @@ using Azure.Core;
 
 namespace Azure.AI.Translator.Document
 {
+    /// <summary> Document Translate Request / Content. </summary>
+    // [CodeGenModel("DocumentTranslateContent")]
+    // [CodeGenSuppress("DocumentContent", typeof(BinaryData))]
+    // [CodeGenSuppress("DocumentContent", typeof(BinaryData), typeof(IList<BinaryData>))]
+    // [CodeGenSuppress("ToRequestContent")]
     public partial class DocumentContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
+        /// <param name="document"> Document to be translated in the form. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="document"/> is null. </exception>
+        public DocumentContent(MultipartFormFileData document)
+        {
+            Argument.AssertNotNull(document, nameof(document));
+
+            Document = document;
+            Glossary = new ChangeTrackingList<MultipartFormFileData>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
+        /// <param name="document"> Document to be translated in the form. </param>
+        /// <param name="glossary"> Glossary / translation memory will be used during translation in the form. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DocumentContent(MultipartFormFileData document, IList<MultipartFormFileData> glossary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Document = document;
+            Glossary = glossary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentContent"/> for deserialization. </summary>
+        internal DocumentContent()
+        {
+        }
+
         /// <summary>
         /// Document to be translated in the form
         /// <para>
@@ -25,7 +91,7 @@ namespace Azure.AI.Translator.Document
         /// </list>
         /// </para>
         /// </summary>
-        internal BinaryData Document { get; }
+        public MultipartFormFileData Document { get; }
         /// <summary>
         /// Glossary / translation memory will be used during translation in the form.
         /// <para>
@@ -42,45 +108,6 @@ namespace Azure.AI.Translator.Document
         /// </list>
         /// </para>
         /// </summary>
-        internal IList<BinaryData> Glossary { get; }
-
-        internal MultipartFormDataContent MultipartFormDataContent { get; }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentContent"/>. </summary>
-        /// <param name="documentData"> Document content. </param>
-        /// <param name="documentName"> Document file name with extension. </param>
-        /// <param name="documentContentType"> Document content type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="documentData"/> is null. </exception>
-        public DocumentContent(BinaryData documentData, string documentName, string documentContentType)
-        {
-            Argument.AssertNotNull(documentData, nameof(documentData));
-            Argument.AssertNotNull(documentName, nameof(documentName));
-            Argument.AssertNotNull(documentContentType, nameof(documentContentType));
-            this.MultipartFormDataContent = new MultipartFormDataContent();
-            var headers = new Dictionary<string, string>()
-            {
-                {"Content-Type", documentContentType }
-            };
-            this.MultipartFormDataContent.Add(RequestContent.Create(documentData), "document", documentName, headers);
-        }
-
-        /// <summary>
-        /// Add glossary file
-        /// </summary>
-        /// <param name="glossaryData"> Glossary content. </param>
-        /// <param name="glossaryName"> Glossary file name with extension. </param>
-        /// <param name="glossaryContentType"> Glossary content type. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="glossaryData"/> is null. </exception>
-        public void AddGlossary(BinaryData glossaryData, string glossaryName, string glossaryContentType)
-        {
-            Argument.AssertNotNull(glossaryData, nameof(glossaryData));
-            Argument.AssertNotNull(glossaryName, nameof(glossaryName));
-            Argument.AssertNotNull(glossaryContentType, nameof(glossaryContentType));
-            var headers = new Dictionary<string, string>()
-            {
-                {"Content-Type", glossaryContentType }
-            };
-            this.MultipartFormDataContent.Add(RequestContent.Create(glossaryData), "glossary", glossaryName, headers);
-        }
+        public IList<MultipartFormFileData> Glossary { get; }
     }
 }

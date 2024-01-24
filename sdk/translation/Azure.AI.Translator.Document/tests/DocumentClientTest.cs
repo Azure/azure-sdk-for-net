@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.Translator.Document.Tests
@@ -24,7 +25,7 @@ namespace Azure.AI.Translator.Document.Tests
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
-            var translateContent = new DocumentContent(BinaryData.FromStream(fileStream), Path.GetFileName(filePath), "text/html");
+            var translateContent = new DocumentContent(new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html"));
             var response = client.DocumentTranslate("hi", translateContent);
             File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
         }
@@ -37,10 +38,10 @@ namespace Azure.AI.Translator.Document.Tests
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
-            var translateContent = new DocumentContent(BinaryData.FromStream(fileStream), Path.GetFileName(filePath), "text/html");
+            var translateContent = new DocumentContent(new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html"));
             filePath = Path.Combine("TestData", "test-glossary.csv");
             using Stream glossaryStream = File.OpenRead(filePath);
-            translateContent.AddGlossary(BinaryData.FromStream(glossaryStream), Path.GetFileName(filePath), "text/csv");
+            translateContent.Glossary.Add(new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv"));
             var response = await client.DocumentTranslateAsync("hi", translateContent).ConfigureAwait(false);
             File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
         }

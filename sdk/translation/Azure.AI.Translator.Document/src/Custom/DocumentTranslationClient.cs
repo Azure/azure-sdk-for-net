@@ -5,9 +5,15 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 
 namespace Azure.AI.Translator.Document
 {
+    // [CodeGenSuppress("CreateDocumentTranslateRequest", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    // [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(DocumentContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    // [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(DocumentContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    // [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    // [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     public partial class DocumentTranslationClient
     {
         /// <summary> API to translate a document. </summary>
@@ -217,7 +223,6 @@ namespace Azure.AI.Translator.Document
                 uri.AppendQuery("allowFallback", allowFallback.Value, true);
             }
             request.Uri = uri;
-            request.Content = requestContent;
             (requestContent as MultipartFormDataContent).ApplyToRequest(request);
             return message;
         }
