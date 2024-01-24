@@ -50,7 +50,10 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
         /// <inheritdoc />
         public IReadOnlyCollection<XElement> GetAllElements()
         {
-            // Service method is called synchronously, so returned task is completed;
+            // Fixes for #40174
+            // Original `Task.Run(() => GetAllElementsAsync()).GetAwaiter().GetResult();` blocks the thread in ThreadPool until task is completed,
+            // then runs first part of the task on another ThreadPool thread and schedules continuation to run in ThreadPool thread again.
+            // If too many calls of GetAllElements() happens before any continuation is executed, all threads in ThreadPool will become blocked
             var data = GetLatestData();
 
             // The document will look like this:
