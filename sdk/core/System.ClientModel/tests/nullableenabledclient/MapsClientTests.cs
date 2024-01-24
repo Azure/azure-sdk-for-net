@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Maps.NullableEnabled;
 using NUnit.Framework;
 
-namespace System.ClientModel.Tests;
+namespace System.ClientModel.Tests.NullableEnableClient;
 
 public class MapsClientTests
 {
@@ -18,6 +18,7 @@ public class MapsClientTests
     // It's here now for quick manual validation of client functionality, but we can revisit
     // this story going forward.
     [Test]
+    [Ignore("Test support project")]
     public void TestClientSync()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -39,6 +40,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void TestGetIfExists()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -72,6 +74,7 @@ public class MapsClientTests
     #region Options Tests
 
     [Test]
+    [Ignore("Test support project")]
     public void ChangeServiceVersion()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -97,6 +100,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void SetNetworkTimeout_ClientScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -122,6 +126,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void AddCustomPolicy_ClientScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -147,6 +152,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void OverrideTransport_ClientScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -173,6 +179,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void PassCancellationToken_MethodScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -199,6 +206,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void AddRequestHeader_MethodScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -225,6 +233,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void AddCustomPolicy_MethodScope()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
@@ -252,6 +261,7 @@ public class MapsClientTests
     }
 
     [Test]
+    [Ignore("Test support project")]
     public void ChangeMethodBehaviorOnErrorResponse()
     {
         string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
