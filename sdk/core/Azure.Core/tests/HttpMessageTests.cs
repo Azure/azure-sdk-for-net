@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
@@ -380,7 +381,67 @@ namespace Azure.Core.Tests
             Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
         }
 
+        [Test]
+        public void CanChainErrorAndRetryClassifiers()
+        {
+            RequestContext context = new RequestContext();
+            context.AddClassifier(404, false);
+            context.AddClassifier(500, false);
+            context.AddClassifier(new RetryClassificationHandler());
+            context.AddClassifier(new StatusCodeHandler(404, true));
+
+            HttpMessage message = new HttpMessage(new MockRequest(), default);
+            message.ApplyRequestContext(context, HeadResponseClassifier.Instance);
+
+            message.Response = new MockResponse(204);
+            Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
+            Assert.IsFalse(message.ResponseClassifier.IsRetriableResponse(message));
+
+            message.Response = new MockResponse(304);
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
+            Assert.IsFalse(message.ResponseClassifier.IsRetriableResponse(message));
+
+            message.Response = new MockResponse(404);
+            Assert.IsTrue(message.ResponseClassifier.IsErrorResponse(message));
+            Assert.IsFalse(message.ResponseClassifier.IsRetriableResponse(message));
+
+            message.Response = new MockResponse(408);
+            Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
+            Assert.IsTrue(message.ResponseClassifier.IsRetriableResponse(message));
+
+            message.Response = new MockResponse(500);
+            Assert.IsFalse(message.ResponseClassifier.IsErrorResponse(message));
+            Assert.IsFalse(message.ResponseClassifier.IsRetriableResponse(message));
+        }
+
         #region Helpers
+
+        private class RetryClassificationHandler : ResponseClassificationHandler
+        {
+            // Note: if we keep this abstract, must provide implementation for errors as well as retries.
+            // We would probably want to make this virtual because of that, but it feels cleaner to separate
+            // out the classification capabilities.
+            public override bool TryClassify(HttpMessage message, out bool isError)
+            {
+                isError = false;
+                return false;
+            }
+
+            public override bool TryClassifyRetriable(HttpMessage message, out bool isRetriable)
+            {
+                // Only retry timeouts, and disable default functionality
+                isRetriable = message.Response.Status == 408;
+                return true;
+            }
+
+            public override bool TryClassifyRetriable(HttpMessage message, Exception exception, out bool isRetriable)
+            {
+                // Only retry timeouts, and disable default functionality
+                isRetriable = message.Response.Status == 408;
+                return true;
+            }
+        }
+
         private class StatusCodeHandler : ResponseClassificationHandler
         {
             private readonly int _statusCode;
