@@ -18,7 +18,7 @@ namespace Azure.Monitor.Query.Tests
     {
         private MetricsTestData _testData;
 
-        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Live)
+        public MetricsQueryClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -339,7 +339,7 @@ namespace Azure.Monitor.Query.Tests
             Assert.Throws<KeyNotFoundException>(() => { results.Value.GetMetricByName("Guinness"); });
         }
 
-        [Test]
+        [RecordedTest]
         public async Task MetricsBatchQueryAsync()
         {
             MetricsClient client = CreateMetricsClient();
@@ -353,7 +353,7 @@ namespace Azure.Monitor.Query.Tests
 
             MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
             Assert.AreEqual(1, metricsQueryResults.Values.Count);
-            Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].Metrics[0].Id);
+            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
             Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
             for (int i = 0; i < metricsQueryResults.Values.Count; i++)
             {
@@ -380,54 +380,6 @@ namespace Azure.Monitor.Query.Tests
                 metricNames: new List<string> { "Ingress" },
                 metricNamespace: "Microsoft.Storage/storageAccounts");
             });
-        }
-
-        [Test]
-        public async Task DemoMetricsClientAsync()
-        {
-            MetricsClient client = CreateMetricsClient();
-
-            var resourceId = TestEnvironment.StorageAccountId;
-            IEnumerable<ResourceIdentifier> resourceIdentifiers = new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) };
-            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
-                resourceIds: resourceIdentifiers,
-                metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
-
-            ProcessStartInfo psi = new ProcessStartInfo("cmd.exe")
-            {
-                RedirectStandardError = true,
-                RedirectStandardInput = true,
-                RedirectStandardOutput = true,
-                UseShellExecute = false
-            };
-
-            Process p = Process.Start(psi);
-
-            StreamWriter sw = p.StandardInput;
-            StreamReader sr = p.StandardOutput;
-
-            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
-            foreach (MetricsQueryResult value in metricsQueryResults.Values)
-            {
-                foreach (MetricResult metric in value.Metrics)
-                {
-                    sw.WriteLine("Metric Id: " + metric.Id);
-                    sw.WriteLine("Metric Name: " + metric.Name);
-                    sw.WriteLine("Metric TimeSeries: " + metric.TimeSeries);
-                }
-                sw.WriteLine("Metric Namespace: " + value.Namespace);
-                sw.WriteLine("Metric Granularity: " + value.Granularity);
-                sw.WriteLine("Metric ResourceRegion: " + value.ResourceRegion);
-                Console.WriteLine(value.Namespace);
-                Console.WriteLine(value.Granularity);
-                Console.WriteLine(value.ResourceRegion);
-                TestContext.WriteLine(value.Namespace);
-                TestContext.WriteLine(value.Granularity);
-                TestContext.WriteLine(value.ResourceRegion);
-            }
-
-            sr.Close();
         }
     }
 }
