@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests.Mocks;
-using Microsoft.Extensions.Primitives;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
+using System.Collections.Immutable;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Results;
 
@@ -184,6 +184,45 @@ public class PipelineResponseTests
 
     #endregion
 
+    #region Cast evolution validation
+
+    [Test]
+    public void CanCastToTFromClientResultOfT()
+    {
+        MockJsonModel model = new(1, "a");
+        MockPipelineResponse response = new MockPipelineResponse(200);
+        CastableClientResult<MockJsonModel> result = new(model, response);
+
+        MockJsonModel value = (MockJsonModel)result.Value;
+
+        Assert.AreEqual(model.IntValue, value.IntValue);
+        Assert.AreEqual(model.StringValue, value.StringValue);
+        Assert.AreEqual(200, result.GetRawResponse().Status);
+    }
+
+    [Test]
+    public void CanCastToTFromOptionalClientResultOfT()
+    {
+        MockJsonModel model = new(1, "a");
+        MockPipelineResponse response = new MockPipelineResponse(200);
+        CastableClientResult<MockJsonModel?> result = new(model, response);
+
+        MockJsonModel? value = (MockJsonModel?)result.Value;
+
+        Assert.IsNotNull(value);
+        Assert.AreEqual(model.IntValue, value!.IntValue);
+        Assert.AreEqual(model.StringValue, value!.StringValue);
+        Assert.AreEqual(200, result.GetRawResponse().Status);
+
+        result = new(default, response);
+        value = (MockJsonModel?)result.Value;
+
+        Assert.IsNull(value);
+        Assert.AreEqual(200, result.GetRawResponse().Status);
+    }
+
+    #endregion
+
     #region Helpers
 
     internal class DerivedClientResult<T> : ClientResult<T>
@@ -236,6 +275,15 @@ public class PipelineResponseTests
                 return ClientResult.FromOptionalValue<int?>(default, response);
             }
         }
+    }
+
+    internal class CastableClientResult<T> : ClientResult<T>
+    {
+        protected internal CastableClientResult(T value, PipelineResponse response) : base(value, response)
+        {
+        }
+
+        public static implicit operator T(CastableClientResult<T> result) => result.Value;
     }
 
     #endregion
