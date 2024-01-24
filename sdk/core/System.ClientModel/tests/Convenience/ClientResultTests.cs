@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using ClientModel.Tests.Mocks;
+using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
 
@@ -127,6 +128,62 @@ public class PipelineResponseTests
 
     #endregion
 
+    #region MockClient Tests
+
+    [Test]
+    public void CanGetReferenceTypeValueFromClientResultOfT()
+    {
+        MockClient client = new MockClient();
+        ClientResult<MockJsonModel> result = client.GetModel(1, "a");
+
+        Assert.AreEqual(1, result.Value.IntValue);
+        Assert.AreEqual("a", result.Value.StringValue);
+        Assert.AreEqual(200, result.GetRawResponse().Status);
+    }
+
+    [Test]
+    public void CanGetOptionalReferenceTypeValueFromClientResultOfT()
+    {
+        MockClient client = new MockClient();
+        ClientResult<MockJsonModel?> result = client.GetOptionalModel(1, "a", hasValue: true);
+
+        Assert.IsNotNull(result.Value);
+        Assert.AreEqual(1, result.Value!.IntValue);
+        Assert.AreEqual("a", result.Value!.StringValue);
+        Assert.AreEqual(200, result.GetRawResponse().Status);
+
+        result = client.GetOptionalModel(1, "a", hasValue: false);
+        Assert.IsNull(result.Value);
+        Assert.AreEqual(404, result.GetRawResponse().Status);
+    }
+
+    [Test]
+    public void CanGetValueTypeValueFromClientResultOfT()
+    {
+        MockClient client = new MockClient();
+        ClientResult<int> result = client.GetCount(1);
+
+        Assert.AreEqual(1, result.Value);
+        Assert.AreEqual(200, result.GetRawResponse().Status);
+    }
+
+    [Test]
+    public void CanGetOptionalValueTypeValueFromClientResultOfT()
+    {
+        MockClient client = new MockClient();
+        ClientResult<int?> result = client.GetOptionalCount(1, hasValue: true);
+
+        Assert.IsNotNull(result.Value);
+        Assert.AreEqual(1, result.Value);
+        Assert.AreEqual(200, result.GetRawResponse().Status);
+
+        result = client.GetOptionalCount(1, hasValue: false);
+        Assert.IsNull(result.Value);
+        Assert.AreEqual(404, result.GetRawResponse().Status);
+    }
+
+    #endregion
+
     #region Helpers
 
     internal class DerivedClientResult<T> : ClientResult<T>
@@ -138,25 +195,45 @@ public class PipelineResponseTests
 
     internal class MockClient
     {
-        public virtual ClientResult<MockPersistableJsonModel> GetModel()
+        public virtual ClientResult<MockJsonModel> GetModel(int intValue, string stringValue)
         {
             MockPipelineResponse response = new(200);
-            MockPersistableJsonModel model = new MockPersistableJsonModel(1, "a");
+            MockJsonModel model = new MockJsonModel(intValue, stringValue);
             return ClientResult.FromValue(model, response);
         }
 
-        public virtual ClientResult<MockPersistableJsonModel?> GetModelIfExists(bool exists)
+        public virtual ClientResult<MockJsonModel?> GetOptionalModel(int intValue, string stringValue, bool hasValue)
         {
-            if (exists)
+            if (hasValue)
             {
                 MockPipelineResponse response = new(200);
-                MockPersistableJsonModel model = new MockPersistableJsonModel(1, "a");
+                MockJsonModel model = new MockJsonModel(intValue, stringValue);
                 return ClientResult.FromOptionalValue(model, response);
             }
             else
             {
                 MockPipelineResponse response = new(404);
-                return ClientResult.FromOptionalValue<MockPersistableJsonModel?>(default, response);
+                return ClientResult.FromOptionalValue<MockJsonModel?>(default, response);
+            }
+        }
+
+        public virtual ClientResult<int> GetCount(int count)
+        {
+            MockPipelineResponse response = new(200);
+            return ClientResult.FromValue(count, response);
+        }
+
+        public virtual ClientResult<int?> GetOptionalCount(int count, bool hasValue)
+        {
+            if (hasValue)
+            {
+                MockPipelineResponse response = new(200);
+                return ClientResult.FromOptionalValue<int?>(count, response);
+            }
+            else
+            {
+                MockPipelineResponse response = new(404);
+                return ClientResult.FromOptionalValue<int?>(default, response);
             }
         }
     }
