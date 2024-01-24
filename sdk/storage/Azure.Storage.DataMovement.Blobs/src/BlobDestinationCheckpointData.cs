@@ -6,7 +6,6 @@ using System.IO;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
-using Metadata = System.Collections.Generic.IDictionary<string, string>;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs
@@ -29,15 +28,15 @@ namespace Azure.Storage.DataMovement.Blobs
         public AccessTier? AccessTier;
 
         /// <summary>
-        /// The metadate for the destination blob.
+        /// The metadata for the destination blob.
         /// </summary>
-        public Metadata Metadata;
+        public BlobTransferMetadataOptions MetadataOptions;
         private byte[] _metadataBytes;
 
         /// <summary>
         /// The Blob tags for the destination blob.
         /// </summary>
-        public Tags Tags;
+        public BlobTransferTagsOptions TagsOptions;
         private byte[] _tagsBytes;
 
         public override int Length => CalculateLength();
@@ -46,8 +45,8 @@ namespace Azure.Storage.DataMovement.Blobs
             BlobType blobType,
             BlobHttpHeaders contentHeaders,
             AccessTier? accessTier,
-            Metadata metadata,
-            Tags blobTags)
+            BlobTransferMetadataOptions metadataOptions,
+            BlobTransferTagsOptions blobTagsOptions)
             : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, blobType)
         {
             ContentHeaders = contentHeaders;
@@ -57,10 +56,10 @@ namespace Azure.Storage.DataMovement.Blobs
             _contentDispositionBytes = ContentHeaders?.ContentDisposition != default ? Encoding.UTF8.GetBytes(ContentHeaders.ContentDisposition) : Array.Empty<byte>();
             _cacheControlBytes = ContentHeaders?.CacheControl != default ? Encoding.UTF8.GetBytes(ContentHeaders.CacheControl) : Array.Empty<byte>();
             AccessTier = accessTier;
-            Metadata = metadata;
-            _metadataBytes = Metadata != default ? Encoding.UTF8.GetBytes(Metadata.DictionaryToString()) : Array.Empty<byte>();
-            Tags = blobTags;
-            _tagsBytes = Tags != default ? Encoding.UTF8.GetBytes(Tags.DictionaryToString()) : Array.Empty<byte>();
+            MetadataOptions = metadataOptions;
+            _metadataBytes = MetadataOptions?._metadata != default ? Encoding.UTF8.GetBytes(MetadataOptions._metadata.DictionaryToString()) : Array.Empty<byte>();
+            TagsOptions = blobTagsOptions;
+            _tagsBytes = TagsOptions?._tags != default ? Encoding.UTF8.GetBytes(TagsOptions?._tags.DictionaryToString()) : Array.Empty<byte>();
         }
 
         protected override void Serialize(Stream stream)

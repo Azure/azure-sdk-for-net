@@ -252,8 +252,8 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new AppendBlobCreateOptions()
             {
-                HttpHeaders = options?.HttpHeaders,
-                Metadata = options?.Metadata,
+                HttpHeaders = options?.HttpHeadersOptions,
+                Metadata = options?.MetadataOptions,
                 Tags = options?.Tags,
                 Conditions = new AppendBlobRequestConditions()
                 {
@@ -325,8 +325,8 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new BlobUploadOptions()
             {
-                HttpHeaders = options?.HttpHeaders,
-                Metadata = options?.Metadata,
+                HttpHeaders = options?.HttpHeadersOptions,
+                Metadata = options?.MetadataOptions,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
                 TransferOptions = new StorageTransferOptions()
@@ -364,8 +364,8 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new BlobSyncUploadFromUriOptions()
             {
-                HttpHeaders = options?.HttpHeaders,
-                Metadata = options?.Metadata,
+                HttpHeaders = options?.HttpHeadersOptions,
+                Metadata = options?.MetadataOptions,
                 Tags = options?.Tags,
                 SourceConditions = new BlobRequestConditions()
                 {
@@ -408,8 +408,8 @@ namespace Azure.Storage.DataMovement.Blobs
             // to see what headers are accepted.
             return new CommitBlockListOptions()
             {
-                HttpHeaders = options?.HttpHeaders,
-                Metadata = options?.Metadata,
+                HttpHeaders = options?.HttpHeadersOptions,
+                Metadata = options?.MetadataOptions,
                 Tags = options?.Tags,
                 AccessTier = options?.AccessTier,
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
@@ -443,9 +443,9 @@ namespace Azure.Storage.DataMovement.Blobs
             return new PageBlobCreateOptions()
             {
                 SequenceNumber = options?.SequenceNumber,
-                HttpHeaders = options?.HttpHeaders,
-                Metadata = options?.Metadata,
-                Tags = options?.Tags,
+                HttpHeaders = options?.HttpHeadersOptions,
+                Metadata = options?.MetadataOptions,
+                Tags = options?.TagsOptions,
                 Conditions = new PageBlobRequestConditions()
                 {
                     IfMatch = options?.DestinationConditions?.IfMatch,
@@ -510,9 +510,9 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new()
             {
-                Metadata = checkpointData.Metadata,
-                Tags = checkpointData.Tags,
-                HttpHeaders = checkpointData.ContentHeaders,
+                MetadataOptions = checkpointData.MetadataOptions,
+                Tags = checkpointData.TagsOptions,
+                HttpHeadersOptions = checkpointData.ContentHeaders,
                 AccessTier = checkpointData.AccessTier,
             };
         }
@@ -558,9 +558,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
                 BlobOptions = new BlobStorageResourceOptions()
                 {
-                    Metadata = options?.BlobOptions?.Metadata,
+                    MetadataOptions = options?.BlobOptions?.MetadataOptions,
                     Tags = options?.BlobOptions?.Tags,
-                    HttpHeaders = options?.BlobOptions?.HttpHeaders,
+                    HttpHeadersOptions = options?.BlobOptions?.HttpHeadersOptions,
                     AccessTier = options?.BlobOptions?.AccessTier,
                 }
             };

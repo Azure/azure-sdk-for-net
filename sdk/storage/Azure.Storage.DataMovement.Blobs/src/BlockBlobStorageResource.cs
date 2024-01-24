@@ -345,9 +345,9 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             return new BlobDestinationCheckpointData(
                 BlobType.Block,
-                _options?.HttpHeaders,
+                _options?.HttpHeadersOptions,
                 _options?.AccessTier,
-                _options?.Metadata,
+                _options?.MetadataOptions,
                 _options?.Tags);
         }
     }

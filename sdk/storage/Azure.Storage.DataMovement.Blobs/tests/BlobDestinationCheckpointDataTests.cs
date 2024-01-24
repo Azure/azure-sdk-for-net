@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(DefaultContentDisposition, data.ContentHeaders.ContentDisposition);
             Assert.AreEqual(DefaultCacheControl, data.ContentHeaders.CacheControl);
             Assert.AreEqual(AccessTier.Hot, data.AccessTier);
-            CollectionAssert.AreEquivalent(DefaultMetadata, data.Metadata);
+            CollectionAssert.AreEquivalent(DefaultMetadata, data.MetadataOptions);
             CollectionAssert.AreEquivalent(DefaultTags, data.Tags);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(DefaultContentDisposition, deserialized.ContentHeaders.ContentDisposition);
             Assert.AreEqual(DefaultCacheControl, deserialized.ContentHeaders.CacheControl);
             Assert.AreEqual(AccessTier.Hot, deserialized.AccessTier);
-            CollectionAssert.AreEquivalent(DefaultMetadata, deserialized.Metadata);
+            CollectionAssert.AreEquivalent(DefaultMetadata, deserialized.MetadataOptions);
             CollectionAssert.AreEquivalent(DefaultTags, deserialized.Tags);
         }
     }

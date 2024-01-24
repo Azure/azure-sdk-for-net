@@ -585,10 +585,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             BlockBlobStorageResourceOptions testOptions = new()
             {
-                Metadata = DataProvider.BuildMetadata(),
+                MetadataOptions = DataProvider.BuildMetadata(),
                 Tags = DataProvider.BuildTags(),
                 AccessTier = AccessTier.Cool,
-                HttpHeaders = new BlobHttpHeaders()
+                HttpHeadersOptions = new BlobHttpHeaders()
                 {
                     ContentLanguage = "en-US",
                 },
@@ -627,10 +627,10 @@ namespace Azure.Storage.DataMovement.Tests
             BlobUriBuilder builder = new BlobUriBuilder(destination.Uri);
             BlockBlobClient blob = blobContainer.Container.GetBlockBlobClient(builder.BlobName);
             BlobProperties props = (await blob.GetPropertiesAsync()).Value;
-            Assert.AreEqual(testOptions.Metadata, props.Metadata);
+            Assert.AreEqual(testOptions.MetadataOptions, props.Metadata);
             Assert.AreEqual(testOptions.Tags.Count, props.TagCount);
             Assert.AreEqual(testOptions.AccessTier, new AccessTier(props.AccessTier));
-            Assert.AreEqual(testOptions.HttpHeaders.ContentLanguage, props.ContentLanguage);
+            Assert.AreEqual(testOptions.HttpHeadersOptions.ContentLanguage, props.ContentLanguage);
         }
 
         private async Task<StorageResource> CreateBlobDirectorySourceResourceAsync(
