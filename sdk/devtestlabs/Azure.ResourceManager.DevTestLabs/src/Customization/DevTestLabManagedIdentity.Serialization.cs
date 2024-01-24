@@ -10,9 +10,9 @@ using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
+// This customization is here to override the serialization and deserialization for `ManagedIdentityType`
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    // This customization is here to override the serialization and deserialization for `ManagedIdentityType`
     public partial class DevTestLabManagedIdentity : IUtf8JsonSerializable, IJsonModel<DevTestLabManagedIdentity>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabManagedIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
@@ -73,6 +73,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDevTestLabManagedIdentity(document.RootElement, options);
         }
+
         internal static DevTestLabManagedIdentity DeserializeDevTestLabManagedIdentity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
@@ -93,17 +94,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>("{" + property.ToString() + "}");
+                    type = new ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("principalId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     principalId = property.Value.GetGuid();
@@ -113,7 +112,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     tenantId = property.Value.GetGuid();
@@ -123,7 +121,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        clientSecretUrl = null;
                         continue;
                     }
                     clientSecretUrl = new Uri(property.Value.GetString());

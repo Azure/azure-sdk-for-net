@@ -8,12 +8,11 @@ using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
+// This customization is here to override the serialization and deserialization for `ManagedIdentityType`
 [assembly: CodeGenSuppressType("DevTestLabManagedIdentity")]
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    /// <summary>
-    /// Properties of a managed identity
-    /// </summary>
+    /// <summary> Properties of a managed identity. </summary>
     public partial class DevTestLabManagedIdentity
     {
         /// <summary>
@@ -52,24 +51,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabManagedIdentity()
         {
         }
+
         /// <summary> Initializes a new instance of <see cref="DevTestLabManagedIdentity"/>. </summary>
-        /// <param name="managedIdentityType">
-        /// Managed identity.
-        /// Serialized Name: IdentityProperties.type
-        /// </param>
-        /// <param name="principalId">
-        /// The principal id of resource identity.
-        /// Serialized Name: IdentityProperties.principalId
-        /// </param>
-        /// <param name="tenantId">
-        /// The tenant identifier of resource.
-        /// Serialized Name: IdentityProperties.tenantId
-        /// </param>
-        /// <param name="clientSecretUri">
-        /// The client secret URL of the identity.
-        /// Serialized Name: IdentityProperties.clientSecretUrl
-        /// </param>
-        /// /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="managedIdentityType"> Managed identity. </param>
+        /// <param name="principalId"> The principal id of resource identity. </param>
+        /// <param name="tenantId"> The tenant identifier of resource. </param>
+        /// <param name="clientSecretUri"> The client secret URL of the identity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DevTestLabManagedIdentity(ManagedServiceIdentityType managedIdentityType, Guid? principalId, Guid? tenantId, Uri clientSecretUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ManagedIdentityType = managedIdentityType;
@@ -79,25 +67,13 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Managed identity.
-        /// Serialized Name: IdentityProperties.type
-        /// </summary>
+        /// <summary> Managed identity. </summary>
         public Azure.ResourceManager.Models.ManagedServiceIdentityType ManagedIdentityType { get; set; }
-        /// <summary>
-        /// The principal id of resource identity.
-        /// Serialized Name: IdentityProperties.principalId
-        /// </summary>
+        /// <summary> The principal id of resource identity. </summary>
         public Guid? PrincipalId { get; set; }
-        /// <summary>
-        /// The tenant identifier of resource.
-        /// Serialized Name: IdentityProperties.tenantId
-        /// </summary>
+        /// <summary> The tenant identifier of resource. </summary>
         public Guid? TenantId { get; set; }
-        /// <summary>
-        /// The client secret URL of the identity.
-        /// Serialized Name: IdentityProperties.clientSecretUrl
-        /// </summary>
+        /// <summary> The client secret URL of the identity. </summary>
         public Uri ClientSecretUri { get; set; }
     }
 }
