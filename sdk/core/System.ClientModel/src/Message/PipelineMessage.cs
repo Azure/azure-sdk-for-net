@@ -66,7 +66,7 @@ public class PipelineMessage : IDisposable
     // at the end of the chain.
     public ErrorResponseClassifier? ErrorClassifier { get; set; }
 
-    public RetriableResponseClassifier? RetryClassifier { get; set; }
+    public RetryResponseClassifier? RetryClassifier { get; set; }
 
     public void Apply(RequestOptions options)
     {

@@ -14,8 +14,27 @@ namespace Azure.Core
     {
         internal static ResponseClassifier Shared { get; } = new();
 
-        // TODO: we'll need an adapter here...
-        private readonly RetriableResponseClassifier _retryClassifier = new();
+        private static ErrorResponseClassifier DefaultErrorClassifier { get; } = new();
+        private static RetryResponseClassifier DefaultRetryClassifier { get; } = new();
+
+        private readonly ErrorResponseClassifier _errorClassifier;
+        private readonly RetryResponseClassifier _retryClassifier;
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        public ResponseClassifier()
+        {
+            _errorClassifier = DefaultErrorClassifier;
+            _retryClassifier = DefaultRetryClassifier;
+        }
+
+        internal ResponseClassifier(ErrorResponseClassifier errorClassifier,
+            RetryResponseClassifier retryClassifier)
+        {
+            _errorClassifier = errorClassifier;
+            _retryClassifier = retryClassifier;
+        }
 
         /// <summary>
         /// Specifies if the request contained in the <paramref name="message"/> should be retried.
@@ -49,8 +68,7 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {
-            // Base type will always classify
-            base.TryClassify(message, out bool isError);
+            _errorClassifier.TryClassify(message, out bool isError);
             return isError;
         }
 

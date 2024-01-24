@@ -63,20 +63,7 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier
-        {
-            get
-            {
-                if (ErrorClassifier is not ResponseClassifier classifier)
-                {
-                    throw new InvalidOperationException($"Invalid ResponseClassifier set on message: '{base.ErrorClassifier}'.");
-                }
-
-                return classifier;
-            }
-
-            set => ErrorClassifier = value;
-        }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         internal int RetryNumber { get; set; }
 
@@ -99,6 +86,11 @@ namespace Azure.Core
             {
                 Policies ??= new(context.Policies.Count);
                 Policies.AddRange(context.Policies);
+            }
+
+            if (classifier is null)
+            {
+                ResponseClassifier = new ResponseClassifier(ErrorClassifier, RetryClassifier);
             }
 
             if (classifier != null)

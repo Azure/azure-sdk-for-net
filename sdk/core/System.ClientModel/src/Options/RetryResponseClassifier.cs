@@ -5,9 +5,9 @@ using System.IO;
 
 namespace System.ClientModel.Primitives;
 
-public class RetriableResponseClassifier
+public class RetryResponseClassifier
 {
-    internal static RetriableResponseClassifier Default { get; } = new RetriableResponseClassifier();
+    internal static RetryResponseClassifier Default { get; } = new RetryResponseClassifier();
 
     public virtual bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
     {

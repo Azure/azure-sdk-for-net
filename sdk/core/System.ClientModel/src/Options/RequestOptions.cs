@@ -22,6 +22,10 @@ public class RequestOptions
 
     private List<HeadersUpdate>? _headersUpdates;
 
+    private List<(int Status, bool IsError)>? _statusCodesClassifiers;
+    private List<ErrorResponseClassifier>? _errorClassifiers;
+    private List<RetryResponseClassifier>? _retryClassifiers;
+
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
@@ -78,17 +82,30 @@ public class RequestOptions
 
     public virtual void AddClassifier(int statusCode, bool isError)
     {
-        throw new NotImplementedException();
+        AssertNotFrozen();
+
+        _statusCodesClassifiers ??= new();
+        _statusCodesClassifiers.Add((statusCode, isError));
     }
 
     public void AddClassifier(ErrorResponseClassifier classifier)
     {
-        throw new NotImplementedException();
+        Argument.AssertNotNull(classifier, nameof(classifier));
+
+        AssertNotFrozen();
+
+        _errorClassifiers ??= new();
+        _errorClassifiers.Add(classifier);
     }
 
-    public void AddClassifier(RetriableResponseClassifier classifier)
+    public void AddClassifier(RetryResponseClassifier classifier)
     {
-        throw new NotImplementedException();
+        Argument.AssertNotNull(classifier, nameof(classifier));
+
+        AssertNotFrozen();
+
+        _retryClassifiers ??= new();
+        _retryClassifiers.Add(classifier);
     }
 
     // Set options on the message before sending it through the pipeline.
@@ -106,8 +123,8 @@ public class RequestOptions
         // This preserves any values set by the client author, and is also
         // needed for Azure.Core-based clients so we don't overwrite a default
         // Azure.Core ResponseClassifier.
-        message.ErrorClassifier ??= ErrorResponseClassifier.Default;
-        message.RetryClassifier ??= RetriableResponseClassifier.Default;
+        message.ErrorClassifier = ComposeErrorClassifier();
+        message.RetryClassifier = ComposeRetryClassifier();
 
         // Copy custom pipeline policies to the message.
         message.PerCallPolicies = _perCallPolicies;
@@ -133,6 +150,16 @@ public class RequestOptions
                 }
             }
         }
+    }
+
+    private RetryResponseClassifier? ComposeRetryClassifier()
+    {
+        throw new NotImplementedException();
+    }
+
+    private ErrorResponseClassifier? ComposeErrorClassifier()
+    {
+        throw new NotImplementedException();
     }
 
     private void AssertNotFrozen()
