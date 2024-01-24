@@ -13,6 +13,16 @@ namespace Azure.AI.Translation.Document
     /// <summary> Model factory for models. </summary>
     public static partial class DocumentTranslationModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Document.SupportedFileFormats"/>. </summary>
+        /// <param name="value"> list of objects. </param>
+        /// <returns> A new <see cref="Document.SupportedFileFormats"/> instance for mocking. </returns>
+        public static SupportedFileFormats SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value = null)
+        {
+            value ??= new List<DocumentTranslationFileFormat>();
+
+            return new SupportedFileFormats(value?.ToList());
+        }
+
         /// <summary> Initializes a new instance of <see cref="Document.DocumentTranslationFileFormat"/>. </summary>
         /// <param name="format"> Name of the format. </param>
         /// <param name="fileExtensions"> Supported file extension for this format. </param>
@@ -27,6 +37,16 @@ namespace Azure.AI.Translation.Document
             formatVersions ??= new List<string>();
 
             return new DocumentTranslationFileFormat(format, fileExtensions?.ToList(), contentTypes?.ToList(), defaultFormatVersion, formatVersions?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Document.SupportedStorageSources"/>. </summary>
+        /// <param name="value"> list of objects. </param>
+        /// <returns> A new <see cref="Document.SupportedStorageSources"/> instance for mocking. </returns>
+        public static SupportedStorageSources SupportedStorageSources(IEnumerable<StorageSource> value = null)
+        {
+            value ??= new List<StorageSource>();
+
+            return new SupportedStorageSources(value?.ToList());
         }
     }
 }
