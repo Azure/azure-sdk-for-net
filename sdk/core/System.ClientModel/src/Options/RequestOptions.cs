@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace System.ClientModel.Primitives;
@@ -19,14 +20,12 @@ public class RequestOptions
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
 
-    private readonly PipelineMessageHeaders _addHeaders;
+    private List<HeadersUpdate>? _headersUpdates;
 
     public RequestOptions()
     {
         CancellationToken = CancellationToken.None;
         ErrorOptions = ClientErrorBehaviors.Default;
-
-        _addHeaders = new PipelineRequestHeaders();
     }
 
     public CancellationToken CancellationToken { get; set; }
@@ -40,7 +39,19 @@ public class RequestOptions
 
         AssertNotFrozen();
 
-        _addHeaders.Add(name, value);
+        _headersUpdates ??= new();
+        _headersUpdates.Add(new HeadersUpdate(HeaderOperation.Add, name, value));
+    }
+
+    public void SetHeader(string name, string value)
+    {
+        Argument.AssertNotNull(name, nameof(name));
+        Argument.AssertNotNull(value, nameof(value));
+
+        AssertNotFrozen();
+
+        _headersUpdates ??= new();
+        _headersUpdates.Add(new HeadersUpdate(HeaderOperation.Set, name, value));
     }
 
     public void AddPolicy(PipelinePolicy policy, PipelinePosition position)
@@ -87,10 +98,24 @@ public class RequestOptions
         message.PerTryPolicies = _perTryPolicies;
         message.BeforeTransportPolicies = _beforeTransportPolicies;
 
-        // Add the values of any headers set via AddHeader.
-        foreach (var header in _addHeaders)
+        // Apply adds and sets to request headers if applicable.
+        if (_headersUpdates is not null)
         {
-            message.Request.Headers.Add(header.Key, header.Value);
+            foreach (var update in _headersUpdates)
+            {
+                switch (update.Operation)
+                {
+                    case HeaderOperation.Add:
+
+                        message.Request.Headers.Add(update.HeaderName, update.HeaderValue);
+                        break;
+                    case HeaderOperation.Set:
+                        message.Request.Headers.Set(update.HeaderName, update.HeaderValue);
+                        break;
+                    default:
+                        throw new InvalidOperationException("Unrecognized header update operation value.");
+                }
+            }
         }
     }
 
@@ -100,5 +125,25 @@ public class RequestOptions
         {
             throw new InvalidOperationException("Cannot change a RequestOptions instance after it has been passed to a client method.");
         }
+    }
+
+    private readonly struct HeadersUpdate
+    {
+        public HeadersUpdate(HeaderOperation operation, string name, string value)
+        {
+            Operation = operation;
+            HeaderName = name;
+            HeaderValue = value;
+        }
+
+        public HeaderOperation Operation { get; }
+        public string HeaderName { get; }
+        public string HeaderValue { get; }
+    }
+
+    private enum HeaderOperation
+    {
+        Add,
+        Set
     }
 }

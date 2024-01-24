@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="id"> String of the selector ID. </param>
         /// <param name="targets"> List of Target references. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="targets"/> is null. </exception>
-        public ChaosTargetListSelector(string id, IEnumerable<TargetReference> targets) : base(id)
+        public ChaosTargetListSelector(string id, IEnumerable<ChaosTargetReference> targets) : base(id)
         {
             Argument.AssertNotNull(id, nameof(id));
             Argument.AssertNotNull(targets, nameof(targets));
@@ -38,13 +38,18 @@ namespace Azure.ResourceManager.Chaos.Models
         /// </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="targets"> List of Target references. </param>
-        internal ChaosTargetListSelector(SelectorType selectorType, string id, ChaosTargetFilter filter, IDictionary<string, BinaryData> additionalProperties, IList<TargetReference> targets) : base(selectorType, id, filter, additionalProperties)
+        internal ChaosTargetListSelector(SelectorType selectorType, string id, ChaosTargetFilter filter, IDictionary<string, BinaryData> additionalProperties, IList<ChaosTargetReference> targets) : base(selectorType, id, filter, additionalProperties)
         {
             Targets = targets;
             SelectorType = selectorType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ChaosTargetListSelector"/> for deserialization. </summary>
+        internal ChaosTargetListSelector()
+        {
+        }
+
         /// <summary> List of Target references. </summary>
-        public IList<TargetReference> Targets { get; }
+        public IList<ChaosTargetReference> Targets { get; }
     }
 }

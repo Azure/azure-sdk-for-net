@@ -6,21 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class DomainValidationProperties
+    public partial class DomainValidationProperties : IUtf8JsonSerializable, IJsonModel<DomainValidationProperties>
     {
-        internal static DomainValidationProperties DeserializeDomainValidationProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DomainValidationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DomainValidationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ValidationToken))
+            {
+                writer.WritePropertyName("validationToken"u8);
+                writer.WriteStringValue(ValidationToken);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
+            {
+                writer.WritePropertyName("expirationDate"u8);
+                writer.WriteStringValue(ExpiresOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DomainValidationProperties IJsonModel<DomainValidationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDomainValidationProperties(document.RootElement, options);
+        }
+
+        internal static DomainValidationProperties DeserializeDomainValidationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> validationToken = default;
             Optional<DateTimeOffset> expirationDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validationToken"u8))
@@ -37,8 +94,44 @@ namespace Azure.ResourceManager.Cdn.Models
                     expirationDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DomainValidationProperties(validationToken.Value, Optional.ToNullable(expirationDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DomainValidationProperties(validationToken.Value, Optional.ToNullable(expirationDate), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DomainValidationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DomainValidationProperties IPersistableModel<DomainValidationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DomainValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDomainValidationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DomainValidationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

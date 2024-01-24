@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Azure.Storage.DataMovement.JobPlan;
 
@@ -9,13 +10,15 @@ namespace Azure.Storage.DataMovement
 {
     internal static class DataMovementExtensions
     {
-        internal static StorageResourceProperties ToStorageResourceProperties(this FileInfo fileInfo)
+        internal static StorageResourceItemProperties ToStorageResourceProperties(this FileInfo fileInfo)
         {
-            return new StorageResourceProperties(
-                lastModified: fileInfo.LastWriteTimeUtc,
-                createdOn: fileInfo.CreationTimeUtc,
-                contentLength: fileInfo.Length,
-                lastAccessed: fileInfo.LastAccessTimeUtc);
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            return new StorageResourceItemProperties(
+                resourceLength: fileInfo.Length,
+                eTag: default,
+                lastModifiedTime: fileInfo.LastWriteTimeUtc,
+                properties: properties);
         }
 
         public static StreamToUriJobPart ToJobPartAsync(

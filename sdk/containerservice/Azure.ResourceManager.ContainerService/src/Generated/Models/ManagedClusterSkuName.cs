@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string BasicValue = "Basic";
+        private const string BaseValue = "Base";
 
-        /// <summary> Basic. </summary>
-        public static ManagedClusterSkuName Basic { get; } = new ManagedClusterSkuName(BasicValue);
+        /// <summary> Base option for the AKS control plane. </summary>
+        public static ManagedClusterSkuName Base { get; } = new ManagedClusterSkuName(BaseValue);
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterSkuName left, ManagedClusterSkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ManagedClusterSkuName"/> values are not the same. </summary>

@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
 
-// TODO: Can I collapse this with RetriableTransport into a single
-// MockTransport?
 public class ObservableTransport : PipelineTransport
 {
     public string Id { get; }
@@ -96,7 +94,7 @@ public class ObservableTransport : PipelineTransport
             throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineRequestHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }
@@ -139,7 +137,7 @@ public class ObservableTransport : PipelineTransport
             set => throw new NotImplementedException();
         }
 
-        protected override PipelineMessageHeaders GetHeadersCore()
+        protected override PipelineResponseHeaders GetHeadersCore()
         {
             throw new NotImplementedException();
         }
