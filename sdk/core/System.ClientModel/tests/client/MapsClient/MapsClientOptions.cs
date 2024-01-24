@@ -17,7 +17,7 @@ public class MapsClientOptions : ClientPipelineOptions
 
     internal string Version { get; }
 
-    internal Uri? Endpoint { get; }
+    internal Uri Endpoint { get; }
 
     public MapsClientOptions(ServiceVersion version = LatestVersion)
     {

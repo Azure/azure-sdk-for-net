@@ -309,8 +309,8 @@ public class MapsClientTests
 
         private class CustomTransportRequest : PipelineRequest
         {
-            private string? _method;
-            private Uri? _uri;
+            private string _method;
+            private Uri _uri;
             private PipelineRequestHeaders _headers;
 
             public CustomTransportRequest()
@@ -340,7 +340,7 @@ public class MapsClientTests
             protected override void SetUriCore(Uri uri)
                 => _uri = uri;
 
-            protected override void SetContentCore(BinaryContent? content)
+            protected override void SetContentCore(BinaryContent content)
             {
                 throw new NotImplementedException();
             }
@@ -348,7 +348,7 @@ public class MapsClientTests
 
         private class CustomTransportResponse : PipelineResponse
         {
-            private Stream? _stream;
+            private Stream _stream;
 
             public CustomTransportResponse()
             {
@@ -360,7 +360,7 @@ public class MapsClientTests
 
             public override string ReasonPhrase => "CustomTransportResponse";
 
-            public override Stream? ContentStream
+            public override Stream ContentStream
             {
                 get => _stream;
                 set => _stream = value;
