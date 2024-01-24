@@ -68,17 +68,5 @@ namespace Azure.ResourceManager
         /// <param name="resourceType"> The resource type to get the version for. </param>
         /// <param name="apiVersion"> The api version to variable to set. </param>
         protected bool TryGetApiVersion(ResourceType resourceType, out string apiVersion) => Client.TryGetApiVersion(resourceType, out apiVersion);
-
-        /// <summary>
-        /// Gets a cached client to use for extension methods.
-        /// </summary>
-        /// <typeparam name="T"> The type of client to get. </typeparam>
-        /// <param name="clientFactory"> The constructor factory for the client. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual T GetCachedClient<T>(Func<ArmClient, T> clientFactory)
-            where T : class
-        {
-            return _clientCache.GetOrAdd(typeof(T), (type) => { return clientFactory(Client); }) as T;
-        }
     }
 }
