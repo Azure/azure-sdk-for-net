@@ -295,6 +295,6 @@ namespace Azure.AI.TextAnalytics
             return OperationState<AsyncPageable<ExtractiveSummarizeResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
 
-        string IOperation<AsyncPageable<ExtractiveSummarizeResultCollection>>.GetOperationId() => null;
+        string IOperation<AsyncPageable<ExtractiveSummarizeResultCollection>>.GetRehydrationToken() => null;
     }
 }

@@ -119,7 +119,7 @@ namespace Azure.Core.TestFramework
             return new ValueTask<OperationState>(OnUpdateState(cancellationToken));
         }
 
-        string IOperation.GetOperationId() => null;
+        string IOperation.GetRehydrationToken() => null;
 
         public MockOperationInternal MockOperationInternal { get; }
 

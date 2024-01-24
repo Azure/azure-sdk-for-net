@@ -124,9 +124,9 @@ namespace Azure.Core
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken) =>
             async ? await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : _internalOperation.UpdateStatus(cancellationToken);
 
-        public virtual string GetOperationId()
+        public virtual string? GetRehydrationToken()
         {
-            return _internalOperation.GetOperationId();
+            return _internalOperation.GetRehydrationToken();
         }
 
         // Wrapper type that converts OperationState to OperationState<T> and can be passed to `OperationInternal<T>` constructor.
@@ -155,9 +155,9 @@ namespace Azure.Core
                 return OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException);
             }
 
-            public string GetOperationId()
+            public string? GetRehydrationToken()
             {
-                return _operation.GetOperationId();
+                return _operation.GetRehydrationToken();
             }
         }
     }
@@ -199,9 +199,9 @@ namespace Azure.Core
         ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken);
 
         /// <summary>
-        /// To get the Id of the operation for rehydration purpose.
+        /// To get the token of the operation for rehydration purpose.
         /// </summary>
-        string GetOperationId();
+        string? GetRehydrationToken();
     }
 
     /// <summary>

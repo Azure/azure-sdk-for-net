@@ -101,6 +101,6 @@ namespace Azure.Security.KeyVault.Secrets
             }
         }
 
-        string IOperation.GetOperationId() => null;
+        string IOperation.GetRehydrationToken() => null;
     }
 }

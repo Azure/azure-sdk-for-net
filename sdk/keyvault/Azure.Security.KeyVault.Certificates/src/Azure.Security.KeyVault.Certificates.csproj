@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+	  <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Memory" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
@@ -29,10 +30,13 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared\Core" />
+	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PageResponseEnumerator.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)LightweightPkcs8Decoder.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)PemReader.cs" LinkBase="Shared\Core" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared\Core" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>

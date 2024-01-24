@@ -295,6 +295,6 @@ namespace Azure.AI.TextAnalytics
             return OperationState<AsyncPageable<ClassifyDocumentResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
 
-        string IOperation<AsyncPageable<ClassifyDocumentResultCollection>>.GetOperationId() => null;
+        string IOperation<AsyncPageable<ClassifyDocumentResultCollection>>.GetRehydrationToken() => null;
     }
 }

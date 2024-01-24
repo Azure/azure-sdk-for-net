@@ -295,6 +295,6 @@ namespace Azure.AI.TextAnalytics
             return OperationState<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.Failure(rawResponse, new RequestFailedException(rawResponse));
         }
 
-        string IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.GetOperationId() => null;
+        string IOperation<AsyncPageable<AnalyzeHealthcareEntitiesResultCollection>>.GetRehydrationToken() => null;
     }
 }

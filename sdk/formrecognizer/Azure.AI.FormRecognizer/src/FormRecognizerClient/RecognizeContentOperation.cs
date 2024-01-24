@@ -188,6 +188,6 @@ namespace Azure.AI.FormRecognizer.Models
             return new FormPageCollection(pages);
         }
 
-        string IOperation<FormPageCollection>.GetOperationId() => null;
+        string IOperation<FormPageCollection>.GetRehydrationToken() => null;
     }
 }

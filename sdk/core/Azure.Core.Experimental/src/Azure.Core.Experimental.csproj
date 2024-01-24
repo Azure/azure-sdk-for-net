@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Experimental types that might eventually move to Azure.Core</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline Experimental Extensions</AssemblyTitle>
@@ -13,12 +13,16 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Microsoft.CSharp" />
+	  <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AuthorizationChallengeParser.cs" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
+	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" />
     <Compile Include="$(AzureCoreSharedSources)NullableAttributes.cs" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" />
   </ItemGroup>
 
 </Project>

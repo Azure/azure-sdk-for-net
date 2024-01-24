@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading;
@@ -284,7 +285,7 @@ namespace Azure.Core
                 }
 
                 asyncLock.SetValue(state);
-                return GetResponseFromState(state, GetHttpMethodFromOperationId(_operation.GetOperationId()));
+                return GetResponseFromState(state, GetRequestMethod());
             }
             catch (Exception e)
             {
@@ -293,19 +294,19 @@ namespace Azure.Core
             }
         }
 
-        public virtual string GetOperationId()
+        private RequestMethod? GetRequestMethod()
         {
-            return _operation.GetOperationId();
-        }
-
-        private static RequestMethod? GetHttpMethodFromOperationId(string operationId)
-        {
-            if (string.IsNullOrEmpty(operationId))
+            var rehydrationToken = _operation.GetRehydrationToken();
+            if (rehydrationToken is null)
             {
                 return null;
             }
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(operationId)).ToObjectFromJson<Dictionary<string, string>>();
-            return new RequestMethod(lroDetails["RequestMethod"]);
+            return ModelReaderWriter.Read<RehydrationToken>(new BinaryData(rehydrationToken)).RequestMethod;
+        }
+
+        public virtual string? GetRehydrationToken()
+        {
+            return _operation.GetRehydrationToken();
         }
 
         private static Response GetResponseFromState(OperationState<T> state, RequestMethod? requestmethod = null)
@@ -326,17 +327,17 @@ namespace Azure.Core
 
         private class FinalOperation : IOperation<T>
         {
-            private string? _operationId;
+            private string? _rehydrationToken;
 
-            public FinalOperation(string? operationId)
+            public FinalOperation(string? rehydrationToken)
             {
-                _operationId = operationId;
+                _rehydrationToken = rehydrationToken;
             }
 
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
 
-            public string GetOperationId() => _operationId ?? string.Empty;
+            public string? GetRehydrationToken() => _rehydrationToken;
         }
     }
 
@@ -379,9 +380,9 @@ namespace Azure.Core
         ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken);
 
         /// <summary>
-        /// To get the Id of the operation for rehydration purpose.
+        /// To get the token of the operation for rehydration purpose.
         /// </summary>
-        string GetOperationId();
+        string? GetRehydrationToken();
     }
 
     /// <summary>

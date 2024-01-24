@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
@@ -27,6 +27,7 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
+	  <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
@@ -48,6 +49,8 @@
     <Compile Include="Shared\AzureKeyCredentialPolicy.cs" />
     <Compile Include="Shared\AzureSasCredentialSynchronousPolicy.cs" />
     <Compile Include="Shared\Base64Url.cs" />
+	  <Compile Include="Shared\ChangeTrackingDictionary.cs" />
+	  <Compile Include="Shared\ChangeTrackingList.cs" />
     <Compile Include="Shared\ClientDiagnostics.cs" />
     <Compile Include="Shared\ContentTypeUtilities.cs" />
     <Compile Include="Shared\DiagnosticScope.cs" />
@@ -57,6 +60,7 @@
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
     <Compile Include="Shared\FixedDelayWithNoJitterStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
+    <Compile Include="Shared\HeaderSource.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />
     <Compile Include="Shared\InitializationConstructorAttribute.cs" />
     <Compile Include="Shared\Multipart\MemoryResponse.cs" />
@@ -66,6 +70,10 @@
     <Compile Include="Shared\VoidValue.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
+	  <Compile Include="Shared\OperationFinalStateVia.cs" />
+	  <Compile Include="Shared\Optional.cs" />
+	  <Compile Include="Shared\RehydrationToken.cs" />
+	  <Compile Include="Shared\RehydrationToken.Serialization.cs" />
     <Compile Include="Shared\SequentialDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
@@ -73,5 +81,5 @@
     <Compile Include="Shared\OperationPoller.cs" />
     <Compile Include="Shared\TypeReferenceTypeAttribute.cs" />
   </ItemGroup>
-
+	
 </Project>

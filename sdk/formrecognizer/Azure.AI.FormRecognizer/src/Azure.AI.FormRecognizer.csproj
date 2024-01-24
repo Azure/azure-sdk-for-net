@@ -13,7 +13,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.Text.Json" />
+	  <PackageReference Include="System.ClientModel" />
+	  <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
@@ -22,6 +23,9 @@
     <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />
+	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared" />
   </ItemGroup>
 
 </Project>

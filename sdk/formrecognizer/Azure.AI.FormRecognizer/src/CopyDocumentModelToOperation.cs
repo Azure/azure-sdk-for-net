@@ -199,6 +199,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             return OperationState<DocumentModelDetails>.Pending(rawResponse);
         }
 
-        string IOperation<DocumentModelDetails>.GetOperationId() => null;
+        string IOperation<DocumentModelDetails>.GetRehydrationToken() => null;
     }
 }

@@ -23,6 +23,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
     <PackageReference Include="Microsoft.AspNetCore.Http" />
+	  <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
   <!-- Import Azure.Core shared source -->
@@ -32,6 +33,9 @@
     <Compile Include="$(AzureCoreSharedSources)ContentTypeUtilities.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)DictionaryHeaders.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+	  <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared\Core" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared\Core" />
+	  <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
   <ItemGroup>

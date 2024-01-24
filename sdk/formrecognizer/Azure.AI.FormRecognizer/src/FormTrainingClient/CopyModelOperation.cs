@@ -214,6 +214,6 @@ namespace Azure.AI.FormRecognizer.Training
                 result.LastUpdatedDateTime);
         }
 
-        string IOperation<CustomFormModelInfo>.GetOperationId() => null;
+        string IOperation<CustomFormModelInfo>.GetRehydrationToken() => null;
     }
 }
