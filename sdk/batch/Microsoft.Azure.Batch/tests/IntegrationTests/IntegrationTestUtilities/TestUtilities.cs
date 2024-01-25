@@ -70,7 +70,7 @@ namespace BatchClientIntegrationTests.IntegrationTestUtilities
         {
             var app = ConfidentialClientApplicationBuilder.Create(TestCommon.Configuration.ClientId)
                         .WithClientSecret(TestCommon.Configuration.ClientKey)
-                        .WithAuthority(new Uri(AuthorityUri + TestCommon.Configuration.BatcTenantID))
+                        .WithAuthority(new Uri(AuthorityUri + TestCommon.Configuration.BatchTenantID))
                         .Build();
 
             var result = await app.AcquireTokenForClient(scopes).ExecuteAsync();

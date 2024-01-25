@@ -67,7 +67,7 @@
 
             public readonly string BatchAccountUrl = GetEnvironmentVariableOrThrow(BatchAccountUrlEnvironmentSettingName);
 
-            public readonly string BatcTenantID = GetEnvironmentVariableOrThrow(BatchTenantIDEnvironmentSettingName);
+            public readonly string BatchTenantID = GetEnvironmentVariableOrThrow(BatchTenantIDEnvironmentSettingName);
 
             public readonly string StorageAccountKey = GetEnvironmentVariableOrThrow(StorageAccountKeyEnvironmentSettingName);
 

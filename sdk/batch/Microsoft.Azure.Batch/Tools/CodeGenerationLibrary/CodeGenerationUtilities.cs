@@ -187,7 +187,7 @@
                 return omPropertyData.GenericTypeParameter + ".ConvertFromProtocolCollectionReadOnly(" + protocolObjectSimpleGetter + ")";
             }
 
-             if (omPropertyData.HasPublicSetter)
+            if (omPropertyData.HasPublicSetter)
             {
                 return $"UtilitiesInternal.CollectionToThreadSafeCollection({protocolObjectSimpleGetter}, o => o)";
             }

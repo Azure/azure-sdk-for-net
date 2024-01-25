@@ -37,8 +37,8 @@ namespace BatchClientIntegrationTests.Fixtures
 
             static bool ubuntuImageScanner(ImageInformation imageInfo) =>
                 imageInfo.ImageReference.Publisher.ToLower().Contains("canonical") &&
-               imageInfo.ImageReference.Offer.Contains("ubuntu");// &&
-               // imageInfo.ImageReference.Sku.Contains("18.04");
+               imageInfo.ImageReference.Offer.Contains("ubuntu") &&
+               imageInfo.ImageReference.Sku.Contains("20");
 
             ImageInformation ubuntuImage = imageInformation.First(ubuntuImageScanner);
 
