@@ -29,7 +29,7 @@ internal class StructuredMessageEncodingStream : Stream
     /// Gets the 1-indexed segment number the underlying stream is currently positioned in.
     /// 1-indexed to match segment labelling as specified by SM spec.
     /// </summary>
-    private int CurrentSegment => (int)Math.Ceiling(_innerStream.Position / (float)_segmentContentLength);
+    private int CurrentSegment => (int)Math.Floor(_innerStream.Position / (float)_segmentContentLength) + 1;
 
     /// <summary>
     /// Segment length including header and footer.
@@ -66,38 +66,26 @@ internal class StructuredMessageEncodingStream : Stream
     {
         get
         {
-            // in-between underlying content segments
-            if (_innerStream.Position % _segmentContentLength == 0)
+            return _currentRegion switch
             {
-                switch (_currentRegion)
-                {
-                    case SMRegion.StreamHeader:
-                        return _currentRegionPosition;
-                    case SMRegion.StreamFooter:
-                        return _streamHeaderLength +
-                            TotalSegments * (_segmentHeaderLength + _segmentFooterLength) +
-                            _innerStream.Length +
-                            _currentRegionPosition;
-                    case SMRegion.SegmentHeader:
-                        return _innerStream.Position +
-                            _streamHeaderLength +
-                            (CurrentSegment - 1) * (_segmentHeaderLength + _segmentFooterLength) +
-                            _currentRegionPosition;
-                    case SMRegion.SegmentFooter:
-                        return _innerStream.Position +
-                            _streamHeaderLength +
-                            CurrentSegment * (_segmentHeaderLength + _segmentFooterLength) -
-                            _segmentFooterLength + _currentRegionPosition;
-                }
-                throw new InvalidDataException($"{nameof(StructuredMessageEncodingStream)} invalid state.");
-            }
-            // in underlying content
-            else
-            {
-                return _streamHeaderLength +
+                SMRegion.StreamHeader => _currentRegionPosition,
+                SMRegion.StreamFooter => _streamHeaderLength +
+                    TotalSegments * (_segmentHeaderLength + _segmentFooterLength) +
+                    _innerStream.Length +
+                    _currentRegionPosition,
+                SMRegion.SegmentHeader => _innerStream.Position +
+                    _streamHeaderLength +
+                    (CurrentSegment - 1) * (_segmentHeaderLength + _segmentFooterLength) +
+                    _currentRegionPosition,
+                SMRegion.SegmentFooter => _innerStream.Position +
+                    _streamHeaderLength +
                     CurrentSegment * (_segmentHeaderLength + _segmentFooterLength) -
-                    _segmentFooterLength;
-            }
+                    _segmentFooterLength + _currentRegionPosition,
+                SMRegion.SegmentContent => _streamHeaderLength +
+                    CurrentSegment * (_segmentHeaderLength + _segmentFooterLength) -
+                    _segmentFooterLength,
+                _ => throw new InvalidDataException($"{nameof(StructuredMessageEncodingStream)} invalid state."),
+            };
         }
         set
         {
@@ -189,7 +177,7 @@ internal class StructuredMessageEncodingStream : Stream
     private async ValueTask<int> ReadInternal(byte[] buffer, int offset, int count, bool async, CancellationToken cancellationToken)
     {
         int totalRead = 0;
-        while (totalRead < count)
+        while (totalRead < count && Position < Length)
         {
             int subreadOffset = offset + totalRead;
             int subreadCount = count - totalRead;
@@ -286,7 +274,7 @@ internal class StructuredMessageEncodingStream : Stream
     {
         int read = Math.Min(buffer.Length, _streamHeaderLength - _currentRegionPosition);
         using IDisposable _ = StructuredMessage.V1_0.GetStreamHeaderBytes(
-            Length, _flags, TotalSegments, ArrayPool<byte>.Shared, out Memory<byte> headerBytes);
+            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, Length, _flags, TotalSegments);
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
         _currentRegionPosition += read;
 
@@ -310,7 +298,7 @@ internal class StructuredMessageEncodingStream : Stream
     {
         int read = Math.Min(buffer.Length, _segmentHeaderLength - _currentRegionPosition);
         using IDisposable _ = StructuredMessage.V1_0.GetSegmentHeaderBytes(
-            _segmentContentLength, CurrentSegment, ArrayPool<byte>.Shared, out Memory<byte> headerBytes);
+            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, CurrentSegment, _segmentContentLength);
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
         _currentRegionPosition += read;
 

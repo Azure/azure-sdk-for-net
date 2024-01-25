@@ -52,11 +52,11 @@ internal static class StructuredMessage
         /// Disposable to return the buffer to the pool.
         /// </returns>
         public static IDisposable GetStreamHeaderBytes(
+            ArrayPool<byte> pool,
+            out Memory<byte> bytes,
             long messageLength,
             Flags flags,
-            int totalSegments,
-            ArrayPool<byte> pool,
-            out Memory<byte> bytes)
+            int totalSegments)
         {
             Argument.AssertNotNull(pool, nameof(pool));
             IDisposable disposable = pool.RentAsMemoryDisposable(StreamHeaderLength, out bytes);
@@ -88,10 +88,10 @@ internal static class StructuredMessage
         /// Disposable to return the buffer to the pool.
         /// </returns>
         public static IDisposable GetSegmentHeaderBytes(
-            int segmentNum,
-            long segmentLength,
             ArrayPool<byte> pool,
-            out Memory<byte> bytes)
+            out Memory<byte> bytes,
+            int segmentNum,
+            long segmentLength)
         {
             Argument.AssertNotNull(pool, nameof(pool));
             IDisposable disposable = pool.RentAsMemoryDisposable(SegmentHeaderLength, out bytes);
