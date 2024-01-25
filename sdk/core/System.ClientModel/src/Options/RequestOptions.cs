@@ -23,6 +23,12 @@ public class RequestOptions
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
 
+    private (int Status, bool IsError)[]? _statusCodes;
+    internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
+
+    private MessageClassificationHandler[]? _handlers;
+    internal MessageClassificationHandler[]? Handlers => _handlers;
+
     private List<HeadersUpdate>? _headersUpdates;
 
     public RequestOptions()
@@ -95,8 +101,30 @@ public class RequestOptions
         }
     }
 
+    public void AddClassifier(int statusCode, bool isError)
+    {
+        Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
+
+        AssertNotFrozen();
+
+        int length = _statusCodes == null ? 0 : _statusCodes.Length;
+        Array.Resize(ref _statusCodes, length + 1);
+        Array.Copy(_statusCodes, 0, _statusCodes, 1, length);
+        _statusCodes[0] = (statusCode, isError);
+    }
+
+    public void AddClassifier(MessageClassificationHandler classifier)
+    {
+        AssertNotFrozen();
+
+        int length = _handlers == null ? 0 : _handlers.Length;
+        Array.Resize(ref _handlers, length + 1);
+        Array.Copy(_handlers, 0, _handlers, 1, length);
+        _handlers[0] = classifier;
+    }
+
     // Set options on the message before sending it through the pipeline.
-    internal void Apply(PipelineMessage message)
+    public virtual void Apply(PipelineMessage message)
     {
         Freeze();
 
@@ -110,7 +138,7 @@ public class RequestOptions
         // This preserves any values set by the client author, and is also
         // needed for Azure.Core-based clients so we don't overwrite a default
         // Azure.Core ResponseClassifier.
-        message.MessageClassifier ??= PipelineMessageClassifier.Default;
+        message.MessageClassifier = ApplyClassifier(message.MessageClassifier ?? PipelineMessageClassifier.Default);
 
         // Copy custom pipeline policies to the message.
         message.PerCallPolicies = _perCallPolicies;
@@ -136,6 +164,32 @@ public class RequestOptions
                 }
             }
         }
+    }
+
+    internal PipelineMessageClassifier ApplyClassifier(PipelineMessageClassifier classifier)
+    {
+        if (_statusCodes == null && _handlers == null)
+        {
+            return classifier;
+        }
+
+        if (classifier is ResponseStatusClassifier statusCodeClassifier)
+        {
+            ResponseStatusClassifier clone = statusCodeClassifier.Clone();
+            clone.Handlers = _handlers;
+
+            if (_statusCodes != null)
+            {
+                foreach (var classification in _statusCodes)
+                {
+                    clone.AddClassifier(classification.Status, classification.IsError);
+                }
+            }
+
+            return clone;
+        }
+
+        return new ChainingClassifier(_statusCodes, _handlers, classifier);
     }
 
     public virtual void Freeze() => _frozen = true;

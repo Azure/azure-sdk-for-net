@@ -305,7 +305,7 @@ public class ClientPipelineTests : SyncAsyncTestBase
         requestOptions.AddPolicy(new ObservablePolicy("B"), PipelinePosition.PerTry);
 
         PipelineMessage message = pipeline.CreateMessage();
-        message.Apply(requestOptions);
+        requestOptions.Apply(message);
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         List<string> observations = ObservablePolicy.GetData(message);
