@@ -43,7 +43,7 @@ namespace Azure.Core
             return TryClassify(httpMessage, out isError);
         }
 
-        // TODO: remove duplication with this an retry policy version
+        // TODO: remove duplication with this and retry policy version
         private static HttpMessage AssertHttpMessage(PipelineMessage message)
         {
             if (message is not HttpMessage httpMessage)

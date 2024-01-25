@@ -683,8 +683,11 @@ namespace Azure.Core
     {
         public ResponseClassifier() { }
         public virtual bool IsErrorResponse(Azure.Core.HttpMessage message) { throw null; }
+        public sealed override bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         public virtual bool IsRetriable(Azure.Core.HttpMessage message, System.Exception exception) { throw null; }
+        public override bool IsRetriable(System.ClientModel.Primitives.PipelineMessage message, System.Exception exception) { throw null; }
         public virtual bool IsRetriableResponse(Azure.Core.HttpMessage message) { throw null; }
+        public sealed override bool IsRetriableResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResponseHeaders : System.Collections.Generic.IEnumerable<Azure.Core.HttpHeader>, System.Collections.IEnumerable
