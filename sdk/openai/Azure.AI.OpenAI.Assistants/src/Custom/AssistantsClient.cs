@@ -57,15 +57,7 @@ public partial class AssistantsClient
             },
             new ResponseClassifier());
         _endpoint = endpoint;
-        if (options.Version == "2024-02-15-preview")
-        {
-            // Temporary redirection pending Azure versioning finalization
-            _apiVersion = "2024-01-01-preview";
-        }
-        else
-        {
-            _apiVersion = options.Version;
-        }
+        _apiVersion = options.Version;
     }
 
     /// <summary>

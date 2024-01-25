@@ -35,6 +35,10 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         => Recording?.Mode == RecordedTestMode.Record || Recording?.Mode == RecordedTestMode.Live
             ? new(TestEnvironment.AzureOpenAIApiKey)
             : new(s_placeholderApiKey);
+    protected TimeSpan RunPollingInterval
+        => Recording?.Mode == RecordedTestMode.Playback
+            ? TimeSpan.FromMilliseconds(10)
+            : TimeSpan.FromMilliseconds(500);
 
     public List<(AssistantsClient, string)> EnsuredFileDeletions = new();
     public List<(AssistantsClient, string)> EnsuredThreadDeletions = new();

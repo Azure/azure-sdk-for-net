@@ -23,7 +23,7 @@ public class RetrievalTests : AssistantsTestBase
     public async Task BasicRetrievalWorks(OpenAIClientServiceTarget target)
     {
         AssistantsClient client = GetTestClient(target);
-        string deloymentOrModelName = GetDeploymentOrModelName(target);
+        string deploymentOrModelName = GetDeploymentOrModelName(target);
 
         OpenAIFile uploadedFile = null;
         using (TestRecording.DisableRecordingScope disableBodyRecordingScope = Recording.DisableRequestBodyRecording())
@@ -37,7 +37,7 @@ public class RetrievalTests : AssistantsTestBase
         }
 
         Response<Assistant> assistantCreationResponse
-            = await client.CreateAssistantAsync(new AssistantCreationOptions(deloymentOrModelName)
+            = await client.CreateAssistantAsync(new AssistantCreationOptions(deploymentOrModelName)
             {
                 Name = "AOAI SDK Test Assistant - Delete Me",
                 Description = "Created by automated tests to exercise the API; should not be used",
@@ -73,7 +73,7 @@ public class RetrievalTests : AssistantsTestBase
         // Repeatedly retrieve the run (polling) until it's done
         do
         {
-            await Task.Delay(500);
+            await Task.Delay(RunPollingInterval);
             Response<ThreadRun> runRetrievalResponse = await client.GetRunAsync(run.ThreadId, run.Id);
             AssertSuccessfulResponse(runRetrievalResponse);
             run = runRetrievalResponse.Value;

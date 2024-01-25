@@ -119,7 +119,7 @@ public class FunctionsTests : AssistantsTestBase
         // Repeatedly retrieve the run (polling) until it's done
         do
         {
-            await Task.Delay(500);
+            await Task.Delay(RunPollingInterval);
             Response<ThreadRun> runRetrievalResponse = await client.GetRunAsync(thread.Id, run.Id);
             AssertSuccessfulResponse(runRetrievalResponse);
             run = runRetrievalResponse.Value;
@@ -140,7 +140,5 @@ public class FunctionsTests : AssistantsTestBase
 
         RunStepToolCallDetails runStepToolCallDetails = runSteps[0].StepDetails as RunStepToolCallDetails;
         Assert.That(runStepToolCallDetails, Is.Not.Null);
-
-        await Task.Delay(0);
     }
 }
