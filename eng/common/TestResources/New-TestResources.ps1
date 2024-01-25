@@ -621,7 +621,7 @@ try {
 
         $TestApplicationOid = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account).Id
         $TestApplicationId = $testApplicationOid
-        Log "User-based app id '$TestApplicationId' will be used."
+        Log "User authentication with user '$TestApplicationId' will be used."
     }
     # If no test application ID was specified during an interactive session, create a new service principal.
     elseif (!$CI -and !$TestApplicationId) {
@@ -686,11 +686,11 @@ try {
     $PSBoundParameters['TestApplicationOid'] = $TestApplicationOid
     $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
 
-    # If the role hasn't been explicitly assigned to the resource group and a cached service principal is in use,
+    # If the role hasn't been explicitly assigned to the resource group and a cached service principal or user authentication is in use,
     # query to see if the grant is needed.
-    if (!$resourceGroupRoleAssigned -and $AzureTestPrincipal) {
+    if (!$resourceGroupRoleAssigned -and $TestApplicationOid) {
         $roleAssignment = Get-AzRoleAssignment `
-                            -ObjectId $AzureTestPrincipal.Id `
+                            -ObjectId TestApplicationOid `
                             -RoleDefinitionName 'Owner' `
                             -ResourceGroupName "$ResourceGroupName" `
                             -ErrorAction SilentlyContinue
@@ -702,19 +702,19 @@ try {
    # considered a critical failure, as the test application may have subscription-level permissions and not require
    # the explicit grant.
    if (!$resourceGroupRoleAssigned) {
-        Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
-        $principalOwnerAssignment = New-AzRoleAssignment `
-                                        -RoleDefinitionName "Owner" `
-                                        -ApplicationId "$TestApplicationId" `
-                                        -ResourceGroupName "$ResourceGroupName" `
-                                        -ErrorAction SilentlyContinue
+        Log "Attempting to assign the 'Owner' role for '$ResourceGroupName' to the Test Application or User with ID '$TestApplicationId'"
+        $ownerAssignment = New-AzRoleAssignment `
+                            -RoleDefinitionName "Owner" `
+                            -ObjectId "$TestApplicationOId" `
+                            -ResourceGroupName "$ResourceGroupName" `
+                            -ErrorAction SilentlyContinue
 
-        if ($principalOwnerAssignment.RoleDefinitionName -eq 'Owner') {
-            Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application '$TestApplicationId'"
+        if ($ownerAssignment.RoleDefinitionName -eq 'Owner') {
+            Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application or User with ID '$TestApplicationId'"
         } else {
             Write-Warning ("The 'Owner' role for '$ResourceGroupName' could not be assigned. " +
                           "You may need to manually grant 'Owner' for the resource group to the " +
-                          "Test Application '$TestApplicationId' if it does not have subscription-level permissions.")
+                          "Test Application or User with ID '$TestApplicationId' if it does not have subscription-level permissions.")
         }
     }
 
