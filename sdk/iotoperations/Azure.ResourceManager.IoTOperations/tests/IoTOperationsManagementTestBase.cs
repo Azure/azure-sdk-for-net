@@ -9,6 +9,7 @@ using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -61,13 +62,20 @@ namespace Azure.ResourceManager.IoTOperations.Tests
 
         protected static ComponentProperties GetComponentProperties()
         {
-            return new ComponentProperties("yhnelpxsobdyurwvhkq", "wiabwsfqhhxru")
+            return new ComponentProperties("basic-configmap", "yaml.k8s")
             {
-                Name = "sdk-test-component",
-                Dependencies = { "dependency1" },
+                Name = "basic-configmap",
                 Properties = {
-                    { "key1", BinaryData.FromString("value1") },
-                    { "chart", BinaryData.FromObjectAsJson(new {repo = "some-container-registry", version = "0.1.0"}) },
+                    { "resource", BinaryData.FromObjectAsJson(new {
+                        apiVersion = "v1",
+                        kind= "ConfigMap",
+                        metadata = new {
+                            name = "basic-configmap-1"
+                        },
+                        data = new {
+                            foo = "bar",
+                        }})
+                    },
                  },
             };
         }
@@ -80,21 +88,21 @@ namespace Azure.ResourceManager.IoTOperations.Tests
                     {
                         new BindingProperties(new Dictionary<string, BinaryData>()
                             {
-                                { "inCluster", BinaryData.FromString("true") },
+                                { "inCluster", BinaryData.FromString("\"true\"") },
                             },
                             "providers.target.k8s",
                             "instance"
                         ),
                         new BindingProperties(new Dictionary<string, BinaryData>()
                             {
-                                { "inCluster", BinaryData.FromString("true") },
+                                { "inCluster", BinaryData.FromString("\"true\"") },
                             },
                             "providers.target.helm",
                             "helm.v3"
                         ),
                         new BindingProperties(new Dictionary<string, BinaryData>()
                             {
-                                { "inCluster", BinaryData.FromString("true") },
+                                { "inCluster", BinaryData.FromString("\"true\"") },
                             },
                             "providers.target.kubectl",
                             "yaml.k8s"

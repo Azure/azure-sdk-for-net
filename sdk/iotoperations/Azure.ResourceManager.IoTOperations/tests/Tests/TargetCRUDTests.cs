@@ -16,17 +16,26 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
         }
 
+        [SetUp]
+        public async Task ClearAndInitialize()
+        {
+            if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
+            {
+                await InitializeClients();
+            }
+        }
+
         [TestCase]
         [RecordedTest]
         public async Task TestTargetCRUDOperations()
         {
-            string resourceGroupName = Recording.GenerateAssetName("SdkRg");
-            await IoTOperationsManagementTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,IoTOperationsManagementTestUtilities.DefaultResourceLocation, resourceGroupName);
-            string targetName = Recording.GenerateAssetName("SdkTargetName");
+            //string resourceGroupName = Recording.GenerateAssetName("SdkRg");
+            await IoTOperationsManagementTestUtilities.TryRegisterResourceGroupAsync(ResourceGroupsOperations,IoTOperationsManagementTestUtilities.DefaultResourceLocation, IoTOperationsManagementTestUtilities.DefaultResourceGroupName);
+            string targetName = Recording.GenerateAssetName("sdk-target-name");
             ComponentProperties componentProperties = GetComponentProperties();
             TopologiesProperties topologiesProperties = GetTopologiesProperties();
             ReconciliationPolicyModel reconciliationPolicy = GetReconciliationPolicy();
-            TargetData targetData = new TargetData(IoTOperationsManagementTestUtilities.DefaultResourceLocation, new ExtendedLocation("eastus", "edgeZone"))
+            TargetData targetData = new TargetData(IoTOperationsManagementTestUtilities.DefaultResourceLocation, new ExtendedLocation("/subscriptions/2bd4119a-4d8d-4090-9183-f9e516c21723/resourceGroups/sdk-test-cluster/providers/Microsoft.ExtendedLocation/customLocations/sdk-test-cluster-cl", "customlocation"))
             {
                 Components = { componentProperties },
                 Topologies = { topologiesProperties },
@@ -34,7 +43,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
                 Scope = "lm",
                 Version = "2",
             };
-            TargetCollection targetResourceCollection = await GetTargetsResourceCollectionAsync(resourceGroupName);
+            TargetCollection targetResourceCollection = await GetTargetsResourceCollectionAsync(IoTOperationsManagementTestUtilities.DefaultResourceGroupName);
 
             // Create
             ArmOperation<TargetResource> createTargetOperation = await targetResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, targetName, targetData);
@@ -49,7 +58,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
 
             // Update
             componentProperties.Name = "sdk-test-component-updated";
-            TargetData targetUpdateParameter = new()
+            TargetData targetUpdateParameter = new TargetData(IoTOperationsManagementTestUtilities.DefaultResourceLocation, new ExtendedLocation("/subscriptions/2bd4119a-4d8d-4090-9183-f9e516c21723/resourceGroups/sdk-test-cluster/providers/Microsoft.ExtendedLocation/customLocations/sdk-test-cluster-cl", "customlocation"))
             {
                 Components = { componentProperties },
                 Topologies = { topologiesProperties },
@@ -65,7 +74,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             getTargetResponse = await targetResourceCollection.GetAsync(targetName);
             targetResource = getTargetResponse.Value;
             Assert.IsNotNull(targetResource);
-            Assert.IsTrue(string.Equals(targetResource.Data.Components[0].Name, "Updated contact name"));
+            Assert.IsTrue(string.Equals(targetResource.Data.Components[0].Name, "sdk-test-component-updated"));
 
             // Delete
             ArmOperation deleteTargetOperation = await targetResource.DeleteAsync(WaitUntil.Completed);
