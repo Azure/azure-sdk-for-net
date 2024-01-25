@@ -212,7 +212,6 @@ namespace Azure
         public RequestContext() { }
         public new Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
-        public void AddClassifier(int statusCode, bool isError) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
@@ -670,11 +669,11 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResponseClassificationHandler
+    public partial class ResponseClassificationHandler : System.ClientModel.Primitives.MessageClassificationHandler
     {
         public ResponseClassificationHandler() { }
         public virtual bool TryClassify(Azure.Core.HttpMessage message, out bool isError) { throw null; }
-        public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
+        public virtual bool TryClassify(Azure.Core.HttpMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
     }
     public partial class ResponseClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {

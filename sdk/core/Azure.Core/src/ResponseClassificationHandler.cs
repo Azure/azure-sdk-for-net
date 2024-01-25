@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {
@@ -17,7 +18,7 @@ namespace Azure.Core
     /// the next handler will be tried, and so on.  The first handler that returns true
     /// will determine whether the response is an error.
     /// </summary>
-    public class ResponseClassificationHandler
+    public class ResponseClassificationHandler : MessageClassificationHandler
     {
         /// <summary>
         /// Populates the <code>isError</code> out parameter to indicate whether or not
@@ -27,12 +28,7 @@ namespace Azure.Core
         /// <param name="isError">Whether the message's response should be considered an error.</param>
         /// <returns><code>true</code> if the handler had a classification for this message; <code>false</code> otherwise.</returns>
         public virtual bool TryClassify(HttpMessage message, out bool isError)
-        {
-            isError = false;
-
-            // Don't classify for errors unless overridden.
-            return false;
-        }
+            => base.TryClassify(message, out isError);
 
         /// <summary>
         /// TBD.
@@ -41,12 +37,7 @@ namespace Azure.Core
         /// <param name="exception"></param>
         /// <param name="isRetriable"></param>
         /// <returns></returns>
-        public virtual bool TryClassifyRetriable(HttpMessage message, Exception? exception, out bool isRetriable)
-        {
-            isRetriable = false;
-
-            // Don't classify for retries unless overridden.
-            return false;
-        }
+        public virtual bool TryClassify(HttpMessage message, Exception? exception, out bool isRetriable)
+            => base.TryClassify(message, exception, out isRetriable);
     }
 }

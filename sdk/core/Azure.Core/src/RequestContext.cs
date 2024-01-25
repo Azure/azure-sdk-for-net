@@ -14,11 +14,11 @@ namespace Azure
     /// </summary>
     public class RequestContext : RequestOptions
     {
-        private (int Status, bool IsError)[]? _statusCodes;
-        internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
+        //private (int Status, bool IsError)[]? _statusCodes;
+        //internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
 
-        private ResponseClassificationHandler[]? _handlers;
-        internal ResponseClassificationHandler[]? Handlers => _handlers;
+        //private ResponseClassificationHandler[]? _handlers;
+        //internal ResponseClassificationHandler[]? Handlers => _handlers;
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
@@ -78,31 +78,31 @@ namespace Azure
             Policies.Add((position, policy));
         }
 
-        /// <summary>
-        /// Customizes the <see cref="ResponseClassifier"/> for this operation to change
-        /// the default <see cref="Response"/> classification behavior so that it considers
-        /// the passed-in status code to be an error or not, as specified.
-        /// Status code classifiers are applied after all <see cref="ResponseClassificationHandler"/> classifiers.
-        /// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
-        /// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
-        /// logs or distributed traces.
-        /// </summary>
-        /// <param name="statusCode">The status code to customize classification for.</param>
-        /// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
-        /// <exception cref="ArgumentOutOfRangeException">statusCode is not between 100 and 599 (inclusive).</exception>
-        /// <exception cref="InvalidOperationException">If this method is called after the <see cref="RequestContext"/> has been
-        /// used in a method call.</exception>
-        public void AddClassifier(int statusCode, bool isError)
-        {
-            Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
+        ///// <summary>
+        ///// Customizes the <see cref="ResponseClassifier"/> for this operation to change
+        ///// the default <see cref="Response"/> classification behavior so that it considers
+        ///// the passed-in status code to be an error or not, as specified.
+        ///// Status code classifiers are applied after all <see cref="ResponseClassificationHandler"/> classifiers.
+        ///// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
+        ///// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
+        ///// logs or distributed traces.
+        ///// </summary>
+        ///// <param name="statusCode">The status code to customize classification for.</param>
+        ///// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
+        ///// <exception cref="ArgumentOutOfRangeException">statusCode is not between 100 and 599 (inclusive).</exception>
+        ///// <exception cref="InvalidOperationException">If this method is called after the <see cref="RequestContext"/> has been
+        ///// used in a method call.</exception>
+        //public void AddClassifier(int statusCode, bool isError)
+        //{
+        //    Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
 
-            AssertNotFrozen();
+        //    AssertNotFrozen();
 
-            int length = _statusCodes == null ? 0 : _statusCodes.Length;
-            Array.Resize(ref _statusCodes, length + 1);
-            Array.Copy(_statusCodes, 0, _statusCodes, 1, length);
-            _statusCodes[0] = (statusCode, isError);
-        }
+        //    int length = _statusCodes == null ? 0 : _statusCodes.Length;
+        //    Array.Resize(ref _statusCodes, length + 1);
+        //    Array.Copy(_statusCodes, 0, _statusCodes, 1, length);
+        //    _statusCodes[0] = (statusCode, isError);
+        //}
 
         /// <summary>
         /// Customizes the <see cref="ResponseClassifier"/> for this operation.
@@ -118,39 +118,35 @@ namespace Azure
         /// <exception cref="InvalidOperationException">If this method is called after the <see cref="RequestContext"/> has been
         /// used in a method call.</exception>
         public void AddClassifier(ResponseClassificationHandler classifier)
-        {
-            AssertNotFrozen();
-
-            int length = _handlers == null ? 0 : _handlers.Length;
-            Array.Resize(ref _handlers, length + 1);
-            Array.Copy(_handlers, 0, _handlers, 1, length);
-            _handlers[0] = classifier;
-        }
+            => base.AddClassifier(classifier);
 
         internal ResponseClassifier Apply(ResponseClassifier classifier)
         {
-            if (_statusCodes == null && _handlers == null)
-            {
-                return classifier;
-            }
+            return classifier;
 
-            if (classifier is StatusCodeClassifier statusCodeClassifier)
-            {
-                StatusCodeClassifier clone = statusCodeClassifier.Clone();
-                clone.Handlers = _handlers;
+            // TODO: implement
+            //if (_statusCodes == null && _handlers == null)
+            //{
+            //    return classifier;
+            //}
 
-                if (_statusCodes != null)
-                {
-                    foreach (var classification in _statusCodes)
-                    {
-                        clone.AddClassifier(classification.Status, classification.IsError);
-                    }
-                }
+            //if (classifier is StatusCodeClassifier statusCodeClassifier)
+            //{
+            //    StatusCodeClassifier clone = statusCodeClassifier.Clone();
+            //    clone.Handlers = _handlers;
 
-                return clone;
-            }
+            //    if (_statusCodes != null)
+            //    {
+            //        foreach (var classification in _statusCodes)
+            //        {
+            //            clone.AddClassifier(classification.Status, classification.IsError);
+            //        }
+            //    }
 
-            return new ChainingClassifier(_statusCodes, _handlers, classifier);
+            //    return clone;
+            //}
+
+            //return new ChainingClassifier(_statusCodes, _handlers, classifier);
         }
     }
 }
