@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> Represents the signing key. </summary>
     public partial class DnsSigningKey
     {
-        /// <summary> Initializes a new instance of DnsSigningKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSigningKey"/>. </summary>
         internal DnsSigningKey()
         {
             DelegationSignerInfo = new ChangeTrackingList<DelegationSignerInfo>();
         }
 
-        /// <summary> Initializes a new instance of DnsSigningKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsSigningKey"/>. </summary>
         /// <param name="delegationSignerInfo"> The delegation signer information. </param>
         /// <param name="flags"> The flags specifies how the key is used. </param>
         /// <param name="keyTag"> The key tag value of the DNSKEY Resource Record. </param>

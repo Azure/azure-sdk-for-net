@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Dns.Models
     /// <summary> A NAPTR record. For more information about the NAPTR record format, see RFC 3403: https://www.rfc-editor.org/rfc/rfc3403. </summary>
     public partial class DnsNaptrRecordInfo
     {
-        /// <summary> Initializes a new instance of DnsNaptrRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsNaptrRecordInfo"/>. </summary>
         public DnsNaptrRecordInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsNaptrRecordInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsNaptrRecordInfo"/>. </summary>
         /// <param name="order"> The order in which the NAPTR records MUST be processed in order to accurately represent the ordered list of rules. The ordering is from lowest to highest. Valid values: 0-65535. </param>
         /// <param name="preference"> The preference specifies the order in which NAPTR records with equal 'order' values should be processed, low numbers being processed before high numbers. Valid values: 0-65535. </param>
         /// <param name="flags"> The flags specific to DDDS applications. Values currently defined in RFC 3404 are uppercase and lowercase letters "A", "P", "S", and "U", and the empty string, "". Enclose Flags in quotation marks. </param>
