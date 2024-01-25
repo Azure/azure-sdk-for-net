@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.Cdn.Models
         {
             Name = name;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDeliveryRuleCondition"/> for deserialization. </summary>
+        internal UnknownDeliveryRuleCondition()
+        {
+        }
     }
 }

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Security.KeyVault.Secrets;
@@ -23,12 +24,12 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             _tasks = new List<Task<Response<KeyVaultSecret>>>();
         }
 
-        public void Add(string secretName)
+        public void AddSecretToLoad(string secretName)
         {
-            _tasks.Add(GetSecret(secretName));
+            _tasks.Add(Task.Run(() => GetSecretAsync(secretName)));
         }
 
-        private async Task<Response<KeyVaultSecret>> GetSecret(string secretName)
+        private async Task<Response<KeyVaultSecret>> GetSecretAsync(string secretName)
         {
             await _semaphore.WaitAsync().ConfigureAwait(false);
             try
@@ -41,10 +42,13 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
             }
         }
 
-        public Task<Response<KeyVaultSecret>[]> WaitForAll()
+        public Response<KeyVaultSecret>[] WaitForAll()
         {
-            return Task.WhenAll(_tasks);
+            Task.WaitAll(_tasks.Select(t => (Task)t).ToArray());
+            return _tasks.Select(t => t.Result).ToArray();
         }
+
+        public Task<Response<KeyVaultSecret>[]> WaitForAllAsync() => Task.WhenAll(_tasks);
 
         public void Dispose()
         {

@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public AgentPoolTests (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task AgentPool()
         {
             string agentPoolName = Recording.GenerateAssetName("systemPool");

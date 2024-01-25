@@ -35,6 +35,19 @@ namespace Azure.Identity.Broker.Tests
         }
 
         [Test]
+        [Ignore("This test is an integration test which can only be run with user interaction")]
+        public async Task AuthenticateWithBrokerWithUseOperatingSystemAccount_DoesNotPrompt()
+        {
+            IntPtr parentWindowHandle = GetForegroundWindow();
+
+            var cred = new InteractiveBrowserCredential(new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle) { UseOperatingSystemAccount = true });
+
+            AccessToken token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://vault.azure.net/.default" })).ConfigureAwait(false);
+
+            Assert.NotNull(token.Token);
+        }
+
+        [Test]
         [TestCase(true)]
         [TestCase(false)]
         [Ignore("This test is an integration test which can only be run with user interaction")]

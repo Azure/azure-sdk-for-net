@@ -162,7 +162,8 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.Object.EventHubName,
                     mockProcessor.Object.ConsumerGroup,
                     It.IsAny<string>(),
-                    It.IsAny<double>()),
+                    It.IsAny<double>(),
+                    eventBatch.Length),
                 Times.Once);
         }
 

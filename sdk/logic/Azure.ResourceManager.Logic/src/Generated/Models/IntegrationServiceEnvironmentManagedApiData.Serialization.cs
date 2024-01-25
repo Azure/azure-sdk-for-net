@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic
 {
-    public partial class IntegrationServiceEnvironmentManagedApiData : IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmentManagedApiData : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentManagedApiData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentManagedApiData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationServiceEnvironmentManagedApiData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -32,12 +41,125 @@ namespace Azure.ResourceManager.Logic
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(NamePropertiesName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectionParameters))
+            {
+                writer.WritePropertyName("connectionParameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in ConnectionParameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteObjectValue(Metadata);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RuntimeUris))
+            {
+                writer.WritePropertyName("runtimeUrls"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuntimeUris)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.AbsoluteUri);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(GeneralInformation))
+            {
+                writer.WritePropertyName("generalInformation"u8);
+                writer.WriteObjectValue(GeneralInformation);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Capabilities)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(BackendService))
+            {
+                writer.WritePropertyName("backendService"u8);
+                writer.WriteObjectValue(BackendService);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Policies))
+            {
+                writer.WritePropertyName("policies"u8);
+                writer.WriteObjectValue(Policies);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApiDefinitionUri))
+            {
+                writer.WritePropertyName("apiDefinitionUrl"u8);
+                writer.WriteStringValue(ApiDefinitionUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApiDefinitions))
+            {
+                writer.WritePropertyName("apiDefinitions"u8);
+                writer.WriteObjectValue(ApiDefinitions);
+            }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
                 writer.WriteObjectValue(IntegrationServiceEnvironment);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category.Value.ToString());
             }
             if (Optional.IsDefined(DeploymentParameters))
             {
@@ -45,11 +167,40 @@ namespace Azure.ResourceManager.Logic
                 writer.WriteObjectValue(DeploymentParameters);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationServiceEnvironmentManagedApiData DeserializeIntegrationServiceEnvironmentManagedApiData(JsonElement element)
+        IntegrationServiceEnvironmentManagedApiData IJsonModel<IntegrationServiceEnvironmentManagedApiData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentManagedApiData(document.RootElement, options);
+        }
+
+        internal static IntegrationServiceEnvironmentManagedApiData DeserializeIntegrationServiceEnvironmentManagedApiData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -74,6 +225,8 @@ namespace Azure.ResourceManager.Logic
             Optional<LogicWorkflowProvisioningState> provisioningState = default;
             Optional<LogicApiTier> category = default;
             Optional<IntegrationServiceEnvironmentManagedApiDeploymentParameters> deploymentParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -282,8 +435,44 @@ namespace Azure.ResourceManager.Logic
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, Optional.ToList(runtimeUrls), generalInformation.Value, Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IntegrationServiceEnvironmentManagedApiData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, name0.Value, Optional.ToDictionary(connectionParameters), metadata.Value, Optional.ToList(runtimeUrls), generalInformation.Value, Optional.ToList(capabilities), backendService.Value, policies.Value, apiDefinitionUrl.Value, apiDefinitions.Value, integrationServiceEnvironment.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(category), deploymentParameters.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IntegrationServiceEnvironmentManagedApiData IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationServiceEnvironmentManagedApiData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationServiceEnvironmentManagedApiData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
