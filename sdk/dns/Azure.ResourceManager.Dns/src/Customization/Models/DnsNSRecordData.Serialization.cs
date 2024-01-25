@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
+            if (Optional.IsDefined(TrafficManagementProfile))
+            {
+                writer.WritePropertyName("trafficManagementProfile"u8);
+                JsonSerializer.Serialize(writer, TrafficManagementProfile);
+            }
             if (Optional.IsCollectionDefined(DnsNSRecords))
             {
                 writer.WritePropertyName("NSRecords");
@@ -72,6 +77,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
+            Optional<WritableSubResource> trafficManagementProfile = default;
             Optional<IList<DnsNSRecordInfo>> nsRecords = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -159,6 +165,15 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
+                        if (property0.NameEquals("trafficManagementProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("NSRecords"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -178,7 +193,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new DnsNSRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(nsRecords));
+            return new DnsNSRecordData(id, name, type, systemData, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, trafficManagementProfile, Optional.ToList(nsRecords));
         }
     }
 }

@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource");
                 JsonSerializer.Serialize(writer, TargetResource);
             }
+            if (Optional.IsDefined(TrafficManagementProfile))
+            {
+                writer.WritePropertyName("trafficManagementProfile"u8);
+                JsonSerializer.Serialize(writer, TrafficManagementProfile);
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -62,6 +67,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
+            Optional<WritableSubResource> trafficManagementProfile = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"))
@@ -153,11 +159,20 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
+                        if (property0.NameEquals("trafficManagementProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new DnsBaseRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource);
+            return new DnsBaseRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, trafficManagementProfile);
         }
     }
 }

@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.Dns
                 writer.WritePropertyName("targetResource"u8);
                 JsonSerializer.Serialize(writer, TargetResource);
             }
+            if (Optional.IsDefined(TrafficManagementProfile))
+            {
+                writer.WritePropertyName("trafficManagementProfile"u8);
+                JsonSerializer.Serialize(writer, TrafficManagementProfile);
+            }
             if (Optional.IsCollectionDefined(DnsARecords))
             {
                 writer.WritePropertyName("ARecords"u8);
@@ -186,6 +191,7 @@ namespace Azure.ResourceManager.Dns
             Optional<string> fqdn = default;
             Optional<string> provisioningState = default;
             Optional<WritableSubResource> targetResource = default;
+            Optional<WritableSubResource> trafficManagementProfile = default;
             Optional<IList<DnsARecordInfo>> aRecords = default;
             Optional<IList<DnsAaaaRecordInfo>> aaaaRecords = default;
             Optional<IList<DnsMXRecordInfo>> mxRecords = default;
@@ -283,6 +289,15 @@ namespace Azure.ResourceManager.Dns
                                 continue;
                             }
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("trafficManagementProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("ARecords"u8))
@@ -461,7 +476,7 @@ namespace Azure.ResourceManager.Dns
                     continue;
                 }
             }
-            return new DnsRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords), Optional.ToList(dsRecords), Optional.ToList(tlsARecords), Optional.ToList(naptrRecords));
+            return new DnsRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, provisioningState.Value, targetResource, trafficManagementProfile, Optional.ToList(aRecords), Optional.ToList(aaaaRecords), Optional.ToList(mxRecords), Optional.ToList(nsRecords), Optional.ToList(ptrRecords), Optional.ToList(srvRecords), Optional.ToList(txtRecords), cnameRecord.Value, soaRecord.Value, Optional.ToList(caaRecords), Optional.ToList(dsRecords), Optional.ToList(tlsARecords), Optional.ToList(naptrRecords));
         }
     }
 }
