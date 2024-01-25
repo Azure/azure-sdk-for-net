@@ -44,6 +44,19 @@ namespace Azure.Communication.JobRouter
             return new ClassificationPolicy(eTag, id, name, fallbackQueueId, queueSelectorAttachments?.ToList(), prioritizationRule, workerSelectorAttachments?.ToList(), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionPolicy"/>. </summary>
+        /// <param name="eTag"> The entity tag for this resource. </param>
+        /// <param name="id"> Id of an exception policy. </param>
+        /// <param name="name"> Friendly name of this policy. </param>
+        /// <param name="exceptionRules"> A collection of exception rules on the exception policy. </param>
+        /// <returns> A new <see cref="JobRouter.ExceptionPolicy"/> instance for mocking. </returns>
+        public static ExceptionPolicy ExceptionPolicy(ETag eTag = default, string id = null, string name = null, IEnumerable<ExceptionRule> exceptionRules = null)
+        {
+            exceptionRules ??= new List<ExceptionRule>();
+
+            return new ExceptionPolicy(eTag, id, name, exceptionRules?.ToList(), serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.ExceptionRule"/>. </summary>
         /// <param name="id"> Id of an exception rule. </param>
         /// <param name="trigger"> The trigger for this exception rule. </param>
