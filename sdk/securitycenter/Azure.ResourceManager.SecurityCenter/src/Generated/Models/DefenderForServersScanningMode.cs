@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    /// <summary> The scanning mode for the vm scan. </summary>
+    /// <summary> The scanning mode for the VM scan. </summary>
     public readonly partial struct DefenderForServersScanningMode : IEquatable<DefenderForServersScanningMode>
     {
         private readonly string _value;

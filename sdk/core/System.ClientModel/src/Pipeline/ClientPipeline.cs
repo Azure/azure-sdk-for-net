@@ -11,6 +11,8 @@ namespace System.ClientModel.Primitives;
 
 public sealed partial class ClientPipeline
 {
+    internal static TimeSpan DefaultNetworkTimeout { get; } = TimeSpan.FromSeconds(100);
+
     private readonly int _perCallIndex;
     private readonly int _perTryIndex;
     private readonly int _beforeTransportIndex;
@@ -18,7 +20,9 @@ public sealed partial class ClientPipeline
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
 
-    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, int perCallIndex, int perTryIndex, int beforeTransportIndex)
+    private readonly TimeSpan _networkTimeout;
+
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, TimeSpan networkTimeout, int perCallIndex, int perTryIndex, int beforeTransportIndex)
     {
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
@@ -26,6 +30,7 @@ public sealed partial class ClientPipeline
         }
 
         Debug.Assert(perCallIndex <= perTryIndex);
+        Debug.Assert(perTryIndex <= beforeTransportIndex);
 
         _transport = (PipelineTransport)policies.Span[policies.Length - 1];
         _policies = policies;
@@ -33,17 +38,15 @@ public sealed partial class ClientPipeline
         _perCallIndex = perCallIndex;
         _perTryIndex = perTryIndex;
         _beforeTransportIndex = beforeTransportIndex;
+
+        _networkTimeout = networkTimeout;
     }
 
-    public static ClientPipeline Create()
-        => Create(ClientPipelineOptions.Default,
-            ReadOnlySpan<PipelinePolicy>.Empty,
-            ReadOnlySpan<PipelinePolicy>.Empty,
-            ReadOnlySpan<PipelinePolicy>.Empty);
+    #region Factory methods for creating a pipeline instance
 
-    public static ClientPipeline Create(ClientPipelineOptions options, params PipelinePolicy[] perCallPolicies)
-        => Create(options,
-            perCallPolicies,
+    public static ClientPipeline Create(ClientPipelineOptions? options = default)
+        => Create(options ?? ClientPipelineOptions.Default,
+            ReadOnlySpan<PipelinePolicy>.Empty,
             ReadOnlySpan<PipelinePolicy>.Empty,
             ReadOnlySpan<PipelinePolicy>.Empty);
 
@@ -63,15 +66,15 @@ public sealed partial class ClientPipeline
         pipelineLength += options.PerCallPolicies?.Length ?? 0;
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
-        // TODO: Retry and buffering policies will come in a later PR.
-        //pipelineLength++; // for retry policy
-        //pipelineLength++; // for response buffering policy
+        pipelineLength++; // for retry policy
+        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
 
         int index = 0;
 
+        // Per call policies come before the retry policy.
         perCallPolicies.CopyTo(policies.AsSpan(index));
         index += perCallPolicies.Length;
 
@@ -83,16 +86,10 @@ public sealed partial class ClientPipeline
 
         int perCallIndex = index;
 
-        // TODO: RetryPolicy will come in a later PR.
-        //if (options.RetryPolicy != null)
-        //{
-        //    policies[index++] = options.RetryPolicy;
-        //}
-        //else
-        //{
-        //    policies[index++] = new RequestRetryPolicy();
-        //}
+        // Add retry policy.
+        policies[index++] = options.RetryPolicy ?? ClientRetryPolicy.Default;
 
+        // Per try policies come after the retry policy.
         perTryPolicies.CopyTo(policies.AsSpan(index));
         index += perTryPolicies.Length;
 
@@ -104,11 +101,10 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        // TODO: Buffering policy will come in a later PR.
-        //TimeSpan networkTimeout = options.NetworkTimeout ?? PipelineResponse.DefaultNetworkTimeout;
-        //ResponseBufferingPolicy bufferingPolicy = new(networkTimeout);
-        //policies[index++] = bufferingPolicy;
+        // Response buffering comes before the transport.
+        policies[index++] = ResponseBufferingPolicy.Default;
 
+        // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
 
@@ -120,47 +116,46 @@ public sealed partial class ClientPipeline
 
         int beforeTransportIndex = index;
 
-        if (options.Transport != null)
-        {
-            policies[index++] = options.Transport;
-        }
-        else
-        {
-            // TODO: Transport implementation will come in a later PR.
-            //// Add default transport.
-            //policies[index++] = HttpClientPipelineTransport.Shared;
-        }
+        // Add the transport.
+        policies[index++] = options.Transport ?? HttpClientPipelineTransport.Shared;
 
-        return new ClientPipeline(policies, perCallIndex, perTryIndex, beforeTransportIndex); ;
+        return new ClientPipeline(policies,
+            options.NetworkTimeout ?? DefaultNetworkTimeout,
+            perCallIndex, perTryIndex, beforeTransportIndex);
     }
+
+    #endregion
 
     public PipelineMessage CreateMessage() => _transport.CreateMessage();
 
     public void Send(PipelineMessage message)
     {
+        message.NetworkTimeout ??= _networkTimeout;
+
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         policies[0].Process(message, policies, 0);
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
+        message.NetworkTimeout ??= _networkTimeout;
+
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)
     {
-        // TODO: RequestOptions will come in a later PR.
-        //if (message.CustomRequestPipeline)
-        //{
-        //    return new RequestOptionsProcessor(_policies,
-        //        message.PerCallPolicies,
-        //        message.PerTryPolicies,
-        //        message.BeforeTransportPolicies,
-        //        _perCallIndex,
-        //        _perTryIndex,
-        //        _beforeTransportIndex);
-        //}
+        if (message.UseCustomRequestPipeline)
+        {
+            return new RequestOptionsProcessor(_policies,
+                message.PerCallPolicies,
+                message.PerTryPolicies,
+                message.BeforeTransportPolicies,
+                _perCallIndex,
+                _perTryIndex,
+                _beforeTransportIndex);
+        }
 
         return new PipelineProcessor(_policies);
     }

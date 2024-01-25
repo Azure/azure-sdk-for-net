@@ -77,6 +77,11 @@ stages:
                             PackageName: ${{artifact.name}}
                             ServiceName: ${{parameters.ServiceDirectory}}
                             ForRelease: true
+                        - template: /eng/common/pipelines/templates/steps/verify-restapi-spec-location.yml
+                          parameters:
+                            PackageName: ${{artifact.name}}
+                            ServiceDirectory: ${{parameters.ServiceDirectory}}
+                            ArtifactLocation: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
                         - task: PowerShell@2
                           inputs:
                             filePath: $(System.DefaultWorkingDirectory)/eng/scripts/InstallationCheck.ps1

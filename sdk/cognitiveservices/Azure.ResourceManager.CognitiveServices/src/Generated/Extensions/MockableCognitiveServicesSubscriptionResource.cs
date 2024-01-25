@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku, ResourceSkusClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceSkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceSkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku, ResourceSkusClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableCognitiveServicesSku.DeserializeAvailableCognitiveServicesSku(e), ResourceSkusClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetResourceSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ServiceAccountUsage.DeserializeServiceAccountUsage, UsagesClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ServiceAccountUsage.DeserializeServiceAccountUsage(e), UsagesClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ServiceAccountUsage.DeserializeServiceAccountUsage, UsagesClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ServiceAccountUsage.DeserializeServiceAccountUsage(e), UsagesClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList(e), DefaultClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateCheckSkuAvailabilityRequest(Id.SubscriptionId, location, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList, DefaultClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CognitiveServicesSkuAvailabilityList.DeserializeCognitiveServicesSkuAvailabilityList(e), DefaultClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.CheckSkuAvailability", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommitmentTiersRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommitmentTiersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CommitmentTier.DeserializeCommitmentTier, CommitmentTiersClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CommitmentTier.DeserializeCommitmentTier(e), CommitmentTiersClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CommitmentTiersRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CommitmentTiersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CommitmentTier.DeserializeCommitmentTier, CommitmentTiersClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CommitmentTier.DeserializeCommitmentTier(e), CommitmentTiersClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetCommitmentTiers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -588,7 +588,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ModelsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CognitiveServicesModel.DeserializeCognitiveServicesModel, ModelsClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesModel.DeserializeCognitiveServicesModel(e), ModelsClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ModelsRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CognitiveServicesModel.DeserializeCognitiveServicesModel, ModelsClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CognitiveServicesModel.DeserializeCognitiveServicesModel(e), ModelsClientDiagnostics, Pipeline, "MockableCognitiveServicesSubscriptionResource.GetModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

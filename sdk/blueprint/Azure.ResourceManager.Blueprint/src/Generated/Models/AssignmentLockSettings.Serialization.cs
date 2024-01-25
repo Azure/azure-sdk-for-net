@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class AssignmentLockSettings : IUtf8JsonSerializable
+    public partial class AssignmentLockSettings : IUtf8JsonSerializable, IJsonModel<AssignmentLockSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentLockSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AssignmentLockSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -41,11 +51,40 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AssignmentLockSettings DeserializeAssignmentLockSettings(JsonElement element)
+        AssignmentLockSettings IJsonModel<AssignmentLockSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssignmentLockSettings(document.RootElement, options);
+        }
+
+        internal static AssignmentLockSettings DeserializeAssignmentLockSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -53,6 +92,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             Optional<AssignmentLockMode> mode = default;
             Optional<IList<string>> excludedPrincipals = default;
             Optional<IList<string>> excludedActions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -92,8 +133,44 @@ namespace Azure.ResourceManager.Blueprint.Models
                     excludedActions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssignmentLockSettings(Optional.ToNullable(mode), Optional.ToList(excludedPrincipals), Optional.ToList(excludedActions));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AssignmentLockSettings(Optional.ToNullable(mode), Optional.ToList(excludedPrincipals), Optional.ToList(excludedActions), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AssignmentLockSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AssignmentLockSettings IPersistableModel<AssignmentLockSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentLockSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssignmentLockSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssignmentLockSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssignmentLockSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

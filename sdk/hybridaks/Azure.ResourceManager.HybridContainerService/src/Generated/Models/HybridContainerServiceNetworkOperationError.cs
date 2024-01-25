@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The HybridContainerServiceNetworkOperationError. </summary>
+    /// <summary> The error if any from the operation. </summary>
     public partial class HybridContainerServiceNetworkOperationError
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceNetworkOperationError"/>. </summary>
@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceNetworkOperationError"/>. </summary>
-        /// <param name="code"></param>
-        /// <param name="message"></param>
+        /// <param name="code"> The error code from the operation. </param>
+        /// <param name="message"> The error message from the operation. </param>
         internal HybridContainerServiceNetworkOperationError(string code, string message)
         {
             Code = code;
             Message = message;
         }
 
-        /// <summary> Gets the code. </summary>
+        /// <summary> The error code from the operation. </summary>
         public string Code { get; }
-        /// <summary> Gets the message. </summary>
+        /// <summary> The error message from the operation. </summary>
         public string Message { get; }
     }
 }

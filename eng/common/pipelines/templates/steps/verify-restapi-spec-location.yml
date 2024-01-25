@@ -1,0 +1,24 @@
+parameters:
+- name: ServiceDirectory
+  type: string
+  default: ''
+- name: PackageName
+  type: string
+  default: ''
+- name: ArtifactLocation
+  type: string
+  default: ''
+
+steps:
+  - task: Powershell@2
+    inputs:
+      filePath: $(Build.SourcesDirectory)/eng/common/scripts/Verify-RestApiSpecLocation.ps1
+      arguments: >
+        -ServiceDirectory "${{ parameters.ServiceDirectory }}"
+        -PackageName "${{ parameters.PackageName }}"
+        -ArtifactLocation: "${{ parameters.ArtifactLocation }}"
+      pwsh: true
+      workingDirectory: $(Pipeline.Workspace)
+    displayName: Verify REST API spec location for "${{ parameters.PackageName }}"
+    env:
+      GH_TOKEN: $(azuresdk-github-pat)
