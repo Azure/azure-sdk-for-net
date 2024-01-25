@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="AutoMLVertical"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/> and <see cref="TextNer"/>.
         /// </param>
-        internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobOutput> outputs, JobQueueSettings queueSettings, MachineLearningJobResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal AutoMLJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobOutput> outputs, JobQueueSettings queueSettings, MachineLearningJobResourceConfiguration resources, AutoMLVertical taskDetails) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
@@ -84,6 +85,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Resources = resources;
             TaskDetails = taskDetails;
             JobType = jobType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoMLJob"/> for deserialization. </summary>
+        internal AutoMLJob()
+        {
         }
 
         /// <summary>
