@@ -5,6 +5,7 @@ From Folder that contains autorest.md, Run `dotnet msbuild /t:GenerateCode` to g
 ### AutoRest Configuration
 > see https://aka.ms/autorest
 
+> testing pipeline issue 
 ```yaml
 input-file:
     -  $(this-folder)/Swagger/2022-04-07.json
