@@ -14,12 +14,6 @@ namespace Azure
     /// </summary>
     public class RequestContext : RequestOptions
     {
-        //private (int Status, bool IsError)[]? _statusCodes;
-        //internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
-
-        //private ResponseClassificationHandler[]? _handlers;
-        //internal ResponseClassificationHandler[]? Handlers => _handlers;
-
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; private set; }
 
         /// <summary>
@@ -78,32 +72,6 @@ namespace Azure
             Policies.Add((position, policy));
         }
 
-        ///// <summary>
-        ///// Customizes the <see cref="ResponseClassifier"/> for this operation to change
-        ///// the default <see cref="Response"/> classification behavior so that it considers
-        ///// the passed-in status code to be an error or not, as specified.
-        ///// Status code classifiers are applied after all <see cref="ResponseClassificationHandler"/> classifiers.
-        ///// This is useful for cases where you'd like to prevent specific response status codes from being treated as errors by
-        ///// logging and distributed tracing policies -- that is, if a response is not classified as an error, it will not appear as an error in
-        ///// logs or distributed traces.
-        ///// </summary>
-        ///// <param name="statusCode">The status code to customize classification for.</param>
-        ///// <param name="isError">Whether the passed-in status code should be classified as an error.</param>
-        ///// <exception cref="ArgumentOutOfRangeException">statusCode is not between 100 and 599 (inclusive).</exception>
-        ///// <exception cref="InvalidOperationException">If this method is called after the <see cref="RequestContext"/> has been
-        ///// used in a method call.</exception>
-        //public void AddClassifier(int statusCode, bool isError)
-        //{
-        //    Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
-
-        //    AssertNotFrozen();
-
-        //    int length = _statusCodes == null ? 0 : _statusCodes.Length;
-        //    Array.Resize(ref _statusCodes, length + 1);
-        //    Array.Copy(_statusCodes, 0, _statusCodes, 1, length);
-        //    _statusCodes[0] = (statusCode, isError);
-        //}
-
         /// <summary>
         /// Customizes the <see cref="ResponseClassifier"/> for this operation.
         /// Adding a <see cref="ResponseClassificationHandler"/> changes the classification
@@ -124,7 +92,7 @@ namespace Azure
         {
             return classifier;
 
-            // TODO: implement
+            // TODO: reimplement
             //if (_statusCodes == null && _handlers == null)
             //{
             //    return classifier;
