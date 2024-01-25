@@ -46,6 +46,7 @@ namespace Azure.ResourceManager.Dynatrace
         /// </para>
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DynatraceMonitorData"/>. </summary>
         public DynatraceMonitorData(AzureLocation location) : base(location)
         {
