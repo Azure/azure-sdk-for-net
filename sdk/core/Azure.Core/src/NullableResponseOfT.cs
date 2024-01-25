@@ -11,7 +11,7 @@ namespace Azure
     /// </summary>
     /// <typeparam name="T">The type of returned value.</typeparam>
 #pragma warning disable SA1649 // File name should match first type name
-    public abstract class NullableResponse<T> : ClientResult
+    public abstract class NullableResponse<T> : ClientResult<T?>
 #pragma warning restore SA1649 // File name should match first type name
     {
         private readonly T? _value;
@@ -23,7 +23,7 @@ namespace Azure
         /// TBD.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected NullableResponse() : base(DefaultResponse)
+        protected NullableResponse() : base(default, DefaultResponse)
         {
             // Added for back-compat with GA APIs.  Any type that derives from
             // Response<T> must provide an implementation for GetRawResponse that
@@ -39,15 +39,15 @@ namespace Azure
         /// <param name="value"></param>
         /// <param name="response"></param>
         protected NullableResponse(T? value, Response response)
-            : base(ReplaceWithDefaultIfNull(response))
+            : base(value,ReplaceWithDefaultIfNull(response))
         {
             _value = value;
         }
 
-        /// <summary>
-        /// Gets the value returned by the service. Accessing this property will throw if <see cref="HasValue"/> is false.
-        /// </summary>
-        public virtual T? Value => _value;
+        ///// <summary>
+        ///// Gets the value returned by the service. Accessing this property will throw if <see cref="HasValue"/> is false.
+        ///// </summary>
+        //public virtual T? Value => _value;
 
         /// <summary>
         /// Gets a value indicating whether the current instance has a non-null value.
