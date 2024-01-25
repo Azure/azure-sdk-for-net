@@ -619,9 +619,11 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UserAuth is set."
         }
 
-        $TestApplicationOid = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account).Id
+        $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
-        Log "User authentication with user '$TestApplicationId' will be used."
+        $userAccountName = $userAccount.UserPrincipalName
+        Log "User authentication with user '$userAccountName'('$TestApplicationId') will be used."
     }
     # If no test application ID was specified during an interactive session, create a new service principal.
     elseif (!$CI -and !$TestApplicationId) {
@@ -690,7 +692,7 @@ try {
     # query to see if the grant is needed.
     if (!$resourceGroupRoleAssigned -and $TestApplicationOid) {
         $roleAssignment = Get-AzRoleAssignment `
-                            -ObjectId TestApplicationOid `
+                            -ObjectId $TestApplicationOid `
                             -RoleDefinitionName 'Owner' `
                             -ResourceGroupName "$ResourceGroupName" `
                             -ErrorAction SilentlyContinue
@@ -702,7 +704,8 @@ try {
    # considered a critical failure, as the test application may have subscription-level permissions and not require
    # the explicit grant.
    if (!$resourceGroupRoleAssigned) {
-        Log "Attempting to assign the 'Owner' role for '$ResourceGroupName' to the Test Application or User with ID '$TestApplicationId'"
+        $idSlug = if ($userAuth) { "user '$userAccountName'('$TestApplicationId')"} else { "Test Application '$TestApplicationId'"};
+        Log "Attempting to assign the 'Owner' role for '$ResourceGroupName' to the $idSlug"
         $ownerAssignment = New-AzRoleAssignment `
                             -RoleDefinitionName "Owner" `
                             -ObjectId "$TestApplicationOId" `
@@ -710,11 +713,11 @@ try {
                             -ErrorAction SilentlyContinue
 
         if ($ownerAssignment.RoleDefinitionName -eq 'Owner') {
-            Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application or User with ID '$TestApplicationId'"
+            Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the $idSlug"
         } else {
             Write-Warning ("The 'Owner' role for '$ResourceGroupName' could not be assigned. " +
                           "You may need to manually grant 'Owner' for the resource group to the " +
-                          "Test Application or User with ID '$TestApplicationId' if it does not have subscription-level permissions.")
+                          "$idSlug if it does not have subscription-level permissions.")
         }
     }
 
