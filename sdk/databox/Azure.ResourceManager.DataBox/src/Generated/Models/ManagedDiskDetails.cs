@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -30,13 +31,19 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="ManagedDiskDetails"/>. </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceGroupId"> Resource Group Id of the compute disks. </param>
         /// <param name="stagingStorageAccountId"> Resource Id of the storage account that can be used to copy the vhd for staging. </param>
-        internal ManagedDiskDetails(DataAccountType dataAccountType, string sharePassword, ResourceIdentifier resourceGroupId, ResourceIdentifier stagingStorageAccountId) : base(dataAccountType, sharePassword)
+        internal ManagedDiskDetails(DataAccountType dataAccountType, string sharePassword, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier resourceGroupId, ResourceIdentifier stagingStorageAccountId) : base(dataAccountType, sharePassword, serializedAdditionalRawData)
         {
             ResourceGroupId = resourceGroupId;
             StagingStorageAccountId = stagingStorageAccountId;
             DataAccountType = dataAccountType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedDiskDetails"/> for deserialization. </summary>
+        internal ManagedDiskDetails()
+        {
         }
 
         /// <summary> Resource Group Id of the compute disks. </summary>

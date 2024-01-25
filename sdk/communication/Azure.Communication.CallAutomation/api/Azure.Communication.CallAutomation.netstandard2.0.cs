@@ -89,6 +89,10 @@ namespace Azure.Communication.CallAutomation
     {
         public AzureOpenAIDialog(System.Collections.Generic.IDictionary<string, object> context) : base (default(System.Collections.Generic.IDictionary<string, object>)) { }
     }
+    public partial class AzureOpenAIDialogUpdate : Azure.Communication.CallAutomation.DialogUpdateBase
+    {
+        public AzureOpenAIDialogUpdate(System.Collections.Generic.IDictionary<string, object> context) { }
+    }
     public abstract partial class BaseDialog
     {
         protected BaseDialog(System.Collections.Generic.IDictionary<string, object> context) { }
@@ -312,6 +316,8 @@ namespace Azure.Communication.CallAutomation
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.DialogResult>> StartDialogAsync(Azure.Communication.CallAutomation.StartDialog startDialogOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.DialogResult> StopDialog(string dialogId, System.Uri operationCallbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.DialogResult>> StopDialogAsync(string dialogId, System.Uri operationCallbackUri = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response UpdateDialog(Azure.Communication.CallAutomation.UpdateDialogOptions updateDialogOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> UpdateDialogAsync(Azure.Communication.CallAutomation.UpdateDialogOptions updateDialogOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CallDisconnected : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -678,6 +684,7 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.CallAutomation.DialogSensitivityUpdate DialogSensitivityUpdateEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogStarted DialogStartedSuccessEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogTransfer DialogTransferSuccessEvent { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogUpdated DialogUpdatedEvent { get { throw null; } }
         public Azure.Communication.CallAutomation.DialogFailed FailureResult { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
     }
@@ -753,6 +760,21 @@ namespace Azure.Communication.CallAutomation
         public string TransferDestination { get { throw null; } }
         public string TransferType { get { throw null; } }
         public static Azure.Communication.CallAutomation.DialogTransfer Deserialize(string content) { throw null; }
+    }
+    public abstract partial class DialogUpdateBase
+    {
+        protected DialogUpdateBase() { }
+        public System.Collections.Generic.IDictionary<string, object> Context { get { throw null; } set { } }
+    }
+    public partial class DialogUpdated : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal DialogUpdated() { }
+        public string DialogId { get { throw null; } }
+        public Azure.Communication.CallAutomation.DialogInputType? DialogInputType { get { throw null; } }
+        public object IvrContext { get { throw null; } }
+        public string UpdatedDestination { get { throw null; } }
+        public string UpdatedType { get { throw null; } }
+        public static Azure.Communication.CallAutomation.DialogUpdated Deserialize(string content) { throw null; }
     }
     public partial class DtmfResult : Azure.Communication.CallAutomation.RecognizeResult
     {
@@ -1383,9 +1405,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal TranscriptionData() { }
         public double Confidence { get { throw null; } set { } }
+        public ulong Duration { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } set { } }
         public ulong Offset { get { throw null; } set { } }
-        public Azure.Communication.CommunicationUserIdentifier Participant { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.ResultStatus ResultStatus { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.WordData> Words { get { throw null; } set { } }
@@ -1552,6 +1575,13 @@ namespace Azure.Communication.CallAutomation
         internal UnmuteParticipantResult() { }
         public string OperationContext { get { throw null; } }
     }
+    public partial class UpdateDialogOptions
+    {
+        public UpdateDialogOptions(string dialogId, Azure.Communication.CallAutomation.DialogUpdateBase dialog) { }
+        public Azure.Communication.CallAutomation.DialogUpdateBase Dialog { get { throw null; } }
+        public string DialogId { get { throw null; } }
+        public string OperationContext { get { throw null; } set { } }
+    }
     public partial class UserConsent
     {
         internal UserConsent() { }
@@ -1578,6 +1608,8 @@ namespace Azure.Communication.CallAutomation
     public partial class WordData
     {
         public WordData() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("duration")]
+        public ulong Duration { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("offset")]
         public ulong Offset { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]
