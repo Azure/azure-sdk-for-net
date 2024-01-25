@@ -14,14 +14,14 @@ namespace Azure.AI.Translator.Document
         public RequestContent ToRequestContent()
         {
             var content = new MultipartFormDataContent();
-            content.Add(Document.Content, "document", Document.Name, new Dictionary<string, string>()
+            content.Add(Document.Content, "document", Document.Name, new Dictionary<string, string>(Document.Headers)
             {
                 {"Content-Type", Document.ContentType }
             });
 
             foreach (var glossary in Glossary)
             {
-                content.Add(glossary.Content, "glossary", glossary.Name, new Dictionary<string, string>()
+                content.Add(glossary.Content, "glossary", glossary.Name, new Dictionary<string, string>(glossary.Headers)
             {
                 {"Content-Type", Document.ContentType }
             });
