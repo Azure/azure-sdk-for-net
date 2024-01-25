@@ -13,7 +13,7 @@ namespace System.ClientModel.Internal;
 /// </summary>
 internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDisposable
 {
-    private volatile BufferSegment[] _buffers; // this is an array so items can be accessed by ref
+    private volatile UnsafeBufferSegment[] _buffers; // this is an array so items can be accessed by ref
     private volatile int _count;
     private readonly int _segmentSize;
 
@@ -27,7 +27,7 @@ internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDispo
         // for 4k, 8k, 16k, 32k, was neglible for the small model but had a 30% alloc improvment
         // from 4k to 16k on the very large model.
         _segmentSize = segmentSize;
-        _buffers = Array.Empty<BufferSegment>();
+        _buffers = Array.Empty<UnsafeBufferSegment>();
     }
 
     /// <summary>
@@ -38,7 +38,7 @@ internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDispo
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void Advance(int bytesWritten)
     {
-        ref BufferSegment last = ref _buffers[_count - 1];
+        ref UnsafeBufferSegment last = ref _buffers[_count - 1];
         last.Written += bytesWritten;
         if (last.Written > last.Array.Length)
         {
@@ -65,7 +65,7 @@ internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDispo
             ExpandBuffers(sizeToRent);
         }
 
-        ref BufferSegment last = ref _buffers[_count - 1];
+        ref UnsafeBufferSegment last = ref _buffers[_count - 1];
         Memory<byte> free = last.Array.AsMemory(last.Written);
         if (free.Length >= sizeHint)
         {
@@ -85,7 +85,7 @@ internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDispo
         {
             int bufferCount = _count == 0 ? 1 : _count * 2;
 
-            BufferSegment[] resized = new BufferSegment[bufferCount];
+            UnsafeBufferSegment[] resized = new UnsafeBufferSegment[bufferCount];
             if (_count > 0)
             {
                 _buffers.CopyTo(resized, 0);
@@ -113,13 +113,13 @@ internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDispo
     public void Dispose()
     {
         int bufferCountToFree;
-        BufferSegment[] buffersToFree;
+        UnsafeBufferSegment[] buffersToFree;
         lock (_lock)
         {
             bufferCountToFree = _count;
             buffersToFree = _buffers;
             _count = 0;
-            _buffers = Array.Empty<BufferSegment>();
+            _buffers = Array.Empty<UnsafeBufferSegment>();
         }
 
         for (int i = 0; i < bufferCountToFree; i++)
@@ -128,13 +128,13 @@ internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDispo
         }
     }
 
-    public Reader ExtractSequenceBufferReader()
+    public Reader ExtractReader()
     {
         lock (_lock)
         {
             Reader reader = new ReaderInstance(_buffers, _count);
             _count = 0;
-            _buffers = Array.Empty<BufferSegment>();
+            _buffers = Array.Empty<UnsafeBufferSegment>();
             return reader;
         }
     }

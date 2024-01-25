@@ -14,7 +14,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public static UnsafeBufferSequence.Reader SetUpBufferReader(int totalSize = 100000, int segmentSize = 16384, int chunkSize = 15000)
         {
             UnsafeBufferSequence writer = SetUpBufferBuilder(totalSize, segmentSize, chunkSize);
-            UnsafeBufferSequence.Reader reader = writer.ExtractSequenceBufferReader();
+            UnsafeBufferSequence.Reader reader = writer.ExtractReader();
             Assert.IsFalse((bool)IsDisposedField.GetValue(reader)!);
             Assert.AreEqual(totalSize, reader.Length);
             return reader;

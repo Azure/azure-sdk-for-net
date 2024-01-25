@@ -3,7 +3,7 @@
 
 namespace System.ClientModel.Internal;
 
-internal struct BufferSegment
+internal struct UnsafeBufferSegment
 {
     public byte[] Array;
     public int Written;

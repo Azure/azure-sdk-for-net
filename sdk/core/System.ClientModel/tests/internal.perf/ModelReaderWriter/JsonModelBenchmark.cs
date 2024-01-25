@@ -75,7 +75,7 @@ namespace System.ClientModel.Tests.Internal.Perf
         [BenchmarkCategory("ModelReaderWriter")]
         public void Write_ModelWriter()
         {
-            using var reader = new ModelWriter(_model, _options).GetSequenceBufferReader();
+            using var reader = new ModelWriter(_model, _options).ExtractReader();
         }
 
         [Benchmark]

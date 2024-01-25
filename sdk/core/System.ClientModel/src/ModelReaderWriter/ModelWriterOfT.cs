@@ -26,12 +26,12 @@ internal partial class ModelWriter<T>
         _options = options;
     }
 
-    public UnsafeBufferSequence.Reader GetSequenceBufferReader()
+    public UnsafeBufferSequence.Reader ExtractReader()
     {
         using UnsafeBufferSequence sequenceWriter = new UnsafeBufferSequence();
         using var jsonWriter = new Utf8JsonWriter(sequenceWriter);
         _model.Write(jsonWriter, _options);
         jsonWriter.Flush();
-        return sequenceWriter.ExtractSequenceBufferReader();
+        return sequenceWriter.ExtractReader();
     }
 }

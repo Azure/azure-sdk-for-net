@@ -29,13 +29,13 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         {
             ModelX? model = ModelReaderWriter.Read<ModelX>(BinaryData.FromString(File.ReadAllText(TestData.GetLocation("ModelX/ModelX.json"))));
             Assert.IsNotNull(model);
-            Assert.Throws<FormatException>(() => new ModelWriter(model!, new ModelReaderWriterOptions("x")).GetSequenceBufferReader());
+            Assert.Throws<FormatException>(() => new ModelWriter(model!, new ModelReaderWriterOptions("x")).ExtractReader());
         }
 
         [Test]
         public async Task HappyPath()
         {
-            UnsafeBufferSequence.Reader reader = new ModelWriter(_resourceProviderData, _wireOptions).GetSequenceBufferReader();
+            UnsafeBufferSequence.Reader reader = new ModelWriter(_resourceProviderData, _wireOptions).ExtractReader();
             long length = reader.Length;
             Assert.AreEqual(_modelSize, length);
 
@@ -59,7 +59,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             MemoryStream stream = new MemoryStream();
 
             ModelWriter writer = new ModelWriter(model, options);
-            Assert.Throws<NotImplementedException>(() => writer.GetSequenceBufferReader());
+            Assert.Throws<NotImplementedException>(() => writer.ExtractReader());
         }
 
         private class ExplodingModel : IJsonModel<ExplodingModel>

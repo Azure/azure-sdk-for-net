@@ -12,13 +12,14 @@ namespace System.ClientModel.Internal;
 /// <summary>
 /// Provides a way to read a <see cref="UnsafeBufferSequence"/> without exposing the underlying buffers.
 /// This class is not thread safe and should only be used by one thread at a time.
+/// If you dispose while another thread is copying you will end up with a partial copy.
 /// </summary>
 internal partial class UnsafeBufferSequence
 {
     //Only needed to restrict ctor access of Reader to BufferSequence
     private class ReaderInstance : Reader
     {
-        public ReaderInstance(BufferSegment[] buffers, int count)
+        public ReaderInstance(UnsafeBufferSegment[] buffers, int count)
             : base(buffers, count)
         {
         }
@@ -26,12 +27,12 @@ internal partial class UnsafeBufferSequence
 
     internal class Reader : IDisposable
     {
-        private readonly BufferSegment[] _buffers;
-        private readonly int _count;
+        private UnsafeBufferSegment[] _buffers;
+        private int _count;
         private bool _isDisposed;
         private static readonly object _disposeLock = new object();
 
-        private protected Reader(BufferSegment[] buffers, int count)
+        private protected Reader(UnsafeBufferSegment[] buffers, int count)
         {
             _buffers = buffers;
             _count = count;
@@ -66,7 +67,7 @@ internal partial class UnsafeBufferSequence
             {
                 cancellation.ThrowIfCancellationRequested();
 
-                BufferSegment buffer = _buffers[i];
+                UnsafeBufferSegment buffer = _buffers[i];
                 stream.Write(buffer.Array, 0, buffer.Written);
             }
         }
@@ -82,7 +83,7 @@ internal partial class UnsafeBufferSequence
             {
                 cancellation.ThrowIfCancellationRequested();
 
-                BufferSegment buffer = _buffers[i];
+                UnsafeBufferSegment buffer = _buffers[i];
                 await stream.WriteAsync(buffer.Array, 0, buffer.Written, cancellation).ConfigureAwait(false);
             }
         }
@@ -112,9 +113,13 @@ internal partial class UnsafeBufferSequence
                 {
                     if (!_isDisposed)
                     {
-                        for (int i = 0; i < _count; i++)
+                        int buffersToReturnCount = _count;
+                        var buffersToReturn = _buffers;
+                        _count = 0;
+                        _buffers = Array.Empty<UnsafeBufferSegment>();
+                        for (int i = 0; i < buffersToReturnCount; i++)
                         {
-                            ArrayPool<byte>.Shared.Return(_buffers[i].Array);
+                            ArrayPool<byte>.Shared.Return(buffersToReturn[i].Array);
                         }
                         _isDisposed = true;
                     }

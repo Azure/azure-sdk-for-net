@@ -107,7 +107,7 @@ public abstract class BinaryContent : IDisposable
 
                 if (_sequenceReader == null)
                 {
-                    _sequenceReader = new ModelWriter<T>(jsonModel, _options).GetSequenceBufferReader();
+                    _sequenceReader = new ModelWriter<T>(jsonModel, _options).ExtractReader();
                 }
                 return _sequenceReader;
             }
