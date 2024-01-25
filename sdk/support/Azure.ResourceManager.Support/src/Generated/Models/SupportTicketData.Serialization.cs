@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -45,6 +46,21 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("require24X7Response"u8);
                 writer.WriteBooleanValue(Require24X7Response.Value);
             }
+            if (Optional.IsDefined(AdvancedDiagnosticConsent))
+            {
+                writer.WritePropertyName("advancedDiagnosticConsent"u8);
+                writer.WriteStringValue(AdvancedDiagnosticConsent.Value.ToString());
+            }
+            if (Optional.IsDefined(ProblemScopingQuestions))
+            {
+                writer.WritePropertyName("problemScopingQuestions"u8);
+                writer.WriteStringValue(ProblemScopingQuestions);
+            }
+            if (Optional.IsDefined(SupportPlanId))
+            {
+                writer.WritePropertyName("supportPlanId"u8);
+                writer.WriteStringValue(SupportPlanId);
+            }
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
@@ -75,6 +91,11 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("serviceId"u8);
                 writer.WriteStringValue(ServiceId);
             }
+            if (Optional.IsDefined(FileWorkspaceName))
+            {
+                writer.WritePropertyName("fileWorkspaceName"u8);
+                writer.WriteStringValue(FileWorkspaceName);
+            }
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
@@ -84,6 +105,16 @@ namespace Azure.ResourceManager.Support
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
                 writer.WriteObjectValue(QuotaTicketDetails);
+            }
+            if (Optional.IsCollectionDefined(SecondaryConsent))
+            {
+                writer.WritePropertyName("secondaryConsent"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecondaryConsent)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -106,10 +137,14 @@ namespace Azure.ResourceManager.Support
             Optional<SupportSeverityLevel> severity = default;
             Optional<string> enrollmentId = default;
             Optional<bool> require24X7Response = default;
+            Optional<AdvancedDiagnosticConsent> advancedDiagnosticConsent = default;
+            Optional<string> problemScopingQuestions = default;
+            Optional<string> supportPlanId = default;
             Optional<SupportContactProfile> contactDetails = default;
             Optional<SupportServiceLevelAgreement> serviceLevelAgreement = default;
             Optional<SupportEngineer> supportEngineer = default;
             Optional<string> supportPlanType = default;
+            Optional<string> supportPlanDisplayName = default;
             Optional<string> title = default;
             Optional<DateTimeOffset> problemStartTime = default;
             Optional<string> serviceId = default;
@@ -117,8 +152,10 @@ namespace Azure.ResourceManager.Support
             Optional<string> status = default;
             Optional<DateTimeOffset> createdDate = default;
             Optional<DateTimeOffset> modifiedDate = default;
+            Optional<string> fileWorkspaceName = default;
             Optional<TechnicalTicketDetails> technicalTicketDetails = default;
             Optional<QuotaTicketDetails> quotaTicketDetails = default;
+            Optional<IList<SecondaryConsent>> secondaryConsent = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -197,6 +234,25 @@ namespace Azure.ResourceManager.Support
                             require24X7Response = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("advancedDiagnosticConsent"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            advancedDiagnosticConsent = new AdvancedDiagnosticConsent(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("problemScopingQuestions"u8))
+                        {
+                            problemScopingQuestions = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("supportPlanId"u8))
+                        {
+                            supportPlanId = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("contactDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -227,6 +283,11 @@ namespace Azure.ResourceManager.Support
                         if (property0.NameEquals("supportPlanType"u8))
                         {
                             supportPlanType = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("supportPlanDisplayName"u8))
+                        {
+                            supportPlanDisplayName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("title"u8))
@@ -276,6 +337,11 @@ namespace Azure.ResourceManager.Support
                             modifiedDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("fileWorkspaceName"u8))
+                        {
+                            fileWorkspaceName = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("technicalTicketDetails"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -294,11 +360,25 @@ namespace Azure.ResourceManager.Support
                             quotaTicketDetails = QuotaTicketDetails.DeserializeQuotaTicketDetails(property0.Value);
                             continue;
                         }
+                        if (property0.NameEquals("secondaryConsent"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SecondaryConsent> array = new List<SecondaryConsent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(Models.SecondaryConsent.DeserializeSecondaryConsent(item));
+                            }
+                            secondaryConsent = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
             }
-            return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Optional.ToNullable(severity), enrollmentId.Value, Optional.ToNullable(require24X7Response), contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, title.Value, Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), technicalTicketDetails.Value, quotaTicketDetails.Value);
+            return new SupportTicketData(id, name, type, systemData.Value, supportTicketId.Value, description.Value, problemClassificationId.Value, problemClassificationDisplayName.Value, Optional.ToNullable(severity), enrollmentId.Value, Optional.ToNullable(require24X7Response), Optional.ToNullable(advancedDiagnosticConsent), problemScopingQuestions.Value, supportPlanId.Value, contactDetails.Value, serviceLevelAgreement.Value, supportEngineer.Value, supportPlanType.Value, supportPlanDisplayName.Value, title.Value, Optional.ToNullable(problemStartTime), serviceId.Value, serviceDisplayName.Value, status.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), fileWorkspaceName.Value, technicalTicketDetails.Value, quotaTicketDetails.Value, Optional.ToList(secondaryConsent));
         }
     }
 }

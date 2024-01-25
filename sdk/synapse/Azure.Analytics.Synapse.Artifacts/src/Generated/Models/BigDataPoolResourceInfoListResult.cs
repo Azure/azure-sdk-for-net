@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Collection of Big Data pool information. </summary>
     public partial class BigDataPoolResourceInfoListResult
     {
-        /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolResourceInfoListResult"/>. </summary>
         internal BigDataPoolResourceInfoListResult()
         {
             Value = new ChangeTrackingList<BigDataPoolResourceInfo>();
         }
 
-        /// <summary> Initializes a new instance of BigDataPoolResourceInfoListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="BigDataPoolResourceInfoListResult"/>. </summary>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="value"> List of Big Data pools. </param>
         internal BigDataPoolResourceInfoListResult(string nextLink, IReadOnlyList<BigDataPoolResourceInfo> value)

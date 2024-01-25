@@ -5,14 +5,16 @@ $TSP_LOCATION_FILE = "tsp-location.yaml"
 . (Join-Path $PSScriptRoot ".." ".." "common" "scripts" "Helpers" PSModule-Helpers.ps1)
 
 #mgmt: swagger directory name to sdk directory name map
-$packageNameHash = [ordered]@{"vmware" = "avs";
+$packageNameHash = [ordered]@{
     "azure-kusto" = "kusto";
     "cosmos-db" = "cosmosdb";
     "msi" = "managedserviceidentity";
-    "web" = "websites";
     "recoveryservicesbackup" = "recoveryservices-backup";
     "recoveryservicessiterecovery" = "recoveryservices-siterecovery";
-    "security" = "securitycenter"
+    "security" = "securitycenter";
+    "sql" = "sqlmanagement";
+    "vmware" = "avs";
+    "web" = "websites";
 }
 
 function Get-SwaggerInfo()

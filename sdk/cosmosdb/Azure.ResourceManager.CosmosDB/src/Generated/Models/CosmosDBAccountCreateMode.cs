@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         private const string DefaultValue = "Default";
         private const string RestoreValue = "Restore";
+        private const string PointInTimeRestoreValue = "PointInTimeRestore";
 
         /// <summary> Default. </summary>
         public static CosmosDBAccountCreateMode Default { get; } = new CosmosDBAccountCreateMode(DefaultValue);
         /// <summary> Restore. </summary>
         public static CosmosDBAccountCreateMode Restore { get; } = new CosmosDBAccountCreateMode(RestoreValue);
+        /// <summary> PointInTimeRestore. </summary>
+        public static CosmosDBAccountCreateMode PointInTimeRestore { get; } = new CosmosDBAccountCreateMode(PointInTimeRestoreValue);
         /// <summary> Determines if two <see cref="CosmosDBAccountCreateMode"/> values are the same. </summary>
         public static bool operator ==(CosmosDBAccountCreateMode left, CosmosDBAccountCreateMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CosmosDBAccountCreateMode"/> values are not the same. </summary>

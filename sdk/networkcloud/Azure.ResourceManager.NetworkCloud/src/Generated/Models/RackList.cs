@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> RackList represents a list of racks. </summary>
     internal partial class RackList
     {
-        /// <summary> Initializes a new instance of RackList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RackList"/>. </summary>
         internal RackList()
         {
-            Value = new ChangeTrackingList<RackData>();
+            Value = new ChangeTrackingList<NetworkCloudRackData>();
         }
 
-        /// <summary> Initializes a new instance of RackList. </summary>
+        /// <summary> Initializes a new instance of <see cref="RackList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of racks. </param>
-        internal RackList(string nextLink, IReadOnlyList<RackData> value)
+        internal RackList(string nextLink, IReadOnlyList<NetworkCloudRackData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of racks. </summary>
-        public IReadOnlyList<RackData> Value { get; }
+        public IReadOnlyList<NetworkCloudRackData> Value { get; }
     }
 }

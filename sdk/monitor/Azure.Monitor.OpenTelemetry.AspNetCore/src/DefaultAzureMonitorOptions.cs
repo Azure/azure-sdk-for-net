@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
@@ -24,23 +26,30 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
 
         public void Configure(AzureMonitorOptions options)
         {
-            if (_configuration != null)
-            {
-                _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
-            }
-
             try
             {
-                string connectionString = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
-
-                if (!string.IsNullOrWhiteSpace(connectionString))
+                if (_configuration != null)
                 {
-                    options.ConnectionString = connectionString;
+                    _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
+
+                    // IConfiguration can read from EnvironmentVariables or InMemoryCollection if configured to do so.
+                    var connectionStringFromIConfig = _configuration[ConnectionStringEnvironmentVariable];
+                    if (!string.IsNullOrEmpty(connectionStringFromIConfig))
+                    {
+                        options.ConnectionString = connectionStringFromIConfig;
+                    }
+                }
+
+                // Environment Variable should take precedence.
+                var connectionStringFromEnvVar = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+                if (!string.IsNullOrEmpty(connectionStringFromEnvVar))
+                {
+                    options.ConnectionString = connectionStringFromEnvVar;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: Log Error.
+                AzureMonitorAspNetCoreEventSource.Log.ConfigureFailed(ex);
             }
         }
     }

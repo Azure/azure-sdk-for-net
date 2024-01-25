@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
     /// A Class representing a ScheduledAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="ScheduledActionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetScheduledActionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetScheduledAction method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetScheduledActionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetScheduledAction method.
     /// </summary>
     public partial class ScheduledActionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ScheduledActionResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="name"> The name. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string name)
         {
             var resourceId = $"{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.CostManagement
         private readonly ScheduledActionsRestOperations _scheduledActionRestClient;
         private readonly ScheduledActionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
+
         /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class for mocking. </summary>
         protected ScheduledActionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ScheduledActionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ScheduledActionResource(ArmClient client, ScheduledActionData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.CostManagement
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -160,6 +178,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_DeleteByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,6 +221,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_DeleteByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -228,6 +262,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CreateOrUpdateByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +310,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CreateOrUpdateByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -307,6 +357,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_RunByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -336,6 +394,14 @@ namespace Azure.ResourceManager.CostManagement
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_RunByScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

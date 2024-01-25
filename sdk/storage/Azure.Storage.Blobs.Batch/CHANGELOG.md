@@ -1,6 +1,32 @@
 # Release History
 
-## 12.15.0-beta.1 (Unreleased)
+## 12.17.0-beta.2 (Unreleased)
+
+### Features Added
+- Added support for deleting individual blob versions.
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.17.0-beta.1 (2023-12-05)
+- Added support for service version 2024-02-04.
+
+## 12.16.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 12.16.0 (2023-11-06)
+- Includes all features from 12.16.0-beta.1.
+
+## 12.16.0-beta.1 (2023-10-16)
+- Added support for service version 2023-11-03.
+
+## 12.15.0 (2023-09-12)
+- Includes all features from 12.15.0-beta.1.
+
+## 12.15.0-beta.1 (2023-08-08)
 - Added support for service version 2023-05-03 and 2023-08-03.
 
 ## 12.14.0 (2023-07-11)

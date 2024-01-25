@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Mars agent details. </summary>
     public partial class MarsAgentDetails
     {
-        /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarsAgentDetails"/>. </summary>
         internal MarsAgentDetails()
         {
             HealthErrors = new ChangeTrackingList<SiteRecoveryHealthError>();
         }
 
-        /// <summary> Initializes a new instance of MarsAgentDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarsAgentDetails"/>. </summary>
         /// <param name="id"> The Mars agent Id. </param>
         /// <param name="name"> The Mars agent name. </param>
         /// <param name="biosId"> The Mars agent Bios Id. </param>

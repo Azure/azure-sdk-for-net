@@ -39,13 +39,13 @@ namespace Azure.Identity.Tests
                 new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                new InteractiveBrowserCredentialOptions(){ IsSupportLoggingEnabled = logPii });
+                new InteractiveBrowserCredentialOptions(){ IsUnsafeSupportLoggingEnabled = logPii });
 
             var client_2 = new MockMsalClient(
                 new CredentialPipeline(new HttpPipeline(new MockTransport()), new ClientDiagnostics(Moq.Mock.Of<ClientOptions>())),
                 "tenant",
                 "client",
-                new InteractiveBrowserCredentialOptions(){ IsSupportLoggingEnabled = false }); // never log PII
+                new InteractiveBrowserCredentialOptions(){ IsUnsafeSupportLoggingEnabled = false }); // never log PII
 
             Assert.AreEqual(logPii, client_1.IsSupportLoggingEnabled);
 

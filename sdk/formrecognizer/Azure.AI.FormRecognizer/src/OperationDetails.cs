@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Initializes a new instance of DocumentModelOperationDetails. Used by the <see cref="DocumentAnalysisModelFactory"/>
         /// for mocking.
         /// </summary>
-        internal OperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error)
+        internal OperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, ResponseError error)
         {
             OperationId = operationId;
             Status = status;
@@ -32,7 +32,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             LastUpdatedOn = lastUpdatedOn;
             Kind = kind;
             ResourceLocation = resourceLocation;
-            ApiVersion = apiVersion;
+            ServiceVersion = serviceVersion;
             Tags = tags;
             Error = error;
         }
@@ -61,6 +61,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public Uri ResourceLocation { get; }
 
         /// <summary>
+        /// Service version used to create this operation.
+        /// </summary>
+        [CodeGenMember("ApiVersion")]
+        public string ServiceVersion { get; }
+
+        /// <summary>
         /// Gets the error that occurred during the operation. The value is <c>null</c> if the operation succeeds.
         /// </summary>
         public ResponseError Error { get; private set; }
@@ -79,7 +85,5 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     : JsonSerializer.Deserialize<ResponseError>(value.GetRawText());
             }
         }
-
-        internal string ApiVersion { get; }
     }
 }

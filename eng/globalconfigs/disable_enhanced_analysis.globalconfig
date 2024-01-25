@@ -1,0 +1,8 @@
+is_global = true
+
+# below are the enhanced analyzer rules
+
+dotnet_diagnostic.AZC0030.severity = none
+dotnet_diagnostic.AZC0031.severity = none
+dotnet_diagnostic.AZC0032.severity = none
+dotnet_diagnostic.AZC0033.severity = none

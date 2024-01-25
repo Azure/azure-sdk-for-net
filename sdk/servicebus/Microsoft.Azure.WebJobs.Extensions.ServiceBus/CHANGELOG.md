@@ -1,6 +1,6 @@
 # Release History
 
-## 5.12.0-beta.1 (Unreleased)
+## 5.14.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,69 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.13.5 (2023-12-04)
+
+### Bugs Fixed
+
+- Fixed cleanup behavior when targeting .NET Framework so that Service Bus clients are properly disposed.
+
+### Other Changes
+
+- Updated the `Azure.Messaging.ServiceBus` dependency, which includes optimized defaults of the host platform to be 
+  used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor 
+  improvement on macOS. This update also enables support for TLS 1.3. Additionally, this update contains a fix for 
+  session messages to ensure FIFO ordering.
+
+## 5.13.4 (2023-11-09)
+
+### Other Changes
+
+- Bump dependency on `Microsoft.Extensions.Azure` to prevent transitive dependency on deprecated version of `Azure.
+  Identity`.
+
+## 5.13.3 (2023-10-20)
+
+### Bugs Fixed
+
+- Fixed issue where deadlettering a message without specifying properties to modify could throw 
+  an exception from out of proc extension.
+- Include underlying exception details in RpcException when a failure occurs.
+
+## 5.13.2 (2023-10-18)
+
+### Other Changes
+
+- Updated proto service definition to use StringValue rather than string for deadletter error reason and description.
+
+## 5.13.1 (2023-10-17)
+
+### Bugs Fixed
+
+- Fixed the disposal pattern for cached Service Bus clients so that they are disposed only on 
+  host shutdown.
+
+### Other Changes
+
+- Updated the proto service definition to use bytes for application properties.
+
+## 5.13.0 (2023-10-11)
+
+### Features Added
+
+- Added `MaxConcurrentCallsPerSession` to `ServiceBusOptions` to allow configuring the maximum number of concurrent calls per session.
+
+### Other Changes
+
+- Added dependency on Grpc libraries in order to support message settlement from isolated worker.
+
+## 5.12.0 (2023-08-11)
+
+### Bugs Fixed
+
+- When binding to a `CancellationToken`, the token will no longer be signaled when in Drain Mode.
+  To detect if the function app is in Drain Mode, use dependency injection to inject the 
+  `IDrainModeManager`, and check the `IsDrainModeEnabled` property.
 
 ## 5.11.0 (2023-06-06)
 

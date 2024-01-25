@@ -15,7 +15,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Line crossing processor allows for the detection of tracked objects moving across one or more predefined lines. It must be downstream of an object tracker of downstream on an AI extension node that generates sequenceId for objects which are tracked across different frames of the video. Inference events are generated every time objects crosses from one side of the line to another. </summary>
     public partial class LineCrossingProcessor : ProcessorNodeBase
     {
-        /// <summary> Initializes a new instance of LineCrossingProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="LineCrossingProcessor"/>. </summary>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>
         /// <param name="lines">
@@ -34,7 +34,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             Type = "#Microsoft.VideoAnalyzer.LineCrossingProcessor";
         }
 
-        /// <summary> Initializes a new instance of LineCrossingProcessor. </summary>
+        /// <summary> Initializes a new instance of <see cref="LineCrossingProcessor"/>. </summary>
         /// <param name="type"> Type discriminator for the derived types. </param>
         /// <param name="name"> Node name. Must be unique within the topology. </param>
         /// <param name="inputs"> An array of upstream node references within the topology to be used as inputs for this node. </param>

@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.StorageMover
         public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.JobDefinitionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.JobDefinitionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.JobDefinitionResource>> GetAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StorageMover.JobDefinitionResource> GetIfExists(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StorageMover.JobDefinitionResource>> GetIfExistsAsync(string jobDefinitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageMover.JobDefinitionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.JobDefinitionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageMover.JobDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.JobDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -63,6 +65,8 @@ namespace Azure.ResourceManager.StorageMover
         public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.JobRunResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.JobRunResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.JobRunResource>> GetAsync(string jobRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StorageMover.JobRunResource> GetIfExists(string jobRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StorageMover.JobRunResource>> GetIfExistsAsync(string jobRunName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageMover.JobRunResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.JobRunResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageMover.JobRunResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.JobRunResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -120,6 +124,8 @@ namespace Azure.ResourceManager.StorageMover
         public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.StorageMoverAgentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.StorageMoverAgentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>> GetAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverAgentResource> GetIfExists(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>> GetIfExistsAsync(string agentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageMover.StorageMoverAgentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageMover.StorageMoverAgentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.StorageMoverAgentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -165,13 +171,15 @@ namespace Azure.ResourceManager.StorageMover
         public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> GetAsync(string storageMoverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverResource> GetIfExists(string storageMoverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverResource>> GetIfExistsAsync(string storageMoverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageMover.StorageMoverResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.StorageMoverResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageMover.StorageMoverResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.StorageMoverResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class StorageMoverData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public StorageMoverData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public StorageMoverData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
     }
@@ -186,6 +194,8 @@ namespace Azure.ResourceManager.StorageMover
         public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>> GetAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource> GetIfExists(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>> GetIfExistsAsync(string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.StorageMoverEndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -234,6 +244,8 @@ namespace Azure.ResourceManager.StorageMover
         public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.StorageMoverProjectResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.StorageMoverProjectResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverProjectResource>> GetAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverProjectResource> GetIfExists(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StorageMover.StorageMoverProjectResource>> GetIfExistsAsync(string projectName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StorageMover.StorageMoverProjectResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StorageMover.StorageMoverProjectResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StorageMover.StorageMoverProjectResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StorageMover.StorageMoverProjectResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -291,22 +303,56 @@ namespace Azure.ResourceManager.StorageMover
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> UpdateAsync(Azure.ResourceManager.StorageMover.Models.StorageMoverPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.StorageMover.Mocking
+{
+    public partial class MockableStorageMoverArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageMoverArmClient() { }
+        public virtual Azure.ResourceManager.StorageMover.JobDefinitionResource GetJobDefinitionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageMover.JobRunResource GetJobRunResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageMover.StorageMoverAgentResource GetStorageMoverAgentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageMover.StorageMoverEndpointResource GetStorageMoverEndpointResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageMover.StorageMoverProjectResource GetStorageMoverProjectResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StorageMover.StorageMoverResource GetStorageMoverResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableStorageMoverResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageMoverResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMover(string storageMoverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StorageMover.StorageMoverResource>> GetStorageMoverAsync(string storageMoverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.StorageMover.StorageMoverCollection GetStorageMovers() { throw null; }
+    }
+    public partial class MockableStorageMoverSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStorageMoverSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMovers(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StorageMover.StorageMoverResource> GetStorageMoversAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.StorageMover.Models
 {
     public static partial class ArmStorageMoverModelFactory
     {
         public static Azure.ResourceManager.StorageMover.Models.AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?), string storageAccountResourceId = null, string blobContainerName = null) { throw null; }
+        public static Azure.ResourceManager.StorageMover.Models.AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?), Azure.Core.ResourceIdentifier storageAccountResourceId = null, string fileShareName = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties EndpointBaseProperties(string endpointType = "Unknown", string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageMover.JobDefinitionData JobDefinitionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode copyMode = default(Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode), string sourceName = null, Azure.Core.ResourceIdentifier sourceResourceId = null, string sourceSubpath = null, string targetName = null, Azure.Core.ResourceIdentifier targetResourceId = null, string targetSubpath = null, string latestJobRunName = null, Azure.Core.ResourceIdentifier latestJobRunResourceId = null, Azure.ResourceManager.StorageMover.Models.JobRunStatus? latestJobRunStatus = default(Azure.ResourceManager.StorageMover.Models.JobRunStatus?), string agentName = null, Azure.Core.ResourceIdentifier agentResourceId = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageMover.JobRunData JobRunData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StorageMover.Models.JobRunStatus? status = default(Azure.ResourceManager.StorageMover.Models.JobRunStatus?), Azure.ResourceManager.StorageMover.Models.JobRunScanStatus? scanStatus = default(Azure.ResourceManager.StorageMover.Models.JobRunScanStatus?), string agentName = null, Azure.Core.ResourceIdentifier agentResourceId = null, System.DateTimeOffset? executionStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? executionEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastStatusUpdate = default(System.DateTimeOffset?), long? itemsScanned = default(long?), long? itemsExcluded = default(long?), long? itemsUnsupported = default(long?), long? itemsNoTransferNeeded = default(long?), long? itemsFailed = default(long?), long? itemsTransferred = default(long?), long? bytesScanned = default(long?), long? bytesExcluded = default(long?), long? bytesUnsupported = default(long?), long? bytesNoTransferNeeded = default(long?), long? bytesFailed = default(long?), long? bytesTransferred = default(long?), string sourceName = null, Azure.Core.ResourceIdentifier sourceResourceId = null, System.BinaryData sourceProperties = null, string targetName = null, Azure.Core.ResourceIdentifier targetResourceId = null, System.BinaryData targetProperties = null, System.BinaryData jobDefinitionProperties = null, Azure.ResourceManager.StorageMover.Models.JobRunError error = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.JobRunError JobRunError(string code = null, string message = null, string target = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.JobRunResourceId JobRunResourceId(Azure.Core.ResourceIdentifier jobRunResourceIdValue = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.NfsMountEndpointProperties NfsMountEndpointProperties(string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?), string host = null, Azure.ResourceManager.StorageMover.Models.NfsVersion? nfsVersion = default(Azure.ResourceManager.StorageMover.Models.NfsVersion?), string export = null) { throw null; }
+        public static Azure.ResourceManager.StorageMover.Models.SmbMountEndpointProperties SmbMountEndpointProperties(string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?), string host = null, string shareName = null, Azure.ResourceManager.StorageMover.Models.AzureKeyVaultSmbCredentials credentials = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.StorageMoverAgentData StorageMoverAgentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, string agentVersion = null, string arcResourceId = null, string arcVmUuid = null, Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus? agentStatus = default(Azure.ResourceManager.StorageMover.Models.StorageMoverAgentStatus?), System.DateTimeOffset? lastStatusUpdate = default(System.DateTimeOffset?), string localIPAddress = null, long? memoryInMB = default(long?), long? numberOfCores = default(long?), long? uptimeInSeconds = default(long?), Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPropertiesErrorDetails errorDetails = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageMover.Models.StorageMoverAgentPropertiesErrorDetails StorageMoverAgentPropertiesErrorDetails(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.StorageMoverData StorageMoverData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.StorageMover.StorageMoverEndpointData StorageMoverEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties properties = null) { throw null; }
         public static Azure.ResourceManager.StorageMover.StorageMoverProjectData StorageMoverProjectData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? provisioningState = default(Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState?)) { throw null; }
+    }
+    public partial class AzureKeyVaultSmbCredentials : Azure.ResourceManager.StorageMover.Models.StorageMoverCredentials
+    {
+        public AzureKeyVaultSmbCredentials() { }
+        public string PasswordUriString { get { throw null; } set { } }
+        public string UsernameUriString { get { throw null; } set { } }
     }
     public partial class AzureStorageBlobContainerEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties
     {
@@ -314,11 +360,30 @@ namespace Azure.ResourceManager.StorageMover.Models
         public string BlobContainerName { get { throw null; } set { } }
         public string StorageAccountResourceId { get { throw null; } set { } }
     }
+    public partial class AzureStorageBlobContainerEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public AzureStorageBlobContainerEndpointUpdateProperties() { }
+    }
+    public partial class AzureStorageSmbFileShareEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties
+    {
+        public AzureStorageSmbFileShareEndpointProperties(Azure.Core.ResourceIdentifier storageAccountResourceId, string fileShareName) { }
+        public string FileShareName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageAccountResourceId { get { throw null; } set { } }
+    }
+    public partial class AzureStorageSmbFileShareEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public AzureStorageSmbFileShareEndpointUpdateProperties() { }
+    }
     public abstract partial class EndpointBaseProperties
     {
         protected EndpointBaseProperties() { }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.StorageMover.Models.StorageMoverProvisioningState? ProvisioningState { get { throw null; } }
+    }
+    public abstract partial class EndpointBaseUpdateProperties
+    {
+        protected EndpointBaseUpdateProperties() { }
+        public string Description { get { throw null; } set { } }
     }
     public partial class JobDefinitionPatch
     {
@@ -389,6 +454,10 @@ namespace Azure.ResourceManager.StorageMover.Models
         public string Host { get { throw null; } set { } }
         public Azure.ResourceManager.StorageMover.Models.NfsVersion? NfsVersion { get { throw null; } set { } }
     }
+    public partial class NfsMountEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public NfsMountEndpointUpdateProperties() { }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NfsVersion : System.IEquatable<Azure.ResourceManager.StorageMover.Models.NfsVersion>
     {
@@ -407,6 +476,18 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static implicit operator Azure.ResourceManager.StorageMover.Models.NfsVersion (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.StorageMover.Models.NfsVersion left, Azure.ResourceManager.StorageMover.Models.NfsVersion right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class SmbMountEndpointProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseProperties
+    {
+        public SmbMountEndpointProperties(string host, string shareName) { }
+        public Azure.ResourceManager.StorageMover.Models.AzureKeyVaultSmbCredentials Credentials { get { throw null; } set { } }
+        public string Host { get { throw null; } set { } }
+        public string ShareName { get { throw null; } set { } }
+    }
+    public partial class SmbMountEndpointUpdateProperties : Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties
+    {
+        public SmbMountEndpointUpdateProperties() { }
+        public Azure.ResourceManager.StorageMover.Models.AzureKeyVaultSmbCredentials Credentials { get { throw null; } set { } }
     }
     public partial class StorageMoverAgentPatch
     {
@@ -459,10 +540,17 @@ namespace Azure.ResourceManager.StorageMover.Models
         public static bool operator !=(Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode left, Azure.ResourceManager.StorageMover.Models.StorageMoverCopyMode right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public abstract partial class StorageMoverCredentials
+    {
+        protected StorageMoverCredentials() { }
+    }
     public partial class StorageMoverEndpointPatch
     {
         public StorageMoverEndpointPatch() { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release", false)]
         public string EndpointBaseUpdateDescription { get { throw null; } set { } }
+        public Azure.ResourceManager.StorageMover.Models.EndpointBaseUpdateProperties Properties { get { throw null; } set { } }
     }
     public partial class StorageMoverPatch
     {

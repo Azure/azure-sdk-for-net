@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
@@ -15,7 +16,7 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> An ADLS Gen 2 folder data set. </summary>
     public partial class AdlsGen2FolderDataSet : ShareDataSetData
     {
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FolderDataSet"/>. </summary>
         /// <param name="fileSystem"> File system to which the folder belongs. </param>
         /// <param name="folderPath"> Folder path within the file system. </param>
         /// <param name="resourceGroup"> Resource group of storage account. </param>
@@ -38,19 +39,20 @@ namespace Azure.ResourceManager.DataShare.Models
             Kind = DataSetKind.AdlsGen2Folder;
         }
 
-        /// <summary> Initializes a new instance of AdlsGen2FolderDataSet. </summary>
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FolderDataSet"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of data set. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSetId"> Unique id for identifying a data set resource. </param>
         /// <param name="fileSystem"> File system to which the folder belongs. </param>
         /// <param name="folderPath"> Folder path within the file system. </param>
         /// <param name="resourceGroup"> Resource group of storage account. </param>
         /// <param name="storageAccountName"> Storage account name of the source data set. </param>
         /// <param name="subscriptionId"> Subscription id of storage account. </param>
-        internal AdlsGen2FolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, Guid? dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind)
+        internal AdlsGen2FolderDataSet(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataSetKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? dataSetId, string fileSystem, string folderPath, string resourceGroup, string storageAccountName, string subscriptionId) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             DataSetId = dataSetId;
             FileSystem = fileSystem;
@@ -59,6 +61,11 @@ namespace Azure.ResourceManager.DataShare.Models
             StorageAccountName = storageAccountName;
             SubscriptionId = subscriptionId;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AdlsGen2FolderDataSet"/> for deserialization. </summary>
+        internal AdlsGen2FolderDataSet()
+        {
         }
 
         /// <summary> Unique id for identifying a data set resource. </summary>

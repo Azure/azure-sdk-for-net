@@ -28,8 +28,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
         /// </summary>
         internal class PartitionProcessor : IEventProcessor, IDisposable
         {
-            private readonly CancellationTokenSource _cts = new();
-
             private readonly ITriggeredFunctionExecutor _executor;
             private readonly bool _singleDispatch;
             private readonly ILogger _logger;
@@ -44,13 +42,15 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             private Task _cachedEventsBackgroundTask;
             private CancellationTokenSource _cachedEventsBackgroundTaskCts;
             private SemaphoreSlim _cachedEventsGuard;
+            private readonly CancellationToken _functionExecutionToken;
+            private readonly CancellationTokenSource _ownershipLostTokenSource;
 
             /// <summary>
             /// When we have a minimum batch size greater than 1, this class manages caching events.
             /// </summary>
             internal PartitionProcessorEventsManager CachedEventsManager { get; }
 
-            public PartitionProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch)
+            public PartitionProcessor(EventHubOptions options, ITriggeredFunctionExecutor executor, ILogger logger, bool singleDispatch, CancellationToken functionExecutionToken)
             {
                 _executor = executor;
                 _singleDispatch = singleDispatch;
@@ -59,6 +59,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 _firstFunctionInvocation = true;
                 _maxWaitTime = options.MaxWaitTime;
                 _minimumBatchesEnabled = options.MinEventBatchSize > 1; // 1 is the default
+                _functionExecutionToken = functionExecutionToken;
+                _ownershipLostTokenSource = new CancellationTokenSource();
 
                 // Events are only cached when building a batch of minimum size.
                 if (_minimumBatchesEnabled)
@@ -70,8 +72,12 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
 
             public Task CloseAsync(EventProcessorHostPartition context, ProcessingStoppedReason reason)
             {
-                // signal cancellation for any in progress executions and clear the cached events
-                _cts.Cancel();
+                if (reason == ProcessingStoppedReason.OwnershipLost)
+                {
+                    _ownershipLostTokenSource.Cancel();
+                }
+
+                // clear the cached events
                 CachedEventsManager?.ClearEventCache();
 
                 _logger.LogDebug(GetOperationDetails(context, $"CloseAsync, {reason}"));
@@ -98,11 +104,10 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
             /// </summary>
             /// <param name="context">The partition information for this partition.</param>
             /// <param name="messages">The events to process.</param>
-            /// <param name="partitionProcessingCancellationToken">The cancellation token to respect if processing for the partition is canceled.</param>
             /// <returns></returns>
-            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages, CancellationToken partitionProcessingCancellationToken)
+            public async Task ProcessEventsAsync(EventProcessorHostPartition context, IEnumerable<EventData> messages)
             {
-                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token, partitionProcessingCancellationToken);
+                using CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(_functionExecutionToken, _ownershipLostTokenSource.Token);
                 _mostRecentPartitionContext = context;
                 var events = messages.ToArray();
                 EventData eventToCheckpoint = null;
@@ -135,7 +140,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             TriggerDetails = eventHubTriggerInput.GetTriggerDetails(context)
                         };
 
-                        await _executor.TryExecuteAsync(input, linkedCts.Token).ConfigureAwait(false);
+                        await _executor.TryExecuteAsync(input, _functionExecutionToken).ConfigureAwait(false);
                         _firstFunctionInvocation = false;
                         eventToCheckpoint = events[i];
                     }
@@ -168,7 +173,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                                 _logger.LogDebug($"Partition Processor received events and is attempting to invoke function ({details})");
 
                                 UpdateCheckpointContext(triggerEvents, context);
-                                await TriggerExecute(triggerEvents, context, linkedCts.Token).ConfigureAwait(false);
+                                await TriggerExecute(triggerEvents, context, _functionExecutionToken).ConfigureAwait(false);
                                 eventToCheckpoint = triggerEvents.Last();
 
                                 // If there is a background timer task, cancel it and dispose of the cancellation token. If there
@@ -186,7 +191,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                             if (_cachedEventsBackgroundTaskCts == null && CachedEventsManager.HasCachedEvents)
                             {
                                 // If there are events waiting to be processed, and no background task running, start a monitoring cycle.
-                                _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_cts.Token);
+                                // Don't reference linkedCts in the class level background task, as it will be disposed when the method goes out of scope.
+                                _cachedEventsBackgroundTaskCts = CancellationTokenSource.CreateLinkedTokenSource(_functionExecutionToken, _ownershipLostTokenSource.Token);
                                 _cachedEventsBackgroundTask = MonitorCachedEvents(context.ProcessorHost.GetLastReadCheckpoint(context.PartitionId)?.LastModified, _cachedEventsBackgroundTaskCts);
                             }
                         }
@@ -201,7 +207,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                     else
                     {
                         UpdateCheckpointContext(events, context);
-                        await TriggerExecute(events, context, linkedCts.Token).ConfigureAwait(false);
+                        await TriggerExecute(events, context, _functionExecutionToken).ConfigureAwait(false);
                         eventToCheckpoint = events.LastOrDefault();
                     }
 
@@ -276,7 +282,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                         var details = GetOperationDetails(_mostRecentPartitionContext, "MaxWaitTimeElapsed");
                         _logger.LogDebug($"Partition Processor has waited MaxWaitTime since last invocation and is attempting to invoke function on all held events ({details})");
 
-                        await TriggerExecute(triggerEvents, _mostRecentPartitionContext, backgroundCancellationTokenSource.Token).ConfigureAwait(false);
+                        UpdateCheckpointContext(triggerEvents, _mostRecentPartitionContext);
+                        await TriggerExecute(triggerEvents, _mostRecentPartitionContext, _functionExecutionToken).ConfigureAwait(false);
                         if (!backgroundCancellationTokenSource.Token.IsCancellationRequested)
                         {
                             await CheckpointAsync(triggerEvents.Last(), _mostRecentPartitionContext).ConfigureAwait(false);
@@ -408,7 +415,6 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Listeners
                 {
                     if (disposing)
                     {
-                        _cts.Dispose();
                         _cachedEventsBackgroundTaskCts?.Dispose();
                         _cachedEventsGuard?.Dispose();
                     }

@@ -1,18 +1,95 @@
 # Release History
 
-## 1.0.0-beta.14 (Unreleased)
+## 1.2.0 (2024-01-24)
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([41398](https://github.com/Azure/azure-sdk-for-net/pull/41398))
+  - OpenTelemetry 1.7.0
+
+## 1.1.0 (2023-11-29)
 
 ### Features Added
+
+* Added NET6 target framework to support Trimming.
+  ([#38459](https://github.com/Azure/azure-sdk-for-net/pull/38459))
+* Added support for Trimming and AOT.
+  ([#38459](https://github.com/Azure/azure-sdk-for-net/pull/38459))
+
+### Bugs Fixed
+
+* Fixed an issue where `OriginalFormat` persisted in TraceTelemetry properties
+  with IncludeFormattedMessage set to true on [
+  OpenTelemetryLoggerOptions](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry/Logs/ILogger/OpenTelemetryLoggerOptions.cs)
+  of the OpenTelemetry LoggerProvider. This fix prevents data duplication in
+  message fields and properties.
+  ([#39308](https://github.com/Azure/azure-sdk-for-net/pull/39308))
+  
+* Fixed an issue related to the processing of scopes that do not conform to a
+  key-value pair structure.
+  ([#39453](https://github.com/Azure/azure-sdk-for-net/pull/39453))
+   * **Previous Behavior**: Logging a scope with a statement like
+     `logger.BeginScope("SomeScopeValue")` would result in adding
+     'SomeScopeValue' to the properties using a key that follows the pattern
+     'scope->*'. Additionally, 'OriginalFormatScope_*' keys were used to handle
+     formatted strings within the scope.
+   * **New Behavior**: 
+     * Non-key-value pair scopes are no longer added to the properties,
+       resulting in cleaner and more efficient log output.
+     * 'OriginalFormatScope_*' keys have been removed.
+     * In case of duplicate keys within the scopes, only the first entry is
+     retained, while all subsequent duplicate entries are discarded.
+
+* Resolved an issue where activity tags of various object types, including
+  double, float, and others, were previously formatted using
+  `CultureInfo.CurrentCulture`. This behavior caused inconsistencies in tag
+  value formatting depending on the regional settings of the machine where the
+  application was running. Such inconsistencies could lead to challenges in data
+  analysis and cause test failures in environments with differing cultural
+  settings. The fix ensures uniform and culture-independent formatting of
+  activity tag values, aligning with consistent data representation.
+  ([#39470](https://github.com/Azure/azure-sdk-for-net/issues/39470))
+
+## 1.0.0 (2023-09-20)
+
+### Bugs Fixed
+
+* Fixed an issue during network failures which prevented the exporter to store
+  the telemetry offline for retrying at a later time.
+  ([#38832](https://github.com/Azure/azure-sdk-for-net/pull/38832))
+
+### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#38430](https://github.com/Azure/azure-sdk-for-net/pull/38430))
+  ([#38568](https://github.com/Azure/azure-sdk-for-net/pull/38568))
+  - OpenTelemetry 1.6.0
+  - OpenTelemetry.PersistentStorage.FileSystem 1.0.0
+
+## 1.0.0-beta.14 (2023-08-09)
 
 ### Breaking Changes
 
 * Location ip on server spans will now be set using `client.address` tag key on
   activity instead of `http.client_ip`.
   ([#37707](https://github.com/Azure/azure-sdk-for-net/pull/37707))
+* Removing `ServiceVersion.V2020_09_15_Preview`. This is no longer in use and
+  the exporter has already defaulted to the latest `ServiceVersion.v2_1`.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
+* Remove Nullable Annotations from the Exporter's public API.
+  ([#37996](https://github.com/Azure/azure-sdk-for-net/pull/37996))
 
 ### Bugs Fixed
 
+* Fixed an issue causing no telemetry if SDK Version string exceeds max length.
+  ([#37807](https://github.com/Azure/azure-sdk-for-net/pull/37807))
+
 ### Other Changes
+
+* Update OpenTelemetry dependencies
+  ([#37837](https://github.com/Azure/azure-sdk-for-net/pull/37837))
+  - OpenTelemetry 1.5.1
 
 ## 1.0.0-beta.13 (2023-07-13)
 

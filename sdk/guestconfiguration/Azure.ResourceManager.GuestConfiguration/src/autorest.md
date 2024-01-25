@@ -11,6 +11,12 @@ namespace: Azure.ResourceManager.GuestConfiguration
 require: https://github.com/Azure/azure-rest-api-specs/blob/58a1320584b1d26bf7dab969a2593cd22b39caec/specification/guestconfiguration/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - GuestConfigurationAssignments_SubscriptionList # skip this because this operation is replaced by customization code
+  - GuestConfigurationAssignments_RGList # skip this because this operation is replaced by customization code
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -43,7 +49,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

@@ -13,13 +13,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Cursor methods for Mongodb query. </summary>
     public partial class MongoDbCursorMethodsProperties
     {
-        /// <summary> Initializes a new instance of MongoDbCursorMethodsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDbCursorMethodsProperties"/>. </summary>
         public MongoDbCursorMethodsProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of MongoDbCursorMethodsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDbCursorMethodsProperties"/>. </summary>
         /// <param name="project"> Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="sort"> Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </param>
         /// <param name="skip"> Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer). </param>

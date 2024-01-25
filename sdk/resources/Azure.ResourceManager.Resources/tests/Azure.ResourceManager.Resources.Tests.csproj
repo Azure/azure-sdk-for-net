@@ -7,9 +7,6 @@
     <PackageReference Include="Azure.Identity" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Update="Scenario\DeploymentTemplates\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

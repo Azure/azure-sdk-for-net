@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningContainerResourceSettings. </summary>
     public partial class MachineLearningContainerResourceSettings
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceSettings"/>. </summary>
         public MachineLearningContainerResourceSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerResourceSettings"/>. </summary>
         /// <param name="cpu">
         /// Number of vCPUs request/limit for container. More info:
         /// https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/

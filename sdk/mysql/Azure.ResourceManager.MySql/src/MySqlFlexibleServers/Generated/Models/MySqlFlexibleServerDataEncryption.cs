@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
     /// <summary> The date encryption for cmk. </summary>
     public partial class MySqlFlexibleServerDataEncryption
     {
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDataEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDataEncryption"/>. </summary>
         public MySqlFlexibleServerDataEncryption()
         {
         }
 
-        /// <summary> Initializes a new instance of MySqlFlexibleServerDataEncryption. </summary>
+        /// <summary> Initializes a new instance of <see cref="MySqlFlexibleServerDataEncryption"/>. </summary>
         /// <param name="primaryUserAssignedIdentityId"> Primary user identity resource id. </param>
         /// <param name="primaryKeyUri"> Primary key uri. </param>
         /// <param name="geoBackupUserAssignedIdentityId"> Geo backup user identity resource id as identity can't cross region, need identity in same region as geo backup. </param>

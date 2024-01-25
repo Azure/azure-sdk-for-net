@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Subscription policies. </summary>
     public partial class SubscriptionPolicies
     {
-        /// <summary> Initializes a new instance of SubscriptionPolicies. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionPolicies"/>. </summary>
         internal SubscriptionPolicies()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionPolicies"/>. </summary>
         /// <param name="locationPlacementId"> The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions. </param>
         /// <param name="quotaId"> The subscription quota ID. </param>
         /// <param name="spendingLimit"> The subscription spending limit. </param>
-        internal SubscriptionPolicies(string locationPlacementId, string quotaId, SpendingLimit? spendingLimit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionPolicies(string locationPlacementId, string quotaId, SpendingLimit? spendingLimit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LocationPlacementId = locationPlacementId;
             QuotaId = quotaId;
             SpendingLimit = spendingLimit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions. </summary>

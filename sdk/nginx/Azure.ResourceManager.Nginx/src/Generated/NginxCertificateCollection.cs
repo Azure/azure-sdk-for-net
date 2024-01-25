@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Nginx
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NginxCertificateResource" /> and their operations.
-    /// Each <see cref="NginxCertificateResource" /> in the collection will belong to the same instance of <see cref="NginxDeploymentResource" />.
-    /// To get a <see cref="NginxCertificateCollection" /> instance call the GetNginxCertificates method from an instance of <see cref="NginxDeploymentResource" />.
+    /// A class representing a collection of <see cref="NginxCertificateResource"/> and their operations.
+    /// Each <see cref="NginxCertificateResource"/> in the collection will belong to the same instance of <see cref="NginxDeploymentResource"/>.
+    /// To get a <see cref="NginxCertificateCollection"/> instance call the GetNginxCertificates method from an instance of <see cref="NginxDeploymentResource"/>.
     /// </summary>
     public partial class NginxCertificateCollection : ArmCollection, IEnumerable<NginxCertificateResource>, IAsyncEnumerable<NginxCertificateResource>
     {
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update the Nginx certificates for given Nginx deployment
+        /// Create or update the NGINX certificates for given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -61,7 +62,15 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Create</description>
+        /// <description>Certificates_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,8 +89,8 @@ namespace Azure.ResourceManager.Nginx
             scope.Start();
             try
             {
-                var response = await _nginxCertificateCertificatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _nginxCertificateCertificatesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -94,7 +103,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update the Nginx certificates for given Nginx deployment
+        /// Create or update the NGINX certificates for given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -102,7 +111,15 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Certificates_Create</description>
+        /// <description>Certificates_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,8 +138,8 @@ namespace Azure.ResourceManager.Nginx
             scope.Start();
             try
             {
-                var response = _nginxCertificateCertificatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
-                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _nginxCertificateCertificatesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data, cancellationToken);
+                var operation = new NginxArmOperation<NginxCertificateResource>(new NginxCertificateOperationSource(Client), _nginxCertificateCertificatesClientDiagnostics, Pipeline, _nginxCertificateCertificatesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -135,7 +152,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get a certificate of given Nginx deployment
+        /// Get a certificate of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -144,6 +161,14 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,7 +197,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get a certificate of given Nginx deployment
+        /// Get a certificate of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -181,6 +206,14 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,7 +242,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// List all certificates of given Nginx deployment
+        /// List all certificates of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -219,19 +252,27 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NginxCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NginxCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NginxCertificateResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxCertificateResource(Client, NginxCertificateData.DeserializeNginxCertificateData(e)), _nginxCertificateCertificatesClientDiagnostics, Pipeline, "NginxCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NginxCertificateResource(Client, NginxCertificateData.DeserializeNginxCertificateData(e)), _nginxCertificateCertificatesClientDiagnostics, Pipeline, "NginxCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
-        /// List all certificates of given Nginx deployment
+        /// List all certificates of given NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -241,15 +282,23 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NginxCertificateResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NginxCertificateResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NginxCertificateResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nginxCertificateCertificatesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _nginxCertificateCertificatesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxCertificateResource(Client, NginxCertificateData.DeserializeNginxCertificateData(e)), _nginxCertificateCertificatesClientDiagnostics, Pipeline, "NginxCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NginxCertificateResource(Client, NginxCertificateData.DeserializeNginxCertificateData(e)), _nginxCertificateCertificatesClientDiagnostics, Pipeline, "NginxCertificateCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +311,14 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +355,14 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Certificates_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -314,6 +379,96 @@ namespace Azure.ResourceManager.Nginx
             {
                 var response = _nginxCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> The name of certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NginxCertificateResource>> GetIfExistsAsync(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _nginxCertificateCertificatesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NginxCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new NginxCertificateResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Nginx.NginxPlus/nginxDeployments/{deploymentName}/certificates/{certificateName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Certificates_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxCertificateResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="certificateName"> The name of certificate. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="certificateName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateName"/> is null. </exception>
+        public virtual NullableResponse<NginxCertificateResource> GetIfExists(string certificateName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
+
+            using var scope = _nginxCertificateCertificatesClientDiagnostics.CreateScope("NginxCertificateCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _nginxCertificateCertificatesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, certificateName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NginxCertificateResource>(response.GetRawResponse());
+                return Response.FromValue(new NginxCertificateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

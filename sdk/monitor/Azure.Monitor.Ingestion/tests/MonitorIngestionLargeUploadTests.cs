@@ -43,6 +43,7 @@ namespace Azure.Monitor.Ingestion.Tests
                 options.AddPolicy(policy, HttpPipelinePosition.PerCall);
             }
             var clientOptions = InstrumentClientOptions(options);
+            clientOptions.Audience = TestEnvironment.GetAudience();
             return InstrumentClient(new LogsIngestionClient(new Uri(TestEnvironment.DCREndpoint), TestEnvironment.Credential, clientOptions));
         }
 

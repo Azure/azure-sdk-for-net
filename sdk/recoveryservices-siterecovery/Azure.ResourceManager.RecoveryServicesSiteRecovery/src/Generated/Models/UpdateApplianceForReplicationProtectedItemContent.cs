@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update appliance for replication protected item input. </summary>
     public partial class UpdateApplianceForReplicationProtectedItemContent
     {
-        /// <summary> Initializes a new instance of UpdateApplianceForReplicationProtectedItemContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateApplianceForReplicationProtectedItemContent"/>. </summary>
         /// <param name="properties"> Update appliance replication protected item properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public UpdateApplianceForReplicationProtectedItemContent(UpdateApplianceForReplicationProtectedItemProperties properties)

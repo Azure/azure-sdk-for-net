@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckRecoveryServicesNameAvailability_AvailabilityStatusOfResourceNameWhenNoResourceWithSameNameTypeAndSubscriptionExistsNorHasBeenDeletedWithinLast24Hours()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/CheckNameAvailability_Available.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/CheckNameAvailability_Available.json
             // this example is just showing the usage of "RecoveryServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckRecoveryServicesNameAvailability_AvailabilityStatusOfResourceNameWhenResourceWithSameNameTypeAndSubscriptionExists()
         {
-            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-01-01/examples/CheckNameAvailability_NotAvailable.json
+            // Generated from example definition: specification/recoveryservices/resource-manager/Microsoft.RecoveryServices/stable/2023-04-01/examples/CheckNameAvailability_NotAvailable.json
             // this example is just showing the usage of "RecoveryServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

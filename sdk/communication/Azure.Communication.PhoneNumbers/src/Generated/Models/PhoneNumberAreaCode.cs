@@ -10,12 +10,12 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents an Area Code. </summary>
     public partial class PhoneNumberAreaCode
     {
-        /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAreaCode"/>. </summary>
         internal PhoneNumberAreaCode()
         {
         }
 
-        /// <summary> Initializes a new instance of PhoneNumberAreaCode. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberAreaCode"/>. </summary>
         /// <param name="areaCode"> An area code. </param>
         internal PhoneNumberAreaCode(string areaCode)
         {

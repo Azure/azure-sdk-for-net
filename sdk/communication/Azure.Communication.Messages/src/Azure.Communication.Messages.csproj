@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>
+      This client library enables working with the Microsoft Azure Communication Messages service.
+    </Description>
+    <AssemblyTitle>Azure Communication Messages Service</AssemblyTitle>
+    <Version>1.0.0-beta.2</Version>
+    <PackageTags>Microsoft Azure Communication Messages Service;Microsoft;Azure;Azure Communication Service;Azure Communication Messages Service;Messages;Communication</PackageTags>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
+    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="Azure.Communication.Common" />
+  </ItemGroup>
+
+</Project>

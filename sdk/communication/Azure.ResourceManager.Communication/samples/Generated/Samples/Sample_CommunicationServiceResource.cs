@@ -13,6 +13,7 @@ using Azure.Identity;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Communication;
 using Azure.ResourceManager.Communication.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Communication.Samples
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityAvailable()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/checkNameAvailabilityAvailable.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/checkNameAvailabilityAvailable.json
             // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityUnavailable()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/checkNameAvailabilityUnavailable.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/checkNameAvailabilityUnavailable.json
             // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task LinkNotificationHub_LinkNotificationHub()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/linkNotificationHub.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/linkNotificationHub.json
             // this example is just showing the usage of "CommunicationServices_LinkNotificationHub" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -112,7 +113,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetCommunicationServiceResources_ListBySubscription()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/listBySubscription.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/listBySubscription.json
             // this example is just showing the usage of "CommunicationServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -144,7 +145,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_UpdateResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/update.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/update.json
             // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,10 +164,175 @@ namespace Azure.ResourceManager.Communication.Samples
             // invoke the operation
             CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
             {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
                 Tags =
 {
 ["newTag"] = "newVal",
 },
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Update resource to add System and User managed identities
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_UpdateResourceToAddSystemAndUserManagedIdentities()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/updateWithSystemAndUserIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/user/assigned/resource/id")] = new UserAssignedIdentity(),
+},
+                },
+                Tags =
+{
+["newTag"] = "newVal",
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Update resource to add a System Assigned managed identity
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_UpdateResourceToAddASystemAssignedManagedIdentity()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/updateWithSystemAssignedIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Tags =
+{
+["newTag"] = "newVal",
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Update resource to add a User Assigned managed identity
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_UpdateResourceToAddAUserAssignedManagedIdentity()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/updateWithUserAssignedIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
+            {
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/user/assigned/resource/id")] = new UserAssignedIdentity(),
+},
+                },
+                Tags =
+{
+["newTag"] = "newVal",
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        // Update resource to remove identity
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_UpdateResourceToRemoveIdentity()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/updateRemoveSystemIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
+            {
+                Identity = new ManagedServiceIdentity("None"),
             };
             CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
 
@@ -182,7 +348,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/get.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/get.json
             // this example is just showing the usage of "CommunicationServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -213,7 +379,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteResource()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/delete.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/delete.json
             // this example is just showing the usage of "CommunicationServices_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -240,7 +406,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetKeys_ListKeys()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/listKeys.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/listKeys.json
             // this example is just showing the usage of "CommunicationServices_ListKeys" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -267,7 +433,7 @@ namespace Azure.ResourceManager.Communication.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RegenerateKey_RegenerateKey()
         {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-03-31/examples/communicationServices/regenerateKey.json
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/preview/2023-06-01-preview/examples/communicationServices/regenerateKey.json
             // this example is just showing the usage of "CommunicationServices_RegenerateKey" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

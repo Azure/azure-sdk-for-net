@@ -120,7 +120,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                concurrencyManager);
+                concurrencyManager,
+                default);
 
             _scaleMonitor = (ServiceBusScaleMonitor)_listener.GetMonitor();
         }
@@ -539,7 +540,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Listeners
                 _loggerFactory,
                 false,
                 _mockClientFactory.Object,
-                concurrencyManager);
+                concurrencyManager,
+                default);
         }
 
         [Test]

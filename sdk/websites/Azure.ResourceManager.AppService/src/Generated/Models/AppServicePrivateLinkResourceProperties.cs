@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Properties of a private link resource. </summary>
     public partial class AppServicePrivateLinkResourceProperties
     {
-        /// <summary> Initializes a new instance of AppServicePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceProperties"/>. </summary>
         internal AppServicePrivateLinkResourceProperties()
         {
             RequiredMembers = new ChangeTrackingList<string>();
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppServicePrivateLinkResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppServicePrivateLinkResourceProperties"/>. </summary>
         /// <param name="groupId"> GroupId of a private link resource. </param>
         /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
         /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>

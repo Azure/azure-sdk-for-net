@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input definition for test failover. </summary>
     public partial class TestFailoverContent
     {
-        /// <summary> Initializes a new instance of TestFailoverContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="TestFailoverContent"/>. </summary>
         /// <param name="properties"> Test failover input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public TestFailoverContent(TestFailoverProperties properties)

@@ -17,16 +17,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public CloudServicesNetworksTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task CloudServicesNetworks()
         {
-            var cloudServicesNetworkCollection = ResourceGroupResource.GetCloudServicesNetworks();
+            var cloudServicesNetworkCollection = ResourceGroupResource.GetNetworkCloudCloudServicesNetworks();
             var cloudServicesNetworkName = Recording.GenerateAssetName("csn");
 
-            var cloudServicesNetworkId = CloudServicesNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, cloudServicesNetworkName);
-            var cloudServicesNetwork = Client.GetCloudServicesNetworkResource(cloudServicesNetworkId);
+            var cloudServicesNetworkId = NetworkCloudCloudServicesNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, cloudServicesNetworkName);
+            var cloudServicesNetwork = Client.GetNetworkCloudCloudServicesNetworkResource(cloudServicesNetworkId);
 
             // Create
-            var data = new CloudServicesNetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation")) {
+            var data = new NetworkCloudCloudServicesNetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation")) {
                 AdditionalEgressEndpoints = {
                     new EgressEndpoint("azure-resource-management", new EndpointDependency[]{
                         new EndpointDependency("https://storageaccountex.blob.core.windows.net")
@@ -44,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(retrievedCloudServicesNetwork.Value.Data.Name, cloudServicesNetworkName);
 
             // Update
-            var patchData = new CloudServicesNetworkPatch()
+            var patchData = new NetworkCloudCloudServicesNetworkPatch()
             {
                 Tags = {
                     ["key1"] = "myvalue1"
@@ -54,15 +55,15 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patchedCloudServicesNetwork.Value.Data.Tags["key1"], "myvalue1");
 
             // List by Resource Group
-            var cloudServicesNetworkListByResourceGroup = new List<CloudServicesNetworkResource>();
-            await foreach (CloudServicesNetworkResource item in cloudServicesNetworkCollection.GetAllAsync()) {
+            var cloudServicesNetworkListByResourceGroup = new List<NetworkCloudCloudServicesNetworkResource>();
+            await foreach (NetworkCloudCloudServicesNetworkResource item in cloudServicesNetworkCollection.GetAllAsync()) {
                 cloudServicesNetworkListByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(cloudServicesNetworkListByResourceGroup);
 
             // List by Subscription
-            var cloudServicesNetworkListBySubscription = new List<CloudServicesNetworkResource>();
-            await foreach (CloudServicesNetworkResource item in SubscriptionResource.GetCloudServicesNetworksAsync()) {
+            var cloudServicesNetworkListBySubscription = new List<NetworkCloudCloudServicesNetworkResource>();
+            await foreach (NetworkCloudCloudServicesNetworkResource item in SubscriptionResource.GetNetworkCloudCloudServicesNetworksAsync()) {
                 cloudServicesNetworkListBySubscription.Add(item);
             }
             Assert.IsNotEmpty(cloudServicesNetworkListBySubscription);

@@ -2,19 +2,31 @@
 <doc>
   <members>
     <member name="GetCropAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetCropAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetCropAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-Response response = await client.GetCropAsync("<cropId>", new RequestContext());
+Response response = await client.GetCropAsync("<cropId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCropAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.GetCropAsync("<cropId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -25,24 +37,35 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="GetCrop(string,RequestContext)">
-<example>
-This sample shows how to call GetCrop with required parameters and parse the result.
+      <example>
+This sample shows how to call GetCrop and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-Response response = client.GetCrop("<cropId>", new RequestContext());
+Response response = client.GetCrop("<cropId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code>
+This sample shows how to call GetCrop with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.GetCrop("<cropId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -53,54 +76,57 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateOrUpdateAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {};
-
-Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = await client.CreateOrUpdateAsync("<cropId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdateAsync with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdateAsync with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     phenotype = "<phenotype>",
     breedingMethod = "VARIETY",
-    measurements = new {
-        key = new {
+    measurements = new
+    {
+        key = new
+        {
             unit = "<unit>",
-            value = 123.45d,
+            value = 123.45,
         },
     },
     status = "<status>",
     source = "<source>",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-Response response = await client.CreateOrUpdateAsync("<cropId>", RequestContent.Create(data));
+});
+Response response = await client.CreateOrUpdateAsync("<cropId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -111,54 +137,57 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="CreateOrUpdate(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdate with required parameters and parse the result.
+      <example>
+This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {};
-
-Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new object());
+Response response = client.CreateOrUpdate("<cropId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.ToString());
 ]]></code>
-This sample shows how to call CreateOrUpdate with all parameters and request content, and how to parse the result.
+This sample shows how to call CreateOrUpdate with all parameters and request content and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     phenotype = "<phenotype>",
     breedingMethod = "VARIETY",
-    measurements = new {
-        key = new {
+    measurements = new
+    {
+        key = new
+        {
             unit = "<unit>",
-            value = 123.45d,
+            value = 123.45,
         },
     },
     status = "<status>",
     source = "<source>",
     name = "<name>",
     description = "<description>",
-    properties = new {
-        key = new {},
+    properties = new
+    {
+        key = new object(),
     },
-};
-
-Response response = client.CreateOrUpdate("<cropId>", RequestContent.Create(data));
+});
+Response response = client.CreateOrUpdate("<cropId>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("phenotype").ToString());
 Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
 Console.WriteLine(result.GetProperty("id").ToString());
 Console.WriteLine(result.GetProperty("eTag").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
@@ -169,48 +198,82 @@ Console.WriteLine(result.GetProperty("name").ToString());
 Console.WriteLine(result.GetProperty("description").ToString());
 Console.WriteLine(result.GetProperty("createdBy").ToString());
 Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
+]]></code></example>
     </member>
     <member name="DeleteAsync(string,RequestContext)">
-<example>
-This sample shows how to call DeleteAsync with required parameters.
+      <example>
+This sample shows how to call DeleteAsync.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
 Response response = await client.DeleteAsync("<cropId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call DeleteAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
+
+Response response = await client.DeleteAsync("<cropId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="Delete(string,RequestContext)">
-<example>
-This sample shows how to call Delete with required parameters.
+      <example>
+This sample shows how to call Delete.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
 Response response = client.Delete("<cropId>");
+
 Console.WriteLine(response.Status);
 ]]></code>
-</example>
+This sample shows how to call Delete with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
+
+Response response = client.Delete("<cropId>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
     </member>
     <member name="GetCropsAsync(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetCropsAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetCropsAsync and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-await foreach (var item in client.GetCropsAsync(new String[]{"<phenotypes>"}, new String[]{"<breedingMethods>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+await foreach (BinaryData item in client.GetCropsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCropsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
+
+await foreach (BinaryData item in client.GetCropsAsync(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("phenotype").ToString());
     Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -221,25 +284,37 @@ await foreach (var item in client.GetCropsAsync(new String[]{"<phenotypes>"}, ne
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("createdBy").ToString());
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetCrops(IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,int?,string,RequestContext)">
-<example>
-This sample shows how to call GetCrops with required parameters and parse the result.
+      <example>
+This sample shows how to call GetCrops and parse the result.
 <code><![CDATA[
-var credential = new DefaultAzureCredential();
-var client = new FarmBeatsClient(credential).GetCropsClient("2022-11-01-preview");
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
 
-foreach (var item in client.GetCrops(new String[]{"<phenotypes>"}, new String[]{"<breedingMethods>"}, new String[]{"<cropIds>"}, new String[]{"<names>"}, new String[]{"<propertyFilters>"}, new String[]{"<statuses>"}, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow, 1234, "<skipToken>", new RequestContext()))
+foreach (BinaryData item in client.GetCrops(null, null, null, null, null, null, null, null, null, null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code>
+This sample shows how to call GetCrops with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+TokenCredential credential = new DefaultAzureCredential();
+Crops client = new FarmBeatsClient(endpoint, credential).GetCropsClient(apiVersion: "2022-11-01-preview");
+
+foreach (BinaryData item in client.GetCrops(new string[] { "<phenotypes>" }, new string[] { "<breedingMethods>" }, new string[] { "<cropIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("phenotype").ToString());
     Console.WriteLine(result.GetProperty("breedingMethod").ToString());
-    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("unit").ToString());
-    Console.WriteLine(result.GetProperty("measurements").GetProperty("<test>").GetProperty("value").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("unit").ToString());
+    Console.WriteLine(result.GetProperty("measurements").GetProperty("<key>").GetProperty("value").ToString());
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("eTag").ToString());
     Console.WriteLine(result.GetProperty("status").ToString());
@@ -250,10 +325,9 @@ foreach (var item in client.GetCrops(new String[]{"<phenotypes>"}, new String[]{
     Console.WriteLine(result.GetProperty("description").ToString());
     Console.WriteLine(result.GetProperty("createdBy").ToString());
     Console.WriteLine(result.GetProperty("modifiedBy").ToString());
-    Console.WriteLine(result.GetProperty("properties").GetProperty("<test>").ToString());
+    Console.WriteLine(result.GetProperty("properties").GetProperty("<key>").ToString());
 }
-]]></code>
-</example>
+]]></code></example>
     </member>
   </members>
 </doc>

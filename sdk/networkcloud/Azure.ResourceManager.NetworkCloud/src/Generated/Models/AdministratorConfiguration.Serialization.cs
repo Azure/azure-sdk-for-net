@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> adminUsername = default;
-            Optional<IList<SshPublicKey>> sshPublicKeys = default;
+            Optional<IList<NetworkCloudSshPublicKey>> sshPublicKeys = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminUsername"u8))
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<SshPublicKey> array = new List<SshPublicKey>();
+                    List<NetworkCloudSshPublicKey> array = new List<NetworkCloudSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKey.DeserializeSshPublicKey(item));
+                        array.Add(NetworkCloudSshPublicKey.DeserializeNetworkCloudSshPublicKey(item));
                     }
                     sshPublicKeys = array;
                     continue;

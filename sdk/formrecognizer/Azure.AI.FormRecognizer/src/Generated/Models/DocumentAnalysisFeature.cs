@@ -22,19 +22,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string OcrHighResolutionValue = "ocr.highResolution";
-        private const string OcrFormulaValue = "ocr.formula";
-        private const string OcrFontValue = "ocr.font";
-        private const string QueryFieldsPremiumValue = "queryFields.premium";
+        private const string OcrHighResolutionValue = "ocrHighResolution";
+        private const string LanguagesValue = "languages";
+        private const string BarcodesValue = "barcodes";
+        private const string FormulasValue = "formulas";
+        private const string KeyValuePairsValue = "keyValuePairs";
+        private const string FontStylingValue = "styleFont";
 
         /// <summary> Perform OCR at a higher resolution to handle documents with fine print. </summary>
         public static DocumentAnalysisFeature OcrHighResolution { get; } = new DocumentAnalysisFeature(OcrHighResolutionValue);
-        /// <summary> Enable the detection of mathematical expressions the document. </summary>
-        public static DocumentAnalysisFeature OcrFormula { get; } = new DocumentAnalysisFeature(OcrFormulaValue);
-        /// <summary> Enable the recognition of various font styles. </summary>
-        public static DocumentAnalysisFeature OcrFont { get; } = new DocumentAnalysisFeature(OcrFontValue);
-        /// <summary> Enable extraction of additional fields via the queryFields query parameter. </summary>
-        public static DocumentAnalysisFeature QueryFieldsPremium { get; } = new DocumentAnalysisFeature(QueryFieldsPremiumValue);
+        /// <summary> Enable the detection of the text content language. </summary>
+        public static DocumentAnalysisFeature Languages { get; } = new DocumentAnalysisFeature(LanguagesValue);
+        /// <summary> Enable the detection of barcodes in the document. </summary>
+        public static DocumentAnalysisFeature Barcodes { get; } = new DocumentAnalysisFeature(BarcodesValue);
+        /// <summary> Enable the detection of mathematical expressions in the document. </summary>
+        public static DocumentAnalysisFeature Formulas { get; } = new DocumentAnalysisFeature(FormulasValue);
+        /// <summary> Enable the detection of general key value pairs (form fields) in the document. </summary>
+        public static DocumentAnalysisFeature KeyValuePairs { get; } = new DocumentAnalysisFeature(KeyValuePairsValue);
         /// <summary> Determines if two <see cref="DocumentAnalysisFeature"/> values are the same. </summary>
         public static bool operator ==(DocumentAnalysisFeature left, DocumentAnalysisFeature right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentAnalysisFeature"/> values are not the same. </summary>

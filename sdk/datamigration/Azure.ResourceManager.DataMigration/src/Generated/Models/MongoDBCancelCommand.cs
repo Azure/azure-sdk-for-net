@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
@@ -12,18 +13,19 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Properties for the command that cancels a migration in whole or in part. </summary>
     public partial class MongoDBCancelCommand : CommandProperties
     {
-        /// <summary> Initializes a new instance of MongoDBCancelCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCancelCommand"/>. </summary>
         public MongoDBCancelCommand()
         {
             CommandType = CommandType.Cancel;
         }
 
-        /// <summary> Initializes a new instance of MongoDBCancelCommand. </summary>
+        /// <summary> Initializes a new instance of <see cref="MongoDBCancelCommand"/>. </summary>
         /// <param name="commandType"> Command type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the command. This is ignored if submitted. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Command input. </param>
-        internal MongoDBCancelCommand(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, MongoDBCommandInput input) : base(commandType, errors, state)
+        internal MongoDBCancelCommand(CommandType commandType, IReadOnlyList<ODataError> errors, CommandState? state, IDictionary<string, BinaryData> serializedAdditionalRawData, MongoDBCommandInput input) : base(commandType, errors, state, serializedAdditionalRawData)
         {
             Input = input;
             CommandType = commandType;

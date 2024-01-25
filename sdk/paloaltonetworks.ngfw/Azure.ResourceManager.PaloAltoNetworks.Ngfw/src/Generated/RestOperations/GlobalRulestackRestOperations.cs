@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-08-29";
+            _apiVersion = apiVersion ?? "2023-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -514,9 +514,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Get the list of advanced security objects. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The AdvancedSecurityObjectType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -542,9 +542,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> Get the list of advanced security objects. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The AdvancedSecurityObjectType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="AdvancedSecurityObjectType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -603,10 +603,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of AppIds for GlobalRulestack ApiVersion. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="appIdVersion"> The String to use. </param>
-        /// <param name="appPrefix"> The String to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
+        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -632,10 +632,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of AppIds for GlobalRulestack ApiVersion. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="appIdVersion"> The String to use. </param>
-        /// <param name="appPrefix"> The String to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="appIdVersion"> The <see cref="string"/> to use. </param>
+        /// <param name="appPrefix"> The <see cref="string"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -686,8 +686,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of countries for Rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -713,8 +713,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List of countries for Rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -832,8 +832,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List predefined URL categories for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -859,8 +859,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List predefined URL categories for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -912,9 +912,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List the security services for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The RulestackSecurityServiceType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -940,9 +940,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 
         /// <summary> List the security services for rulestack. </summary>
         /// <param name="globalRulestackName"> GlobalRulestack resource name. </param>
-        /// <param name="type"> The RulestackSecurityServiceType to use. </param>
-        /// <param name="skip"> The String to use. </param>
-        /// <param name="top"> The Integer to use. </param>
+        /// <param name="type"> The <see cref="RulestackSecurityServiceType"/> to use. </param>
+        /// <param name="skip"> The <see cref="string"/> to use. </param>
+        /// <param name="top"> The <see cref="int"/>? to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="globalRulestackName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>

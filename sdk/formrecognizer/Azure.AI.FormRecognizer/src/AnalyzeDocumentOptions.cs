@@ -46,11 +46,5 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// For more information, see <see href="https://aka.ms/azsdk/formrecognizer/features">Azure Form Recognizer add-on capabilities</see>.
         /// </summary>
         public IList<DocumentAnalysisFeature> Features { get; } = new List<DocumentAnalysisFeature>();
-
-        /// <summary>
-        /// A list of fields to extract without the need of added training.
-        /// For more information, see <see href="https://aka.ms/azsdk/formrecognizer/queryfields">Azure Form Recognizer query field extraction</see>.
-        /// </summary>
-        public IList<string> QueryFields { get; } = new List<string>();
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             VirtualMachinePlacementHintType hintType = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             VirtualMachineSchedulingExecution schedulingExecution = default;
             VirtualMachinePlacementHintPodAffinityScope scope = default;
             foreach (var property in element.EnumerateObject())
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schedulingExecution"u8))

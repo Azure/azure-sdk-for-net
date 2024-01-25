@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> DNSZone information. </summary>
     public partial class DnsZone
     {
-        /// <summary> Initializes a new instance of DnsZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsZone"/>. </summary>
         public DnsZone()
         {
         }
 
-        /// <summary> Initializes a new instance of DnsZone. </summary>
+        /// <summary> Initializes a new instance of <see cref="DnsZone"/>. </summary>
         /// <param name="subResource"> Subresource type for vault AzureBackup, AzureBackup_secondary or AzureSiteRecovery. </param>
         internal DnsZone(VaultSubResourceType? subResource)
         {

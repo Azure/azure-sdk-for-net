@@ -14,12 +14,12 @@ namespace Azure.ResourceManager.Workloads.Models
     /// </summary>
     public abstract partial class SapSizingRecommendationResult
     {
-        /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationResult"/>. </summary>
         protected SapSizingRecommendationResult()
         {
         }
 
-        /// <summary> Initializes a new instance of SapSizingRecommendationResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapSizingRecommendationResult"/>. </summary>
         /// <param name="deploymentType"> The type of SAP deployment, single server or Three tier. </param>
         internal SapSizingRecommendationResult(SapDeploymentType deploymentType)
         {

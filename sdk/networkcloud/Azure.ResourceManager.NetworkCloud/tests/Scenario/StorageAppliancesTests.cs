@@ -17,14 +17,15 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public StorageAppliancesTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task StorageAppliances()
         {
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterManagedRG);
             ResourceGroupResource clusterRGResource = Client.GetResourceGroupResource(resourceGroupResourceId);
-            StorageApplianceCollection collection = clusterRGResource.GetStorageAppliances();
+            NetworkCloudStorageApplianceCollection collection = clusterRGResource.GetNetworkCloudStorageAppliances();
 
             // List by Resource Group
-            var listByResourceGroup = new List<StorageApplianceResource>();
+            var listByResourceGroup = new List<NetworkCloudStorageApplianceResource>();
             await foreach (var item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
@@ -40,10 +41,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(storageApplianceName, getResult.Value.Data.Name);
 
             // Update
-            StorageApplianceResource storageAppliance = Client.GetStorageApplianceResource(new ResourceIdentifier(firstStorageAppliance.Id));
+            NetworkCloudStorageApplianceResource storageAppliance = Client.GetNetworkCloudStorageApplianceResource(new ResourceIdentifier(firstStorageAppliance.Id));
             getResult = await storageAppliance.GetAsync();
             var originalTags = getResult.Value.Data.Tags;
-            StorageAppliancePatch patch = new StorageAppliancePatch(){};
+            NetworkCloudStorageAppliancePatch patch = new NetworkCloudStorageAppliancePatch(){};
             var testKey = "test-key";
             var testValue = "test-value";
             patch.Tags.Add(testKey, testValue);
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 patch.Tags.Add(key, originalTags[key]);
             }
-            ArmOperation<StorageApplianceResource> updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudStorageApplianceResource> updateResult = await storageAppliance.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             patch.Tags.Remove(testKey);
@@ -59,8 +60,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags, "tag reversion failed");
 
             // List by Subscription
-            var listBySubscription = new List<StorageApplianceResource>();
-            await foreach (var item in SubscriptionResource.GetStorageAppliancesAsync())
+            var listBySubscription = new List<NetworkCloudStorageApplianceResource>();
+            await foreach (var item in SubscriptionResource.GetNetworkCloudStorageAppliancesAsync())
             {
                 listBySubscription.Add(item);
             }

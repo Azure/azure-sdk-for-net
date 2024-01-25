@@ -4,9 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Azure.Communication.JobRouter.Models;
 using Azure.Communication.JobRouter.Tests.Infrastructure;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -47,16 +45,13 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsFalse(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
 
             bestWorkerModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
-                new UpdateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId)
+                new DistributionPolicy(bestWorkerModeDistributionPolicyId)
                 {
                     OfferExpiresAfter = TimeSpan.FromSeconds(60),
                     Mode = new BestWorkerMode
                     {
-                        BypassSelectors = true,
-                        ScoringRuleOptions = new ScoringRuleOptions
-                        {
-                            DescendingOrder = false
-                        }
+                        ScoringRuleOptions = new ScoringRuleOptions { DescendingOrder = false },
+                        BypassSelectors = true
                     },
                     Name = bestWorkerModeDistributionPolicyName
                 });
@@ -69,7 +64,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.IsTrue(bestWorkerModeDistributionPolicy.Mode.BypassSelectors);
 
             bestWorkerModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
-                new UpdateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId)
+                new DistributionPolicy(bestWorkerModeDistributionPolicyId)
                 {
                     Mode = new BestWorkerMode
                     {
@@ -97,15 +92,20 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             var bestWorkerModeDistributionPolicyResponse = await routerClient.CreateDistributionPolicyAsync(
                 new CreateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId, TimeSpan.FromSeconds(1),
-                    new BestWorkerMode(
-                        new FunctionRouterRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
+                    new BestWorkerMode
+                    {
+                        ScoringRule = new FunctionRouterRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
                         {
                             Credential = new FunctionRouterRuleCredential("MyAppKey", "MyClientId")
                         },
-                        new List<ScoringRuleParameterSelector> { ScoringRuleParameterSelector.WorkerSelectors })
-                    {
-                        MinConcurrentOffers = 1, MaxConcurrentOffers = 2
-                    }) { Name = bestWorkerModeDistributionPolicyName, });
+                        ScoringRuleOptions = new ScoringRuleOptions
+                        {
+                            ScoringParameters = { ScoringRuleParameterSelector.WorkerSelectors }
+                        },
+                        MinConcurrentOffers = 1,
+                        MaxConcurrentOffers = 2
+                    }
+                ) { Name = bestWorkerModeDistributionPolicyName });
 
             AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
             Assert.NotNull(bestWorkerModeDistributionPolicyResponse.Value);
@@ -136,16 +136,20 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
             Assert.AreEqual("MyClientId", azureFuncScoringRule.Credential.ClientId);
 
             bestWorkerModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
-                new UpdateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId)
+                new DistributionPolicy(bestWorkerModeDistributionPolicyId)
                 {
-                    Mode = new BestWorkerMode(
-                        new FunctionRouterRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
+                    Mode = new BestWorkerMode
+                    {
+                        ScoringRule = new FunctionRouterRule(new Uri("https://my.function.app/api/myfunction?code=Kg=="))
                         {
                             Credential = new FunctionRouterRuleCredential("MyKey")
                         },
-                        new List<ScoringRuleParameterSelector> { ScoringRuleParameterSelector.WorkerSelectors })
-                    {
-                        MinConcurrentOffers = 1, MaxConcurrentOffers = 2
+                        ScoringRuleOptions = new ScoringRuleOptions
+                        {
+                            ScoringParameters = { ScoringRuleParameterSelector.WorkerSelectors }
+                        },
+                        MinConcurrentOffers = 1,
+                        MaxConcurrentOffers = 2
                     }
                 });
 
@@ -201,7 +205,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             // specifying min and max concurrent offers
             longestIdleModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
-                new UpdateDistributionPolicyOptions(longestIdleModeDistributionPolicyId)
+                new DistributionPolicy(longestIdleModeDistributionPolicyId)
                 {
                     Mode = new LongestIdleMode
                     {
@@ -248,7 +252,7 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
 
             // specifying min and max concurrent offers
             roundRobinModeDistributionPolicyResponse = await routerClient.UpdateDistributionPolicyAsync(
-                new UpdateDistributionPolicyOptions(roundRobinModeDistributionPolicyId)
+                new DistributionPolicy(roundRobinModeDistributionPolicyId)
                 {
                     Mode = new LongestIdleMode
                     {
@@ -267,38 +271,6 @@ namespace Azure.Communication.JobRouter.Tests.RouterClients
         }
 
         #endregion round robin mode constructors
-
-        #region sanity checks
-
-        [Test]
-        public async Task CreateDistributionPolicyAndRemoveAProperty()
-        {
-            JobRouterAdministrationClient routerClient = CreateRouterAdministrationClientWithConnectionString();
-            // test best worker mode constructors
-
-            // --- default scoring rule
-            var bestWorkerModeDistributionPolicyId = GenerateUniqueId($"{nameof(CreateDistributionPolicyAndRemoveAProperty)}-Default-DistributionPolicy");
-            var bestWorkerModeDistributionPolicyName = $"{bestWorkerModeDistributionPolicyId}-Name";
-            var bestWorkerModeDistributionPolicyResponse = await routerClient.CreateDistributionPolicyAsync(
-                new CreateDistributionPolicyOptions(bestWorkerModeDistributionPolicyId, TimeSpan.FromSeconds(60), new BestWorkerMode())
-                {
-                    Name = bestWorkerModeDistributionPolicyName
-                });
-
-            AddForCleanup(new Task(async () => await routerClient.DeleteDistributionPolicyAsync(bestWorkerModeDistributionPolicyId)));
-
-            Assert.False(string.IsNullOrWhiteSpace(bestWorkerModeDistributionPolicyResponse.Value.Name));
-
-            var updatedDistributionPolicyResponse =
-                await routerClient.UpdateDistributionPolicyAsync(bestWorkerModeDistributionPolicyId,
-                    RequestContent.Create(new { Name = (string?)null }));
-
-            var retrievedPolicy = await routerClient.GetDistributionPolicyAsync(bestWorkerModeDistributionPolicyId);
-
-            Assert.True(string.IsNullOrWhiteSpace(retrievedPolicy.Value.Name));
-        }
-
-        #endregion sanity checks
 
         #endregion Distribution Policy Tests
     }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> SIM name and encrypted properties. </summary>
     public partial class SimNameAndEncryptedProperties
     {
-        /// <summary> Initializes a new instance of SimNameAndEncryptedProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SimNameAndEncryptedProperties"/>. </summary>
         /// <param name="name"> The name of the SIM. </param>
         /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="internationalMobileSubscriberIdentity"/> is null. </exception>
@@ -25,19 +25,48 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Argument.AssertNotNull(internationalMobileSubscriberIdentity, nameof(internationalMobileSubscriberIdentity));
 
             Name = name;
-            SiteProvisioningState = new ChangeTrackingDictionary<string, SiteProvisioningState>();
+            SiteProvisioningState = new ChangeTrackingDictionary<string, MobileNetworkSiteProvisioningState>();
             InternationalMobileSubscriberIdentity = internationalMobileSubscriberIdentity;
             StaticIPConfiguration = new ChangeTrackingList<SimStaticIPProperties>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SimNameAndEncryptedProperties"/>. </summary>
+        /// <param name="name"> The name of the SIM. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
+        /// <param name="simState"> The state of the SIM resource. </param>
+        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
+        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
+        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
+        /// <param name="simPolicy"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
+        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
+        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
+        /// <param name="encryptedCredentials"> The encrypted SIM credentials. </param>
+        internal SimNameAndEncryptedProperties(string name, MobileNetworkProvisioningState? provisioningState, MobileNetworkSimState? simState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string encryptedCredentials)
+        {
+            Name = name;
+            ProvisioningState = provisioningState;
+            SimState = simState;
+            SiteProvisioningState = siteProvisioningState;
+            InternationalMobileSubscriberIdentity = internationalMobileSubscriberIdentity;
+            IntegratedCircuitCardIdentifier = integratedCircuitCardIdentifier;
+            DeviceType = deviceType;
+            SimPolicy = simPolicy;
+            StaticIPConfiguration = staticIPConfiguration;
+            VendorName = vendorName;
+            VendorKeyFingerprint = vendorKeyFingerprint;
+            EncryptedCredentials = encryptedCredentials;
         }
 
         /// <summary> The name of the SIM. </summary>
         public string Name { get; }
         /// <summary> The provisioning state of the SIM resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The state of the SIM resource. </summary>
-        public SimState? SimState { get; }
+        public MobileNetworkSimState? SimState { get; }
         /// <summary> A dictionary of sites to the provisioning state of this SIM on that site. </summary>
-        public IReadOnlyDictionary<string, SiteProvisioningState> SiteProvisioningState { get; }
+        public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
         /// <summary> The international mobile subscriber identity (IMSI) for the SIM. </summary>
         public string InternationalMobileSubscriberIdentity { get; }
         /// <summary> The integrated circuit card ID (ICCID) for the SIM. </summary>

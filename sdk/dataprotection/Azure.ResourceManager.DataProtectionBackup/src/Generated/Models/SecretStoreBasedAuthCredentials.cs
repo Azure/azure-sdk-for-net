@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Secret store based authentication credentials. </summary>
     public partial class SecretStoreBasedAuthCredentials : DataProtectionBackupAuthCredentials
     {
-        /// <summary> Initializes a new instance of SecretStoreBasedAuthCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretStoreBasedAuthCredentials"/>. </summary>
         public SecretStoreBasedAuthCredentials()
         {
             ObjectType = "SecretStoreBasedAuthCredentials";
         }
 
-        /// <summary> Initializes a new instance of SecretStoreBasedAuthCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecretStoreBasedAuthCredentials"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="secretStoreResource"> Secret store resource. </param>
-        internal SecretStoreBasedAuthCredentials(string objectType, SecretStoreResourceInfo secretStoreResource) : base(objectType)
+        internal SecretStoreBasedAuthCredentials(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, SecretStoreResourceInfo secretStoreResource) : base(objectType, serializedAdditionalRawData)
         {
             SecretStoreResource = secretStoreResource;
             ObjectType = objectType ?? "SecretStoreBasedAuthCredentials";

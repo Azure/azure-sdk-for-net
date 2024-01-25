@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// </summary>
     public abstract partial class EventGridFilter
     {
-        /// <summary> Initializes a new instance of EventGridFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridFilter"/>. </summary>
         protected EventGridFilter()
         {
         }
 
-        /// <summary> Initializes a new instance of EventGridFilter. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventGridFilter"/>. </summary>
         /// <param name="operatorType"> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </param>
         /// <param name="key"> The field/property in the event based on which you want to filter. </param>
         internal EventGridFilter(FilterOperatorType operatorType, string key)

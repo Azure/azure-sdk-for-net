@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> InitialAgentPoolConfiguration specifies the configuration of a pool of virtual machines that are initially defined with a Kubernetes cluster. </summary>
     public partial class InitialAgentPoolConfiguration
     {
-        /// <summary> Initializes a new instance of InitialAgentPoolConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
         /// <param name="name"> The name that will be used for the agent pool resource representing this agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="vmSkuName"/> is null. </exception>
-        public InitialAgentPoolConfiguration(long count, AgentPoolMode mode, string name, string vmSkuName)
+        public InitialAgentPoolConfiguration(long count, NetworkCloudAgentPoolMode mode, string name, string vmSkuName)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             VmSkuName = vmSkuName;
         }
 
-        /// <summary> Initializes a new instance of InitialAgentPoolConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>
         /// <param name="agentOptions"> The configurations that will be applied to each agent in this agent pool. </param>
         /// <param name="attachedNetworkConfiguration"> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="taints"> The taints applied to the nodes in this agent pool. </param>
         /// <param name="upgradeSettings"> The configuration of the agent pool. </param>
         /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
-        internal InitialAgentPoolConfiguration(AdministratorConfiguration administratorConfiguration, AgentOptions agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, IList<KubernetesLabel> labels, AgentPoolMode mode, string name, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName)
+        internal InitialAgentPoolConfiguration(AdministratorConfiguration administratorConfiguration, NetworkCloudAgentConfiguration agentOptions, AttachedNetworkConfiguration attachedNetworkConfiguration, IList<string> availabilityZones, long count, IList<KubernetesLabel> labels, NetworkCloudAgentPoolMode mode, string name, IList<KubernetesLabel> taints, AgentPoolUpgradeSettings upgradeSettings, string vmSkuName)
         {
             AdministratorConfiguration = administratorConfiguration;
             AgentOptions = agentOptions;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The administrator credentials to be used for the nodes in this agent pool. </summary>
         public AdministratorConfiguration AdministratorConfiguration { get; set; }
         /// <summary> The configurations that will be applied to each agent in this agent pool. </summary>
-        public AgentOptions AgentOptions { get; set; }
+        public NetworkCloudAgentConfiguration AgentOptions { get; set; }
         /// <summary> The configuration of networks being attached to the agent pool for use by the workloads that run on this Kubernetes cluster. </summary>
         public AttachedNetworkConfiguration AttachedNetworkConfiguration { get; set; }
         /// <summary> The list of availability zones of the Network Cloud cluster used for the provisioning of nodes in this agent pool. If not specified, all availability zones will be used. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The labels applied to the nodes in this agent pool. </summary>
         public IList<KubernetesLabel> Labels { get; }
         /// <summary> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </summary>
-        public AgentPoolMode Mode { get; set; }
+        public NetworkCloudAgentPoolMode Mode { get; set; }
         /// <summary> The name that will be used for the agent pool resource representing this agent pool. </summary>
         public string Name { get; set; }
         /// <summary> The taints applied to the nodes in this agent pool. </summary>

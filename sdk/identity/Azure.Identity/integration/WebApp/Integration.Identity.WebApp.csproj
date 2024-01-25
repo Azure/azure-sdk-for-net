@@ -10,7 +10,7 @@
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Azure.Identity.csproj" />
+    <ProjectReference Include="..\Integration.Identity.Common\Integration.Identity.Common.csproj" />
   </ItemGroup>
 
 </Project>

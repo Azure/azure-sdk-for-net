@@ -25,16 +25,23 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TargetName);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(TargetName.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(TargetName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("userName"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(UserName);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(UserName.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(UserName))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             writer.WritePropertyName("password"u8);
-            JsonSerializer.Serialize(writer, Password); writer.WriteEndObject();
+            JsonSerializer.Serialize(writer, Password);
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 

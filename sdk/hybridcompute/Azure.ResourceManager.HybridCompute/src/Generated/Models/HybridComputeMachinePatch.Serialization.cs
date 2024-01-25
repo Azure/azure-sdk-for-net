@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -36,6 +36,39 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndObject();
             }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LocationData))
+            {
+                writer.WritePropertyName("locationData"u8);
+                writer.WriteObjectValue(LocationData);
+            }
+            if (Optional.IsDefined(OSProfile))
+            {
+                writer.WritePropertyName("osProfile"u8);
+                writer.WriteObjectValue(OSProfile);
+            }
+            if (Optional.IsDefined(CloudMetadata))
+            {
+                writer.WritePropertyName("cloudMetadata"u8);
+                writer.WriteObjectValue(CloudMetadata);
+            }
+            if (Optional.IsDefined(AgentUpgrade))
+            {
+                writer.WritePropertyName("agentUpgrade"u8);
+                writer.WriteObjectValue(AgentUpgrade);
+            }
+            if (Optional.IsDefined(ParentClusterResourceId))
+            {
+                writer.WritePropertyName("parentClusterResourceId"u8);
+                writer.WriteStringValue(ParentClusterResourceId);
+            }
+            if (Optional.IsDefined(PrivateLinkScopeResourceId))
+            {
+                writer.WritePropertyName("privateLinkScopeResourceId"u8);
+                writer.WriteStringValue(PrivateLinkScopeResourceId);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
     }

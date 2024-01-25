@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class SqlServerDatabaseRestorePointData : ResourceData
     {
-        /// <summary> Initializes a new instance of SqlServerDatabaseRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseRestorePointData"/>. </summary>
         public SqlServerDatabaseRestorePointData()
         {
         }
 
-        /// <summary> Initializes a new instance of SqlServerDatabaseRestorePointData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlServerDatabaseRestorePointData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

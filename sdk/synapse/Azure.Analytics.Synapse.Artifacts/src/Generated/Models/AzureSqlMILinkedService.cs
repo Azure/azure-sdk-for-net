@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure SQL Managed Instance linked service. </summary>
     public partial class AzureSqlMILinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureSqlMILinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMILinkedService"/>. </summary>
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         public AzureSqlMILinkedService(object connectionString)
@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureSqlMI";
         }
 
-        /// <summary> Initializes a new instance of AzureSqlMILinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSqlMILinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -42,8 +42,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="azureCloudType"> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </param>
+        /// <param name="alwaysEncryptedSettings"> Sql always encrypted properties. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureSqlMILinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference password, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureSqlMILinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, AzureKeyVaultSecretReference password, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, SqlAlwaysEncryptedProperties alwaysEncryptedSettings, object encryptedCredential, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             Password = password;
@@ -51,7 +53,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
             AzureCloudType = azureCloudType;
+            AlwaysEncryptedSettings = alwaysEncryptedSettings;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             Type = type ?? "AzureSqlMI";
         }
 
@@ -71,7 +75,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>
         public object AzureCloudType { get; set; }
+        /// <summary> Sql always encrypted properties. </summary>
+        public SqlAlwaysEncryptedProperties AlwaysEncryptedSettings { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

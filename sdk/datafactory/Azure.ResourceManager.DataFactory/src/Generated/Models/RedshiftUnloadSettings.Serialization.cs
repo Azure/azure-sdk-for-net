@@ -17,7 +17,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("s3LinkedServiceName"u8);
-            JsonSerializer.Serialize(writer, S3LinkedServiceName); writer.WritePropertyName("bucketName"u8);
+            JsonSerializer.Serialize(writer, S3LinkedServiceName);
+            writer.WritePropertyName("bucketName"u8);
             JsonSerializer.Serialize(writer, BucketName);
             writer.WriteEndObject();
         }

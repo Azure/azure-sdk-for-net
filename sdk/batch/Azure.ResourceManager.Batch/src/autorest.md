@@ -7,13 +7,14 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 library-name: Batch
-namespace: Azure.ResourceManager.Batch
-require: https://github.com/Azure/azure-rest-api-specs/blob/ab84b777992cf4ca170a18e1b8e5f3e437209888/specification/batch/resource-manager/readme.md
+namespace: Azure.ResourceManager.Batch   
+require: https://github.com/Azure/azure-rest-api-specs/blob/408db257fe67fc66d8c66c10881be8d414d5e5f3/specification/batch/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
 # mgmt-debug:
@@ -28,7 +29,7 @@ format-by-name-rules:
   'ifMatch': 'etag'
   'locationName': 'azure-location'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -191,6 +192,14 @@ rename-mapping:
   BatchAccountRegenerateKeyParameters.keyName: KeyType
   Certificate.properties.thumbprint: ThumbprintString
   CertificateCreateOrUpdateParameters.properties.thumbprint: ThumbprintString
+  OSDisk: BatchOSDisk
+  OSDisk.writeAcceleratorEnabled: IsWriteAcceleratorEnabled
+  SecurityProfile: BatchSecurityProfile
+  UefiSettings: BatchUefiSettings
+  UefiSettings.secureBootEnabled: IsSecureBootEnabled
+  UefiSettings.vTpmEnabled: IsVTpmEnabled
+  SecurityTypes: BatchSecurityType
+  StorageAccountType.StandardSSD_LRS: StandardSsdLrs
 
 directive:
 # TODO -- remove this and use rename-mapping when it is supported

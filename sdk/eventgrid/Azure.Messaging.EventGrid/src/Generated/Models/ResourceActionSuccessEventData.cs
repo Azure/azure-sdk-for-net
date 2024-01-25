@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionSuccess event. This is raised when a resource action operation succeeds. </summary>
     public partial class ResourceActionSuccessEventData
     {
-        /// <summary> Initializes a new instance of ResourceActionSuccessEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceActionSuccessEventData"/>. </summary>
         internal ResourceActionSuccessEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceActionSuccessEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceActionSuccessEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>

@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure ML Service linked service. </summary>
     public partial class AzureMLServiceLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureMLServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedService"/>. </summary>
         /// <param name="subscriptionId"> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </param>
         /// <param name="resourceGroupName"> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </param>
         /// <param name="mlWorkspaceName"> Azure ML Service workspace name. Type: string (or Expression with resultType string). </param>
@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureMLService";
         }
 
-        /// <summary> Initializes a new instance of AzureMLServiceLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureMLServiceLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -41,6 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="subscriptionId"> Azure ML Service workspace subscription ID. Type: string (or Expression with resultType string). </param>
         /// <param name="resourceGroupName"> Azure ML Service workspace resource group name. Type: string (or Expression with resultType string). </param>
         /// <param name="mlWorkspaceName"> Azure ML Service workspace name. Type: string (or Expression with resultType string). </param>
+        /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalId"> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey">
         /// The key of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline.
@@ -49,11 +50,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureMLServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object subscriptionId, object resourceGroupName, object mlWorkspaceName, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureMLServiceLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object subscriptionId, object resourceGroupName, object mlWorkspaceName, object authentication, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             SubscriptionId = subscriptionId;
             ResourceGroupName = resourceGroupName;
             MlWorkspaceName = mlWorkspaceName;
+            Authentication = authentication;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Tenant = tenant;
@@ -67,6 +69,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ResourceGroupName { get; set; }
         /// <summary> Azure ML Service workspace name. Type: string (or Expression with resultType string). </summary>
         public object MlWorkspaceName { get; set; }
+        /// <summary> Type of authentication (Required to specify MSI) used to connect to AzureML. Type: string (or Expression with resultType string). </summary>
+        public object Authentication { get; set; }
         /// <summary> The ID of the service principal used to authenticate against the endpoint of a published Azure ML Service pipeline. Type: string (or Expression with resultType string). </summary>
         public object ServicePrincipalId { get; set; }
         /// <summary>

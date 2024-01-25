@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Connection information for encrypting the on-premises data source credentials. </summary>
     public partial class SynapseIntegrationRuntimeConnectionInfo
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeConnectionInfo"/>. </summary>
         internal SynapseIntegrationRuntimeConnectionInfo()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeConnectionInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeConnectionInfo"/>. </summary>
         /// <param name="serviceToken"> The token generated in service. Callers use this token to authenticate to integration runtime. </param>
         /// <param name="identityCertThumbprint"> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </param>
         /// <param name="hostServiceUri"> The on-premises integration runtime host URL. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

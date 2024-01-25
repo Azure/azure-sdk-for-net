@@ -366,15 +366,8 @@ namespace Azure.Storage.Files.DataLake
         /// The token credential used to sign requests.
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential)
-            : this(
-                  fileSystemUri,
-                  credential.AsPolicy(new DataLakeClientOptions()),
-                  options: null,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+            : this(fileSystemUri, credential, new DataLakeClientOptions())
         {
-            Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
 
         /// <summary>
@@ -395,12 +388,14 @@ namespace Azure.Storage.Files.DataLake
         /// </param>
         public DataLakeFileSystemClient(Uri fileSystemUri, TokenCredential credential, DataLakeClientOptions options)
             : this(
-                  fileSystemUri,
-                  credential.AsPolicy(options),
-                  options,
-                  storageSharedKeyCredential: null,
-                  sasCredential: null,
-                  tokenCredential: credential)
+                fileSystemUri,
+                credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? DataLakeAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
+                options,
+                storageSharedKeyCredential: null,
+                sasCredential: null,
+                tokenCredential: credential)
         {
             Errors.VerifyHttpsTokenAuth(fileSystemUri);
         }
@@ -2911,6 +2906,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Response<FileSystemInfo> SetAccessPolicy(
             Models.PublicAccessType accessType = Models.PublicAccessType.None,
             IEnumerable<DataLakeSignedIdentifier> permissions = default,
@@ -2990,6 +2986,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual async Task<Response<FileSystemInfo>> SetAccessPolicyAsync(
             Models.PublicAccessType accessType = Models.PublicAccessType.None,
             IEnumerable<DataLakeSignedIdentifier> permissions = default,
@@ -3184,6 +3181,7 @@ namespace Azure.Storage.Files.DataLake
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Uri GenerateSasUri(DataLakeFileSystemSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new DataLakeSasBuilder(permissions, expiresOn) { FileSystemName = Name });
 
@@ -3210,6 +3208,7 @@ namespace Azure.Storage.Files.DataLake
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-datalake")]
         public virtual Uri GenerateSasUri(
             DataLakeSasBuilder builder)
         {
@@ -3334,6 +3333,7 @@ namespace Azure.Storage.Files.DataLake
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,
+                            showonly: ListBlobsShowOnly.Deleted,
                             timeout: null,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -3346,6 +3346,7 @@ namespace Azure.Storage.Files.DataLake
                             marker: continuation,
                             maxResults: maxResults,
                             include: null,
+                            showonly: ListBlobsShowOnly.Deleted,
                             timeout: null,
                             cancellationToken: cancellationToken);
                     }

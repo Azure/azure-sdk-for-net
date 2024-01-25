@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> SSIS properties for managed integration runtime. </summary>
     public partial class SynapseIntegrationRuntimeSsisProperties
     {
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisProperties"/>. </summary>
         public SynapseIntegrationRuntimeSsisProperties()
         {
             ExpressCustomSetupProperties = new ChangeTrackingList<SynapseCustomSetupBase>();
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SynapseIntegrationRuntimeSsisProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseIntegrationRuntimeSsisProperties"/>. </summary>
         /// <param name="catalogInfo"> Catalog information for managed dedicated integration runtime. </param>
         /// <param name="licenseType"> License type for bringing your own license scenario. </param>
         /// <param name="customSetupScriptProperties"> Custom setup script properties for a managed dedicated integration runtime. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Synapse.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

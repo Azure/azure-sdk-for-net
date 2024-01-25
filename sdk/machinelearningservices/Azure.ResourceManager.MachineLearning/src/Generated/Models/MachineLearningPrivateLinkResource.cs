@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> A private link resource. </summary>
     public partial class MachineLearningPrivateLinkResource : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkResource"/>. </summary>
         /// <param name="location"> The location. </param>
         public MachineLearningPrivateLinkResource(AzureLocation location) : base(location)
         {
@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             RequiredZoneNames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningPrivateLinkResource. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningPrivateLinkResource"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="sku"> The sku of the workspace. </param>
+        /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
+        /// <param name="sku"> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </param>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource Private link DNS zone name. </param>
@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             RequiredZoneNames = requiredZoneNames;
         }
 
-        /// <summary> The identity of the resource. </summary>
+        /// <summary> Managed service identity (system assigned and/or user assigned identities). </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The sku of the workspace. </summary>
+        /// <summary> Optional. This field is required to be implemented by the RP because AML is supporting more than one tier. </summary>
         public MachineLearningSku Sku { get; set; }
         /// <summary> The private link resource group id. </summary>
         public string GroupId { get; }

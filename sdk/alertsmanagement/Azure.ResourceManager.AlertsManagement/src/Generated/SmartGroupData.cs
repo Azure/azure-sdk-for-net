@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.AlertsManagement
     /// </summary>
     public partial class SmartGroupData : ResourceData
     {
-        /// <summary> Initializes a new instance of SmartGroupData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SmartGroupData"/>. </summary>
         public SmartGroupData()
         {
             Resources = new ChangeTrackingList<SmartGroupAggregatedProperty>();
@@ -31,7 +63,7 @@ namespace Azure.ResourceManager.AlertsManagement
             AlertSeverities = new ChangeTrackingList<SmartGroupAggregatedProperty>();
         }
 
-        /// <summary> Initializes a new instance of SmartGroupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.AlertsManagement
         /// <param name="alertStates"> Summary of alertStates in the smart group. </param>
         /// <param name="alertSeverities"> Summary of alertSeverities in the smart group. </param>
         /// <param name="nextLink"> The URI to fetch the next page of alerts. Call ListNext() with this URI to fetch the next page alerts. </param>
-        internal SmartGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? alertsCount, SmartGroupState? smartGroupState, ServiceAlertSeverity? severity, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IList<SmartGroupAggregatedProperty> resources, IList<SmartGroupAggregatedProperty> resourceTypes, IList<SmartGroupAggregatedProperty> resourceGroups, IList<SmartGroupAggregatedProperty> monitorServices, IList<SmartGroupAggregatedProperty> monitorConditions, IList<SmartGroupAggregatedProperty> alertStates, IList<SmartGroupAggregatedProperty> alertSeverities, string nextLink) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SmartGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, long? alertsCount, SmartGroupState? smartGroupState, ServiceAlertSeverity? severity, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IList<SmartGroupAggregatedProperty> resources, IList<SmartGroupAggregatedProperty> resourceTypes, IList<SmartGroupAggregatedProperty> resourceGroups, IList<SmartGroupAggregatedProperty> monitorServices, IList<SmartGroupAggregatedProperty> monitorConditions, IList<SmartGroupAggregatedProperty> alertStates, IList<SmartGroupAggregatedProperty> alertSeverities, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AlertsCount = alertsCount;
             SmartGroupState = smartGroupState;
@@ -66,6 +99,7 @@ namespace Azure.ResourceManager.AlertsManagement
             AlertStates = alertStates;
             AlertSeverities = alertSeverities;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total number of alerts in smart group. </summary>

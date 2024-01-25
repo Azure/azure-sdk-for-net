@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static ClassificationModel DecisionTree { get; } = new ClassificationModel(DecisionTreeValue);
         /// <summary>
         /// Random forest is a supervised learning algorithm.
-        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the “bagging” method.
+        /// The "forest" it builds, is an ensemble of decision trees, usually trained with the bagging method.
         /// The general idea of the bagging method is that a combination of learning models increases the overall result.
         /// </summary>
         public static ClassificationModel RandomForest { get; } = new ClassificationModel(RandomForestValue);

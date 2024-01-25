@@ -15,11 +15,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Prefix))
-            {
-                writer.WritePropertyName("prefix"u8);
-                writer.WriteStringValue(Prefix);
-            }
+            writer.WritePropertyName("prefix"u8);
+            writer.WriteStringValue(Prefix);
             writer.WriteEndObject();
         }
 
@@ -29,7 +26,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> prefix = default;
+            string prefix = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("prefix"u8))
@@ -38,7 +35,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     continue;
                 }
             }
-            return new AggregateRoute(prefix.Value);
+            return new AggregateRoute(prefix);
         }
     }
 }

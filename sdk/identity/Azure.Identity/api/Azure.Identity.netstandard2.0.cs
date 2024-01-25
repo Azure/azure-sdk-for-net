@@ -94,10 +94,10 @@ namespace Azure.Identity
     }
     public partial class BrowserCustomizationOptions
     {
-        public bool? UseEmbeddedWebView;
         public BrowserCustomizationOptions() { }
-        public string HtmlMessageError { get { throw null; } set { } }
-        public string HtmlMessageSuccess { get { throw null; } set { } }
+        public string ErrorMessage { get { throw null; } set { } }
+        public string SuccessMessage { get { throw null; } set { } }
+        public bool? UseEmbeddedWebView { get { throw null; } set { } }
     }
     public partial class ChainedTokenCredential : Azure.Core.TokenCredential
     {
@@ -261,7 +261,7 @@ namespace Azure.Identity
         public static Azure.Identity.AuthenticationRecord AuthenticationRecord(string username, string authority, string homeAccountId, string tenantId, string clientId) { throw null; }
         public static Azure.Identity.DeviceCodeInfo DeviceCodeInfo(string userCode, string deviceCode, System.Uri verificationUri, System.DateTimeOffset expiresOn, string message, string clientId, System.Collections.Generic.IReadOnlyCollection<string> scopes) { throw null; }
     }
-    public partial class InteractiveBrowserCredential : Azure.Core.TokenCredential
+    public partial class InteractiveBrowserCredential : Azure.Core.TokenCredential, Azure.Core.ISupportsProofOfPossession
     {
         public InteractiveBrowserCredential() { }
         public InteractiveBrowserCredential(Azure.Identity.InteractiveBrowserCredentialOptions options) { }
@@ -273,7 +273,9 @@ namespace Azure.Identity
         public virtual Azure.Identity.AuthenticationRecord Authenticate(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Identity.AuthenticationRecord> AuthenticateAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public Azure.Core.AccessToken GetToken(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.PopTokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class InteractiveBrowserCredentialOptions : Azure.Identity.TokenCredentialOptions
@@ -281,7 +283,7 @@ namespace Azure.Identity
         public InteractiveBrowserCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public Azure.Identity.AuthenticationRecord AuthenticationRecord { get { throw null; } set { } }
-        public Azure.Identity.BrowserCustomizationOptions BrowserCustomizedOptions { get { throw null; } set { } }
+        public Azure.Identity.BrowserCustomizationOptions BrowserCustomization { get { throw null; } set { } }
         public string ClientId { get { throw null; } set { } }
         public bool DisableAutomaticAuthentication { get { throw null; } set { } }
         public bool DisableInstanceDiscovery { get { throw null; } set { } }
@@ -373,7 +375,7 @@ namespace Azure.Identity
         public TokenCredentialOptions() { }
         public System.Uri AuthorityHost { get { throw null; } set { } }
         public new Azure.Identity.TokenCredentialDiagnosticsOptions Diagnostics { get { throw null; } }
-        public bool IsSupportLoggingEnabled { get { throw null; } set { } }
+        public bool IsUnsafeSupportLoggingEnabled { get { throw null; } set { } }
     }
     public abstract partial class UnsafeTokenCacheOptions : Azure.Identity.TokenCachePersistenceOptions
     {

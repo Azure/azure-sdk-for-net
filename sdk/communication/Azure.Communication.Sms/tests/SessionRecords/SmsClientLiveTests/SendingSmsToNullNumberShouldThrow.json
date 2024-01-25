@@ -1,7 +1,0 @@
-{
-  "Entries": [],
-  "Variables": {
-    "AZURE_PHONE_NUMBER": "\u002B18772125291",
-    "COMMUNICATION_LIVETEST_STATIC_CONNECTION_STRING": "endpoint=https://smstestapp.communication.azure.com/;accesskey=Kg=="
-  }
-}

@@ -6,7 +6,7 @@
       Microsoft Azure Communication Call Automation quickstart - https://learn.microsoft.com/azure/communication-services/quickstarts/voice-video-calling/callflows-for-customer-interactions?pivots=programming-language-csharp
     </Description>
     <AssemblyTitle>Azure Communication CallAutomation Service</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageTags>Microsoft Azure Communication CallAutomation Service;Microsoft;Azure;Azure Communication Service;Azure Communication CallAutomation Service;Calling;Communication;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -28,8 +28,7 @@
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
-    <!-- <PackageReference Include="Azure.Core" /> -->
-    <ProjectReference Include="..\..\..\core\Azure.Core\src\Azure.Core.csproj" />
+    <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Communication.Common" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>

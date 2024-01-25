@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Network.Models
@@ -12,14 +13,15 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> The visibility list of the private link service. </summary>
     internal partial class PrivateLinkServicePropertiesVisibility : ResourceSet
     {
-        /// <summary> Initializes a new instance of PrivateLinkServicePropertiesVisibility. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesVisibility"/>. </summary>
         public PrivateLinkServicePropertiesVisibility()
         {
         }
 
-        /// <summary> Initializes a new instance of PrivateLinkServicePropertiesVisibility. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateLinkServicePropertiesVisibility"/>. </summary>
         /// <param name="subscriptions"> The list of subscriptions. </param>
-        internal PrivateLinkServicePropertiesVisibility(IList<string> subscriptions) : base(subscriptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateLinkServicePropertiesVisibility(IList<string> subscriptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(subscriptions, serializedAdditionalRawData)
         {
         }
     }

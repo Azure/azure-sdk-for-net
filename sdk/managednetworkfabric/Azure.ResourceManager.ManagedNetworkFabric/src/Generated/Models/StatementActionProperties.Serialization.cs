@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 return null;
             }
             Optional<long> localPreference = default;
-            CommunityActionType actionType = default;
+            RoutePolicyActionType actionType = default;
             Optional<ActionIPCommunityProperties> ipCommunityProperties = default;
             Optional<ActionIPExtendedCommunityProperties> ipExtendedCommunityProperties = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (property.NameEquals("actionType"u8))
                 {
-                    actionType = new CommunityActionType(property.Value.GetString());
+                    actionType = new RoutePolicyActionType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipCommunityProperties"u8))

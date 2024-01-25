@@ -7,21 +7,22 @@
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    /// <summary>
-    /// The type used for update operations of the Product.
-    /// Serialized Name: ProductUpdate
-    /// </summary>
+    /// <summary> The type used for update operations of the Product. </summary>
     public partial class SphereProductPatch
     {
-        /// <summary> Initializes a new instance of SphereProductPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductPatch"/>. </summary>
         public SphereProductPatch()
         {
         }
 
-        /// <summary>
-        /// Description of the product
-        /// Serialized Name: ProductUpdate.properties.description
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="SphereProductPatch"/>. </summary>
+        /// <param name="description"> Description of the product. </param>
+        internal SphereProductPatch(string description)
+        {
+            Description = description;
+        }
+
+        /// <summary> Description of the product. </summary>
         public string Description { get; set; }
     }
 }

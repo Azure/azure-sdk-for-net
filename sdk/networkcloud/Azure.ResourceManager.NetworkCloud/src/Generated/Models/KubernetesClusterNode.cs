@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> KubernetesClusterNode represents the details of a node in a Kubernetes cluster. </summary>
     public partial class KubernetesClusterNode
     {
-        /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNode"/>. </summary>
         internal KubernetesClusterNode()
         {
             Labels = new ChangeTrackingList<KubernetesLabel>();
@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Taints = new ChangeTrackingList<KubernetesLabel>();
         }
 
-        /// <summary> Initializes a new instance of KubernetesClusterNode. </summary>
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterNode"/>. </summary>
         /// <param name="agentPoolId"> The resource ID of the agent pool that this node belongs to. This value is not represented on control plane nodes. </param>
         /// <param name="availabilityZone"> The availability zone this node is running within. </param>
         /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts this node. </param>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="role"> The role of this node in the cluster. </param>
         /// <param name="taints"> The list of taints that have been assigned to the agent pool containing this node. </param>
         /// <param name="vmSkuName"> The VM SKU name that was used to create this cluster node. </param>
-        internal KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, IReadOnlyList<KubernetesLabel> labels, long? memorySizeGB, AgentPoolMode? mode, string name, IReadOnlyList<NetworkAttachment> networkAttachments, KubernetesNodePowerState? powerState, KubernetesNodeRole? role, IReadOnlyList<KubernetesLabel> taints, string vmSkuName)
+        internal KubernetesClusterNode(string agentPoolId, string availabilityZone, string bareMetalMachineId, long? cpuCores, KubernetesClusterNodeDetailedStatus? detailedStatus, string detailedStatusMessage, long? diskSizeGB, string image, string kubernetesVersion, IReadOnlyList<KubernetesLabel> labels, long? memorySizeGB, NetworkCloudAgentPoolMode? mode, string name, IReadOnlyList<NetworkAttachment> networkAttachments, KubernetesNodePowerState? powerState, KubernetesNodeRole? role, IReadOnlyList<KubernetesLabel> taints, string vmSkuName)
         {
             AgentPoolId = agentPoolId;
             AvailabilityZone = availabilityZone;
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The amount of memory configured for this node, derived from the vm SKU specified. </summary>
         public long? MemorySizeGB { get; }
         /// <summary> The mode of the agent pool containing this node. Not applicable for control plane nodes. </summary>
-        public AgentPoolMode? Mode { get; }
+        public NetworkCloudAgentPoolMode? Mode { get; }
         /// <summary> The name of this node, as realized in the Kubernetes cluster. </summary>
         public string Name { get; }
         /// <summary> The NetworkAttachments made to this node. </summary>

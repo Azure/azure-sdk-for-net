@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Web activity. </summary>
     public partial class WebActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of WebActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="method"> Rest API method for target endpoint. </param>
         /// <param name="url"> Web activity target endpoint and path. Type: string (or Expression with resultType string). </param>
@@ -31,10 +31,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "WebActivity";
         }
 
-        /// <summary> Initializes a new instance of WebActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -48,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="datasets"> List of datasets passed to web endpoint. </param>
         /// <param name="linkedServices"> List of linked services passed to web endpoint. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
-        internal WebActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, object url, object headers, object body, WebActivityAuthentication authentication, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal WebActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, WebActivityMethod method, object url, object headers, object body, WebActivityAuthentication authentication, IList<DatasetReference> datasets, IList<LinkedServiceReference> linkedServices, IntegrationRuntimeReference connectVia) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Method = method;
             Url = url;

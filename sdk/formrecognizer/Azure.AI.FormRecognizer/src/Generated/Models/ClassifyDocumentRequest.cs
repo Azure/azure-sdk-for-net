@@ -12,14 +12,23 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Document classification parameters. </summary>
     internal partial class ClassifyDocumentRequest
     {
-        /// <summary> Initializes a new instance of ClassifyDocumentRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentRequest"/>. </summary>
         public ClassifyDocumentRequest()
         {
         }
 
-        /// <summary> Document URL to classify. </summary>
+        /// <summary> Initializes a new instance of <see cref="ClassifyDocumentRequest"/>. </summary>
+        /// <param name="urlSource"> Document URL to classify.  Either urlSource or base64Source must be specified. </param>
+        /// <param name="base64Source"> Base64 encoding of the document to classify.  Either urlSource or base64Source must be specified. </param>
+        internal ClassifyDocumentRequest(Uri urlSource, byte[] base64Source)
+        {
+            UrlSource = urlSource;
+            Base64Source = base64Source;
+        }
+
+        /// <summary> Document URL to classify.  Either urlSource or base64Source must be specified. </summary>
         public Uri UrlSource { get; set; }
-        /// <summary> Base64 encoding of the document to classify. </summary>
+        /// <summary> Base64 encoding of the document to classify.  Either urlSource or base64Source must be specified. </summary>
         public byte[] Base64Source { get; set; }
     }
 }

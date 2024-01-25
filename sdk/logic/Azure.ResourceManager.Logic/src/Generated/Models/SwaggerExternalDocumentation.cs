@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The swagger external documentation. </summary>
     public partial class SwaggerExternalDocumentation
     {
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         public SwaggerExternalDocumentation()
         {
             Extensions = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of SwaggerExternalDocumentation. </summary>
+        /// <summary> Initializes a new instance of <see cref="SwaggerExternalDocumentation"/>. </summary>
         /// <param name="description"> The document description. </param>
         /// <param name="uri"> The documentation Uri. </param>
         /// <param name="extensions"> The vendor extensions. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

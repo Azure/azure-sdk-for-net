@@ -1,6 +1,6 @@
 # Release History
 
-## 0.1.0-preview.29 (Unreleased)
+## 0.1.0-preview.33 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,36 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 0.1.0-preview.32 (2024-01-11)
+
+### Features Added
+
+- Added types `PopTokenRequestContext`, `PopTokenAuthenticationPolicy`, and `ISupportsProofOfPossession` to support Proof of Possession tokens.
+
+## 0.1.0-preview.31 (2023-11-10)
+
+### Breaking Changes
+
+- `Variant.As<T>` now allows returning `null` for reference types with no value.
+- If a `Variant` is assigned a value that is a `Variant`, the left-hand `Variant` operand will now store the value that the right-hand `Variant` operand represents instead of storing the value as the `Variant` itself.
+
+## 0.1.0-preview.30 (2023-09-07)
+
+### Breaking Changes
+
+- Changed default location of `cloudmachine.json` passed to `CloudMachine` constructor.
+- Renamed `Azure.Value` to `Azure.Variant`.
+- Added cast operators to/from string to `Variant`.
+- Added `Variant.Null` and `variant.IsNull` APIs to `Variant`.
+- Added `ToString` implementation to `Variant`.
+
+## 0.1.0-preview.29 (2023-08-07)
+
+### Features Added
+
+- Added SchemaValidator and LruCache types for use with Azure.Data.SchemaRegistry preview library.
+- Added CloudMachine and ProvisionableTemplateAttribute types for use with CloudMachine.
 
 ## 0.1.0-preview.28 (2023-07-11)
 

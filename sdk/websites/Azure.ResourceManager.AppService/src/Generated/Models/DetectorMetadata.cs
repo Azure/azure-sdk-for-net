@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> The DetectorMetadata. </summary>
     internal partial class DetectorMetadata
     {
-        /// <summary> Initializes a new instance of DetectorMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorMetadata"/>. </summary>
         public DetectorMetadata()
         {
         }
 
-        /// <summary> Initializes a new instance of DetectorMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="DetectorMetadata"/>. </summary>
         /// <param name="dataSource"> Source of the Data. </param>
         internal DetectorMetadata(DetectorDataSource dataSource)
         {

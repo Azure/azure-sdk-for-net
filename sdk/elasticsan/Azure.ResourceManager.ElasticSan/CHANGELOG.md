@@ -1,16 +1,45 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.7 (Unreleased)
 
 ### Features Added
 
-- Supported private endpoints for ElasticSan
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.6 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.0.0-beta.5 (2023-10-27)
+
+### Features Added
+
+- Upgraded to API version 2023-01-01
+- Supported snapshot and CMK for ElasticSan
+
+## 1.0.0-beta.4 (2023-07-31)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2021-11-20-preview' to 'package-preview-2022-12'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1af2861030243b06ee35172c95899f4809eedfc7/specification/elasticsan/resource-manager/readme.md
+- Supported private endpoints for ElasticSan
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.32.0 to 1.34.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
 
 ## 1.0.0-beta.3 (2023-05-30)
 

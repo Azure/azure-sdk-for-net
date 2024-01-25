@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> billing information. </summary>
     public partial class BillingInformation
     {
-        /// <summary> Initializes a new instance of BillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInformation"/>. </summary>
         internal BillingInformation()
         {
         }
 
-        /// <summary> Initializes a new instance of BillingInformation. </summary>
+        /// <summary> Initializes a new instance of <see cref="BillingInformation"/>. </summary>
         /// <param name="billingCurrencyTotalPaidAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyProratedAmount"> Pricing information containing the amount and the currency code. </param>
         /// <param name="billingCurrencyRemainingCommitmentAmount"> Pricing information containing the amount and the currency code. </param>

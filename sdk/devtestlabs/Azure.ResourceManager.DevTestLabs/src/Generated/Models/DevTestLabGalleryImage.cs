@@ -15,13 +15,45 @@ namespace Azure.ResourceManager.DevTestLabs.Models
     /// <summary> A gallery image. </summary>
     public partial class DevTestLabGalleryImage : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of DevTestLabGalleryImage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>
         /// <param name="location"> The location. </param>
         public DevTestLabGalleryImage(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of DevTestLabGalleryImage. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +68,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="isEnabled"> Indicates whether this gallery image is enabled. </param>
         /// <param name="planId"> The third party plan that applies to this image. </param>
         /// <param name="isPlanAuthorized"> Indicates if the plan has been authorized for programmatic deployment. </param>
-        internal DevTestLabGalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string author, DateTimeOffset? createdOn, string description, DevTestLabGalleryImageReference imageReference, string icon, bool? isEnabled, string planId, bool? isPlanAuthorized) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DevTestLabGalleryImage(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string author, DateTimeOffset? createdOn, string description, DevTestLabGalleryImageReference imageReference, string icon, bool? isEnabled, string planId, bool? isPlanAuthorized, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Author = author;
             CreatedOn = createdOn;
@@ -46,6 +79,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             IsEnabled = isEnabled;
             PlanId = planId;
             IsPlanAuthorized = isPlanAuthorized;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DevTestLabGalleryImage"/> for deserialization. </summary>
+        internal DevTestLabGalleryImage()
+        {
         }
 
         /// <summary> The author of the gallery image. </summary>

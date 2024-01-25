@@ -55,7 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -69,7 +72,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("version"u8);
             JsonSerializer.Serialize(writer, Version);
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); writer.WritePropertyName("hostSubscriptionId"u8);
+            JsonSerializer.Serialize(writer, LinkedServiceName);
+            writer.WritePropertyName("hostSubscriptionId"u8);
             JsonSerializer.Serialize(writer, HostSubscriptionId);
             if (Optional.IsDefined(ServicePrincipalId))
             {
@@ -141,7 +145,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CoreConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CoreConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(CoreConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(HBaseConfiguration))
@@ -150,7 +157,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HBaseConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(HBaseConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(HBaseConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(HdfsConfiguration))
@@ -159,7 +169,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HdfsConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(HdfsConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(HdfsConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(HiveConfiguration))
@@ -168,7 +181,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HiveConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(HiveConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(HiveConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(MapReduceConfiguration))
@@ -177,7 +193,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MapReduceConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(MapReduceConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(MapReduceConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(OozieConfiguration))
@@ -186,7 +205,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(OozieConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(OozieConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(OozieConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(StormConfiguration))
@@ -195,7 +217,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(StormConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(StormConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(StormConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(YarnConfiguration))
@@ -204,17 +229,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(YarnConfiguration);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(YarnConfiguration.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(YarnConfiguration))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(EncryptedCredential);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(EncryptedCredential.ToString()).RootElement);
-#endif
+                writer.WriteStringValue(EncryptedCredential);
             }
             if (Optional.IsDefined(HeadNodeSize))
             {
@@ -222,7 +246,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HeadNodeSize);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(HeadNodeSize.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(HeadNodeSize))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(DataNodeSize))
@@ -231,7 +258,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataNodeSize);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(DataNodeSize.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(DataNodeSize))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsDefined(ZookeeperNodeSize))
@@ -240,7 +270,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ZookeeperNodeSize);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(ZookeeperNodeSize.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(ZookeeperNodeSize))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(ScriptActions))
@@ -275,7 +308,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -318,11 +354,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<BinaryData> oozieConfiguration = default;
             Optional<BinaryData> stormConfiguration = default;
             Optional<BinaryData> yarnConfiguration = default;
-            Optional<BinaryData> encryptedCredential = default;
+            Optional<string> encryptedCredential = default;
             Optional<BinaryData> headNodeSize = default;
             Optional<BinaryData> dataNodeSize = default;
             Optional<BinaryData> zookeeperNodeSize = default;
-            Optional<IList<ScriptAction>> scriptActions = default;
+            Optional<IList<DataFactoryScriptAction>> scriptActions = default;
             Optional<DataFactoryElement<string>> virtualNetworkId = default;
             Optional<DataFactoryElement<string>> subnetName = default;
             Optional<DataFactoryCredentialReference> credential = default;
@@ -606,11 +642,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            encryptedCredential = BinaryData.FromString(property0.Value.GetRawText());
+                            encryptedCredential = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("headNodeSize"u8))
@@ -646,10 +678,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            List<ScriptAction> array = new List<ScriptAction>();
+                            List<DataFactoryScriptAction> array = new List<DataFactoryScriptAction>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScriptAction.DeserializeScriptAction(item));
+                                array.Add(DataFactoryScriptAction.DeserializeDataFactoryScriptAction(item));
                             }
                             scriptActions = array;
                             continue;

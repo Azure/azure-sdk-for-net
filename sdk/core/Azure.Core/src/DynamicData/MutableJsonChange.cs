@@ -2,38 +2,26 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
+
+#nullable enable
 
 namespace Azure.Core.Json
 {
     internal struct MutableJsonChange
     {
-        private JsonElement? _serializedValue;
-        private readonly JsonSerializerOptions _serializerOptions;
-
         public MutableJsonChange(string path,
             int index,
             object? value,
-            JsonSerializerOptions options,
             MutableJsonChangeKind changeKind,
             string? addedPropertyName)
         {
             Path = path;
             Index = index;
             Value = value;
-            _serializerOptions = options;
             ChangeKind = changeKind;
             AddedPropertyName = addedPropertyName;
-
-            if (value is JsonElement element)
-            {
-                _serializedValue = element;
-            }
-
-            if (value is JsonDocument doc)
-            {
-                _serializedValue = doc.RootElement;
-            }
         }
 
         public string Path { get; }
@@ -46,29 +34,86 @@ namespace Azure.Core.Json
 
         public MutableJsonChangeKind ChangeKind { get; }
 
-        public JsonValueKind ValueKind => GetSerializedValue().ValueKind;
-
-        internal JsonElement GetSerializedValue()
+        public readonly JsonValueKind ValueKind => Value switch
         {
-            if (_serializedValue != null)
+            null => JsonValueKind.Null,
+            bool b => b ? JsonValueKind.True : JsonValueKind.False,
+            string => JsonValueKind.String,
+            DateTime => JsonValueKind.String,
+            DateTimeOffset => JsonValueKind.String,
+            Guid => JsonValueKind.String,
+            byte => JsonValueKind.Number,
+            sbyte => JsonValueKind.Number,
+            short => JsonValueKind.Number,
+            ushort => JsonValueKind.Number,
+            int => JsonValueKind.Number,
+            uint => JsonValueKind.Number,
+            long => JsonValueKind.Number,
+            ulong => JsonValueKind.Number,
+            float => JsonValueKind.Number,
+            double => JsonValueKind.Number,
+            decimal => JsonValueKind.Number,
+            JsonElement e => e.ValueKind,
+            _ => throw new InvalidOperationException($"Unrecognized change type '{Value.GetType()}'.")
+        };
+
+        internal readonly void EnsureString()
+        {
+            if (ValueKind != JsonValueKind.String)
             {
-                return _serializedValue.Value;
+                throw new InvalidOperationException($"Expected a 'String' kind but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly void EnsureNumber()
+        {
+            if (ValueKind != JsonValueKind.Number)
+            {
+                throw new InvalidOperationException($"Expected a 'Number' kind but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly void EnsureArray()
+        {
+            if (ValueKind != JsonValueKind.Array)
+            {
+                throw new InvalidOperationException($"Expected an 'Array' kind but was '{ValueKind}'.");
+            }
+        }
+
+        internal readonly int GetArrayLength()
+        {
+            EnsureArray();
+
+            if (Value is JsonElement e)
+            {
+                return e.GetArrayLength();
             }
 
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(Value, _serializerOptions);
-            _serializedValue = JsonDocument.Parse(bytes).RootElement;
-            return _serializedValue.Value;
+            throw new InvalidOperationException($"Expected an 'Array' kind but was '{ValueKind}'.");
         }
 
         internal bool IsDescendant(string path)
         {
-            if (path.Length > 0)
+            return IsDescendant(path.AsSpan());
+        }
+
+        internal bool IsDescendant(ReadOnlySpan<char> ancestorPath)
+        {
+            return IsDescendant(ancestorPath, Path.AsSpan());
+        }
+
+        internal static bool IsDescendant(ReadOnlySpan<char> ancestorPath, ReadOnlySpan<char> descendantPath)
+        {
+            if (ancestorPath.Length == 0)
             {
-                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
-                path += MutableJsonDocument.ChangeTracker.Delimiter;
+                return descendantPath.Length > 0;
             }
 
-            return Path.StartsWith(path, StringComparison.Ordinal);
+            return descendantPath.Length > ancestorPath.Length &&
+                descendantPath.StartsWith(ancestorPath) &&
+                // Restrict matches (e.g. so we don't think 'a' is a parent of 'abc').
+                descendantPath[ancestorPath.Length] == MutableJsonDocument.ChangeTracker.Delimiter;
         }
 
         internal bool IsDirectDescendant(string path)
@@ -85,9 +130,24 @@ namespace Azure.Core.Json
             return ancestorPathLength == (descendantPathLength - 1);
         }
 
+        internal bool IsLessThan(ReadOnlySpan<char> otherPath)
+        {
+            return Path.AsSpan().SequenceCompareTo(otherPath) < 0;
+        }
+
+        internal bool IsGreaterThan(ReadOnlySpan<char> otherPath)
+        {
+            return Path.AsSpan().SequenceCompareTo(otherPath) > 0;
+        }
+
         internal string AsString()
         {
-            return GetSerializedValue().ToString() ?? "null";
+            if (Value is null)
+            {
+                return "null";
+            }
+
+            return Value.ToString()!;
         }
 
         public override string ToString()

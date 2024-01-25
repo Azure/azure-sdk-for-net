@@ -16,7 +16,7 @@ namespace Azure.Identity
         private string _tenantId;
 
         /// <summary>
-        /// Prevents the <see cref="InteractiveBrowserCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="InteractiveBrowserCredential.GetToken"/> and <see cref="InteractiveBrowserCredential.GetTokenAsync"/> in the case that
+        /// Prevents the <see cref="InteractiveBrowserCredential"/> from automatically prompting the user. If automatic authentication is disabled a AuthenticationRequiredException will be thrown from <see cref="InteractiveBrowserCredential.GetToken(Core.TokenRequestContext, CancellationToken)"/> and <see cref="InteractiveBrowserCredential.GetTokenAsync(Core.TokenRequestContext, CancellationToken)"/> in the case that
         /// user interaction is necessary. The application is responsible for handling this exception, and calling <see cref="InteractiveBrowserCredential.Authenticate(CancellationToken)"/> or <see cref="InteractiveBrowserCredential.AuthenticateAsync(CancellationToken)"/> to authenticate the user interactively.
         /// </summary>
         public bool DisableAutomaticAuthentication { get; set; }
@@ -69,6 +69,6 @@ namespace Azure.Identity
         /// <summary>
         /// The options for customizing the browser for interactive authentication.
         /// </summary>
-        public BrowserCustomizationOptions BrowserCustomizedOptions { get; set; }
+        public BrowserCustomizationOptions BrowserCustomization { get; set; }
     }
 }

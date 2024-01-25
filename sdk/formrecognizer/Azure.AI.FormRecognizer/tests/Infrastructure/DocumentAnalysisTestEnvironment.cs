@@ -4,6 +4,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
@@ -72,6 +73,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         /// A Blob Container SAS URL used to build document classifiers in live tests.
         /// </summary>
         public string ClassifierTrainingSasUrl => GetRecordedVariable("CLASSIFIER_BLOB_CONTAINER_SAS_URL", options => options.IsSecret(SanitizedSasUrl));
+
+        protected override async ValueTask<bool> IsEnvironmentReadyAsync()
+        {
+            var endpoint = new Uri(Endpoint);
+            var keyCredential = new AzureKeyCredential(ApiKey);
+            var keyCredentialClient = new DocumentModelAdministrationClient(endpoint, keyCredential);
+            var tokenCredentialClient = new DocumentModelAdministrationClient(endpoint, Credential);
+
+            try
+            {
+                await keyCredentialClient.GetResourceDetailsAsync();
+                await tokenCredentialClient.GetResourceDetailsAsync();
+            }
+            catch (RequestFailedException e) when (e.Status == 401)
+            {
+                return false;
+            }
+
+            return true;
+        }
 
         /// <summary>
         /// Creates an absolute path to a file contained in the local test assets folder.

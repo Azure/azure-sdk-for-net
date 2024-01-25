@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The Edifact agreement validation settings. </summary>
     public partial class EdifactValidationSettings
     {
-        /// <summary> Initializes a new instance of EdifactValidationSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="EdifactValidationSettings"/>. </summary>
         /// <param name="validateCharacterSet"> The value indicating whether to validate character set in the message. </param>
         /// <param name="checkDuplicateInterchangeControlNumber"> The value indicating whether to check for duplicate interchange control number. </param>
         /// <param name="interchangeControlNumberValidityDays"> The validity period of interchange control number. </param>

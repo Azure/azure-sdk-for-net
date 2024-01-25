@@ -55,20 +55,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             if (activityTagsProcessor.AzureNamespace != null)
             {
-                if (activity.Kind == ActivityKind.Internal)
-                {
-                    Type = $"InProc | {activityTagsProcessor.AzureNamespace}";
-                }
-                else if (activity.Kind == ActivityKind.Producer)
-                {
-                    Type = $"Queue Message | {activityTagsProcessor.AzureNamespace}";
-                }
-                else
-                {
-                    // The Azure SDK sets az.namespace with its resource provider information.
-                    // When ActivityKind is not internal and az.namespace is present, set the value of Type to az.namespace.
-                    Type = activityTagsProcessor.AzureNamespace ?? Type;
-                }
+                Type = TraceHelper.GetAzureSDKDependencyType(activity.Kind, activityTagsProcessor.AzureNamespace);
             }
             else if (activity.Kind == ActivityKind.Internal)
             {

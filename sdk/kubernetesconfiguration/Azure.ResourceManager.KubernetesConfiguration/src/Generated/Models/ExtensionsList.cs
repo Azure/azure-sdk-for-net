@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
     /// <summary> Result of the request to list Extensions.  It contains a list of Extension objects and a URL link to get the next set of results. </summary>
     internal partial class ExtensionsList
     {
-        /// <summary> Initializes a new instance of ExtensionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionsList"/>. </summary>
         internal ExtensionsList()
         {
             Value = new ChangeTrackingList<KubernetesClusterExtensionData>();
         }
 
-        /// <summary> Initializes a new instance of ExtensionsList. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExtensionsList"/>. </summary>
         /// <param name="value"> List of Extensions within a Kubernetes cluster. </param>
         /// <param name="nextLink"> URL to get the next set of extension objects, if any. </param>
         internal ExtensionsList(IReadOnlyList<KubernetesClusterExtensionData> value, string nextLink)

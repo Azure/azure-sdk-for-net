@@ -13,7 +13,7 @@ namespace Azure.Communication
     /// <summary> The PhoneNumberIdentifierModel. </summary>
     internal partial class PhoneNumberIdentifierModel
     {
-        /// <summary> Initializes a new instance of PhoneNumberIdentifierModel. </summary>
+        /// <summary> Initializes a new instance of <see cref="PhoneNumberIdentifierModel"/>. </summary>
         /// <param name="value"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public PhoneNumberIdentifierModel(string value)

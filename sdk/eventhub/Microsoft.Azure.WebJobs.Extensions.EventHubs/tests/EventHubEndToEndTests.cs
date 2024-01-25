@@ -12,6 +12,7 @@ using Azure.Core.TestFramework;
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Azure.Messaging.EventHubs.Tests;
 using Microsoft.Azure.WebJobs.EventHubs;
@@ -31,7 +32,8 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
     {
         private static readonly TimeSpan NoEventReadTimeout = TimeSpan.FromSeconds(5);
 
-        private static EventWaitHandle _eventWait;
+        private static EventWaitHandle _eventWait1;
+        private static EventWaitHandle _eventWait2;
         private static List<string> _results;
         private static DateTimeOffset _initialOffsetEnqueuedTimeUTC;
 
@@ -39,13 +41,15 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         public void SetUp()
         {
             _results = new List<string>();
-            _eventWait = new ManualResetEvent(initialState: false);
+            _eventWait1 = new ManualResetEvent(initialState: false);
+            _eventWait2 = new ManualResetEvent(initialState: false);
         }
 
         [TearDown]
         public void TearDown()
         {
-            _eventWait.Dispose();
+            _eventWait1.Dispose();
+            _eventWait2.Dispose();
         }
 
         [Test]
@@ -56,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestBindToPocoJobs.SendEvent_TestHub));
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
             }
 
@@ -75,7 +79,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestBindToStringJobs.SendEvent_TestHub), new { input = "data" });
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
 
                 var logs = host.GetTestLoggerProvider().GetAllLogMessages().Select(p => p.FormattedMessage);
@@ -94,11 +98,37 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobs.SendEvent_TestHub), new { input = "data" });
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertSingleDispatchLogs(host);
+        }
+
+        [Test]
+        public async Task EventHub_SingleDispatch_Dispose()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (jobHost, _) = BuildHost<EventHubTestSingleDispatchJobs_Dispose>(ConfigureTestEventHub);
+
+            Assert.True(_eventWait1.WaitOne(Timeout));
+            jobHost.Dispose();
+            Assert.True(_eventWait2.WaitOne(Timeout));
+        }
+
+        [Test]
+        public async Task EventHub_SingleDispatch_StopWithoutDrain()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (jobHost, _) = BuildHost<EventHubTestSingleDispatchJobs_Dispose>(ConfigureTestEventHub);
+
+            Assert.True(_eventWait1.WaitOne(Timeout));
+            await jobHost.StopAsync();
+            Assert.True(_eventWait2.WaitOne(Timeout));
         }
 
         [Test]
@@ -120,7 +150,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestSingleDispatchWithConsumerGroupJobs.SendEvent_TestHub));
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
             }
         }
@@ -133,8 +163,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobsBinaryData.SendEvent_TestHub), new { input = "data" });
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertSingleDispatchLogs(host);
@@ -148,7 +180,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestClientDispatch.SendEvents));
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
             }
         }
@@ -161,7 +193,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestCollectorDispatch.SendEvents));
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
             }
         }
@@ -174,7 +206,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestCollectorDispatch.SendEventsWithKey));
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
             }
         }
@@ -292,7 +324,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 await jobHost.CallAsync(nameof(EventHubTestSingleDispatchJobWithConnection.SendEvent_TestHub), new { input = "data" });
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
             }
         }
@@ -306,8 +338,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int numEvents = 5;
                 await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobs.SendEvents_TestHub), new { numEvents = numEvents, input = "data" });
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogs(host);
@@ -322,8 +356,10 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int numEvents = 5;
                 await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchJobsBinaryData.SendEvents_TestHub), new { numEvents = numEvents, input = "data" });
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogs(host);
@@ -357,11 +393,169 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 int numEvents = 5;
                 await jobHost.CallAsync(nameof(EventHubTestMultipleDispatchMinBatchSizeJobs.SendEvents_TestHub), new { numEvents = numEvents, input = "data" });
 
-                bool result = _eventWait.WaitOne(Timeout);
+                bool result = _eventWait1.WaitOne(Timeout);
                 Assert.True(result);
+
+                await StopWithDrainAsync(host);
             }
 
             AssertMultipleDispatchLogsMinBatch(host);
+        }
+
+        [Test]
+        public async Task EventHub_MultipleDispatch_Dispose()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (jobHost, _) = BuildHost<EventHubTestMultipleDispatchJobs_Dispose>();
+
+            Assert.True(_eventWait1.WaitOne(Timeout));
+            jobHost.Dispose();
+            Assert.True(_eventWait2.WaitOne(Timeout));
+        }
+
+        [Test]
+        public async Task EventHub_MultipleDispatch_StopWithoutDrain()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+            var (jobHost, _) = BuildHost<EventHubTestMultipleDispatchJobs_Dispose>();
+
+            Assert.True(_eventWait1.WaitOne(Timeout));
+            await jobHost.StopAsync();
+            Assert.True(_eventWait2.WaitOne(Timeout));
+        }
+
+        [Test]
+        public async Task EventHub_PartitionKey()
+        {
+            var (jobHost, host) = BuildHost<EventHubPartitionKeyTestJobs>();
+            using (jobHost)
+            {
+                await jobHost.CallAsync(nameof(EventHubPartitionKeyTestJobs.SendEvents_TestHub), new { input = "data" });
+                bool result = _eventWait1.WaitOne(Timeout);
+
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task EventHub_InitialOffsetFromStart()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+
+            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
+                builder =>
+                {
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions.Type = OffsetType.FromStart;
+                        });
+                    });
+                    ConfigureTestEventHub(builder);
+                });
+            using (jobHost)
+            {
+                bool result = _eventWait1.WaitOne(Timeout);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task EventHub_InitialOffsetFromEnd()
+        {
+            // Send a message to ensure the stream is not empty as we are trying to validate that no messages are delivered in this case
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+
+            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
+                builder =>
+                {
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions.Type = OffsetType.FromEnd;
+                        });
+                    });
+                    ConfigureTestEventHub(builder);
+                });
+            using (jobHost)
+            {
+                // We don't expect to get signaled as there should be no messages received with a FromEnd initial offset
+                bool result = _eventWait1.WaitOne(NoEventReadTimeout);
+                Assert.False(result, "An event was received while none were expected.");
+
+                // send events which should be received.  To ensure that the test is
+                // resilient to any errors where the link needs to be reestablished,
+                // continue sending events until cancellation takes place.
+
+                using var cts = new CancellationTokenSource();
+
+                var sendTask = Task.Run(async () =>
+                {
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await producer.SendAsync(new[] { new EventData("data") }, cts.Token).ConfigureAwait(false);
+                    }
+                });
+
+                result = _eventWait1.WaitOne(Timeout);
+
+                cts.Cancel();
+                try { await sendTask; } catch { /* Ignore, we're not testing sends */ }
+
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task EventHub_InitialOffsetFromEnqueuedTime()
+        {
+            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
+
+            for (int i = 0; i < 5; i++)
+            {
+                // send one at a time so they will have slightly different enqueued times
+                await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
+                await Task.Delay(1000);
+            }
+            await using var consumer = new EventHubConsumerClient(
+                EventHubConsumerClient.DefaultConsumerGroupName,
+                EventHubsTestEnvironment.Instance.EventHubsConnectionString,
+                _eventHubScope.EventHubName);
+
+            await foreach (PartitionEvent evt in consumer.ReadEventsAsync())
+            {
+                // use the timestamp from the first event for our FromEnqueuedTime
+                _initialOffsetEnqueuedTimeUTC = evt.Data.EnqueuedTime;
+                break;
+            }
+
+            var initialOffsetOptions = new InitialOffsetOptions();
+            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromEnqueuedTimeJobs>(
+                builder =>
+                {
+                    builder.ConfigureServices(services =>
+                    {
+                        services.Configure<EventHubOptions>(options =>
+                        {
+                            options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
+
+                            // Reads from enqueue time are non-inclusive.  To ensure that we start with the desired event, set the time slightly in the past.
+                            options.InitialOffsetOptions.EnqueuedTimeUtc = _initialOffsetEnqueuedTimeUTC.Subtract(TimeSpan.FromMilliseconds(250));
+                        });
+                    });
+                    ConfigureTestEventHub(builder);
+                });
+            using (jobHost)
+            {
+                bool result = _eventWait1.WaitOne(Timeout);
+                Assert.True(result);
+            }
         }
 
         private static void AssertMultipleDispatchLogsMinBatch(IHost host)
@@ -412,136 +606,12 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             AssertAzureSdkLogs(logMessages);
         }
 
-        [Test]
-        public async Task EventHub_PartitionKey()
+        private static async Task StopWithDrainAsync(IHost host)
         {
-            var (jobHost, host) = BuildHost<EventHubPartitionKeyTestJobs>();
-            using (jobHost)
-            {
-                await jobHost.CallAsync(nameof(EventHubPartitionKeyTestJobs.SendEvents_TestHub), new { input = "data" });
-                bool result = _eventWait.WaitOne(Timeout);
-
-                Assert.True(result);
-            }
-        }
-
-        [Test]
-        public async Task EventHub_InitialOffsetFromStart()
-        {
-            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
-            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
-
-            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
-                builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                        services.Configure<EventHubOptions>(options =>
-                        {
-                            options.InitialOffsetOptions.Type = OffsetType.FromStart;
-                        });
-                    });
-                    ConfigureTestEventHub(builder);
-                });
-            using (jobHost)
-            {
-                bool result = _eventWait.WaitOne(Timeout);
-                Assert.True(result);
-            }
-        }
-
-        [Test]
-        public async Task EventHub_InitialOffsetFromEnd()
-        {
-            // Send a message to ensure the stream is not empty as we are trying to validate that no messages are delivered in this case
-            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
-            await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
-
-            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromStartEndJobs>(
-                builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                        services.Configure<EventHubOptions>(options =>
-                        {
-                            options.InitialOffsetOptions.Type = OffsetType.FromEnd;
-                        });
-                    });
-                    ConfigureTestEventHub(builder);
-                });
-            using (jobHost)
-            {
-                // We don't expect to get signaled as there should be no messages received with a FromEnd initial offset
-                bool result = _eventWait.WaitOne(NoEventReadTimeout);
-                Assert.False(result, "An event was received while none were expected.");
-
-                // send events which should be received.  To ensure that the test is
-                // resilient to any errors where the link needs to be reestablished,
-                // continue sending events until cancellation takes place.
-
-                using var cts = new CancellationTokenSource();
-
-                var sendTask = Task.Run(async () =>
-                {
-                    while (!cts.IsCancellationRequested)
-                    {
-                        await producer.SendAsync(new[] { new EventData("data") }, cts.Token).ConfigureAwait(false);
-                    }
-                });
-
-                result = _eventWait.WaitOne(Timeout);
-
-                cts.Cancel();
-                try { await sendTask; } catch { /* Ignore, we're not testing sends */ }
-
-                Assert.True(result);
-            }
-        }
-
-        [Test]
-        public async Task EventHub_InitialOffsetFromEnqueuedTime()
-        {
-            await using var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, _eventHubScope.EventHubName);
-
-            for (int i = 0; i < 5; i++)
-            {
-                // send one at a time so they will have slightly different enqueued times
-                await producer.SendAsync(new EventData[] { new EventData(new BinaryData("data")) });
-                await Task.Delay(1000);
-            }
-            await using var consumer = new EventHubConsumerClient(
-                EventHubConsumerClient.DefaultConsumerGroupName,
-                EventHubsTestEnvironment.Instance.EventHubsConnectionString,
-                _eventHubScope.EventHubName);
-
-            await foreach (PartitionEvent evt in consumer.ReadEventsAsync())
-            {
-                // use the timestamp from the first event for our FromEnqueuedTime
-                _initialOffsetEnqueuedTimeUTC = evt.Data.EnqueuedTime;
-                break;
-            }
-
-            var initialOffsetOptions = new InitialOffsetOptions();
-            var (jobHost, host) = BuildHost<EventHubTestInitialOffsetFromEnqueuedTimeJobs>(
-                builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                        services.Configure<EventHubOptions>(options =>
-                        {
-                            options.InitialOffsetOptions.Type = OffsetType.FromEnqueuedTime;
-
-                            // Reads from enqueue time are non-inclusive.  To ensure that we start with the desired event, set the time slightly in the past.
-                            options.InitialOffsetOptions.EnqueuedTimeUtc = _initialOffsetEnqueuedTimeUTC.Subtract(TimeSpan.FromMilliseconds(250));
-                        });
-                    });
-                    ConfigureTestEventHub(builder);
-                });
-            using (jobHost)
-            {
-                bool result = _eventWait.WaitOne(Timeout);
-                Assert.True(result);
-            }
+            // Enable drain mode so checkpointing occurs when stopping
+            var drainModeManager = host.Services.GetService<IDrainModeManager>();
+            await drainModeManager.EnableDrainModeAsync(CancellationToken.None);
+            await host.StopAsync();
         }
 
         private static void AssertAzureSdkLogs(IEnumerable<LogMessage> logMessages)
@@ -574,7 +644,35 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreNotEqual(default(LastEnqueuedEventProperties), triggerPartitionContext.ReadLastEnqueuedEventProperties());
                 Assert.True(triggerPartitionContext.IsCheckpointingAfterInvocation);
 
-                _eventWait.Set();
+                _eventWait1.Set();
+            }
+        }
+
+        public class EventHubTestSingleDispatchJobs_Dispose
+        {
+            public static async Task SendEvent_TestHub([EventHubTrigger(TestHubName, Connection = TestHubName)] string evt, CancellationToken cancellationToken)
+            {
+                _eventWait1.Set();
+                // wait for the host to call dispose
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    await Task.Delay(100, CancellationToken.None);
+                }
+                _eventWait2.Set();
+            }
+        }
+
+        public class EventHubTestMultipleDispatchJobs_Dispose
+        {
+            public static async Task SendEvent_TestHub([EventHubTrigger(TestHubName, Connection = TestHubName)] string[] evt, CancellationToken cancellationToken)
+            {
+                _eventWait1.Set();
+                // wait for the host to call dispose
+                while (!cancellationToken.IsCancellationRequested)
+                {
+                    await Task.Delay(1000, CancellationToken.None);
+                }
+                _eventWait2.Set();
             }
         }
 
@@ -605,7 +703,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     Assert.AreEqual(eventData.PartitionKey, s_partitionKey);
                 }
 
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
 
@@ -622,7 +720,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void ProcessSingleEvent([EventHubTrigger(TestHubName, Connection = TestHubName)] EventData eventData)
             {
                 Assert.AreEqual(eventData.EventBody.ToString(), "Event 1");
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
 
@@ -637,7 +735,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             {
                 Assert.AreEqual(evt, nameof(EventHubTestSingleDispatchWithConsumerGroupJobs));
 
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
 
@@ -653,7 +751,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        IDictionary<string, object> systemProperties)
             {
                 Assert.AreEqual("data", evt.ToString());
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
 
@@ -669,7 +767,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual(input.Value, "data");
                 Assert.AreEqual(input.Name, "foo");
                 logger.LogInformation($"PocoValues(foo,data)");
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
 
@@ -683,7 +781,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             public static void BindToString([EventHubTrigger(TestHubName, Connection = TestHubName)] string input, ILogger logger)
             {
                 logger.LogInformation($"Input({input})");
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
 
@@ -729,7 +827,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 if (s_processedEventCount == s_eventCount)
                 {
                     _results.AddRange(events);
-                    _eventWait.Set();
+                    _eventWait1.Set();
                 }
             }
         }
@@ -762,7 +860,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 // filter for the ID the current test is using
                 if (s_processedEventCount == s_eventCount)
                 {
-                    _eventWait.Set();
+                    _eventWait1.Set();
                 }
             }
         }
@@ -774,23 +872,23 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
             internal static async Task InitializeCheckpoints(EventHubClientFactory factory)
             {
-                    var producer = factory.GetEventHubProducerClient(TestHubName, TestHubName);
-                    var blobClient = factory.GetCheckpointStoreClient();
-                    var checkpointStore = new BlobCheckpointStoreInternal(blobClient);
+                var producer = factory.GetEventHubProducerClient(TestHubName, TestHubName);
+                var blobClient = factory.GetCheckpointStoreClient();
+                var checkpointStore = new BlobCheckpointStoreInternal(blobClient);
 
-                    await blobClient.CreateIfNotExistsAsync();
+                await blobClient.CreateIfNotExistsAsync();
 
-                    foreach (var partition in await producer.GetPartitionIdsAsync())
-                    {
-                        await checkpointStore.UpdateCheckpointAsync(
-                            producer.FullyQualifiedNamespace,
-                            producer.EventHubName,
-                            EventHubConsumerClient.DefaultConsumerGroupName,
-                            partition,
-                            -1,
-                            -1,
-                            CancellationToken.None);
-                    }
+                foreach (var partition in await producer.GetPartitionIdsAsync())
+                {
+                    await checkpointStore.UpdateCheckpointAsync(
+                        producer.FullyQualifiedNamespace,
+                        producer.EventHubName,
+                        EventHubConsumerClient.DefaultConsumerGroupName,
+                        partition,
+                        producer.Identifier,
+                        new CheckpointPosition(-1, -1),
+                        CancellationToken.None);
+                }
             }
 
             public static async Task SendEvents_TestHub(int numEvents, string input, [EventHub(TestHubName, Connection = TestHubName)] EventHubProducerClient client)
@@ -827,7 +925,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 if (s_processedEventCount >= s_eventCount)
                 {
-                    _eventWait.Set();
+                    _eventWait1.Set();
                 }
             }
         }
@@ -875,7 +973,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 
                 if (_results.Count > 0)
                 {
-                   _eventWait.Set();
+                   _eventWait1.Set();
                 }
             }
         }
@@ -894,7 +992,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                 Assert.AreEqual("value1", properties["TestProp1"]);
                 Assert.AreEqual("value2", properties["TestProp2"]);
 
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
         public class TestPoco
@@ -909,7 +1007,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                        string partitionKey, DateTime enqueuedTimeUtc, IDictionary<string, object> properties,
                        IDictionary<string, object> systemProperties)
             {
-                _eventWait.Set();
+                _eventWait1.Set();
             }
         }
 
@@ -934,7 +1032,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         {
                             Assert.GreaterOrEqual(DateTimeOffset.Parse(result), earliestAllowedOffset);
                         }
-                        _eventWait.Set();
+                        _eventWait1.Set();
                     }
                 }
             }

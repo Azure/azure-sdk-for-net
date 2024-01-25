@@ -11,26 +11,26 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of IpExtendedCommunities. </summary>
+    /// <summary> List of IP Extended Communities. </summary>
     internal partial class IPExtendedCommunityListResult
     {
-        /// <summary> Initializes a new instance of IPExtendedCommunityListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityListResult"/>. </summary>
         internal IPExtendedCommunityListResult()
         {
-            Value = new ChangeTrackingList<IPExtendedCommunityData>();
+            Value = new ChangeTrackingList<NetworkFabricIPExtendedCommunityData>();
         }
 
-        /// <summary> Initializes a new instance of IPExtendedCommunityListResult. </summary>
-        /// <param name="value"> List of IpExtendedCommunities resources. </param>
+        /// <summary> Initializes a new instance of <see cref="IPExtendedCommunityListResult"/>. </summary>
+        /// <param name="value"> List of IP Extended Communities resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal IPExtendedCommunityListResult(IReadOnlyList<IPExtendedCommunityData> value, string nextLink)
+        internal IPExtendedCommunityListResult(IReadOnlyList<NetworkFabricIPExtendedCommunityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of IpExtendedCommunities resources. </summary>
-        public IReadOnlyList<IPExtendedCommunityData> Value { get; }
+        /// <summary> List of IP Extended Communities resources. </summary>
+        public IReadOnlyList<NetworkFabricIPExtendedCommunityData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

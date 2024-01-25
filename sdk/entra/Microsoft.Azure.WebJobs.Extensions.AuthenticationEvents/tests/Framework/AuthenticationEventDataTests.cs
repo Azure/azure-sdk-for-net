@@ -1,7 +1,10 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.using System;
+
+using System;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
 using Newtonsoft.Json.Linq;
-using System;
 using NUnit.Framework;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framework
@@ -33,15 +36,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Framewor
 
             if (hasTenantIdKey)
             {
-                dataObj["tenantId"] = hasTenantIdValue ? TenantId : "";
+                dataObj["tenantId"] = hasTenantIdValue ? TenantId : string.Empty;
             }
             if (hasAuthenticationEventListenerIdKey)
             {
-                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : "";
+                dataObj["authenticationEventListenerId"] = hasAuthenticationEventListenerIdValue ? AuthenticationEventListenerId : string.Empty;
             }
             if (hasCustomAuthenticationExtensionIdKey)
             {
-                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : "";
+                dataObj["customAuthenticationExtensionId"] = hasCustomAuthenticationExtensionIdValue ? CustomAuthenticationExtensionId : string.Empty;
             }
 
             return obj.ToString();

@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereCatalogResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereCatalogResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereCatalogResource>> GetAsync(string catalogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereCatalogResource> GetIfExists(string catalogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereCatalogResource>> GetIfExistsAsync(string catalogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sphere.SphereCatalogResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereCatalogResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sphere.SphereCatalogResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereCatalogResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class SphereCatalogData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public SphereCatalogData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SphereCatalogData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Sphere.Models.SphereProvisioningState? ProvisioningState { get { throw null; } }
     }
     public partial class SphereCatalogResource : Azure.ResourceManager.ArmResource
@@ -68,6 +70,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereCertificateResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereCertificateResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereCertificateResource>> GetAsync(string serialNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereCertificateResource> GetIfExists(string serialNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereCertificateResource>> GetIfExistsAsync(string serialNumber, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sphere.SphereCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sphere.SphereCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereCertificateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -108,6 +112,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereDeploymentResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereDeploymentResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereDeploymentResource>> GetAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereDeploymentResource> GetIfExists(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereDeploymentResource>> GetIfExistsAsync(string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sphere.SphereDeploymentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereDeploymentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sphere.SphereDeploymentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereDeploymentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -145,6 +151,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereDeviceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereDeviceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereDeviceResource>> GetAsync(string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereDeviceResource> GetIfExists(string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereDeviceResource>> GetIfExistsAsync(string deviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sphere.SphereDeviceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereDeviceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sphere.SphereDeviceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereDeviceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -171,6 +179,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereDeviceGroupResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereDeviceGroupResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereDeviceGroupResource>> GetAsync(string deviceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereDeviceGroupResource> GetIfExists(string deviceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereDeviceGroupResource>> GetIfExistsAsync(string deviceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sphere.SphereDeviceGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereDeviceGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sphere.SphereDeviceGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereDeviceGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -252,6 +262,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereImageResource> GetAll(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereImageResource> GetAllAsync(string filter = null, int? top = default(int?), int? skip = default(int?), int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereImageResource>> GetAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereImageResource> GetIfExists(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereImageResource>> GetIfExistsAsync(string imageName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sphere.SphereImageResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereImageResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sphere.SphereImageResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereImageResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -294,6 +306,8 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereProductResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereProductResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereProductResource>> GetAsync(string productName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereProductResource> GetIfExists(string productName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Sphere.SphereProductResource>> GetIfExistsAsync(string productName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Sphere.SphereProductResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Sphere.SphereProductResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Sphere.SphereProductResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Sphere.SphereProductResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -324,6 +338,33 @@ namespace Azure.ResourceManager.Sphere
         public virtual Azure.ResourceManager.Sphere.SphereDeviceGroupCollection GetSphereDeviceGroups() { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sphere.SphereProductResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sphere.Models.SphereProductPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.Sphere.SphereProductResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.Sphere.Models.SphereProductPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Sphere.Mocking
+{
+    public partial class MockableSphereArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSphereArmClient() { }
+        public virtual Azure.ResourceManager.Sphere.SphereCatalogResource GetSphereCatalogResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereCertificateResource GetSphereCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereDeploymentResource GetSphereDeploymentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereDeviceGroupResource GetSphereDeviceGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereDeviceResource GetSphereDeviceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereImageResource GetSphereImageResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereProductResource GetSphereProductResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableSphereResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSphereResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Sphere.SphereCatalogResource> GetSphereCatalog(string catalogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Sphere.SphereCatalogResource>> GetSphereCatalogAsync(string catalogName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Sphere.SphereCatalogCollection GetSphereCatalogs() { throw null; }
+    }
+    public partial class MockableSphereSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSphereSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Sphere.SphereCatalogResource> GetSphereCatalogs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Sphere.SphereCatalogResource> GetSphereCatalogsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Sphere.Models

@@ -2,10 +2,11 @@
   <PropertyGroup>
     <Description>This is the Microsoft Azure Cognitive Services Form Recognizer client library</Description>
     <AssemblyTitle>Microsoft Azure.AI.FormRecognizer client library</AssemblyTitle>
-    <Version>4.1.0-beta.2</Version>
+    <Version>4.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>4.0.0</ApiCompatVersion>
-    <PackageTags>Microsoft Azure Form Recognizer</PackageTags>
+    <ApiCompatVersion>4.1.0</ApiCompatVersion>
+    <PackageTags>Microsoft Azure Form Recognizer Document Intelligence Cognitive Services Applied AI</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>

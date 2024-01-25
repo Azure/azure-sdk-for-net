@@ -18,19 +18,20 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public AgentPoolTests (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task AgentPool()
         {
             string agentPoolName = Recording.GenerateAssetName("systemPool");
-            ResourceIdentifier agentPoolId = AgentPoolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.KubernetesClusterRG, TestEnvironment.KubernetesClusterName, agentPoolName);
-            AgentPoolResource agentPool = Client.GetAgentPoolResource(agentPoolId);
+            ResourceIdentifier agentPoolId = NetworkCloudAgentPoolResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.KubernetesClusterRG, TestEnvironment.KubernetesClusterName, agentPoolName);
+            NetworkCloudAgentPoolResource agentPool = Client.GetNetworkCloudAgentPoolResource(agentPoolId);
 
-            KubernetesClusterResource kubernetesCluster = Client.GetKubernetesClusterResource(TestEnvironment.KubernetesClusterId);
+            NetworkCloudKubernetesClusterResource kubernetesCluster = Client.GetNetworkCloudKubernetesClusterResource(TestEnvironment.KubernetesClusterId);
             kubernetesCluster = await kubernetesCluster.GetAsync();
-            AgentPoolCollection collection = kubernetesCluster.GetAgentPools();
+            NetworkCloudAgentPoolCollection collection = kubernetesCluster.GetNetworkCloudAgentPools();
 
             // Create
-            AgentPoolData data = new AgentPoolData
-            (TestEnvironment.Location, 1, AgentPoolMode.System, TestEnvironment.VMImage)
+            NetworkCloudAgentPoolData data = new NetworkCloudAgentPoolData
+            (TestEnvironment.Location, 1, NetworkCloudAgentPoolMode.System, TestEnvironment.VMImage)
             {
                 ExtendedLocation = kubernetesCluster.Data.ExtendedLocation,
                 AdministratorConfiguration = new AdministratorConfiguration()
@@ -38,10 +39,10 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     AdminUsername = "azure",
                     SshPublicKeys =
                     {
-                    new SshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key")
+                    new NetworkCloudSshPublicKey("ssh-rsa AAtsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsSXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= fake-public-key")
                     },
                 },
-                AgentOptions = new AgentOptions(12)
+                AgentOptions = new NetworkCloudAgentConfiguration(12)
                 {
                     HugepagesSize = HugepagesSize.TwoM,
                 },
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 {
                     L3Networks =
                     {
-                        new L3NetworkAttachmentConfiguration(TestEnvironment.L3NAttachmentId)
+                        new L3NetworkAttachmentConfiguration(new ResourceIdentifier(TestEnvironment.L3NAttachmentId))
                         {
                             IpamEnabled = L3NetworkConfigurationIpamEnabled.False,
                             PluginType = KubernetesPluginType.Sriov,
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             };
 
             // Create
-            ArmOperation<AgentPoolResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
+            ArmOperation<NetworkCloudAgentPoolResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, agentPoolName, data);
             Assert.AreEqual(agentPoolName, createResult.Value.Data.Name);
 
             // Get
@@ -73,15 +74,15 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(agentPoolName, getResult.Value.Data.Name);
 
             // List
-            var listByKubernetesCluster = new List<AgentPoolResource>();
-            await foreach (AgentPoolResource item in collection.GetAllAsync())
+            var listByKubernetesCluster = new List<NetworkCloudAgentPoolResource>();
+            await foreach (NetworkCloudAgentPoolResource item in collection.GetAllAsync())
             {
                 listByKubernetesCluster.Add(item);
             }
             Assert.IsNotEmpty(listByKubernetesCluster);
 
             // Update
-            AgentPoolPatch patch = new AgentPoolPatch()
+            NetworkCloudAgentPoolPatch patch = new NetworkCloudAgentPoolPatch()
             {
                 Tags =
                 {
@@ -89,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "newvalue2",
                 }
             };
-            ArmOperation<AgentPoolResource> updateResult = await agentPool.UpdateAsync(WaitUntil.Completed, patch);
+            ArmOperation<NetworkCloudAgentPoolResource> updateResult = await agentPool.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete

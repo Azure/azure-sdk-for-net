@@ -18,15 +18,16 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public RacksTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task Racks()
         {
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ClusterManagedRG);
             ResourceGroupResource clusterRGResource = Client.GetResourceGroupResource(resourceGroupResourceId);
-            RackCollection collection = clusterRGResource.GetRacks();
+            NetworkCloudRackCollection collection = clusterRGResource.GetNetworkCloudRacks();
             string rackName = "rackName";
 
             // List by Resource Group
-            var listByResourceGroup = new List<RackResource>();
+            var listByResourceGroup = new List<NetworkCloudRackResource>();
             await foreach (var item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
@@ -34,8 +35,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<RackResource>();
-            await foreach (var item in SubscriptionResource.GetRacksAsync())
+            var listBySubscription = new List<NetworkCloudRackResource>();
+            await foreach (var item in SubscriptionResource.GetNetworkCloudRacksAsync())
             {
                 listBySubscription.Add(item);
             }
@@ -50,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             var originalTags = firstRack.Tags;
             var testKey = "test-key";
             var testValue = "test-value";
-            RackPatch patch = new RackPatch()
+            NetworkCloudRackPatch patch = new NetworkCloudRackPatch()
             {
                 Tags = {},
             };
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             }
             patch.Tags.Add(testKey, testValue);
 
-            RackResource rack = Client.GetRackResource(firstRack.Id);
+            NetworkCloudRackResource rack = Client.GetNetworkCloudRackResource(firstRack.Id);
             var updateResult = await rack.UpdateAsync(WaitUntil.Completed, patch);
             Assert.AreEqual(testValue, updateResult.Value.Data.Tags[testKey]);
 

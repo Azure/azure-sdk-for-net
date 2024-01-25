@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> Identity for the resource. </summary>
     public partial class ArmApplicationManagedIdentity
     {
-        /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagedIdentity"/>. </summary>
         public ArmApplicationManagedIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, ArmApplicationUserAssignedIdentity>();
         }
 
-        /// <summary> Initializes a new instance of ArmApplicationManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationManagedIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID of resource identity. </param>
         /// <param name="tenantId"> The tenant ID of resource. </param>
         /// <param name="identityType"> The identity type. </param>

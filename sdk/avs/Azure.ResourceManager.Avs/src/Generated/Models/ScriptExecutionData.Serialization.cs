@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs
 {
-    public partial class ScriptExecutionData : IUtf8JsonSerializable
+    public partial class ScriptExecutionData : IUtf8JsonSerializable, IJsonModel<ScriptExecutionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScriptExecutionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScriptExecutionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ScriptCmdletId))
@@ -61,6 +90,26 @@ namespace Azure.ResourceManager.Avs
                 writer.WritePropertyName("retention"u8);
                 writer.WriteStringValue(Retention);
             }
+            if (options.Format != "W" && Optional.IsDefined(SubmittedOn))
+            {
+                writer.WritePropertyName("submittedAt"u8);
+                writer.WriteStringValue(SubmittedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            {
+                writer.WritePropertyName("startedAt"u8);
+                writer.WriteStringValue(StartedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(FinishedOn))
+            {
+                writer.WritePropertyName("finishedAt"u8);
+                writer.WriteStringValue(FinishedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
@@ -77,15 +126,77 @@ namespace Azure.ResourceManager.Avs
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(NamedOutputs);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(NamedOutputs.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(NamedOutputs))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Information))
+            {
+                writer.WritePropertyName("information"u8);
+                writer.WriteStartArray();
+                foreach (var item in Information)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Warnings))
+            {
+                writer.WritePropertyName("warnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in Warnings)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScriptExecutionData DeserializeScriptExecutionData(JsonElement element)
+        ScriptExecutionData IJsonModel<ScriptExecutionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScriptExecutionData(document.RootElement, options);
+        }
+
+        internal static ScriptExecutionData DeserializeScriptExecutionData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -109,6 +220,8 @@ namespace Azure.ResourceManager.Avs
             Optional<IReadOnlyList<string>> information = default;
             Optional<IReadOnlyList<string>> warnings = default;
             Optional<IReadOnlyList<string>> errors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -300,8 +413,44 @@ namespace Azure.ResourceManager.Avs
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), namedOutputs.Value, Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ScriptExecutionData(id, name, type, systemData.Value, scriptCmdletId.Value, Optional.ToList(parameters), Optional.ToList(hiddenParameters), failureReason.Value, timeout.Value, retention.Value, Optional.ToNullable(submittedAt), Optional.ToNullable(startedAt), Optional.ToNullable(finishedAt), Optional.ToNullable(provisioningState), Optional.ToList(output), namedOutputs.Value, Optional.ToList(information), Optional.ToList(warnings), Optional.ToList(errors), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScriptExecutionData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScriptExecutionData IPersistableModel<ScriptExecutionData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptExecutionData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScriptExecutionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScriptExecutionData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScriptExecutionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

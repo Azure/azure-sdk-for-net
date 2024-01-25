@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownBackupCriteria. </summary>
     internal partial class UnknownBackupCriteria : DataProtectionBackupCriteria
     {
-        /// <summary> Initializes a new instance of UnknownBackupCriteria. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal UnknownBackupCriteria(string objectType) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownBackupCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownBackupCriteria"/> for deserialization. </summary>
+        internal UnknownBackupCriteria()
+        {
         }
     }
 }

@@ -10,30 +10,34 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The DialogStateResponse. </summary>
     internal partial class DialogStateResponseInternal
     {
-        /// <summary> Initializes a new instance of DialogStateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogStateResponseInternal"/>. </summary>
         internal DialogStateResponseInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of DialogStateResponseInternal. </summary>
+        /// <summary> Initializes a new instance of <see cref="DialogStateResponseInternal"/>. </summary>
         /// <param name="dialogId"> The dialog ID. </param>
-        /// <param name="dialogOptions"> Defines options for dialog. </param>
-        /// <param name="dialogInputType"> Determines the type of the dialog. </param>
+        /// <param name="dialog">
+        /// Defines dialog.
+        /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
-        internal DialogStateResponseInternal(string dialogId, DialogOptionsInternal dialogOptions, DialogInputType? dialogInputType, string operationContext)
+        internal DialogStateResponseInternal(string dialogId, BaseDialog dialog, string operationContext)
         {
             DialogId = dialogId;
-            DialogOptions = dialogOptions;
-            DialogInputType = dialogInputType;
+            Dialog = dialog;
             OperationContext = operationContext;
         }
 
         /// <summary> The dialog ID. </summary>
         public string DialogId { get; }
-        /// <summary> Defines options for dialog. </summary>
-        public DialogOptionsInternal DialogOptions { get; }
-        /// <summary> Determines the type of the dialog. </summary>
-        public DialogInputType? DialogInputType { get; }
+        /// <summary>
+        /// Defines dialog.
+        /// Please note <see cref="BaseDialog"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureOpenAIDialog"/> and <see cref="PowerVirtualAgentsDialog"/>.
+        /// </summary>
+        public BaseDialog Dialog { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; }
     }

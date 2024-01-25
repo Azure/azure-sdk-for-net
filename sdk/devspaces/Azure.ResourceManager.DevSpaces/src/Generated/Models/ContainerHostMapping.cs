@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DevSpaces.Models
 {
     /// <summary> Container host mapping object specifying the Container host resource ID and its associated Controller resource. </summary>
     public partial class ContainerHostMapping
     {
-        /// <summary> Initializes a new instance of ContainerHostMapping. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerHostMapping"/>. </summary>
         public ContainerHostMapping()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerHostMapping. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerHostMapping"/>. </summary>
         /// <param name="containerHostResourceId"> ARM ID of the Container Host resource. </param>
         /// <param name="mappedControllerResourceId"> ARM ID of the mapped Controller resource. </param>
-        internal ContainerHostMapping(string containerHostResourceId, string mappedControllerResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerHostMapping(string containerHostResourceId, string mappedControllerResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContainerHostResourceId = containerHostResourceId;
             MappedControllerResourceId = mappedControllerResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ARM ID of the Container Host resource. </summary>

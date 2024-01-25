@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseServerSecurityAlertPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerSecurityAlertPolicyData"/>. </summary>
         public SynapseServerSecurityAlertPolicyData()
         {
             DisabledAlerts = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseServerSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseServerSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

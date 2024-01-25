@@ -12,12 +12,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Resources.ResourceActionCancel event. This is raised when a resource action operation is canceled. </summary>
     public partial class ResourceActionCancelEventData
     {
-        /// <summary> Initializes a new instance of ResourceActionCancelEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceActionCancelEventData"/>. </summary>
         internal ResourceActionCancelEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of ResourceActionCancelEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceActionCancelEventData"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the resource. </param>
         /// <param name="subscriptionId"> The subscription ID of the resource. </param>
         /// <param name="resourceGroup"> The resource group of the resource. </param>

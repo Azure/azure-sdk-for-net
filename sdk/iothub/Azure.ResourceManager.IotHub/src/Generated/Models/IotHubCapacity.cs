@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> IoT Hub capacity information. </summary>
     public partial class IotHubCapacity
     {
-        /// <summary> Initializes a new instance of IotHubCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCapacity"/>. </summary>
         internal IotHubCapacity()
         {
         }
 
-        /// <summary> Initializes a new instance of IotHubCapacity. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubCapacity"/>. </summary>
         /// <param name="minimum"> The minimum number of units. </param>
         /// <param name="maximum"> The maximum number of units. </param>
         /// <param name="default"> The default number of units. </param>

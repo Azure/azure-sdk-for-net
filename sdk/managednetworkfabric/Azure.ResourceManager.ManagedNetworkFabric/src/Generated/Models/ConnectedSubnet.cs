@@ -5,25 +5,33 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Connected Subnet properties. </summary>
-    public partial class ConnectedSubnet : AnnotationResource
+    public partial class ConnectedSubnet : AnnotationResourceProperties
     {
-        /// <summary> Initializes a new instance of ConnectedSubnet. </summary>
-        public ConnectedSubnet()
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
+        /// <param name="prefix"> Prefix of the Connected Subnet. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
+        public ConnectedSubnet(string prefix)
         {
+            Argument.AssertNotNull(prefix, nameof(prefix));
+
+            Prefix = prefix;
         }
 
-        /// <summary> Initializes a new instance of ConnectedSubnet. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedSubnet"/>. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="prefix"> Prefix of the connected Subnet. </param>
+        /// <param name="prefix"> Prefix of the Connected Subnet. </param>
         internal ConnectedSubnet(string annotation, string prefix) : base(annotation)
         {
             Prefix = prefix;
         }
 
-        /// <summary> Prefix of the connected Subnet. </summary>
+        /// <summary> Prefix of the Connected Subnet. </summary>
         public string Prefix { get; set; }
     }
 }

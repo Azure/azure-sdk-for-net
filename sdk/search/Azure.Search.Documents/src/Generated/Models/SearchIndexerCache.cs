@@ -10,12 +10,12 @@ namespace Azure.Search.Documents.Indexes.Models
     /// <summary> The SearchIndexerCache. </summary>
     public partial class SearchIndexerCache
     {
-        /// <summary> Initializes a new instance of SearchIndexerCache. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
         public SearchIndexerCache()
         {
         }
 
-        /// <summary> Initializes a new instance of SearchIndexerCache. </summary>
+        /// <summary> Initializes a new instance of <see cref="SearchIndexerCache"/>. </summary>
         /// <param name="storageConnectionString"> The connection string to the storage account where the cache data will be persisted. </param>
         /// <param name="enableReprocessing"> Specifies whether incremental reprocessing is enabled. </param>
         /// <param name="identity">

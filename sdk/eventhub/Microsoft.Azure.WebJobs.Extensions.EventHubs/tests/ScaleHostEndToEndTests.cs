@@ -26,7 +26,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Tests
+namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Tests
 {
     [NonParallelizable]
     [LiveOnly(true)]

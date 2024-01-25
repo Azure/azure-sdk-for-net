@@ -13,13 +13,13 @@ namespace Azure.Maps.Rendering
     /// <summary> Copyright attribution for the requested section of a tileset. </summary>
     internal partial class MapAttribution
     {
-        /// <summary> Initializes a new instance of MapAttribution. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapAttribution"/>. </summary>
         internal MapAttribution()
         {
             Copyrights = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of MapAttribution. </summary>
+        /// <summary> Initializes a new instance of <see cref="MapAttribution"/>. </summary>
         /// <param name="copyrights"> A list of copyright strings. </param>
         internal MapAttribution(IReadOnlyList<string> copyrights)
         {

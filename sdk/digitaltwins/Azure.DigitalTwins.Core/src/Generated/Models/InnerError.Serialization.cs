@@ -10,8 +10,24 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    internal partial class InnerError
+    internal partial class InnerError : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue(Innererror);
+            }
+            writer.WriteEndObject();
+        }
+
         internal static InnerError DeserializeInnerError(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using OpenTelemetry.Resources;
 
@@ -14,6 +15,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals;
 internal static class ResourceExtensions
 {
     private const string AiSdkPrefixKey = "ai.sdk.prefix";
+    private const string TelemetryDistroNameKey = "telemetry.distro.name";
     private const string DefaultServiceName = "unknown_service";
     private const int Version = 2;
 
@@ -60,6 +62,12 @@ internal static class ResourceExtensions
                 case AiSdkPrefixKey when attribute.Value is string _aiSdkPrefixValue:
                     SdkVersionUtils.SdkVersionPrefix = _aiSdkPrefixValue;
                     continue;
+                case TelemetryDistroNameKey when attribute.Value is string _aiSdkDistroValue:
+                    if (_aiSdkDistroValue == "Azure.Monitor.OpenTelemetry.AspNetCore")
+                    {
+                        SdkVersionUtils.IsDistro = true;
+                    }
+                    break;
                 default:
                     if (attribute.Key.StartsWith("k8s"))
                     {
@@ -77,6 +85,7 @@ internal static class ResourceExtensions
         }
 
         // TODO: Check if service.name as unknown_service should be sent.
+        // (2023-07) we need to drop the "unknown_service."
         if (serviceName != null && serviceNamespace != null)
         {
             azureMonitorResource.RoleName = string.Concat(serviceNamespace, "/", serviceName);
@@ -111,7 +120,20 @@ internal static class ResourceExtensions
             }
         }
 
-        if (metricsData != null)
+        bool shouldReportMetricTelemetry = false;
+        try
+        {
+            var exportResource = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.EXPORT_RESOURCE_METRIC);
+            if (exportResource != null && exportResource.Equals("true", StringComparison.OrdinalIgnoreCase))
+            {
+                shouldReportMetricTelemetry = true;
+            }
+        }
+        catch
+        {
+        }
+
+        if (shouldReportMetricTelemetry && metricsData != null)
         {
             azureMonitorResource.MetricTelemetry = new TelemetryItem(DateTime.UtcNow, azureMonitorResource, instrumentationKey!)
             {

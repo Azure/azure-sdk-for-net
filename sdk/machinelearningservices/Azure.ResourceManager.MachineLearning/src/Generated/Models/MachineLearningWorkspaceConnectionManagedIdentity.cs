@@ -12,23 +12,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceConnectionManagedIdentity. </summary>
     public partial class MachineLearningWorkspaceConnectionManagedIdentity
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         public MachineLearningWorkspaceConnectionManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
-        /// <param name="resourceId"></param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         /// <param name="clientId"></param>
-        internal MachineLearningWorkspaceConnectionManagedIdentity(ResourceIdentifier resourceId, string clientId)
+        /// <param name="resourceId"></param>
+        internal MachineLearningWorkspaceConnectionManagedIdentity(string clientId, ResourceIdentifier resourceId)
         {
-            ResourceId = resourceId;
             ClientId = clientId;
+            ResourceId = resourceId;
         }
 
-        /// <summary> Gets or sets the resource id. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Gets or sets the client id. </summary>
         public string ClientId { get; set; }
+        /// <summary> Gets or sets the resource id. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringShort
     {
@@ -18,7 +18,7 @@ namespace Azure
         [Test]
         public void ShortImplicit([ValueSource("ShortData")] short testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<short>());
             Assert.AreEqual(typeof(short), value.Type);
 
@@ -31,10 +31,10 @@ namespace Azure
         [Test]
         public void ShortCreate([ValueSource("ShortData")] short testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<short>());
@@ -44,7 +44,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<short?>());
@@ -54,7 +54,7 @@ namespace Azure
         [Test]
         public void ShortInOut([ValueSource("ShortData")] short testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out short result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -67,7 +67,7 @@ namespace Azure
         public void NullableShortInShortOut([ValueSource("ShortData")] short? testValue)
         {
             short? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out short result);
             Assert.True(success);
@@ -82,7 +82,7 @@ namespace Azure
         public void ShortInNullableShortOut([ValueSource("ShortData")] short testValue)
         {
             short source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out short? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -95,7 +95,7 @@ namespace Azure
         {
             short i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(short), value.Type);
             Assert.True(value.TryGetValue(out short result));
@@ -118,7 +118,7 @@ namespace Azure
         public void NullShort()
         {
             short? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<short?>());
             Assert.False(value.As<short?>().HasValue);
@@ -127,7 +127,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("ShortData")] short testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(short), o.GetType());
             Assert.AreEqual(testValue, (short)o);

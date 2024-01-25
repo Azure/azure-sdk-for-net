@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,21 +16,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> IP configuration of an Bastion Host. </summary>
     public partial class BastionHostIPConfiguration : NetworkResourceData
     {
-        /// <summary> Initializes a new instance of BastionHostIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPConfiguration"/>. </summary>
         public BastionHostIPConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BastionHostIPConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BastionHostIPConfiguration"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="subnet"> Reference of the subnet resource. </param>
         /// <param name="publicIPAddress"> Reference of the PublicIP resource. </param>
         /// <param name="provisioningState"> The provisioning state of the bastion host IP configuration resource. </param>
         /// <param name="privateIPAllocationMethod"> Private IP allocation method. </param>
-        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, NetworkIPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType)
+        internal BastionHostIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource subnet, WritableSubResource publicIPAddress, NetworkProvisioningState? provisioningState, NetworkIPAllocationMethod? privateIPAllocationMethod) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             Subnet = subnet;

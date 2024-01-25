@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -298,13 +298,57 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Upgrades an API Management service to the Stv2 platform. For details refer
+            /// to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is
+            /// long running operation and could take several minutes to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static ApiManagementServiceResource MigrateToStv2(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.MigrateToStv2Async(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrades an API Management service to the Stv2 platform. For details refer
+            /// to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is
+            /// long running operation and could take several minutes to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiManagementServiceResource> MigrateToStv2Async(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.MigrateToStv2WithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List all API Management services within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IPage<ApiManagementServiceResource> ListByResourceGroup(this IApiManagementServiceOperations operations, string resourceGroupName)
             {
@@ -318,7 +362,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -367,7 +411,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -385,7 +429,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -473,7 +517,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -497,7 +541,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -528,7 +572,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -551,7 +595,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -580,7 +624,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -602,7 +646,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -629,7 +673,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -650,7 +694,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -676,7 +720,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -696,7 +740,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -722,7 +766,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -739,7 +783,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -756,6 +800,50 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Upgrades an API Management service to the Stv2 platform. For details refer
+            /// to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is
+            /// long running operation and could take several minutes to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static ApiManagementServiceResource BeginMigrateToStv2(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.BeginMigrateToStv2Async(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrades an API Management service to the Stv2 platform. For details refer
+            /// to https://aka.ms/apim-migrate-stv2. This change is not reversible. This is
+            /// long running operation and could take several minutes to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiManagementServiceResource> BeginMigrateToStv2Async(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginMigrateToStv2WithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates the Microsoft.ApiManagement resource running in the Virtual network
             /// to pick the updated DNS changes.
             /// </summary>
@@ -763,7 +851,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.
@@ -787,7 +875,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='serviceName'>
             /// The name of the API Management service.

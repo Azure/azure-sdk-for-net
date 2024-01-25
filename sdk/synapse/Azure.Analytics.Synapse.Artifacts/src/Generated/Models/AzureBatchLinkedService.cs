@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Batch linked service. </summary>
     public partial class AzureBatchLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="accountName"> The Azure Batch account name. Type: string (or Expression with resultType string). </param>
         /// <param name="batchUri"> The Azure Batch URI. Type: string (or Expression with resultType string). </param>
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureBatch";
         }
 
-        /// <summary> Initializes a new instance of AzureBatchLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBatchLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -51,7 +51,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="poolName"> The Azure Batch pool name. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> The Azure Storage linked service reference. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureBatchLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountName, SecretBase accessKey, object batchUri, object poolName, LinkedServiceReference linkedServiceName, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureBatchLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object accountName, SecretBase accessKey, object batchUri, object poolName, LinkedServiceReference linkedServiceName, object encryptedCredential, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccountName = accountName;
             AccessKey = accessKey;
@@ -59,6 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             PoolName = poolName;
             LinkedServiceName = linkedServiceName;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             Type = type ?? "AzureBatch";
         }
 
@@ -78,5 +80,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public LinkedServiceReference LinkedServiceName { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

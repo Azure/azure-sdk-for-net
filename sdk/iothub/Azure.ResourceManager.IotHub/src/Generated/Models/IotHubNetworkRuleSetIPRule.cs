@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> IP Rule to be applied as part of Network Rule Set. </summary>
     public partial class IotHubNetworkRuleSetIPRule
     {
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetIPRule"/>. </summary>
         /// <param name="filterName"> Name of the IP filter rule. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filterName"/> or <paramref name="ipMask"/> is null. </exception>
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.IotHub.Models
             IPMask = ipMask;
         }
 
-        /// <summary> Initializes a new instance of IotHubNetworkRuleSetIPRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetIPRule"/>. </summary>
         /// <param name="filterName"> Name of the IP filter rule. </param>
         /// <param name="action"> IP Filter Action. </param>
         /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>

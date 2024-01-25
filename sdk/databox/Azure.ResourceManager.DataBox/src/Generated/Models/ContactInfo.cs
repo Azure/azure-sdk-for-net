@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.DataBox.Models
     /// <summary> Contact Info. </summary>
     public partial class ContactInfo
     {
-        /// <summary> Initializes a new instance of ContactInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> or <paramref name="phone"/> is null. </exception>
@@ -26,17 +59,24 @@ namespace Azure.ResourceManager.DataBox.Models
             Phone = phone;
         }
 
-        /// <summary> Initializes a new instance of ContactInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/>. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
         /// <param name="mobile"> Mobile number of the contact person. </param>
-        internal ContactInfo(string contactName, string phone, string phoneExtension, string mobile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContactInfo(string contactName, string phone, string phoneExtension, string mobile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactName = contactName;
             Phone = phone;
             PhoneExtension = phoneExtension;
             Mobile = mobile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContactInfo"/> for deserialization. </summary>
+        internal ContactInfo()
+        {
         }
 
         /// <summary> Contact name of the person. </summary>

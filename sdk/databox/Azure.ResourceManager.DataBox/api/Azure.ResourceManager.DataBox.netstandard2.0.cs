@@ -32,13 +32,15 @@ namespace Azure.ResourceManager.DataBox
         public virtual Azure.Pageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetAll(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetAllAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.DataBoxJobResource>> GetAsync(string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.DataBox.DataBoxJobResource> GetIfExists(string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.DataBox.DataBoxJobResource>> GetIfExistsAsync(string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.DataBox.DataBoxJobResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataBox.DataBoxJobResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DataBox.DataBoxJobResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.DataBoxJobResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DataBoxJobData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DataBoxJobData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.DataBoxJobData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.DataBoxJobData>
     {
-        public DataBoxJobData(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType, Azure.ResourceManager.DataBox.Models.DataBoxSku sku) : base (default(Azure.Core.AzureLocation)) { }
+        public DataBoxJobData(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType, Azure.ResourceManager.DataBox.Models.DataBoxSku sku) { }
         public string CancellationReason { get { throw null; } }
         public System.DateTimeOffset? DeliveryInfoScheduledOn { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.JobDeliveryType? DeliveryType { get { throw null; } set { } }
@@ -56,6 +58,11 @@ namespace Azure.ResourceManager.DataBox
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxStageName? Status { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType TransferType { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.DataBoxJobData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.DataBoxJobData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.DataBoxJobData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.DataBoxJobData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.DataBoxJobData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.DataBoxJobData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.DataBoxJobData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DataBoxJobResource : Azure.ResourceManager.ArmResource
     {
@@ -88,20 +95,63 @@ namespace Azure.ResourceManager.DataBox
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.DataBox.DataBoxJobResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.DataBox.Models.DataBoxJobPatch patch, string ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.DataBox.Mocking
+{
+    public partial class MockableDataBoxArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataBoxArmClient() { }
+        public virtual Azure.ResourceManager.DataBox.DataBoxJobResource GetDataBoxJobResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDataBoxResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataBoxResourceGroupResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation> GetAvailableSkus(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.AvailableSkusContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation> GetAvailableSkusAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.AvailableSkusContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJob(string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.DataBoxJobResource>> GetDataBoxJobAsync(string jobName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.DataBox.DataBoxJobCollection GetDataBoxJobs() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult> GetRegionConfiguration(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>> GetRegionConfigurationAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult> ValidateInputs(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>> ValidateInputsAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableDataBoxSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDataBoxSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJobs(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.DataBox.DataBoxJobResource> GetDataBoxJobsAsync(string skipToken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult> GetRegionConfiguration(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>> GetRegionConfigurationAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.RegionConfigurationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.AddressValidationOutput> ValidateAddress(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>> ValidateAddressAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult> ValidateInputs(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>> ValidateInputsAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.DataBox.Models.DataBoxValidationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class AddressValidationOutput
+    public partial class AddressValidationOutput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>
     {
         internal AddressValidationOutput() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress> AlternateAddresses { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.AddressValidationStatus? ValidationStatus { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.AddressValidationOutput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.AddressValidationOutput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationOutput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AddressValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult
+    public partial class AddressValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AddressValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationResult>
     {
         internal AddressValidationResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress> AlternateAddresses { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.AddressValidationStatus? ValidationStatus { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.AddressValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AddressValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AddressValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.AddressValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AddressValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum AddressValidationStatus
     {
@@ -109,16 +159,23 @@ namespace Azure.ResourceManager.DataBox.Models
         Invalid = 1,
         Ambiguous = 2,
     }
-    public partial class ApplianceNetworkConfiguration
+    public partial class ApplianceNetworkConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration>
     {
         internal ApplianceNetworkConfiguration() { }
         public string MacAddress { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmDataBoxModelFactory
     {
         public static Azure.ResourceManager.DataBox.Models.AddressValidationResult AddressValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.AddressValidationStatus? validationStatus = default(Azure.ResourceManager.DataBox.Models.AddressValidationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress> alternateAddresses = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration ApplianceNetworkConfiguration(string name = null, string macAddress = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.AvailableSkusContent AvailableSkusContent(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType = Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType.ImportToAzure, string country = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxSkuName> skuNames = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent CreateOrderLimitForSubscriptionValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType = Azure.ResourceManager.DataBox.Models.DataBoxSkuName.DataBox) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult CreateOrderLimitForSubscriptionValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets CustomerDiskJobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret> diskSecrets = null, string carrierAccountNumber = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails DataBoxAccountCopyLogDetails(string accountName = null, string copyLogLink = null, string copyVerboseLogLink = null) { throw null; }
@@ -143,11 +200,13 @@ namespace Azure.ResourceManager.DataBox.Models
         public static Azure.ResourceManager.DataBox.Models.DataBoxJobDetails DataBoxJobDetails(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxJobStage> jobStages = null, Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails deliveryPackage = null, Azure.ResourceManager.DataBox.Models.PackageShippingDetails returnPackage = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataImportDetails> dataImportDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataExportDetails> dataExportDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences preferences = null, Azure.ResourceManager.DataBox.Models.ReverseShippingDetails reverseShippingDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CopyLogDetails> copyLogDetails = null, string reverseShipmentLabelSasKey = null, string chainOfCustodySasKey = null, Azure.ResourceManager.DataBox.Models.DeviceErasureDetails deviceErasureDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey keyEncryptionKey = null, int? expectedDataSizeInTerabytes = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null, Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob lastMitigationActionOnJob = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddress = null, Azure.ResourceManager.DataBox.Models.DataCenterCode? dataCenterCode = default(Azure.ResourceManager.DataBox.Models.DataCenterCode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress> copyProgress = null, string devicePassword = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataboxJobSecrets DataboxJobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxSecret> podSecrets = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxJobStage DataBoxJobStage(Azure.ResourceManager.DataBox.Models.DataBoxStageName? stageName = default(Azure.ResourceManager.DataBox.Models.DataBoxStageName?), string displayName = null, Azure.ResourceManager.DataBox.Models.DataBoxStageStatus? stageStatus = default(Azure.ResourceManager.DataBox.Models.DataBoxStageStatus?), System.DateTimeOffset? stageTime = default(System.DateTimeOffset?), System.BinaryData jobStageDetails = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent DataBoxScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation = default(Azure.Core.AzureLocation), string country = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxSecret DataBoxSecret(string deviceSerialNumber = null, string devicePassword = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration> networkConfigurations = null, string encodedValidationCertPubKey = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails> accountCredentialDetails = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult DataBoxShipmentPickUpResult(string confirmationNumber = null, System.DateTimeOffset? readyBy = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity DataBoxSkuCapacity(string usable = null, string maximum = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxSkuCost DataBoxSkuCost(System.Guid? meterId = default(System.Guid?), string meterType = null, double? multiplier = default(double?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation DataBoxSkuInformation(Azure.ResourceManager.DataBox.Models.DataBoxSku sku = null, bool? isEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap> dataLocationToServiceLocationMap = null, Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity capacity = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost> costs = null, System.Collections.Generic.IEnumerable<string> apiVersions = null, Azure.ResourceManager.DataBox.Models.SkuDisabledReason? disabledReason = default(Azure.ResourceManager.DataBox.Models.SkuDisabledReason?), string disabledReasonMessage = null, string requiredFeature = null, System.Collections.Generic.IEnumerable<string> countriesWithinCommerceBoundary = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent DataBoxValidateAddressContent(Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType = Azure.ResourceManager.DataBox.Models.DataBoxSkuName.DataBox, Azure.ResourceManager.DataBox.Models.TransportPreferences transportPreferences = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult DataBoxValidationInputResult(Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataBoxValidationResult DataBoxValidationResult(Azure.ResourceManager.DataBox.Models.OverallValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.OverallValidationStatus?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult> individualResponseDetails = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode DataCenterAccessSecurityCode(string reverseDataCenterAccessCode = null, string forwardDataCenterAccessCode = null) { throw null; }
@@ -155,77 +214,129 @@ namespace Azure.ResourceManager.DataBox.Models
         public static Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult DataCenterAddressLocationResult(System.Collections.Generic.IEnumerable<string> supportedCarriersForReturnShipment = null, Azure.Core.AzureLocation? dataCenterAzureLocation = default(Azure.Core.AzureLocation?), string contactPersonName = null, string company = null, string street1 = null, string street2 = null, string street3 = null, string city = null, string state = null, string zip = null, string country = null, string phone = null, string phoneExtension = null, string addressType = null, string additionalShippingInformation = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DataCenterAddressResult(System.Collections.Generic.IEnumerable<string> supportedCarriersForReturnShipment = null, Azure.Core.AzureLocation? dataCenterAzureLocation = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap DataLocationToServiceLocationMap(Azure.Core.AzureLocation? dataLocation = default(Azure.Core.AzureLocation?), Azure.Core.AzureLocation? serviceLocation = default(Azure.Core.AzureLocation?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent DataTransferDetailsValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataExportDetails> dataExportDetails = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataImportDetails> dataImportDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType = Azure.ResourceManager.DataBox.Models.DataBoxSkuName.DataBox, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType = Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType.ImportToAzure) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult DataTransferDetailsValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.DeviceErasureDetails DeviceErasureDetails(Azure.ResourceManager.DataBox.Models.DataBoxStageStatus? deviceErasureStatus = default(Azure.ResourceManager.DataBox.Models.DataBoxStageStatus?), string erasureOrDestructionCertificateSasKey = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent DiskScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation = default(Azure.Core.AzureLocation), string country = null, int expectedDataSizeInTerabytes = 0) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.ExportDiskDetails ExportDiskDetails(string manifestFile = null, string manifestHash = null, string backupManifestCloudPath = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.GranularCopyProgress GranularCopyProgress(string storageAccountName = null, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? transferType = default(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType?), Azure.ResourceManager.DataBox.Models.DataAccountType? dataAccountType = default(Azure.ResourceManager.DataBox.Models.DataAccountType?), Azure.Core.ResourceIdentifier accountId = null, long? bytesProcessed = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?), long? invalidFilesProcessed = default(long?), long? invalidFileBytesUploaded = default(long?), long? renamedContainerCount = default(long?), long? filesErroredOut = default(long?), long? directoriesErroredOut = default(long?), long? invalidDirectoriesProcessed = default(long?), bool? isEnumerationInProgress = default(bool?), Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> actions = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent HeavyScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation = default(Azure.Core.AzureLocation), string country = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.ImportDiskDetails ImportDiskDetails(string manifestFile = null, string manifestHash = null, string bitLockerKey = null, string backupManifestCloudPath = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.JobSecrets JobSecrets(Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode dataCenterAccessSecurityCode = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob LastMitigationActionOnJob(System.DateTimeOffset? actionPerformedOn = default(System.DateTimeOffset?), bool? isPerformedByCustomer = default(bool?), Azure.ResourceManager.DataBox.Models.CustomerResolutionCode? customerResolution = default(Azure.ResourceManager.DataBox.Models.CustomerResolutionCode?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.MitigateJobContent MitigateJobContent(Azure.ResourceManager.DataBox.Models.CustomerResolutionCode customerResolutionCode = Azure.ResourceManager.DataBox.Models.CustomerResolutionCode.None, System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> serialNumberCustomerResolutionMap = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.PackageShippingDetails PackageShippingDetails(System.Uri trackingUri = null, string carrierName = null, string trackingId = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.PreferencesValidationContent PreferencesValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences preference = null, Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType = Azure.ResourceManager.DataBox.Models.DataBoxSkuName.DataBox) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.PreferencesValidationResult PreferencesValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.RegionConfigurationResult RegionConfigurationResult(System.Collections.Generic.IEnumerable<System.DateTimeOffset> scheduleAvailabilityResponseAvailableDates = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails> transportAvailabilityDetails = null, Azure.ResourceManager.DataBox.Models.DataCenterAddressResult dataCenterAddressResponse = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.ReverseShippingDetails ReverseShippingDetails(Azure.ResourceManager.DataBox.Models.ContactInfo contactDetails = null, Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress = null, bool? isUpdated = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent ScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation = default(Azure.Core.AzureLocation), string country = null) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.ShareCredentialDetails ShareCredentialDetails(string shareName = null, Azure.ResourceManager.DataBox.Models.ShareDestinationFormatType? shareType = default(Azure.ResourceManager.DataBox.Models.ShareDestinationFormatType?), string userName = null, string password = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxAccessProtocol> supportedAccessProtocols = null) { throw null; }
+        public static Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent SkuAvailabilityValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType = Azure.ResourceManager.DataBox.Models.DataBoxSkuName.DataBox, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType = Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType.ImportToAzure, string country = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult SkuAvailabilityValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult SubscriptionIsAllowedToCreateJobValidationResult(Azure.ResponseError error = null, Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? status = default(Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails TransportAvailabilityDetails(Azure.ResourceManager.DataBox.Models.TransportShipmentType? shipmentType = default(Azure.ResourceManager.DataBox.Models.TransportShipmentType?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences(Azure.ResourceManager.DataBox.Models.TransportShipmentType preferredShipmentType = Azure.ResourceManager.DataBox.Models.TransportShipmentType.CustomerManaged, bool? isUpdated = default(bool?)) { throw null; }
         public static Azure.ResourceManager.DataBox.Models.UnencryptedCredentials UnencryptedCredentials(string jobName = null, Azure.ResourceManager.DataBox.Models.JobSecrets jobSecrets = null) { throw null; }
     }
-    public partial class AvailableSkusContent
+    public partial class AvailableSkusContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AvailableSkusContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AvailableSkusContent>
     {
         public AvailableSkusContent(Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType, string country, Azure.Core.AzureLocation location) { }
         public string Country { get { throw null; } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataBoxSkuName> SkuNames { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType TransferType { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.AvailableSkusContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AvailableSkusContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AvailableSkusContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.AvailableSkusContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AvailableSkusContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AvailableSkusContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AvailableSkusContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzureFileFilterDetails
+    public partial class AzureFileFilterDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails>
     {
         public AzureFileFilterDetails() { }
         public System.Collections.Generic.IList<string> FilePathList { get { throw null; } }
         public System.Collections.Generic.IList<string> FilePrefixList { get { throw null; } }
         public System.Collections.Generic.IList<string> FileShareList { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BlobFilterDetails
+    public partial class BlobFilterDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.BlobFilterDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.BlobFilterDetails>
     {
         public BlobFilterDetails() { }
         public System.Collections.Generic.IList<string> BlobPathList { get { throw null; } }
         public System.Collections.Generic.IList<string> BlobPrefixList { get { throw null; } }
         public System.Collections.Generic.IList<string> ContainerList { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.BlobFilterDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.BlobFilterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.BlobFilterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.BlobFilterDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.BlobFilterDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.BlobFilterDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.BlobFilterDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContactInfo
+    public partial class ContactInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ContactInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ContactInfo>
     {
         public ContactInfo(string contactName, string phone) { }
         public string ContactName { get { throw null; } set { } }
         public string Mobile { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
         public string PhoneExtension { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.ContactInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ContactInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ContactInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ContactInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ContactInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ContactInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ContactInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class CopyLogDetails
+    public abstract partial class CopyLogDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CopyLogDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CopyLogDetails>
     {
         protected CopyLogDetails() { }
+        Azure.ResourceManager.DataBox.Models.CopyLogDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CopyLogDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CopyLogDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.CopyLogDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CopyLogDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CopyLogDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CopyLogDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CreateJobValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationContent
+    public partial class CreateJobValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateJobValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateJobValidationContent>
     {
         public CreateJobValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent> individualRequestDetails) : base (default(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>)) { }
+        Azure.ResourceManager.DataBox.Models.CreateJobValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateJobValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateJobValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.CreateJobValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateJobValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateJobValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateJobValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CreateOrderLimitForSubscriptionValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent
+    public partial class CreateOrderLimitForSubscriptionValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent>
     {
         public CreateOrderLimitForSubscriptionValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CreateOrderLimitForSubscriptionValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult
+    public partial class CreateOrderLimitForSubscriptionValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult>
     {
         internal CreateOrderLimitForSubscriptionValidationResult() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CreateOrderLimitForSubscriptionValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomerDiskJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets
+    public partial class CustomerDiskJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets>
     {
         internal CustomerDiskJobSecrets() { }
         public string CarrierAccountNumber { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret> DiskSecrets { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.CustomerDiskJobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum CustomerResolutionCode
     {
@@ -235,10 +346,15 @@ namespace Azure.ResourceManager.DataBox.Models
         Restart = 3,
         ReachOutToOperation = 4,
     }
-    public abstract partial class DataAccountDetails
+    public abstract partial class DataAccountDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataAccountDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataAccountDetails>
     {
         protected DataAccountDetails() { }
         public string SharePassword { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataAccountDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataAccountDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataAccountDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataAccountDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataAccountDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataAccountDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataAccountDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum DataAccountType
     {
@@ -250,22 +366,32 @@ namespace Azure.ResourceManager.DataBox.Models
         Smb = 0,
         Nfs = 1,
     }
-    public partial class DataBoxAccountCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
+    public partial class DataBoxAccountCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails>
     {
         internal DataBoxAccountCopyLogDetails() { }
         public string AccountName { get { throw null; } }
         public string CopyLogLink { get { throw null; } }
         public string CopyVerboseLogLink { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCopyLogDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxAccountCredentialDetails
+    public partial class DataBoxAccountCredentialDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails>
     {
         internal DataBoxAccountCredentialDetails() { }
         public string AccountConnectionString { get { throw null; } }
         public string AccountName { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataAccountType? DataAccountType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails> ShareCredentialDetails { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class DataBoxBasicJobDetails
+    public abstract partial class DataBoxBasicJobDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails>
     {
         protected DataBoxBasicJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
@@ -287,8 +413,13 @@ namespace Azure.ResourceManager.DataBox.Models
         public string ReverseShipmentLabelSasKey { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.ReverseShippingDetails ReverseShippingDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxContactDetails
+    public partial class DataBoxContactDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxContactDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxContactDetails>
     {
         public DataBoxContactDetails(string contactName, string phone, System.Collections.Generic.IEnumerable<string> emailList) { }
         public string ContactName { get { throw null; } set { } }
@@ -297,8 +428,13 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.NotificationPreference> NotificationPreference { get { throw null; } }
         public string Phone { get { throw null; } set { } }
         public string PhoneExtension { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxContactDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxContactDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxContactDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxContactDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxContactDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxContactDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxContactDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxCopyProgress
+    public partial class DataBoxCopyProgress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress>
     {
         internal DataBoxCopyProgress() { }
         public Azure.Core.ResourceIdentifier AccountId { get { throw null; } }
@@ -318,6 +454,11 @@ namespace Azure.ResourceManager.DataBox.Models
         public long? TotalBytesToProcess { get { throw null; } }
         public long? TotalFilesToProcess { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? TransferType { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataBoxCopyStatus : System.IEquatable<Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus>
@@ -353,20 +494,30 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator !=(Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus left, Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataBoxCustomerDiskCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
+    public partial class DataBoxCustomerDiskCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails>
     {
         internal DataBoxCustomerDiskCopyLogDetails() { }
         public string ErrorLogLink { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public string VerboseLogLink { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyLogDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxCustomerDiskCopyProgress : Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress
+    public partial class DataBoxCustomerDiskCopyProgress : Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress>
     {
         internal DataBoxCustomerDiskCopyProgress() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? CopyStatus { get { throw null; } }
         public string SerialNumber { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxCustomerDiskJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
+    public partial class DataBoxCustomerDiskJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails>
     {
         public DataBoxCustomerDiskJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails, Azure.ResourceManager.DataBox.Models.PackageCarrierDetails returnToCustomerPackageDetails) : base (default(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskCopyProgress> CopyProgress { get { throw null; } }
@@ -375,15 +526,25 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.DataBox.Models.ExportDiskDetails> ExportDiskDetails { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBox.Models.ImportDiskDetails> ImportDiskDetails { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.PackageCarrierDetails ReturnToCustomerPackageDetails { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxCustomerDiskJobDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxDiskCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
+    public partial class DataBoxDiskCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails>
     {
         internal DataBoxDiskCopyLogDetails() { }
         public string DiskSerialNumber { get { throw null; } }
         public string ErrorLogLink { get { throw null; } }
         public string VerboseLogLink { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyLogDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxDiskCopyProgress
+    public partial class DataBoxDiskCopyProgress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress>
     {
         internal DataBoxDiskCopyProgress() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> Actions { get { throw null; } }
@@ -392,22 +553,37 @@ namespace Azure.ResourceManager.DataBox.Models
         public int? PercentComplete { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? Status { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxDiskGranularCopyLogDetails : Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails
+    public partial class DataBoxDiskGranularCopyLogDetails : Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails>
     {
         internal DataBoxDiskGranularCopyLogDetails() { }
         public Azure.Core.ResourceIdentifier AccountId { get { throw null; } }
         public string ErrorLogLink { get { throw null; } }
         public string SerialNumber { get { throw null; } }
         public string VerboseLogLink { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyLogDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxDiskGranularCopyProgress : Azure.ResourceManager.DataBox.Models.GranularCopyProgress
+    public partial class DataBoxDiskGranularCopyProgress : Azure.ResourceManager.DataBox.Models.GranularCopyProgress, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress>
     {
         internal DataBoxDiskGranularCopyProgress() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxCopyStatus? CopyStatus { get { throw null; } }
         public string SerialNumber { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxDiskJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
+    public partial class DataBoxDiskJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails>
     {
         public DataBoxDiskJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskCopyProgress> CopyProgress { get { throw null; } }
@@ -416,50 +592,85 @@ namespace Azure.ResourceManager.DataBox.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskGranularCopyProgress> GranularCopyProgress { get { throw null; } }
         public string Passkey { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, int> PreferredDisks { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxDiskJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets
+    public partial class DataBoxDiskJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets>
     {
         internal DataBoxDiskJobSecrets() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret> DiskSecrets { get { throw null; } }
         public bool? IsPasskeyUserDefined { get { throw null; } }
         public string Passkey { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskJobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxDiskSecret
+    public partial class DataBoxDiskSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret>
     {
         internal DataBoxDiskSecret() { }
         public string BitLockerKey { get { throw null; } }
         public string DiskSerialNumber { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxDiskSecret>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum DataBoxDoubleEncryption
     {
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class DataBoxEncryptionPreferences
+    public partial class DataBoxEncryptionPreferences : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences>
     {
         public DataBoxEncryptionPreferences() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxDoubleEncryption? DoubleEncryption { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.HardwareEncryption? HardwareEncryption { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxEncryptionPreferences>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxHeavyAccountCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails
+    public partial class DataBoxHeavyAccountCopyLogDetails : Azure.ResourceManager.DataBox.Models.CopyLogDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails>
     {
         internal DataBoxHeavyAccountCopyLogDetails() { }
         public string AccountName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CopyLogLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> CopyVerboseLogLink { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyAccountCopyLogDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxHeavyJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
+    public partial class DataBoxHeavyJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails>
     {
         public DataBoxHeavyJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress> CopyProgress { get { throw null; } }
         public string DevicePassword { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxHeavyJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets
+    public partial class DataBoxHeavyJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets>
     {
         internal DataBoxHeavyJobSecrets() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret> CabinetPodSecrets { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavyJobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxHeavySecret
+    public partial class DataBoxHeavySecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret>
     {
         internal DataBoxHeavySecret() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails> AccountCredentialDetails { get { throw null; } }
@@ -467,31 +678,56 @@ namespace Azure.ResourceManager.DataBox.Models
         public string DeviceSerialNumber { get { throw null; } }
         public string EncodedValidationCertPubKey { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration> NetworkConfigurations { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxHeavySecret>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxJobCancellationReason
+    public partial class DataBoxJobCancellationReason : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason>
     {
         public DataBoxJobCancellationReason(string reason) { }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobCancellationReason>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails
+    public partial class DataBoxJobDetails : Azure.ResourceManager.DataBox.Models.DataBoxBasicJobDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobDetails>
     {
         public DataBoxJobDetails(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails contactDetails) : base (default(Azure.ResourceManager.DataBox.Models.DataBoxContactDetails)) { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxCopyProgress> CopyProgress { get { throw null; } }
         public string DevicePassword { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxJobPatch
+    public partial class DataBoxJobPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>
     {
         public DataBoxJobPatch() { }
         public Azure.ResourceManager.DataBox.Models.UpdateJobDetails Details { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataboxJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets
+    public partial class DataboxJobSecrets : Azure.ResourceManager.DataBox.Models.JobSecrets, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>
     {
         internal DataboxJobSecrets() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxSecret> PodSecrets { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataboxJobSecrets System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataboxJobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataboxJobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxJobStage
+    public partial class DataBoxJobStage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>
     {
         internal DataBoxJobStage() { }
         public string DisplayName { get { throw null; } }
@@ -499,32 +735,47 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.DataBoxStageName? StageName { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxStageStatus? StageStatus { get { throw null; } }
         public System.DateTimeOffset? StageTime { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobStage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxJobStage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxJobStage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum DataBoxJobTransferType
     {
         ImportToAzure = 0,
         ExportFromAzure = 1,
     }
-    public partial class DataBoxKeyEncryptionKey
+    public partial class DataBoxKeyEncryptionKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey>
     {
         public DataBoxKeyEncryptionKey(Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKeyType kekType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKeyType KekType { get { throw null; } set { } }
         public System.Uri KekUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier KekVaultResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity ManagedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxKeyEncryptionKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum DataBoxKeyEncryptionKeyType
     {
         MicrosoftManaged = 0,
         CustomerManaged = 1,
     }
-    public partial class DataBoxManagedIdentity
+    public partial class DataBoxManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity>
     {
         public DataBoxManagedIdentity() { }
         public string IdentityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityId { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxOrderPreferences
+    public partial class DataBoxOrderPreferences : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences>
     {
         public DataBoxOrderPreferences() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -536,12 +787,22 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
+    public partial class DataBoxScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent>
     {
         public DataBoxScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation) : base (default(Azure.Core.AzureLocation)) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxScheduleAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxSecret
+    public partial class DataBoxSecret : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSecret>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSecret>
     {
         internal DataBoxSecret() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxAccountCredentialDetails> AccountCredentialDetails { get { throw null; } }
@@ -549,14 +810,24 @@ namespace Azure.ResourceManager.DataBox.Models
         public string DeviceSerialNumber { get { throw null; } }
         public string EncodedValidationCertPubKey { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.ApplianceNetworkConfiguration> NetworkConfigurations { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxSecret System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSecret>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSecret>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxSecret System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSecret>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSecret>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSecret>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxShipmentPickUpResult
+    public partial class DataBoxShipmentPickUpResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>
     {
         internal DataBoxShipmentPickUpResult() { }
         public string ConfirmationNumber { get { throw null; } }
         public System.DateTimeOffset? ReadyBy { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShipmentPickUpResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxShippingAddress
+    public partial class DataBoxShippingAddress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress>
     {
         public DataBoxShippingAddress(string streetAddress1, string country, string postalCode) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddressType? AddressType { get { throw null; } set { } }
@@ -571,6 +842,11 @@ namespace Azure.ResourceManager.DataBox.Models
         public string StreetAddress3 { get { throw null; } set { } }
         public string TaxIdentificationNumber { get { throw null; } set { } }
         public string ZipExtendedCode { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum DataBoxShippingAddressType
     {
@@ -578,27 +854,42 @@ namespace Azure.ResourceManager.DataBox.Models
         Residential = 1,
         Commercial = 2,
     }
-    public partial class DataBoxSku
+    public partial class DataBoxSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSku>
     {
         public DataBoxSku(Azure.ResourceManager.DataBox.Models.DataBoxSkuName name) { }
         public string DisplayName { get { throw null; } set { } }
         public string Family { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName Name { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxSkuCapacity
+    public partial class DataBoxSkuCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity>
     {
         internal DataBoxSkuCapacity() { }
         public string Maximum { get { throw null; } }
         public string Usable { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCapacity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxSkuCost
+    public partial class DataBoxSkuCost : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost>
     {
         internal DataBoxSkuCost() { }
         public System.Guid? MeterId { get { throw null; } }
         public string MeterType { get { throw null; } }
         public double? Multiplier { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxSkuCost System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxSkuCost System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuCost>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxSkuInformation
+    public partial class DataBoxSkuInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation>
     {
         internal DataBoxSkuInformation() { }
         public System.Collections.Generic.IReadOnlyList<string> ApiVersions { get { throw null; } }
@@ -611,6 +902,11 @@ namespace Azure.ResourceManager.DataBox.Models
         public bool? IsEnabled { get { throw null; } }
         public string RequiredFeature { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSku Sku { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxSkuInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum DataBoxSkuName
     {
@@ -672,12 +968,17 @@ namespace Azure.ResourceManager.DataBox.Models
         CustomerActionPerformedForCleanUp = 11,
         CustomerActionPerformed = 12,
     }
-    public partial class DataBoxStorageAccountDetails : Azure.ResourceManager.DataBox.Models.DataAccountDetails
+    public partial class DataBoxStorageAccountDetails : Azure.ResourceManager.DataBox.Models.DataAccountDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails>
     {
         public DataBoxStorageAccountDetails(Azure.Core.ResourceIdentifier storageAccountId) { }
         public Azure.Core.ResourceIdentifier StorageAccountId { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxStorageAccountDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxValidateAddressContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent
+    public partial class DataBoxValidateAddressContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent>
     {
         public DataBoxValidateAddressContent(Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress shippingAddress, Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
@@ -685,26 +986,51 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.TransportPreferences TransportPreferences { get { throw null; } set { } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? TransportPreferencesPreferredShipmentType { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidateAddressContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class DataBoxValidationContent
+    public abstract partial class DataBoxValidationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationContent>
     {
         protected DataBoxValidationContent(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent> individualRequestDetails) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent> IndividualRequestDetails { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class DataBoxValidationInputContent
+    public abstract partial class DataBoxValidationInputContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>
     {
         protected DataBoxValidationInputContent() { }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class DataBoxValidationInputResult
+    public abstract partial class DataBoxValidationInputResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult>
     {
         protected DataBoxValidationInputResult() { }
         public Azure.ResponseError Error { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataBoxValidationResult
+    public partial class DataBoxValidationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>
     {
         internal DataBoxValidationResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult> IndividualResponseDetails { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.OverallValidationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataBoxValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataBoxValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum DataBoxValidationStatus
     {
@@ -712,24 +1038,39 @@ namespace Azure.ResourceManager.DataBox.Models
         Invalid = 1,
         Skipped = 2,
     }
-    public partial class DataCenterAccessSecurityCode
+    public partial class DataCenterAccessSecurityCode : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode>
     {
         internal DataCenterAccessSecurityCode() { }
         public string ForwardDataCenterAccessCode { get { throw null; } }
         public string ReverseDataCenterAccessCode { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataCenterAddressContent
+    public partial class DataCenterAddressContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressContent>
     {
         public DataCenterAddressContent(Azure.Core.AzureLocation storageLocation, Azure.ResourceManager.DataBox.Models.DataBoxSkuName skuName) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName SkuName { get { throw null; } }
         public Azure.Core.AzureLocation StorageLocation { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataCenterAddressInstructionResult : Azure.ResourceManager.DataBox.Models.DataCenterAddressResult
+    public partial class DataCenterAddressInstructionResult : Azure.ResourceManager.DataBox.Models.DataCenterAddressResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult>
     {
         internal DataCenterAddressInstructionResult() { }
         public string CommunicationInstruction { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressInstructionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataCenterAddressLocationResult : Azure.ResourceManager.DataBox.Models.DataCenterAddressResult
+    public partial class DataCenterAddressLocationResult : Azure.ResourceManager.DataBox.Models.DataCenterAddressResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult>
     {
         internal DataCenterAddressLocationResult() { }
         public string AdditionalShippingInformation { get { throw null; } }
@@ -745,12 +1086,22 @@ namespace Azure.ResourceManager.DataBox.Models
         public string Street2 { get { throw null; } }
         public string Street3 { get { throw null; } }
         public string Zip { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressLocationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class DataCenterAddressResult
+    public abstract partial class DataCenterAddressResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressResult>
     {
         protected DataCenterAddressResult() { }
         public Azure.Core.AzureLocation? DataCenterAzureLocation { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedCarriersForReturnShipment { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataCenterAddressResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataCenterAddressResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DataCenterCode : System.IEquatable<Azure.ResourceManager.DataBox.Models.DataCenterCode>
@@ -827,72 +1178,122 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator !=(Azure.ResourceManager.DataBox.Models.DataCenterCode left, Azure.ResourceManager.DataBox.Models.DataCenterCode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataExportDetails
+    public partial class DataExportDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataExportDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataExportDetails>
     {
         public DataExportDetails(Azure.ResourceManager.DataBox.Models.TransferConfiguration transferConfiguration, Azure.ResourceManager.DataBox.Models.DataAccountDetails accountDetails) { }
         public Azure.ResourceManager.DataBox.Models.DataAccountDetails AccountDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.LogCollectionLevel? LogCollectionLevel { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.TransferConfiguration TransferConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataExportDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataExportDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataExportDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataExportDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataExportDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataExportDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataExportDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataImportDetails
+    public partial class DataImportDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataImportDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataImportDetails>
     {
         public DataImportDetails(Azure.ResourceManager.DataBox.Models.DataAccountDetails accountDetails) { }
         public Azure.ResourceManager.DataBox.Models.DataAccountDetails AccountDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.LogCollectionLevel? LogCollectionLevel { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.DataImportDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataImportDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataImportDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataImportDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataImportDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataImportDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataImportDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataLocationToServiceLocationMap
+    public partial class DataLocationToServiceLocationMap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap>
     {
         internal DataLocationToServiceLocationMap() { }
         public Azure.Core.AzureLocation? DataLocation { get { throw null; } }
         public Azure.Core.AzureLocation? ServiceLocation { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataLocationToServiceLocationMap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataTransferDetailsValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent
+    public partial class DataTransferDetailsValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent>
     {
         public DataTransferDetailsValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataExportDetails> DataExportDetails { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.DataImportDetails> DataImportDetails { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType TransferType { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataTransferDetailsValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult
+    public partial class DataTransferDetailsValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult>
     {
         internal DataTransferDetailsValidationResult() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DataTransferDetailsValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeviceErasureDetails
+    public partial class DeviceErasureDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DeviceErasureDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DeviceErasureDetails>
     {
         internal DeviceErasureDetails() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxStageStatus? DeviceErasureStatus { get { throw null; } }
         public string ErasureOrDestructionCertificateSasKey { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DeviceErasureDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DeviceErasureDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DeviceErasureDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DeviceErasureDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DeviceErasureDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DeviceErasureDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DeviceErasureDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DiskScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
+    public partial class DiskScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent>
     {
         public DiskScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation, int expectedDataSizeInTerabytes) : base (default(Azure.Core.AzureLocation)) { }
         public int ExpectedDataSizeInTerabytes { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.DiskScheduleAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportDiskDetails
+    public partial class ExportDiskDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ExportDiskDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ExportDiskDetails>
     {
         internal ExportDiskDetails() { }
         public string BackupManifestCloudPath { get { throw null; } }
         public string ManifestFile { get { throw null; } }
         public string ManifestHash { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.ExportDiskDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ExportDiskDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ExportDiskDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ExportDiskDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ExportDiskDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ExportDiskDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ExportDiskDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FilterFileDetails
+    public partial class FilterFileDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.FilterFileDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.FilterFileDetails>
     {
         public FilterFileDetails(Azure.ResourceManager.DataBox.Models.FilterFileType filterFileType, string filterFilePath) { }
         public string FilterFilePath { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.FilterFileType FilterFileType { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.FilterFileDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.FilterFileDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.FilterFileDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.FilterFileDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.FilterFileDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.FilterFileDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.FilterFileDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum FilterFileType
     {
         AzureBlob = 0,
         AzureFile = 1,
     }
-    public abstract partial class GranularCopyLogDetails
+    public abstract partial class GranularCopyLogDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails>
     {
         protected GranularCopyLogDetails() { }
+        Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyLogDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GranularCopyProgress
+    public partial class GranularCopyProgress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.GranularCopyProgress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyProgress>
     {
         internal GranularCopyProgress() { }
         public Azure.Core.ResourceIdentifier AccountId { get { throw null; } }
@@ -912,70 +1313,115 @@ namespace Azure.ResourceManager.DataBox.Models
         public long? TotalBytesToProcess { get { throw null; } }
         public long? TotalFilesToProcess { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType? TransferType { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.GranularCopyProgress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.GranularCopyProgress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.GranularCopyProgress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.GranularCopyProgress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyProgress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyProgress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.GranularCopyProgress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum HardwareEncryption
     {
         Enabled = 0,
         Disabled = 1,
     }
-    public partial class HeavyScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent
+    public partial class HeavyScheduleAvailabilityContent : Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent>
     {
         public HeavyScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation) : base (default(Azure.Core.AzureLocation)) { }
+        Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.HeavyScheduleAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ImportDiskDetails
+    public partial class ImportDiskDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ImportDiskDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ImportDiskDetails>
     {
         public ImportDiskDetails(string manifestFile, string manifestHash, string bitLockerKey) { }
         public string BackupManifestCloudPath { get { throw null; } }
         public string BitLockerKey { get { throw null; } set { } }
         public string ManifestFile { get { throw null; } set { } }
         public string ManifestHash { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.ImportDiskDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ImportDiskDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ImportDiskDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ImportDiskDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ImportDiskDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ImportDiskDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ImportDiskDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum JobDeliveryType
     {
         NonScheduled = 0,
         Scheduled = 1,
     }
-    public abstract partial class JobSecrets
+    public abstract partial class JobSecrets : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.JobSecrets>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.JobSecrets>
     {
         protected JobSecrets() { }
         public Azure.ResourceManager.DataBox.Models.DataCenterAccessSecurityCode DataCenterAccessSecurityCode { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.JobSecrets System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.JobSecrets>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.JobSecrets>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.JobSecrets System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.JobSecrets>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.JobSecrets>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.JobSecrets>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LastMitigationActionOnJob
+    public partial class LastMitigationActionOnJob : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob>
     {
         internal LastMitigationActionOnJob() { }
         public System.DateTimeOffset? ActionPerformedOn { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.CustomerResolutionCode? CustomerResolution { get { throw null; } }
         public bool? IsPerformedByCustomer { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.LastMitigationActionOnJob>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum LogCollectionLevel
     {
         Error = 0,
         Verbose = 1,
     }
-    public partial class ManagedDiskDetails : Azure.ResourceManager.DataBox.Models.DataAccountDetails
+    public partial class ManagedDiskDetails : Azure.ResourceManager.DataBox.Models.DataAccountDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ManagedDiskDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ManagedDiskDetails>
     {
         public ManagedDiskDetails(Azure.Core.ResourceIdentifier resourceGroupId, Azure.Core.ResourceIdentifier stagingStorageAccountId) { }
         public Azure.Core.ResourceIdentifier ResourceGroupId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StagingStorageAccountId { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.ManagedDiskDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ManagedDiskDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ManagedDiskDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ManagedDiskDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ManagedDiskDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ManagedDiskDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ManagedDiskDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MarkDevicesShippedContent
+    public partial class MarkDevicesShippedContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent>
     {
         public MarkDevicesShippedContent(Azure.ResourceManager.DataBox.Models.PackageCarrierInfo deliverToDataCenterPackageDetails) { }
         public Azure.ResourceManager.DataBox.Models.PackageCarrierInfo DeliverToDataCenterPackageDetails { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MarkDevicesShippedContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MitigateJobContent
+    public partial class MitigateJobContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.MitigateJobContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MitigateJobContent>
     {
         public MitigateJobContent() { }
         public MitigateJobContent(Azure.ResourceManager.DataBox.Models.CustomerResolutionCode customerResolutionCode) { }
         public Azure.ResourceManager.DataBox.Models.CustomerResolutionCode CustomerResolutionCode { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.DataBox.Models.CustomerResolutionCode> SerialNumberCustomerResolutionMap { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.MitigateJobContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.MitigateJobContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.MitigateJobContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.MitigateJobContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MitigateJobContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MitigateJobContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.MitigateJobContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NotificationPreference
+    public partial class NotificationPreference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.NotificationPreference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.NotificationPreference>
     {
         public NotificationPreference(Azure.ResourceManager.DataBox.Models.NotificationStageName stageName, bool sendNotification) { }
         public bool SendNotification { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.NotificationStageName StageName { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.NotificationPreference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.NotificationPreference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.NotificationPreference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.NotificationPreference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.NotificationPreference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.NotificationPreference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.NotificationPreference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NotificationStageName : System.IEquatable<Azure.ResourceManager.DataBox.Models.NotificationStageName>
@@ -1007,57 +1453,97 @@ namespace Azure.ResourceManager.DataBox.Models
         InputsRevisitRequired = 1,
         CertainInputValidationsSkipped = 2,
     }
-    public partial class PackageCarrierDetails
+    public partial class PackageCarrierDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageCarrierDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierDetails>
     {
         public PackageCarrierDetails() { }
         public string CarrierAccountNumber { get { throw null; } set { } }
         public string CarrierName { get { throw null; } set { } }
         public string TrackingId { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.PackageCarrierDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageCarrierDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageCarrierDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.PackageCarrierDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PackageCarrierInfo
+    public partial class PackageCarrierInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageCarrierInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierInfo>
     {
         public PackageCarrierInfo() { }
         public string CarrierName { get { throw null; } set { } }
         public string TrackingId { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.PackageCarrierInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageCarrierInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageCarrierInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.PackageCarrierInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageCarrierInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PackageShippingDetails
+    public partial class PackageShippingDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageShippingDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageShippingDetails>
     {
         internal PackageShippingDetails() { }
         public string CarrierName { get { throw null; } }
         public string TrackingId { get { throw null; } }
         public System.Uri TrackingUri { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.PackageShippingDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageShippingDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PackageShippingDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.PackageShippingDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageShippingDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageShippingDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PackageShippingDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PreferencesValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent
+    public partial class PreferencesValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationContent>
     {
         public PreferencesValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType) { }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxOrderPreferences Preference { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.PreferencesValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.PreferencesValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PreferencesValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult
+    public partial class PreferencesValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationResult>
     {
         internal PreferencesValidationResult() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.PreferencesValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.PreferencesValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.PreferencesValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RegionConfigurationContent
+    public partial class RegionConfigurationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>
     {
         public RegionConfigurationContent() { }
         public Azure.ResourceManager.DataBox.Models.DataCenterAddressContent DataCenterAddressRequest { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent ScheduleAvailabilityRequest { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName? TransportAvailabilityRequestSkuName { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.RegionConfigurationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.RegionConfigurationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RegionConfigurationResult
+    public partial class RegionConfigurationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>
     {
         internal RegionConfigurationResult() { }
         public Azure.ResourceManager.DataBox.Models.DataCenterAddressResult DataCenterAddressResponse { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<System.DateTimeOffset> ScheduleAvailabilityResponseAvailableDates { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails> TransportAvailabilityDetails { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.RegionConfigurationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.RegionConfigurationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.RegionConfigurationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReverseShippingDetails
+    public partial class ReverseShippingDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ReverseShippingDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ReverseShippingDetails>
     {
         public ReverseShippingDetails() { }
         public Azure.ResourceManager.DataBox.Models.ContactInfo ContactDetails { get { throw null; } set { } }
         public bool? IsUpdated { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.ReverseShippingDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ReverseShippingDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ReverseShippingDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ReverseShippingDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ReverseShippingDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ReverseShippingDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ReverseShippingDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ReverseShippingDetailsEditStatus
     {
@@ -1071,13 +1557,18 @@ namespace Azure.ResourceManager.DataBox.Models
         Disabled = 1,
         NotSupported = 2,
     }
-    public abstract partial class ScheduleAvailabilityContent
+    public abstract partial class ScheduleAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent>
     {
         protected ScheduleAvailabilityContent(Azure.Core.AzureLocation storageLocation) { }
         public string Country { get { throw null; } set { } }
         public Azure.Core.AzureLocation StorageLocation { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ScheduleAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareCredentialDetails
+    public partial class ShareCredentialDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails>
     {
         internal ShareCredentialDetails() { }
         public string Password { get { throw null; } }
@@ -1085,6 +1576,11 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.ShareDestinationFormatType? ShareType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.DataBox.Models.DataBoxAccessProtocol> SupportedAccessProtocols { get { throw null; } }
         public string UserName { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.ShareCredentialDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ShareCredentialDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShareCredentialDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ShareDestinationFormatType
     {
@@ -1095,25 +1591,40 @@ namespace Azure.ResourceManager.DataBox.Models
         AzureFile = 4,
         ManagedDisk = 5,
     }
-    public partial class ShipmentPickUpContent
+    public partial class ShipmentPickUpContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent>
     {
         public ShipmentPickUpContent(System.DateTimeOffset startOn, System.DateTimeOffset endOn, string shipmentLocation) { }
         public System.DateTimeOffset EndOn { get { throw null; } }
         public string ShipmentLocation { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.ShipmentPickUpContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuAvailabilityValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent
+    public partial class SkuAvailabilityValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent>
     {
         public SkuAvailabilityValidationContent(Azure.ResourceManager.DataBox.Models.DataBoxSkuName deviceType, Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType transferType, string country, Azure.Core.AzureLocation location) { }
         public string Country { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxSkuName DeviceType { get { throw null; } }
         public Azure.Core.AzureLocation Location { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.DataBoxJobTransferType TransferType { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuAvailabilityValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult
+    public partial class SkuAvailabilityValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult>
     {
         internal SkuAvailabilityValidationResult() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SkuAvailabilityValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SkuDisabledReason
     {
@@ -1124,65 +1635,105 @@ namespace Azure.ResourceManager.DataBox.Models
         OfferType = 4,
         NoSubscriptionInfo = 5,
     }
-    public partial class SubscriptionIsAllowedToCreateJobValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent
+    public partial class SubscriptionIsAllowedToCreateJobValidationContent : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent>
     {
         public SubscriptionIsAllowedToCreateJobValidationContent() { }
+        Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SubscriptionIsAllowedToCreateJobValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult
+    public partial class SubscriptionIsAllowedToCreateJobValidationResult : Azure.ResourceManager.DataBox.Models.DataBoxValidationInputResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult>
     {
         internal SubscriptionIsAllowedToCreateJobValidationResult() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxValidationStatus? Status { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.SubscriptionIsAllowedToCreateJobValidationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TransferAllDetails
+    public partial class TransferAllDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferAllDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferAllDetails>
     {
         public TransferAllDetails(Azure.ResourceManager.DataBox.Models.DataAccountType dataAccountType) { }
         public Azure.ResourceManager.DataBox.Models.DataAccountType DataAccountType { get { throw null; } set { } }
         public bool? TransferAllBlobs { get { throw null; } set { } }
         public bool? TransferAllFiles { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.TransferAllDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferAllDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferAllDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.TransferAllDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferAllDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferAllDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferAllDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TransferConfiguration
+    public partial class TransferConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferConfiguration>
     {
         public TransferConfiguration(Azure.ResourceManager.DataBox.Models.TransferConfigurationType transferConfigurationType) { }
         public Azure.ResourceManager.DataBox.Models.TransferAllDetails TransferAllDetailsInclude { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.TransferConfigurationType TransferConfigurationType { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.TransferFilterDetails TransferFilterDetailsInclude { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.TransferConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.TransferConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum TransferConfigurationType
     {
         TransferAll = 0,
         TransferUsingFilter = 1,
     }
-    public partial class TransferFilterDetails
+    public partial class TransferFilterDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferFilterDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferFilterDetails>
     {
         public TransferFilterDetails(Azure.ResourceManager.DataBox.Models.DataAccountType dataAccountType) { }
         public Azure.ResourceManager.DataBox.Models.AzureFileFilterDetails AzureFileFilterDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.BlobFilterDetails BlobFilterDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataAccountType DataAccountType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataBox.Models.FilterFileDetails> FilterFileDetails { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.TransferFilterDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferFilterDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransferFilterDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.TransferFilterDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferFilterDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferFilterDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransferFilterDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TransportAvailabilityDetails
+    public partial class TransportAvailabilityDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails>
     {
         internal TransportAvailabilityDetails() { }
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType? ShipmentType { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportAvailabilityDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TransportPreferences
+    public partial class TransportPreferences : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransportPreferences>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportPreferences>
     {
         public TransportPreferences(Azure.ResourceManager.DataBox.Models.TransportShipmentType preferredShipmentType) { }
         public bool? IsUpdated { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.TransportShipmentType PreferredShipmentType { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.TransportPreferences System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransportPreferences>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.TransportPreferences>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.TransportPreferences System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportPreferences>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportPreferences>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.TransportPreferences>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum TransportShipmentType
     {
         CustomerManaged = 0,
         MicrosoftManaged = 1,
     }
-    public partial class UnencryptedCredentials
+    public partial class UnencryptedCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.UnencryptedCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UnencryptedCredentials>
     {
         internal UnencryptedCredentials() { }
         public string JobName { get { throw null; } }
         public Azure.ResourceManager.DataBox.Models.JobSecrets JobSecrets { get { throw null; } }
+        Azure.ResourceManager.DataBox.Models.UnencryptedCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.UnencryptedCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.UnencryptedCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.UnencryptedCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UnencryptedCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UnencryptedCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UnencryptedCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpdateJobDetails
+    public partial class UpdateJobDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.UpdateJobDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UpdateJobDetails>
     {
         public UpdateJobDetails() { }
         public Azure.ResourceManager.DataBox.Models.DataBoxContactDetails ContactDetails { get { throw null; } set { } }
@@ -1191,5 +1742,10 @@ namespace Azure.ResourceManager.DataBox.Models
         public Azure.ResourceManager.DataBox.Models.PackageCarrierDetails ReturnToCustomerPackageDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.ReverseShippingDetails ReverseShippingDetails { get { throw null; } set { } }
         public Azure.ResourceManager.DataBox.Models.DataBoxShippingAddress ShippingAddress { get { throw null; } set { } }
+        Azure.ResourceManager.DataBox.Models.UpdateJobDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.UpdateJobDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataBox.Models.UpdateJobDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataBox.Models.UpdateJobDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UpdateJobDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UpdateJobDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataBox.Models.UpdateJobDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

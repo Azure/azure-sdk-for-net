@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Elastic.Models
     /// <summary> Properties specific to the monitor resource. </summary>
     public partial class MonitorProperties
     {
-        /// <summary> Initializes a new instance of MonitorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
         public MonitorProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of MonitorProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning state of the monitor resource. </param>
         /// <param name="monitoringStatus"> Flag specifying if the resource monitoring is enabled or disabled. </param>
         /// <param name="elasticProperties"> Elastic cloud properties. </param>

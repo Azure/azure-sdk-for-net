@@ -5,28 +5,65 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> ImageCleaner removes unused images from nodes, freeing up disk space and helping to reduce attack surface area. Here are settings for the security profile. </summary>
+    /// <summary> Image Cleaner removes unused images from nodes, freeing up disk space and helping to reduce attack surface area. Here are settings for the security profile. </summary>
     public partial class ManagedClusterSecurityProfileImageCleaner
     {
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileImageCleaner. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileImageCleaner"/>. </summary>
         public ManagedClusterSecurityProfileImageCleaner()
         {
         }
 
-        /// <summary> Initializes a new instance of ManagedClusterSecurityProfileImageCleaner. </summary>
-        /// <param name="isEnabled"> Whether to enable ImageCleaner on AKS cluster. </param>
-        /// <param name="intervalHours"> ImageCleaner scanning interval. </param>
-        internal ManagedClusterSecurityProfileImageCleaner(bool? isEnabled, int? intervalHours)
+        /// <summary> Initializes a new instance of <see cref="ManagedClusterSecurityProfileImageCleaner"/>. </summary>
+        /// <param name="isEnabled"> Whether to enable Image Cleaner on AKS cluster. </param>
+        /// <param name="intervalHours"> Image Cleaner scanning interval in hours. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedClusterSecurityProfileImageCleaner(bool? isEnabled, int? intervalHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             IntervalHours = intervalHours;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Whether to enable ImageCleaner on AKS cluster. </summary>
+        /// <summary> Whether to enable Image Cleaner on AKS cluster. </summary>
         public bool? IsEnabled { get; set; }
-        /// <summary> ImageCleaner scanning interval. </summary>
+        /// <summary> Image Cleaner scanning interval in hours. </summary>
         public int? IntervalHours { get; set; }
     }
 }

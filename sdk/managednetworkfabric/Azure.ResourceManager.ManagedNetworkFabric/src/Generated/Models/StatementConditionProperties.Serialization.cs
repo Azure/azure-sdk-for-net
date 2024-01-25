@@ -16,6 +16,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(RoutePolicyConditionType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(RoutePolicyConditionType.Value.ToString());
+            }
             if (Optional.IsDefined(IPPrefixId))
             {
                 writer.WritePropertyName("ipPrefixId"u8);
@@ -27,6 +32,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPExtendedCommunityIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -37,6 +47,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPCommunityIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -50,14 +65,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<string> ipPrefixId = default;
-            Optional<IList<string>> ipExtendedCommunityIds = default;
-            Optional<IList<string>> ipCommunityIds = default;
+            Optional<RoutePolicyConditionType> type = default;
+            Optional<ResourceIdentifier> ipPrefixId = default;
+            Optional<IList<ResourceIdentifier>> ipExtendedCommunityIds = default;
+            Optional<IList<ResourceIdentifier>> ipCommunityIds = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("type"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    type = new RoutePolicyConditionType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("ipPrefixId"u8))
                 {
-                    ipPrefixId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ipPrefixId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("ipExtendedCommunityIds"u8))
@@ -66,10 +95,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     ipExtendedCommunityIds = array;
                     continue;
@@ -80,16 +116,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<string> array = new List<string>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(new ResourceIdentifier(item.GetString()));
+                        }
                     }
                     ipCommunityIds = array;
                     continue;
                 }
             }
-            return new StatementConditionProperties(Optional.ToList(ipCommunityIds), ipPrefixId.Value, Optional.ToList(ipExtendedCommunityIds));
+            return new StatementConditionProperties(Optional.ToList(ipCommunityIds), Optional.ToNullable(type), ipPrefixId.Value, Optional.ToList(ipExtendedCommunityIds));
         }
     }
 }

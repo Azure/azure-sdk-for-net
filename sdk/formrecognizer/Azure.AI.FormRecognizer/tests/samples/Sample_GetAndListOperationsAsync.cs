@@ -55,21 +55,26 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
 
             if (operationDetails.Status == DocumentOperationStatus.Succeeded)
             {
-                Console.WriteLine($"My {operationDetails.Kind} operation is completed.");
+                Console.WriteLine($"My {operationDetails.Kind} operation is complete.");
 
-                // Extract the result based on the kind of operation. Currently only Build, CopyTo, and
-                // Compose operations are supported.
-                DocumentModelDetails result = operationDetails switch
+                // Extract the result based on the kind of operation.
+                switch (operationDetails)
                 {
-                    DocumentModelBuildOperationDetails buildOp => buildOp.Result,
-                    DocumentModelCopyToOperationDetails copyToOp => copyToOp.Result,
-                    DocumentModelComposeOperationDetails composeOp => composeOp.Result,
-                    _ => null
-                };
+                    case DocumentModelBuildOperationDetails modelOperation:
+                        Console.WriteLine($"Model ID: {modelOperation.Result.ModelId}");
+                        break;
 
-                if (result != null)
-                {
-                    Console.WriteLine($"Model ID: {result.ModelId}");
+                    case DocumentModelCopyToOperationDetails modelOperation:
+                        Console.WriteLine($"Model ID: {modelOperation.Result.ModelId}");
+                        break;
+
+                    case DocumentModelComposeOperationDetails modelOperation:
+                        Console.WriteLine($"Model ID: {modelOperation.Result.ModelId}");
+                        break;
+
+                    case DocumentClassifierBuildOperationDetails classifierOperation:
+                        Console.WriteLine($"Classifier ID: {classifierOperation.Result.ClassifierId}");
+                        break;
                 }
             }
             else if (operationDetails.Status == DocumentOperationStatus.Failed)

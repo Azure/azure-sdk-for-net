@@ -11,18 +11,22 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    /// <summary> A class representing a collection of <see cref="TenantResource" /> and their operations. </summary>
+    /// <summary> A class representing a collection of <see cref="TenantResource"/> and their operations. </summary>
     public partial class TenantCollection : ArmCollection, IEnumerable<TenantResource>, IAsyncEnumerable<TenantResource>
     {
         private readonly ClientDiagnostics _tenantClientDiagnostics;
         private readonly TenantsRestOperations _tenantRestClient;
+        private readonly ClientDiagnostics _defaultClientDiagnostics;
+        private readonly ResourceManagementRestOperations _defaultRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="TenantCollection"/> class for mocking. </summary>
         protected TenantCollection()
@@ -37,6 +41,8 @@ namespace Azure.ResourceManager.Resources
             _tenantClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", TenantResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(TenantResource.ResourceType, out string tenantApiVersion);
             _tenantRestClient = new TenantsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, tenantApiVersion);
+            _defaultClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _defaultRestClient = new ResourceManagementRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -59,15 +65,23 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tenants_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="TenantResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="TenantResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TenantResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,15 +95,93 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Tenants_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="TenantResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="TenantResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TenantResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _tenantRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _tenantRestClient.CreateListNextPageRequest(nextLink);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TenantResource(Client, TenantData.DeserializeTenantData(e)), _tenantClientDiagnostics, Pipeline, "TenantCollection.GetAll", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// A resource name is valid if it is not a reserved word, does not contains a reserved word and does not start with a reserved word
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/checkResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>checkResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Resource object with values for resource name and resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ResourceNameValidationResult>> CheckResourceNameAsync(ResourceNameValidationContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _defaultClientDiagnostics.CreateScope("TenantCollection.CheckResourceName");
+            scope.Start();
+            try
+            {
+                var response = await _defaultRestClient.CheckResourceNameAsync(content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// A resource name is valid if it is not a reserved word, does not contains a reserved word and does not start with a reserved word
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Resources/checkResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>checkResourceName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Resource object with values for resource name and resource type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ResourceNameValidationResult> CheckResourceName(ResourceNameValidationContent content = null, CancellationToken cancellationToken = default)
+        {
+            using var scope = _defaultClientDiagnostics.CreateScope("TenantCollection.CheckResourceName");
+            scope.Start();
+            try
+            {
+                var response = _defaultRestClient.CheckResourceName(content, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         IEnumerator<TenantResource> IEnumerable<TenantResource>.GetEnumerator()

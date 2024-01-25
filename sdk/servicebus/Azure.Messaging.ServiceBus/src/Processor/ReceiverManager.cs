@@ -29,7 +29,8 @@ namespace Azure.Messaging.ServiceBus
         protected readonly ServiceBusProcessorOptions ProcessorOptions;
         private readonly MessagingClientDiagnostics _clientDiagnostics;
 
-        protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero;
+        protected bool AutoRenewLock => ProcessorOptions.MaxAutoLockRenewalDuration > TimeSpan.Zero ||
+                                        ProcessorOptions.MaxAutoLockRenewalDuration == Timeout.InfiniteTimeSpan;
 
         public ReceiverManager(
             ServiceBusProcessor processor,

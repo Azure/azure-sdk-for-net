@@ -2,15 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
+using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 {
     /// <summary>
     /// EventSource for the AzureMonitorExporter.
     /// EventSource Guid at Runtime: bb5be13f-ec3a-5ab2-6a6a-0f881d6e0d5b.
+    /// (This guid can be found by debugging this class and inspecting the "Log" singleton and reading the "Guid" property).
     /// </summary>
     /// <remarks>
     /// PerfView Instructions:
@@ -36,7 +39,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         internal const string EventSourceName = "OpenTelemetry-AzureMonitor-Exporter";
 
         internal static readonly AzureMonitorExporterEventSource Log = new AzureMonitorExporterEventSource();
+#if DEBUG
         internal static readonly AzureMonitorExporterEventListener Listener = new AzureMonitorExporterEventListener();
+#endif
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -83,7 +88,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                         isAadEnabled: isAadEnabled,
                         instrumentationKey: connectionVars.InstrumentationKey,
                         configuredEndpoint: connectionVars.IngestionEndpoint,
-                        actualEndpoint: requestEndpoint);
+                        actualEndpoint: requestEndpoint ?? "null");
                 }
                 else
                 {
@@ -97,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                             isAadEnabled: isAadEnabled,
                             instrumentationKey: connectionVars.InstrumentationKey,
                             configuredEndpoint: connectionVars.IngestionEndpoint,
-                            actualEndpoint: requestEndpoint);
+                            actualEndpoint: requestEndpoint ?? "null");
                     }
                 }
             }
@@ -111,12 +116,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
                     isAadEnabled: isAadEnabled,
                     instrumentationKey: connectionVars.InstrumentationKey,
                     configuredEndpoint: connectionVars.IngestionEndpoint,
-                    actualEndpoint: requestEndpoint);
+                    actualEndpoint: requestEndpoint ?? "null");
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(8, Message = "Transmission failed. StatusCode: {0}. Error from Ingestion: {1}. Action: {2}. Origin: {3}. AAD Enabled: {4}. Instrumentation Key: {5}. Configured Endpoint: {6}. Actual Endpoint: {7}", Level = EventLevel.Critical)]
-        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, bool isAadEnabled, string instrumentationKey, string configuredEndpoint, string? actualEndpoint)
+        public void TransmissionFailed(int statusCode, string errorMessage, string action, string origin, bool isAadEnabled, string instrumentationKey, string configuredEndpoint, string actualEndpoint)
             => WriteEvent(8, statusCode, errorMessage, action, origin, isAadEnabled, instrumentationKey, configuredEndpoint, actualEndpoint);
 
         [Event(9, Message = "{0} has been disposed.", Level = EventLevel.Informational)]
@@ -131,7 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
-        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. If not hosted in an Azure VM this can safely be ignored. {0}", Level = EventLevel.Informational)]
+        [Event(10, Message = "Failed to get Azure VM Metadata due to an exception. This is only for internal telemetry and can safely be ignored. {0}", Level = EventLevel.Informational)]
         public void VmMetadataFailed(string exceptionMessage) => WriteEvent(10, exceptionMessage);
 
         [NonEvent]
@@ -209,6 +215,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         [Event(17, Message = "Failed to extract Activity Event due to an exception. This telemetry item will be lost. ActivitySource: {0}. Activity: {1}. {2}", Level = EventLevel.Error)]
         public void FailedToExtractActivityEvent(string activitySourceName, string activityDisplayName, string exceptionMessage) => WriteEvent(17, activitySourceName, activityDisplayName, exceptionMessage);
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(18, Message = "Maximum count of {0} Activity Links reached. Excess Links are dropped. ActivitySource: {1}. Activity: {2}.", Level = EventLevel.Warning)]
         public void ActivityLinksIgnored(int maxLinksAllowed, string activitySourceName, string activityDisplayName) => WriteEvent(18, maxLinksAllowed, activitySourceName, activityDisplayName);
 
@@ -275,9 +282,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
+        [NonEvent]
+        public void ErrorAddingActivityTagsAsCustomProperties(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                ErrorAddingActivityTagsAsCustomProperties(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(25, Message = "Failed to transmit from storage due to an exception. AAD Enabled: {0}. Instrumentation Key: {1}. {2}", Level = EventLevel.Error)]
         public void FailedToTransmitFromStorage(bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(25, isAadEnabled, instrumentationKey, exceptionMessage);
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(26, Message = "Successfully transmitted a blob from storage. AAD Enabled: {0}. Instrumentation Key: {1}", Level = EventLevel.Verbose)]
         public void TransmitFromStorageSuccess(bool isAadEnabled, string instrumentationKey) => WriteEvent(26, isAadEnabled, instrumentationKey);
 
@@ -323,6 +341,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(32, Message = "Successfully transmitted a batch of telemetry Items. Origin: {0}. AAD: {1}. Instrumentation Key: {2}", Level = EventLevel.Verbose)]
         public void TransmissionSuccess(string origin, bool isAadEnabled, string instrumentationKey) => WriteEvent(32, origin, isAadEnabled, instrumentationKey);
 
@@ -335,9 +354,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
             }
         }
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(33, Message = "Transmitter failed due to an exception. Origin: {0}. AAD: {1}. Instrumentation Key: {2}. {3}", Level = EventLevel.Error)]
         public void TransmitterFailed(string origin, bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(33, origin, isAadEnabled, instrumentationKey, exceptionMessage);
 
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
         [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
         public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);
 
@@ -352,5 +373,75 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(35, Message = "Failed to deserialize response from ingestion due to an exception. Not user actionable. {0}", Level = EventLevel.Warning)]
         public void FailedToDeserializeIngestionResponse(string exceptionMessage) => WriteEvent(35, exceptionMessage);
+
+        [Event(36, Message = "Version string exceeds expected length. This is only for internal telemetry and can safely be ignored. Type Name: {0}. Version: {1}", Level = EventLevel.Verbose)]
+        public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(36, typeName, value);
+
+        [Event(37, Message = "Failed to delete telemetry from storage. This may result in duplicate telemetry if the file is processed again. Not user actionable.", Level = EventLevel.Warning)]
+        public void DeletedFailed() => WriteEvent(37);
+
+        [NonEvent]
+        public void PartialContentResponseInvalid(int totalTelemetryItems, TelemetryErrorDetails error)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                PartialContentResponseInvalid(totalTelemetryItems, error.Index?.ToString() ?? "N/A", error.StatusCode?.ToString() ?? "N/A", error.Message);
+            }
+        }
+
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
+        [Event(38, Message = "Received a partial success from ingestion that does not match telemetry that was sent. Total telemetry items sent: {0}. Error Index: {1}. Error StatusCode: {2}. Error Message: {3}", Level = EventLevel.Warning)]
+        public void PartialContentResponseInvalid(int totalTelemetryItems, string errorIndex, string errorStatusCode, string errorMessage) => WriteEvent(38, totalTelemetryItems, errorIndex, errorStatusCode, errorMessage);
+
+        [NonEvent]
+        public void PartialContentResponseUnhandled(TelemetryErrorDetails error)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                PartialContentResponseUnhandled(error.StatusCode?.ToString() ?? "N/A", error.Message);
+            }
+        }
+
+        [Event(39, Message = "Received a partial success from ingestion. This status code is not handled and telemetry will be lost. Error StatusCode: {0}. Error Message: {1}", Level = EventLevel.Warning)]
+        public void PartialContentResponseUnhandled(string errorStatusCode, string errorMessage) => WriteEvent(39, errorStatusCode, errorMessage);
+
+        [NonEvent]
+        public void FailedToAddScopeItem(string key, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToAddScopeItem(key, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(40, Message = "An exception {1} occurred while adding the scope value associated with the key {0}", Level = EventLevel.Warning)]
+        public void FailedToAddScopeItem(string key, string exceptionMessage) => WriteEvent(40, key, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToAddLogAttribute(string key, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToAddLogAttribute(key, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(41, Message = "An exception {1} occurred while adding the log attribute associated with the key {0}", Level = EventLevel.Warning)]
+        public void FailedToAddLogAttribute(string key, string exceptionMessage) => WriteEvent(41, key, exceptionMessage);
+
+        [NonEvent]
+        public void FailedToReadEnvironmentVariables(Exception ex)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                FailedToReadEnvironmentVariables(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(42, Message = "Failed to read environment variables due to an exception. This may prevent the Exporter from initializing. {0}", Level = EventLevel.Warning)]
+        public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(42, errorMessage);
+
+        [Event(43, Message = "Error while adding activity tags as custom property: {0}", Level = EventLevel.Warning)]
+        public void ErrorAddingActivityTagsAsCustomProperties(string errorMessage) => WriteEvent(43, errorMessage);
     }
 }

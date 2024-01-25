@@ -5,28 +5,22 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.ResourceManager.ResourceMover.Models
 {
     /// <summary> Defines the key vault resource settings. </summary>
     public partial class KeyVaultResourceSettings : MoverResourceSettings
     {
-        /// <summary> Initializes a new instance of KeyVaultResourceSettings. </summary>
-        /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetResourceName"/> is null. </exception>
-        public KeyVaultResourceSettings(string targetResourceName) : base(targetResourceName)
+        /// <summary> Initializes a new instance of <see cref="KeyVaultResourceSettings"/>. </summary>
+        public KeyVaultResourceSettings()
         {
-            Argument.AssertNotNull(targetResourceName, nameof(targetResourceName));
-
             ResourceType = "Microsoft.KeyVault/vaults";
         }
 
-        /// <summary> Initializes a new instance of KeyVaultResourceSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultResourceSettings"/>. </summary>
         /// <param name="resourceType"> The resource type. For example, the value can be Microsoft.Compute/virtualMachines. </param>
         /// <param name="targetResourceName"> Gets or sets the target Resource name. </param>
-        internal KeyVaultResourceSettings(string resourceType, string targetResourceName) : base(resourceType, targetResourceName)
+        /// <param name="targetResourceGroupName"> Gets or sets the target resource group name. </param>
+        internal KeyVaultResourceSettings(string resourceType, string targetResourceName, string targetResourceGroupName) : base(resourceType, targetResourceName, targetResourceGroupName)
         {
             ResourceType = resourceType ?? "Microsoft.KeyVault/vaults";
         }

@@ -15,13 +15,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> The BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
     public partial class BackupResourceEncryptionConfigExtendedCreateOrUpdateContent : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/>. </summary>
         /// <param name="location"> The location. </param>
         public BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of BackupResourceEncryptionConfigExtendedCreateOrUpdateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupResourceEncryptionConfigExtendedCreateOrUpdateContent"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

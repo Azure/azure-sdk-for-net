@@ -1,17 +1,7 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
-pr:
-  branches:
-    include:
-    - main
-    - feature/*
-    - hotfix/*
-    - release/*
-  paths:
-    include:
-    - sdk/hybriddatamanager/ci.mgmt.yml
-    - sdk/hybriddatamanager/Azure.ResourceManager.HybridData/
+pr: none
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -19,5 +9,3 @@ extends:
     ServiceDirectory: hybriddatamanager
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.HybridData
-      safeName: AzureResourceManagerHybridData

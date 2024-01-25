@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.Grafana
 {
     /// <summary>
     /// A Class representing a GrafanaPrivateLinkResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GrafanaPrivateLinkResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGrafanaPrivateLinkResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagedGrafanaResource" /> using the GetGrafanaPrivateLinkResource method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GrafanaPrivateLinkResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGrafanaPrivateLinkResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagedGrafanaResource"/> using the GetGrafanaPrivateLinkResource method.
     /// </summary>
     public partial class GrafanaPrivateLinkResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GrafanaPrivateLinkResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="workspaceName"> The workspaceName. </param>
+        /// <param name="privateLinkResourceName"> The privateLinkResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string privateLinkResourceName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Dashboard/grafana/{workspaceName}/privateLinkResources/{privateLinkResourceName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.Grafana
         private readonly PrivateLinkResourcesRestOperations _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly GrafanaPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateLinkResource"/> class for mocking. </summary>
         protected GrafanaPrivateLinkResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GrafanaPrivateLinkResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateLinkResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GrafanaPrivateLinkResource(ArmClient client, GrafanaPrivateLinkResourceData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.Grafana
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

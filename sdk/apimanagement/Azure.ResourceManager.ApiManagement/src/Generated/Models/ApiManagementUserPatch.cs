@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,63 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> User update parameters. </summary>
     public partial class ApiManagementUserPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementUserPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserPatch"/>. </summary>
         public ApiManagementUserPatch()
         {
             Identities = new ChangeTrackingList<UserIdentityContract>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementUserPatch"/>. </summary>
+        /// <param name="state"> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </param>
+        /// <param name="note"> Optional note about a user set by the administrator. </param>
+        /// <param name="identities"> Collection of user identities. </param>
+        /// <param name="email"> Email address. Must not be empty and must be unique within the service instance. </param>
+        /// <param name="password"> User Password. </param>
+        /// <param name="firstName"> First name. </param>
+        /// <param name="lastName"> Last name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementUserPatch(ApiManagementUserState? state, string note, IList<UserIdentityContract> identities, string email, string password, string firstName, string lastName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            State = state;
+            Note = note;
+            Identities = identities;
+            Email = email;
+            Password = password;
+            FirstName = firstName;
+            LastName = lastName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Account state. Specifies whether the user is active or not. Blocked users are unable to sign into the developer portal or call any APIs of subscribed products. Default state is Active. </summary>

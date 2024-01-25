@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.MobileNetwork
             writer.WriteStartObject();
             writer.WritePropertyName("userPlaneAccessInterface"u8);
             writer.WriteObjectValue(UserPlaneAccessInterface);
+            if (Optional.IsCollectionDefined(UserPlaneAccessVirtualIPv4Addresses))
+            {
+                writer.WritePropertyName("userPlaneAccessVirtualIpv4Addresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in UserPlaneAccessVirtualIPv4Addresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             writer.WriteEndObject();
         }
@@ -51,8 +61,9 @@ namespace Azure.ResourceManager.MobileNetwork
             string name = default;
             ResourceType type = default;
             Optional<SystemData> systemData = default;
-            Optional<ProvisioningState> provisioningState = default;
-            InterfaceProperties userPlaneAccessInterface = default;
+            Optional<MobileNetworkProvisioningState> provisioningState = default;
+            MobileNetworkInterfaceProperties userPlaneAccessInterface = default;
+            Optional<IList<string>> userPlaneAccessVirtualIPv4Addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -113,19 +124,33 @@ namespace Azure.ResourceManager.MobileNetwork
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new MobileNetworkProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("userPlaneAccessInterface"u8))
                         {
-                            userPlaneAccessInterface = InterfaceProperties.DeserializeInterfaceProperties(property0.Value);
+                            userPlaneAccessInterface = MobileNetworkInterfaceProperties.DeserializeMobileNetworkInterfaceProperties(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("userPlaneAccessVirtualIpv4Addresses"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            userPlaneAccessVirtualIPv4Addresses = array;
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new PacketCoreDataPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneAccessInterface);
+            return new PacketCoreDataPlaneData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(provisioningState), userPlaneAccessInterface, Optional.ToList(userPlaneAccessVirtualIPv4Addresses));
         }
     }
 }

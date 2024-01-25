@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("maxSizeBytes"u8);
                 writer.WriteNumberValue(MaxSizeBytes.Value);
             }
+            if (Optional.IsDefined(MinCapacity))
+            {
+                writer.WritePropertyName("minCapacity"u8);
+                writer.WriteNumberValue(MinCapacity.Value);
+            }
             if (Optional.IsDefined(PerDatabaseSettings))
             {
                 writer.WritePropertyName("perDatabaseSettings"u8);
@@ -62,6 +67,16 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("highAvailabilityReplicaCount"u8);
                 writer.WriteNumberValue(HighAvailabilityReplicaCount.Value);
+            }
+            if (Optional.IsDefined(PreferredEnclaveType))
+            {
+                writer.WritePropertyName("preferredEnclaveType"u8);
+                writer.WriteStringValue(PreferredEnclaveType.Value.ToString());
+            }
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                writer.WritePropertyName("availabilityZone"u8);
+                writer.WriteStringValue(AvailabilityZone.Value.ToString());
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

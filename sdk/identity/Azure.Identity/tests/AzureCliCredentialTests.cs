@@ -3,6 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -32,7 +34,7 @@ namespace Azure.Identity.Tests
             {
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 TenantId = config.TenantId,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
             var (_, _, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
             var testProcess = new TestProcess { Output = processOutput };
@@ -47,7 +49,7 @@ namespace Azure.Identity.Tests
         {
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AdditionallyAllowedTenants = { TenantIdHint } };
-            string expectedTenantId = TenantIdResolver.Resolve(explicitTenantId, context, TenantIdResolver.AllTenants);
+            string expectedTenantId = TenantIdResolverBase.Default.Resolve(explicitTenantId, context, TenantIdResolverBase.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
             var testProcess = new TestProcess { Output = processOutput };
@@ -70,16 +72,28 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task AuthenticateWithCliCredential_ExpiresIn()
+        public async Task AuthenticateWithCliCredential_expires_on()
         {
-            var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCliExpiresIn(1800);
+            var now = DateTimeOffset.UtcNow;
+            DateTimeOffset expectedExpiresOn = new DateTimeOffset(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, TimeSpan.Zero).AddHours(1);
+            var (expectedToken1, processOutput1) = CredentialTestHelpers.CreateTokenForAzureCliExpiresOn(expectedExpiresOn, true);
+            var (expectedToken2, processOutput2) = CredentialTestHelpers.CreateTokenForAzureCliExpiresOn(expectedExpiresOn, false);
 
-            var testProcess = new TestProcess { Output = processOutput };
+            var testProcess = new TestProcess { Output = processOutput1 };
             AzureCliCredential credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
-            AccessToken actualToken = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+            AccessToken actualToken1 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
 
-            Assert.AreEqual(expectedToken, actualToken.Token);
-            Assert.LessOrEqual(expectedExpiresOn, actualToken.ExpiresOn);
+            Assert.AreEqual(expectedToken1, actualToken1.Token, "The tokens should match.");
+            Assert.AreEqual(expectedExpiresOn, actualToken1.ExpiresOn, "The expires on value should be the same for token1.");
+
+            testProcess = new TestProcess { Output = processOutput2 };
+            credential = InstrumentClient(new AzureCliCredential(CredentialPipeline.GetInstance(null), new TestProcessService(testProcess)));
+            AccessToken actualToken2 = await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default));
+
+            Assert.AreEqual(expectedToken2, actualToken2.Token);
+            Assert.AreEqual(expectedExpiresOn, actualToken2.ExpiresOn, "The expires on value should be the same for token2.");
+
+            Assert.AreEqual(actualToken1.ExpiresOn, actualToken2.ExpiresOn);
         }
 
         [Test]
@@ -147,6 +161,59 @@ namespace Azure.Identity.Tests
                 ex = Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
             }
             Assert.AreEqual(AzureCliCredential.AzureCliTimeoutError, ex.Message);
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyCtorTenantIdValidation(char testChar)
+        {
+            string tenantId = Guid.NewGuid().ToString();
+
+            for (int i = 0; i < tenantId.Length; i++)
+            {
+                StringBuilder tenantIdBuilder = new StringBuilder(tenantId);
+
+                tenantIdBuilder.Insert(i, testChar);
+
+                Assert.Throws<ArgumentException>(() => new AzureCliCredential(new AzureCliCredentialOptions { TenantId = tenantIdBuilder.ToString() }), Validations.InvalidTenantIdErrorMessage);
+            }
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyGetTokenTenantIdValidation(char testChar)
+        {
+            AzureCliCredential credential = InstrumentClient(new AzureCliCredential());
+
+            string tenantId = Guid.NewGuid().ToString();
+
+            for (int i = 0; i < tenantId.Length; i++)
+            {
+                StringBuilder tenantIdBuilder = new StringBuilder(tenantId);
+
+                tenantIdBuilder.Insert(i, testChar);
+
+                var tokenRequestContext = new TokenRequestContext(MockScopes.Default, tenantId: tenantIdBuilder.ToString());
+
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), Validations.InvalidTenantIdErrorMessage);
+            }
+        }
+
+        [TestCaseSource(nameof(NegativeTestCharacters))]
+        public void VerifyGetTokenScopeValidation(char testChar)
+        {
+            AzureCliCredential credential = InstrumentClient(new AzureCliCredential());
+
+            string scope = MockScopes.Default.ToString();
+
+            for (int i = 0; i < scope.Length; i++)
+            {
+                StringBuilder scopeBuilder = new StringBuilder(scope);
+
+                scopeBuilder.Insert(i, testChar);
+
+                var tokenRequestContext = new TokenRequestContext(new string[] { scopeBuilder.ToString() });
+
+                Assert.ThrowsAsync<AuthenticationFailedException>(async () => await credential.GetTokenAsync(tokenRequestContext), ScopeUtilities.InvalidScopeMessage);
+            }
         }
     }
 }

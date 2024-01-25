@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.3 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -10,12 +10,51 @@
 
 ### Other Changes
 
-## 1.2.0-beta.2 (2023-06-02)
+## 1.2.0-beta.5 (2024-01-15)
+
+### Features Added
+
+- Switch to use tag `package-dotnet-sdk` for autorest generation
+- Add `securityConnectorsDevOps` at `2023-09-01-preview`
+- Add `apiCollections` at `2023-11-15`
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Breaking Changes
+
+- Removed IngestionSettings (deprecated)
 
 ### Other Changes
 
+- Upgraded Azure.Core from 1.36.0 to 1.37.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.0
+
+## 1.2.0-beta.4 (2023-11-30)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0-beta.3 (2023-09-18)
+
+### Features Added
+
+- Bump api-version of `Pricings` to `2023-03-01`.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.32.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
+
+## 1.2.0-beta.2 (2023-06-02)
+
+### Features Added
+
 - Bump api-version of `SqlVulnerabilityAssessmentsScanOperations` to `2023-02-01-preview`.
-- Bump api-version of `sqlVulnerabilityAssessmentsScanResultsOperations` to `2023-02-01-preview`.
+- Bump api-version of `SqlVulnerabilityAssessmentsScanResultsOperations` to `2023-02-01-preview`.
 - Bump api-version of `SqlVulnerabilityAssessmentsBaselineRuleOperations` to `2023-02-01-preview`.
 
 ## 1.2.0-beta.1 (2023-05-31)

@@ -6,8 +6,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core.Json;
@@ -20,6 +22,10 @@ namespace Azure.Core.Serialization
     /// This and related types are not intended to be mocked.
     /// </summary>
     [DebuggerDisplay("{DebuggerDisplay,nq}")]
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+    [RequiresUnreferencedCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+    [RequiresDynamicCode(MutableJsonDocument.SerializationRequiresUnreferencedCodeClass)]
+#endif
     [JsonConverter(typeof(DynamicDataJsonConverter))]
     public sealed partial class DynamicData : IDisposable
     {
@@ -32,6 +38,8 @@ namespace Azure.Core.Serialization
         private MutableJsonElement _element;
         private readonly DynamicDataOptions _options;
         private readonly JsonSerializerOptions _serializerOptions;
+
+        internal const string SerializationRequiresUnreferencedCodeClass = "This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.";
 
         internal DynamicData(MutableJsonElement element, DynamicDataOptions options)
         {
@@ -147,12 +155,12 @@ namespace Azure.Core.Serialization
             if (_options.PropertyNameFormat == JsonPropertyNames.UseExact ||
                 _element.TryGetProperty(name, out MutableJsonElement _))
             {
-                _element = _element.SetProperty(name, value);
+                SetPropertyInternal(name, value);
                 return null;
             }
 
             // The dynamic content has a specified property name format.
-            _element = _element.SetProperty(FormatPropertyName(name), value);
+            SetPropertyInternal(FormatPropertyName(name), value);
 
             // Binding machinery expects the call site signature to return an object
             return null;
@@ -166,11 +174,8 @@ namespace Azure.Core.Serialization
             _ => false
         };
 
-        private object ConvertType(object value)
-        {
-            byte[] bytes = JsonSerializer.SerializeToUtf8Bytes(value, _serializerOptions);
-            return JsonDocument.Parse(bytes);
-        }
+        private JsonElement ConvertType(object value) =>
+            MutableJsonElement.SerializeToJsonElement(value, _serializerOptions);
 
         private object? SetViaIndexer(object index, object value)
         {
@@ -179,15 +184,145 @@ namespace Azure.Core.Serialization
             switch (index)
             {
                 case string propertyName:
-                    _element = _element.SetProperty(propertyName, value);
+                    SetPropertyInternal(propertyName, value);
                     return null;
                 case int arrayIndex:
                     MutableJsonElement element = _element.GetIndexElement(arrayIndex);
-                    element.Set(value);
+                    SetInternal(ref element, value);
                     return new DynamicData(element, _options);
             }
 
             throw new InvalidOperationException($"Tried to access indexer with an unsupported index type: {index}");
+        }
+
+        private void SetPropertyInternal(string name, object value)
+        {
+            switch (value)
+            {
+                case bool b:
+                    _element = _element.SetProperty(name, b);
+                    break;
+                case string s:
+                    _element = _element.SetProperty(name, s);
+                    break;
+                case byte b:
+                    _element = _element.SetProperty(name, b);
+                    break;
+                case sbyte sb:
+                    _element = _element.SetProperty(name, sb);
+                    break;
+                case short sh:
+                    _element = _element.SetProperty(name, sh);
+                    break;
+                case ushort us:
+                    _element = _element.SetProperty(name, us);
+                    break;
+                case int i:
+                    _element = _element.SetProperty(name, i);
+                    break;
+                case uint u:
+                    _element = _element.SetProperty(name, u);
+                    break;
+                case long l:
+                    _element = _element.SetProperty(name, l);
+                    break;
+                case ulong ul:
+                    _element = _element.SetProperty(name, ul);
+                    break;
+                case float f:
+                    _element = _element.SetProperty(name, f);
+                    break;
+                case double d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case decimal d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case DateTime d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case DateTimeOffset d:
+                    _element = _element.SetProperty(name, d);
+                    break;
+                case Guid g:
+                    _element = _element.SetProperty(name, g);
+                    break;
+                case null:
+                    _element = _element.SetPropertyNull(name);
+                    break;
+                case JsonElement e:
+                    _element = _element.SetProperty(name, e);
+                    break;
+                default:
+                    JsonElement element = ConvertType(value);
+                    _element = _element.SetProperty(name, element);
+                    break;
+            }
+        }
+
+        private void SetInternal(ref MutableJsonElement element, object value)
+        {
+            switch (value)
+            {
+                case bool b:
+                    element.Set(b);
+                    break;
+                case string s:
+                    element.Set(s);
+                    break;
+                case byte b:
+                    element.Set(b);
+                    break;
+                case sbyte sb:
+                    element.Set(sb);
+                    break;
+                case short sh:
+                    element.Set(sh);
+                    break;
+                case ushort us:
+                    element.Set(us);
+                    break;
+                case int i:
+                    element.Set(i);
+                    break;
+                case uint u:
+                    element.Set(u);
+                    break;
+                case long l:
+                    element.Set(l);
+                    break;
+                case ulong ul:
+                    element.Set(ul);
+                    break;
+                case float f:
+                    element.Set(f);
+                    break;
+                case double d:
+                    element.Set(d);
+                    break;
+                case decimal d:
+                    element.Set(d);
+                    break;
+                case DateTime d:
+                    element.Set(d);
+                    break;
+                case DateTimeOffset d:
+                    element.Set(d);
+                    break;
+                case Guid g:
+                    element.Set(g);
+                    break;
+                case null:
+                    element.SetNull();
+                    break;
+                case JsonElement e:
+                    element.Set(e);
+                    break;
+                default:
+                    JsonElement jsonElement = ConvertType(value);
+                    element.Set(jsonElement);
+                    break;
+            }
         }
 
         private T? ConvertTo<T>()
@@ -344,12 +479,18 @@ namespace Azure.Core.Serialization
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
         private string DebuggerDisplay => _element.DebuggerDisplay;
 
+#if !NET5_0 // RequiresUnreferencedCode in net5.0 doesn't have AttributeTargets.Class as a target, but it was added in net6.0
+        [RequiresUnreferencedCode(ClassIsIncompatibleWithTrimming)]
+#endif
+        [RequiresDynamicCode(ClassIsIncompatibleWithTrimming)]
         private class DynamicDataJsonConverter : JsonConverter<DynamicData>
         {
+            public const string ClassIsIncompatibleWithTrimming = "Using DynamicData or DynamicDataConverter is not compatible with trimming due to reflection-based serialization.";
+
             public override DynamicData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
-                JsonDocument document = JsonDocument.ParseValue(ref reader);
-                return new DynamicData(new MutableJsonDocument(document, options).RootElement, DynamicDataOptions.FromSerializerOptions(options));
+                MutableJsonDocument mdoc = MutableJsonDocument.Parse(ref reader);
+                return new DynamicData(mdoc.RootElement, DynamicDataOptions.FromSerializerOptions(options));
             }
 
             public override void Write(Utf8JsonWriter writer, DynamicData value, JsonSerializerOptions options)

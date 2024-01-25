@@ -429,9 +429,7 @@ namespace Azure.Messaging.WebPubSub
         /// }
         /// </code>
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> AddUserToGroupAsync(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
@@ -466,9 +464,7 @@ namespace Azure.Messaging.WebPubSub
         /// }
         /// </code>
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response AddUserToGroup(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.AddUserToGroup");
             scope.Start();
@@ -503,9 +499,7 @@ namespace Azure.Messaging.WebPubSub
         /// }
         /// </code>
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual async Task<Response> RemoveUserFromGroupAsync(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();
@@ -540,9 +534,7 @@ namespace Azure.Messaging.WebPubSub
         /// }
         /// </code>
         /// </remarks>
-#pragma warning disable AZC0002
         public virtual Response RemoveUserFromGroup(string group, string userId, RequestContext context = null)
-#pragma warning restore AZC0002
         {
             using var scope = ClientDiagnostics.CreateScope("WebPubSubServiceClient.RemoveUserFromGroup");
             scope.Start();

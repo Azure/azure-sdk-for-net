@@ -77,15 +77,17 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
 
         [Test]
         // Using default concurrency of 10.
-        [TestCase(10, 10, 1)]
-        [TestCase(20, 10, 2)]
-        [TestCase(30, 10, 3)]
-        [TestCase(60, 10, 10)]
-        [TestCase(70, 10, 10)]
-        [TestCase(150, 10, 10)]
-        public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int expectedTargetWorkerCount)
+        [TestCase(10, 10, 10, 1)]
+        [TestCase(20, 10, 10, 2)]
+        [TestCase(30, 10, 10, 3)]
+        [TestCase(60, 10, 10, 10)]
+        [TestCase(70, 10, 10, 10)]
+        [TestCase(150, 10, 10, 10)]
+        [TestCase(2147483650, 1, 1, 1)] // Testing eventCount > int.MaxInt is 2147483647
+        [TestCase(21474836500, 1000, 1, 1000)] // Testing eventCount > int.MaxInt is 2147483647, with concurrency 1 to force overflow
+        public void GetScaleResultInternal_ReturnsExpected(long eventCount, int partitionCount, int? concurrency, int expectedTargetWorkerCount)
         {
-            TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { }, eventCount, partitionCount);
+            TargetScalerResult result = _targetScaler.GetScaleResultInternal(new TargetScalerContext { InstanceConcurrency = concurrency }, eventCount, partitionCount);
             Assert.AreEqual(expectedTargetWorkerCount, result.TargetWorkerCount);
         }
 
@@ -93,7 +95,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.UnitTests
         [TestCase(10, 20, 30, 10)] // InstanceConcurrency defined in TargetScalerContext takes precedence
         [TestCase(null, 20, 30, 30)] // TargetUnprocessedEventThreshold takes second precendence
         [TestCase(null, 20, null, 20)] // Finally MaxEventBatchSize is only used if InstanceConcurrency and TargetUnprocessedEventThreshold are both undefined
-        [TestCase(null, null, null, 10)] // Using default value of MaxEventBatchSize
+        [TestCase(null, null, null, 100)] // Using default value of MaxEventBatchSize
         public void GetDesiredConcurrencyInternal_ReturnsExpected(int? instanceConcurrency, int? maxEventBatchSize, int? targetUnprocessedEventThreshold, int expectedConcurrency)
         {
             TargetScalerContext context = new TargetScalerContext() { InstanceConcurrency = instanceConcurrency };

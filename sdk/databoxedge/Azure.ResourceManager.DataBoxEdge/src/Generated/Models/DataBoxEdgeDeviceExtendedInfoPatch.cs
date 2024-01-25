@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
@@ -13,9 +14,58 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> The Data Box Edge/Gateway device extended info patch. </summary>
     public partial class DataBoxEdgeDeviceExtendedInfoPatch
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeDeviceExtendedInfoPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/>. </summary>
         public DataBoxEdgeDeviceExtendedInfoPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeDeviceExtendedInfoPatch"/>. </summary>
+        /// <param name="clientSecretStoreId"> The Key Vault ARM Id for client secrets. </param>
+        /// <param name="clientSecretStoreUri"> The url to access the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyName"> The name for Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="channelIntegrityKeyVersion"> The version of Channel Integrity Key stored in the Client Key Vault. </param>
+        /// <param name="syncStatus"> For changing or to initiate the resync to key-vault set the status to KeyVaultSyncPending, rest of the status will not be applicable. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeDeviceExtendedInfoPatch(ResourceIdentifier clientSecretStoreId, Uri clientSecretStoreUri, string channelIntegrityKeyName, string channelIntegrityKeyVersion, EdgeKeyVaultSyncStatus? syncStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ClientSecretStoreId = clientSecretStoreId;
+            ClientSecretStoreUri = clientSecretStoreUri;
+            ChannelIntegrityKeyName = channelIntegrityKeyName;
+            ChannelIntegrityKeyVersion = channelIntegrityKeyVersion;
+            SyncStatus = syncStatus;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Key Vault ARM Id for client secrets. </summary>

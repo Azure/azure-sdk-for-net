@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> ThreatIntelligence property bag. </summary>
     public partial class SecurityInsightsThreatIntelligence
     {
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligence. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligence"/>. </summary>
         internal SecurityInsightsThreatIntelligence()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsThreatIntelligence. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsThreatIntelligence"/>. </summary>
         /// <param name="confidence"> Confidence (must be between 0 and 1). </param>
         /// <param name="providerName"> Name of the provider from whom this Threat Intelligence information was received. </param>
         /// <param name="reportLink"> Report link. </param>

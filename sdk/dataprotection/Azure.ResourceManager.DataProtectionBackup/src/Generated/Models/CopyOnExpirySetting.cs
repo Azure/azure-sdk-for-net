@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Copy on Expiry Option. </summary>
     public partial class CopyOnExpirySetting : DataProtectionBackupCopySetting
     {
-        /// <summary> Initializes a new instance of CopyOnExpirySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyOnExpirySetting"/>. </summary>
         public CopyOnExpirySetting()
         {
             ObjectType = "CopyOnExpiryOption";
         }
 
-        /// <summary> Initializes a new instance of CopyOnExpirySetting. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyOnExpirySetting"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal CopyOnExpirySetting(string objectType) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyOnExpirySetting(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "CopyOnExpiryOption";
         }

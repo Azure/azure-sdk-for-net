@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01-preview";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="rackSkuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<RackSkuData>> GetAsync(string subscriptionId, string rackSkuName, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkCloudRackSkuData>> GetAsync(string subscriptionId, string rackSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(rackSkuName, nameof(rackSkuName));
@@ -139,13 +139,13 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        RackSkuData value = default;
+                        NetworkCloudRackSkuData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RackSkuData.DeserializeRackSkuData(document.RootElement);
+                        value = NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RackSkuData)null, message.Response);
+                    return Response.FromValue((NetworkCloudRackSkuData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="rackSkuName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="rackSkuName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<RackSkuData> Get(string subscriptionId, string rackSkuName, CancellationToken cancellationToken = default)
+        public Response<NetworkCloudRackSkuData> Get(string subscriptionId, string rackSkuName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(rackSkuName, nameof(rackSkuName));
@@ -168,13 +168,13 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 case 200:
                     {
-                        RackSkuData value = default;
+                        NetworkCloudRackSkuData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RackSkuData.DeserializeRackSkuData(document.RootElement);
+                        value = NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((RackSkuData)null, message.Response);
+                    return Response.FromValue((NetworkCloudRackSkuData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

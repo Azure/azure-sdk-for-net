@@ -84,6 +84,37 @@ namespace Azure.Search.Documents.Models
             string finalTrackingState) =>
             new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors, warnings, itemCount, failedItemCount, initialTrackingState, finalTrackingState);
 
+        /// <summary> Initializes a new instance of IndexerExecutionResult. </summary>
+        /// <param name="status"> The outcome of this indexer execution. </param>
+        /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
+        /// <param name="startTime"> The start time of this indexer execution. </param>
+        /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>
+        /// <param name="errors"> The item-level indexing errors. </param>
+        /// <param name="warnings"> The item-level indexing warnings. </param>
+        /// <param name="itemCount"> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </param>
+        /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
+        /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
+        /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexerExecutionResult"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IndexerExecutionResult IndexerExecutionResult(
+            IndexerExecutionStatus status = default,
+            string errorMessage = null,
+            DateTimeOffset? startTime = null,
+            DateTimeOffset? endTime = null,
+            IEnumerable<SearchIndexerError> errors = null,
+            IEnumerable<SearchIndexerWarning> warnings = null,
+            int itemCount = default,
+            int failedItemCount = default,
+            string initialTrackingState = null,
+            string finalTrackingState = null)
+        {
+            errors ??= new List<SearchIndexerError>();
+            warnings ??= new List<SearchIndexerWarning>();
+
+            return new IndexerExecutionResult(status, null, null, errorMessage, startTime, endTime, errors?.ToList(), warnings?.ToList(), itemCount, failedItemCount, initialTrackingState, finalTrackingState);
+        }
+
         /// <summary> Initializes a new instance of LexicalAnalyzer. </summary>
         /// <param name="oDataType"> Identifies the concrete type of the analyzer. </param>
         /// <param name="name"> The name of the analyzer. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
@@ -189,10 +220,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="documentCount"> The number of documents in the index. </param>
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <returns> A new SearchIndexStatistics instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchIndexStatistics SearchIndexStatistics(
             long documentCount,
             long storageSize) =>
-            new SearchIndexStatistics(documentCount, storageSize);
+            new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize: default);
 
         /// <summary> Initializes a new instance of SearchResourceCounter. </summary>
         /// <param name="usage"> The resource usage amount. </param>
@@ -219,7 +251,7 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter dataSourceCounter,
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter) =>
-                SearchServiceCounters(documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter: null, null);
 
         /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
@@ -239,10 +271,9 @@ namespace Azure.Search.Documents.Models
             SearchResourceCounter storageSizeCounter,
             SearchResourceCounter synonymMapCounter,
             SearchResourceCounter skillsetCounter) =>
-            SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, null);
 
-        /// <summary> Initializes a new instance of SearchServiceCounters. </summary>
-        /// <param name="aliasCounter"> Total number of aliases. </param>
+        // <summary> Initializes a new instance of SearchServiceCounters. </summary>
         /// <param name="documentCounter"> Total number of documents across all indexes in the service. </param>
         /// <param name="indexCounter"> Total number of indexes. </param>
         /// <param name="indexerCounter"> Total number of indexers. </param>
@@ -250,18 +281,19 @@ namespace Azure.Search.Documents.Models
         /// <param name="storageSizeCounter"> Total size of used storage in bytes. </param>
         /// <param name="synonymMapCounter"> Total number of synonym maps. </param>
         /// <param name="skillsetCounter"> Total number of skillsets. </param>
-        /// <returns> A new SearchServiceCounters instance for mocking. </returns>
+        /// <param name="vectorIndexSizeCounter"> Total memory consumption of all vector indexes within the service, in bytes. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchServiceCounters SearchServiceCounters(
-            SearchResourceCounter aliasCounter,
-            SearchResourceCounter documentCounter,
-            SearchResourceCounter indexCounter,
-            SearchResourceCounter indexerCounter,
-            SearchResourceCounter dataSourceCounter,
-            SearchResourceCounter storageSizeCounter,
-            SearchResourceCounter synonymMapCounter,
-            SearchResourceCounter skillsetCounter) =>
-            new(aliasCounter, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter);
+            SearchResourceCounter documentCounter = null,
+            SearchResourceCounter indexCounter = null,
+            SearchResourceCounter indexerCounter = null,
+            SearchResourceCounter dataSourceCounter = null,
+            SearchResourceCounter storageSizeCounter = null,
+            SearchResourceCounter synonymMapCounter = null,
+            SearchResourceCounter skillsetCounter = null,
+            SearchResourceCounter vectorIndexSizeCounter = null) =>
+            new SearchServiceCounters(null, documentCounter, indexCounter, indexerCounter, dataSourceCounter, storageSizeCounter, synonymMapCounter, skillsetCounter, vectorIndexSizeCounter);
 
         /// <summary> Initializes a new instance of SearchServiceLimits. </summary>
         /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
@@ -270,11 +302,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <returns> A new SearchServiceLimits instance for mocking. </returns>
         public static SearchServiceLimits SearchServiceLimits(
-            int? maxFieldsPerIndex,
-            int? maxFieldNestingDepthPerIndex,
-            int? maxComplexCollectionFieldsPerIndex,
-            int? maxComplexObjectsInCollectionsPerDocument) =>
-            new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument);
+        int? maxFieldsPerIndex,
+        int? maxFieldNestingDepthPerIndex,
+        int? maxComplexCollectionFieldsPerIndex,
+        int? maxComplexObjectsInCollectionsPerDocument) =>
+        new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument);
 
         /// <summary> Initializes a new instance of SearchServiceStatistics. </summary>
         /// <param name="counters"> Service level resource counters. </param>

@@ -53,12 +53,11 @@ namespace Azure.Communication
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MicrosoftBotIdentifier : Azure.Communication.CommunicationIdentifier
+    public partial class MicrosoftTeamsAppIdentifier : Azure.Communication.CommunicationIdentifier
     {
-        public MicrosoftBotIdentifier(string botId, bool isResourceAccountConfigured = true, Azure.Communication.CommunicationCloudEnvironment? cloud = default(Azure.Communication.CommunicationCloudEnvironment?)) { }
-        public string BotId { get { throw null; } }
+        public MicrosoftTeamsAppIdentifier(string appId, Azure.Communication.CommunicationCloudEnvironment? cloud = default(Azure.Communication.CommunicationCloudEnvironment?)) { }
+        public string AppId { get { throw null; } }
         public Azure.Communication.CommunicationCloudEnvironment Cloud { get { throw null; } }
-        public bool IsResourceAccountConfigured { get { throw null; } }
         public override string RawId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
         public override string ToString() { throw null; }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Chaos.Tests
     public class ExperimentTests : ChaosManagementTestBase
     {
         public ExperimentTests(bool isAsync)
-            : base(isAsync)//, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 
@@ -26,6 +26,11 @@ namespace Azure.ResourceManager.Chaos.Tests
             if (Mode == RecordedTestMode.Record || Mode == RecordedTestMode.Playback)
             {
                 await Initialize().ConfigureAwait(false);
+            }
+
+            if (Mode == RecordedTestMode.Record)
+            {
+                await Delay(10000);
             }
         }
 
@@ -65,23 +70,27 @@ namespace Azure.ResourceManager.Chaos.Tests
             var deleteResponse = await experimentResourceResponse.Value.DeleteAsync(WaitUntil.Completed).ConfigureAwait(false);
             Assert.AreEqual(200, deleteResponse.GetRawResponse().Status);
 
-            var existsResponse = await rg.GetExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
+            await Delay(2000, 0);
+
+            var existsResponse = await rg.GetChaosExperiments().ExistsAsync(this.ExperimentName).ConfigureAwait(false);
             Assert.AreEqual(false, existsResponse.Value);
         }
 
         [TestCase, Order(5)]
         [RecordedTest]
-        public async Task StartAndCheckStatus()
+        public async Task StartAndCheckExecutionStatus()
         {
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
-            var startResponse = await experimentResourceResponse.Value.StartAsync().ConfigureAwait(false);
-            Assert.AreEqual(experimentName, startResponse.Value.Name);
+            var startResponse = await experimentResourceResponse.Value.StartAsync(WaitUntil.Started).ConfigureAwait(false);
             Assert.AreEqual(202, startResponse.GetRawResponse().Status);
 
-            var statusId = UrlUtility.GetStatusId(startResponse.Value.StatusUri);
-            var statusResponse = await experimentResourceResponse.Value.GetExperimentStatusAsync(statusId).ConfigureAwait(false);
-            Assert.AreEqual(200, statusResponse.GetRawResponse().Status);
+            var executionsList = await experimentResourceResponse.Value.GetChaosExperimentExecutions().ToListAsync().ConfigureAwait(false);
+            Assert.True(executionsList.Any());
+
+            var executionId = UrlUtility.GetExecutionsId(executionsList.FirstOrDefault().Id);
+            var executionResponse = await experimentResourceResponse.Value.GetChaosExperimentExecutionAsync(executionId).ConfigureAwait(false);
+            Assert.AreEqual(200, executionResponse.GetRawResponse().Status);
         }
 
         [TestCase, Order(6)]
@@ -90,24 +99,8 @@ namespace Azure.ResourceManager.Chaos.Tests
         {
             var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
             var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
-            var cancelResponse = await experimentResourceResponse.Value.CancelAsync().ConfigureAwait(false);
-            Assert.AreEqual(experimentName, cancelResponse.Value.Name);
+            var cancelResponse = await experimentResourceResponse.Value.CancelAsync(WaitUntil.Started).ConfigureAwait(false);
             Assert.AreEqual(202, cancelResponse.GetRawResponse().Status);
-        }
-
-        [TestCase, Order(7)]
-        [RecordedTest]
-        public async Task ListAndGetDetails()
-        {
-            var experimentName = string.Format(TestConstants.ExperimentForExecutionNameFormat, TestConstants.ExperimentNamePrefix, this.VmssId);
-            var experimentResourceResponse = await this.ExperimentCollection.GetAsync(experimentName).ConfigureAwait(false);
-            var detailsList = await experimentResourceResponse.Value.GetExperimentExecutionDetails().ToListAsync().ConfigureAwait(false);
-            Assert.True(detailsList.Any());
-
-            var detailId = UrlUtility.GetDetailsId(detailsList.FirstOrDefault().Id);
-            var experimentDetailResponse = await experimentResourceResponse.Value.GetExperimentExecutionDetailAsync(detailId).ConfigureAwait(false);
-            Assert.AreEqual(detailsList.FirstOrDefault().Id, experimentDetailResponse.Value.Id);
-            Assert.AreEqual(200, experimentDetailResponse.GetRawResponse().Status);
         }
     }
 }

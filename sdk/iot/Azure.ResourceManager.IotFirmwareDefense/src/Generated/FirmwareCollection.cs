@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.IotFirmwareDefense
 {
     /// <summary>
-    /// A class representing a collection of <see cref="FirmwareResource" /> and their operations.
-    /// Each <see cref="FirmwareResource" /> in the collection will belong to the same instance of <see cref="FirmwareWorkspaceResource" />.
-    /// To get a <see cref="FirmwareCollection" /> instance call the GetFirmwares method from an instance of <see cref="FirmwareWorkspaceResource" />.
+    /// A class representing a collection of <see cref="FirmwareResource"/> and their operations.
+    /// Each <see cref="FirmwareResource"/> in the collection will belong to the same instance of <see cref="FirmwareWorkspaceResource"/>.
+    /// To get a <see cref="FirmwareCollection"/> instance call the GetFirmwares method from an instance of <see cref="FirmwareWorkspaceResource"/>.
     /// </summary>
     public partial class FirmwareCollection : ArmCollection, IEnumerable<FirmwareResource>, IAsyncEnumerable<FirmwareResource>
     {
@@ -62,6 +63,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firmware_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <term>Operation Id</term>
         /// <description>Firmware_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -145,6 +162,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <term>Operation Id</term>
         /// <description>Firmware_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firmwareName"> The id of the firmware. </param>
@@ -181,6 +206,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firmware_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,15 +252,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <term>Operation Id</term>
         /// <description>Firmware_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="FirmwareResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="FirmwareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<FirmwareResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,15 +282,23 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <term>Operation Id</term>
         /// <description>Firmware_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="FirmwareResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="FirmwareResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<FirmwareResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _firmwareRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _firmwareRestClient.CreateListByWorkspaceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FirmwareResource(Client, FirmwareData.DeserializeFirmwareData(e)), _firmwareClientDiagnostics, Pipeline, "FirmwareCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +311,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Firmware_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +355,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <term>Operation Id</term>
         /// <description>Firmware_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="firmwareName"> The id of the firmware. </param>
@@ -314,6 +379,96 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             {
                 var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firmware_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual async Task<NullableResponse<FirmwareResource>> GetIfExistsAsync(string firmwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
+
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _firmwareRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<FirmwareResource>(response.GetRawResponse());
+                return Response.FromValue(new FirmwareResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Firmware_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-08-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FirmwareResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="firmwareName"> The id of the firmware. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="firmwareName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="firmwareName"/> is null. </exception>
+        public virtual NullableResponse<FirmwareResource> GetIfExists(string firmwareName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(firmwareName, nameof(firmwareName));
+
+            using var scope = _firmwareClientDiagnostics.CreateScope("FirmwareCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _firmwareRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, firmwareName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<FirmwareResource>(response.GetRawResponse());
+                return Response.FromValue(new FirmwareResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,9 +21,9 @@ using Azure.ResourceManager.OperationalInsights.Models;
 namespace Azure.ResourceManager.OperationalInsights
 {
     /// <summary>
-    /// A class representing a collection of <see cref="OperationalInsightsLinkedStorageAccountsResource" /> and their operations.
-    /// Each <see cref="OperationalInsightsLinkedStorageAccountsResource" /> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource" />.
-    /// To get an <see cref="OperationalInsightsLinkedStorageAccountsCollection" /> instance call the GetOperationalInsightsLinkedStorageAccounts method from an instance of <see cref="OperationalInsightsWorkspaceResource" />.
+    /// A class representing a collection of <see cref="OperationalInsightsLinkedStorageAccountsResource"/> and their operations.
+    /// Each <see cref="OperationalInsightsLinkedStorageAccountsResource"/> in the collection will belong to the same instance of <see cref="OperationalInsightsWorkspaceResource"/>.
+    /// To get an <see cref="OperationalInsightsLinkedStorageAccountsCollection"/> instance call the GetOperationalInsightsLinkedStorageAccounts method from an instance of <see cref="OperationalInsightsWorkspaceResource"/>.
     /// </summary>
     public partial class OperationalInsightsLinkedStorageAccountsCollection : ArmCollection, IEnumerable<OperationalInsightsLinkedStorageAccountsResource>, IAsyncEnumerable<OperationalInsightsLinkedStorageAccountsResource>
     {
@@ -64,6 +65,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -102,6 +111,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -142,6 +159,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSourceType"> Linked storage accounts type. </param>
@@ -174,6 +199,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,14 +241,22 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="OperationalInsightsLinkedStorageAccountsResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="OperationalInsightsLinkedStorageAccountsResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<OperationalInsightsLinkedStorageAccountsResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsLinkedStorageAccountsResource(Client, OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e)), _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new OperationalInsightsLinkedStorageAccountsResource(Client, OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e)), _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -229,14 +270,22 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_ListByWorkspace</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="OperationalInsightsLinkedStorageAccountsResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="OperationalInsightsLinkedStorageAccountsResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<OperationalInsightsLinkedStorageAccountsResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateListByWorkspaceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsLinkedStorageAccountsResource(Client, OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e)), _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new OperationalInsightsLinkedStorageAccountsResource(Client, OperationalInsightsLinkedStorageAccountsData.DeserializeOperationalInsightsLinkedStorageAccountsData(e)), _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics, Pipeline, "OperationalInsightsLinkedStorageAccountsCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -249,6 +298,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,6 +338,14 @@ namespace Azure.ResourceManager.OperationalInsights
         /// <term>Operation Id</term>
         /// <description>LinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSourceType"> Linked storage accounts type. </param>
@@ -293,6 +358,88 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataSourceType"> Linked storage accounts type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<NullableResponse<OperationalInsightsLinkedStorageAccountsResource>> GetIfExistsAsync(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
+        {
+            using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsLinkedStorageAccountsResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/linkedStorageAccounts/{dataSourceType}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>LinkedStorageAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsLinkedStorageAccountsResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataSourceType"> Linked storage accounts type. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual NullableResponse<OperationalInsightsLinkedStorageAccountsResource> GetIfExists(OperationalInsightsDataSourceType dataSourceType, CancellationToken cancellationToken = default)
+        {
+            using var scope = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsClientDiagnostics.CreateScope("OperationalInsightsLinkedStorageAccountsCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<OperationalInsightsLinkedStorageAccountsResource>(response.GetRawResponse());
+                return Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

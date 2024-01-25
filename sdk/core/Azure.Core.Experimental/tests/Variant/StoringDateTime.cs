@@ -4,7 +4,7 @@
 using System;
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringDateTime
     {
@@ -19,7 +19,7 @@ namespace Azure
         [Test]
         public void DateTimeImplicit([ValueSource("DateTimeData")] DateTime testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<DateTime>());
             Assert.AreEqual(typeof(DateTime), value.Type);
 
@@ -32,7 +32,7 @@ namespace Azure
         [Test]
         public void DateTimeInOut([ValueSource("DateTimeData")] DateTime testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out DateTime result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -45,7 +45,7 @@ namespace Azure
         public void NullableDateTimeInDateTimeOut([ValueSource("DateTimeData")] DateTime? testValue)
         {
             DateTime? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out DateTime result);
             Assert.True(success);
@@ -60,7 +60,7 @@ namespace Azure
         public void DateTimeInNullableDateTimeOut([ValueSource("DateTimeData")] DateTime testValue)
         {
             DateTime source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out DateTime? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -72,7 +72,7 @@ namespace Azure
         public void NullDateTime()
         {
             DateTime? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<DateTime?>());
             Assert.False(value.As<DateTime?>().HasValue);
@@ -81,7 +81,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("DateTimeData")] DateTime testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(DateTime), o.GetType());
             Assert.AreEqual(testValue, (DateTime)o);

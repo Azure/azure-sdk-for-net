@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ReadBehavior))
             {
                 writer.WritePropertyName("readBehavior"u8);
-                writer.WriteStringValue(ReadBehavior.Value.ToString());
+                JsonSerializer.Serialize(writer, ReadBehavior);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
@@ -39,7 +39,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(AdditionalColumns);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(AdditionalColumns.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WritePropertyName("type"u8);
@@ -70,7 +73,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -83,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<DataFactoryElement<string>> query = default;
-            Optional<SalesforceSourceReadBehavior> readBehavior = default;
+            Optional<DataFactoryElement<string>> readBehavior = default;
             Optional<DataFactoryElement<string>> queryTimeout = default;
             Optional<BinaryData> additionalColumns = default;
             string type = default;
@@ -110,7 +116,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    readBehavior = new SalesforceSourceReadBehavior(property.Value.GetString());
+                    readBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("queryTimeout"u8))
@@ -175,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SalesforceSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, Optional.ToNullable(readBehavior));
+            return new SalesforceSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, queryTimeout.Value, additionalColumns.Value, query.Value, readBehavior.Value);
         }
     }
 }

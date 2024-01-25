@@ -18,13 +18,14 @@ namespace Azure.ResourceManager.EventGrid
 {
     /// <summary>
     /// A Class representing an ExtensionTopic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="ExtensionTopicResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetExtensionTopicResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetExtensionTopic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ExtensionTopicResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetExtensionTopicResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetExtensionTopic method.
     /// </summary>
     public partial class ExtensionTopicResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="ExtensionTopicResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope)
         {
             var resourceId = $"{scope}/providers/Microsoft.EventGrid/extensionTopics/default";
@@ -35,12 +36,15 @@ namespace Azure.ResourceManager.EventGrid
         private readonly ExtensionTopicsRestOperations _extensionTopicRestClient;
         private readonly ExtensionTopicData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/extensionTopics";
+
         /// <summary> Initializes a new instance of the <see cref="ExtensionTopicResource"/> class for mocking. </summary>
         protected ExtensionTopicResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "ExtensionTopicResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ExtensionTopicResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ExtensionTopicResource(ArmClient client, ExtensionTopicData data) : this(client, data.Id)
@@ -61,9 +65,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/extensionTopics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +98,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>ExtensionTopics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExtensionTopicResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +137,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExtensionTopics_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ExtensionTopicResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

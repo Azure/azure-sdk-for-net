@@ -5,26 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
     public partial class MsTeamsChannelProperties
     {
-        /// <summary> Initializes a new instance of MsTeamsChannelProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/>. </summary>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         public MsTeamsChannelProperties(bool isEnabled)
         {
             IsEnabled = isEnabled;
         }
 
-        /// <summary> Initializes a new instance of MsTeamsChannelProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/>. </summary>
         /// <param name="isCallingEnabled"> Enable calling for Microsoft Teams channel. </param>
         /// <param name="callingWebhook"> Webhook for Microsoft Teams channel calls. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
         /// <param name="incomingCallRoute"> Webhook for Microsoft Teams channel calls. </param>
         /// <param name="deploymentEnvironment"> Deployment environment for Microsoft Teams channel calls. </param>
         /// <param name="acceptedTerms"> Whether this channel accepted terms. </param>
-        internal MsTeamsChannelProperties(bool? isCallingEnabled, string callingWebhook, bool isEnabled, string incomingCallRoute, string deploymentEnvironment, bool? acceptedTerms)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MsTeamsChannelProperties(bool? isCallingEnabled, string callingWebhook, bool isEnabled, string incomingCallRoute, string deploymentEnvironment, bool? acceptedTerms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsCallingEnabled = isCallingEnabled;
             CallingWebhook = callingWebhook;
@@ -32,6 +68,12 @@ namespace Azure.ResourceManager.BotService.Models
             IncomingCallRoute = incomingCallRoute;
             DeploymentEnvironment = deploymentEnvironment;
             AcceptedTerms = acceptedTerms;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MsTeamsChannelProperties"/> for deserialization. </summary>
+        internal MsTeamsChannelProperties()
+        {
         }
 
         /// <summary> Enable calling for Microsoft Teams channel. </summary>

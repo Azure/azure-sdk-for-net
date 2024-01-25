@@ -14,14 +14,14 @@ namespace Azure.Communication.ShortCodes.Models
     /// <summary> The ProgramDetails. </summary>
     public partial class ProgramDetails
     {
-        /// <summary> Initializes a new instance of ProgramDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgramDetails"/>. </summary>
         public ProgramDetails()
         {
             PreferredVanityNumbers = new ChangeTrackingList<string>();
             SignUpTypes = new ChangeTrackingList<ProgramSignUpType>();
         }
 
-        /// <summary> Initializes a new instance of ProgramDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProgramDetails"/>. </summary>
         /// <param name="isVanity"> Set to true if the request is for a vanity number. </param>
         /// <param name="preferredVanityNumbers">
         /// Priority ordered list of preferred vanity numbers.

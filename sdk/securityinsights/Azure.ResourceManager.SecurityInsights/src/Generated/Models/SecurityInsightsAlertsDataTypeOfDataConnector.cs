@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Alerts data type for data connectors. </summary>
     public partial class SecurityInsightsAlertsDataTypeOfDataConnector
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAlertsDataTypeOfDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
         public SecurityInsightsAlertsDataTypeOfDataConnector()
         {
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAlertsDataTypeOfDataConnector. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAlertsDataTypeOfDataConnector"/>. </summary>
         /// <param name="alerts"> Alerts data type connection. </param>
         internal SecurityInsightsAlertsDataTypeOfDataConnector(DataConnectorDataTypeCommon alerts)
         {

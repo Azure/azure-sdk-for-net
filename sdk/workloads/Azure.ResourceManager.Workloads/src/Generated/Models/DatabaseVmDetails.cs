@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Database VM details. </summary>
     public partial class DatabaseVmDetails
     {
-        /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseVmDetails"/>. </summary>
         internal DatabaseVmDetails()
         {
             StorageDetails = new ChangeTrackingList<SubResource>();
         }
 
-        /// <summary> Initializes a new instance of DatabaseVmDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DatabaseVmDetails"/>. </summary>
         /// <param name="virtualMachineId"></param>
         /// <param name="status"> Defines the SAP Instance status. </param>
         /// <param name="storageDetails"> Storage details of all the Storage Accounts attached to the Database Virtual Machine. For e.g. NFS on AFS Shared Storage. </param>

@@ -19,7 +19,39 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// </summary>
     public abstract partial class DataProtectionBackupPolicyPropertiesBase
     {
-        /// <summary> Initializes a new instance of DataProtectionBackupPolicyPropertiesBase. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSourceTypes"/> is null. </exception>
         protected DataProtectionBackupPolicyPropertiesBase(IEnumerable<string> dataSourceTypes)
@@ -29,13 +61,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceTypes = dataSourceTypes.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataProtectionBackupPolicyPropertiesBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/>. </summary>
         /// <param name="dataSourceTypes"> Type of datasource for the backup management. </param>
         /// <param name="objectType"></param>
-        internal DataProtectionBackupPolicyPropertiesBase(IList<string> dataSourceTypes, string objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataProtectionBackupPolicyPropertiesBase(IList<string> dataSourceTypes, string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataSourceTypes = dataSourceTypes;
             ObjectType = objectType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataProtectionBackupPolicyPropertiesBase"/> for deserialization. </summary>
+        internal DataProtectionBackupPolicyPropertiesBase()
+        {
         }
 
         /// <summary> Type of datasource for the backup management. </summary>

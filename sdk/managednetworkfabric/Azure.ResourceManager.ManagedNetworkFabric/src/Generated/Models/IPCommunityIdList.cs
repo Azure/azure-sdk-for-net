@@ -13,20 +13,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> IP Community ID list properties. </summary>
     public partial class IPCommunityIdList
     {
-        /// <summary> Initializes a new instance of IPCommunityIdList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         public IPCommunityIdList()
         {
-            IPCommunityIds = new ChangeTrackingList<string>();
+            IPCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of IPCommunityIdList. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunityIdList"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
-        internal IPCommunityIdList(IList<string> ipCommunityIds)
+        internal IPCommunityIdList(IList<ResourceIdentifier> ipCommunityIds)
         {
             IPCommunityIds = ipCommunityIds;
         }
 
         /// <summary> List of IP Community resource IDs. </summary>
-        public IList<string> IPCommunityIds { get; }
+        public IList<ResourceIdentifier> IPCommunityIds { get; }
     }
 }

@@ -30,15 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("vendorFirmwareVersion"u8);
                 writer.WriteStringValue(VendorFirmwareVersion);
             }
-            if (Optional.IsDefined(IsCurrent))
+            if (Optional.IsDefined(IsDefault))
             {
-                writer.WritePropertyName("isCurrent"u8);
-                writer.WriteStringValue(IsCurrent.Value.ToString());
-            }
-            if (Optional.IsDefined(IsTest))
-            {
-                writer.WritePropertyName("isTest"u8);
-                writer.WriteStringValue(IsTest.Value.ToString());
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteStringValue(IsDefault.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -52,8 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<string> version = default;
             Optional<string> vendorOSVersion = default;
             Optional<string> vendorFirmwareVersion = default;
-            Optional<IsCurrentVersion> isCurrent = default;
-            Optional<IsTestVersion> isTest = default;
+            Optional<NetworkFabricBooleanValue> isDefault = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -71,26 +65,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     vendorFirmwareVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("isCurrent"u8))
+                if (property.NameEquals("isDefault"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    isCurrent = new IsCurrentVersion(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("isTest"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isTest = new IsTestVersion(property.Value.GetString());
+                    isDefault = new NetworkFabricBooleanValue(property.Value.GetString());
                     continue;
                 }
             }
-            return new SupportedVersionProperties(version.Value, vendorOSVersion.Value, vendorFirmwareVersion.Value, Optional.ToNullable(isCurrent), Optional.ToNullable(isTest));
+            return new SupportedVersionProperties(version.Value, vendorOSVersion.Value, vendorFirmwareVersion.Value, Optional.ToNullable(isDefault));
         }
     }
 }

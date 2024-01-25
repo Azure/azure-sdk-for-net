@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             {
                 Activities =
 {
-new ForEachActivity("ExampleForeachActivity",new DataFactoryExpressionDefinition(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new DataFactoryActivity[]
+new ForEachActivity("ExampleForeachActivity",new DataFactoryExpression(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new PipelineActivity[]
 {
 new CopyActivity("ExampleCopyActivity",new DataFactoryBlobSource(),new DataFactoryBlobSink())
 {
@@ -56,8 +56,8 @@ new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromString("examplecontainer.csv"),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFileName"] = BinaryData.FromString("\"examplecontainer.csv\""),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -71,7 +71,7 @@ Parameters =
 {
 ["type"] = "Expression",
 ["value"] = "@item()"}),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -98,7 +98,7 @@ IsSequential = true,
 ["type"] = "Expression",
 ["value"] = "@pipeline().parameters.JobId"}),
 },
-                ElapsedTimeMetricDuration = BinaryData.FromString("0.00:10:00"),
+                ElapsedTimeMetricDuration = BinaryData.FromString("\"0.00:10:00\""),
             };
             ArmOperation<DataFactoryPipelineResource> lro = await dataFactoryPipeline.UpdateAsync(WaitUntil.Completed, data);
             DataFactoryPipelineResource result = lro.Value;
@@ -138,7 +138,7 @@ IsSequential = true,
                 Description = "Example description",
                 Activities =
 {
-new ForEachActivity("ExampleForeachActivity",new DataFactoryExpressionDefinition(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new DataFactoryActivity[]
+new ForEachActivity("ExampleForeachActivity",new DataFactoryExpression(DataFactoryExpressionType.Expression,"@pipeline().parameters.OutputBlobNameList"),new PipelineActivity[]
 {
 new CopyActivity("ExampleCopyActivity",new DataFactoryBlobSource(),new DataFactoryBlobSink())
 {
@@ -148,8 +148,8 @@ new DatasetReference(DatasetReferenceType.DatasetReference,"exampleDataset")
 {
 Parameters =
 {
-["MyFileName"] = BinaryData.FromString("examplecontainer.csv"),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFileName"] = BinaryData.FromString("\"examplecontainer.csv\""),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -163,7 +163,7 @@ Parameters =
 {
 ["type"] = "Expression",
 ["value"] = "@item()"}),
-["MyFolderPath"] = BinaryData.FromString("examplecontainer"),
+["MyFolderPath"] = BinaryData.FromString("\"examplecontainer\""),
 },
 }
 },
@@ -178,7 +178,7 @@ IsSequential = true,
 {
 ["OutputBlobNameList"] = new EntityParameterSpecification(EntityParameterType.Array),
 },
-                ElapsedTimeMetricDuration = BinaryData.FromString("0.00:10:00"),
+                ElapsedTimeMetricDuration = BinaryData.FromString("\"0.00:10:00\""),
             };
             ArmOperation<DataFactoryPipelineResource> lro = await dataFactoryPipeline.UpdateAsync(WaitUntil.Completed, data);
             DataFactoryPipelineResource result = lro.Value;

@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Input for migrate. </summary>
     public partial class SiteRecoveryMigrateContent
     {
-        /// <summary> Initializes a new instance of SiteRecoveryMigrateContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryMigrateContent"/>. </summary>
         /// <param name="properties"> Migrate input properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public SiteRecoveryMigrateContent(SiteRecoveryMigrateProperties properties)

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The list private endpoint connections response. </summary>
     internal partial class HDInsightPrivateEndpointConnectionListResult
     {
-        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionListResult"/>. </summary>
         internal HDInsightPrivateEndpointConnectionListResult()
         {
             Value = new ChangeTrackingList<HDInsightPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of HDInsightPrivateEndpointConnectionListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPrivateEndpointConnectionListResult"/>. </summary>
         /// <param name="value"> The list of private endpoint connections. </param>
         /// <param name="nextLink"> The link (url) to the next page of results. </param>
         internal HDInsightPrivateEndpointConnectionListResult(IReadOnlyList<HDInsightPrivateEndpointConnectionData> value, string nextLink)

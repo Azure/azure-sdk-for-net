@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query.Models
     /// <summary> The result data of a query. </summary>
     public partial class MetricResult
     {
-        /// <summary> Initializes a new instance of MetricResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="resourceType"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>
@@ -36,7 +36,7 @@ namespace Azure.Monitor.Query.Models
             TimeSeries = timeSeries.ToList();
         }
 
-        /// <summary> Initializes a new instance of MetricResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="MetricResult"/>. </summary>
         /// <param name="id"> the metric Id. </param>
         /// <param name="resourceType"> the resource type of the metric resource. </param>
         /// <param name="localizedName"> the name and the display name of the metric, i.e. it is localizable string. </param>

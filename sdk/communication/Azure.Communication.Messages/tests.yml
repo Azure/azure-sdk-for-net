@@ -1,0 +1,14 @@
+﻿trigger: none
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  parameters:
+    ServiceDirectory: communication
+    Project: Azure.Communication.Messages
+    CloudConfig:
+      Public:
+        SubscriptionConfigurations:
+          - $(sub-config-azure-cloud-test-resources)
+          - $(sub-config-communication-services-cloud-test-resources-common)
+          - $(sub-config-communication-services-cloud-test-resources-net)
+    Clouds: Public

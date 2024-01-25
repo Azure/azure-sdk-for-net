@@ -12,6 +12,7 @@
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" />
     <Reference Include="System.Net.Http" Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'" />
   </ItemGroup>
 </Project>

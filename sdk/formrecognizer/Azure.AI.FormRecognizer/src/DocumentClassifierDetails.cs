@@ -26,5 +26,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// </summary>
         [CodeGenMember("DocTypes")]
         public IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> DocumentTypes { get; }
+
+        /// <summary>
+        /// Service version used to create this document classifier.
+        /// </summary>
+        [CodeGenMember("ApiVersion")]
+        public string ServiceVersion { get; }
     }
 }

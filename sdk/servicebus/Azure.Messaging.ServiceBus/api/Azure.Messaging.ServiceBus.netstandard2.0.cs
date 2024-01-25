@@ -204,6 +204,7 @@ namespace Azure.Messaging.ServiceBus
     public partial class ServiceBusMessage
     {
         public ServiceBusMessage() { }
+        public ServiceBusMessage(Azure.Core.Amqp.AmqpAnnotatedMessage message) { }
         public ServiceBusMessage(Azure.Messaging.ServiceBus.ServiceBusReceivedMessage receivedMessage) { }
         public ServiceBusMessage(System.BinaryData body) { }
         public ServiceBusMessage(System.ReadOnlyMemory<byte> body) { }

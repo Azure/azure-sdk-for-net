@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_SharedPrivateLinkResourceCreateOrUpdate()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2022-09-01/examples/CreateOrUpdateSharedPrivateLinkResource.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/CreateOrUpdateSharedPrivateLinkResource.json
             // this example is just showing the usage of "SharedPrivateLinkResources_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_SharedPrivateLinkResourceGet()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2022-09-01/examples/GetSharedPrivateLinkResource.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/GetSharedPrivateLinkResource.json
             // this example is just showing the usage of "SharedPrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Search.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_SharedPrivateLinkResourceGet()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2022-09-01/examples/GetSharedPrivateLinkResource.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/GetSharedPrivateLinkResource.json
             // this example is just showing the usage of "SharedPrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,12 +130,55 @@ namespace Azure.ResourceManager.Search.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // SharedPrivateLinkResourceGet
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_SharedPrivateLinkResourceGet()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/GetSharedPrivateLinkResource.json
+            // this example is just showing the usage of "SharedPrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SearchServiceResource created on azure
+            // for more information of creating SearchServiceResource, please refer to the document of SearchServiceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string searchServiceName = "mysearchservice";
+            ResourceIdentifier searchServiceResourceId = SearchServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, searchServiceName);
+            SearchServiceResource searchService = client.GetSearchServiceResource(searchServiceResourceId);
+
+            // get the collection of this SharedSearchServicePrivateLinkResource
+            SharedSearchServicePrivateLinkResourceCollection collection = searchService.GetSharedSearchServicePrivateLinkResources();
+
+            // invoke the operation
+            string sharedPrivateLinkResourceName = "testResource";
+            NullableResponse<SharedSearchServicePrivateLinkResource> response = await collection.GetIfExistsAsync(sharedPrivateLinkResourceName);
+            SharedSearchServicePrivateLinkResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SharedSearchServicePrivateLinkResourceData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // ListSharedPrivateLinkResourcesByService
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListSharedPrivateLinkResourcesByService()
         {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2022-09-01/examples/ListSharedPrivateLinkResourcesByService.json
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/stable/2023-11-01/examples/ListSharedPrivateLinkResourcesByService.json
             // this example is just showing the usage of "SharedPrivateLinkResources_ListByService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

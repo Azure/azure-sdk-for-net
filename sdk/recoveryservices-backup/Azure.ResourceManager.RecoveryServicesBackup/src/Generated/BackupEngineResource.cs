@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 {
     /// <summary>
     /// A Class representing a BackupEngine along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="BackupEngineResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetBackupEngineResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetBackupEngine method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="BackupEngineResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetBackupEngineResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetBackupEngine method.
     /// </summary>
     public partial class BackupEngineResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="BackupEngineResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="backupEngineName"> The backupEngineName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string backupEngineName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupEngines/{backupEngineName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         private readonly BackupEnginesRestOperations _backupEngineRestClient;
         private readonly BackupEngineData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupEngines";
+
         /// <summary> Initializes a new instance of the <see cref="BackupEngineResource"/> class for mocking. </summary>
         protected BackupEngineResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "BackupEngineResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="BackupEngineResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal BackupEngineResource(ArmClient client, BackupEngineData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.RecoveryServices/vaults/backupEngines";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupEngineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,6 +143,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BackupEngines_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BackupEngineResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

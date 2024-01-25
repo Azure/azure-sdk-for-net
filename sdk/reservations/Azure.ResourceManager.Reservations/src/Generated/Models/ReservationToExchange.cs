@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation refund details. </summary>
     public partial class ReservationToExchange
     {
-        /// <summary> Initializes a new instance of ReservationToExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToExchange"/>. </summary>
         internal ReservationToExchange()
         {
         }
 
-        /// <summary> Initializes a new instance of ReservationToExchange. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationToExchange"/>. </summary>
         /// <param name="reservationId"> Fully qualified id of the reservation being returned. </param>
         /// <param name="quantity"> Quantity to be returned. </param>
         /// <param name="billingRefundAmount"> Pricing information containing the amount and the currency code. </param>

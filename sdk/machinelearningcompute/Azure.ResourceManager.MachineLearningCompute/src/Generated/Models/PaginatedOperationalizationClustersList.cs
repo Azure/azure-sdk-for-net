@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
     /// <summary> Paginated list of operationalization clusters. </summary>
     internal partial class PaginatedOperationalizationClustersList
     {
-        /// <summary> Initializes a new instance of PaginatedOperationalizationClustersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaginatedOperationalizationClustersList"/>. </summary>
         internal PaginatedOperationalizationClustersList()
         {
             Value = new ChangeTrackingList<OperationalizationClusterData>();
         }
 
-        /// <summary> Initializes a new instance of PaginatedOperationalizationClustersList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaginatedOperationalizationClustersList"/>. </summary>
         /// <param name="value"> An array of cluster objects. </param>
         /// <param name="nextLink"> A continuation link (absolute URI) to the next page of results in the list. </param>
         internal PaginatedOperationalizationClustersList(IReadOnlyList<OperationalizationClusterData> value, string nextLink)

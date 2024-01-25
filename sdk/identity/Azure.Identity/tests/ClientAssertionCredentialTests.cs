@@ -27,16 +27,18 @@ namespace Azure.Identity.Tests
 
             var options = new ClientAssertionCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                MsalClient = config.MockConfidentialMsalClient,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             options.Pipeline = pipeline;
-            var cred = new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options);
-            var instrumented = InstrumentClient(cred);
-            return instrumented;
+            return InstrumentClient(new ClientAssertionCredential(config.TenantId, ClientId, () => "assertion", options));
         }
     }
 }

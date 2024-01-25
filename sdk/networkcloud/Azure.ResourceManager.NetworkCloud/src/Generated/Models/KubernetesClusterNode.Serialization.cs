@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<string> kubernetesVersion = default;
             Optional<IReadOnlyList<KubernetesLabel>> labels = default;
             Optional<long> memorySizeGB = default;
-            Optional<AgentPoolMode> mode = default;
+            Optional<NetworkCloudAgentPoolMode> mode = default;
             Optional<string> name = default;
             Optional<IReadOnlyList<NetworkAttachment>> networkAttachments = default;
             Optional<KubernetesNodePowerState> powerState = default;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    mode = new AgentPoolMode(property.Value.GetString());
+                    mode = new NetworkCloudAgentPoolMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("name"u8))

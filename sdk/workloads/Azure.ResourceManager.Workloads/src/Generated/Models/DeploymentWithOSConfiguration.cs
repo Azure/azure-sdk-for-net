@@ -12,18 +12,18 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> Deployment along with OS Configuration. </summary>
     public partial class DeploymentWithOSConfiguration : SapConfiguration
     {
-        /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentWithOSConfiguration"/>. </summary>
         public DeploymentWithOSConfiguration()
         {
             ConfigurationType = SapConfigurationType.DeploymentWithOSConfig;
         }
 
-        /// <summary> Initializes a new instance of DeploymentWithOSConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeploymentWithOSConfiguration"/>. </summary>
         /// <param name="configurationType"> The configuration Type. </param>
         /// <param name="appLocation"> The geo-location where the SAP system is to be created. </param>
         /// <param name="infrastructureConfiguration">
         /// The infrastructure configuration.
-        /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
         /// </param>
         /// <param name="softwareConfiguration">
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public AzureLocation? AppLocation { get; set; }
         /// <summary>
         /// The infrastructure configuration.
-        /// Please note <see cref="InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.InfrastructureConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="SingleServerConfiguration"/> and <see cref="ThreeTierConfiguration"/>.
         /// </summary>
         public InfrastructureConfiguration InfrastructureConfiguration { get; set; }

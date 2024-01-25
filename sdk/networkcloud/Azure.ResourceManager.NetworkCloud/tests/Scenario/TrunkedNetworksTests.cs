@@ -17,13 +17,14 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public TrunkedNetworksTests  (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task TrunkedNetworks()
         {
-            TrunkedNetworkCollection collection = ResourceGroupResource.GetTrunkedNetworks();
+            NetworkCloudTrunkedNetworkCollection collection = ResourceGroupResource.GetNetworkCloudTrunkedNetworks();
             string trunkedNetworkName = Recording.GenerateAssetName("trunkednetwork");
             string resourceGroupName = ResourceIdentifier.Parse(ResourceGroupResource.Id).ResourceGroupName;
-            ResourceIdentifier trunkedNetworkResourceId = TrunkedNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, resourceGroupName, trunkedNetworkName);
-            TrunkedNetworkResource trunkedNetwork = Client.GetTrunkedNetworkResource(trunkedNetworkResourceId);
+            ResourceIdentifier trunkedNetworkResourceId = NetworkCloudTrunkedNetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, resourceGroupName, trunkedNetworkName);
+            NetworkCloudTrunkedNetworkResource trunkedNetwork = Client.GetNetworkCloudTrunkedNetworkResource(trunkedNetworkResourceId);
 
             // Create
             var listOfVlans = TestEnvironment.TrunkedNetworkVlans.Split(',');
@@ -32,9 +33,14 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             {
                 vlans.Add(long.Parse(item));
             }
-            var isolationDomainIds = TestEnvironment.IsolationDomainIds.Split(',');
+            var isolationDomainIdStringList = TestEnvironment.IsolationDomainIds.Split(',');
+            List<ResourceIdentifier> isolationDomainIds = new List<ResourceIdentifier>();
+            foreach (string id in isolationDomainIdStringList)
+            {
+                isolationDomainIds.Add(new ResourceIdentifier(id));
+            }
 
-            TrunkedNetworkData createData = new TrunkedNetworkData
+            NetworkCloudTrunkedNetworkData createData = new NetworkCloudTrunkedNetworkData
             (
                 TestEnvironment.Location,
                 new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
@@ -48,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key1"] = "myvalue1",
                 },
             };
-            ArmOperation<TrunkedNetworkResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, trunkedNetworkName, createData);
+            ArmOperation<NetworkCloudTrunkedNetworkResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, trunkedNetworkName, createData);
             Assert.AreEqual(trunkedNetworkName, createResult.Value.Data.Name);
 
             // Get
@@ -56,7 +62,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(trunkedNetworkName, getResult.Value.Data.Name);
 
             // Update
-            TrunkedNetworkPatch patch = new TrunkedNetworkPatch()
+            NetworkCloudTrunkedNetworkPatch patch = new NetworkCloudTrunkedNetworkPatch()
             {
                 Tags =
                 {
@@ -64,20 +70,20 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     ["key2"] = "myvalue2",
                 },
             };
-            TrunkedNetworkResource updateResult = await trunkedNetwork.UpdateAsync(patch);
+            NetworkCloudTrunkedNetworkResource updateResult = await trunkedNetwork.UpdateAsync(patch);
             Assert.AreEqual(patch.Tags, updateResult.Data.Tags);
 
             // List by Resource Group
-            var listByResourceGroup = new List<TrunkedNetworkResource>();
-            await foreach (TrunkedNetworkResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkCloudTrunkedNetworkResource>();
+            await foreach (NetworkCloudTrunkedNetworkResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<TrunkedNetworkResource>();
-            await foreach (TrunkedNetworkResource item in SubscriptionResource.GetTrunkedNetworksAsync())
+            var listBySubscription = new List<NetworkCloudTrunkedNetworkResource>();
+            await foreach (NetworkCloudTrunkedNetworkResource item in SubscriptionResource.GetNetworkCloudTrunkedNetworksAsync())
             {
                 listBySubscription.Add(item);
             }

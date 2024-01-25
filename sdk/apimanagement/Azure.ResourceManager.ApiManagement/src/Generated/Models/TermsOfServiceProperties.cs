@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Terms of service contract properties. </summary>
     public partial class TermsOfServiceProperties
     {
-        /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
         public TermsOfServiceProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TermsOfServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TermsOfServiceProperties"/>. </summary>
         /// <param name="text"> A terms of service text. </param>
         /// <param name="isDisplayEnabled"> Display terms of service during a sign-up process. </param>
         /// <param name="isConsentRequired"> Ask user for consent to the terms of service. </param>
-        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TermsOfServiceProperties(string text, bool? isDisplayEnabled, bool? isConsentRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             IsDisplayEnabled = isDisplayEnabled;
             IsConsentRequired = isConsentRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> A terms of service text. </summary>

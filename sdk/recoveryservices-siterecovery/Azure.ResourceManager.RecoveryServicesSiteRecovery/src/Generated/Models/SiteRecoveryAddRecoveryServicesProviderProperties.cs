@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> The properties of an add provider request. </summary>
     public partial class SiteRecoveryAddRecoveryServicesProviderProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryAddRecoveryServicesProviderProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddRecoveryServicesProviderProperties"/>. </summary>
         /// <param name="machineName"> The name of the machine where the provider is getting added. </param>
         /// <param name="authenticationIdentityContent"> The identity provider input for DRA authentication. </param>
         /// <param name="resourceAccessIdentityContent"> The identity provider input for resource access. </param>
@@ -27,6 +27,23 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             MachineName = machineName;
             AuthenticationIdentityContent = authenticationIdentityContent;
             ResourceAccessIdentityContent = resourceAccessIdentityContent;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryAddRecoveryServicesProviderProperties"/>. </summary>
+        /// <param name="machineName"> The name of the machine where the provider is getting added. </param>
+        /// <param name="machineId"> The Id of the machine where the provider is getting added. </param>
+        /// <param name="biosId"> The Bios Id of the machine. </param>
+        /// <param name="authenticationIdentityContent"> The identity provider input for DRA authentication. </param>
+        /// <param name="resourceAccessIdentityContent"> The identity provider input for resource access. </param>
+        /// <param name="dataPlaneAuthenticationIdentityContent"> The identity provider input for data plane authentication. </param>
+        internal SiteRecoveryAddRecoveryServicesProviderProperties(string machineName, string machineId, string biosId, IdentityProviderContent authenticationIdentityContent, IdentityProviderContent resourceAccessIdentityContent, IdentityProviderContent dataPlaneAuthenticationIdentityContent)
+        {
+            MachineName = machineName;
+            MachineId = machineId;
+            BiosId = biosId;
+            AuthenticationIdentityContent = authenticationIdentityContent;
+            ResourceAccessIdentityContent = resourceAccessIdentityContent;
+            DataPlaneAuthenticationIdentityContent = dataPlaneAuthenticationIdentityContent;
         }
 
         /// <summary> The name of the machine where the provider is getting added. </summary>

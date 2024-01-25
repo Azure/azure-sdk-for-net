@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<int> nodeCount = default;
             Optional<string> integrationRuntimeName = default;
             Optional<Guid> sessionId = default;
-            Optional<string> startTime = default;
+            Optional<DateTimeOffset> startTime = default;
             Optional<int> timeToLiveInMinutes = default;
             Optional<DateTimeOffset> lastActivityTime = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
@@ -77,7 +77,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("timeToLiveInMinutes"u8))
@@ -101,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Optional.ToNullable(sessionId), startTime.Value, Optional.ToNullable(timeToLiveInMinutes), Optional.ToNullable(lastActivityTime), additionalProperties);
+            return new DataFlowDebugSessionInfo(dataFlowName.Value, computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(nodeCount), integrationRuntimeName.Value, Optional.ToNullable(sessionId), Optional.ToNullable(startTime), Optional.ToNullable(timeToLiveInMinutes), Optional.ToNullable(lastActivityTime), additionalProperties);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.ConnectionMonitorTestResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.ConnectionMonitorTestResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>> GetAsync(string connectionMonitorTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Peering.ConnectionMonitorTestResource> GetIfExists(string connectionMonitorTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>> GetIfExistsAsync(string connectionMonitorTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Peering.ConnectionMonitorTestResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Peering.ConnectionMonitorTestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.ConnectionMonitorTestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -51,6 +53,8 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeerAsnResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeerAsnResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource>> GetAsync(string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Peering.PeerAsnResource> GetIfExists(string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Peering.PeerAsnResource>> GetIfExistsAsync(string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Peering.PeerAsnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.PeerAsnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Peering.PeerAsnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.PeerAsnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -89,13 +93,15 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> GetAsync(string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringResource> GetIfExists(string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringResource>> GetIfExistsAsync(string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Peering.PeeringResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.PeeringResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Peering.PeeringResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.PeeringResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class PeeringData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PeeringData(Azure.Core.AzureLocation location, Azure.ResourceManager.Peering.Models.PeeringSku sku, Azure.ResourceManager.Peering.Models.PeeringKind kind) : base (default(Azure.Core.AzureLocation)) { }
+        public PeeringData(Azure.Core.AzureLocation location, Azure.ResourceManager.Peering.Models.PeeringSku sku, Azure.ResourceManager.Peering.Models.PeeringKind kind) { }
         public Azure.ResourceManager.Peering.Models.DirectPeeringProperties Direct { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.ExchangePeeringProperties Exchange { get { throw null; } set { } }
         public Azure.ResourceManager.Peering.Models.PeeringKind Kind { get { throw null; } set { } }
@@ -155,6 +161,8 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource>> GetAsync(string registeredAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> GetIfExists(string registeredAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource>> GetIfExistsAsync(string registeredAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.PeeringRegisteredAsnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -191,6 +199,8 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>> GetAsync(string registeredPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> GetIfExists(string registeredPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>> GetIfExistsAsync(string registeredPrefixName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -261,13 +271,15 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringServiceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringServiceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> GetAsync(string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringServiceResource> GetIfExists(string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringServiceResource>> GetIfExistsAsync(string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Peering.PeeringServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.PeeringServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Peering.PeeringServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.PeeringServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
     public partial class PeeringServiceData : Azure.ResourceManager.Models.TrackedResourceData
     {
-        public PeeringServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public PeeringServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Peering.Models.PeeringLogAnalyticsWorkspaceProperties LogAnalyticsWorkspaceProperties { get { throw null; } set { } }
         public string PeeringServiceLocation { get { throw null; } set { } }
         public string PeeringServiceProvider { get { throw null; } set { } }
@@ -287,6 +299,8 @@ namespace Azure.ResourceManager.Peering
         public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringServicePrefixResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringServicePrefixResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServicePrefixResource>> GetAsync(string prefixName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringServicePrefixResource> GetIfExists(string prefixName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Peering.PeeringServicePrefixResource>> GetIfExistsAsync(string prefixName, string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Peering.PeeringServicePrefixResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Peering.PeeringServicePrefixResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Peering.PeeringServicePrefixResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Peering.PeeringServicePrefixResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -341,6 +355,59 @@ namespace Azure.ResourceManager.Peering
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource> Update(Azure.ResourceManager.Peering.Models.PeeringServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> UpdateAsync(Azure.ResourceManager.Peering.Models.PeeringServicePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Peering.Mocking
+{
+    public partial class MockablePeeringArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockablePeeringArmClient() { }
+        public virtual Azure.ResourceManager.Peering.ConnectionMonitorTestResource GetConnectionMonitorTestResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeerAsnResource GetPeerAsnResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeeringRegisteredAsnResource GetPeeringRegisteredAsnResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeeringRegisteredPrefixResource GetPeeringRegisteredPrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeeringResource GetPeeringResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeeringServicePrefixResource GetPeeringServicePrefixResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeeringServiceResource GetPeeringServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockablePeeringResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockablePeeringResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringResource> GetPeering(string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringResource>> GetPeeringAsync(string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeeringCollection GetPeerings() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource> GetPeeringService(string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeeringServiceResource>> GetPeeringServiceAsync(string peeringServiceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeeringServiceCollection GetPeeringServices() { throw null; }
+    }
+    public partial class MockablePeeringSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockablePeeringSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability> CheckPeeringServiceProviderAvailability(Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.Models.PeeringServiceProviderAvailability>> CheckPeeringServiceProviderAvailabilityAsync(Azure.ResourceManager.Peering.Models.CheckPeeringServiceProviderAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetCdnPeeringPrefixes(string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.CdnPeeringPrefix> GetCdnPeeringPrefixesAsync(string peeringLocation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource> GetPeerAsn(string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.PeerAsnResource>> GetPeerAsnAsync(string peerAsnName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Peering.PeerAsnCollection GetPeerAsns() { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetPeeringLocations(Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringLocation> GetPeeringLocationsAsync(Azure.ResourceManager.Peering.Models.PeeringLocationsKind kind, Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.PeeringLocationsDirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetPeerings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsByLegacyPeering(string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringResource> GetPeeringsByLegacyPeeringAsync(string peeringLocation, Azure.ResourceManager.Peering.Models.LegacyPeeringsKind kind, int? asn = default(int?), Azure.ResourceManager.Peering.Models.DirectPeeringType? directPeeringType = default(Azure.ResourceManager.Peering.Models.DirectPeeringType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringServiceCountry> GetPeeringServiceCountries(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringServiceCountry> GetPeeringServiceCountriesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringServiceLocation> GetPeeringServiceLocations(string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringServiceLocation> GetPeeringServiceLocationsAsync(string country = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.Models.PeeringServiceProvider> GetPeeringServiceProviders(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.Models.PeeringServiceProvider> GetPeeringServiceProvidersAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.Peering.PeeringServiceResource> GetPeeringServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Peering.PeeringServiceResource> GetPeeringServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response InitializePeeringServiceConnectionMonitor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> InitializePeeringServiceConnectionMonitorAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.Peering.Models.LookingGlassOutput> InvokeLookingGlass(Azure.ResourceManager.Peering.Models.LookingGlassCommand command, Azure.ResourceManager.Peering.Models.LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Peering.Models.LookingGlassOutput>> InvokeLookingGlassAsync(Azure.ResourceManager.Peering.Models.LookingGlassCommand command, Azure.ResourceManager.Peering.Models.LookingGlassSourceType sourceType, string sourceLocation, string destinationIP, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Peering.Models

@@ -133,6 +133,9 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName,
                     parameters: testBase.serviceProperties);
+
+                updatedService = await testBase.client.ApiManagementService.GetAsync(testBase.rgName, testBase.serviceName);
+
                 Assert.Equal(VirtualNetworkType.Internal, updatedService.VirtualNetworkType);
                 Assert.NotNull(updatedService.VirtualNetworkConfiguration);
                 Assert.Equal(getSubnetResponse.Id, updatedService.VirtualNetworkConfiguration.SubnetResourceId);
@@ -289,6 +292,9 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     resourceGroupName: testBase.rgName,
                     serviceName: testBase.serviceName,
                     parameters: testBase.serviceProperties);
+
+                updatedService = await testBase.client.ApiManagementService.GetAsync(testBase.rgName, testBase.serviceName);
+
                 Assert.Equal(VirtualNetworkType.Internal, updatedService.VirtualNetworkType);
                 Assert.NotNull(updatedService.VirtualNetworkConfiguration);
                 Assert.Equal(getSubnetResponse.Id, updatedService.VirtualNetworkConfiguration.SubnetResourceId);

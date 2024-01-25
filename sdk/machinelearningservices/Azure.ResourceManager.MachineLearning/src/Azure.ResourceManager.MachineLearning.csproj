@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.2.0-beta.2</Version>
+    <Version>1.2.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.1.1</ApiCompatVersion>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.MachineLearningServices.</Description>
     <PackageId>Azure.ResourceManager.MachineLearning</PackageId>
     <PackageTags>azure;management;machinelearning;machinelearningservices;aml;ml</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
 
   <PropertyGroup>

@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Work item configuration associated with an application insights resource. </summary>
     public partial class WorkItemConfiguration
     {
-        /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfiguration"/>. </summary>
         internal WorkItemConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of WorkItemConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkItemConfiguration"/>. </summary>
         /// <param name="connectorId"> Connector identifier where work item is created. </param>
         /// <param name="configDisplayName"> Configuration friendly name. </param>
         /// <param name="isDefault"> Boolean value indicating whether configuration is default. </param>
         /// <param name="id"> Unique Id for work item. </param>
         /// <param name="configProperties"> Serialized JSON object for detailed properties. </param>
-        internal WorkItemConfiguration(string connectorId, string configDisplayName, bool? isDefault, string id, string configProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkItemConfiguration(string connectorId, string configDisplayName, bool? isDefault, string id, string configProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectorId = connectorId;
             ConfigDisplayName = configDisplayName;
             IsDefault = isDefault;
             Id = id;
             ConfigProperties = configProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Connector identifier where work item is created. </summary>

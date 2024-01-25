@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.ApiManagement.Models
     /// <summary> Details of the Backend WebProxy Server to use in the Request to Backend. </summary>
     public partial class BackendProxyContract
     {
-        /// <summary> Initializes a new instance of BackendProxyContract. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackendProxyContract"/>. </summary>
         /// <param name="uri"> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public BackendProxyContract(Uri uri)
@@ -23,15 +56,22 @@ namespace Azure.ResourceManager.ApiManagement.Models
             Uri = uri;
         }
 
-        /// <summary> Initializes a new instance of BackendProxyContract. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackendProxyContract"/>. </summary>
         /// <param name="uri"> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </param>
         /// <param name="username"> Username to connect to the WebProxy server. </param>
         /// <param name="password"> Password to connect to the WebProxy Server. </param>
-        internal BackendProxyContract(Uri uri, string username, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendProxyContract(Uri uri, string username, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uri = uri;
             Username = username;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackendProxyContract"/> for deserialization. </summary>
+        internal BackendProxyContract()
+        {
         }
 
         /// <summary> WebProxy Server AbsoluteUri property which includes the entire URI stored in the Uri instance, including all fragments and query strings. </summary>

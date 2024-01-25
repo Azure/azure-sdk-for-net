@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.2</Version>
+    <Version>1.2.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.1</ApiCompatVersion>
+    <ApiCompatVersion>1.1.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.StorageMover</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider StorageMover</Description>
     <PackageTags>azure;management;arm;resource manager;storagemover</PackageTags>

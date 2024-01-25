@@ -169,18 +169,18 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        public static async Task<ConfigurationSetting> DeserializeSettingAsync(Stream content, CancellationToken cancellation)
+        public static async Task<ConfigurationSetting> DeserializeSettingAsync(BinaryData content, CancellationToken cancellation)
         {
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellation).ConfigureAwait(false))
+            using (JsonDocument json = await JsonDocument.ParseAsync(content.ToStream(), default, cancellation).ConfigureAwait(false))
             {
                 JsonElement root = json.RootElement;
                 return ReadSetting(root);
             }
         }
 
-        public static ConfigurationSetting DeserializeSetting(Stream content)
+        public static ConfigurationSetting DeserializeSetting(BinaryData content)
         {
-            using JsonDocument json = JsonDocument.Parse(content, default);
+            using JsonDocument json = JsonDocument.Parse(content.ToMemory(), default);
             JsonElement root = json.RootElement;
             return ReadSetting(root);
         }

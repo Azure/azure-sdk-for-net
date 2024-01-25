@@ -65,6 +65,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue(ResourceGroupName);
             writer.WritePropertyName("mlWorkspaceName"u8);
             writer.WriteObjectValue(MlWorkspaceName);
+            if (Optional.IsDefined(Authentication))
+            {
+                writer.WritePropertyName("authentication"u8);
+                writer.WriteObjectValue(Authentication);
+            }
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
@@ -108,6 +113,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object subscriptionId = default;
             object resourceGroupName = default;
             object mlWorkspaceName = default;
+            Optional<object> authentication = default;
             Optional<object> servicePrincipalId = default;
             Optional<SecretBase> servicePrincipalKey = default;
             Optional<object> tenant = default;
@@ -194,6 +200,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             mlWorkspaceName = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("authentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            authentication = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("servicePrincipalId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -236,7 +251,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureMLServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, subscriptionId, resourceGroupName, mlWorkspaceName, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value);
+            return new AzureMLServiceLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, subscriptionId, resourceGroupName, mlWorkspaceName, authentication.Value, servicePrincipalId.Value, servicePrincipalKey.Value, tenant.Value, encryptedCredential.Value);
         }
 
         internal partial class AzureMLServiceLinkedServiceConverter : JsonConverter<AzureMLServiceLinkedService>

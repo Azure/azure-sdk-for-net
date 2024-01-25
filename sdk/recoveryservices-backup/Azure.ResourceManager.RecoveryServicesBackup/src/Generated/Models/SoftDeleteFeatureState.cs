@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         private const string InvalidValue = "Invalid";
         private const string EnabledValue = "Enabled";
         private const string DisabledValue = "Disabled";
+        private const string AlwaysONValue = "AlwaysON";
 
         /// <summary> Invalid. </summary>
         public static SoftDeleteFeatureState Invalid { get; } = new SoftDeleteFeatureState(InvalidValue);
@@ -32,6 +33,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public static SoftDeleteFeatureState Enabled { get; } = new SoftDeleteFeatureState(EnabledValue);
         /// <summary> Disabled. </summary>
         public static SoftDeleteFeatureState Disabled { get; } = new SoftDeleteFeatureState(DisabledValue);
+        /// <summary> AlwaysON. </summary>
+        public static SoftDeleteFeatureState AlwaysON { get; } = new SoftDeleteFeatureState(AlwaysONValue);
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are the same. </summary>
         public static bool operator ==(SoftDeleteFeatureState left, SoftDeleteFeatureState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SoftDeleteFeatureState"/> values are not the same. </summary>

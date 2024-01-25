@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> The max per-database performance level capability. </summary>
     public partial class ElasticPoolPerDatabaseMaxPerformanceLevelCapability
     {
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMaxPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMaxPerformanceLevelCapability"/>. </summary>
         internal ElasticPoolPerDatabaseMaxPerformanceLevelCapability()
         {
             SupportedPerDatabaseMinPerformanceLevels = new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolPerDatabaseMaxPerformanceLevelCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolPerDatabaseMaxPerformanceLevelCapability"/>. </summary>
         /// <param name="limit"> The maximum performance level per database. </param>
         /// <param name="unit"> Unit type used to measure performance level. </param>
         /// <param name="supportedPerDatabaseMinPerformanceLevels"> The list of supported min database performance levels. </param>

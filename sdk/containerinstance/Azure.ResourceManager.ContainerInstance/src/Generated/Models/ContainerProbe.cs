@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
@@ -12,12 +13,44 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> The container probe, for liveness or readiness. </summary>
     public partial class ContainerProbe
     {
-        /// <summary> Initializes a new instance of ContainerProbe. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerProbe"/>. </summary>
         public ContainerProbe()
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerProbe. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerProbe"/>. </summary>
         /// <param name="exec"> The execution command to probe. </param>
         /// <param name="httpGet"> The Http Get settings to probe. </param>
         /// <param name="initialDelayInSeconds"> The initial delay seconds. </param>
@@ -25,7 +58,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="failureThreshold"> The failure threshold. </param>
         /// <param name="successThreshold"> The success threshold. </param>
         /// <param name="timeoutInSeconds"> The timeout seconds. </param>
-        internal ContainerProbe(ContainerExec exec, ContainerHttpGet httpGet, int? initialDelayInSeconds, int? periodInSeconds, int? failureThreshold, int? successThreshold, int? timeoutInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerProbe(ContainerExec exec, ContainerHttpGet httpGet, int? initialDelayInSeconds, int? periodInSeconds, int? failureThreshold, int? successThreshold, int? timeoutInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Exec = exec;
             HttpGet = httpGet;
@@ -34,6 +68,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             FailureThreshold = failureThreshold;
             SuccessThreshold = successThreshold;
             TimeoutInSeconds = timeoutInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The execution command to probe. </summary>

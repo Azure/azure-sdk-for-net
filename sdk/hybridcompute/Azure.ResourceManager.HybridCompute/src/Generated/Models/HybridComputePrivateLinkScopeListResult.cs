@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes the list of Azure Arc PrivateLinkScope resources. </summary>
     internal partial class HybridComputePrivateLinkScopeListResult
     {
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeListResult"/>. </summary>
         /// <param name="value"> List of Azure Arc PrivateLinkScope definitions. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal HybridComputePrivateLinkScopeListResult(IEnumerable<HybridComputePrivateLinkScopeData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of HybridComputePrivateLinkScopeListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridComputePrivateLinkScopeListResult"/>. </summary>
         /// <param name="value"> List of Azure Arc PrivateLinkScope definitions. </param>
         /// <param name="nextLink"> The URI to get the next set of Azure Arc PrivateLinkScope definitions if too many PrivateLinkScopes where returned in the result set. </param>
         internal HybridComputePrivateLinkScopeListResult(IReadOnlyList<HybridComputePrivateLinkScopeData> value, string nextLink)

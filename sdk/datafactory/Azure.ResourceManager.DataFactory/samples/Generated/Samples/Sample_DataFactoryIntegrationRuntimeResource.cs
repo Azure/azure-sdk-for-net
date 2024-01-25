@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             // invoke the operation
             DataFactoryIntegrationRuntimePatch patch = new DataFactoryIntegrationRuntimePatch()
             {
-                AutoUpdate = IntegrationRuntimeAutoUpdate.Off,
+                AutoUpdate = IntegrationRuntimeAutoUpdateState.Off,
                 UpdateDelayOffset = XmlConvert.ToTimeSpan("\"PT3H\""),
             };
             DataFactoryIntegrationRuntimeResource result = await dataFactoryIntegrationRuntime.UpdateAsync(patch);

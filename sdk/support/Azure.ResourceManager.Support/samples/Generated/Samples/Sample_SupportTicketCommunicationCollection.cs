@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListCommunicationsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListCommunicationsForSubscriptionSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListCommunicationsForSubscriptionSupportTicket.json
             // this example is just showing the usage of "Communications_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SupportTicketResource created on azure
-            // for more information of creating SupportTicketResource, please refer to the document of SupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
-            ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
-            SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
+            SupportTicketCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketCommunications();
 
             // invoke the operation and iterate over the result
             await foreach (SupportTicketCommunicationResource item in collection.GetAllAsync())
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListWebCommunicationCreatedOnOrAfterASpecificDateForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListWebCommunicationsForSubscriptionSupportTicketCreatedOnOrAfter.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListWebCommunicationsForSubscriptionSupportTicketCreatedOnOrAfter.json
             // this example is just showing the usage of "Communications_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,15 +66,15 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SupportTicketResource created on azure
-            // for more information of creating SupportTicketResource, please refer to the document of SupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
-            ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
-            SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
+            SupportTicketCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketCommunications();
 
             // invoke the operation and iterate over the result
             string filter = "communicationType eq 'web' and createdDate ge 2020-03-10T22:08:51Z";
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ListWebCommunicationsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/ListWebCommunicationsForSubscriptionSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/ListWebCommunicationsForSubscriptionSupportTicket.json
             // this example is just showing the usage of "Communications_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,15 +103,15 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SupportTicketResource created on azure
-            // for more information of creating SupportTicketResource, please refer to the document of SupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
-            ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
-            SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
+            SupportTicketCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketCommunications();
 
             // invoke the operation and iterate over the result
             string filter = "communicationType eq 'web'";
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetCommunicationDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
             // this example is just showing the usage of "Communications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -140,15 +140,15 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SupportTicketResource created on azure
-            // for more information of creating SupportTicketResource, please refer to the document of SupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
-            ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
-            SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
+            SupportTicketCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketCommunications();
 
             // invoke the operation
             string communicationName = "testmessage";
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Support.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_GetCommunicationDetailsForASubscriptionSupportTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
             // this example is just showing the usage of "Communications_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -174,15 +174,15 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SupportTicketResource created on azure
-            // for more information of creating SupportTicketResource, please refer to the document of SupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
-            ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
-            SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
+            SupportTicketCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketCommunications();
 
             // invoke the operation
             string communicationName = "testmessage";
@@ -191,12 +191,54 @@ namespace Azure.ResourceManager.Support.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Get communication details for a subscription support ticket
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_GetCommunicationDetailsForASubscriptionSupportTicket()
+        {
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/GetCommunicationDetailsForSubscriptionSupportTicket.json
+            // this example is just showing the usage of "Communications_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
+            string subscriptionId = "subid";
+            string supportTicketName = "testticket";
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
+
+            // get the collection of this SupportTicketCommunicationResource
+            SupportTicketCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketCommunications();
+
+            // invoke the operation
+            string communicationName = "testmessage";
+            NullableResponse<SupportTicketCommunicationResource> response = await collection.GetIfExistsAsync(communicationName);
+            SupportTicketCommunicationResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SupportTicketCommunicationData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // AddCommunicationToSubscriptionTicket
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_AddCommunicationToSubscriptionTicket()
         {
-            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/stable/2020-04-01/examples/CreateSupportTicketCommunication.json
+            // Generated from example definition: specification/support/resource-manager/Microsoft.Support/preview/2022-09-01-preview/examples/CreateSupportTicketCommunication.json
             // this example is just showing the usage of "Communications_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -204,15 +246,15 @@ namespace Azure.ResourceManager.Support.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SupportTicketResource created on azure
-            // for more information of creating SupportTicketResource, please refer to the document of SupportTicketResource
+            // this example assumes you already have this SubscriptionSupportTicketResource created on azure
+            // for more information of creating SubscriptionSupportTicketResource, please refer to the document of SubscriptionSupportTicketResource
             string subscriptionId = "subid";
             string supportTicketName = "testticket";
-            ResourceIdentifier supportTicketResourceId = SupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
-            SupportTicketResource supportTicket = client.GetSupportTicketResource(supportTicketResourceId);
+            ResourceIdentifier subscriptionSupportTicketResourceId = SubscriptionSupportTicketResource.CreateResourceIdentifier(subscriptionId, supportTicketName);
+            SubscriptionSupportTicketResource subscriptionSupportTicket = client.GetSubscriptionSupportTicketResource(subscriptionSupportTicketResourceId);
 
             // get the collection of this SupportTicketCommunicationResource
-            SupportTicketCommunicationCollection collection = supportTicket.GetSupportTicketCommunications();
+            SupportTicketCommunicationCollection collection = subscriptionSupportTicket.GetSupportTicketCommunications();
 
             // invoke the operation
             string communicationName = "testcommunication";

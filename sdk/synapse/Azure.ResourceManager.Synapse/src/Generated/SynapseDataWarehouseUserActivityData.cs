@@ -16,12 +16,12 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseDataWarehouseUserActivityData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseDataWarehouseUserActivityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataWarehouseUserActivityData"/>. </summary>
         public SynapseDataWarehouseUserActivityData()
         {
         }
 
-        /// <summary> Initializes a new instance of SynapseDataWarehouseUserActivityData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseDataWarehouseUserActivityData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -1,14 +1,54 @@
 # Release History
 
-## 1.2.0-beta.2 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2023-12-29)
+
+### Features Added
+
+- Compute RP to `2023-09-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+
+## 1.2.1 (2023-11-21)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.2.0 (2023-09-15)
+
+### Features Added
+
+- Compute RP to `2023-03-01` (AvailabilitySets, VirtualMachines, VirtualMachineScaleSets, etc)
+  - Added new parameter `DomainNameLabelScope` to VM and VMSS Public IP Dns Settings.
+  - Added new parameter `TimeCreated` to VMSS VM properties.
+  - Added new parameters `AuxiliaryMode` and `AuxiliarySku` to VM and VMSS Network Configuration Properties.
+
+## 1.2.0-beta.3 (2023-08-14)
+
+### Features Added
+
+- Make `ComputeArmClientMockingExtension`, `ComputeResourceGroupMockingExtension`, `ComputeSubscriptionMockingExtension` public for mocking the extension methods.
+
+## 1.2.0-beta.2 (2023-07-28)
+
+### Features Added
+
+- Disk RP to `2023-01-02`
+    - Added new property class `DiskImageFileFormat` to `GrantAccessData` class
 
 ## 1.2.0-beta.1 (2023-06-01)
 

@@ -10,12 +10,12 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Interpretation of the anomalous time stamp. </summary>
     public partial class AnomalyInterpretation
     {
-        /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyInterpretation"/>. </summary>
         internal AnomalyInterpretation()
         {
         }
 
-        /// <summary> Initializes a new instance of AnomalyInterpretation. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnomalyInterpretation"/>. </summary>
         /// <param name="variable"> Variable. </param>
         /// <param name="contributionScore">
         /// This score shows the percentage that contributes to the anomalous time stamp. It's a

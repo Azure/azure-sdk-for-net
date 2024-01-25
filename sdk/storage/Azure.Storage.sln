@@ -155,6 +155,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Files.DataLake.Perf", "Azure.Storage.Files.DataLake\perf\Azure.Storage.Files.DataLake.Perf\Azure.Storage.Files.DataLake.Perf.csproj", "{0323A01E-E360-4D22-B1F4-15FD2DB39437}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Files.Shares", "Azure.Storage.DataMovement.Files.Shares\src\Azure.Storage.DataMovement.Files.Shares.csproj", "{D3FFA4E3-4DDE-4496-9907-6CCCC315A8A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Files.Shares.Tests", "Azure.Storage.DataMovement.Files.Shares\tests\Azure.Storage.DataMovement.Files.Shares.Tests.csproj", "{4F45B7CD-8A15-4B95-8A57-B6E8A4DD8B02}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Files.Shares.Samples.Tests", "Azure.Storage.DataMovement.Files.Shares\samples\Azure.Storage.DataMovement.Files.Shares.Samples.Tests.csproj", "{A564BB94-1867-4D43-98AB-F3C38E9AFA30}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Files.Shares\BlobToFileSharesTests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{B08F17FE-7AFA-4777-B179-0FE15883EA50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -333,6 +341,22 @@ Global
 		{0323A01E-E360-4D22-B1F4-15FD2DB39437}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0323A01E-E360-4D22-B1F4-15FD2DB39437}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0323A01E-E360-4D22-B1F4-15FD2DB39437}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3FFA4E3-4DDE-4496-9907-6CCCC315A8A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3FFA4E3-4DDE-4496-9907-6CCCC315A8A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3FFA4E3-4DDE-4496-9907-6CCCC315A8A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3FFA4E3-4DDE-4496-9907-6CCCC315A8A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F45B7CD-8A15-4B95-8A57-B6E8A4DD8B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F45B7CD-8A15-4B95-8A57-B6E8A4DD8B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F45B7CD-8A15-4B95-8A57-B6E8A4DD8B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F45B7CD-8A15-4B95-8A57-B6E8A4DD8B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

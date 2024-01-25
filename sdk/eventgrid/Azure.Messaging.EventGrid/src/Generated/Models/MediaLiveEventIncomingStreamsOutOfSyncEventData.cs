@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Incoming streams out of sync event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingStreamsOutOfSync event. </summary>
     public partial class MediaLiveEventIncomingStreamsOutOfSyncEventData
     {
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamsOutOfSyncEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamsOutOfSyncEventData"/>. </summary>
         internal MediaLiveEventIncomingStreamsOutOfSyncEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of MediaLiveEventIncomingStreamsOutOfSyncEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamsOutOfSyncEventData"/>. </summary>
         /// <param name="minLastTimestamp"> Gets the minimum last timestamp received. </param>
         /// <param name="typeOfStreamWithMinLastTimestamp"> Gets the type of stream with minimum last timestamp. </param>
         /// <param name="maxLastTimestamp"> Gets the maximum timestamp among all the tracks (audio or video). </param>

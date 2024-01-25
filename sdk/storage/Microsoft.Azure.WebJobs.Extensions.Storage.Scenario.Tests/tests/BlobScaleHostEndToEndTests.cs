@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
             }";
 
             string triggers = $@"{{
-""triggers"": [
+    ""triggers"": [
     {{
         ""name"": ""myQueueItem"",
         ""type"": ""queueTrigger"",
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Scenario.Tests
         ""connection"": ""{BlobConnection1}"",
         ""functionName"": ""{Function1Name}""
     }}
- ]}}";
+    ]}}";
 
             IHost host = new HostBuilder().ConfigureServices(services => services.AddAzureClientsCore()).Build();
             AzureComponentFactory defaultAzureComponentFactory = host.Services.GetService<AzureComponentFactory>();

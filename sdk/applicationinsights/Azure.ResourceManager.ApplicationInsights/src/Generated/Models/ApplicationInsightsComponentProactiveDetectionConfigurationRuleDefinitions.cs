@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Static definitions of the ProactiveDetection configuration rule (same values for all components). </summary>
     public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions
     {
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/>. </summary>
         public ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions()
         {
         }
 
-        /// <summary> Initializes a new instance of ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions"/>. </summary>
         /// <param name="name"> The rule name. </param>
         /// <param name="displayName"> The rule name as it is displayed in UI. </param>
         /// <param name="description"> The rule description. </param>
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="isEnabledByDefault"> A flag indicating whether the rule is enabled by default. </param>
         /// <param name="isInPreview"> A flag indicating whether the rule is in preview. </param>
         /// <param name="supportsEmailNotifications"> A flag indicating whether email notifications are supported for detections for this rule. </param>
-        internal ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name, string displayName, string description, Uri helpUri, bool? isHidden, bool? isEnabledByDefault, bool? isInPreview, bool? supportsEmailNotifications)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions(string name, string displayName, string description, Uri helpUri, bool? isHidden, bool? isEnabledByDefault, bool? isInPreview, bool? supportsEmailNotifications, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisplayName = displayName;
@@ -36,6 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             IsEnabledByDefault = isEnabledByDefault;
             IsInPreview = isInPreview;
             SupportsEmailNotifications = supportsEmailNotifications;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The rule name. </summary>

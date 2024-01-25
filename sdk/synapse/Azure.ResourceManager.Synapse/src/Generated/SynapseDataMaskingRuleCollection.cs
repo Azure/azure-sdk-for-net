@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Synapse
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SynapseDataMaskingRuleResource" /> and their operations.
-    /// Each <see cref="SynapseDataMaskingRuleResource" /> in the collection will belong to the same instance of <see cref="SynapseDataMaskingPolicyResource" />.
-    /// To get a <see cref="SynapseDataMaskingRuleCollection" /> instance call the GetSynapseDataMaskingRules method from an instance of <see cref="SynapseDataMaskingPolicyResource" />.
+    /// A class representing a collection of <see cref="SynapseDataMaskingRuleResource"/> and their operations.
+    /// Each <see cref="SynapseDataMaskingRuleResource"/> in the collection will belong to the same instance of <see cref="SynapseDataMaskingPolicyResource"/>.
+    /// To get a <see cref="SynapseDataMaskingRuleCollection"/> instance call the GetSynapseDataMaskingRules method from an instance of <see cref="SynapseDataMaskingPolicyResource"/>.
     /// </summary>
     public partial class SynapseDataMaskingRuleCollection : ArmCollection, IEnumerable<SynapseDataMaskingRuleResource>, IAsyncEnumerable<SynapseDataMaskingRuleResource>
     {
@@ -62,6 +63,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -145,6 +162,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
@@ -181,6 +206,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,14 +252,22 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_ListBySqlPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SynapseDataMaskingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="SynapseDataMaskingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SynapseDataMaskingRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -240,14 +281,22 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_ListBySqlPool</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SynapseDataMaskingRuleResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SynapseDataMaskingRuleResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SynapseDataMaskingRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _synapseDataMaskingRuleDataMaskingRulesRestClient.CreateListBySqlPoolRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new SynapseDataMaskingRuleResource(Client, SynapseDataMaskingRuleData.DeserializeSynapseDataMaskingRuleData(e)), _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics, Pipeline, "SynapseDataMaskingRuleCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -260,6 +309,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,6 +353,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>DataMaskingRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
@@ -312,6 +377,96 @@ namespace Azure.ResourceManager.Synapse
             {
                 var response = _synapseDataMaskingRuleDataMaskingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, dataMaskingRuleName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules/{dataMaskingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataMaskingRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
+        public virtual async Task<NullableResponse<SynapseDataMaskingRuleResource>> GetIfExistsAsync(string dataMaskingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+
+            using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _synapseDataMaskingRuleDataMaskingRulesRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, dataMaskingRuleName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDataMaskingRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Synapse/workspaces/{workspaceName}/sqlPools/{sqlPoolName}/dataMaskingPolicies/{dataMaskingPolicyName}/rules/{dataMaskingRuleName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DataMaskingRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseDataMaskingRuleResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="dataMaskingRuleName"> The name of the data masking rule. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="dataMaskingRuleName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataMaskingRuleName"/> is null. </exception>
+        public virtual NullableResponse<SynapseDataMaskingRuleResource> GetIfExists(string dataMaskingRuleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(dataMaskingRuleName, nameof(dataMaskingRuleName));
+
+            using var scope = _synapseDataMaskingRuleDataMaskingRulesClientDiagnostics.CreateScope("SynapseDataMaskingRuleCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _synapseDataMaskingRuleDataMaskingRulesRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, dataMaskingRuleName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<SynapseDataMaskingRuleResource>(response.GetRawResponse());
+                return Response.FromValue(new SynapseDataMaskingRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

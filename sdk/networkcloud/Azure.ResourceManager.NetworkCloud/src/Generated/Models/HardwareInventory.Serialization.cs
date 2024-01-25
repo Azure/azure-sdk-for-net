@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             Optional<string> additionalHostInformation = default;
             Optional<IReadOnlyList<HardwareInventoryNetworkInterface>> interfaces = default;
-            Optional<IReadOnlyList<Nic>> nics = default;
+            Optional<IReadOnlyList<NetworkCloudNic>> nics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalHostInformation"u8))
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<Nic> array = new List<Nic>();
+                    List<NetworkCloudNic> array = new List<NetworkCloudNic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Nic.DeserializeNic(item));
+                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item));
                     }
                     nics = array;
                     continue;

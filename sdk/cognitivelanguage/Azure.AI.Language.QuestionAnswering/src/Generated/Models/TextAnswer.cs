@@ -10,12 +10,12 @@ namespace Azure.AI.Language.QuestionAnswering
     /// <summary> Represents answer result. </summary>
     public partial class TextAnswer
     {
-        /// <summary> Initializes a new instance of TextAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAnswer"/>. </summary>
         internal TextAnswer()
         {
         }
 
-        /// <summary> Initializes a new instance of TextAnswer. </summary>
+        /// <summary> Initializes a new instance of <see cref="TextAnswer"/>. </summary>
         /// <param name="answer"> Answer. </param>
         /// <param name="confidence"> answer confidence score, value ranges from 0 to 1. </param>
         /// <param name="id"> record ID. </param>

@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> The UnknownAuthCredentials. </summary>
     internal partial class UnknownAuthCredentials : DataProtectionBackupAuthCredentials
     {
-        /// <summary> Initializes a new instance of UnknownAuthCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthCredentials"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
-        internal UnknownAuthCredentials(string objectType) : base(objectType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAuthCredentials(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(objectType, serializedAdditionalRawData)
         {
             ObjectType = objectType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAuthCredentials"/> for deserialization. </summary>
+        internal UnknownAuthCredentials()
+        {
         }
     }
 }

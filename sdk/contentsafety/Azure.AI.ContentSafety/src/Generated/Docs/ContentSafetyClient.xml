@@ -2,796 +2,288 @@
 <doc>
   <members>
     <member name="AnalyzeTextAsync(AnalyzeTextOptions,CancellationToken)">
-<example>
-This sample shows how to call AnalyzeTextAsync with required parameters.
+      <example>
+This sample shows how to call AnalyzeTextAsync.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var body = new AnalyzeTextOptions("<text>")
-{
-    Categories = 
-{
-        TextCategory.Hate
-    },
-    BlocklistNames = 
-{
-        "<null>"
-    },
-    BreakByBlocklists = true,
-};
-var result = await client.AnalyzeTextAsync(body);
+AnalyzeTextOptions options = new AnalyzeTextOptions("<text>");
+Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(options);
 ]]></code>
-</example>
+This sample shows how to call AnalyzeTextAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextOptions options = new AnalyzeTextOptions("<text>")
+{
+    Categories = { TextCategory.Hate },
+    BlocklistNames = { "<blocklistNames>" },
+    HaltOnBlocklistHit = true,
+    OutputType = AnalyzeTextOutputType.FourSeverityLevels,
+};
+Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(options);
+]]></code></example>
     </member>
     <member name="AnalyzeText(AnalyzeTextOptions,CancellationToken)">
-<example>
-This sample shows how to call AnalyzeText with required parameters.
+      <example>
+This sample shows how to call AnalyzeText.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var body = new AnalyzeTextOptions("<text>")
-{
-    Categories = 
-{
-        TextCategory.Hate
-    },
-    BlocklistNames = 
-{
-        "<null>"
-    },
-    BreakByBlocklists = true,
-};
-var result = client.AnalyzeText(body);
+AnalyzeTextOptions options = new AnalyzeTextOptions("<text>");
+Response<AnalyzeTextResult> response = client.AnalyzeText(options);
 ]]></code>
-</example>
+This sample shows how to call AnalyzeText with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeTextOptions options = new AnalyzeTextOptions("<text>")
+{
+    Categories = { TextCategory.Hate },
+    BlocklistNames = { "<blocklistNames>" },
+    HaltOnBlocklistHit = true,
+    OutputType = AnalyzeTextOutputType.FourSeverityLevels,
+};
+Response<AnalyzeTextResult> response = client.AnalyzeText(options);
+]]></code></example>
     </member>
     <member name="AnalyzeTextAsync(RequestContent,RequestContext)">
-<example>
-This sample shows how to call AnalyzeTextAsync with required request content, and how to parse the result.
+      <example>
+This sample shows how to call AnalyzeTextAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     text = "<text>",
-};
-
-Response response = await client.AnalyzeTextAsync(RequestContent.Create(data));
+});
+Response response = await client.AnalyzeTextAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
 ]]></code>
-This sample shows how to call AnalyzeTextAsync with all request content, and how to parse the result.
+This sample shows how to call AnalyzeTextAsync with all request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     text = "<text>",
-    categories = new[] {
+    categories = new object[]
+    {
         "Hate"
     },
-    blocklistNames = new[] {
-        "<String>"
+    blocklistNames = new object[]
+    {
+        "<blocklistNames>"
     },
-    breakByBlocklists = true,
-};
-
-Response response = await client.AnalyzeTextAsync(RequestContent.Create(data));
+    haltOnBlocklistHit = true,
+    outputType = "FourSeverityLevels",
+});
+Response response = await client.AnalyzeTextAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blockItemId").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blockItemText").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("offset").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("length").ToString());
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistName").ToString());
+Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemId").ToString());
+Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemText").ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
+]]></code></example>
     </member>
     <member name="AnalyzeText(RequestContent,RequestContext)">
-<example>
-This sample shows how to call AnalyzeText with required request content, and how to parse the result.
+      <example>
+This sample shows how to call AnalyzeText and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     text = "<text>",
-};
-
-Response response = client.AnalyzeText(RequestContent.Create(data));
+});
+Response response = client.AnalyzeText(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
 ]]></code>
-This sample shows how to call AnalyzeText with all request content, and how to parse the result.
+This sample shows how to call AnalyzeText with all request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
+using RequestContent content = RequestContent.Create(new
+{
     text = "<text>",
-    categories = new[] {
+    categories = new object[]
+    {
         "Hate"
     },
-    blocklistNames = new[] {
-        "<String>"
+    blocklistNames = new object[]
+    {
+        "<blocklistNames>"
     },
-    breakByBlocklists = true,
-};
-
-Response response = client.AnalyzeText(RequestContent.Create(data));
+    haltOnBlocklistHit = true,
+    outputType = "FourSeverityLevels",
+});
+Response response = client.AnalyzeText(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blockItemId").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("blockItemText").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("offset").ToString());
-Console.WriteLine(result.GetProperty("blocklistsMatchResults")[0].GetProperty("length").ToString());
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistName").ToString());
+Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemId").ToString());
+Console.WriteLine(result.GetProperty("blocklistsMatch")[0].GetProperty("blocklistItemText").ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
+]]></code></example>
     </member>
     <member name="AnalyzeImageAsync(AnalyzeImageOptions,CancellationToken)">
-<example>
-This sample shows how to call AnalyzeImageAsync with required parameters.
+      <example>
+This sample shows how to call AnalyzeImageAsync.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var body = new AnalyzeImageOptions(new ImageData()
-{
-    Content = BinaryData.FromString("<your binary data content>"),
-    BlobUrl = new Uri("http://localhost:3000"),
-})
-{
-    Categories = 
-{
-        ImageCategory.Hate
-    },
-};
-var result = await client.AnalyzeImageAsync(body);
+AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData());
+Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(options);
 ]]></code>
-</example>
+This sample shows how to call AnalyzeImageAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData())
+{
+    Categories = { ImageCategory.Hate },
+    OutputType = AnalyzeImageOutputType.FourSeverityLevels,
+};
+Response<AnalyzeImageResult> response = await client.AnalyzeImageAsync(options);
+]]></code></example>
     </member>
     <member name="AnalyzeImage(AnalyzeImageOptions,CancellationToken)">
-<example>
-This sample shows how to call AnalyzeImage with required parameters.
+      <example>
+This sample shows how to call AnalyzeImage.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var body = new AnalyzeImageOptions(new ImageData()
-{
-    Content = BinaryData.FromString("<your binary data content>"),
-    BlobUrl = new Uri("http://localhost:3000"),
-})
-{
-    Categories = 
-{
-        ImageCategory.Hate
-    },
-};
-var result = client.AnalyzeImage(body);
+AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData());
+Response<AnalyzeImageResult> response = client.AnalyzeImage(options);
 ]]></code>
-</example>
+This sample shows how to call AnalyzeImage with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
+
+AnalyzeImageOptions options = new AnalyzeImageOptions(new ContentSafetyImageData())
+{
+    Categories = { ImageCategory.Hate },
+    OutputType = AnalyzeImageOutputType.FourSeverityLevels,
+};
+Response<AnalyzeImageResult> response = client.AnalyzeImage(options);
+]]></code></example>
     </member>
     <member name="AnalyzeImageAsync(RequestContent,RequestContext)">
-<example>
-This sample shows how to call AnalyzeImageAsync with required request content, and how to parse the result.
+      <example>
+This sample shows how to call AnalyzeImageAsync and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
-    image = new {},
-};
-
-Response response = await client.AnalyzeImageAsync(RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new
+{
+    image = new object(),
+});
+Response response = await client.AnalyzeImageAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
 ]]></code>
-This sample shows how to call AnalyzeImageAsync with all request content, and how to parse the result.
+This sample shows how to call AnalyzeImageAsync with all request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
-    image = new {
-        content = new {},
+using RequestContent content = RequestContent.Create(new
+{
+    image = new
+    {
+        content = new object(),
         blobUrl = "http://localhost:3000",
     },
-    categories = new[] {
+    categories = new object[]
+    {
         "Hate"
     },
-};
-
-Response response = await client.AnalyzeImageAsync(RequestContent.Create(data));
+    outputType = "FourSeverityLevels",
+});
+Response response = await client.AnalyzeImageAsync(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
+]]></code></example>
     </member>
     <member name="AnalyzeImage(RequestContent,RequestContext)">
-<example>
-This sample shows how to call AnalyzeImage with required request content, and how to parse the result.
+      <example>
+This sample shows how to call AnalyzeImage and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
-    image = new {},
-};
-
-Response response = client.AnalyzeImage(RequestContent.Create(data));
+using RequestContent content = RequestContent.Create(new
+{
+    image = new object(),
+});
+Response response = client.AnalyzeImage(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
 ]]></code>
-This sample shows how to call AnalyzeImage with all request content, and how to parse the result.
+This sample shows how to call AnalyzeImage with all request content and parse the result.
 <code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ContentSafetyClient client = new ContentSafetyClient(endpoint, credential);
 
-var data = new {
-    image = new {
-        content = new {},
+using RequestContent content = RequestContent.Create(new
+{
+    image = new
+    {
+        content = new object(),
         blobUrl = "http://localhost:3000",
     },
-    categories = new[] {
+    categories = new object[]
+    {
         "Hate"
     },
-};
-
-Response response = client.AnalyzeImage(RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("hateResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("selfHarmResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("sexualResult").GetProperty("severity").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("category").ToString());
-Console.WriteLine(result.GetProperty("violenceResult").GetProperty("severity").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistAsync(string,CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklistAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var result = await client.GetTextBlocklistAsync("<blocklistName>");
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklist(string,CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklist with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var result = client.GetTextBlocklist("<blocklistName>");
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklistAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-Response response = await client.GetTextBlocklistAsync("<blocklistName>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklist(string,RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklist with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-Response response = client.GetTextBlocklist("<blocklistName>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="CreateOrUpdateTextBlocklistAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateTextBlocklistAsync with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blocklistName = "<blocklistName>",
-};
-
-Response response = await client.CreateOrUpdateTextBlocklistAsync("<blocklistName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistName").ToString());
-]]></code>
-This sample shows how to call CreateOrUpdateTextBlocklistAsync with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blocklistName = "<blocklistName>",
-    description = "<description>",
-};
-
-Response response = await client.CreateOrUpdateTextBlocklistAsync("<blocklistName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="CreateOrUpdateTextBlocklist(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call CreateOrUpdateTextBlocklist with required parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blocklistName = "<blocklistName>",
-};
-
-Response response = client.CreateOrUpdateTextBlocklist("<blocklistName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistName").ToString());
-]]></code>
-This sample shows how to call CreateOrUpdateTextBlocklist with all parameters and request content, and how to parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blocklistName = "<blocklistName>",
-    description = "<description>",
-};
-
-Response response = client.CreateOrUpdateTextBlocklist("<blocklistName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blocklistName").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="DeleteTextBlocklistAsync(string,RequestContext)">
-<example>
-This sample shows how to call DeleteTextBlocklistAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-Response response = await client.DeleteTextBlocklistAsync("<blocklistName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-    </member>
-    <member name="DeleteTextBlocklist(string,RequestContext)">
-<example>
-This sample shows how to call DeleteTextBlocklist with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-Response response = client.DeleteTextBlocklist("<blocklistName>");
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-    </member>
-    <member name="AddBlockItemsAsync(string,AddBlockItemsOptions,CancellationToken)">
-<example>
-This sample shows how to call AddBlockItemsAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[] 
-{
-    new TextBlockItemInfo("<text>")
-{
-        Description = "<Description>",
-    }
+    outputType = "FourSeverityLevels",
 });
-var result = await client.AddBlockItemsAsync("<blocklistName>", addBlockItemsOptions);
-]]></code>
-</example>
-    </member>
-    <member name="AddBlockItems(string,AddBlockItemsOptions,CancellationToken)">
-<example>
-This sample shows how to call AddBlockItems with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var addBlockItemsOptions = new AddBlockItemsOptions(new TextBlockItemInfo[] 
-{
-    new TextBlockItemInfo("<text>")
-{
-        Description = "<Description>",
-    }
-});
-var result = client.AddBlockItems("<blocklistName>", addBlockItemsOptions);
-]]></code>
-</example>
-    </member>
-    <member name="AddBlockItemsAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call AddBlockItemsAsync with required parameters and request content and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blockItems = new[] {
-        new {
-            description = "<description>",
-            text = "<text>",
-        }
-    },
-};
-
-Response response = await client.AddBlockItemsAsync("<blocklistName>", RequestContent.Create(data));
+Response response = client.AnalyzeImage(content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("blockItemId").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="AddBlockItems(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call AddBlockItems with required parameters and request content and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blockItems = new[] {
-        new {
-            description = "<description>",
-            text = "<text>",
-        }
-    },
-};
-
-Response response = client.AddBlockItems("<blocklistName>", RequestContent.Create(data));
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("blockItemId").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("text").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="RemoveBlockItemsAsync(string,RemoveBlockItemsOptions,CancellationToken)">
-<example>
-This sample shows how to call RemoveBlockItemsAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] 
-{
-    "<null>"
-});
-var result = await client.RemoveBlockItemsAsync("<blocklistName>", removeBlockItemsOptions);
-]]></code>
-</example>
-    </member>
-    <member name="RemoveBlockItems(string,RemoveBlockItemsOptions,CancellationToken)">
-<example>
-This sample shows how to call RemoveBlockItems with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var removeBlockItemsOptions = new RemoveBlockItemsOptions(new string[] 
-{
-    "<null>"
-});
-var result = client.RemoveBlockItems("<blocklistName>", removeBlockItemsOptions);
-]]></code>
-</example>
-    </member>
-    <member name="RemoveBlockItemsAsync(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call RemoveBlockItemsAsync with required parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blockItemIds = new[] {
-        "<String>"
-    },
-};
-
-Response response = await client.RemoveBlockItemsAsync("<blocklistName>", RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-    </member>
-    <member name="RemoveBlockItems(string,RequestContent,RequestContext)">
-<example>
-This sample shows how to call RemoveBlockItems with required parameters and request content.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var data = new {
-    blockItemIds = new[] {
-        "<String>"
-    },
-};
-
-Response response = client.RemoveBlockItems("<blocklistName>", RequestContent.Create(data));
-Console.WriteLine(response.Status);
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItemAsync(string,string,CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklistItemAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var result = await client.GetTextBlocklistItemAsync("<blocklistName>", "<blockItemId>");
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItem(string,string,CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklistItem with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-var result = client.GetTextBlocklistItem("<blocklistName>", "<blockItemId>");
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItemAsync(string,string,RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklistItemAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-Response response = await client.GetTextBlocklistItemAsync("<blocklistName>", "<blockItemId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blockItemId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItem(string,string,RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklistItem with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-Response response = client.GetTextBlocklistItem("<blocklistName>", "<blockItemId>", new RequestContext());
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("blockItemId").ToString());
-Console.WriteLine(result.GetProperty("description").ToString());
-Console.WriteLine(result.GetProperty("text").ToString());
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistsAsync(CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklistsAsync.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-await foreach (var item in client.GetTextBlocklistsAsync())
-{
-}
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklists(CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklists.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-foreach (var item in client.GetTextBlocklists())
-{
-}
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistsAsync(RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklistsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-await foreach (var item in client.GetTextBlocklistsAsync(new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-}
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklists(RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklists with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-foreach (var item in client.GetTextBlocklists(new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blocklistName").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-}
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItemsAsync(string,int?,int?,int?,CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklistItemsAsync with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-await foreach (var item in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234))
-{
-}
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItems(string,int?,int?,int?,CancellationToken)">
-<example>
-This sample shows how to call GetTextBlocklistItems with required parameters.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-foreach (var item in client.GetTextBlocklistItems("<blocklistName>", 1234, 1234, 1234))
-{
-}
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItemsAsync(string,int?,int?,int?,RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklistItemsAsync with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-await foreach (var item in client.GetTextBlocklistItemsAsync("<blocklistName>", 1234, 1234, 1234, new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blockItemId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("text").ToString());
-}
-]]></code>
-</example>
-    </member>
-    <member name="GetTextBlocklistItems(string,int?,int?,int?,RequestContext)">
-<example>
-This sample shows how to call GetTextBlocklistItems with required parameters and parse the result.
-<code><![CDATA[
-var credential = new AzureKeyCredential("<key>");
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ContentSafetyClient(endpoint, credential);
-
-foreach (var item in client.GetTextBlocklistItems("<blocklistName>", 1234, 1234, 1234, new RequestContext()))
-{
-    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
-    Console.WriteLine(result.GetProperty("blockItemId").ToString());
-    Console.WriteLine(result.GetProperty("description").ToString());
-    Console.WriteLine(result.GetProperty("text").ToString());
-}
-]]></code>
-</example>
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("category").ToString());
+Console.WriteLine(result.GetProperty("categoriesAnalysis")[0].GetProperty("severity").ToString());
+]]></code></example>
     </member>
   </members>
 </doc>

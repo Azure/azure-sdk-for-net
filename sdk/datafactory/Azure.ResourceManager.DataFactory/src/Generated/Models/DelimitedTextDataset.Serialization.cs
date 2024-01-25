@@ -36,7 +36,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 JsonSerializer.Serialize(writer, Schema);
             }
             writer.WritePropertyName("linkedServiceName"u8);
-            JsonSerializer.Serialize(writer, LinkedServiceName); if (Optional.IsCollectionDefined(Parameters))
+            JsonSerializer.Serialize(writer, LinkedServiceName);
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -61,7 +62,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item);
 #else
-                    JsonSerializer.Serialize(writer, JsonDocument.Parse(item.ToString()).RootElement);
+                    using (JsonDocument document = JsonDocument.Parse(item))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
                 }
                 writer.WriteEndArray();
@@ -101,11 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(CompressionLevel))
             {
                 writer.WritePropertyName("compressionLevel"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(CompressionLevel);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(CompressionLevel.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, CompressionLevel);
             }
             if (Optional.IsDefined(QuoteChar))
             {
@@ -134,7 +134,10 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
@@ -159,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> rowDelimiter = default;
             Optional<DataFactoryElement<string>> encodingName = default;
             Optional<DataFactoryElement<string>> compressionCodec = default;
-            Optional<BinaryData> compressionLevel = default;
+            Optional<DataFactoryElement<string>> compressionLevel = default;
             Optional<DataFactoryElement<string>> quoteChar = default;
             Optional<DataFactoryElement<string>> escapeChar = default;
             Optional<DataFactoryElement<bool>> firstRowAsHeader = default;
@@ -305,7 +308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            compressionLevel = BinaryData.FromString(property0.Value.GetRawText());
+                            compressionLevel = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("quoteChar"u8))

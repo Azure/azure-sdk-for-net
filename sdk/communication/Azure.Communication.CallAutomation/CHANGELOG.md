@@ -1,14 +1,32 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- StartRecording now accepts PauseOnStart.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.0 (2023-11-23)
+
+### Features Added
+- Mid-Call actions support overriding callback uri 
+- Cancel Add Participant Invitation 
+- Support transfer a participant in a group call to another participant
+- Add Custom Calling Context payload to Transfer and AddParticipant API
+
+## 1.1.0-beta.1 (2023-08-17)
+
+### Features Added
+- Play and recognize supports TTS and SSML source prompts.
+- Recognize supports choices and freeform speech.
+- Start/Stop continuous DTMF recognition by subscribing/unsubscribing to tones.
+- Send DTMF tones to a participant in the call.
+- Mute participants in the call.
 
 ## 1.0.0 (2023-06-14)
 

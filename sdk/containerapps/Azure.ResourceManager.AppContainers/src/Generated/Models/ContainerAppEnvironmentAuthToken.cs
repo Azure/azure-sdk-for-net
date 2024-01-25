@@ -15,13 +15,45 @@ namespace Azure.ResourceManager.AppContainers.Models
     /// <summary> Environment Auth Token. </summary>
     public partial class ContainerAppEnvironmentAuthToken : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentAuthToken. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/>. </summary>
         /// <param name="location"> The location. </param>
         public ContainerAppEnvironmentAuthToken(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ContainerAppEnvironmentAuthToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -30,10 +62,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="location"> The location. </param>
         /// <param name="token"> Auth token value. </param>
         /// <param name="expireOn"> Token expiration date. </param>
-        internal ContainerAppEnvironmentAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string token, DateTimeOffset? expireOn) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppEnvironmentAuthToken(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string token, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Token = token;
             ExpireOn = expireOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppEnvironmentAuthToken"/> for deserialization. </summary>
+        internal ContainerAppEnvironmentAuthToken()
+        {
         }
 
         /// <summary> Auth token value. </summary>

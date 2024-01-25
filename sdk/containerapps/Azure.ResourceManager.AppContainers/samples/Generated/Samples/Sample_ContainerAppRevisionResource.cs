@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Revisions_Get.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Revisions_Get.json
             // this example is just showing the usage of "ContainerAppsRevisions_GetRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ActivateRevision_ActivateContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Revisions_Activate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Revisions_Activate.json
             // this example is just showing the usage of "ContainerAppsRevisions_ActivateRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DeactivateRevision_DeactivateContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Revisions_Deactivate.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Revisions_Deactivate.json
             // this example is just showing the usage of "ContainerAppsRevisions_DeactivateRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task RestartRevision_RestartContainerAppSRevision()
         {
-            // Generated from example definition: specification/app/resource-manager/Microsoft.App/preview/2022-11-01-preview/examples/Revisions_Restart.json
+            // Generated from example definition: specification/app/resource-manager/Microsoft.App/stable/2023-05-01/examples/Revisions_Restart.json
             // this example is just showing the usage of "ContainerAppsRevisions_RestartRevision" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

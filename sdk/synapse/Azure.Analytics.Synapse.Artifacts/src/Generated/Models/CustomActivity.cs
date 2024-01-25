@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Custom activity type. </summary>
     public partial class CustomActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="command"> Command for custom activity Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="command"/> is null. </exception>
@@ -28,10 +28,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Custom";
         }
 
-        /// <summary> Initializes a new instance of CustomActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -44,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="extendedProperties"> User defined property bag. There is no restriction on the keys or values that can be used. The user specified custom activity has the full responsibility to consume and interpret the content defined. </param>
         /// <param name="retentionTimeInDays"> The retention time for the files submitted for custom activity. Type: double (or Expression with resultType double). </param>
         /// <param name="autoUserSpecification"> Elevation level and scope for the user, default is nonadmin task. Type: string (or Expression with resultType double). </param>
-        internal CustomActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object command, LinkedServiceReference resourceLinkedService, object folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, object> extendedProperties, object retentionTimeInDays, object autoUserSpecification) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CustomActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, object command, LinkedServiceReference resourceLinkedService, object folderPath, CustomActivityReferenceObject referenceObjects, IDictionary<string, object> extendedProperties, object retentionTimeInDays, object autoUserSpecification) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Command = command;
             ResourceLinkedService = resourceLinkedService;

@@ -6,33 +6,54 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The NetworkFabric resource definition. </summary>
-    public partial class NetworkFabricPatch
+    /// <summary> The Network Fabric resource definition. </summary>
+    public partial class NetworkFabricPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
         public NetworkFabricPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
-            Racks = new ChangeTrackingList<string>();
-            L2IsolationDomains = new ChangeTrackingList<string>();
-            L3IsolationDomains = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
+        /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
+        /// <param name="terminalServerConfiguration"> Network and credentials configuration already applied to terminal server. </param>
+        /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
+        internal NetworkFabricPatch(IDictionary<string, string> tags, string annotation, int? rackCount, int? serverCountPerRack, string ipv4Prefix, string ipv6Prefix, long? fabricAsn, NetworkFabricPatchablePropertiesTerminalServerConfiguration terminalServerConfiguration, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration) : base(tags)
+        {
+            Annotation = annotation;
+            RackCount = rackCount;
+            ServerCountPerRack = serverCountPerRack;
+            IPv4Prefix = ipv4Prefix;
+            IPv6Prefix = ipv6Prefix;
+            FabricAsn = fabricAsn;
+            TerminalServerConfiguration = terminalServerConfiguration;
+            ManagementNetworkConfiguration = managementNetworkConfiguration;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
+        /// <summary> Number of compute racks associated to Network Fabric. </summary>
+        public int? RackCount { get; set; }
+        /// <summary> Number of servers.Possible values are from 1-16. </summary>
+        public int? ServerCountPerRack { get; set; }
+        /// <summary> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </summary>
+        public string IPv4Prefix { get; set; }
+        /// <summary> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </summary>
+        public string IPv6Prefix { get; set; }
+        /// <summary> ASN of CE devices for CE/PE connectivity. </summary>
+        public long? FabricAsn { get; set; }
         /// <summary> Network and credentials configuration already applied to terminal server. </summary>
-        public TerminalServerPatchableProperties TerminalServerConfiguration { get; set; }
-        /// <summary> List of NetworkRack resource IDs under the Network Fabric. The number of racks allowed depends on the Network Fabric SKU. </summary>
-        public IReadOnlyList<string> Racks { get; }
-        /// <summary> List of L2IsolationDomain resource IDs under the Network Fabric. </summary>
-        public IReadOnlyList<string> L2IsolationDomains { get; }
-        /// <summary> List of L3IsolationDomain resource IDs under the Network Fabric. </summary>
-        public IReadOnlyList<string> L3IsolationDomains { get; }
+        public NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get; set; }
+        /// <summary> Configuration to be used to setup the management network. </summary>
+        public ManagementNetworkConfigurationPatchableProperties ManagementNetworkConfiguration { get; set; }
     }
 }

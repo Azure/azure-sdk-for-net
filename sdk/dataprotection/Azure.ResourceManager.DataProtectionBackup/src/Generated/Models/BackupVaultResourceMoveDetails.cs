@@ -6,30 +6,65 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> ResourceMoveDetails will be returned in response to GetResource call from ARM. </summary>
     public partial class BackupVaultResourceMoveDetails
     {
-        /// <summary> Initializes a new instance of BackupVaultResourceMoveDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceMoveDetails"/>. </summary>
         internal BackupVaultResourceMoveDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of BackupVaultResourceMoveDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="BackupVaultResourceMoveDetails"/>. </summary>
         /// <param name="operationId"> CorrelationId of latest ResourceMove operation attempted. </param>
         /// <param name="startOn"> Start time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
         /// <param name="completeOn"> Completion time in UTC of latest ResourceMove operation attempted. ISO 8601 format. </param>
         /// <param name="sourceResourcePath"> ARM resource path of source resource. </param>
         /// <param name="targetResourcePath"> ARM resource path of target resource used in latest ResourceMove operation. </param>
-        internal BackupVaultResourceMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completeOn, string sourceResourcePath, string targetResourcePath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackupVaultResourceMoveDetails(string operationId, DateTimeOffset? startOn, DateTimeOffset? completeOn, string sourceResourcePath, string targetResourcePath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             StartOn = startOn;
             CompleteOn = completeOn;
             SourceResourcePath = sourceResourcePath;
             TargetResourcePath = targetResourcePath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> CorrelationId of latest ResourceMove operation attempted. </summary>

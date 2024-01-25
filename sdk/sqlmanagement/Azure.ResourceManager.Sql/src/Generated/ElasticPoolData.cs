@@ -19,13 +19,13 @@ namespace Azure.ResourceManager.Sql
     /// </summary>
     public partial class ElasticPoolData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of ElasticPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ElasticPoolData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of ElasticPoolData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ElasticPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -46,23 +46,29 @@ namespace Azure.ResourceManager.Sql
         /// <param name="state"> The state of the elastic pool. </param>
         /// <param name="createdOn"> The creation date of the elastic pool (ISO8601 format). </param>
         /// <param name="maxSizeBytes"> The storage limit for the database elastic pool in bytes. </param>
+        /// <param name="minCapacity"> Minimal capacity that serverless pool will not shrink below, if not paused. </param>
         /// <param name="perDatabaseSettings"> The per database settings for the elastic pool. </param>
         /// <param name="isZoneRedundant"> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </param>
         /// <param name="licenseType"> The license type to apply for this elastic pool. </param>
         /// <param name="maintenanceConfigurationId"> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </param>
-        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. </param>
-        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="highAvailabilityReplicaCount"> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </param>
+        /// <param name="preferredEnclaveType"> Type of enclave requested on the elastic pool. </param>
+        /// <param name="availabilityZone"> Specifies the availability zone the pool's primary replica is pinned to. </param>
+        internal ElasticPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, SqlSku sku, string kind, ElasticPoolState? state, DateTimeOffset? createdOn, long? maxSizeBytes, double? minCapacity, ElasticPoolPerDatabaseSettings perDatabaseSettings, bool? isZoneRedundant, ElasticPoolLicenseType? licenseType, ResourceIdentifier maintenanceConfigurationId, int? highAvailabilityReplicaCount, SqlAlwaysEncryptedEnclaveType? preferredEnclaveType, SqlAvailabilityZoneType? availabilityZone) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Kind = kind;
             State = state;
             CreatedOn = createdOn;
             MaxSizeBytes = maxSizeBytes;
+            MinCapacity = minCapacity;
             PerDatabaseSettings = perDatabaseSettings;
             IsZoneRedundant = isZoneRedundant;
             LicenseType = licenseType;
             MaintenanceConfigurationId = maintenanceConfigurationId;
             HighAvailabilityReplicaCount = highAvailabilityReplicaCount;
+            PreferredEnclaveType = preferredEnclaveType;
+            AvailabilityZone = availabilityZone;
         }
 
         /// <summary>
@@ -84,6 +90,8 @@ namespace Azure.ResourceManager.Sql
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The storage limit for the database elastic pool in bytes. </summary>
         public long? MaxSizeBytes { get; set; }
+        /// <summary> Minimal capacity that serverless pool will not shrink below, if not paused. </summary>
+        public double? MinCapacity { get; set; }
         /// <summary> The per database settings for the elastic pool. </summary>
         public ElasticPoolPerDatabaseSettings PerDatabaseSettings { get; set; }
         /// <summary> Whether or not this elastic pool is zone redundant, which means the replicas of this elastic pool will be spread across multiple availability zones. </summary>
@@ -92,7 +100,11 @@ namespace Azure.ResourceManager.Sql
         public ElasticPoolLicenseType? LicenseType { get; set; }
         /// <summary> Maintenance configuration id assigned to the elastic pool. This configuration defines the period when the maintenance updates will will occur. </summary>
         public ResourceIdentifier MaintenanceConfigurationId { get; set; }
-        /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. </summary>
+        /// <summary> The number of secondary replicas associated with the elastic pool that are used to provide high availability. Applicable only to Hyperscale elastic pools. </summary>
         public int? HighAvailabilityReplicaCount { get; set; }
+        /// <summary> Type of enclave requested on the elastic pool. </summary>
+        public SqlAlwaysEncryptedEnclaveType? PreferredEnclaveType { get; set; }
+        /// <summary> Specifies the availability zone the pool's primary replica is pinned to. </summary>
+        public SqlAvailabilityZoneType? AvailabilityZone { get; set; }
     }
 }

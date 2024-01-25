@@ -19,13 +19,17 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     /// <summary>
     /// A Class representing an EdgeOrder along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct an <see cref="EdgeOrderResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetEdgeOrderResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource" /> using the GetEdgeOrder method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="EdgeOrderResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetEdgeOrderResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetEdgeOrder method.
     /// </summary>
     public partial class EdgeOrderResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="EdgeOrderResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="orderName"> The orderName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, AzureLocation location, string orderName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EdgeOrder/locations/{location}/orders/{orderName}";
@@ -36,12 +40,15 @@ namespace Azure.ResourceManager.EdgeOrder
         private readonly EdgeOrderManagementRestOperations _edgeOrderRestClient;
         private readonly EdgeOrderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/locations/orders";
+
         /// <summary> Initializes a new instance of the <see cref="EdgeOrderResource"/> class for mocking. </summary>
         protected EdgeOrderResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "EdgeOrderResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="EdgeOrderResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal EdgeOrderResource(ArmClient client, EdgeOrderData data) : this(client, data.Id)
@@ -62,9 +69,6 @@ namespace Azure.ResourceManager.EdgeOrder
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EdgeOrder/locations/orders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +102,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +141,14 @@ namespace Azure.ResourceManager.EdgeOrder
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetOrderByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

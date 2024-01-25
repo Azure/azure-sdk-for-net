@@ -12,8 +12,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Initializes a new instance of DocumentClassifierBuildOperationDetails. Used by the <see cref="DocumentAnalysisModelFactory"/>
         /// for mocking.
         /// </summary>
-        internal DocumentClassifierBuildOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentClassifierDetails result)
-            : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, DocumentOperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error)
+        internal DocumentClassifierBuildOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentClassifierDetails result)
+            : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, DocumentOperationKind.DocumentClassifierBuild, resourceLocation, serviceVersion, tags, error)
         {
             Result = result;
         }

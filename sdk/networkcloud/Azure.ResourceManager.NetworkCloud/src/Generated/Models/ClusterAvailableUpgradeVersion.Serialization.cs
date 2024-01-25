@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Optional<ControlImpact> controlImpact = default;
             Optional<string> expectedDuration = default;
             Optional<string> impactDescription = default;
-            Optional<string> supportExpiryDate = default;
+            Optional<DateTimeOffset> supportExpiryDate = default;
             Optional<string> targetClusterVersion = default;
             Optional<WorkloadImpact> workloadImpact = default;
             foreach (var property in element.EnumerateObject())
@@ -47,7 +48,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (property.NameEquals("supportExpiryDate"u8))
                 {
-                    supportExpiryDate = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportExpiryDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("targetClusterVersion"u8))
@@ -65,7 +70,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     continue;
                 }
             }
-            return new ClusterAvailableUpgradeVersion(Optional.ToNullable(controlImpact), expectedDuration.Value, impactDescription.Value, supportExpiryDate.Value, targetClusterVersion.Value, Optional.ToNullable(workloadImpact));
+            return new ClusterAvailableUpgradeVersion(Optional.ToNullable(controlImpact), expectedDuration.Value, impactDescription.Value, Optional.ToNullable(supportExpiryDate), targetClusterVersion.Value, Optional.ToNullable(workloadImpact));
         }
     }
 }

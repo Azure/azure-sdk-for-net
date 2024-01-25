@@ -14,13 +14,45 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties of a managed Cassandra data center. </summary>
     public partial class CassandraDataCenterProperties
     {
-        /// <summary> Initializes a new instance of CassandraDataCenterProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterProperties"/>. </summary>
         public CassandraDataCenterProperties()
         {
             SeedNodes = new ChangeTrackingList<CassandraDataCenterSeedNode>();
         }
 
-        /// <summary> Initializes a new instance of CassandraDataCenterProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraDataCenterProperties"/>. </summary>
         /// <param name="provisioningState"> The status of the resource at the time the operation was called. </param>
         /// <param name="dataCenterLocation"> The region this data center should be created in. </param>
         /// <param name="delegatedSubnetId"> Resource id of a subnet the nodes in this data center should have their network interfaces connected to. The subnet must be in the same region specified in 'dataCenterLocation' and must be able to route to the subnet specified in the cluster's 'delegatedManagementSubnetId' property. This resource id will be of the form '/subscriptions/&lt;subscription id&gt;/resourceGroups/&lt;resource group&gt;/providers/Microsoft.Network/virtualNetworks/&lt;virtual network&gt;/subnets/&lt;subnet&gt;'. </param>
@@ -31,10 +63,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="backupStorageCustomerKeyUri"> Indicates the Key Uri of the customer key to use for encryption of the backup storage account. </param>
         /// <param name="sku"> Virtual Machine SKU used for data centers. Default value is Standard_DS14_v2. </param>
         /// <param name="diskSku"> Disk SKU used for data centers. Default value is P30. </param>
-        /// <param name="diskCapacity"> Number of disk used for data centers. Default value is 4. </param>
-        /// <param name="doesSupportAvailabilityZone"> If the data center has Availability Zone feature, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
+        /// <param name="diskCapacity"> Number of disks attached to each node. Default is 4. </param>
+        /// <param name="doesSupportAvailabilityZone"> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </param>
         /// <param name="authenticationMethodLdapProperties"> Ldap authentication method properties. This feature is in preview. </param>
-        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties)
+        /// <param name="deallocated"> Whether the data center has been deallocated. </param>
+        /// <param name="provisionError"> Error related to resource provisioning. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CassandraDataCenterProperties(CassandraProvisioningState? provisioningState, AzureLocation? dataCenterLocation, ResourceIdentifier delegatedSubnetId, int? nodeCount, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, string base64EncodedCassandraYamlFragment, Uri managedDiskCustomerKeyUri, Uri backupStorageCustomerKeyUri, string sku, string diskSku, int? diskCapacity, bool? doesSupportAvailabilityZone, AuthenticationMethodLdapProperties authenticationMethodLdapProperties, bool? deallocated, CassandraError provisionError, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             DataCenterLocation = dataCenterLocation;
@@ -49,6 +84,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             DiskCapacity = diskCapacity;
             DoesSupportAvailabilityZone = doesSupportAvailabilityZone;
             AuthenticationMethodLdapProperties = authenticationMethodLdapProperties;
+            Deallocated = deallocated;
+            ProvisionError = provisionError;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the resource at the time the operation was called. </summary>
@@ -71,11 +109,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Sku { get; set; }
         /// <summary> Disk SKU used for data centers. Default value is P30. </summary>
         public string DiskSku { get; set; }
-        /// <summary> Number of disk used for data centers. Default value is 4. </summary>
+        /// <summary> Number of disks attached to each node. Default is 4. </summary>
         public int? DiskCapacity { get; set; }
-        /// <summary> If the data center has Availability Zone feature, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </summary>
+        /// <summary> If the data center has Availability Zone support, apply it to the Virtual Machine ScaleSet that host the cassandra data center virtual machines. </summary>
         public bool? DoesSupportAvailabilityZone { get; set; }
         /// <summary> Ldap authentication method properties. This feature is in preview. </summary>
         public AuthenticationMethodLdapProperties AuthenticationMethodLdapProperties { get; set; }
+        /// <summary> Whether the data center has been deallocated. </summary>
+        public bool? Deallocated { get; set; }
+        /// <summary> Error related to resource provisioning. </summary>
+        public CassandraError ProvisionError { get; set; }
     }
 }

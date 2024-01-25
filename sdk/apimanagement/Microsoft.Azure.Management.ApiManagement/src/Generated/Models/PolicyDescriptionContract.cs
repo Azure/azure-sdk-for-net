@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Policy description details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PolicyDescriptionContract : Resource
+    public partial class PolicyDescriptionContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the PolicyDescriptionContract class.

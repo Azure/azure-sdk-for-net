@@ -151,6 +151,49 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Predictions_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_PredictionsGet()
+        {
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/PredictionsGet.json
+            // this example is just showing the usage of "Predictions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HubResource created on azure
+            // for more information of creating HubResource, please refer to the document of HubResource
+            string subscriptionId = "c909e979-ef71-4def-a970-bc7c154db8c5";
+            string resourceGroupName = "TestHubRG";
+            string hubName = "sdkTestHub";
+            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
+            HubResource hub = client.GetHubResource(hubResourceId);
+
+            // get the collection of this PredictionResourceFormatResource
+            PredictionResourceFormatCollection collection = hub.GetPredictionResourceFormats();
+
+            // invoke the operation
+            string predictionName = "sdktest";
+            NullableResponse<PredictionResourceFormatResource> response = await collection.GetIfExistsAsync(predictionName);
+            PredictionResourceFormatResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PredictionResourceFormatData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Predictions_ListByHub
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]

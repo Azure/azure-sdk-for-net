@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> Publishing Credentials Policies entity collection ARM resource. </summary>
     internal partial class PublishingCredentialsPoliciesListResult
     {
-        /// <summary> Initializes a new instance of PublishingCredentialsPoliciesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishingCredentialsPoliciesListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PublishingCredentialsPoliciesListResult(IEnumerable<CsmPublishingCredentialsPoliciesEntityData> value)
@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.AppService.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PublishingCredentialsPoliciesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PublishingCredentialsPoliciesListResult"/>. </summary>
         /// <param name="value"> Collection of resources. </param>
         /// <param name="nextLink"> Link to next page of resources. </param>
         internal PublishingCredentialsPoliciesListResult(IReadOnlyList<CsmPublishingCredentialsPoliciesEntityData> value, string nextLink)

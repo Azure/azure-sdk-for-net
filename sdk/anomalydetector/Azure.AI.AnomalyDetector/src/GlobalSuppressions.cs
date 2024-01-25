@@ -5,4 +5,3 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Usage", "AZC0007: A client type should have a public constructor with equivalent parameters that doesn't take a Azure.Core.ClientOptions-derived type as the last argument", Justification = "")]
 [assembly: SuppressMessage("Usage", "AZC0006: A client type should have a public constructor with equivalent parameters that takes a Azure.Core.ClientOptions-derived type as the last argument", Justification = "")]
-[assembly: SuppressMessage("Usage", "AZC0002: Client method should have cancellationToken as the last optional parameter (both name and it being optional matters", Justification = "")]

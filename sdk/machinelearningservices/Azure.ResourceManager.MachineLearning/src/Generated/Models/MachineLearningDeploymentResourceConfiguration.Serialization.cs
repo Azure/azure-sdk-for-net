@@ -34,6 +34,35 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("instanceType");
                 }
             }
+            if (Optional.IsCollectionDefined(Locations))
+            {
+                if (Locations != null)
+                {
+                    writer.WritePropertyName("locations"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in Locations)
+                    {
+                        writer.WriteStringValue(item);
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("locations");
+                }
+            }
+            if (Optional.IsDefined(MaxInstanceCount))
+            {
+                if (MaxInstanceCount != null)
+                {
+                    writer.WritePropertyName("maxInstanceCount"u8);
+                    writer.WriteNumberValue(MaxInstanceCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("maxInstanceCount");
+                }
+            }
             if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
@@ -51,7 +80,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                        JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                        using (JsonDocument document = JsonDocument.Parse(item.Value))
+                        {
+                            JsonSerializer.Serialize(writer, document.RootElement);
+                        }
 #endif
                     }
                     writer.WriteEndObject();
@@ -72,6 +104,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             Optional<int> instanceCount = default;
             Optional<string> instanceType = default;
+            Optional<IList<string>> locations = default;
+            Optional<int?> maxInstanceCount = default;
             Optional<IDictionary<string, BinaryData>> properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -92,6 +126,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     instanceType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("locations"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        locations = null;
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    locations = array;
+                    continue;
+                }
+                if (property.NameEquals("maxInstanceCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxInstanceCount = null;
+                        continue;
+                    }
+                    maxInstanceCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -117,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningDeploymentResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToDictionary(properties));
+            return new MachineLearningDeploymentResourceConfiguration(Optional.ToNullable(instanceCount), instanceType.Value, Optional.ToList(locations), Optional.ToNullable(maxInstanceCount), Optional.ToDictionary(properties));
         }
     }
 }

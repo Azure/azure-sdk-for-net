@@ -10,13 +10,13 @@ namespace Azure.AI.TextAnalytics.Models
     /// <summary> Use custom models to classify text into single label taxonomy. </summary>
     internal partial class CustomSingleLabelClassificationLROTask : AnalyzeTextLROTask
     {
-        /// <summary> Initializes a new instance of CustomSingleLabelClassificationLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationLROTask"/>. </summary>
         public CustomSingleLabelClassificationLROTask()
         {
             Kind = AnalyzeTextLROTaskKind.CustomSingleLabelClassification;
         }
 
-        /// <summary> Initializes a new instance of CustomSingleLabelClassificationLROTask. </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomSingleLabelClassificationLROTask"/>. </summary>
         /// <param name="taskName"></param>
         /// <param name="kind"> Enumeration of supported long-running Text Analysis tasks. </param>
         /// <param name="parameters"> Supported parameters for a Custom Single Classification task. </param>

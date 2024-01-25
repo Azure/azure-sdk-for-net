@@ -6,19 +6,68 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The date range for data in the export. This should only be specified with timeFrame set to 'Custom'. The maximum date range is 3 months. </summary>
     public partial class ExportTimePeriod
     {
-        /// <summary> Initializes a new instance of ExportTimePeriod. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExportTimePeriod"/>. </summary>
         /// <param name="from"> The start date for export data. </param>
         /// <param name="to"> The end date for export data. </param>
         public ExportTimePeriod(DateTimeOffset @from, DateTimeOffset to)
         {
             From = @from;
             To = to;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportTimePeriod"/>. </summary>
+        /// <param name="from"> The start date for export data. </param>
+        /// <param name="to"> The end date for export data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExportTimePeriod(DateTimeOffset @from, DateTimeOffset to, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            From = @from;
+            To = to;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExportTimePeriod"/> for deserialization. </summary>
+        internal ExportTimePeriod()
+        {
         }
 
         /// <summary> The start date for export data. </summary>

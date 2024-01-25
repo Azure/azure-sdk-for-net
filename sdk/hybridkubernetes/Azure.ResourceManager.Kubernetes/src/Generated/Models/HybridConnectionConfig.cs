@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>
     public partial class HybridConnectionConfig
     {
-        /// <summary> Initializes a new instance of HybridConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionConfig"/>. </summary>
         internal HybridConnectionConfig()
         {
         }
 
-        /// <summary> Initializes a new instance of HybridConnectionConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="HybridConnectionConfig"/>. </summary>
         /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the relay. </param>

@@ -650,6 +650,22 @@ namespace Azure.Core.TestFramework
             }
         }
 
+        /// <summary>
+        /// Determines whether to enable proxy logging beyond errors.
+        /// </summary>
+        internal static bool EnableProxyLogging
+        {
+            get
+            {
+                string switchString = TestContext.Parameters["EnableProxyLogging"] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_PROXY_LOGGING");
+
+                bool.TryParse(switchString, out bool enableProxyLogging);
+
+                return enableProxyLogging;
+            }
+        }
+
         private void BootStrapTestResources()
         {
             lock (s_syncLock)

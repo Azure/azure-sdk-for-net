@@ -14,10 +14,10 @@ using Azure.Core.Pipeline;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// A long-running operation for <see cref="ConfigurationClient.CreateSnapshot(WaitUntil, string, ConfigurationSettingsSnapshot, CancellationToken)"/>
-    /// or <see cref="ConfigurationClient.CreateSnapshotAsync(WaitUntil, string, ConfigurationSettingsSnapshot, CancellationToken)"/>.
+    /// A long-running operation for <see cref="ConfigurationClient.CreateSnapshot(WaitUntil, string, ConfigurationSnapshot, CancellationToken)"/>
+    /// or <see cref="ConfigurationClient.CreateSnapshotAsync(WaitUntil, string, ConfigurationSnapshot, CancellationToken)"/>.
     /// </summary>
-    public class CreateSnapshotOperation : Operation<ConfigurationSettingsSnapshot>
+    public class CreateSnapshotOperation : Operation<ConfigurationSnapshot>
     {
         private readonly ClientDiagnostics _diagnostics;
         private Operation<BinaryData> _operation;
@@ -25,10 +25,10 @@ namespace Azure.Data.AppConfiguration
         private static readonly TimeSpan s_defaultPollingInterval = TimeSpan.FromSeconds(5);
 
         /// <summary>
-        /// Gets the <see cref="ConfigurationSettingsSnapshot"/>. This snapshot will have a status of
-        /// <see cref="SnapshotStatus.Provisioning"/> until the operation has completed.
+        /// Gets the <see cref="ConfigurationSnapshot"/>. This snapshot will have a status of
+        /// <see cref="ConfigurationSnapshotStatus.Provisioning"/> until the operation has completed.
         /// </summary>
-        public override ConfigurationSettingsSnapshot Value => ConfigurationSettingsSnapshot.FromResponse(_operation.GetRawResponse());
+        public override ConfigurationSnapshot Value => ConfigurationSnapshot.FromResponse(_operation.GetRawResponse());
 
         /// <inheritdoc/>
         public override bool HasValue => _operation.HasValue;
@@ -69,11 +69,11 @@ namespace Azure.Data.AppConfiguration
         public override async ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => await UpdateStatusAsync(true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ConfigurationSettingsSnapshot>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
+        public override ValueTask<Response<ConfigurationSnapshot>> WaitForCompletionAsync(CancellationToken cancellationToken = default) =>
             this.DefaultWaitForCompletionAsync(s_defaultPollingInterval, cancellationToken);
 
         /// <inheritdoc />
-        public override ValueTask<Response<ConfigurationSettingsSnapshot>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
+        public override ValueTask<Response<ConfigurationSnapshot>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken) =>
             this.DefaultWaitForCompletionAsync(pollingInterval, cancellationToken);
 
         private async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken)

@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.EventGrid.SubscriptionDeletedEvent event. </summary>
     public partial class SubscriptionDeletedEventData
     {
-        /// <summary> Initializes a new instance of SubscriptionDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
         internal SubscriptionDeletedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of SubscriptionDeletedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionDeletedEventData"/>. </summary>
         /// <param name="eventSubscriptionId"> The Azure resource ID of the deleted event subscription. </param>
         internal SubscriptionDeletedEventData(string eventSubscriptionId)
         {

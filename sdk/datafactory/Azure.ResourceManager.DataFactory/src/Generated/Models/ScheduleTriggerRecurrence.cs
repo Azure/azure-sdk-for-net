@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The workflow trigger recurrence. </summary>
     public partial class ScheduleTriggerRecurrence
     {
-        /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTriggerRecurrence"/>. </summary>
         public ScheduleTriggerRecurrence()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of ScheduleTriggerRecurrence. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduleTriggerRecurrence"/>. </summary>
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
         /// <param name="startOn"> The start time. </param>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal ScheduleTriggerRecurrence(RecurrenceFrequency? frequency, int? interval, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeZone, RecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalProperties)
+        internal ScheduleTriggerRecurrence(DataFactoryRecurrenceFrequency? frequency, int? interval, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeZone, DataFactoryRecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalProperties)
         {
             Frequency = frequency;
             Interval = interval;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The frequency. </summary>
-        public RecurrenceFrequency? Frequency { get; set; }
+        public DataFactoryRecurrenceFrequency? Frequency { get; set; }
         /// <summary> The interval. </summary>
         public int? Interval { get; set; }
         /// <summary> The start time. </summary>
@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The time zone. </summary>
         public string TimeZone { get; set; }
         /// <summary> The recurrence schedule. </summary>
-        public RecurrenceSchedule Schedule { get; set; }
+        public DataFactoryRecurrenceSchedule Schedule { get; set; }
         /// <summary>
         /// Additional Properties
         /// <para>
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ResourceManagerModelFactory
     {
-        /// <summary> Initializes a new instance of PolicyAssignmentData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicyAssignmentData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -45,295 +45,10 @@ namespace Azure.ResourceManager.Models
             resourceSelectors ??= new List<ResourceSelector>();
             overrides ??= new List<PolicyOverride>();
 
-            return new PolicyAssignmentData(id, name, resourceType, systemData, location, managedIdentity, displayName, policyDefinitionId, scope, excludedScopes?.ToList(), parameters, description, metadata, enforcementMode, nonComplianceMessages?.ToList(), resourceSelectors?.ToList(), overrides?.ToList());
+            return new PolicyAssignmentData(id, name, resourceType, systemData, location, managedIdentity, displayName, policyDefinitionId, scope, excludedScopes?.ToList(), parameters, description, metadata, enforcementMode, nonComplianceMessages?.ToList(), resourceSelectors?.ToList(), overrides?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ResourceProviderData. </summary>
-        /// <param name="id"> The provider ID. </param>
-        /// <param name="namespace"> The namespace of the resource provider. </param>
-        /// <param name="registrationState"> The registration state of the resource provider. </param>
-        /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
-        /// <param name="resourceTypes"> The collection of provider resource types. </param>
-        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
-        /// <returns> A new <see cref="Resources.ResourceProviderData"/> instance for mocking. </returns>
-        public static ResourceProviderData ResourceProviderData(ResourceIdentifier id = null, string @namespace = null, string registrationState = null, string registrationPolicy = null, IEnumerable<ProviderResourceType> resourceTypes = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
-        {
-            resourceTypes ??= new List<ProviderResourceType>();
-
-            return new ResourceProviderData(id, @namespace, registrationState, registrationPolicy, resourceTypes?.ToList(), providerAuthorizationConsentState);
-        }
-
-        /// <summary> Initializes a new instance of ProviderResourceType. </summary>
-        /// <param name="resourceType"> The resource type. </param>
-        /// <param name="locations"> The collection of locations where this resource type can be created. </param>
-        /// <param name="locationMappings"> The location mappings that are supported by this resource type. </param>
-        /// <param name="aliases"> The aliases that are supported by this resource type. </param>
-        /// <param name="apiVersions"> The API version. </param>
-        /// <param name="defaultApiVersion"> The default API version. </param>
-        /// <param name="zoneMappings"></param>
-        /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
-        /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
-        /// <param name="properties"> The properties. </param>
-        /// <returns> A new <see cref="Resources.Models.ProviderResourceType"/> instance for mocking. </returns>
-        public static ProviderResourceType ProviderResourceType(string resourceType = null, IEnumerable<string> locations = null, IEnumerable<ProviderExtendedLocation> locationMappings = null, IEnumerable<ResourceTypeAlias> aliases = null, IEnumerable<string> apiVersions = null, string defaultApiVersion = null, IEnumerable<ZoneMapping> zoneMappings = null, IEnumerable<ApiProfile> apiProfiles = null, string capabilities = null, IReadOnlyDictionary<string, string> properties = null)
-        {
-            locations ??= new List<string>();
-            locationMappings ??= new List<ProviderExtendedLocation>();
-            aliases ??= new List<ResourceTypeAlias>();
-            apiVersions ??= new List<string>();
-            zoneMappings ??= new List<ZoneMapping>();
-            apiProfiles ??= new List<ApiProfile>();
-            properties ??= new Dictionary<string, string>();
-
-            return new ProviderResourceType(resourceType, locations?.ToList(), locationMappings?.ToList(), aliases?.ToList(), apiVersions?.ToList(), defaultApiVersion, zoneMappings?.ToList(), apiProfiles?.ToList(), capabilities, properties);
-        }
-
-        /// <summary> Initializes a new instance of ProviderExtendedLocation. </summary>
-        /// <param name="location"> The azure location. </param>
-        /// <param name="providerExtendedLocationType"> The extended location type. </param>
-        /// <param name="extendedLocations"> The extended locations for the azure location. </param>
-        /// <returns> A new <see cref="Resources.Models.ProviderExtendedLocation"/> instance for mocking. </returns>
-        public static ProviderExtendedLocation ProviderExtendedLocation(AzureLocation? location = null, string providerExtendedLocationType = null, IEnumerable<string> extendedLocations = null)
-        {
-            extendedLocations ??= new List<string>();
-
-            return new ProviderExtendedLocation(location, providerExtendedLocationType, extendedLocations?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAlias. </summary>
-        /// <param name="name"> The alias name. </param>
-        /// <param name="paths"> The paths for an alias. </param>
-        /// <param name="aliasType"> The type of the alias. </param>
-        /// <param name="defaultPath"> The default path for an alias. </param>
-        /// <param name="defaultPattern"> The default pattern for an alias. </param>
-        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAlias"/> instance for mocking. </returns>
-        public static ResourceTypeAlias ResourceTypeAlias(string name = null, IEnumerable<ResourceTypeAliasPath> paths = null, ResourceTypeAliasType? aliasType = null, string defaultPath = null, ResourceTypeAliasPattern defaultPattern = null, ResourceTypeAliasPathMetadata defaultMetadata = null)
-        {
-            paths ??= new List<ResourceTypeAliasPath>();
-
-            return new ResourceTypeAlias(name, paths?.ToList(), aliasType, defaultPath, defaultPattern, defaultMetadata);
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAliasPath. </summary>
-        /// <param name="path"> The path of an alias. </param>
-        /// <param name="apiVersions"> The API versions. </param>
-        /// <param name="pattern"> The pattern for an alias path. </param>
-        /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPath"/> instance for mocking. </returns>
-        public static ResourceTypeAliasPath ResourceTypeAliasPath(string path = null, IEnumerable<string> apiVersions = null, ResourceTypeAliasPattern pattern = null, ResourceTypeAliasPathMetadata metadata = null)
-        {
-            apiVersions ??= new List<string>();
-
-            return new ResourceTypeAliasPath(path, apiVersions?.ToList(), pattern, metadata);
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAliasPattern. </summary>
-        /// <param name="phrase"> The alias pattern phrase. </param>
-        /// <param name="variable"> The alias pattern variable. </param>
-        /// <param name="patternType"> The type of alias pattern. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPattern"/> instance for mocking. </returns>
-        public static ResourceTypeAliasPattern ResourceTypeAliasPattern(string phrase = null, string variable = null, ResourceTypeAliasPatternType? patternType = null)
-        {
-            return new ResourceTypeAliasPattern(phrase, variable, patternType);
-        }
-
-        /// <summary> Initializes a new instance of ResourceTypeAliasPathMetadata. </summary>
-        /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
-        /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/> instance for mocking. </returns>
-        public static ResourceTypeAliasPathMetadata ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? tokenType = null, ResourceTypeAliasPathAttributes? attributes = null)
-        {
-            return new ResourceTypeAliasPathMetadata(tokenType, attributes);
-        }
-
-        /// <summary> Initializes a new instance of ZoneMapping. </summary>
-        /// <param name="location"> The location of the zone mapping. </param>
-        /// <param name="zones"></param>
-        /// <returns> A new <see cref="Resources.Models.ZoneMapping"/> instance for mocking. </returns>
-        public static ZoneMapping ZoneMapping(AzureLocation? location = null, IEnumerable<string> zones = null)
-        {
-            zones ??= new List<string>();
-
-            return new ZoneMapping(location, zones?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of ApiProfile. </summary>
-        /// <param name="profileVersion"> The profile version. </param>
-        /// <param name="apiVersion"> The API version. </param>
-        /// <returns> A new <see cref="Resources.Models.ApiProfile"/> instance for mocking. </returns>
-        public static ApiProfile ApiProfile(string profileVersion = null, string apiVersion = null)
-        {
-            return new ApiProfile(profileVersion, apiVersion);
-        }
-
-        /// <summary> Initializes a new instance of ProviderPermission. </summary>
-        /// <param name="applicationId"> The application id. </param>
-        /// <param name="roleDefinition"> Role definition properties. </param>
-        /// <param name="managedByRoleDefinition"> Role definition properties. </param>
-        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
-        /// <returns> A new <see cref="Resources.Models.ProviderPermission"/> instance for mocking. </returns>
-        public static ProviderPermission ProviderPermission(string applicationId = null, AzureRoleDefinition roleDefinition = null, AzureRoleDefinition managedByRoleDefinition = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
-        {
-            return new ProviderPermission(applicationId, roleDefinition, managedByRoleDefinition, providerAuthorizationConsentState);
-        }
-
-        /// <summary> Initializes a new instance of AzureRoleDefinition. </summary>
-        /// <param name="id"> The role definition ID. </param>
-        /// <param name="name"> The role definition name. </param>
-        /// <param name="isServiceRole"> If this is a service role. </param>
-        /// <param name="permissions"> Role definition permissions. </param>
-        /// <param name="scopes"> Role definition assignable scopes. </param>
-        /// <returns> A new <see cref="Resources.Models.AzureRoleDefinition"/> instance for mocking. </returns>
-        public static AzureRoleDefinition AzureRoleDefinition(string id = null, string name = null, bool? isServiceRole = null, IEnumerable<Permission> permissions = null, IEnumerable<string> scopes = null)
-        {
-            permissions ??= new List<Permission>();
-            scopes ??= new List<string>();
-
-            return new AzureRoleDefinition(id, name, isServiceRole, permissions?.ToList(), scopes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of Permission. </summary>
-        /// <param name="allowedActions"> Allowed actions. </param>
-        /// <param name="deniedActions"> Denied actions. </param>
-        /// <param name="allowedDataActions"> Allowed Data actions. </param>
-        /// <param name="deniedDataActions"> Denied Data actions. </param>
-        /// <returns> A new <see cref="Resources.Models.Permission"/> instance for mocking. </returns>
-        public static Permission Permission(IEnumerable<string> allowedActions = null, IEnumerable<string> deniedActions = null, IEnumerable<string> allowedDataActions = null, IEnumerable<string> deniedDataActions = null)
-        {
-            allowedActions ??= new List<string>();
-            deniedActions ??= new List<string>();
-            allowedDataActions ??= new List<string>();
-            deniedDataActions ??= new List<string>();
-
-            return new Permission(allowedActions?.ToList(), deniedActions?.ToList(), allowedDataActions?.ToList(), deniedDataActions?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of TenantResourceProvider. </summary>
-        /// <param name="namespace"> The namespace of the resource provider. </param>
-        /// <param name="resourceTypes"> The collection of provider resource types. </param>
-        /// <returns> A new <see cref="Resources.Models.TenantResourceProvider"/> instance for mocking. </returns>
-        public static TenantResourceProvider TenantResourceProvider(string @namespace = null, IEnumerable<ProviderResourceType> resourceTypes = null)
-        {
-            resourceTypes ??= new List<ProviderResourceType>();
-
-            return new TenantResourceProvider(@namespace, resourceTypes?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of GenericResourceData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> Resource extended location. </param>
-        /// <param name="plan"> The plan of the resource. </param>
-        /// <param name="properties"> The resource properties. </param>
-        /// <param name="kind"> The kind of the resource. </param>
-        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
-        /// <param name="sku"> The SKU of the resource. </param>
-        /// <param name="identity"> The identity of the resource. </param>
-        /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
-        /// <returns> A new <see cref="Resources.GenericResourceData"/> instance for mocking. </returns>
-        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new GenericResourceData(id, name, resourceType, systemData, tags, location, extendedLocation, plan, properties, kind, managedBy, sku, identity, createdOn, changedOn, provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of TrackedResourceExtendedData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation"> Resource extended location. </param>
-        /// <returns> A new <see cref="Resources.Models.TrackedResourceExtendedData"/> instance for mocking. </returns>
-        public static TrackedResourceExtendedData TrackedResourceExtendedData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new TrackedResourceExtendedData(id, name, resourceType, systemData, tags, location, extendedLocation);
-        }
-
-        /// <summary> Initializes a new instance of ResourceGroupData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="resourceGroupProvisioningState"> The resource group properties. </param>
-        /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
-        /// <returns> A new <see cref="Resources.ResourceGroupData"/> instance for mocking. </returns>
-        public static ResourceGroupData ResourceGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string resourceGroupProvisioningState = null, string managedBy = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new ResourceGroupData(id, name, resourceType, systemData, tags, location, resourceGroupProvisioningState != null ? new ResourceGroupProperties(resourceGroupProvisioningState) : null, managedBy);
-        }
-
-        /// <summary> Initializes a new instance of ResourceGroupExportResult. </summary>
-        /// <param name="template"> The template content. </param>
-        /// <param name="error"> The template export error. </param>
-        /// <returns> A new <see cref="Resources.Models.ResourceGroupExportResult"/> instance for mocking. </returns>
-        public static ResourceGroupExportResult ResourceGroupExportResult(BinaryData template = null, ResponseError error = null)
-        {
-            return new ResourceGroupExportResult(template, error);
-        }
-
-        /// <summary> Initializes a new instance of PredefinedTagValue. </summary>
-        /// <param name="id"> The tag value ID. </param>
-        /// <param name="tagValue"> The tag value. </param>
-        /// <param name="count"> The tag value count. </param>
-        /// <returns> A new <see cref="Resources.Models.PredefinedTagValue"/> instance for mocking. </returns>
-        public static PredefinedTagValue PredefinedTagValue(string id = null, string tagValue = null, PredefinedTagCount count = null)
-        {
-            return new PredefinedTagValue(id, tagValue, count);
-        }
-
-        /// <summary> Initializes a new instance of PredefinedTagCount. </summary>
-        /// <param name="predefinedTagCountType"> Type of count. </param>
-        /// <param name="value"> Value of count. </param>
-        /// <returns> A new <see cref="Resources.Models.PredefinedTagCount"/> instance for mocking. </returns>
-        public static PredefinedTagCount PredefinedTagCount(string predefinedTagCountType = null, int? value = null)
-        {
-            return new PredefinedTagCount(predefinedTagCountType, value);
-        }
-
-        /// <summary> Initializes a new instance of PredefinedTag. </summary>
-        /// <param name="id"> The tag name ID. </param>
-        /// <param name="tagName"> The tag name. </param>
-        /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
-        /// <param name="values"> The list of tag values. </param>
-        /// <returns> A new <see cref="Resources.Models.PredefinedTag"/> instance for mocking. </returns>
-        public static PredefinedTag PredefinedTag(string id = null, string tagName = null, PredefinedTagCount count = null, IEnumerable<PredefinedTagValue> values = null)
-        {
-            values ??= new List<PredefinedTagValue>();
-
-            return new PredefinedTag(id, tagName, count, values?.ToList());
-        }
-
-        /// <summary> Initializes a new instance of TagResourceData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tagValues"> The set of tags. </param>
-        /// <returns> A new <see cref="Resources.TagResourceData"/> instance for mocking. </returns>
-        public static TagResourceData TagResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tagValues = null)
-        {
-            tagValues ??= new Dictionary<string, string>();
-
-            return new TagResourceData(id, name, resourceType, systemData, tagValues != null ? new Tag(tagValues) : null);
-        }
-
-        /// <summary> Initializes a new instance of PolicyDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicyDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -350,10 +65,10 @@ namespace Azure.ResourceManager.Models
         {
             parameters ??= new Dictionary<string, ArmPolicyParameter>();
 
-            return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters);
+            return new PolicyDefinitionData(id, name, resourceType, systemData, policyType, mode, displayName, description, policyRule, metadata, parameters, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PolicySetDefinitionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.PolicySetDefinitionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -372,10 +87,10 @@ namespace Azure.ResourceManager.Models
             policyDefinitions ??= new List<PolicyDefinitionReference>();
             policyDefinitionGroups ??= new List<PolicyDefinitionGroup>();
 
-            return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList());
+            return new PolicySetDefinitionData(id, name, resourceType, systemData, policyType, displayName, description, metadata, parameters, policyDefinitions?.ToList(), policyDefinitionGroups?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.DataPolicyManifestData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -398,10 +113,10 @@ namespace Azure.ResourceManager.Models
             standard ??= new List<string>();
             customDefinitions ??= new List<DataManifestCustomResourceFunctionDefinition>();
 
-            return new DataPolicyManifestData(id, name, resourceType, systemData, namespaces?.ToList(), policyMode, isBuiltInOnly, resourceTypeAliases?.ToList(), effects?.ToList(), fieldValues?.ToList(), standard?.ToList(), customDefinitions?.ToList());
+            return new DataPolicyManifestData(id, name, resourceType, systemData, namespaces?.ToList(), policyMode, isBuiltInOnly, resourceTypeAliases?.ToList(), effects?.ToList(), fieldValues?.ToList(), standard?.ToList(), customDefinitions?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ResourceTypeAliases. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliases"/>. </summary>
         /// <param name="resourceType"> The resource type name. </param>
         /// <param name="aliases"> The aliases for property names. </param>
         /// <returns> A new <see cref="Resources.Models.ResourceTypeAliases"/> instance for mocking. </returns>
@@ -409,19 +124,66 @@ namespace Azure.ResourceManager.Models
         {
             aliases ??= new List<ResourceTypeAlias>();
 
-            return new ResourceTypeAliases(resourceType, aliases?.ToList());
+            return new ResourceTypeAliases(resourceType, aliases?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataPolicyManifestEffect. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAlias"/>. </summary>
+        /// <param name="name"> The alias name. </param>
+        /// <param name="paths"> The paths for an alias. </param>
+        /// <param name="aliasType"> The type of the alias. </param>
+        /// <param name="defaultPath"> The default path for an alias. </param>
+        /// <param name="defaultPattern"> The default pattern for an alias. </param>
+        /// <param name="defaultMetadata"> The default alias path metadata. Applies to the default path and to any alias path that doesn't have metadata. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAlias"/> instance for mocking. </returns>
+        public static ResourceTypeAlias ResourceTypeAlias(string name = null, IEnumerable<ResourceTypeAliasPath> paths = null, ResourceTypeAliasType? aliasType = null, string defaultPath = null, ResourceTypeAliasPattern defaultPattern = null, ResourceTypeAliasPathMetadata defaultMetadata = null)
+        {
+            paths ??= new List<ResourceTypeAliasPath>();
+
+            return new ResourceTypeAlias(name, paths?.ToList(), aliasType, defaultPath, defaultPattern, defaultMetadata, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPath"/>. </summary>
+        /// <param name="path"> The path of an alias. </param>
+        /// <param name="apiVersions"> The API versions. </param>
+        /// <param name="pattern"> The pattern for an alias path. </param>
+        /// <param name="metadata"> The metadata of the alias path. If missing, fall back to the default metadata of the alias. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPath"/> instance for mocking. </returns>
+        public static ResourceTypeAliasPath ResourceTypeAliasPath(string path = null, IEnumerable<string> apiVersions = null, ResourceTypeAliasPattern pattern = null, ResourceTypeAliasPathMetadata metadata = null)
+        {
+            apiVersions ??= new List<string>();
+
+            return new ResourceTypeAliasPath(path, apiVersions?.ToList(), pattern, metadata, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPattern"/>. </summary>
+        /// <param name="phrase"> The alias pattern phrase. </param>
+        /// <param name="variable"> The alias pattern variable. </param>
+        /// <param name="patternType"> The type of alias pattern. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPattern"/> instance for mocking. </returns>
+        public static ResourceTypeAliasPattern ResourceTypeAliasPattern(string phrase = null, string variable = null, ResourceTypeAliasPatternType? patternType = null)
+        {
+            return new ResourceTypeAliasPattern(phrase, variable, patternType, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/>. </summary>
+        /// <param name="tokenType"> The type of the token that the alias path is referring to. </param>
+        /// <param name="attributes"> The attributes of the token that the alias path is referring to. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceTypeAliasPathMetadata"/> instance for mocking. </returns>
+        public static ResourceTypeAliasPathMetadata ResourceTypeAliasPathMetadata(ResourceTypeAliasPathTokenType? tokenType = null, ResourceTypeAliasPathAttributes? attributes = null)
+        {
+            return new ResourceTypeAliasPathMetadata(tokenType, attributes, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.DataPolicyManifestEffect"/>. </summary>
         /// <param name="name"> The data effect name. </param>
         /// <param name="detailsSchema"> The data effect details schema. </param>
         /// <returns> A new <see cref="Resources.Models.DataPolicyManifestEffect"/> instance for mocking. </returns>
         public static DataPolicyManifestEffect DataPolicyManifestEffect(string name = null, BinaryData detailsSchema = null)
         {
-            return new DataPolicyManifestEffect(name, detailsSchema);
+            return new DataPolicyManifestEffect(name, detailsSchema, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of DataManifestCustomResourceFunctionDefinition. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.DataManifestCustomResourceFunctionDefinition"/>. </summary>
         /// <param name="name"> The function name as it will appear in the policy rule. eg - 'vault'. </param>
         /// <param name="fullyQualifiedResourceType"> The fully qualified control plane resource type that this function represents. eg - 'Microsoft.KeyVault/vaults'. </param>
         /// <param name="defaultProperties"> The top-level properties that can be selected on the function's output. eg - [ "name", "location" ] if vault().name and vault().location are supported. </param>
@@ -431,10 +193,10 @@ namespace Azure.ResourceManager.Models
         {
             defaultProperties ??= new List<string>();
 
-            return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties?.ToList(), allowCustomProperties);
+            return new DataManifestCustomResourceFunctionDefinition(name, fullyQualifiedResourceType, defaultProperties?.ToList(), allowCustomProperties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagementLockData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ManagementLockData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -447,10 +209,248 @@ namespace Azure.ResourceManager.Models
         {
             owners ??= new List<ManagementLockOwner>();
 
-            return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList());
+            return new ManagementLockData(id, name, resourceType, systemData, level, notes, owners?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of LocationExpanded. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.ResourceProviderData"/>. </summary>
+        /// <param name="id"> The provider ID. </param>
+        /// <param name="namespace"> The namespace of the resource provider. </param>
+        /// <param name="registrationState"> The registration state of the resource provider. </param>
+        /// <param name="registrationPolicy"> The registration policy of the resource provider. </param>
+        /// <param name="resourceTypes"> The collection of provider resource types. </param>
+        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
+        /// <returns> A new <see cref="Resources.ResourceProviderData"/> instance for mocking. </returns>
+        public static ResourceProviderData ResourceProviderData(ResourceIdentifier id = null, string @namespace = null, string registrationState = null, string registrationPolicy = null, IEnumerable<ProviderResourceType> resourceTypes = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
+        {
+            resourceTypes ??= new List<ProviderResourceType>();
+
+            return new ResourceProviderData(id, @namespace, registrationState, registrationPolicy, resourceTypes?.ToList(), providerAuthorizationConsentState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderResourceType"/>. </summary>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="locations"> The collection of locations where this resource type can be created. </param>
+        /// <param name="locationMappings"> The location mappings that are supported by this resource type. </param>
+        /// <param name="aliases"> The aliases that are supported by this resource type. </param>
+        /// <param name="apiVersions"> The API version. </param>
+        /// <param name="defaultApiVersion"> The default API version. </param>
+        /// <param name="zoneMappings"></param>
+        /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
+        /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
+        /// <param name="properties"> The properties. </param>
+        /// <returns> A new <see cref="Resources.Models.ProviderResourceType"/> instance for mocking. </returns>
+        public static ProviderResourceType ProviderResourceType(string resourceType = null, IEnumerable<string> locations = null, IEnumerable<ProviderExtendedLocation> locationMappings = null, IEnumerable<ResourceTypeAlias> aliases = null, IEnumerable<string> apiVersions = null, string defaultApiVersion = null, IEnumerable<ZoneMapping> zoneMappings = null, IEnumerable<ApiProfile> apiProfiles = null, string capabilities = null, IReadOnlyDictionary<string, string> properties = null)
+        {
+            locations ??= new List<string>();
+            locationMappings ??= new List<ProviderExtendedLocation>();
+            aliases ??= new List<ResourceTypeAlias>();
+            apiVersions ??= new List<string>();
+            zoneMappings ??= new List<ZoneMapping>();
+            apiProfiles ??= new List<ApiProfile>();
+            properties ??= new Dictionary<string, string>();
+
+            return new ProviderResourceType(resourceType, locations?.ToList(), locationMappings?.ToList(), aliases?.ToList(), apiVersions?.ToList(), defaultApiVersion, zoneMappings?.ToList(), apiProfiles?.ToList(), capabilities, properties, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderExtendedLocation"/>. </summary>
+        /// <param name="location"> The azure location. </param>
+        /// <param name="providerExtendedLocationType"> The extended location type. </param>
+        /// <param name="extendedLocations"> The extended locations for the azure location. </param>
+        /// <returns> A new <see cref="Resources.Models.ProviderExtendedLocation"/> instance for mocking. </returns>
+        public static ProviderExtendedLocation ProviderExtendedLocation(AzureLocation? location = null, string providerExtendedLocationType = null, IEnumerable<string> extendedLocations = null)
+        {
+            extendedLocations ??= new List<string>();
+
+            return new ProviderExtendedLocation(location, providerExtendedLocationType, extendedLocations?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ZoneMapping"/>. </summary>
+        /// <param name="location"> The location of the zone mapping. </param>
+        /// <param name="zones"></param>
+        /// <returns> A new <see cref="Resources.Models.ZoneMapping"/> instance for mocking. </returns>
+        public static ZoneMapping ZoneMapping(AzureLocation? location = null, IEnumerable<string> zones = null)
+        {
+            zones ??= new List<string>();
+
+            return new ZoneMapping(location, zones?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ApiProfile"/>. </summary>
+        /// <param name="profileVersion"> The profile version. </param>
+        /// <param name="apiVersion"> The API version. </param>
+        /// <returns> A new <see cref="Resources.Models.ApiProfile"/> instance for mocking. </returns>
+        public static ApiProfile ApiProfile(string profileVersion = null, string apiVersion = null)
+        {
+            return new ApiProfile(profileVersion, apiVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ProviderPermission"/>. </summary>
+        /// <param name="applicationId"> The application id. </param>
+        /// <param name="roleDefinition"> Role definition properties. </param>
+        /// <param name="managedByRoleDefinition"> Role definition properties. </param>
+        /// <param name="providerAuthorizationConsentState"> The provider authorization consent state. </param>
+        /// <returns> A new <see cref="Resources.Models.ProviderPermission"/> instance for mocking. </returns>
+        public static ProviderPermission ProviderPermission(string applicationId = null, AzureRoleDefinition roleDefinition = null, AzureRoleDefinition managedByRoleDefinition = null, ProviderAuthorizationConsentState? providerAuthorizationConsentState = null)
+        {
+            return new ProviderPermission(applicationId, roleDefinition, managedByRoleDefinition, providerAuthorizationConsentState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.AzureRoleDefinition"/>. </summary>
+        /// <param name="id"> The role definition ID. </param>
+        /// <param name="name"> The role definition name. </param>
+        /// <param name="isServiceRole"> If this is a service role. </param>
+        /// <param name="permissions"> Role definition permissions. </param>
+        /// <param name="scopes"> Role definition assignable scopes. </param>
+        /// <returns> A new <see cref="Resources.Models.AzureRoleDefinition"/> instance for mocking. </returns>
+        public static AzureRoleDefinition AzureRoleDefinition(string id = null, string name = null, bool? isServiceRole = null, IEnumerable<Permission> permissions = null, IEnumerable<string> scopes = null)
+        {
+            permissions ??= new List<Permission>();
+            scopes ??= new List<string>();
+
+            return new AzureRoleDefinition(id, name, isServiceRole, permissions?.ToList(), scopes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.Permission"/>. </summary>
+        /// <param name="allowedActions"> Allowed actions. </param>
+        /// <param name="deniedActions"> Denied actions. </param>
+        /// <param name="allowedDataActions"> Allowed Data actions. </param>
+        /// <param name="deniedDataActions"> Denied Data actions. </param>
+        /// <returns> A new <see cref="Resources.Models.Permission"/> instance for mocking. </returns>
+        public static Permission Permission(IEnumerable<string> allowedActions = null, IEnumerable<string> deniedActions = null, IEnumerable<string> allowedDataActions = null, IEnumerable<string> deniedDataActions = null)
+        {
+            allowedActions ??= new List<string>();
+            deniedActions ??= new List<string>();
+            allowedDataActions ??= new List<string>();
+            deniedDataActions ??= new List<string>();
+
+            return new Permission(allowedActions?.ToList(), deniedActions?.ToList(), allowedDataActions?.ToList(), deniedDataActions?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.TenantResourceProvider"/>. </summary>
+        /// <param name="namespace"> The namespace of the resource provider. </param>
+        /// <param name="resourceTypes"> The collection of provider resource types. </param>
+        /// <returns> A new <see cref="Resources.Models.TenantResourceProvider"/> instance for mocking. </returns>
+        public static TenantResourceProvider TenantResourceProvider(string @namespace = null, IEnumerable<ProviderResourceType> resourceTypes = null)
+        {
+            resourceTypes ??= new List<ProviderResourceType>();
+
+            return new TenantResourceProvider(@namespace, resourceTypes?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.GenericResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> Resource extended location. </param>
+        /// <param name="plan"> The plan of the resource. </param>
+        /// <param name="properties"> The resource properties. </param>
+        /// <param name="kind"> The kind of the resource. </param>
+        /// <param name="managedBy"> ID of the resource that manages this resource. </param>
+        /// <param name="sku"> The SKU of the resource. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="createdOn"> The created time of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="changedOn"> The changed time of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. This is only present if requested via the $expand query parameter. </param>
+        /// <returns> A new <see cref="Resources.GenericResourceData"/> instance for mocking. </returns>
+        public static GenericResourceData GenericResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ArmPlan plan = null, BinaryData properties = null, string kind = null, string managedBy = null, ResourcesSku sku = null, ManagedServiceIdentity identity = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, string provisioningState = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new GenericResourceData(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData: null, plan, properties, kind, managedBy, sku, identity, createdOn, changedOn, provisioningState);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.TrackedResourceExtendedData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> Resource extended location. </param>
+        /// <returns> A new <see cref="Resources.Models.TrackedResourceExtendedData"/> instance for mocking. </returns>
+        public static TrackedResourceExtendedData TrackedResourceExtendedData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new TrackedResourceExtendedData(id, name, resourceType, systemData, tags, location, extendedLocation, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.ResourceGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="resourceGroupProvisioningState"> The resource group properties. </param>
+        /// <param name="managedBy"> The ID of the resource that manages this resource group. </param>
+        /// <returns> A new <see cref="Resources.ResourceGroupData"/> instance for mocking. </returns>
+        public static ResourceGroupData ResourceGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string resourceGroupProvisioningState = null, string managedBy = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new ResourceGroupData(id, name, resourceType, systemData, tags, location, resourceGroupProvisioningState != null ? new ResourceGroupProperties(resourceGroupProvisioningState, serializedAdditionalRawData: null) : null, managedBy, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceGroupExportResult"/>. </summary>
+        /// <param name="template"> The template content. </param>
+        /// <param name="error"> The template export error. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceGroupExportResult"/> instance for mocking. </returns>
+        public static ResourceGroupExportResult ResourceGroupExportResult(BinaryData template = null, ResponseError error = null)
+        {
+            return new ResourceGroupExportResult(template, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTagValue"/>. </summary>
+        /// <param name="id"> The tag value ID. </param>
+        /// <param name="tagValue"> The tag value. </param>
+        /// <param name="count"> The tag value count. </param>
+        /// <returns> A new <see cref="Resources.Models.PredefinedTagValue"/> instance for mocking. </returns>
+        public static PredefinedTagValue PredefinedTagValue(string id = null, string tagValue = null, PredefinedTagCount count = null)
+        {
+            return new PredefinedTagValue(id, tagValue, count, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTagCount"/>. </summary>
+        /// <param name="predefinedTagCountType"> Type of count. </param>
+        /// <param name="value"> Value of count. </param>
+        /// <returns> A new <see cref="Resources.Models.PredefinedTagCount"/> instance for mocking. </returns>
+        public static PredefinedTagCount PredefinedTagCount(string predefinedTagCountType = null, int? value = null)
+        {
+            return new PredefinedTagCount(predefinedTagCountType, value, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PredefinedTag"/>. </summary>
+        /// <param name="id"> The tag name ID. </param>
+        /// <param name="tagName"> The tag name. </param>
+        /// <param name="count"> The total number of resources that use the resource tag. When a tag is initially created and has no associated resources, the value is 0. </param>
+        /// <param name="values"> The list of tag values. </param>
+        /// <returns> A new <see cref="Resources.Models.PredefinedTag"/> instance for mocking. </returns>
+        public static PredefinedTag PredefinedTag(string id = null, string tagName = null, PredefinedTagCount count = null, IEnumerable<PredefinedTagValue> values = null)
+        {
+            values ??= new List<PredefinedTagValue>();
+
+            return new PredefinedTag(id, tagName, count, values?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.TagResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tagValues"> The set of tags. </param>
+        /// <returns> A new <see cref="Resources.TagResourceData"/> instance for mocking. </returns>
+        public static TagResourceData TagResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tagValues = null)
+        {
+            tagValues ??= new Dictionary<string, string>();
+
+            return new TagResourceData(id, name, resourceType, systemData, tagValues != null ? new Tag(tagValues, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationExpanded"/>. </summary>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="name"> The location name. </param>
@@ -464,29 +464,47 @@ namespace Azure.ResourceManager.Models
         {
             availabilityZoneMappings ??= new List<AvailabilityZoneMappings>();
 
-            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList());
+            return new LocationExpanded(id, subscriptionId, name, locationType, displayName, regionalDisplayName, metadata, availabilityZoneMappings?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of PairedRegion. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.LocationMetadata"/>. </summary>
+        /// <param name="regionType"> The type of the region. </param>
+        /// <param name="regionCategory"> The category of the region. </param>
+        /// <param name="geography"> The geography of the location. </param>
+        /// <param name="geographyGroup"> The geography group of the location. </param>
+        /// <param name="longitude"> The longitude of the location. </param>
+        /// <param name="latitude"> The latitude of the location. </param>
+        /// <param name="physicalLocation"> The physical location of the Azure location. </param>
+        /// <param name="pairedRegions"> The regions paired to this region. </param>
+        /// <param name="homeLocation"> The home location of an edge zone. </param>
+        /// <returns> A new <see cref="Resources.Models.LocationMetadata"/> instance for mocking. </returns>
+        public static LocationMetadata LocationMetadata(RegionType? regionType = null, RegionCategory? regionCategory = null, string geography = null, string geographyGroup = null, double? longitude = null, double? latitude = null, string physicalLocation = null, IEnumerable<PairedRegion> pairedRegions = null, string homeLocation = null)
+        {
+            pairedRegions ??= new List<PairedRegion>();
+
+            return new LocationMetadata(regionType, regionCategory, geography, geographyGroup, longitude, latitude, physicalLocation, pairedRegions?.ToList(), homeLocation, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.PairedRegion"/>. </summary>
         /// <param name="name"> The name of the paired region. </param>
         /// <param name="id"> The fully qualified ID of the location. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74/locations/westus. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <returns> A new <see cref="Resources.Models.PairedRegion"/> instance for mocking. </returns>
         public static PairedRegion PairedRegion(string name = null, string id = null, string subscriptionId = null)
         {
-            return new PairedRegion(name, id, subscriptionId);
+            return new PairedRegion(name, id, subscriptionId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AvailabilityZoneMappings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.AvailabilityZoneMappings"/>. </summary>
         /// <param name="logicalZone"> The logical zone id for the availability zone. </param>
         /// <param name="physicalZone"> The fully qualified physical zone id of availability zone to which logical zone id is mapped to. </param>
         /// <returns> A new <see cref="Resources.Models.AvailabilityZoneMappings"/> instance for mocking. </returns>
         public static AvailabilityZoneMappings AvailabilityZoneMappings(string logicalZone = null, string physicalZone = null)
         {
-            return new AvailabilityZoneMappings(logicalZone, physicalZone);
+            return new AvailabilityZoneMappings(logicalZone, physicalZone, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.SubscriptionData"/>. </summary>
         /// <param name="id"> The fully qualified ID for the subscription. For example, /subscriptions/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="subscriptionId"> The subscription ID. </param>
         /// <param name="displayName"> The subscription display name. </param>
@@ -502,28 +520,28 @@ namespace Azure.ResourceManager.Models
             managedByTenants ??= new List<ManagedByTenant>();
             tags ??= new Dictionary<string, string>();
 
-            return new SubscriptionData(id, subscriptionId, displayName, tenantId, state, subscriptionPolicies, authorizationSource, managedByTenants?.ToList(), tags);
+            return new SubscriptionData(id, subscriptionId, displayName, tenantId, state, subscriptionPolicies, authorizationSource, managedByTenants?.ToList(), tags, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of SubscriptionPolicies. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.SubscriptionPolicies"/>. </summary>
         /// <param name="locationPlacementId"> The subscription location placement ID. The ID indicates which regions are visible for a subscription. For example, a subscription with a location placement Id of Public_2014-09-01 has access to Azure public regions. </param>
         /// <param name="quotaId"> The subscription quota ID. </param>
         /// <param name="spendingLimit"> The subscription spending limit. </param>
         /// <returns> A new <see cref="Resources.Models.SubscriptionPolicies"/> instance for mocking. </returns>
         public static SubscriptionPolicies SubscriptionPolicies(string locationPlacementId = null, string quotaId = null, SpendingLimit? spendingLimit = null)
         {
-            return new SubscriptionPolicies(locationPlacementId, quotaId, spendingLimit);
+            return new SubscriptionPolicies(locationPlacementId, quotaId, spendingLimit, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ManagedByTenant. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ManagedByTenant"/>. </summary>
         /// <param name="tenantId"> The tenant ID of the managing tenant. This is a GUID. </param>
         /// <returns> A new <see cref="Resources.Models.ManagedByTenant"/> instance for mocking. </returns>
         public static ManagedByTenant ManagedByTenant(Guid? tenantId = null)
         {
-            return new ManagedByTenant(tenantId);
+            return new ManagedByTenant(tenantId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of TenantData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.TenantData"/>. </summary>
         /// <param name="id"> The fully qualified ID of the tenant. For example, /tenants/8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantId"> The tenant ID. For example, 8d65815f-a5b6-402f-9298-045155da7d74. </param>
         /// <param name="tenantCategory"> Category of the tenant. </param>
@@ -539,10 +557,20 @@ namespace Azure.ResourceManager.Models
         {
             domains ??= new List<string>();
 
-            return new TenantData(id, tenantId, tenantCategory, country, countryCode, displayName, domains?.ToList(), defaultDomain, tenantType, tenantBrandingLogoUri);
+            return new TenantData(id, tenantId, tenantCategory, country, countryCode, displayName, domains?.ToList(), defaultDomain, tenantType, tenantBrandingLogoUri, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FeatureData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Resources.Models.ResourceNameValidationResult"/>. </summary>
+        /// <param name="name"> Name of Resource. </param>
+        /// <param name="resourceType"> Type of Resource. </param>
+        /// <param name="status"> Is the resource name Allowed or Reserved. </param>
+        /// <returns> A new <see cref="Resources.Models.ResourceNameValidationResult"/> instance for mocking. </returns>
+        public static ResourceNameValidationResult ResourceNameValidationResult(string name = null, ResourceType? resourceType = null, ResourceNameValidationStatus? status = null)
+        {
+            return new ResourceNameValidationResult(name, resourceType, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Resources.FeatureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -551,7 +579,7 @@ namespace Azure.ResourceManager.Models
         /// <returns> A new <see cref="Resources.FeatureData"/> instance for mocking. </returns>
         public static FeatureData FeatureData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string featureState = null)
         {
-            return new FeatureData(id, name, resourceType, systemData, featureState != null ? new FeatureProperties(featureState) : null);
+            return new FeatureData(id, name, resourceType, systemData, featureState != null ? new FeatureProperties(featureState, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
     }
 }

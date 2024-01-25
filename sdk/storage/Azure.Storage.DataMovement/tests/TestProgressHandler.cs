@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    internal class TestProgressHandler : IProgress<StorageTransferProgress>
+    internal class TestProgressHandler : IProgress<DataTransferProgress>
     {
-        public List<StorageTransferProgress> Updates { get; private set; } = new List<StorageTransferProgress>();
+        public List<DataTransferProgress> Updates { get; private set; } = new List<DataTransferProgress>();
 
-        public void Report(StorageTransferProgress progress)
+        public void Report(DataTransferProgress progress)
         {
             Updates.Add(progress);
         }

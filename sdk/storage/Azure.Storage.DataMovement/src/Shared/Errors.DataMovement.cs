@@ -13,8 +13,8 @@ namespace Azure.Storage
     internal partial class Errors
     {
         public static ArgumentException InvalidSourceDestinationParams()
-            => new ArgumentException($"Cannot perform transfer because neither source and destination resource cannot produce a Uri. " +
-                $"Either the source or destination resource, or both resources needs to produce a Uri.");
+            => new ArgumentException($"Cannot perform transfer because neither source nor destination resource are web resources. " +
+                $"Either the source or destination resource, or both resources needs to be a web resource.");
 
         public static ArgumentException InvalidTransferId(string command, string transferId)
             => new ArgumentException($"Cannot process {command} for transfer id: \"{transferId}\". Because " +
@@ -26,8 +26,11 @@ namespace Azure.Storage
         public static ArgumentException UnableToGetLength()
             => new ArgumentException("Unable to get the length of the source storage resource");
 
-        public static ArgumentException UnsupportedSchemaVersionHeader(string schemaVersion)
+        public static ArgumentException UnsupportedJobSchemaVersionHeader(string schemaVersion)
             => new ArgumentException($"The checkpoint file schema version {schemaVersion} is not supported by this version of the SDK.");
+
+        public static ArgumentException UnsupportedJobPartSchemaVersionHeader(string schemaVersion)
+            => new ArgumentException($"The checkpoint part file schema version {schemaVersion} is not supported by this version of the SDK.");
 
         public static ArgumentException MismatchTransferId(string passedTransferId, string storedTransferId)
             => throw new ArgumentException($"Mismatch Transfer Id: Transfer ID stored in the Job Plan file does not match the Transfer ID " +
@@ -55,23 +58,26 @@ namespace Azure.Storage
         public static ArgumentException MissingCheckpointerPath(string directoryPath)
             => throw new ArgumentException($"Could not initialize the LocalTransferCheckpointer because the folderPath passed does not exist. Please create the {directoryPath}, folder path first.");
 
-        public static ArgumentException InvalidTransferIdFileName(string fileName)
-            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains a Transfer ID that is either too long or short: {fileName}");
-
         public static ArgumentException InvalidJobPartFileName(string fileName)
-            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number: {fileName}");
+            => new ArgumentException($"Invalid Checkpoint File: The following checkpoint file contains an invalid file name {fileName}");
+
+        public static ArgumentException InvalidTransferIdFileName(string fileName)
+            => new ArgumentException($"Invalid Checkpoint File: The following checkpoint file contains a Transfer ID that is invalid {fileName}");
+
+        public static ArgumentException InvalidJobPartFileNameExtension(string fileName)
+            => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid extension: {fileName}");
 
         public static ArgumentException InvalidJobPartNumberFileName(string fileName)
             => new ArgumentException($"Invalid Job Part Plan File: The following Job Part Plan file contains an invalid Job Part Number, could not convert to a integer: {fileName}");
 
-        public static ArgumentException InvalidSchemaVersionFileName(string schemaVersion)
-            => new ArgumentException($"Invalid Job Part Plan File: Job Part Schema version: {schemaVersion} does not match the Schema Version supported by the package: {DataMovementConstants.PlanFile.SchemaVersion}. Please consider altering the package version that supports the respective version.");
+        public static ArgumentException InvalidPartHeaderElementLength(string elementName, int expectedSize, int actualSize)
+            => new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
 
-        public static ArgumentException InvalidPlanFileElement(string elementName, int expectedSize, int actualSize)
-            => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected size: {expectedSize}\n Actual Size: {actualSize}");
+        public static ArgumentException InvalidPartHeaderElement(string elementName, string elementValue)
+            => new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" with value \"{elementValue}\" failed.");
 
         public static ArgumentException InvalidStringToDictionary(string elementName, string value)
-            => throw new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected format stored was invalid, \"{value}\"");
+            => new ArgumentException($"Invalid Job Part Plan File: Attempt to set element, \"{elementName}\" failed.\n Expected format stored was invalid, \"{value}\"");
 
         public static IOException LocalFileAlreadyExists(string pathName)
             => new IOException($"File path `{pathName}` already exists. Cannot overwrite file.");
@@ -80,11 +86,6 @@ namespace Azure.Storage
             => new ArgumentException($"Mismatch Value to Resume Job: The following parameter, {elementName}, does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value used when the transfer was started.\n" +
                 $"Checkpointer Value: {checkpointerValue}\n" +
                 $"New Value: {passedValue}");
-
-        public static ArgumentException MismatchResumeCreateMode(bool checkpointerValue, StorageResourceCreateMode passedValue)
-            => new ArgumentException($"Mismatch Value to Resume Job: The value to overwrite / create files when they exist does not match the stored value in the transfer checkpointer. Please ensure the value passed to resume the transfer matches the value in order to prevent overwriting or failing files.\n" +
-                $"Checkpointer Value to overwrite was set to {checkpointerValue.ToString()}.\n" +
-                $"The value passed in was {passedValue.ToString()}");
 
         public static InvalidOperationException SingleDownloadLengthMismatch(long expectedLength, long actualLength)
             => new InvalidOperationException($"Download length {actualLength} did not match expected length {expectedLength}.");
@@ -118,5 +119,12 @@ namespace Azure.Storage
 
         public static InvalidOperationException InvalidTransferResourceTypes()
             => new InvalidOperationException("Invalid source and destination resource types.");
+
+        public static ArgumentException ResourceUriInvalid(string parameterResource)
+            => new ArgumentException($"Could not perform operation because {parameterResource} was expected to be not a Local Storage Resource.");
+
+        public static ArgumentException NoResourceProviderFound(bool isSource, string providerId)
+            => new ArgumentException($"Unable to find resource provider for transfer {(isSource ? "source" : "destination")} with provider id: {providerId}. " +
+                $"Please ensure you have registered the required resource provider with TransferManagerOptions.ResumeProviders.");
     }
 }

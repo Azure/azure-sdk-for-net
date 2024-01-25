@@ -1,15 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+extern alias DMBlobs;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.DataMovement.Blobs;
-using Azure.Storage.DataMovement.JobPlan;
 using Azure.Storage.Test;
+using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
 using static Azure.Storage.DataMovement.Tests.TransferUtility;
@@ -18,25 +17,6 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class RehydrateBlobResourceTests
     {
-        public enum RehydrateApi
-        {
-            /// <summary>
-            /// The internal, resource-specific static API for rehydrating.
-            /// </summary>
-            ResourceStaticApi,
-
-            /// <summary>
-            /// Instance of the provider the user is given to invoke rehydration on.
-            /// </summary>
-            ProviderInstance,
-
-            /// <summary>
-            /// The public, package-wide static API for rehydrating.
-            /// </summary>
-            PublicStaticApi
-        }
-        public static IEnumerable<RehydrateApi> GetRehydrateApis() => Enum.GetValues(typeof(RehydrateApi)).Cast<RehydrateApi>();
-
         public RehydrateBlobResourceTests()
         { }
 
@@ -48,452 +28,277 @@ namespace Azure.Storage.DataMovement.Tests
             Local
         }
 
-        private static string ToResourceId(StorageResourceType type)
+        private static string ToProviderId(StorageResourceType type)
         {
             return type switch
             {
-                StorageResourceType.BlockBlob => "BlockBlob",
-                StorageResourceType.PageBlob => "PageBlob",
-                StorageResourceType.AppendBlob => "AppendBlob",
-                StorageResourceType.Local => "LocalFile",
+                StorageResourceType.BlockBlob => "blob",
+                StorageResourceType.PageBlob => "blob",
+                StorageResourceType.AppendBlob => "blob",
                 _ => throw new NotImplementedException(),
             };
         }
 
+        private static BlobSourceCheckpointData GetSourceCheckpointData(BlobType blobType)
+        {
+            return new BlobSourceCheckpointData(blobType);
+        }
+
+        private static BlobDestinationCheckpointData GetPopulatedDestinationCheckpointData(
+            BlobType blobType,
+            AccessTier? accessTier = default)
+        {
+            BlobHttpHeaders headers = new()
+            {
+                ContentType = "text/plain",
+                ContentEncoding = "gzip",
+                ContentLanguage = "en-US",
+                ContentDisposition = "inline",
+                CacheControl = "no-cache",
+            };
+            return new BlobDestinationCheckpointData(
+                blobType,
+                headers,
+                accessTier,
+                DataProvider.BuildMetadata(),
+                DataProvider.BuildTags());
+        }
+
+        private static BlobDestinationCheckpointData GetDefaultDestinationCheckpointData(BlobType blobType)
+        {
+            return new BlobDestinationCheckpointData(blobType, default, default, default, default);
+        }
+
+        private static byte[] GetBytes(BlobCheckpointData checkpointData)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                checkpointData.Serialize(stream);
+                return stream.ToArray();
+            }
+        }
+
         private static Mock<DataTransferProperties> GetProperties(
-            string checkpointerPath,
             string transferId,
             string sourcePath,
             string destinationPath,
-            string sourceResourceId,
-            string destinationResourceId,
-            bool isContainer)
+            string sourceProviderId,
+            string destinationProviderId,
+            bool isContainer,
+            BlobSourceCheckpointData sourceCheckpointData,
+            BlobDestinationCheckpointData destinationCheckpointData)
         {
             var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
-            mock.Setup(p => p.Checkpointer).Returns(new TransferCheckpointerOptions(checkpointerPath));
-            mock.Setup(p => p.SourcePath).Returns(sourcePath);
-            mock.Setup(p => p.DestinationPath).Returns(destinationPath);
-            mock.Setup(p => p.SourceTypeId).Returns(sourceResourceId);
-            mock.Setup(p => p.DestinationTypeId).Returns(destinationResourceId);
+            mock.Setup(p => p.SourceUri).Returns(new Uri(sourcePath));
+            mock.Setup(p => p.DestinationUri).Returns(new Uri(destinationPath));
+            mock.Setup(p => p.SourceProviderId).Returns(sourceProviderId);
+            mock.Setup(p => p.DestinationProviderId).Returns(destinationProviderId);
+            mock.Setup(p => p.SourceCheckpointData).Returns(GetBytes(sourceCheckpointData));
+            mock.Setup(p => p.DestinationCheckpointData).Returns(GetBytes(destinationCheckpointData));
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
 
-        private JobPlanOperation GetPlanOperation(
-            StorageResourceType sourceType,
-            StorageResourceType destinationType)
-        {
-            if (sourceType == StorageResourceType.Local)
-            {
-                return JobPlanOperation.Upload;
-            }
-            else if (destinationType == StorageResourceType.Local)
-            {
-                return JobPlanOperation.Download;
-            }
-            return JobPlanOperation.ServiceToService;
-        }
-
-        private async Task AddJobPartToCheckpointer(
-            TransferCheckpointer checkpointer,
-            string transferId,
-            StorageResourceType sourceType,
-            List<string> sourcePaths,
-            StorageResourceType destinationType,
-            List<string> destinationPaths,
-            int partCount = 1,
-            JobPartPlanHeader header = default)
-        {
-            // Populate sourcePaths if not provided
-            if (sourcePaths == default)
-            {
-                string sourcePath = "sample-source";
-                sourcePaths = new List<string>();
-                for (int i = 0; i < partCount; i++)
-                {
-                    sourcePaths.Add(Path.Combine(sourcePath, $"file{i}"));
-                }
-            }
-            // Populate destPaths if not provided
-            if (destinationPaths == default)
-            {
-                string destPath = "sample-dest";
-                destinationPaths = new List<string>();
-                for (int i = 0; i < partCount; i++)
-                {
-                    destinationPaths.Add(Path.Combine(destPath, $"file{i}"));
-                }
-            }
-
-            JobPlanOperation fromTo = GetPlanOperation(sourceType, destinationType);
-
-            await checkpointer.AddNewJobAsync(transferId);
-
-            for (int currentPart = 0; currentPart < partCount; currentPart++)
-            {
-                header ??= CheckpointerTesting.CreateDefaultJobPartHeader(
-                    transferId: transferId,
-                    partNumber: currentPart,
-                    sourcePath: sourcePaths[currentPart],
-                    destinationPath: destinationPaths[currentPart],
-                    fromTo: fromTo);
-
-                using (Stream stream = new MemoryStream())
-                {
-                    header.Serialize(stream);
-
-                    await checkpointer.AddNewJobPartAsync(
-                        transferId: transferId,
-                        partNumber: currentPart,
-                        chunksTotal: 1,
-                        headerStream: stream);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Inlines the tryget to allow for switch expressions in tests.
-        /// </summary>
-        private async Task<StorageResource> AzureBlobStorageResourcesInlineTryGet(DataTransferProperties info, bool getSource)
-        {
-            if (!BlobStorageResources.TryGetResourceProviders(
-                info,
-                out BlobStorageResourceProvider sourceProvider,
-                out BlobStorageResourceProvider destinationProvider))
-            {
-                return null;
-            }
-            return getSource ? await sourceProvider.MakeResourceAsync() : await destinationProvider.MakeResourceAsync();
-        }
-
         [Test]
-        [Combinatorial]
         public async Task RehydrateBlockBlob(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+            [Values(true, false)] bool isSource)
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-
-            DataTransferProperties transferProperties = GetProperties(
-                test.DirectoryPath,
-                transferId,
-                sourcePath,
-                destinationPath,
-                ToResourceId(sourceType),
-                ToResourceId(destinationType),
-                isContainer: false).Object;
-
-            await AddJobPartToCheckpointer(
-                checkpointer,
-                transferId,
-                sourceType,
-                new List<string>() { sourcePath },
-                destinationType,
-                new List<string>() { destinationPath });
-
-            BlockBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await BlockBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (BlockBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.BlockBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (BlockBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
-
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
-        }
-
-        [Test]
-        [Combinatorial]
-        public async Task RehydrateBlockBlob_Options(
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
-        {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
-            string transferId = GetNewTransferId();
-            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
-            string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
-
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
             StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             DataTransferProperties transferProperties = GetProperties(
-                test.DirectoryPath,
                 transferId,
                 sourcePath,
                 destinationPath,
-                ToResourceId(sourceType),
-                ToResourceId(destinationType),
-                isContainer: false).Object;
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
+                isContainer: false,
+                GetSourceCheckpointData(BlobType.Block),
+                GetDefaultDestinationCheckpointData(BlobType.Block)).Object;
 
-            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> blobTags = DataProvider.BuildTags();
+            StorageResource storageResource = isSource
+                ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
-            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                    transferId: transferId,
-                    partNumber: 0,
-                    sourcePath: sourcePath,
-                    destinationPath: destinationPath,
-                    fromTo: GetPlanOperation(sourceType, destinationType),
-                    blobTags: blobTags,
-                    metadata: metadata,
-                    blockBlobTier: JobPartPlanBlockBlobTier.Cool);
-
-            await AddJobPartToCheckpointer(
-                checkpointer,
-                transferId,
-                sourceType,
-                new List<string>() { sourcePath },
-                destinationType,
-                new List<string>() { destinationPath },
-                header: header);
-
-            BlockBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await BlockBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => (BlockBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, false, BlobStorageResources.ResourceType.BlockBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (BlockBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, false),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
-
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(AccessTier.Cool, storageResource._options.AccessTier);
-            Assert.AreEqual(metadata, storageResource._options.Metadata);
-            Assert.AreEqual(blobTags, storageResource._options.Tags);
+            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
         }
 
         [Test]
-        [Combinatorial]
-        public async Task RehydratePageBlob(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+        public async Task RehydrateBlockBlob_Options()
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            string transferId = GetNewTransferId();
+            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
+
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = StorageResourceType.BlockBlob;
+
+            BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Block, AccessTier.Cool);
+            DataTransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePath,
+                destinationPath,
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
+                isContainer: false,
+                GetSourceCheckpointData(BlobType.Block),
+                checkpointData).Object;
+
+            BlockBlobStorageResource storageResource = (BlockBlobStorageResource)await new BlobsStorageResourceProvider()
+                    .FromDestinationInternalHookAsync(transferProperties);
+
+            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
+            Assert.AreEqual(checkpointData.AccessTier, storageResource._options.AccessTier);
+            Assert.AreEqual(checkpointData.Metadata, storageResource._options.Metadata);
+            Assert.AreEqual(checkpointData.Tags, storageResource._options.Tags);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentType, storageResource._options.HttpHeaders.ContentType);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentEncoding, storageResource._options.HttpHeaders.ContentEncoding);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentLanguage, storageResource._options.HttpHeaders.ContentLanguage);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentDisposition, storageResource._options.HttpHeaders.ContentDisposition);
+            Assert.AreEqual(checkpointData.ContentHeaders.CacheControl, storageResource._options.HttpHeaders.CacheControl);
+        }
+
+        [Test]
+        public async Task RehydratePageBlob(
+            [Values(true, false)] bool isSource)
+        {
             string transferId = GetNewTransferId();
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.PageBlob;
-
-            DataTransferProperties transferProperties = GetProperties(
-                test.DirectoryPath,
-                transferId,
-                sourcePath,
-                destinationPath,
-                ToResourceId(sourceType),
-                ToResourceId(destinationType),
-                isContainer: false).Object;
-
-            await AddJobPartToCheckpointer(
-                checkpointer,
-                transferId,
-                sourceType,
-                new List<string>() { sourcePath },
-                destinationType,
-                new List<string>() { destinationPath });
-
-            PageBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await PageBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (PageBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.PageBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (PageBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
-
-            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
-        }
-
-        [Test]
-        [Combinatorial]
-        public async Task RehydratePageBlob_Options(
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
-        {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
-            string transferId = GetNewTransferId();
-            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
-            string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
-
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.PageBlob;
             StorageResourceType destinationType = StorageResourceType.PageBlob;
 
             DataTransferProperties transferProperties = GetProperties(
-                test.DirectoryPath,
                 transferId,
                 sourcePath,
                 destinationPath,
-                ToResourceId(sourceType),
-                ToResourceId(destinationType),
-                isContainer: false).Object;
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
+                isContainer: false,
+                GetSourceCheckpointData(BlobType.Page),
+                GetDefaultDestinationCheckpointData(BlobType.Page)).Object;
 
-            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> blobTags = DataProvider.BuildTags();
+            StorageResource storageResource = isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
-            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                    transferId: transferId,
-                    partNumber: 0,
-                    sourcePath: sourcePath,
-                    destinationPath: destinationPath,
-                    fromTo: GetPlanOperation(sourceType, destinationType),
-                    blobTags: blobTags,
-                    metadata: metadata,
-                    pageBlobTier: JobPartPlanPageBlobTier.P30);
-
-            await AddJobPartToCheckpointer(
-                checkpointer,
-                transferId,
-                sourceType,
-                new List<string>() { sourcePath },
-                destinationType,
-                new List<string>() { destinationPath },
-                header: header);
-
-            PageBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await PageBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => (PageBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, false, BlobStorageResources.ResourceType.PageBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (PageBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, false),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
-
-            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(AccessTier.P30, storageResource._options.AccessTier);
-            Assert.AreEqual(metadata, storageResource._options.Metadata);
-            Assert.AreEqual(blobTags, storageResource._options.Tags);
+            Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(PageBlobStorageResource), storageResource);
         }
 
         [Test]
-        [Combinatorial]
-        public async Task RehydrateAppendBlob(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+        public async Task RehydratePageBlob_Options()
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
+            string transferId = GetNewTransferId();
+            string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
+            string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
+
+            StorageResourceType sourceType = StorageResourceType.PageBlob;
+            StorageResourceType destinationType = StorageResourceType.PageBlob;
+
+            BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Page, AccessTier.P30);
+            DataTransferProperties transferProperties = GetProperties(
+                transferId,
+                sourcePath,
+                destinationPath,
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
+                isContainer: false,
+                GetSourceCheckpointData(BlobType.Page),
+                checkpointData).Object;
+
+            PageBlobStorageResource storageResource = (PageBlobStorageResource)await new BlobsStorageResourceProvider()
+                    .FromDestinationInternalHookAsync(transferProperties);
+
+            Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
+            Assert.AreEqual(checkpointData.AccessTier, storageResource._options.AccessTier);
+            Assert.AreEqual(checkpointData.Metadata, storageResource._options.Metadata);
+            Assert.AreEqual(checkpointData.Tags, storageResource._options.Tags);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentType, storageResource._options.HttpHeaders.ContentType);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentEncoding, storageResource._options.HttpHeaders.ContentEncoding);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentLanguage, storageResource._options.HttpHeaders.ContentLanguage);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentDisposition, storageResource._options.HttpHeaders.ContentDisposition);
+            Assert.AreEqual(checkpointData.ContentHeaders.CacheControl, storageResource._options.HttpHeaders.CacheControl);
+        }
+
+        [Test]
+        public async Task RehydrateAppendBlob(
+            [Values(true, false)] bool isSource)
+        {
             string transferId = GetNewTransferId();
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.AppendBlob;
+            StorageResourceType sourceType = StorageResourceType.AppendBlob;
+            StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
             DataTransferProperties transferProperties = GetProperties(
-                test.DirectoryPath,
                 transferId,
                 sourcePath,
                 destinationPath,
-                ToResourceId(sourceType),
-                ToResourceId(destinationType),
-                isContainer: false).Object;
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
+                isContainer: false,
+                GetSourceCheckpointData(BlobType.Append),
+                GetDefaultDestinationCheckpointData(BlobType.Append)).Object;
 
-            await AddJobPartToCheckpointer(
-                checkpointer,
-                transferId,
-                sourceType,
-                new List<string>() { sourcePath },
-                destinationType,
-                new List<string>() { destinationPath });
-
-            AppendBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await AppendBlobStorageResource.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (AppendBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.AppendBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (AppendBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            StorageResource storageResource = isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(AppendBlobStorageResource), storageResource);
         }
 
         [Test]
-        [Combinatorial]
-        public async Task RehydrateAppendBlob_Options(
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+        public async Task RehydrateAppendBlob_Options()
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             string sourcePath = "https://storageaccount.blob.core.windows.net/container/blobsource";
             string destinationPath = "https://storageaccount.blob.core.windows.net/container/blobdest";
 
-            StorageResourceType sourceType = StorageResourceType.Local;
+            StorageResourceType sourceType = StorageResourceType.AppendBlob;
             StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
+            BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Append, accessTier: default);
             DataTransferProperties transferProperties = GetProperties(
-                test.DirectoryPath,
                 transferId,
                 sourcePath,
                 destinationPath,
-                ToResourceId(sourceType),
-                ToResourceId(destinationType),
-                isContainer: false).Object;
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
+                isContainer: false,
+                GetSourceCheckpointData(BlobType.Append),
+                checkpointData).Object;
 
-            IDictionary<string, string> metadata = DataProvider.BuildMetadata();
-            IDictionary<string, string> blobTags = DataProvider.BuildTags();
-
-            JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
-                    transferId: transferId,
-                    partNumber: 0,
-                    sourcePath: sourcePath,
-                    destinationPath: destinationPath,
-                    fromTo: GetPlanOperation(sourceType, destinationType),
-                    blobTags: blobTags,
-                    metadata: metadata);
-
-            await AddJobPartToCheckpointer(
-                checkpointer,
-                transferId,
-                sourceType,
-                new List<string>() { sourcePath },
-                destinationType,
-                new List<string>() { destinationPath },
-                header: header);
-
-            AppendBlobStorageResource storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await AppendBlobStorageResource.RehydrateResourceAsync(transferProperties, false),
-                RehydrateApi.ProviderInstance => (AppendBlobStorageResource)await new BlobStorageResourceProvider(
-                    transferProperties, false, BlobStorageResources.ResourceType.AppendBlob).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (AppendBlobStorageResource)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, false),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            AppendBlobStorageResource storageResource = (AppendBlobStorageResource)await new BlobsStorageResourceProvider()
+                .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(metadata, storageResource._options.Metadata);
-            Assert.AreEqual(blobTags, storageResource._options.Tags);
+            Assert.AreEqual(checkpointData.AccessTier, storageResource._options.AccessTier);
+            Assert.AreEqual(checkpointData.Metadata, storageResource._options.Metadata);
+            Assert.AreEqual(checkpointData.Tags, storageResource._options.Tags);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentType, storageResource._options.HttpHeaders.ContentType);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentEncoding, storageResource._options.HttpHeaders.ContentEncoding);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentLanguage, storageResource._options.HttpHeaders.ContentLanguage);
+            Assert.AreEqual(checkpointData.ContentHeaders.ContentDisposition, storageResource._options.HttpHeaders.ContentDisposition);
+            Assert.AreEqual(checkpointData.ContentHeaders.CacheControl, storageResource._options.HttpHeaders.CacheControl);
         }
 
         [Test]
-        [Combinatorial]
         public async Task RehydrateBlobContainer(
-            [Values(true, false)] bool isSource,
-            [ValueSource(nameof(GetRehydrateApis))] RehydrateApi api)
+            [Values(true, false)] bool isSource)
         {
-            using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             string transferId = GetNewTransferId();
             List<string> sourcePaths = new List<string>();
             string sourceParentPath = "https://storageaccount.blob.core.windows.net/sourcecontainer";
@@ -507,40 +312,27 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationPaths.Add(string.Join("/", destinationParentPath, childPath));
             }
 
-            StorageResourceType sourceType = !isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
-            StorageResourceType destinationType = isSource ? StorageResourceType.Local : StorageResourceType.BlockBlob;
+            StorageResourceType sourceType = StorageResourceType.BlockBlob;
+            StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             string originalPath = isSource ? sourceParentPath : destinationParentPath;
 
             DataTransferProperties transferProperties = GetProperties(
-                test.DirectoryPath,
                 transferId,
                 sourceParentPath,
                 destinationParentPath,
-                ToResourceId(sourceType),
-                ToResourceId(destinationType),
-                isContainer: true).Object;
+                ToProviderId(sourceType),
+                ToProviderId(destinationType),
+                isContainer: true,
+                GetSourceCheckpointData(BlobType.Block),
+                GetDefaultDestinationCheckpointData(BlobType.Block)).Object;
 
-            await AddJobPartToCheckpointer(
-                checkpointer,
-                transferId,
-                sourceType,
-                sourcePaths,
-                destinationType,
-                destinationPaths,
-                jobPartCount);
-
-            BlobStorageResourceContainer storageResource = api switch
-            {
-                RehydrateApi.ResourceStaticApi => await BlobStorageResourceContainer.RehydrateResourceAsync(transferProperties, isSource),
-                RehydrateApi.ProviderInstance => (BlobStorageResourceContainer)await new BlobStorageResourceProvider(
-                    transferProperties, isSource, BlobStorageResources.ResourceType.BlobContainer).MakeResourceAsync(),
-                RehydrateApi.PublicStaticApi => (BlobStorageResourceContainer)await AzureBlobStorageResourcesInlineTryGet(
-                    transferProperties, isSource),
-                _ => throw new ArgumentException("Unrecognized test parameter"),
-            };
+            StorageResource storageResource = isSource
+                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
+            Assert.IsInstanceOf(typeof(BlobStorageResourceContainer), storageResource);
         }
     }
 }

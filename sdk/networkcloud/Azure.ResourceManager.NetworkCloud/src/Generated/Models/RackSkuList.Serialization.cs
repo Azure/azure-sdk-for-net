@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<RackSkuData>> value = default;
+            Optional<IReadOnlyList<NetworkCloudRackSkuData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<RackSkuData> array = new List<RackSkuData>();
+                    List<NetworkCloudRackSkuData> array = new List<NetworkCloudRackSkuData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RackSkuData.DeserializeRackSkuData(item));
+                        array.Add(NetworkCloudRackSkuData.DeserializeNetworkCloudRackSkuData(item));
                     }
                     value = array;
                     continue;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.DataShare.Models
     /// <summary> Table level sharing properties dto for kusto data set properties. </summary>
     public partial class TableLevelSharingProperties
     {
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TableLevelSharingProperties"/>. </summary>
         public TableLevelSharingProperties()
         {
             ExternalTablesToExclude = new ChangeTrackingList<string>();
@@ -24,14 +57,15 @@ namespace Azure.ResourceManager.DataShare.Models
             TablesToInclude = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of TableLevelSharingProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableLevelSharingProperties"/>. </summary>
         /// <param name="externalTablesToExclude"> External tables to be excluded in the data set. </param>
         /// <param name="externalTablesToInclude"> External tables to be included in the data set. </param>
         /// <param name="materializedViewsToExclude"> Materialized views to be excluded in the data set. </param>
         /// <param name="materializedViewsToInclude"> Materialized views to be included in the data set. </param>
         /// <param name="tablesToExclude"> Tables to be excluded in the data set. </param>
         /// <param name="tablesToInclude"> Tables to be included in the data set. </param>
-        internal TableLevelSharingProperties(IList<string> externalTablesToExclude, IList<string> externalTablesToInclude, IList<string> materializedViewsToExclude, IList<string> materializedViewsToInclude, IList<string> tablesToExclude, IList<string> tablesToInclude)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TableLevelSharingProperties(IList<string> externalTablesToExclude, IList<string> externalTablesToInclude, IList<string> materializedViewsToExclude, IList<string> materializedViewsToInclude, IList<string> tablesToExclude, IList<string> tablesToInclude, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExternalTablesToExclude = externalTablesToExclude;
             ExternalTablesToInclude = externalTablesToInclude;
@@ -39,6 +73,7 @@ namespace Azure.ResourceManager.DataShare.Models
             MaterializedViewsToInclude = materializedViewsToInclude;
             TablesToExclude = tablesToExclude;
             TablesToInclude = tablesToInclude;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> External tables to be excluded in the data set. </summary>

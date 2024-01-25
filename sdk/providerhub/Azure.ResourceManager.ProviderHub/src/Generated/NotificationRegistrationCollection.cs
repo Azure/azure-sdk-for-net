@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -19,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ProviderHub
 {
     /// <summary>
-    /// A class representing a collection of <see cref="NotificationRegistrationResource" /> and their operations.
-    /// Each <see cref="NotificationRegistrationResource" /> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource" />.
-    /// To get a <see cref="NotificationRegistrationCollection" /> instance call the GetNotificationRegistrations method from an instance of <see cref="ProviderRegistrationResource" />.
+    /// A class representing a collection of <see cref="NotificationRegistrationResource"/> and their operations.
+    /// Each <see cref="NotificationRegistrationResource"/> in the collection will belong to the same instance of <see cref="ProviderRegistrationResource"/>.
+    /// To get a <see cref="NotificationRegistrationCollection"/> instance call the GetNotificationRegistrations method from an instance of <see cref="ProviderRegistrationResource"/>.
     /// </summary>
     public partial class NotificationRegistrationCollection : ArmCollection, IEnumerable<NotificationRegistrationResource>, IAsyncEnumerable<NotificationRegistrationResource>
     {
@@ -62,6 +63,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -104,6 +113,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -145,6 +162,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
@@ -181,6 +206,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,15 +252,23 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_ListByProviderRegistration</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="NotificationRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="NotificationRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NotificationRegistrationResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationRegistrationResource(Client, NotificationRegistrationData.DeserializeNotificationRegistrationData(e)), _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new NotificationRegistrationResource(Client, NotificationRegistrationData.DeserializeNotificationRegistrationData(e)), _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -241,15 +282,23 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_ListByProviderRegistration</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="NotificationRegistrationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="NotificationRegistrationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NotificationRegistrationResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _notificationRegistrationRestClient.CreateListByProviderRegistrationRequest(Id.SubscriptionId, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _notificationRegistrationRestClient.CreateListByProviderRegistrationNextPageRequest(nextLink, Id.SubscriptionId, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationRegistrationResource(Client, NotificationRegistrationData.DeserializeNotificationRegistrationData(e)), _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new NotificationRegistrationResource(Client, NotificationRegistrationData.DeserializeNotificationRegistrationData(e)), _notificationRegistrationClientDiagnostics, Pipeline, "NotificationRegistrationCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -262,6 +311,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,6 +355,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>NotificationRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="notificationRegistrationName"> The notification registration. </param>
@@ -314,6 +379,96 @@ namespace Azure.ResourceManager.ProviderHub
             {
                 var response = _notificationRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, notificationRegistrationName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationRegistrationName"> The notification registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
+        public virtual async Task<NullableResponse<NotificationRegistrationResource>> GetIfExistsAsync(string notificationRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
+
+            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _notificationRegistrationRestClient.GetAsync(Id.SubscriptionId, Id.Name, notificationRegistrationName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.ProviderHub/providerRegistrations/{providerNamespace}/notificationRegistrations/{notificationRegistrationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NotificationRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NotificationRegistrationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="notificationRegistrationName"> The notification registration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="notificationRegistrationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="notificationRegistrationName"/> is null. </exception>
+        public virtual NullableResponse<NotificationRegistrationResource> GetIfExists(string notificationRegistrationName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(notificationRegistrationName, nameof(notificationRegistrationName));
+
+            using var scope = _notificationRegistrationClientDiagnostics.CreateScope("NotificationRegistrationCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _notificationRegistrationRestClient.Get(Id.SubscriptionId, Id.Name, notificationRegistrationName, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<NotificationRegistrationResource>(response.GetRawResponse());
+                return Response.FromValue(new NotificationRegistrationResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

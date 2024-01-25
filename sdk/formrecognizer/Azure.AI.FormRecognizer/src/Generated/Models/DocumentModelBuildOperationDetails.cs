@@ -15,7 +15,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// <summary> Get Operation response object. </summary>
     public partial class DocumentModelBuildOperationDetails : OperationDetails
     {
-        /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -30,7 +30,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Kind = DocumentOperationKind.DocumentModelBuild;
         }
 
-        /// <summary> Initializes a new instance of DocumentModelBuildOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
@@ -38,11 +38,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
-        /// <param name="apiVersion"> API version used to create this operation. </param>
+        /// <param name="serviceVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="jsonError"> Encountered error. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal DocumentModelBuildOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, jsonError)
+        internal DocumentModelBuildOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DocumentOperationKind kind, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, JsonElement jsonError, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, serviceVersion, tags, jsonError)
         {
             Result = result;
             Kind = kind;

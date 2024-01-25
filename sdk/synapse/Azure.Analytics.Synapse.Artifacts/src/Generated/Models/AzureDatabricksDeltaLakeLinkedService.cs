@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Databricks Delta Lake linked service. </summary>
     public partial class AzureDatabricksDeltaLakeLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeLinkedService"/>. </summary>
         /// <param name="domain"> &lt;REGION&gt;.azuredatabricks.net, domain name of your Databricks deployment. Type: string (or Expression with resultType string). </param>
         /// <param name="accessToken">
         /// Access token for databricks REST API. Refer to https://docs.azuredatabricks.net/api/latest/authentication.html. Type: string, SecureString or AzureKeyVaultSecretReference.
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureDatabricksDeltaLake";
         }
 
-        /// <summary> Initializes a new instance of AzureDatabricksDeltaLakeLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDatabricksDeltaLakeLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -47,12 +47,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="clusterId"> The id of an existing interactive cluster that will be used for all runs of this job. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal AzureDatabricksDeltaLakeLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object clusterId, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureDatabricksDeltaLakeLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object domain, SecretBase accessToken, object clusterId, object encryptedCredential, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Domain = domain;
             AccessToken = accessToken;
             ClusterId = clusterId;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             Type = type ?? "AzureDatabricksDeltaLake";
         }
 
@@ -68,5 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object ClusterId { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

@@ -13,25 +13,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Route policy statement condition properties. </summary>
     public partial class StatementConditionProperties : IPCommunityIdList
     {
-        /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         public StatementConditionProperties()
         {
-            IPExtendedCommunityIds = new ChangeTrackingList<string>();
+            IPExtendedCommunityIds = new ChangeTrackingList<ResourceIdentifier>();
         }
 
-        /// <summary> Initializes a new instance of StatementConditionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="StatementConditionProperties"/>. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
+        /// <param name="routePolicyConditionType"> Type of the condition used. </param>
         /// <param name="ipPrefixId"> Arm Resource Id of IpPrefix. </param>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
-        internal StatementConditionProperties(IList<string> ipCommunityIds, string ipPrefixId, IList<string> ipExtendedCommunityIds) : base(ipCommunityIds)
+        internal StatementConditionProperties(IList<ResourceIdentifier> ipCommunityIds, RoutePolicyConditionType? routePolicyConditionType, ResourceIdentifier ipPrefixId, IList<ResourceIdentifier> ipExtendedCommunityIds) : base(ipCommunityIds)
         {
+            RoutePolicyConditionType = routePolicyConditionType;
             IPPrefixId = ipPrefixId;
             IPExtendedCommunityIds = ipExtendedCommunityIds;
         }
 
+        /// <summary> Type of the condition used. </summary>
+        public RoutePolicyConditionType? RoutePolicyConditionType { get; set; }
         /// <summary> Arm Resource Id of IpPrefix. </summary>
-        public string IPPrefixId { get; set; }
+        public ResourceIdentifier IPPrefixId { get; set; }
         /// <summary> List of IP Extended Community resource IDs. </summary>
-        public IList<string> IPExtendedCommunityIds { get; }
+        public IList<ResourceIdentifier> IPExtendedCommunityIds { get; }
     }
 }

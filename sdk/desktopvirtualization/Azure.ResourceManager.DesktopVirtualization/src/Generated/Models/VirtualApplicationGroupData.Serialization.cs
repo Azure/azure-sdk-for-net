@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization
 {
-    public partial class VirtualApplicationGroupData : IUtf8JsonSerializable
+    public partial class VirtualApplicationGroupData : IUtf8JsonSerializable, IJsonModel<VirtualApplicationGroupData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualApplicationGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualApplicationGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualApplicationGroupData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ManagedBy))
             {
@@ -28,6 +38,11 @@ namespace Azure.ResourceManager.DesktopVirtualization
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
@@ -57,8 +72,33 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
@@ -71,14 +111,65 @@ namespace Azure.ResourceManager.DesktopVirtualization
             }
             writer.WritePropertyName("hostPoolArmPath"u8);
             writer.WriteStringValue(HostPoolId);
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            {
+                if (WorkspaceId != null)
+                {
+                    writer.WritePropertyName("workspaceArmPath"u8);
+                    writer.WriteStringValue(WorkspaceId);
+                }
+                else
+                {
+                    writer.WriteNull("workspaceArmPath");
+                }
+            }
             writer.WritePropertyName("applicationGroupType"u8);
             writer.WriteStringValue(ApplicationGroupType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(IsCloudPCResource))
+            {
+                writer.WritePropertyName("cloudPcResource"u8);
+                writer.WriteBooleanValue(IsCloudPCResource.Value);
+            }
+            if (Optional.IsDefined(ShowInFeed))
+            {
+                writer.WritePropertyName("showInFeed"u8);
+                writer.WriteBooleanValue(ShowInFeed.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualApplicationGroupData DeserializeVirtualApplicationGroupData(JsonElement element)
+        VirtualApplicationGroupData IJsonModel<VirtualApplicationGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualApplicationGroupData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualApplicationGroupData(document.RootElement, options);
+        }
+
+        internal static VirtualApplicationGroupData DeserializeVirtualApplicationGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -102,6 +193,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             Optional<ResourceIdentifier> workspaceArmPath = default;
             VirtualApplicationGroupType applicationGroupType = default;
             Optional<bool> cloudPCResource = default;
+            Optional<bool> showInFeed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -250,11 +344,56 @@ namespace Azure.ResourceManager.DesktopVirtualization
                             cloudPCResource = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("showInFeed"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            showInFeed = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, Optional.ToNullable(cloudPCResource), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VirtualApplicationGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, objectId.Value, description.Value, friendlyName.Value, hostPoolArmPath, workspaceArmPath.Value, applicationGroupType, Optional.ToNullable(cloudPCResource), Optional.ToNullable(showInFeed), managedBy.Value, kind.Value, Optional.ToNullable(etag), identity, sku.Value, plan, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualApplicationGroupData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualApplicationGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VirtualApplicationGroupData IPersistableModel<VirtualApplicationGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualApplicationGroupData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualApplicationGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualApplicationGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

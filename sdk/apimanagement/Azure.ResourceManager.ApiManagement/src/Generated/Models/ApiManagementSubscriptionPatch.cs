@@ -6,15 +6,73 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Subscription update details. </summary>
     public partial class ApiManagementSubscriptionPatch
     {
-        /// <summary> Initializes a new instance of ApiManagementSubscriptionPatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
         public ApiManagementSubscriptionPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiManagementSubscriptionPatch"/>. </summary>
+        /// <param name="ownerId"> User identifier path: /users/{userId}. </param>
+        /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
+        /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="displayName"> Subscription name. </param>
+        /// <param name="primaryKey"> Primary subscription key. </param>
+        /// <param name="secondaryKey"> Secondary subscription key. </param>
+        /// <param name="state"> Subscription state. Possible states are * active – the subscription is active, * suspended – the subscription is blocked, and the subscriber cannot call any APIs of the product, * submitted – the subscription request has been made by the developer, but has not yet been approved or rejected, * rejected – the subscription request has been denied by an administrator, * cancelled – the subscription has been cancelled by the developer or administrator, * expired – the subscription reached its expiration date and was deactivated. </param>
+        /// <param name="stateComment"> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </param>
+        /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementSubscriptionPatch(string ownerId, string scope, DateTimeOffset? expireOn, string displayName, string primaryKey, string secondaryKey, SubscriptionState? state, string stateComment, bool? allowTracing, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            OwnerId = ownerId;
+            Scope = scope;
+            ExpireOn = expireOn;
+            DisplayName = displayName;
+            PrimaryKey = primaryKey;
+            SecondaryKey = secondaryKey;
+            State = state;
+            StateComment = stateComment;
+            AllowTracing = allowTracing;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> User identifier path: /users/{userId}. </summary>

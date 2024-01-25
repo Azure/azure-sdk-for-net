@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 if (property.NameEquals("snapshotPolicyId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (property.Value.ValueKind == JsonValueKind.Null || property.Value.ValueKind == JsonValueKind.String && property.Value.GetString().Length == 0)
                     {
                         continue;
                     }

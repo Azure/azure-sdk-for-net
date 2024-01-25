@@ -2,11 +2,11 @@
 
 [Azure AI Content Safety][contentsafety_overview] detects harmful user-generated and AI-generated content in applications and services. Content Safety includes several APIs that allow you to detect material that is harmful:
 
-* Text Analysis API: Scans text for sexual content, violence, hate, and self harm with multi-severity levels.
-* Image Analysis API: Scans images for sexual content, violence, hate, and self harm with multi-severity levels.
+* Text Analysis API: Scans text for sexual content, violence, hate, and self-harm with multi-severity levels.
+* Image Analysis API: Scans images for sexual content, violence, hate, and self-harm with multi-severity levels.
 * Text Blocklist Management APIs: The default AI classifiers are sufficient for most content safety needs; however, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentsafety/Azure.AI.ContentSafety) | [Package (NuGet)](https://www.nuget.org/packages/Azure.AI.ContentSafety) | [API reference documentation](https://learn.microsoft.com/dotnet/api/azure.ai.contentsafety) | [Product documentation](https://learn.microsoft.com/azure/cognitive-services/content-safety/)
 
 ## Getting started
 
@@ -15,13 +15,13 @@
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.AI.ContentSafety --prerelease
+dotnet add package Azure.AI.ContentSafety
 ```
 
 ### Prerequisites
 
 * You need an [Azure subscription][azure_sub] to use this package.
-* An existing [Azure AI Content Safety][contentsafety_overview] instance.
+* An [Azure AI Content Safety][contentsafety_overview] resource, if no existing resource, you could [create a new one](https://aka.ms/acs-create).
 
 ### Authenticate the client
 
@@ -34,37 +34,70 @@ You can find the endpoint for your Azure AI Content Safety service resource usin
 az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
 ```
 
-#### Get the API key
+#### Create a ContentSafetyClient/BlocklistClient with API key
 
-The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
+* Step 1: Get the API key
 
-```bash
-az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
-```
+    The API key can be found in the [Azure Portal][azure_portal] or by running the following [Azure CLI][azure_cli_key_lookup] command:
 
-#### Create a ContentSafetyClient with AzureKeyCredential
+    ```bash
+    az cognitiveservices account keys list --name "<resource-name>" --resource-group "<resource-group-name>"
+    ```
 
-Pass the API key as a string into an instance of `AzureKeyCredential`.
+* Step 2: Create a ContentSafetyClient with AzureKeyCredential
 
-```csharp
-string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
-string key = "<api_key>";
+    Pass the API key as a string into an instance of `AzureKeyCredential`.
 
-ContentSafetyClient client = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
-```
+    ```csharp
+    string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
+    string key = "<api_key>";
+
+    ContentSafetyClient contentSafetyClient = new ContentSafetyClient(new Uri(endpoint), new AzureKeyCredential(key));
+    BlocklistClient blocklistClient = new BlocklistClient(new Uri(endpoint), new AzureKeyCredential(key));
+    ```
+
+#### Create a ContentSafetyClient/BlocklistClient with Microsoft Entra ID credential
+
+* Step 1: Enable Microsoft Entra ID for your resource. Please refer to this document [Authenticate with Microsoft Entra ID][authenticate_with_microsoft_entra_id] for the steps to enable Microsoft Entra ID for your resource.
+
+    The main steps are:
+
+  * Create resource with a custom subdomain.
+  * Create Service Principal and assign `Cognitive Services User` role to it.
+
+* Step 2: Set the values of the client ID, tenant ID, and client secret of the Microsoft Entra application as environment variables: `AZURE_CLIENT_ID`, `TENANT_ID`, `AZURE_CLIENT_SECRET`.
+   DefaultAzureCredential will use the values from these environment variables.
+   And you need to install **Azure.Identity** package to use DefaultAzureCredential.
+
+   ```csharp
+    string endpoint = "https://<my-custom-subdomain>.cognitiveservices.azure.com/";
+
+    ContentSafetyClient contentSafetyClient = new ContentSafetyClient(new Uri(endpoint), new DefaultAzureCredential());
+    BlocklistClient blocklistClient = new BlocklistClient(new Uri(endpoint), new DefaultAzureCredential());
+    ```
 
 ## Key concepts
+
+### Available features
+
+There are different types of analysis available from this service. The following table describes the currently available APIs.
+
+|Feature  |Description  |
+|---------|---------|
+|Text Analysis API|Scans text for sexual content, violence, hate, and self-harm with multi-severity levels.|
+|Image Analysis API|Scans images for sexual content, violence, hate, and self-harm with multi-severity levels.|
+| Text Blocklist Management APIs|The default AI classifiers are sufficient for most content safety needs. However, you might need to screen for terms that are specific to your use case. You can create blocklists of terms to use with the Text API.|
 
 ### Harm categories
 
 Content Safety recognizes four distinct categories of objectionable content.
 
-|Category |Description  |
+|Category|Description|
 |---------|---------|
-|Hate |Hate refers to any content that attacks or uses pejorative or discriminatory language in reference to a person or identity group based on certain differentiating attributes of that group. This includes but is not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
-|Sexual |Sexual describes content related to anatomical organs and genitals, romantic relationships, acts portrayed in erotic or affectionate terms, pregnancy, physical sexual acts—including those acts portrayed as an assault or a forced sexual violent act against one’s will—, prostitution, pornography, and abuse.|
-|Violence |Violence describes content related to physical actions intended to hurt, injure, damage, or kill someone or something. It also includes weapons, guns and related entities, such as manufacturers, associations, legislation, and similar.|
-|Self-harm |Self-harm describes content related to physical actions intended to purposely hurt, injure, or damage one’s body or kill oneself.|
+|Hate |Hate and fairness-related harms refer to any content that attacks or uses pejorative or discriminatory language with reference to a person or identity group based on certain differentiating attributes of these groups including but not limited to race, ethnicity, nationality, gender identity and expression, sexual orientation, religion, immigration status, ability status, personal appearance, and body size.|
+|Sexual |Sexual describes language related to anatomical organs and genitals, romantic relationships, acts portrayed in erotic or affectionate terms, pregnancy, physical sexual acts, including those portrayed as an assault or a forced sexual violent act against one's will, prostitution, pornography, and abuse.|
+|Violence |Violence describes language related to physical actions intended to hurt, injure, damage, or kill someone or something; describes weapons, guns and related entities, such as manufactures, associations, legislation, and so on.|
+|Self-harm |Self-harm describes language related to physical actions intended to purposely hurt, injure, damage one's body or kill oneself.|
 
 Classification can be multi-labeled. For example, when a text sample goes through the text moderation model, it could be classified as both Sexual content and Violence.
 
@@ -72,12 +105,19 @@ Classification can be multi-labeled. For example, when a text sample goes throug
 
 Every harm category the service applies also comes with a severity level rating. The severity level is meant to indicate the severity of the consequences of showing the flagged content.
 
-|Severity |Label |
-|---------|---------|
-|0 |Safe|
-|2 |Low|
-|4 |Medium|
-|6 |High|
+**Text**: The current version of the text model supports the **full 0-7 severity scale**. The classifier detects amongst all severities along this scale. If the user specifies, it can return severities in the trimmed scale of 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [text content severity levels definitions][text_severity_levels] for details.
+
+- [0,1] -> 0
+- [2,3] -> 2
+- [4,5] -> 4
+- [6,7] -> 6
+
+**Image**: The current version of the image model supports the **trimmed version of the full 0-7 severity scale**. The classifier only returns severities 0, 2, 4, and 6; each two adjacent levels are mapped to a single level. You can refer [image content severity levels definitions][image_severity_levels] for details.
+
+- [0,1] -> 0
+- [2,3] -> 2
+- [4,5] -> 4
+- [6,7] -> 6
 
 ### Text blocklist management
 
@@ -86,11 +126,11 @@ Following operations are supported to manage your text blocklist:
 * Create or modify a blocklist
 * List all blocklists
 * Get a blocklist by blocklistName
-* Add blockItems to a blocklist
-* Remove blockItems from a blocklist
-* List all blockItems in a blocklist by blocklistName
-* Get a blockItem in a blocklist by blockItemId and blocklistName
-* Delete a blocklist and all of its blockItems
+* Add blocklistItems to a blocklist
+* Remove blocklistItems from a blocklist
+* List all blocklistItems in a blocklist by blocklistName
+* Get a blocklistItem in a blocklist by blocklistItemId and blocklistName
+* Delete a blocklist and all of its blocklistItems
 
 You can set the blocklists you want to use when analyze text, then you can get blocklist match result from returned response.
 
@@ -139,10 +179,10 @@ catch (RequestFailedException ex)
     throw;
 }
 
-Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
-Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
-Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
-Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
+Console.WriteLine("Hate severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Hate)?.Severity ?? 0);
+Console.WriteLine("SelfHarm severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.SelfHarm)?.Severity ?? 0);
+Console.WriteLine("Sexual severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Sexual)?.Severity ?? 0);
+Console.WriteLine("Violence severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == TextCategory.Violence)?.Severity ?? 0);
 ```
 
 #### Analyze text with blocklists
@@ -151,12 +191,12 @@ Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Sever
 // After you edit your blocklist, it usually takes effect in 5 minutes, please wait some time before analyzing with blocklist after editing.
 var request = new AnalyzeTextOptions("I h*te you and I want to k*ll you");
 request.BlocklistNames.Add(blocklistName);
-request.BreakByBlocklists = true;
+request.HaltOnBlocklistHit = true;
 
 Response<AnalyzeTextResult> response;
 try
 {
-    response = client.AnalyzeText(request);
+    response = contentSafetyClient.AnalyzeText(request);
 }
 catch (RequestFailedException ex)
 {
@@ -164,13 +204,12 @@ catch (RequestFailedException ex)
     throw;
 }
 
-if (response.Value.BlocklistsMatchResults != null)
+if (response.Value.BlocklistsMatch != null)
 {
     Console.WriteLine("\nBlocklist match result:");
-    foreach (var matchResult in response.Value.BlocklistsMatchResults)
+    foreach (var matchResult in response.Value.BlocklistsMatch)
     {
-        Console.WriteLine("Blockitem was hit in text: Offset: {0}, Length: {1}", matchResult.Offset, matchResult.Length);
-        Console.WriteLine("BlocklistName: {0}, BlockItemId: {1}, BlockItemText: {2}, ", matchResult.BlocklistName, matchResult.BlockItemId, matchResult.BlockItemText);
+        Console.WriteLine("BlocklistName: {0}, BlocklistItemId: {1}, BlocklistText: {2}, ", matchResult.BlocklistName, matchResult.BlocklistItemId, matchResult.BlocklistItemText);
     }
 }
 ```
@@ -179,7 +218,7 @@ if (response.Value.BlocklistsMatchResults != null)
 
 ```C# Snippet:Azure_AI_ContentSafety_AnalyzeImage
 string datapath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Samples", "sample_data", "image.jpg");
-ImageData image = new ImageData() { Content = BinaryData.FromBytes(File.ReadAllBytes(datapath)) };
+ContentSafetyImageData image = new ContentSafetyImageData(BinaryData.FromBytes(File.ReadAllBytes(datapath)));
 
 var request = new AnalyzeImageOptions(image);
 
@@ -194,10 +233,10 @@ catch (RequestFailedException ex)
     throw;
 }
 
-Console.WriteLine("Hate severity: {0}", response.Value.HateResult?.Severity ?? 0);
-Console.WriteLine("SelfHarm severity: {0}", response.Value.SelfHarmResult?.Severity ?? 0);
-Console.WriteLine("Sexual severity: {0}", response.Value.SexualResult?.Severity ?? 0);
-Console.WriteLine("Violence severity: {0}", response.Value.ViolenceResult?.Severity ?? 0);
+Console.WriteLine("Hate severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Hate)?.Severity ?? 0);
+Console.WriteLine("SelfHarm severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.SelfHarm)?.Severity ?? 0);
+Console.WriteLine("Sexual severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Sexual)?.Severity ?? 0);
+Console.WriteLine("Violence severity: {0}", response.Value.CategoriesAnalysis.FirstOrDefault(a => a.Category == ImageCategory.Violence)?.Severity ?? 0);
 ```
 
 ### Manage text blocklist
@@ -213,7 +252,7 @@ var data = new
     description = blocklistDescription,
 };
 
-var createResponse = client.CreateOrUpdateTextBlocklist(blocklistName, RequestContent.Create(data));
+var createResponse = blocklistClient.CreateOrUpdateTextBlocklist(blocklistName, RequestContent.Create(data));
 if (createResponse.Status == 201)
 {
     Console.WriteLine("\nBlocklist {0} created.", blocklistName);
@@ -230,15 +269,15 @@ else if (createResponse.Status == 200)
 string blockItemText1 = "k*ll";
 string blockItemText2 = "h*te";
 
-var blockItems = new TextBlockItemInfo[] { new TextBlockItemInfo(blockItemText1), new TextBlockItemInfo(blockItemText2) };
-var addedBlockItems = client.AddBlockItems(blocklistName, new AddBlockItemsOptions(blockItems));
+var blockItems = new TextBlocklistItem[] { new TextBlocklistItem(blockItemText1), new TextBlocklistItem(blockItemText2) };
+var addedBlockItems = blocklistClient.AddOrUpdateBlocklistItems(blocklistName, new AddOrUpdateTextBlocklistItemsOptions(blockItems));
 
 if (addedBlockItems != null && addedBlockItems.Value != null)
 {
     Console.WriteLine("\nBlockItems added:");
-    foreach (var addedBlockItem in addedBlockItems.Value.Value)
+    foreach (var addedBlockItem in addedBlockItems.Value.BlocklistItems)
     {
-        Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlockItemId, addedBlockItem.Text, addedBlockItem.Description);
+        Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", addedBlockItem.BlocklistItemId, addedBlockItem.Text, addedBlockItem.Description);
     }
 }
 ```
@@ -246,51 +285,51 @@ if (addedBlockItems != null && addedBlockItems.Value != null)
 #### List text blocklists
 
 ```C# Snippet:Azure_AI_ContentSafety_ListBlocklists
-var blocklists = client.GetTextBlocklists();
+var blocklists = blocklistClient.GetTextBlocklists();
 Console.WriteLine("\nList blocklists:");
 foreach (var blocklist in blocklists)
 {
-    Console.WriteLine("BlocklistName: {0}, Description: {1}", blocklist.BlocklistName, blocklist.Description);
+    Console.WriteLine("BlocklistName: {0}, Description: {1}", blocklist.Name, blocklist.Description);
 }
 ```
 
 #### Get text blocklist
 
 ```C# Snippet:Azure_AI_ContentSafety_GetBlocklist
-var getBlocklist = client.GetTextBlocklist(blocklistName);
+var getBlocklist = blocklistClient.GetTextBlocklist(blocklistName);
 if (getBlocklist != null && getBlocklist.Value != null)
 {
     Console.WriteLine("\nGet blocklist:");
-    Console.WriteLine("BlocklistName: {0}, Description: {1}", getBlocklist.Value.BlocklistName, getBlocklist.Value.Description);
+    Console.WriteLine("BlocklistName: {0}, Description: {1}", getBlocklist.Value.Name, getBlocklist.Value.Description);
 }
 ```
 
 #### List blockItems
 
 ```C# Snippet:Azure_AI_ContentSafety_ListBlockItems
-var allBlockitems = client.GetTextBlocklistItems(blocklistName);
+var allBlockitems = blocklistClient.GetTextBlocklistItems(blocklistName);
 Console.WriteLine("\nList BlockItems:");
 foreach (var blocklistItem in allBlockitems)
 {
-    Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlockItemId, blocklistItem.Text, blocklistItem.Description);
+    Console.WriteLine("BlocklistItemId: {0}, Text: {1}, Description: {2}", blocklistItem.BlocklistItemId, blocklistItem.Text, blocklistItem.Description);
 }
 ```
 
 #### Get blockItem
 
 ```C# Snippet:Azure_AI_ContentSafety_GetBlockItem
-var getBlockItemId = addedBlockItems.Value.Value[0].BlockItemId;
-var getBlockItem = client.GetTextBlocklistItem(blocklistName, getBlockItemId);
+var getBlockItemId = addedBlockItems.Value.BlocklistItems[0].BlocklistItemId;
+var getBlockItem = blocklistClient.GetTextBlocklistItem(blocklistName, getBlockItemId);
 Console.WriteLine("\nGet BlockItem:");
-Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlockItemId, getBlockItem.Value.Text, getBlockItem.Value.Description);
+Console.WriteLine("BlockItemId: {0}, Text: {1}, Description: {2}", getBlockItem.Value.BlocklistItemId, getBlockItem.Value.Text, getBlockItem.Value.Description);
 ```
 
 #### Remove blockItems
 
 ```C# Snippet:Azure_AI_ContentSafety_RemoveBlockItems
-var removeBlockItemId = addedBlockItems.Value.Value[0].BlockItemId;
+var removeBlockItemId = addedBlockItems.Value.BlocklistItems[0].BlocklistItemId;
 var removeBlockItemIds = new List<string> { removeBlockItemId };
-var removeResult = client.RemoveBlockItems(blocklistName, new RemoveBlockItemsOptions(removeBlockItemIds));
+var removeResult = blocklistClient.RemoveBlocklistItems(blocklistName, new RemoveTextBlocklistItemsOptions(removeBlockItemIds));
 
 if (removeResult != null && removeResult.Status == 204)
 {
@@ -301,7 +340,7 @@ if (removeResult != null && removeResult.Status == 204)
 #### Delete text blocklist
 
 ```C# Snippet:Azure_AI_ContentSafety_DeleteBlocklist
-var deleteResult = client.DeleteTextBlocklist(blocklistName);
+var deleteResult = blocklistClient.DeleteTextBlocklist(blocklistName);
 if (deleteResult != null && deleteResult.Status == 204)
 {
     Console.WriteLine("\nDeleted blocklist.");
@@ -382,5 +421,8 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
+[authenticate_with_microsoft_entra_id]: https://learn.microsoft.com/azure/ai-services/authentication?tabs=powershell#authenticate-with-microsoft-entra-id
+[text_severity_levels]: https://learn.microsoft.com/azure/ai-services/content-safety/concepts/harm-categories?tabs=definitions#text-content
+[image_severity_levels]: https://learn.microsoft.com/azure/ai-services/content-safety/concepts/harm-categories?tabs=definitions#image-content
 
 ![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk//Azure.AI/README.png)

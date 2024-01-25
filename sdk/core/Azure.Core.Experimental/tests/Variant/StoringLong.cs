@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace Azure
+namespace Azure.Core.Experimental.Tests
 {
     public class StoringLong
     {
@@ -18,7 +18,7 @@ namespace Azure
         [Test]
         public void LongImplicit([ValueSource("LongData")] long testValue)
         {
-            Value value = testValue;
+            Variant value = testValue;
             Assert.AreEqual(testValue, value.As<long>());
             Assert.AreEqual(typeof(long), value.Type);
 
@@ -31,10 +31,10 @@ namespace Azure
         [Test]
         public void LongCreate([ValueSource("LongData")] long testValue)
         {
-            Value value;
+            Variant value;
             using (MemoryWatch.Create())
             {
-                value = Value.Create(testValue);
+                value = Variant.Create(testValue);
             }
 
             Assert.AreEqual(testValue, value.As<long>());
@@ -44,7 +44,7 @@ namespace Azure
 
             using (MemoryWatch.Create())
             {
-                value = Value.Create(source);
+                value = Variant.Create(source);
             }
 
             Assert.AreEqual(source, value.As<long?>());
@@ -54,7 +54,7 @@ namespace Azure
         [Test]
         public void LongInOut([ValueSource("LongData")] long testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             bool success = value.TryGetValue(out long result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -67,7 +67,7 @@ namespace Azure
         public void NullableLongInLongOut([ValueSource("LongData")] long? testValue)
         {
             long? source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
 
             bool success = value.TryGetValue(out long result);
             Assert.True(success);
@@ -82,7 +82,7 @@ namespace Azure
         public void LongInNullableLongOut([ValueSource("LongData")] long testValue)
         {
             long source = testValue;
-            Value value = new(source);
+            Variant value = new(source);
             bool success = value.TryGetValue(out long? result);
             Assert.True(success);
             Assert.AreEqual(testValue, result);
@@ -95,7 +95,7 @@ namespace Azure
         {
             long i = testValue;
             object o = i;
-            Value value = new(o);
+            Variant value = new(o);
 
             Assert.AreEqual(typeof(long), value.Type);
             Assert.True(value.TryGetValue(out long result));
@@ -118,7 +118,7 @@ namespace Azure
         public void NullLong()
         {
             long? source = null;
-            Value value = source;
+            Variant value = source;
             Assert.Null(value.Type);
             Assert.AreEqual(source, value.As<long?>());
             Assert.False(value.As<long?>().HasValue);
@@ -127,7 +127,7 @@ namespace Azure
         [Test]
         public void OutAsObject([ValueSource("LongData")] long testValue)
         {
-            Value value = new(testValue);
+            Variant value = new(testValue);
             object o = value.As<object>();
             Assert.AreEqual(typeof(long), o.GetType());
             Assert.AreEqual(testValue, (long)o);

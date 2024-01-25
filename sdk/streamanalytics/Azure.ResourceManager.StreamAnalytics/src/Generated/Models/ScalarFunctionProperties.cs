@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The properties that are associated with a scalar function. </summary>
     public partial class ScalarFunctionProperties : StreamingJobFunctionProperties
     {
-        /// <summary> Initializes a new instance of ScalarFunctionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalarFunctionProperties"/>. </summary>
         public ScalarFunctionProperties()
         {
             FunctionPropertiesType = "Scalar";
         }
 
-        /// <summary> Initializes a new instance of ScalarFunctionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScalarFunctionProperties"/>. </summary>
         /// <param name="functionPropertiesType"> Indicates the type of function. </param>
         /// <param name="etag"> The current entity tag for the function. This is an opaque string. You can use it to detect whether the resource has changed between requests. You can also use it in the If-Match or If-None-Match headers for write operations for optimistic concurrency. </param>
         /// <param name="inputs"></param>

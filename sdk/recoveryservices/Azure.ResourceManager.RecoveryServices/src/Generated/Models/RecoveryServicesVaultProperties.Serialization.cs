@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings);
             }
+            if (Optional.IsDefined(RestoreSettings))
+            {
+                writer.WritePropertyName("restoreSettings"u8);
+                writer.WriteObjectValue(RestoreSettings);
+            }
             if (Optional.IsDefined(RedundancySettings))
             {
                 writer.WritePropertyName("redundancySettings"u8);
@@ -71,8 +76,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             Optional<BackupStorageVersion> backupStorageVersion = default;
             Optional<VaultPublicNetworkAccess> publicNetworkAccess = default;
             Optional<VaultMonitoringSettings> monitoringSettings = default;
+            Optional<RestoreSettings> restoreSettings = default;
             Optional<VaultPropertiesRedundancySettings> redundancySettings = default;
-            Optional<SecuritySettings> securitySettings = default;
+            Optional<RecoveryServicesSecuritySettings> securitySettings = default;
+            Optional<SecureScoreLevel> secureScore = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -175,6 +182,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     monitoringSettings = VaultMonitoringSettings.DeserializeVaultMonitoringSettings(property.Value);
                     continue;
                 }
+                if (property.NameEquals("restoreSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreSettings = RestoreSettings.DeserializeRestoreSettings(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("redundancySettings"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -190,11 +206,20 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    securitySettings = SecuritySettings.DeserializeSecuritySettings(property.Value);
+                    securitySettings = RecoveryServicesSecuritySettings.DeserializeRecoveryServicesSecuritySettings(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("secureScore"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    secureScore = new SecureScoreLevel(property.Value.GetString());
                     continue;
                 }
             }
-            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, redundancySettings.Value, securitySettings.Value);
+            return new RecoveryServicesVaultProperties(provisioningState.Value, upgradeDetails.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(privateEndpointStateForBackup), Optional.ToNullable(privateEndpointStateForSiteRecovery), encryption.Value, moveDetails.Value, Optional.ToNullable(moveState), Optional.ToNullable(backupStorageVersion), Optional.ToNullable(publicNetworkAccess), monitoringSettings.Value, restoreSettings.Value, redundancySettings.Value, securitySettings.Value, Optional.ToNullable(secureScore));
         }
     }
 }

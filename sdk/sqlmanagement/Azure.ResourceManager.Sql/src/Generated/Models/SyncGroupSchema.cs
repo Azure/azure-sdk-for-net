@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Properties of sync group schema. </summary>
     public partial class SyncGroupSchema
     {
-        /// <summary> Initializes a new instance of SyncGroupSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupSchema"/>. </summary>
         public SyncGroupSchema()
         {
             Tables = new ChangeTrackingList<SyncGroupSchemaTable>();
         }
 
-        /// <summary> Initializes a new instance of SyncGroupSchema. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupSchema"/>. </summary>
         /// <param name="tables"> List of tables in sync group schema. </param>
         /// <param name="masterSyncMemberName"> Name of master sync member where the schema is from. </param>
         internal SyncGroupSchema(IList<SyncGroupSchemaTable> tables, string masterSyncMemberName)

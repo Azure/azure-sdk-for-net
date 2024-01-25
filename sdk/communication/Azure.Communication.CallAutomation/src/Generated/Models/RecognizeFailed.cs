@@ -10,7 +10,7 @@ namespace Azure.Communication.CallAutomation
     /// <summary> The RecognizeFailed. </summary>
     public partial class RecognizeFailed
     {
-        /// <summary> Initializes a new instance of RecognizeFailed. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecognizeFailed"/>. </summary>
         internal RecognizeFailed()
         {
         }

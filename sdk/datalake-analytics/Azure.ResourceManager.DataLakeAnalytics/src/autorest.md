@@ -13,11 +13,15 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/066eb8c81e14e0f3b22b
 tag: package-2016-11
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-mgmt-debug: 
+mgmt-debug:
   show-serialized-names: true
 
 request-path-to-parent:
@@ -68,7 +72,7 @@ prepend-rp-prefix:
   - StorageAccountInformation
   - StorageAccountInformationListResult
   - FirewallState
-  - FirewallAllowAzureIPsState
+  - FirewallAllowAzureIpsState
   - CapabilityInformation
   - HiveMetastore
   - SasTokenInformation
@@ -84,7 +88,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

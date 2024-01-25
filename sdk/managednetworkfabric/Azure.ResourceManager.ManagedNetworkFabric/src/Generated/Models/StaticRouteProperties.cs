@@ -12,12 +12,12 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Static Route properties. </summary>
+    /// <summary> Route Properties. </summary>
     public partial class StaticRouteProperties
     {
-        /// <summary> Initializes a new instance of StaticRouteProperties. </summary>
-        /// <param name="prefix"> IPv4 | IPv6 Prefix. </param>
-        /// <param name="nextHop"> List of next hop IPv4 | IPv6 addresses. </param>
+        /// <summary> Initializes a new instance of <see cref="StaticRouteProperties"/>. </summary>
+        /// <param name="prefix"> Prefix of the route. </param>
+        /// <param name="nextHop"> List of next hop addresses. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="nextHop"/> is null. </exception>
         public StaticRouteProperties(string prefix, IEnumerable<string> nextHop)
         {
@@ -28,18 +28,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextHop = nextHop.ToList();
         }
 
-        /// <summary> Initializes a new instance of StaticRouteProperties. </summary>
-        /// <param name="prefix"> IPv4 | IPv6 Prefix. </param>
-        /// <param name="nextHop"> List of next hop IPv4 | IPv6 addresses. </param>
+        /// <summary> Initializes a new instance of <see cref="StaticRouteProperties"/>. </summary>
+        /// <param name="prefix"> Prefix of the route. </param>
+        /// <param name="nextHop"> List of next hop addresses. </param>
         internal StaticRouteProperties(string prefix, IList<string> nextHop)
         {
             Prefix = prefix;
             NextHop = nextHop;
         }
 
-        /// <summary> IPv4 | IPv6 Prefix. </summary>
+        /// <summary> Prefix of the route. </summary>
         public string Prefix { get; set; }
-        /// <summary> List of next hop IPv4 | IPv6 addresses. </summary>
+        /// <summary> List of next hop addresses. </summary>
         public IList<string> NextHop { get; }
     }
 }

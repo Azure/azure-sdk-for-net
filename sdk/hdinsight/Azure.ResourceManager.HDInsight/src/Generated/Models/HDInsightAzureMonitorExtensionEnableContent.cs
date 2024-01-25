@@ -10,9 +10,20 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The azure monitor parameters. </summary>
     public partial class HDInsightAzureMonitorExtensionEnableContent
     {
-        /// <summary> Initializes a new instance of HDInsightAzureMonitorExtensionEnableContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorExtensionEnableContent"/>. </summary>
         public HDInsightAzureMonitorExtensionEnableContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightAzureMonitorExtensionEnableContent"/>. </summary>
+        /// <param name="workspaceId"> The Log Analytics workspace ID. </param>
+        /// <param name="primaryKey"> The Log Analytics workspace key. </param>
+        /// <param name="selectedConfigurations"> The selected configurations. </param>
+        internal HDInsightAzureMonitorExtensionEnableContent(string workspaceId, string primaryKey, HDInsightAzureMonitorSelectedConfigurations selectedConfigurations)
+        {
+            WorkspaceId = workspaceId;
+            PrimaryKey = primaryKey;
+            SelectedConfigurations = selectedConfigurations;
         }
 
         /// <summary> The Log Analytics workspace ID. </summary>

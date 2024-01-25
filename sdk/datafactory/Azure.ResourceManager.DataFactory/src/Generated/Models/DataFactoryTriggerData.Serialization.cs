@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 return null;
             }
-            DataFactoryTriggerDefinition properties = default;
+            DataFactoryTriggerProperties properties = default;
             Optional<ETag> etag = default;
             ResourceIdentifier id = default;
             string name = default;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.DataFactory
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = DataFactoryTriggerDefinition.DeserializeDataFactoryTriggerDefinition(property.Value);
+                    properties = DataFactoryTriggerProperties.DeserializeDataFactoryTriggerProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))

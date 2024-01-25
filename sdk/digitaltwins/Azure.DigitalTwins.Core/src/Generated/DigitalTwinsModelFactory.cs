@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.DigitalTwins.Core
 {
     /// <summary> Model factory for models. </summary>
     public static partial class DigitalTwinsModelFactory
     {
-        /// <summary> Initializes a new instance of DigitalTwinsModelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="Core.DigitalTwinsModelData"/>. </summary>
         /// <param name="languageDisplayNames"> A language map that contains the localized display names as specified in the model definition. </param>
         /// <param name="languageDescriptions"> A language map that contains the localized descriptions as specified in the model definition. </param>
         /// <param name="id"> The id of the model as specified in the model definition. </param>
@@ -29,7 +30,7 @@ namespace Azure.DigitalTwins.Core
             return new DigitalTwinsModelData(languageDisplayNames, languageDescriptions, id, uploadedOn, decommissioned, dtdlModel);
         }
 
-        /// <summary> Initializes a new instance of IncomingRelationship. </summary>
+        /// <summary> Initializes a new instance of <see cref="Core.IncomingRelationship"/>. </summary>
         /// <param name="relationshipId"> A user-provided string representing the id of this relationship, unique in the context of the source digital twin, i.e. sourceId + relationshipId is unique in the context of the service. </param>
         /// <param name="sourceId"> The id of the source digital twin. </param>
         /// <param name="relationshipName"> The name of the relationship. </param>
@@ -40,7 +41,7 @@ namespace Azure.DigitalTwins.Core
             return new IncomingRelationship(relationshipId, sourceId, relationshipName, relationshipLink);
         }
 
-        /// <summary> Initializes a new instance of DigitalTwinsEventRoute. </summary>
+        /// <summary> Initializes a new instance of <see cref="Core.DigitalTwinsEventRoute"/>. </summary>
         /// <param name="id"> The id of the event route. </param>
         /// <param name="endpointName"> The name of the endpoint this event route is bound to. </param>
         /// <param name="filter"> An expression which describes the events which are routed to the endpoint. </param>
@@ -48,6 +49,22 @@ namespace Azure.DigitalTwins.Core
         public static DigitalTwinsEventRoute DigitalTwinsEventRoute(string id = null, string endpointName = null, string filter = null)
         {
             return new DigitalTwinsEventRoute(id, endpointName, filter);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Core.ImportJob"/>. </summary>
+        /// <param name="id"> The identifier of the import job. </param>
+        /// <param name="inputBlobUri"> The path to the input Azure storage blob that contains file(s) describing the operations to perform in the job. </param>
+        /// <param name="outputBlobUri"> The path to the output Azure storage blob that will contain the errors and progress logs of import job. </param>
+        /// <param name="status"> Status of the job. </param>
+        /// <param name="createdDateTime"> Start time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="lastActionDateTime"> Last time service performed any action from the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="finishedDateTime"> End time of the job. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="purgeDateTime"> Time at which job will be purged by the service from the system. The timestamp is in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="error"> Details of the error(s) that occurred executing the import job. </param>
+        /// <returns> A new <see cref="Core.ImportJob"/> instance for mocking. </returns>
+        public static ImportJob ImportJob(string id = null, Uri inputBlobUri = null, Uri outputBlobUri = null, ImportJobStatus? status = null, DateTimeOffset? createdDateTime = null, DateTimeOffset? lastActionDateTime = null, DateTimeOffset? finishedDateTime = null, DateTimeOffset? purgeDateTime = null, ResponseError error = null)
+        {
+            return new ImportJob(id, inputBlobUri, outputBlobUri, status, createdDateTime, lastActionDateTime, finishedDateTime, purgeDateTime, error);
         }
     }
 }

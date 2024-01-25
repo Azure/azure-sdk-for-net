@@ -10,9 +10,18 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The exposure control request. </summary>
     public partial class ExposureControlContent
     {
-        /// <summary> Initializes a new instance of ExposureControlContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExposureControlContent"/>. </summary>
         public ExposureControlContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ExposureControlContent"/>. </summary>
+        /// <param name="featureName"> The feature name. </param>
+        /// <param name="featureType"> The feature type. </param>
+        internal ExposureControlContent(string featureName, string featureType)
+        {
+            FeatureName = featureName;
+            FeatureType = featureType;
         }
 
         /// <summary> The feature name. </summary>

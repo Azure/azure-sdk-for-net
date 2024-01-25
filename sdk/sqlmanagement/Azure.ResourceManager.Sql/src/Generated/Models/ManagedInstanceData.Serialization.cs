@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (Optional.IsDefined(DnsZonePartner))
+            if (Optional.IsDefined(ManagedDnsZonePartner))
             {
                 writer.WritePropertyName("dnsZonePartner"u8);
-                writer.WriteStringValue(DnsZonePartner);
+                writer.WriteStringValue(ManagedDnsZonePartner);
             }
             if (Optional.IsDefined(IsPublicDataEndpointEnabled))
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql
             Optional<int> storageSizeInGB = default;
             Optional<string> collation = default;
             Optional<string> dnsZone = default;
-            Optional<string> dnsZonePartner = default;
+            Optional<ResourceIdentifier> dnsZonePartner = default;
             Optional<bool> publicDataEndpointEnabled = default;
             Optional<ResourceIdentifier> sourceManagedInstanceId = default;
             Optional<DateTimeOffset> restorePointInTime = default;
@@ -366,7 +366,11 @@ namespace Azure.ResourceManager.Sql
                         }
                         if (property0.NameEquals("dnsZonePartner"u8))
                         {
-                            dnsZonePartner = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dnsZonePartner = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicDataEndpointEnabled"u8))

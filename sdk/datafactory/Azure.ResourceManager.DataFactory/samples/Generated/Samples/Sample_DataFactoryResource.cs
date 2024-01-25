@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             AzureLocation locationId = new AzureLocation("East US");
-            FactoryRepoUpdate factoryRepoUpdate = new FactoryRepoUpdate()
+            FactoryRepoContent content = new FactoryRepoContent()
             {
                 FactoryResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName"),
                 RepoConfiguration = new FactoryVstsConfiguration("ADF", "repo", "master", "/", "project")
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
                     LastCommitId = "",
                 },
             };
-            DataFactoryResource result = await subscriptionResource.ConfigureFactoryRepoInformationAsync(locationId, factoryRepoUpdate);
+            DataFactoryResource result = await subscriptionResource.ConfigureFactoryRepoInformationAsync(locationId, content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -246,8 +246,8 @@ namespace Azure.ResourceManager.DataFactory.Samples
                 Permissions = "r",
                 AccessResourcePath = "",
                 ProfileName = "DefaultProfile",
-                StartTime = "2018-11-10T02:46:20.2659347Z",
-                ExpireTime = "2018-11-10T09:46:20.2659347Z",
+                StartOn = DateTimeOffset.Parse("2018-11-10T02:46:20.2659347Z"),
+                ExpireOn = DateTimeOffset.Parse("2018-11-10T09:46:20.2659347Z"),
             };
             DataFactoryDataPlaneAccessPolicyResult result = await dataFactory.GetDataPlaneAccessAsync(policy);
 
@@ -445,7 +445,7 @@ new RunQueryFilter(RunQueryFilterOperand.PipelineName,RunQueryFilterOperator.Equ
             // invoke the operation and iterate over the result
             string runId = "2f7fdb90-5df1-4b8e-ac2f-064cfa58202b";
             RunFilterContent content = new RunFilterContent(DateTimeOffset.Parse("2018-06-16T00:36:44.3345758Z"), DateTimeOffset.Parse("2018-06-16T00:49:48.3686473Z"));
-            await foreach (DataFactoryActivityRunInfo item in dataFactory.GetActivityRunAsync(runId, content))
+            await foreach (PipelineActivityRunInformation item in dataFactory.GetActivityRunAsync(runId, content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -634,7 +634,7 @@ new RunQueryFilter(RunQueryFilterOperand.TriggerName,RunQueryFilterOperator.Equa
             DataFactoryDataFlowDebugPackageContent content = new DataFactoryDataFlowDebugPackageContent()
             {
                 SessionId = Guid.Parse("f06ed247-9d07-49b2-b05e-2cb4a2fc871e"),
-                DataFlow = new DataFactoryDataFlowDebugInfo(new DataFactoryMappingDataFlowDefinition()
+                DataFlow = new DataFactoryDataFlowDebugInfo(new DataFactoryMappingDataFlowProperties()
                 {
                     Sources =
 {
@@ -687,7 +687,7 @@ Name = "dataset1",
 new DataFactoryLinkedServiceDebugInfo(new AzureBlobStorageLinkedService()
 {
 ConnectionString = "DefaultEndpointsProtocol=https;AccountName=<storageName>;EndpointSuffix=core.windows.net;",
-EncryptedCredential = BinaryData.FromString("<credential>"),
+EncryptedCredential = "<credential>",
 Annotations =
 {
 },
@@ -712,7 +712,7 @@ RowLimit = 222,
 },
                     Parameters =
 {
-["sourcePath"] = BinaryData.FromString("Toy"),
+["sourcePath"] = BinaryData.FromString("\"Toy\""),
 },
                     DatasetParameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                     {

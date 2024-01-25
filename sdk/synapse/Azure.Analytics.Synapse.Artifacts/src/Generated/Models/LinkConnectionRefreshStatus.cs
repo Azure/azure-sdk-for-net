@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The LinkConnectionRefreshStatus. </summary>
     public partial class LinkConnectionRefreshStatus
     {
-        /// <summary> Initializes a new instance of LinkConnectionRefreshStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionRefreshStatus"/>. </summary>
         internal LinkConnectionRefreshStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of LinkConnectionRefreshStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkConnectionRefreshStatus"/>. </summary>
         /// <param name="refreshStatus"> Link connection refresh status. </param>
         /// <param name="errorMessage"> Link connection refresh error message. </param>
         internal LinkConnectionRefreshStatus(string refreshStatus, string errorMessage)

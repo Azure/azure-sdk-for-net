@@ -105,6 +105,56 @@ namespace Azure.Storage.Tests
             Assert.AreEqual(0, pooledMemoryStream.Position);
         }
 
+        [TestCase(1, 0, 1)]
+        [TestCase(Constants.KB, 512, 2 * Constants.KB)]
+        [TestCase(Constants.KB, 512, 512)]
+        [TestCase(107, 99, 52)]
+        public async Task ReadByte(int dataSize, int initialReadSize, int bufferPartitionSize)
+        {
+            // Arrange
+            byte[] originalData = GetRandomBuffer(dataSize);
+            PooledMemoryStream pooledMemoryStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferPartitionSize);
+            await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);
+            pooledMemoryStream.Position = 0;
+
+            // Read some data initially to test boundary conditions with buffers
+            if (initialReadSize > 0)
+            {
+                byte[] readData = new byte[initialReadSize];
+                await pooledMemoryStream.ReadAsync(readData, 0, initialReadSize);
+            }
+
+            // Act
+            byte result = Convert.ToByte(pooledMemoryStream.ReadByte());
+
+            // Assert
+            Assert.AreEqual(initialReadSize + 1, pooledMemoryStream.Position);
+            Assert.AreEqual(originalData[initialReadSize], result);
+        }
+
+        [TestCase(Constants.KB, 2 * Constants.KB)]
+        [TestCase(Constants.KB, 512)]
+        [TestCase(107, 52)]
+        public async Task ReadByte_Full(int dataSize, int bufferPartitionSize)
+        {
+            // Arrange
+            byte[] originalData = GetRandomBuffer(dataSize);
+            PooledMemoryStream pooledMemoryStream = new PooledMemoryStream(ArrayPool<byte>.Shared, bufferPartitionSize);
+            await pooledMemoryStream.WriteAsync(originalData, 0, dataSize);
+            pooledMemoryStream.Position = 0;
+
+            // Act
+            byte[] result = new byte[originalData.Length];
+            for (int i = 0; i < originalData.Length; i++)
+            {
+                result[i] = Convert.ToByte(pooledMemoryStream.ReadByte());
+            }
+
+            // Assert
+            Assert.AreEqual(originalData.Length, pooledMemoryStream.Position);
+            AssertSequenceEqual(originalData, result);
+        }
+
         private static byte[] GetRandomBuffer(long size)
         {
             Random random = new Random(Environment.TickCount);

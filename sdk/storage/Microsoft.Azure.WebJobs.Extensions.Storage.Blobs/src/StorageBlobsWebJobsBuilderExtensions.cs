@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.EventGrid;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Blobs;
@@ -71,6 +72,7 @@ namespace Microsoft.Extensions.Hosting
         /// <param name="builder"></param>
         /// <param name="triggerMetadata">Trigger metadata.</param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static IWebJobsBuilder AddAzureStorageBlobsScaleForTrigger(this IWebJobsBuilder builder, TriggerMetadata triggerMetadata)
         {
             builder.Services.AddSingleton<IScaleMonitorProvider>(serviceProvider =>

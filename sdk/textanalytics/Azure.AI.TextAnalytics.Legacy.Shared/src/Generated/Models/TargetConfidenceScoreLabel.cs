@@ -10,7 +10,7 @@ namespace Azure.AI.TextAnalytics.Legacy
     /// <summary> Represents the confidence scores across all sentiment classes: positive, neutral, negative. </summary>
     internal partial class TargetConfidenceScoreLabel
     {
-        /// <summary> Initializes a new instance of TargetConfidenceScoreLabel. </summary>
+        /// <summary> Initializes a new instance of <see cref="TargetConfidenceScoreLabel"/>. </summary>
         /// <param name="positive"></param>
         /// <param name="negative"></param>
         internal TargetConfidenceScoreLabel(double positive, double negative)

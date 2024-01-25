@@ -20,7 +20,10 @@ namespace Azure.ResourceManager.ServiceFabric.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Thumbprint);
 #else
-            JsonSerializer.Serialize(writer, JsonDocument.Parse(Thumbprint.ToString()).RootElement);
+            using (JsonDocument document = JsonDocument.Parse(Thumbprint))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
 #endif
             if (Optional.IsDefined(ThumbprintSecondary))
             {

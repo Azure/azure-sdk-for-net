@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines contents of a web application rule. </summary>
     public partial class WebApplicationCustomRule
     {
-        /// <summary> Initializes a new instance of WebApplicationCustomRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationCustomRule"/>. </summary>
         /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="ruleType"> Describes type of rule. </param>
         /// <param name="matchConditions"> List of match conditions. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             Action = action;
         }
 
-        /// <summary> Initializes a new instance of WebApplicationCustomRule. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebApplicationCustomRule"/>. </summary>
         /// <param name="name"> Describes the name of the rule. </param>
         /// <param name="priority"> Describes priority of the rule. Rules with a lower value will be evaluated before rules with a higher value. </param>
         /// <param name="enabledState"> Describes if the custom rule is in enabled or disabled state. Defaults to Enabled if not specified. </param>

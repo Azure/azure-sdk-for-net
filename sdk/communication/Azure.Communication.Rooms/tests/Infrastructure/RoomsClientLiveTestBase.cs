@@ -2,13 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Net.Http;
-using System.Text.Json.Serialization;
-using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Communication.Identity;
-using System.Threading.Tasks;
 using static Azure.Communication.Rooms.RoomsClientOptions;
 using Azure.Core.TestFramework.Models;
 using Azure.Communication.Tests;
@@ -42,13 +37,13 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true)
+        protected RoomsClient CreateClient(AuthMethod authMethod = AuthMethod.ConnectionString, bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
         {
             return authMethod switch
             {
-                AuthMethod.ConnectionString => CreateClientWithConnectionString(isInstrumented),
-                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(isInstrumented),
-                AuthMethod.TokenCredential => CreateClientWithTokenCredential(isInstrumented),
+                AuthMethod.ConnectionString => CreateClientWithConnectionString(isInstrumented, apiVersion),
+                AuthMethod.KeyCredential => CreateClientWithAzureKeyCredential(isInstrumented, apiVersion),
+                AuthMethod.TokenCredential => CreateClientWithTokenCredential(isInstrumented, apiVersion),
                 _ => throw new ArgumentOutOfRangeException(nameof(authMethod))
             };
         }
@@ -58,11 +53,11 @@ namespace Azure.Communication.Rooms.Tests
         /// variables and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true)
+        protected RoomsClient CreateClientWithConnectionString(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_06_14));
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
 
             // We always create the instrumented client to suppress the instrumentation check
             var instrumentedClient = InstrumentClient(client);
@@ -74,12 +69,12 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true)
+        protected RoomsClient CreateClientWithAzureKeyCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationRoomsEndpoint,
                      new AzureKeyCredential(TestEnvironment.CommunicationRoomsAccessKey),
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_06_14));
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -89,12 +84,12 @@ namespace Azure.Communication.Rooms.Tests
         /// and instruments it to make use of the Azure Core Test Framework functionalities.
         /// </summary>
         /// <returns>The instrumented <see cref="RoomsClient" />.</returns>
-        protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true)
+        protected RoomsClient CreateClientWithTokenCredential(bool isInstrumented = true, ServiceVersion apiVersion = ServiceVersion.V2023_10_30_Preview)
         {
             var client = new RoomsClient(
                     TestEnvironment.CommunicationRoomsEndpoint,
                     (Mode == RecordedTestMode.Playback) ? new MockCredential() : new DefaultAzureCredential(),
-                    CreateRoomsClientOptionsWithCorrelationVectorLogs(RoomsClientOptions.ServiceVersion.V2023_06_14));
+                    CreateRoomsClientOptionsWithCorrelationVectorLogs(apiVersion));
 
             return isInstrumented ? InstrumentClient(client) : client;
         }
@@ -121,7 +116,7 @@ namespace Azure.Communication.Rooms.Tests
             => InstrumentClient(
                 new CommunicationIdentityClient(
                     TestEnvironment.CommunicationConnectionStringRooms,
-                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2021_03_07))));
+                    InstrumentClientOptions(new CommunicationIdentityClientOptions(CommunicationIdentityClientOptions.ServiceVersion.V2023_10_01))));
 
         private RoomsClientOptions CreateRoomsClientOptionsWithCorrelationVectorLogs(ServiceVersion version)
         {

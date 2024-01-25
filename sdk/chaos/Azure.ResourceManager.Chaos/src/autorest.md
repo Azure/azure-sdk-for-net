@@ -2,19 +2,48 @@
 
 Run `dotnet build /t:GenerateCode` to generate code.
 
-``` yaml
-
+```yaml
 azure-arm: true
 csharp: true
 library-name: Chaos
 namespace: Azure.ResourceManager.Chaos
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/1114a5b1f0831d8b3de07db7248c8a4f38c5bbb7/specification/chaos/resource-manager/readme.md
+#tag: package-2023-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/4af52aaac2c3b4af4a0e61378d33c5bc050e65e2/specification/chaos/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
-  flatten-payloads: false
+    flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
+
+rename-mapping:
+  ActionStatus: ChaosExperimentRunActionStatus
+  BranchStatus: ChaosExperimentRunBranchStatus
+  StepStatus: ChaosExperimentRunStepStatus
+  TargetReference.id: -|arm-id
+  CapabilityTypePropertiesRuntimeProperties: ChaosCapabilityTypeRuntimeProperties
+  ExperimentExecutionDetailsPropertiesRunInformation: ChaosExperimentRunInformation
+
+prepend-rp-prefix:
+  - Capability
+  - CapabilityType
+  - Experiment
+  - ExperimentExecution
+  - Target
+  - TargetType
+  - ProvisioningState
+  - ContinuousAction
+  - DelayAction
+  - DiscreteAction
+  - KeyValuePair
+  - TargetReference
+  - TargetReferenceType
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -23,7 +52,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -45,5 +74,8 @@ rename-rules:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+
+directive:
+  - remove-operation: 'OperationStatuses_Get'
 
 ```

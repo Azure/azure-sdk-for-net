@@ -1,14 +1,45 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.5 (2023-11-16)
+
+### Features Added
+
+- Upgraded API version.
+  - Added Some Properties on GoogleAds Connector.
+  - Added Support LakeHouse Connector In ADF.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+## 1.0.0-beta.4 (2023-09-26)
+
+### Features Added
+
+- Upgraded API version.
+
+### Bugs Fixed
+
+- Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `SelfHostedIntegrationRuntimeStatus`.
+
+## 1.0.0-beta.3 (2023-08-02)
 
 ### Features Added
 
 - Supported the new `DataFactoryElement<T>` expression type property.
+- Upgraded API version.
 
 ### Other Changes
 
-- Upgraded API version.
+- Upgraded Azure.Core to 1.34.0.
+- Upgraded Azure.ResourceManager to 1.7.0.
 
 ## 1.0.0-beta.2 (2022-08-29)
 

@@ -41,7 +41,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Tests
         public void BuildDocumentClassifierHonorsTheCancellationToken()
         {
             var client = CreateInstrumentedClient();
-            var source = new AzureBlobContentSource(new Uri("http://notreal.azure.com/"));
+            var source = new BlobContentSource(new Uri("http://notreal.azure.com/"));
             var documentTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { string.Empty, new ClassifierDocumentTypeDetails(source) }

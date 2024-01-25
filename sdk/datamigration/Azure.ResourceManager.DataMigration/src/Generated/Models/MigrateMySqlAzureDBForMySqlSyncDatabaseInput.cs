@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.DataMigration.Models
     /// <summary> Database specific information for MySQL to Azure Database for MySQL migration task inputs. </summary>
     public partial class MigrateMySqlAzureDBForMySqlSyncDatabaseInput
     {
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncDatabaseInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/>. </summary>
         public MigrateMySqlAzureDBForMySqlSyncDatabaseInput()
         {
             MigrationSetting = new ChangeTrackingDictionary<string, string>();
@@ -22,14 +55,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             TableMap = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of MigrateMySqlAzureDBForMySqlSyncDatabaseInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateMySqlAzureDBForMySqlSyncDatabaseInput"/>. </summary>
         /// <param name="name"> Name of the database. </param>
         /// <param name="targetDatabaseName"> Name of target database. Note: Target database will be truncated before starting migration. </param>
         /// <param name="migrationSetting"> Migration settings which tune the migration behavior. </param>
         /// <param name="sourceSetting"> Source settings to tune source endpoint migration behavior. </param>
         /// <param name="targetSetting"> Target settings to tune target endpoint migration behavior. </param>
         /// <param name="tableMap"> Mapping of source to target tables. </param>
-        internal MigrateMySqlAzureDBForMySqlSyncDatabaseInput(string name, string targetDatabaseName, IDictionary<string, string> migrationSetting, IDictionary<string, string> sourceSetting, IDictionary<string, string> targetSetting, IDictionary<string, string> tableMap)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MigrateMySqlAzureDBForMySqlSyncDatabaseInput(string name, string targetDatabaseName, IDictionary<string, string> migrationSetting, IDictionary<string, string> sourceSetting, IDictionary<string, string> targetSetting, IDictionary<string, string> tableMap, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             TargetDatabaseName = targetDatabaseName;
@@ -37,6 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             SourceSetting = sourceSetting;
             TargetSetting = targetSetting;
             TableMap = tableMap;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of the database. </summary>

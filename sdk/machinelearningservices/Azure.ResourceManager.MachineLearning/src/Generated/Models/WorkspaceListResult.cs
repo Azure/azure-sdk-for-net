@@ -14,24 +14,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The result of a request to list machine learning workspaces. </summary>
     internal partial class WorkspaceListResult
     {
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
         internal WorkspaceListResult()
         {
             Value = new ChangeTrackingList<MachineLearningWorkspaceData>();
         }
 
-        /// <summary> Initializes a new instance of WorkspaceListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkspaceListResult"/>. </summary>
+        /// <param name="nextLink"> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </param>
         /// <param name="value"> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </param>
-        /// <param name="nextLink"> The URI that can be used to request the next list of machine learning workspaces. </param>
-        internal WorkspaceListResult(IReadOnlyList<MachineLearningWorkspaceData> value, string nextLink)
+        internal WorkspaceListResult(string nextLink, IReadOnlyList<MachineLearningWorkspaceData> value)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
         }
 
+        /// <summary> The link to the next page constructed using the continuationToken.  If null, there are no additional pages. </summary>
+        public string NextLink { get; }
         /// <summary> The list of machine learning workspaces. Since this list may be incomplete, the nextLink field should be used to request the next list of machine learning workspaces. </summary>
         public IReadOnlyList<MachineLearningWorkspaceData> Value { get; }
-        /// <summary> The URI that can be used to request the next list of machine learning workspaces. </summary>
-        public string NextLink { get; }
     }
 }

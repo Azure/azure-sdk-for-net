@@ -51,6 +51,11 @@ namespace Azure.DigitalTwins.Core.Samples
         public const string TemporaryComponentModelPrefix = "dtmi:com:samples:ComponentModel;";
 
         /// <summary>
+        /// Temporary job Id prefix
+        /// </summary>
+        public const string TemporaryJobPrefix = "job";
+
+        /// <summary>
         /// Placeholder for model display name in the temporary payload.
         /// </summary>
         public const string ModelDisplayName = "MODEL_DISPLAY_NAME";

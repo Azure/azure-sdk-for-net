@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,30 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.1 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0 (2023-11-01)
+
+### Features Added
+
+- Updated api-version to `2023-09-01`.
+
+## 1.0.0 (2023-09-05)
+
+This package is the first stable release of the Azure Mobile Network management library.
+
+### Features Added
+
+- Updated api-version to `2023-06-01`.
 
 ## 1.0.0-beta.2 (2023-05-30)
 

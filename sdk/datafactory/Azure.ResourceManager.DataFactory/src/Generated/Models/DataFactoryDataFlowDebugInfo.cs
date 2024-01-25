@@ -13,25 +13,37 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Data flow debug resource. </summary>
     public partial class DataFactoryDataFlowDebugInfo : DataFactoryDebugInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/>. </summary>
         /// <param name="properties">
         /// Data flow properties.
-        /// Please note <see cref="DataFactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactoryFlowletDefinition"/>, <see cref="DataFactoryMappingDataFlowDefinition"/> and <see cref="DataFactoryWranglingDataFlowDefinition"/>.
+        /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryDataFlowDebugInfo(DataFactoryDataFlowDefinition properties)
+        public DataFactoryDataFlowDebugInfo(DataFactoryDataFlowProperties properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/>. </summary>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="properties">
+        /// Data flow properties.
+        /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
+        /// </param>
+        internal DataFactoryDataFlowDebugInfo(string name, DataFactoryDataFlowProperties properties) : base(name)
+        {
+            Properties = properties;
+        }
+
         /// <summary>
         /// Data flow properties.
-        /// Please note <see cref="DataFactoryDataFlowDefinition"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataFactoryFlowletDefinition"/>, <see cref="DataFactoryMappingDataFlowDefinition"/> and <see cref="DataFactoryWranglingDataFlowDefinition"/>.
+        /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
         /// </summary>
-        public DataFactoryDataFlowDefinition Properties { get; }
+        public DataFactoryDataFlowProperties Properties { get; }
     }
 }

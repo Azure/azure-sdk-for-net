@@ -20,13 +20,13 @@ namespace Azure.ResourceManager.KeyVault
     /// </summary>
     public partial class KeyVaultPrivateEndpointConnectionData : ResourceData
     {
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionData"/>. </summary>
         public KeyVaultPrivateEndpointConnectionData()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of KeyVaultPrivateEndpointConnectionData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultPrivateEndpointConnectionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

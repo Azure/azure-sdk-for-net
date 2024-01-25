@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> HBase server linked service. </summary>
     public partial class HBaseLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of HBaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HBaseLinkedService"/>. </summary>
         /// <param name="host"> The IP address or host name of the HBase server. (i.e. 192.168.222.160). </param>
         /// <param name="authenticationType"> The authentication mechanism to use to connect to the HBase server. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HBase";
         }
 
-        /// <summary> Initializes a new instance of HBaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="HBaseLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

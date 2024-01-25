@@ -19,7 +19,6 @@ using BenchmarkDotNet.Jobs;
 
 namespace Azure.Core.Perf
 {
-    [MemoryDiagnoser]
     [SimpleJob(RuntimeMoniker.Net60)]
     public class HeaderStringValueToStringVsEnumerator
     {

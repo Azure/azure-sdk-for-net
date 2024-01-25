@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
 
             #region Snippet:FormRecognizerSampleBuildVariousModels
-            // For this sample, you can use the training forms found in the `trainingFiles` folder.
-            // Upload the forms to your storage container and then generate a container SAS URL.
-            // For instructions on setting up forms for training in an Azure Storage Blob Container, see
+            // For this sample, you can use the training documents found in the `trainingFiles` folder.
+            // Upload the documents to your storage container and then generate a container SAS URL.
+            // For instructions on setting up documents for training in an Azure Storage Blob Container, see
             // https://aka.ms/azsdk/formrecognizer/buildtrainingset
 
 #if SNIPPET

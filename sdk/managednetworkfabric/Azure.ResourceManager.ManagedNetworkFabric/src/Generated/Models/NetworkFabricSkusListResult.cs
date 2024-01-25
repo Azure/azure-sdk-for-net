@@ -11,17 +11,17 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkFabricSkus. </summary>
+    /// <summary> List of Network Fabric SKUs. </summary>
     internal partial class NetworkFabricSkusListResult
     {
-        /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkusListResult"/>. </summary>
         internal NetworkFabricSkusListResult()
         {
             Value = new ChangeTrackingList<NetworkFabricSkuData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricSkusListResult. </summary>
-        /// <param name="value"> List of NetworkFabricSku resources. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkusListResult"/>. </summary>
+        /// <param name="value"> List of Network Fabric SKU resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkFabricSkusListResult(IReadOnlyList<NetworkFabricSkuData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextLink = nextLink;
         }
 
-        /// <summary> List of NetworkFabricSku resources. </summary>
+        /// <summary> List of Network Fabric SKU resources. </summary>
         public IReadOnlyList<NetworkFabricSkuData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

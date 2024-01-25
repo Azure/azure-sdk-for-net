@@ -1,33 +1,14 @@
-{{- include "stress.deploy-job-template.from-job" (list . "stress.service-bus") -}}
+{{- include "stress-test-addons.deploy-job-template.from-pod" (list . "stress.service-bus") -}}
 {{- define "stress.service-bus" -}}
+metadata:
+  labels:
+    testName: "net-sb-stress-{{ lower .Stress.scenarioName }}"
+    testInstance: "servicebus-{{ lower .Stress.scenarioName }}-{{ .Release.Name }}-{{ .Release.Revision }}"
 spec:
-  completions: 2
-  parallelism: 2
-  completionMode: Indexed
-  template:
-    metadata:
-      labels:
-        testName: "net-sb-stress-{{ lower .Stress.scenarioName }}"
-        testInstance: "servicebus-{{ lower .Stress.scenarioName }}-{{ .Release.Name }}-{{ .Release.Revision }}"
-    spec:
-      containers:
-        - name: role
-          image: {{ .Stress.imageTag }}
-          command: ['dotnet', "Azure.Messaging.ServiceBus.Stress.dll", "--test", "{{ .Stress.scenarioName }}", "--role", "$(JOB_COMPLETION_INDEX)"]
-          imagePullPolicy: Always
-          {{- include "stress-test-addons.container-env" . | nindent 10 }}
-{{- end -}}
-
-{{- define "stress.deploy-job-template.from-job" -}}
-{{- $global := index . 0 -}}
-{{- $jobOverrideDefinition := index . 1 -}}
-# Configmap template that adds the stress test ARM template for mounting
-{{- include "stress-test-addons.deploy-configmap" $global }}
-{{- range (default (list "stress") $global.Values.scenarios) }}
----
-{{ $jobCtx := fromYaml (include "stress-test-addons.util.mergeStressContext" (list $global . )) }}
-{{- $jobOverride := fromYaml (include $jobOverrideDefinition $jobCtx) -}}
-{{- $tpl := fromYaml (include "stress-test-addons.deploy-job-template.tpl" $jobCtx) -}}
-{{- toYaml (merge $jobOverride $tpl) -}}
-{{- end }}
+  containers:
+    - name: role
+      image: {{ .Stress.imageTag }}
+      command: ['dotnet', "Azure.Messaging.ServiceBus.Stress.dll", "--test", "{{ .Stress.scenarioName }}", "--role", "$(JOB_COMPLETION_INDEX)"]
+      imagePullPolicy: Always
+      {{- include "stress-test-addons.container-env" . | nindent 6 }}
 {{- end -}}

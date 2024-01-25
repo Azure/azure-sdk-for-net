@@ -6,26 +6,34 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The NetworkDevicePatchParameters resource definition. </summary>
-    public partial class NetworkDevicePatch
+    /// <summary> The Network Device Patch Parameters defines the patch parameters of the resource. </summary>
+    public partial class NetworkDevicePatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkDevicePatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkDevicePatch"/>. </summary>
         public NetworkDevicePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="NetworkDevicePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="hostName"> The host name of the device. </param>
+        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
+        internal NetworkDevicePatch(IDictionary<string, string> tags, string annotation, string hostName, string serialNumber) : base(tags)
+        {
+            Annotation = annotation;
+            HostName = hostName;
+            SerialNumber = serialNumber;
+        }
+
         /// <summary> Switch configuration description. </summary>
         public string Annotation { get; set; }
-        /// <summary> The host Name of the device. </summary>
+        /// <summary> The host name of the device. </summary>
         public string HostName { get; set; }
-        /// <summary> serialNumber of the format Make;Model;HardwareRevisionId;SerialNumber. Example: Arista;DCS-7280DR3-24;12.05;JPE21116969. </summary>
+        /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
         public string SerialNumber { get; set; }
     }
 }

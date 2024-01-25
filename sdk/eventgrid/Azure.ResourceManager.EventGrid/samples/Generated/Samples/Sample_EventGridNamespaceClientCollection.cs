@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_ClientsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/Clients_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/Clients_Get.json
             // this example is just showing the usage of "Clients_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_ClientsGet()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/Clients_Get.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/Clients_Get.json
             // this example is just showing the usage of "Clients_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,12 +84,55 @@ namespace Azure.ResourceManager.EventGrid.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
+        // Clients_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task GetIfExists_ClientsGet()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/Clients_Get.json
+            // this example is just showing the usage of "Clients_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EventGridNamespaceResource created on azure
+            // for more information of creating EventGridNamespaceResource, please refer to the document of EventGridNamespaceResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            string namespaceName = "exampleNamespaceName1";
+            ResourceIdentifier eventGridNamespaceResourceId = EventGridNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventGridNamespaceResource eventGridNamespace = client.GetEventGridNamespaceResource(eventGridNamespaceResourceId);
+
+            // get the collection of this EventGridNamespaceClientResource
+            EventGridNamespaceClientCollection collection = eventGridNamespace.GetEventGridNamespaceClients();
+
+            // invoke the operation
+            string clientName = "exampleClientName1";
+            NullableResponse<EventGridNamespaceClientResource> response = await collection.GetIfExistsAsync(clientName);
+            EventGridNamespaceClientResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine($"Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridNamespaceClientData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
         // Clients_CreateOrUpdate
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_ClientsCreateOrUpdate()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/Clients_CreateOrUpdate.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/Clients_CreateOrUpdate.json
             // this example is just showing the usage of "Clients_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,22 +156,16 @@ namespace Azure.ResourceManager.EventGrid.Samples
             EventGridNamespaceClientData data = new EventGridNamespaceClientData()
             {
                 Description = "This is a test client",
-                Authentication = new EventGridNamespaceClientAuthentication()
+                ClientCertificateAuthentication = new ClientCertificateAuthentication()
                 {
-                    CertificateSubject = new ClientCertificateSubjectDistinguishedName()
-                    {
-                        CommonName = "CertificateCommonName",
-                        Organization = "Microsoft",
-                        OrganizationUnit = "Azure",
-                        CountryCode = "US",
-                    },
+                    ValidationScheme = ClientCertificateValidationScheme.SubjectMatchesAuthenticationName,
                 },
                 State = EventGridNamespaceClientState.Enabled,
                 Attributes =
 {
 ["deviceTypes"] = BinaryData.FromObjectAsJson(new object[] { "Fan", "Light", "AC" }),
-["floor"] = BinaryData.FromString("3"),
-["room"] = BinaryData.FromString("345"),
+["floor"] = BinaryData.FromString("\"3\""),
+["room"] = BinaryData.FromString("\"345\""),
 },
             };
             ArmOperation<EventGridNamespaceClientResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clientName, data);
@@ -146,7 +183,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_ClientsListByNamespace()
         {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-06-01-preview/examples/Clients_ListByNamespace.json
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2023-12-15-preview/examples/Clients_ListByNamespace.json
             // this example is just showing the usage of "Clients_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

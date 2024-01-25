@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,10 +15,41 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> Describes a virtual machine scale set network profile's network configurations. </summary>
     public partial class VirtualMachineScaleSetUpdateNetworkConfiguration : ComputeWriteableSubResourceData
     {
-        /// <summary> Initializes a new instance of VirtualMachineScaleSetUpdateNetworkConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateNetworkConfiguration"/>. </summary>
         public VirtualMachineScaleSetUpdateNetworkConfiguration()
         {
             IPConfigurations = new ChangeTrackingList<VirtualMachineScaleSetUpdateIPConfiguration>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetUpdateNetworkConfiguration"/>. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> The network configuration name. </param>
+        /// <param name="primary"> Whether this is a primary NIC on a virtual machine. </param>
+        /// <param name="enableAcceleratedNetworking"> Specifies whether the network interface is accelerated networking-enabled. </param>
+        /// <param name="isTcpStateTrackingDisabled"> Specifies whether the network interface is disabled for tcp state tracking. </param>
+        /// <param name="enableFpga"> Specifies whether the network interface is FPGA networking-enabled. </param>
+        /// <param name="networkSecurityGroup"> The network security group. </param>
+        /// <param name="dnsSettings"> The dns settings to be applied on the network interfaces. </param>
+        /// <param name="ipConfigurations"> The virtual machine scale set IP Configuration. </param>
+        /// <param name="enableIPForwarding"> Whether IP forwarding enabled on this NIC. </param>
+        /// <param name="deleteOption"> Specify what happens to the network interface when the VM is deleted. </param>
+        /// <param name="auxiliaryMode"> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </param>
+        /// <param name="auxiliarySku"> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </param>
+        internal VirtualMachineScaleSetUpdateNetworkConfiguration(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, bool? primary, bool? enableAcceleratedNetworking, bool? isTcpStateTrackingDisabled, bool? enableFpga, WritableSubResource networkSecurityGroup, VirtualMachineScaleSetNetworkConfigurationDnsSettings dnsSettings, IList<VirtualMachineScaleSetUpdateIPConfiguration> ipConfigurations, bool? enableIPForwarding, ComputeDeleteOption? deleteOption, ComputeNetworkInterfaceAuxiliaryMode? auxiliaryMode, ComputeNetworkInterfaceAuxiliarySku? auxiliarySku) : base(id, serializedAdditionalRawData)
+        {
+            Name = name;
+            Primary = primary;
+            EnableAcceleratedNetworking = enableAcceleratedNetworking;
+            IsTcpStateTrackingDisabled = isTcpStateTrackingDisabled;
+            EnableFpga = enableFpga;
+            NetworkSecurityGroup = networkSecurityGroup;
+            DnsSettings = dnsSettings;
+            IPConfigurations = ipConfigurations;
+            EnableIPForwarding = enableIPForwarding;
+            DeleteOption = deleteOption;
+            AuxiliaryMode = auxiliaryMode;
+            AuxiliarySku = auxiliarySku;
         }
 
         /// <summary> The network configuration name. </summary>
@@ -63,5 +95,9 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? EnableIPForwarding { get; set; }
         /// <summary> Specify what happens to the network interface when the VM is deleted. </summary>
         public ComputeDeleteOption? DeleteOption { get; set; }
+        /// <summary> Specifies whether the Auxiliary mode is enabled for the Network Interface resource. </summary>
+        public ComputeNetworkInterfaceAuxiliaryMode? AuxiliaryMode { get; set; }
+        /// <summary> Specifies whether the Auxiliary sku is enabled for the Network Interface resource. </summary>
+        public ComputeNetworkInterfaceAuxiliarySku? AuxiliarySku { get; set; }
     }
 }

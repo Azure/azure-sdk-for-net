@@ -13,19 +13,22 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
+using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
     /// A Class representing a CosmosDBLocation along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="CosmosDBLocationResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetCosmosDBLocationResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource" /> using the GetCosmosDBLocation method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBLocationResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBLocationResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SubscriptionResource"/> using the GetCosmosDBLocation method.
     /// </summary>
     public partial class CosmosDBLocationResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="CosmosDBLocationResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="location"> The location. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, AzureLocation location)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}";
@@ -34,14 +37,19 @@ namespace Azure.ResourceManager.CosmosDB
 
         private readonly ClientDiagnostics _cosmosDBLocationLocationsClientDiagnostics;
         private readonly LocationsRestOperations _cosmosDBLocationLocationsRestClient;
+        private readonly ClientDiagnostics _mongoClustersClientDiagnostics;
+        private readonly MongoClustersRestOperations _mongoClustersRestClient;
         private readonly CosmosDBLocationData _data;
+
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/locations";
 
         /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationResource"/> class for mocking. </summary>
         protected CosmosDBLocationResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "CosmosDBLocationResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBLocationResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal CosmosDBLocationResource(ArmClient client, CosmosDBLocationData data) : this(client, data.Id)
@@ -58,13 +66,12 @@ namespace Azure.ResourceManager.CosmosDB
             _cosmosDBLocationLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string cosmosDBLocationLocationsApiVersion);
             _cosmosDBLocationLocationsRestClient = new LocationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBLocationLocationsApiVersion);
+            _mongoClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _mongoClustersRestClient = new MongoClustersRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/locations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -91,7 +98,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <returns> An object representing collection of RestorableCosmosDBAccountResources and their operations over a RestorableCosmosDBAccountResource. </returns>
         public virtual RestorableCosmosDBAccountCollection GetRestorableCosmosDBAccounts()
         {
-            return GetCachedClient(Client => new RestorableCosmosDBAccountCollection(Client, Id));
+            return GetCachedClient(client => new RestorableCosmosDBAccountCollection(client, Id));
         }
 
         /// <summary>
@@ -104,6 +111,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_GetByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,6 +141,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>RestorableDatabaseAccounts_GetByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RestorableCosmosDBAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceId"> The instanceId GUID of a restorable database account. </param>
@@ -146,6 +169,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -179,6 +210,14 @@ namespace Azure.ResourceManager.CosmosDB
         /// <term>Operation Id</term>
         /// <description>Locations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CosmosDBLocationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -192,6 +231,82 @@ namespace Azure.ResourceManager.CosmosDB
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new CosmosDBLocationResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<CheckCosmosDBNameAvailabilityResponse>> CheckMongoClusterNameAailabilityAsync(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckMongoClusterNameAailability");
+            scope.Start();
+            try
+            {
+                var response = await _mongoClustersRestClient.CheckNameAvailabilityAsync(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Check the availability of name for resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/checkMongoClusterNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>MongoClusters_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-15-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The required parameters for checking if resource name is available. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<CheckCosmosDBNameAvailabilityResponse> CheckMongoClusterNameAailability(CheckCosmosDBNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = _mongoClustersClientDiagnostics.CreateScope("CosmosDBLocationResource.CheckMongoClusterNameAailability");
+            scope.Start();
+            try
+            {
+                var response = _mongoClustersRestClient.CheckNameAvailability(Id.SubscriptionId, new AzureLocation(Id.Name), content, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {

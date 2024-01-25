@@ -28,6 +28,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("compute");
                 }
             }
+            if (Optional.IsDefined(DeploymentConfiguration))
+            {
+                if (DeploymentConfiguration != null)
+                {
+                    writer.WritePropertyName("deploymentConfiguration"u8);
+                    writer.WriteObjectValue(DeploymentConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentConfiguration");
+                }
+            }
             if (Optional.IsDefined(ErrorThreshold))
             {
                 writer.WritePropertyName("errorThreshold"u8);
@@ -176,6 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 return null;
             }
             Optional<string> compute = default;
+            Optional<BatchDeploymentConfiguration> deploymentConfiguration = default;
             Optional<int> errorThreshold = default;
             Optional<MachineLearningBatchLoggingLevel> loggingLevel = default;
             Optional<int> maxConcurrencyPerInstance = default;
@@ -201,6 +214,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     compute = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deploymentConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        deploymentConfiguration = null;
+                        continue;
+                    }
+                    deploymentConfiguration = BatchDeploymentConfiguration.DeserializeBatchDeploymentConfiguration(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorThreshold"u8))
@@ -353,7 +376,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     continue;
                 }
             }
-            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), compute.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
+            return new MachineLearningBatchDeploymentProperties(codeConfiguration.Value, description.Value, environmentId.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(properties), compute.Value, deploymentConfiguration.Value, Optional.ToNullable(errorThreshold), Optional.ToNullable(loggingLevel), Optional.ToNullable(maxConcurrencyPerInstance), Optional.ToNullable(miniBatchSize), model.Value, Optional.ToNullable(outputAction), outputFileName.Value, Optional.ToNullable(provisioningState), resources.Value, retrySettings.Value);
         }
     }
 }

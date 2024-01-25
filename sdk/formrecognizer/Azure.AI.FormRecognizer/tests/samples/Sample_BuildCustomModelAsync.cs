@@ -40,13 +40,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             DocumentModelDetails model = operation.Value;
 
             Console.WriteLine($"  Model Id: {model.ModelId}");
-            if (string.IsNullOrEmpty(model.Description))
-                Console.WriteLine($"  Model description: {model.Description}");
             Console.WriteLine($"  Created on: {model.CreatedOn}");
-            Console.WriteLine("  Doc types the model can recognize:");
+
+            Console.WriteLine("  Document types the model can recognize:");
             foreach (KeyValuePair<string, DocumentTypeDetails> documentType in model.DocumentTypes)
             {
-                Console.WriteLine($"    Doc type: {documentType.Key} which has the following fields:");
+                Console.WriteLine($"    Document type: {documentType.Key} which has the following fields:");
                 foreach (KeyValuePair<string, DocumentFieldSchema> schema in documentType.Value.FieldSchema)
                 {
                     Console.WriteLine($"    Field: {schema.Key} with confidence {documentType.Value.FieldConfidence[schema.Key]}");

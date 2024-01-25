@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,19 +14,53 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> This is the replication status of the gallery image version. </summary>
     public partial class ReplicationStatus
     {
-        /// <summary> Initializes a new instance of ReplicationStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReplicationStatus"/>. </summary>
         internal ReplicationStatus()
         {
             Summary = new ChangeTrackingList<RegionalReplicationStatus>();
         }
 
-        /// <summary> Initializes a new instance of ReplicationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReplicationStatus"/>. </summary>
         /// <param name="aggregatedState"> This is the aggregated replication status based on all the regional replication status flags. </param>
         /// <param name="summary"> This is a summary of replication status for each region. </param>
-        internal ReplicationStatus(AggregatedReplicationState? aggregatedState, IReadOnlyList<RegionalReplicationStatus> summary)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReplicationStatus(AggregatedReplicationState? aggregatedState, IReadOnlyList<RegionalReplicationStatus> summary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AggregatedState = aggregatedState;
             Summary = summary;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is the aggregated replication status based on all the regional replication status flags. </summary>

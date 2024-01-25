@@ -28,6 +28,7 @@ namespace Azure.Core.Expressions.DataFactory
                    typeToConvert == typeof(DataFactoryElement<Uri>) ||
                    typeToConvert == typeof(DataFactoryElement<IList<string>>) ||
                    typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>) ||
+                   typeToConvert == typeof(DataFactoryElement<BinaryData>) ||
                    TryGetGenericDataFactoryList(typeToConvert, out _);
         }
 
@@ -52,6 +53,8 @@ namespace Azure.Core.Expressions.DataFactory
                 return Deserialize<IList<string>>(document.RootElement);
             if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>))
                 return Deserialize<IDictionary<string, string>>(document.RootElement);
+            if (typeToConvert == typeof(DataFactoryElement<BinaryData>))
+                return Deserialize<BinaryData>(document.RootElement);
             if (TryGetGenericDataFactoryList(typeToConvert, out Type? genericListType))
             {
                 var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(DeserializeGenericList));
@@ -109,6 +112,9 @@ namespace Azure.Core.Expressions.DataFactory
                     break;
                 case DataFactoryElement<IDictionary<string, string?>?> keyValuePairElement:
                     Serialize(writer, keyValuePairElement);
+                    break;
+                case DataFactoryElement<BinaryData?> binaryDataElement:
+                    Serialize(writer, binaryDataElement);
                     break;
                 default:
                 {
@@ -189,6 +195,12 @@ namespace Azure.Core.Expressions.DataFactory
                             writer.WriteStringValue(pair.Value);
                         }
                         writer.WriteEndObject();
+                        break;
+                    case BinaryData binaryData:
+                        using (JsonDocument document = JsonDocument.Parse(binaryData.ToString()))
+                        {
+                            document.RootElement.WriteTo(writer);
+                        }
                         break;
                     default:
                         writer.WriteObjectValue(element.Literal!);
@@ -316,6 +328,11 @@ namespace Azure.Core.Expressions.DataFactory
             if (typeof(T) == typeof(Uri))
             {
                 return new DataFactoryElement<T?>((T)(object)new Uri(json.GetString()!));
+            }
+
+            if (typeof(T) == typeof(BinaryData))
+            {
+                return new DataFactoryElement<T?>((T)(object)BinaryData.FromString(json.GetRawText()!));
             }
 
             var obj = json.GetObject();

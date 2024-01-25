@@ -5,24 +5,25 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> Aggregate Route properties. </summary>
+    /// <summary> aggregateIpv4Route model. </summary>
     public partial class AggregateRoute
     {
-        /// <summary> Initializes a new instance of AggregateRoute. </summary>
-        public AggregateRoute()
+        /// <summary> Initializes a new instance of <see cref="AggregateRoute"/>. </summary>
+        /// <param name="prefix"> IPv4 Prefix of the aggregate Ipv4Route. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> is null. </exception>
+        public AggregateRoute(string prefix)
         {
-        }
+            Argument.AssertNotNull(prefix, nameof(prefix));
 
-        /// <summary> Initializes a new instance of AggregateRoute. </summary>
-        /// <param name="prefix"> Prefix of the aggregate Route. </param>
-        internal AggregateRoute(string prefix)
-        {
             Prefix = prefix;
         }
 
-        /// <summary> Prefix of the aggregate Route. </summary>
+        /// <summary> IPv4 Prefix of the aggregate Ipv4Route. </summary>
         public string Prefix { get; set; }
     }
 }

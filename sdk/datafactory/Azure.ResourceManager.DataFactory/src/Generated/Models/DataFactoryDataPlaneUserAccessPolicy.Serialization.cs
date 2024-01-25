@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -30,15 +31,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime);
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (Optional.IsDefined(ExpireTime))
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expireTime"u8);
-                writer.WriteStringValue(ExpireTime);
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             writer.WriteEndObject();
         }
@@ -52,8 +53,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> permissions = default;
             Optional<string> accessResourcePath = default;
             Optional<string> profileName = default;
-            Optional<string> startTime = default;
-            Optional<string> expireTime = default;
+            Optional<DateTimeOffset> startTime = default;
+            Optional<DateTimeOffset> expireTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permissions"u8))
@@ -73,16 +74,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("expireTime"u8))
                 {
-                    expireTime = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expireTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
             }
-            return new DataFactoryDataPlaneUserAccessPolicy(permissions.Value, accessResourcePath.Value, profileName.Value, startTime.Value, expireTime.Value);
+            return new DataFactoryDataPlaneUserAccessPolicy(permissions.Value, accessResourcePath.Value, profileName.Value, Optional.ToNullable(startTime), Optional.ToNullable(expireTime));
         }
     }
 }

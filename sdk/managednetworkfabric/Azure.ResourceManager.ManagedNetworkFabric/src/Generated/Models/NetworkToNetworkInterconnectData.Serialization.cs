@@ -29,20 +29,42 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("isManagementType"u8);
                 writer.WriteStringValue(IsManagementType.Value.ToString());
             }
-            if (Optional.IsDefined(UseOptionB))
-            {
-                writer.WritePropertyName("useOptionB"u8);
-                writer.WriteStringValue(UseOptionB.Value.ToString());
-            }
+            writer.WritePropertyName("useOptionB"u8);
+            writer.WriteStringValue(UseOptionB.ToString());
             if (Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
                 writer.WriteObjectValue(Layer2Configuration);
             }
-            if (Optional.IsDefined(Layer3Configuration))
+            if (Optional.IsDefined(OptionBLayer3Configuration))
             {
-                writer.WritePropertyName("layer3Configuration"u8);
-                writer.WriteObjectValue(Layer3Configuration);
+                writer.WritePropertyName("optionBLayer3Configuration"u8);
+                writer.WriteObjectValue(OptionBLayer3Configuration);
+            }
+            if (Optional.IsDefined(NpbStaticRouteConfiguration))
+            {
+                writer.WritePropertyName("npbStaticRouteConfiguration"u8);
+                writer.WriteObjectValue(NpbStaticRouteConfiguration);
+            }
+            if (Optional.IsDefined(ImportRoutePolicy))
+            {
+                writer.WritePropertyName("importRoutePolicy"u8);
+                writer.WriteObjectValue(ImportRoutePolicy);
+            }
+            if (Optional.IsDefined(ExportRoutePolicy))
+            {
+                writer.WritePropertyName("exportRoutePolicy"u8);
+                writer.WriteObjectValue(ExportRoutePolicy);
+            }
+            if (Optional.IsDefined(EgressAclId))
+            {
+                writer.WritePropertyName("egressAclId"u8);
+                writer.WriteStringValue(EgressAclId);
+            }
+            if (Optional.IsDefined(IngressAclId))
+            {
+                writer.WritePropertyName("ingressAclId"u8);
+                writer.WriteStringValue(IngressAclId);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -59,12 +81,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<NniType> nniType = default;
-            Optional<EnabledDisabledState> administrativeState = default;
-            Optional<BooleanEnumProperty> isManagementType = default;
-            Optional<BooleanEnumProperty> useOptionB = default;
+            Optional<IsManagementType> isManagementType = default;
+            NetworkFabricBooleanValue useOptionB = default;
             Optional<Layer2Configuration> layer2Configuration = default;
-            Optional<Layer3Configuration> layer3Configuration = default;
-            Optional<ProvisioningState> provisioningState = default;
+            Optional<NetworkToNetworkInterconnectOptionBLayer3Configuration> optionBLayer3Configuration = default;
+            Optional<NpbStaticRouteConfiguration> npbStaticRouteConfiguration = default;
+            Optional<ImportRoutePolicyInformation> importRoutePolicy = default;
+            Optional<ExportRoutePolicyInformation> exportRoutePolicy = default;
+            Optional<ResourceIdentifier> egressAclId = default;
+            Optional<ResourceIdentifier> ingressAclId = default;
+            Optional<NetworkFabricConfigurationState> configurationState = default;
+            Optional<NetworkFabricProvisioningState> provisioningState = default;
+            Optional<NetworkFabricAdministrativeState> administrativeState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -109,31 +137,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             nniType = new NniType(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("administrativeState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            administrativeState = new EnabledDisabledState(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("isManagementType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            isManagementType = new BooleanEnumProperty(property0.Value.GetString());
+                            isManagementType = new IsManagementType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("useOptionB"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useOptionB = new BooleanEnumProperty(property0.Value.GetString());
+                            useOptionB = new NetworkFabricBooleanValue(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("layer2Configuration"u8))
@@ -145,13 +160,67 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             layer2Configuration = Layer2Configuration.DeserializeLayer2Configuration(property0.Value);
                             continue;
                         }
-                        if (property0.NameEquals("layer3Configuration"u8))
+                        if (property0.NameEquals("optionBLayer3Configuration"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            layer3Configuration = Layer3Configuration.DeserializeLayer3Configuration(property0.Value);
+                            optionBLayer3Configuration = NetworkToNetworkInterconnectOptionBLayer3Configuration.DeserializeNetworkToNetworkInterconnectOptionBLayer3Configuration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("npbStaticRouteConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            npbStaticRouteConfiguration = NpbStaticRouteConfiguration.DeserializeNpbStaticRouteConfiguration(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("importRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            importRoutePolicy = ImportRoutePolicyInformation.DeserializeImportRoutePolicyInformation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("exportRoutePolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            exportRoutePolicy = ExportRoutePolicyInformation.DeserializeExportRoutePolicyInformation(property0.Value);
+                            continue;
+                        }
+                        if (property0.NameEquals("egressAclId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            egressAclId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("ingressAclId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ingressAclId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("configurationState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            configurationState = new NetworkFabricConfigurationState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -160,14 +229,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new NetworkFabricProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("administrativeState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            administrativeState = new NetworkFabricAdministrativeState(property0.Value.GetString());
                             continue;
                         }
                     }
                     continue;
                 }
             }
-            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Optional.ToNullable(nniType), Optional.ToNullable(administrativeState), Optional.ToNullable(isManagementType), Optional.ToNullable(useOptionB), layer2Configuration.Value, layer3Configuration.Value, Optional.ToNullable(provisioningState));
+            return new NetworkToNetworkInterconnectData(id, name, type, systemData.Value, Optional.ToNullable(nniType), Optional.ToNullable(isManagementType), useOptionB, layer2Configuration.Value, optionBLayer3Configuration.Value, npbStaticRouteConfiguration.Value, importRoutePolicy.Value, exportRoutePolicy.Value, egressAclId.Value, ingressAclId.Value, Optional.ToNullable(configurationState), Optional.ToNullable(provisioningState), Optional.ToNullable(administrativeState));
         }
     }
 }

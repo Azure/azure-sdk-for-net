@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -14,13 +15,56 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppReplicaData : IUtf8JsonSerializable
+    public partial class ContainerAppReplicaData : IUtf8JsonSerializable, IJsonModel<ContainerAppReplicaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppReplicaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppReplicaData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(RunningState))
+            {
+                writer.WritePropertyName("runningState"u8);
+                writer.WriteStringValue(RunningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RunningStateDetails))
+            {
+                writer.WritePropertyName("runningStateDetails"u8);
+                writer.WriteStringValue(RunningStateDetails);
+            }
             if (Optional.IsCollectionDefined(Containers))
             {
                 writer.WritePropertyName("containers"u8);
@@ -31,12 +75,51 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(InitContainers))
+            {
+                writer.WritePropertyName("initContainers"u8);
+                writer.WriteStartArray();
+                foreach (var item in InitContainers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppReplicaData DeserializeContainerAppReplicaData(JsonElement element)
+        ContainerAppReplicaData IJsonModel<ContainerAppReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppReplicaData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppReplicaData(document.RootElement, options);
+        }
+
+        internal static ContainerAppReplicaData DeserializeContainerAppReplicaData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -46,7 +129,12 @@ namespace Azure.ResourceManager.AppContainers
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<DateTimeOffset> createdTime = default;
+            Optional<ContainerAppReplicaRunningState> runningState = default;
+            Optional<string> runningStateDetails = default;
             Optional<IList<ContainerAppReplicaContainer>> containers = default;
+            Optional<IList<ContainerAppReplicaContainer>> initContainers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -91,6 +179,20 @@ namespace Azure.ResourceManager.AppContainers
                             createdTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("runningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            runningState = new ContainerAppReplicaRunningState(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("runningStateDetails"u8))
+                        {
+                            runningStateDetails = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("containers"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -105,11 +207,61 @@ namespace Azure.ResourceManager.AppContainers
                             containers = array;
                             continue;
                         }
+                        if (property0.NameEquals("initContainers"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ContainerAppReplicaContainer> array = new List<ContainerAppReplicaContainer>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ContainerAppReplicaContainer.DeserializeContainerAppReplicaContainer(item));
+                            }
+                            initContainers = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToList(containers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppReplicaData(id, name, type, systemData.Value, Optional.ToNullable(createdTime), Optional.ToNullable(runningState), runningStateDetails.Value, Optional.ToList(containers), Optional.ToList(initContainers), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppReplicaData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppReplicaData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppReplicaData IPersistableModel<ContainerAppReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppReplicaData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppReplicaData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

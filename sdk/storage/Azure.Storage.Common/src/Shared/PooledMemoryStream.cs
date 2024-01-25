@@ -259,6 +259,21 @@ namespace Azure.Storage.Shared
             return read;
         }
 
+        public override int ReadByte()
+        {
+            if (Position >= Length)
+            {
+                return -1;
+            }
+
+            (byte[] currentBuffer, int _, long offsetOfBuffer) = GetBufferFromPosition();
+
+            byte result = currentBuffer[Position - offsetOfBuffer];
+            Position += 1;
+
+            return result;
+        }
+
         /// <summary>
         /// According the the current <see cref="Position"/> of the stream, gets the correct buffer containing the byte
         /// at that position, as well as the stream position represented by the start of the array.

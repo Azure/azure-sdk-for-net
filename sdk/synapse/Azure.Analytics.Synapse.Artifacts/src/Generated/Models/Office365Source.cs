@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity source for an Office 365 service. </summary>
     public partial class Office365Source : CopySource
     {
-        /// <summary> Initializes a new instance of Office365Source. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365Source"/>. </summary>
         public Office365Source()
         {
             Type = "Office365Source";
         }
 
-        /// <summary> Initializes a new instance of Office365Source. </summary>
+        /// <summary> Initializes a new instance of <see cref="Office365Source"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="dateFilterColumn"> The Column to apply the &lt;paramref name="StartTime"/&gt; and &lt;paramref name="EndTime"/&gt;. Type: string (or Expression with resultType string). </param>
         /// <param name="startTime"> Start time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="endTime"> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </param>
-        /// <param name="outputColumns"> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]. </param>
+        /// <param name="outputColumns"> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). itemType: OutputColumn.  Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]. </param>
         internal Office365Source(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object allowedGroups, object userScopeFilterUri, object dateFilterColumn, object startTime, object endTime, object outputColumns) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties)
         {
             AllowedGroups = allowedGroups;
@@ -51,7 +51,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object StartTime { get; set; }
         /// <summary> End time of the requested range for this dataset. Type: string (or Expression with resultType string). </summary>
         public object EndTime { get; set; }
-        /// <summary> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]. </summary>
+        /// <summary> The columns to be read out from the Office 365 table. Type: array of objects (or Expression with resultType array of objects). itemType: OutputColumn.  Example: [ { "name": "Id" }, { "name": "CreatedDateTime" } ]. </summary>
         public object OutputColumns { get; set; }
     }
 }

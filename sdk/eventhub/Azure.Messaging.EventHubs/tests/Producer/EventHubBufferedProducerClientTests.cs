@@ -262,7 +262,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.IsClosed = true;
@@ -279,7 +280,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             await bufferedProducer.GetEventHubPropertiesAsync(cancellationSource.Token);
@@ -296,7 +298,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.IsClosed = true;
@@ -313,7 +316,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             mockProducer
@@ -334,7 +338,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.IsClosed = true;
@@ -352,7 +357,8 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var expectedPartition = "0";
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             mockProducer
@@ -372,7 +378,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void NullEventHandlersAreNotAllowed()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             Assert.That(() => bufferedProducer.SendEventBatchSucceededAsync += null, Throws.InstanceOf<ArgumentNullException>(), "The success handler should not allow null.");
@@ -386,7 +393,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void OnlyOneEventHandlerIsAllowed()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchSucceededAsync += args => Task.CompletedTask;
@@ -403,7 +411,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CannotUnRegisterHandlersWhenPublishingIsActive()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             Func<SendEventBatchSucceededEventArgs, Task> successHandler = args => Task.CompletedTask;
@@ -424,7 +433,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CannotUnregisterEventHandlersWhenNotSet()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             Assert.That(() => bufferedProducer.SendEventBatchSucceededAsync -= args => Task.CompletedTask, Throws.InstanceOf<ArgumentException>(), "The success handler should not allow removing an unset handler.");
@@ -438,7 +448,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void CannotUnregisterEventHandlerDelegateThatIsNotRegistered()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchSucceededAsync += args => Task.CompletedTask;
@@ -455,7 +466,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void RegisteredEventHandlersCanBeUnregistered()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             Func<SendEventBatchSucceededEventArgs, Task> successHandler = args => Task.CompletedTask;
@@ -495,7 +507,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DisposIsSafeToCallMultipleTimes()
+        public async Task DisposeIsSafeToCallMultipleTimes()
         {
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>("fqNamespace", "eventHub", Mock.Of<TokenCredential>(), null)
             {
@@ -1652,6 +1664,35 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        public async Task StartPublishingThrowsTaskCanceledExceptionAsEventHubsException()
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var options = new EventHubProducerClientOptions { RetryOptions = new EventHubsRetryOptions { TryTimeout = TimeSpan.FromSeconds(1) } };
+
+            var mockConnection = new Mock<EventHubConnection>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), default);
+            mockConnection.Setup(connection => connection.GetPartitionIdsAsync(
+                It.IsAny<EventHubsRetryPolicy>(),
+                It.IsAny<CancellationToken>()))
+            .ThrowsAsync(new TaskCanceledException());
+            var connection = mockConnection.Object;
+
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" }) { CallBase = true };
+            var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
+
+            await Task.Yield();
+            var thrownException = Assert.ThrowsAsync<EventHubsException>(async () => await InvokeStartPublishingAsync(mockBufferedProducer.Object, cancellationSource.Token), "The attempt to start publishing should have surfaced an exception.");
+            Assert.True(thrownException.IsTransient, "Exception thrown should be transient");
+            Assert.That(thrownException.Reason, Is.EqualTo(EventHubsException.FailureReason.ServiceTimeout), "Exception thrown should have a reason of ServiceCommunicationProblem.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the non-public <c>StartPublishingAsync</c>
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public async Task StartPublishingAsyncInspectsPartitions()
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -1843,7 +1884,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             var expectedEvents = new[] { new EventData("One"), new EventData("Two") };
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockBufferedProducer
@@ -1866,7 +1908,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.IsClosed = true;
@@ -1880,7 +1923,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void EnqueueEventsAsyncValidatesEvents()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -1896,7 +1940,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             var events = new[] { new EventData("One"), new EventData("Two") };
             var invalidOptions = new EnqueueEventOptions { PartitionId = "1", PartitionKey = "key" };
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -1938,7 +1983,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EnqueueEventsAsyncValidatesFailHandler()
         {
             var events = new[] { new EventData("One"), new EventData("Two") };
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             Assert.That(async () => await bufferedProducer.EnqueueEventsAsync(events), Throws.InstanceOf<InvalidOperationException>());
@@ -1955,7 +2001,8 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.Cancel();
 
             var events = new[] { new EventData("One"), new EventData("Two") };
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -2624,7 +2671,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
 
             var expectedEvent = new EventData("One");
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockBufferedProducer
@@ -2647,7 +2695,8 @@ namespace Azure.Messaging.EventHubs.Tests
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.IsClosed = true;
@@ -2661,7 +2710,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void EnqueueEventAsyncValidatesEvents()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -2676,7 +2726,8 @@ namespace Azure.Messaging.EventHubs.Tests
         public void EnqueueEventAsyncValidatesOptions()
         {
             var invalidOptions = new EnqueueEventOptions { PartitionId = "1", PartitionKey = "key" };
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -2717,7 +2768,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void EnqueueEventAsyncValidatesFailHandler()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             Assert.That(async () => await bufferedProducer.EnqueueEventAsync(new EventData("One")), Throws.InstanceOf<InvalidOperationException>());
@@ -2733,7 +2785,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.SendEventBatchFailedAsync += args => Task.CompletedTask;
@@ -2750,7 +2803,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             mockProducer
@@ -2821,7 +2875,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitions = new[] { partitionId };
             var expectedEvent = new EventData("One");
             var mockPartitionResolver = new Mock<PartitionResolver>();
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockPartitionResolver
@@ -2898,7 +2953,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionKey = "test-key";
             var expectedEvent = new EventData("One");
             var mockPartitionResolver = new Mock<PartitionResolver>();
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockPartitionResolver
@@ -2971,6 +3027,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "2";
             var expectedEvent = new EventData("One");
             var mockPartitionResolver = new Mock<PartitionResolver>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
             var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
@@ -3178,7 +3235,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "7";
             var expectedEvent = new EventData("One");
             var mockLogger = new Mock<EventHubsEventSource>();
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             mockProducer
@@ -3238,7 +3296,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "7";
             var expectedEvent = new EventData("One");
             var mockLogger = new Mock<EventHubsEventSource>();
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             mockProducer
@@ -3298,7 +3357,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionId = "7";
             var expectedExceptionMessage = "The channel has been closed.";
             var mockLogger = new Mock<EventHubsEventSource>();
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             mockProducer
@@ -3350,7 +3410,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var firstPartitionId = "4";
             var secondPartitionId = "1";
             var events = new[] { new EventData("One"), new EventData("Two") };
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, default(EventHubBufferedProducerClientOptions)) { CallBase = true };
 
             mockProducer
@@ -3401,7 +3462,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public void GetBufferedEventCountValidatesNotClosed()
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             bufferedProducer.IsClosed = true;
@@ -3417,7 +3479,8 @@ namespace Azure.Messaging.EventHubs.Tests
         [TestCase("")]
         public void GetBufferedEventCountValidatesThePartitionId(string partitionId)
         {
-            var mockProducer = new Mock<EventHubProducerClient>();
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var bufferedProducer = new EventHubBufferedProducerClient(mockProducer.Object);
 
             Assert.That(() => bufferedProducer.GetBufferedEventCount(partitionId), Throws.InstanceOf<ArgumentException>());
@@ -5601,7 +5664,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var idleCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventHubBufferedProducerClientOptions { MaximumConcurrentSends = concurentSends, MaximumConcurrentSendsPerPartition = concurrentSendsPerPartition };
             var mockLogger = new Mock<EventHubsEventSource>();
-            var mockProducer = new Mock<EventHubProducerClient>("fakeNS", "fakeHub", Mock.Of<TokenCredential>(), new EventHubProducerClientOptions { Identifier = "abc123" });
+            var connection = new EventHubConnection("fakeNS", "fakeHub", Mock.Of<TokenCredential>());
+            var mockProducer = new Mock<EventHubProducerClient>(connection, new EventHubProducerClientOptions { Identifier = "abc123" });
             var mockBufferedProducer = new Mock<EventHubBufferedProducerClient>(mockProducer.Object, options) { CallBase = true };
 
             mockLogger

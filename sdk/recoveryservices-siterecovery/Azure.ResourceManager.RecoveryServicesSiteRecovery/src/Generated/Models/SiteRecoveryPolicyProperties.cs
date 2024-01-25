@@ -10,12 +10,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Protection profile custom data details. </summary>
     public partial class SiteRecoveryPolicyProperties
     {
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyProperties"/>. </summary>
         internal SiteRecoveryPolicyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SiteRecoveryPolicyProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SiteRecoveryPolicyProperties"/>. </summary>
         /// <param name="friendlyName"> The FriendlyName. </param>
         /// <param name="providerSpecificDetails">
         /// The ReplicationChannelSetting.

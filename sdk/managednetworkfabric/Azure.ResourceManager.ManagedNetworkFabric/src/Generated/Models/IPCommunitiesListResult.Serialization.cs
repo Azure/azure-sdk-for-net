@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<IPCommunityData>> value = default;
+            Optional<IReadOnlyList<NetworkFabricIPCommunityData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<IPCommunityData> array = new List<IPCommunityData>();
+                    List<NetworkFabricIPCommunityData> array = new List<NetworkFabricIPCommunityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IPCommunityData.DeserializeIPCommunityData(item));
+                        array.Add(NetworkFabricIPCommunityData.DeserializeNetworkFabricIPCommunityData(item));
                     }
                     value = array;
                     continue;

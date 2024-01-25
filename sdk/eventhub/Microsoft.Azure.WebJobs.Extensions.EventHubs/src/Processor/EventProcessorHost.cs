@@ -66,7 +66,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 
             if (checkpoint is BlobCheckpointStoreInternal.BlobStorageCheckpoint blobCheckpoint && blobCheckpoint is not null)
             {
-                _lastReadCheckpoint[partitionId] = new CheckpointInfo(blobCheckpoint.Offset ?? -1, blobCheckpoint.SequenceNumber ?? -1, blobCheckpoint.LastModified);
+                _lastReadCheckpoint[partitionId] = new CheckpointInfo(blobCheckpoint.Offset ?? -1, blobCheckpoint.SequenceNumber ?? -1,
+                    blobCheckpoint.LastModified);
             }
 
             return checkpoint;
@@ -79,8 +80,8 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 EventHubName,
                 ConsumerGroup,
                 partitionId,
-                checkpointEvent.Offset,
-                checkpointEvent.SequenceNumber,
+                Identifier,
+                CheckpointPosition.FromEvent(checkpointEvent),
                 cancellationToken).ConfigureAwait(false);
         }
 
@@ -112,7 +113,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
                 return Task.CompletedTask;
             }
 
-            return partition.EventProcessor.ProcessEventsAsync(partition, events, cancellationToken);
+            return partition.EventProcessor.ProcessEventsAsync(partition, events);
         }
 
         protected override async Task OnInitializingPartitionAsync(EventProcessorHostPartition partition, CancellationToken cancellationToken)

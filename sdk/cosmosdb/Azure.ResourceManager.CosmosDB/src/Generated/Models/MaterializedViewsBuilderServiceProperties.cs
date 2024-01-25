@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.CosmosDB.Models
     /// <summary> Properties for MaterializedViewsBuilderServiceResource. </summary>
     public partial class MaterializedViewsBuilderServiceProperties : CosmosDBServiceProperties
     {
-        /// <summary> Initializes a new instance of MaterializedViewsBuilderServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderServiceProperties"/>. </summary>
         public MaterializedViewsBuilderServiceProperties()
         {
             Locations = new ChangeTrackingList<MaterializedViewsBuilderRegionalService>();
             ServiceType = CosmosDBServiceType.MaterializedViewsBuilder;
         }
 
-        /// <summary> Initializes a new instance of MaterializedViewsBuilderServiceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MaterializedViewsBuilderServiceProperties"/>. </summary>
         /// <param name="createdOn"> Time of the last state change (ISO-8601 format). </param>
         /// <param name="instanceSize"> Instance type for the service. </param>
         /// <param name="instanceCount"> Instance count for the service. </param>

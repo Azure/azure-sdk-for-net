@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         [RecordedTest]
         public async Task CreateVolumWithBackupConfigWithVaultIdShouldWorkUsing2022_05_01()
         {

@@ -6,10 +6,9 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation;
 using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     internal partial class DialogStartedInternal
     {
@@ -19,30 +18,15 @@ namespace Azure.Communication.CallAutomation.Models.Events
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> dialogId = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -71,8 +55,23 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     dialogId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DialogStartedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value);
+            return new DialogStartedInternal(operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
         }
     }
 }

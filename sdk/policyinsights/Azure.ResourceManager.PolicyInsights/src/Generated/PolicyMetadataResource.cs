@@ -19,13 +19,14 @@ namespace Azure.ResourceManager.PolicyInsights
 {
     /// <summary>
     /// A Class representing a PolicyMetadata along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="PolicyMetadataResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetPolicyMetadataResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TenantResource" /> using the GetPolicyMetadata method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PolicyMetadataResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetPolicyMetadataResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TenantResource"/> using the GetPolicyMetadata method.
     /// </summary>
     public partial class PolicyMetadataResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="PolicyMetadataResource"/> instance. </summary>
+        /// <param name="resourceName"> The resourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string resourceName)
         {
             var resourceId = $"/providers/Microsoft.PolicyInsights/policyMetadata/{resourceName}";
@@ -36,12 +37,15 @@ namespace Azure.ResourceManager.PolicyInsights
         private readonly PolicyMetadataRestOperations _policyMetadataPolicyMetadataRestClient;
         private readonly PolicyMetadataData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/policyMetadata";
+
         /// <summary> Initializes a new instance of the <see cref="PolicyMetadataResource"/> class for mocking. </summary>
         protected PolicyMetadataResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "PolicyMetadataResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="PolicyMetadataResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal PolicyMetadataResource(ArmClient client, PolicyMetadataData data) : this(client, data.Id)
@@ -62,9 +66,6 @@ namespace Azure.ResourceManager.PolicyInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.PolicyInsights/policyMetadata";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +99,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +138,14 @@ namespace Azure.ResourceManager.PolicyInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyMetadata_GetResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

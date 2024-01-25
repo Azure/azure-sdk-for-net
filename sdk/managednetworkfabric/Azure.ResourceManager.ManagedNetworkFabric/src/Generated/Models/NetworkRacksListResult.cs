@@ -11,17 +11,17 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of NetworkRacks. </summary>
+    /// <summary> List of Network Racks. </summary>
     internal partial class NetworkRacksListResult
     {
-        /// <summary> Initializes a new instance of NetworkRacksListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkRacksListResult"/>. </summary>
         internal NetworkRacksListResult()
         {
             Value = new ChangeTrackingList<NetworkRackData>();
         }
 
-        /// <summary> Initializes a new instance of NetworkRacksListResult. </summary>
-        /// <param name="value"> List of NetworkRack resources. </param>
+        /// <summary> Initializes a new instance of <see cref="NetworkRacksListResult"/>. </summary>
+        /// <param name="value"> List of Network Rack resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
         internal NetworkRacksListResult(IReadOnlyList<NetworkRackData> value, string nextLink)
         {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NextLink = nextLink;
         }
 
-        /// <summary> List of NetworkRack resources. </summary>
+        /// <summary> List of Network Rack resources. </summary>
         public IReadOnlyList<NetworkRackData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }

@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.Cdn.Models
     /// <summary> The ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
     public partial class ProfileResourceGetWafLogAnalyticsMetricsOptions
     {
-        /// <summary> Initializes a new instance of ProfileResourceGetWafLogAnalyticsMetricsOptions. </summary>
-        /// <param name="metrics"> The ArrayOfWafMetric to use. </param>
-        /// <param name="dateTimeBegin"> The DateTime to use. </param>
-        /// <param name="dateTimeEnd"> The DateTime to use. </param>
-        /// <param name="granularity"> The WafGranularity to use. </param>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/>. </summary>
+        /// <param name="metrics"> The metrics. </param>
+        /// <param name="dateTimeBegin"> The dateTimeBegin. </param>
+        /// <param name="dateTimeEnd"> The dateTimeEnd. </param>
+        /// <param name="granularity"> The granularity. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> is null. </exception>
         public ProfileResourceGetWafLogAnalyticsMetricsOptions(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, WafGranularity granularity)
         {
@@ -34,19 +34,24 @@ namespace Azure.ResourceManager.Cdn.Models
             RuleTypes = new ChangeTrackingList<WafRuleType>();
         }
 
-        /// <summary> The ArrayOfWafMetric to use. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetWafLogAnalyticsMetricsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetWafLogAnalyticsMetricsOptions()
+        {
+        }
+
+        /// <summary> The metrics. </summary>
         public IList<WafMetric> Metrics { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The dateTimeBegin. </summary>
         public DateTimeOffset DateTimeBegin { get; }
-        /// <summary> The DateTime to use. </summary>
+        /// <summary> The dateTimeEnd. </summary>
         public DateTimeOffset DateTimeEnd { get; }
-        /// <summary> The WafGranularity to use. </summary>
+        /// <summary> The granularity. </summary>
         public WafGranularity Granularity { get; }
-        /// <summary> The ArrayOfWafAction to use. </summary>
+        /// <summary> The actions. </summary>
         public IList<WafAction> Actions { get; }
-        /// <summary> The ArrayOfWafRankingGroupBy to use. </summary>
+        /// <summary> The groupBy. </summary>
         public IList<WafRankingGroupBy> GroupBy { get; }
-        /// <summary> The ArrayOfWafRuleType to use. </summary>
+        /// <summary> The ruleTypes. </summary>
         public IList<WafRuleType> RuleTypes { get; }
     }
 }

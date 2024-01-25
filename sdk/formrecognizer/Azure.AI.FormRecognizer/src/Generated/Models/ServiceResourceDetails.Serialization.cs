@@ -19,7 +19,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             CustomDocumentModelsDetails customDocumentModels = default;
-            Optional<QuotaDetails> customNeuralDocumentModelBuilds = default;
+            Optional<ResourceQuotaDetails> customNeuralDocumentModelBuilds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customDocumentModels"u8))
@@ -33,7 +33,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    customNeuralDocumentModelBuilds = QuotaDetails.DeserializeQuotaDetails(property.Value);
+                    customNeuralDocumentModelBuilds = ResourceQuotaDetails.DeserializeResourceQuotaDetails(property.Value);
                     continue;
                 }
             }

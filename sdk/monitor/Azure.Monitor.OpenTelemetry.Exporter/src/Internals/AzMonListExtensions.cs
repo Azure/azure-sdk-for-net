@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -344,6 +345,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     return tagObjects.GetHttpDependencyTarget();
                 case OperationType.Db:
                     return tagObjects.GetDbDependencyTargetAndName().DbTarget;
+                case OperationType.Messaging:
+                    return tagObjects.GetMessagingUrlAndSourceOrTarget(ActivityKind.Producer).SourceOrTarget;
                 default:
                     return null;
             }

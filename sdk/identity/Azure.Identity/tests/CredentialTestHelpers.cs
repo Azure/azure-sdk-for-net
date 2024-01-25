@@ -17,12 +17,12 @@ using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.Identity.Client;
 using NUnit.Framework;
-using Castle.DynamicProxy;
 
 namespace Azure.Identity.Tests
 {
     internal static class CredentialTestHelpers
     {
+        public static string[] DefaultScope = new string[] { "https://management.azure.com//.default" };
         private const string DiscoveryResponseBody =
             "{\"tenant_discovery_endpoint\": \"https://login.microsoftonline.com/c54fac88-3dd3-461f-a7c4-8a368e0340b3/v2.0/.well-known/openid-configuration\",\"api-version\": \"1.1\",\"metadata\":[{\"preferred_network\": \"login.microsoftonline.com\",\"preferred_cache\": \"login.windows.net\",\"aliases\":[\"login.microsoftonline.com\",\"login.windows.net\",\"login.microsoft.com\",\"sts.windows.net\"]},{\"preferred_network\": \"login.partner.microsoftonline.cn\",\"preferred_cache\": \"login.partner.microsoftonline.cn\",\"aliases\":[\"login.partner.microsoftonline.cn\",\"login.chinacloudapi.cn\"]},{\"preferred_network\": \"login.microsoftonline.de\",\"preferred_cache\": \"login.microsoftonline.de\",\"aliases\":[\"login.microsoftonline.de\"]},{\"preferred_network\": \"login.microsoftonline.us\",\"preferred_cache\": \"login.microsoftonline.us\",\"aliases\":[\"login.microsoftonline.us\",\"login.usgovcloudapi.net\"]},{\"preferred_network\": \"login-us.microsoftonline.com\",\"preferred_cache\": \"login-us.microsoftonline.com\",\"aliases\":[\"login-us.microsoftonline.com\"]}]}";
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCli() => CreateTokenForAzureCli(TimeSpan.FromSeconds(30));
@@ -38,12 +38,16 @@ namespace Azure.Identity.Tests
             return (token, expiresOn, json);
         }
 
-        public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureCliExpiresIn(int seconds = 30)
+        public static (string Token, string Json) CreateTokenForAzureCliExpiresOn(DateTimeOffset expiresOn, bool includeExpiresOn)
         {
-            var expiresOn = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
+            const string expiresOnStringFormat = "yyyy-MM-dd HH:mm:ss.ffffff";
+
+            var expiresOnString = expiresOn.ToLocalTime().ToString(expiresOnStringFormat);
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
-            var json = $"{{ \"accessToken\": \"{token}\", \"expiresIn\": {seconds} }}";
-            return (token, expiresOn, json);
+            var json = includeExpiresOn ?
+                $$"""{ "accessToken": "{{token}}", "expiresOn": "{{expiresOnString}}", "expires_on": {{expiresOn.ToUnixTimeSeconds()}} }""" :
+                $$"""{ "accessToken": "{{token}}", "expiresOn": "{{expiresOnString}}" }""";
+            return (token, json);
         }
 
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzureDeveloperCli() => CreateTokenForAzureDeveloperCli(TimeSpan.FromSeconds(30));
@@ -69,10 +73,9 @@ namespace Azure.Identity.Tests
 
         public static (string Token, DateTimeOffset ExpiresOn, string Json) CreateTokenForAzurePowerShell(TimeSpan expiresOffset)
         {
-            var expiresOnString = DateTimeOffset.Now.Add(expiresOffset).ToString();
-            var expiresOn = DateTimeOffset.Parse(expiresOnString, CultureInfo.CurrentCulture, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeLocal);
+            var expiresOn = DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.Add(expiresOffset).ToUnixTimeSeconds());
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
-            var xml = @$"<Object Type=""Microsoft.Azure.Commands.Profile.Models.PSAccessToken""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.DateTimeOffset"">{expiresOnString}</Property><Property Name=""TenantId"" Type=""System.String"">{Guid.NewGuid().ToString()}</Property><Property Name=""UserId"" Type=""System.String"">foo@contoso.com</Property><Property Name=""Type"" Type=""System.String"">Bearer</Property></Object>";
+            var xml = @$"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">{expiresOn.ToUnixTimeSeconds()}</Property></Object>";
             return (token, expiresOn, xml);
         }
 
@@ -483,7 +486,7 @@ namespace Azure.Identity.Tests
         {
             var uid = objectId ?? "myuid";
             var tid = tenantId ?? "myutid";
-            return CredentialTestHelpers.MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
+            return MsalEncode($"{{\"uid\":\"{uid}\",\"utid\":\"{tid}\"}}");
         }
 
         public static string CreateMsalIdToken(string uniqueId, string displayableId, string tenantId)
@@ -500,7 +503,7 @@ namespace Azure.Identity.Tests
                         "\"sub\": \"K4_SGGxKqW1SxUAmhg6C1F6VPiFzcx-Qd80ehIEdFus\"," +
                         "\"tid\": \"" + tenantId + "\"," +
                         "\"ver\": \"2.0\"}";
-            return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", CredentialTestHelpers.MsalEncode(id));
+            return string.Format(CultureInfo.InvariantCulture, "someheader.{0}.somesignature", MsalEncode(id));
         }
 
         public static bool ExtractMsalDisableInstanceDiscoveryProperty(TokenCredential cred)

@@ -23,9 +23,12 @@ namespace Azure.Communication.CallAutomation
         }
 
         private const string PowerVirtualAgentsValue = "powerVirtualAgents";
+        private const string AzureOpenAIValue = "azureOpenAI";
 
         /// <summary> powerVirtualAgents. </summary>
         public static DialogInputType PowerVirtualAgents { get; } = new DialogInputType(PowerVirtualAgentsValue);
+        /// <summary> azureOpenAI. </summary>
+        public static DialogInputType AzureOpenAI { get; } = new DialogInputType(AzureOpenAIValue);
         /// <summary> Determines if two <see cref="DialogInputType"/> values are the same. </summary>
         public static bool operator ==(DialogInputType left, DialogInputType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DialogInputType"/> values are not the same. </summary>

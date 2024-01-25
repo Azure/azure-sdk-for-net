@@ -315,6 +315,17 @@ namespace Azure.Messaging.EventHubs.Primitives
         public virtual void ReportPartitionStolen(string partitionId) => InstanceOwnership.TryRemove(partitionId, out _);
 
         /// <summary>
+        ///   Determines whether the specified partition is owned by the load balancer.
+        /// </summary>
+        ///
+        /// <param name="partitionId">The identifier of the partition to consider.</param>
+        ///
+        /// <returns>
+        ///   <c>true</c> if <paramref name="partitionId"/> is owned; otherwise, <c>false</c>.</returns>
+        ///
+        public virtual bool IsPartitionOwned(string partitionId) => InstanceOwnership.ContainsKey(partitionId);
+
+        /// <summary>
         ///   Finds and tries to claim an ownership if this processor instance is eligible to increase its ownership list.
         /// </summary>
         ///
@@ -420,12 +431,23 @@ namespace Azure.Messaging.EventHubs.Primitives
                     {
                         // If any partitions that can be stolen were found, randomly pick one of them to claim.
 
-                        Logger.StealPartition(OwnerIdentifier);
-
                         var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count);
+                        var partitionToSteal = partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index];
+                        var stealingFrom = default(string);
+
+                        foreach (var ownership in completeOwnershipEnumerable)
+                        {
+                            if (ownership.PartitionId == partitionToSteal)
+                            {
+                                stealingFrom = ownership.OwnerIdentifier;
+                                break;
+                            }
+                        }
+
+                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier);
 
                         var returnTask = ClaimOwnershipAsync(
-                            partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount[index],
+                            partitionToSteal,
                             completeOwnershipEnumerable,
                             cancellationToken);
 
@@ -437,14 +459,25 @@ namespace Azure.Messaging.EventHubs.Primitives
                         // need to steal from the processors that have exactly the maximum amount to enforce balancing.  If this instance has
                         // already reached the minimum, there's no benefit to stealing, because the distribution wouldn't change.
 
-                        Logger.StealPartition(OwnerIdentifier);
-
                         // Randomly pick a processor to steal from.
 
                         var index = RandomNumberGenerator.Value.Next(partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount.Count);
+                        var partitionToSteal = partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index];
+                        var stealingFrom = default(string);
+
+                        foreach (var ownership in completeOwnershipEnumerable)
+                        {
+                            if (ownership.PartitionId == partitionToSteal)
+                            {
+                                stealingFrom = ownership.OwnerIdentifier;
+                                break;
+                            }
+                        }
+
+                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier);
 
                         var returnTask = ClaimOwnershipAsync(
-                            partitionsOwnedByProcessorWithExactlyMaximumOwnedPartitionsCount[index],
+                            partitionToSteal,
                             completeOwnershipEnumerable,
                             cancellationToken);
 

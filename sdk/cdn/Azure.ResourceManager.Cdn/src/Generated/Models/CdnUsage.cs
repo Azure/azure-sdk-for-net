@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Cdn.Models
 {
     /// <summary> Output of check resource usage API. </summary>
     public partial class CdnUsage
     {
-        /// <summary> Initializes a new instance of CdnUsage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
         internal CdnUsage()
         {
         }
 
-        /// <summary> Initializes a new instance of CdnUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="CdnUsage"/>. </summary>
         /// <param name="resourceType"> Resource type for which the usage is provided. </param>
         /// <param name="unit"> Unit of the usage. e.g. count. </param>
         /// <param name="currentValue"> Actual value of usage on the specified resource type. </param>
         /// <param name="limit"> Quota of the specified resource type. </param>
-        internal CdnUsage(string resourceType, CdnUsageUnit? unit, int? currentValue, int? limit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CdnUsage(string resourceType, CdnUsageUnit? unit, int? currentValue, int? limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Unit = unit;
             CurrentValue = currentValue;
             Limit = limit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource type for which the usage is provided. </summary>

@@ -119,6 +119,186 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// </param>
+        /// <param name="trainingDataSource">
+        /// An externally accessible location that has your training files. See <see cref="DocumentContentSource"/> for an exhaustive list of source options.
+        /// For more information on setting up a training data set, see <see href="https://aka.ms/azsdk/formrecognizer/buildcustommodel">this article</see>.
+        /// </param>
+        /// <param name="buildMode">
+        /// The technique to use to build the model. Use:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Template"/></term>
+        ///     <description>
+        ///       When the custom documents all have the same layout. Fields are expected to be in the same place
+        ///       across documents. Build time tends to be considerably shorter than <see cref="DocumentBuildMode.Neural"/>
+        ///       mode.
+        ///     </description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Neural"/></term>
+        ///     <description>
+        ///       Recommended mode when custom documents have different layouts. Fields are expected to be the same but
+        ///       they can be placed in different positions across documents.
+        ///     </description>
+        ///   </item>
+        /// </list>
+        /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
+        /// </param>
+        /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
+        /// to the documents in the source path.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="BuildDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// completion will contain meta-data about the created custom model.
+        /// </returns>
+        public virtual async Task<BuildDocumentModelOperation> BuildDocumentModelAsync(WaitUntil waitUntil, DocumentContentSource trainingDataSource, DocumentBuildMode buildMode, string modelId = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(trainingDataSource, nameof(trainingDataSource));
+            options ??= new BuildDocumentModelOptions();
+
+            modelId ??= Guid.NewGuid().ToString();
+            var request = new BuildDocumentModelRequest(modelId, buildMode)
+            {
+                Description = options.Description
+            };
+
+            switch (trainingDataSource)
+            {
+                case BlobContentSource blobSource:
+                    request.AzureBlobSource = blobSource;
+                    break;
+                case BlobFileListContentSource blobFileListSource:
+                    request.AzureBlobFileListSource = blobFileListSource;
+                    break;
+                default:
+                    throw new ArgumentException("Unsupported training data source.", nameof(trainingDataSource));
+            }
+
+            foreach (var tag in options.Tags)
+            {
+                request.Tags.Add(tag);
+            }
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentModel)}");
+            scope.Start();
+
+            try
+            {
+                var response = await ServiceClient.DocumentModelsBuildModelAsync(request, cancellationToken).ConfigureAwait(false);
+                var operation = new BuildDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Build a custom model from a collection of documents in an Azure Blob Storage container.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
+        /// <param name="trainingDataSource">
+        /// An externally accessible location that has your training files. See <see cref="DocumentContentSource"/> for an exhaustive list of source options.
+        /// For more information on setting up a training data set, see <see href="https://aka.ms/azsdk/formrecognizer/buildcustommodel">this article</see>.
+        /// </param>
+        /// <param name="buildMode">
+        /// The technique to use to build the model. Use:
+        /// <list type="bullet">
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Template"/></term>
+        ///     <description>
+        ///       When the custom documents all have the same layout. Fields are expected to be in the same place
+        ///       across documents. Build time tends to be considerably shorter than <see cref="DocumentBuildMode.Neural"/>
+        ///       mode.
+        ///     </description>
+        ///   </item>
+        ///   <item>
+        ///     <term><see cref="DocumentBuildMode.Neural"/></term>
+        ///     <description>
+        ///       Recommended mode when custom documents have different layouts. Fields are expected to be the same but
+        ///       they can be placed in different positions across documents.
+        ///     </description>
+        ///   </item>
+        /// </list>
+        /// For more information see <see href="https://aka.ms/azsdk/formrecognizer/buildmode">here</see>.
+        /// </param>
+        /// <param name="modelId">A unique ID for your model. If not specified, a model ID will be created for you.</param>
+        /// <param name="options">A set of options available for configuring the request. For example, set a model description or set a filter to apply
+        /// to the documents in the source path.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>
+        /// A <see cref="BuildDocumentModelOperation"/> to wait on this long-running operation. Its Value upon successful
+        /// completion will contain meta-data about the created custom model.
+        /// </returns>
+        public virtual BuildDocumentModelOperation BuildDocumentModel(WaitUntil waitUntil, DocumentContentSource trainingDataSource, DocumentBuildMode buildMode, string modelId = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(trainingDataSource, nameof(trainingDataSource));
+            options ??= new BuildDocumentModelOptions();
+
+            modelId ??= Guid.NewGuid().ToString();
+            var request = new BuildDocumentModelRequest(modelId, buildMode)
+            {
+                Description = options.Description
+            };
+
+            switch (trainingDataSource)
+            {
+                case BlobContentSource blobSource:
+                    request.AzureBlobSource = blobSource;
+                    break;
+                case BlobFileListContentSource blobFileListSource:
+                    request.AzureBlobFileListSource = blobFileListSource;
+                    break;
+                default:
+                    throw new ArgumentException("Unsupported training data source.", nameof(trainingDataSource));
+            }
+
+            foreach (var tag in options.Tags)
+            {
+                request.Tags.Add(tag);
+            }
+
+            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentModel)}");
+            scope.Start();
+
+            try
+            {
+                var response = ServiceClient.DocumentModelsBuildModel(request, cancellationToken);
+                var operation = new BuildDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
+
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Build a custom model from a collection of documents in an Azure Blob Storage container.
+        /// </summary>
+        /// <param name="waitUntil">
+        /// <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service;
+        /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
+        /// </param>
         /// <param name="blobContainerUri">
         /// An externally accessible Azure Blob Storage container URI pointing to the container that has your training files.
         /// Note that a container URI without SAS is accepted only when the container is public or has a managed identity
@@ -158,46 +338,10 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         public virtual async Task<BuildDocumentModelOperation> BuildDocumentModelAsync(WaitUntil waitUntil, Uri blobContainerUri, DocumentBuildMode buildMode, string modelId = default, string prefix = default, BuildDocumentModelOptions options = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
-            options ??= new BuildDocumentModelOptions();
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentModel)}");
-            scope.Start();
+            var source = new BlobContentSource(blobContainerUri) { Prefix = prefix };
 
-            try
-            {
-                var source = new AzureBlobContentSource(blobContainerUri);
-                if (!string.IsNullOrEmpty(prefix))
-                {
-                    source.Prefix = prefix;
-                }
-
-                modelId ??= Guid.NewGuid().ToString();
-                var request = new BuildDocumentModelRequest(modelId, buildMode)
-                {
-                    AzureBlobSource = source,
-                    Description = options.Description
-                };
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags.Add(tag);
-                }
-
-                var response = await ServiceClient.DocumentModelsBuildModelAsync(request, cancellationToken).ConfigureAwait(false);
-                var operation = new BuildDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
-
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                }
-
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return await BuildDocumentModelAsync(waitUntil, source, buildMode, modelId, options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -247,46 +391,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         {
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
 
-            options ??= new BuildDocumentModelOptions();
+            var source = new BlobContentSource(blobContainerUri) { Prefix = prefix };
 
-            using DiagnosticScope scope = Diagnostics.CreateScope($"{nameof(DocumentModelAdministrationClient)}.{nameof(BuildDocumentModel)}");
-            scope.Start();
-
-            try
-            {
-                var source = new AzureBlobContentSource(blobContainerUri);
-                if (!string.IsNullOrEmpty(prefix))
-                {
-                    source.Prefix = prefix;
-                }
-
-                modelId ??= Guid.NewGuid().ToString();
-                var request = new BuildDocumentModelRequest(modelId, buildMode)
-                {
-                    AzureBlobSource = source,
-                    Description = options.Description
-                };
-
-                foreach (var tag in options.Tags)
-                {
-                    request.Tags.Add(tag);
-                }
-
-                var response = ServiceClient.DocumentModelsBuildModel(request, cancellationToken);
-                var operation = new BuildDocumentModelOperation(response.Headers.OperationLocation, response.GetRawResponse(), ServiceClient, Diagnostics);
-
-                if (waitUntil == WaitUntil.Completed)
-                {
-                    operation.WaitForCompletion(cancellationToken);
-                }
-
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            return BuildDocumentModel(waitUntil, source, buildMode, modelId, options, cancellationToken);
         }
 
         /// <summary>
@@ -780,7 +887,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// completion will contain meta-data about the created document classifier.
         /// </returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual async Task<BuildDocumentClassifierOperation> BuildDocumentClassifierAsync(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
@@ -833,7 +940,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// completion will contain meta-data about the created document classifier.
         /// </returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual BuildDocumentClassifierOperation BuildDocumentClassifier(WaitUntil waitUntil, IDictionary<string, ClassifierDocumentTypeDetails> documentTypes, string classifierId = default, string description = default, CancellationToken cancellationToken = default)
         {
@@ -875,7 +982,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentClassifierDetails"/> containing
         /// information about the requested classifier.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual async Task<Response<DocumentClassifierDetails>> GetDocumentClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -904,7 +1011,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <returns>A <see cref="Response{T}"/> representing the result of the operation. It can be cast to a <see cref="DocumentClassifierDetails"/> containing
         /// information about the requested classifier.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual Response<DocumentClassifierDetails> GetDocumentClassifier(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -931,7 +1038,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentClassifierDetails"/> items.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual AsyncPageable<DocumentClassifierDetails> GetDocumentClassifiersAsync(CancellationToken cancellationToken = default)
         {
@@ -978,7 +1085,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A collection of <see cref="DocumentClassifierDetails"/> items.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual Pageable<DocumentClassifierDetails> GetDocumentClassifiers(CancellationToken cancellationToken = default)
         {
@@ -1026,7 +1133,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual async Task<Response> DeleteDocumentClassifierAsync(string classifierId, CancellationToken cancellationToken = default)
         {
@@ -1053,7 +1160,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>A <see cref="Response"/> representing the result of the operation.</returns>
         /// <remarks>
-        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_02_28_Preview"/> and newer.
+        /// This method is only available for <see cref="DocumentAnalysisClientOptions.ServiceVersion.V2023_07_31"/> and newer.
         /// </remarks>
         public virtual Response DeleteDocumentClassifier(string classifierId, CancellationToken cancellationToken = default)
         {

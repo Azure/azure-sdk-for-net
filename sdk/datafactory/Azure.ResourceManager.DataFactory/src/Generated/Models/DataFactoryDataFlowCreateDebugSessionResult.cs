@@ -12,12 +12,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Response body structure for creating data flow debug session. </summary>
     public partial class DataFactoryDataFlowCreateDebugSessionResult
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowCreateDebugSessionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowCreateDebugSessionResult"/>. </summary>
         internal DataFactoryDataFlowCreateDebugSessionResult()
         {
         }
 
-        /// <summary> Initializes a new instance of DataFactoryDataFlowCreateDebugSessionResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowCreateDebugSessionResult"/>. </summary>
         /// <param name="status"> The state of the debug session. </param>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         internal DataFactoryDataFlowCreateDebugSessionResult(string status, Guid? sessionId)

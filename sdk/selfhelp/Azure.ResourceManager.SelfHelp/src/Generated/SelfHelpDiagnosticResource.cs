@@ -18,13 +18,15 @@ namespace Azure.ResourceManager.SelfHelp
 {
     /// <summary>
     /// A Class representing a SelfHelpDiagnostic along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SelfHelpDiagnosticResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSelfHelpDiagnosticResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource" /> using the GetSelfHelpDiagnostic method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SelfHelpDiagnosticResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSelfHelpDiagnosticResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetSelfHelpDiagnostic method.
     /// </summary>
     public partial class SelfHelpDiagnosticResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SelfHelpDiagnosticResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="diagnosticsResourceName"> The diagnosticsResourceName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string diagnosticsResourceName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}";
@@ -35,12 +37,15 @@ namespace Azure.ResourceManager.SelfHelp
         private readonly DiagnosticsRestOperations _selfHelpDiagnosticDiagnosticsRestClient;
         private readonly SelfHelpDiagnosticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Help/diagnostics";
+
         /// <summary> Initializes a new instance of the <see cref="SelfHelpDiagnosticResource"/> class for mocking. </summary>
         protected SelfHelpDiagnosticResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SelfHelpDiagnosticResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SelfHelpDiagnosticResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SelfHelpDiagnosticResource(ArmClient client, SelfHelpDiagnosticData data) : this(client, data.Id)
@@ -61,9 +66,6 @@ namespace Azure.ResourceManager.SelfHelp
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Help/diagnostics";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +99,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -129,6 +139,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -151,7 +169,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API
+        /// Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -160,6 +178,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +215,7 @@ namespace Azure.ResourceManager.SelfHelp
         }
 
         /// <summary>
-        /// Diagnostics tells you precisely the root cause of the issue and how to address it. You can get diagnostics once you discover and identify the relevant solution for your Azure issue.&lt;br/&gt;&lt;br/&gt; You can create diagnostics using the ‘solutionId’  from Solution Discovery API response and ‘additionalParameters’ &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt;‘requiredParameterSets’ from Solutions Discovery API response must be passed via ‘additionalParameters’ as an input to Diagnostics API
+        /// Creates a diagnostic for the specific resource using solutionId and requiredInputs* from discovery solutions. &lt;br/&gt;Diagnostics tells you precisely the root cause of the issue and the steps to address it. You can get diagnostics once you discover the relevant solution for your Azure issue. &lt;br/&gt;&lt;br/&gt; &lt;b&gt;Note: &lt;/b&gt; requiredInputs’ from Discovery solutions response must be passed via ‘additionalParameters’ as an input to Diagnostics API.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,6 +224,14 @@ namespace Azure.ResourceManager.SelfHelp
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SelfHelpDiagnosticResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

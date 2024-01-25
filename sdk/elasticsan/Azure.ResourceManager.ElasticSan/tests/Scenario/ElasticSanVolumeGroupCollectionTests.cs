@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.ElasticSan.Models;
-using Azure.ResourceManager.Resources;
-using Microsoft.Identity.Client;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task CreateUpdateGet()
         {
             ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
             ElasticSanVolumeGroupCollection collection = (await elasticSanCollection.GetAsync(ElasticSanName)).Value.GetElasticSanVolumeGroups();
@@ -33,8 +32,9 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             string volumeGroupName = Recording.GenerateAssetName("testvolumegroup-");
             ElasticSanVolumeGroupData volumeGroupData = new ElasticSanVolumeGroupData()
             {
-                ProtocolType = StorageTargetType.Iscsi,
-                Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey
+                ProtocolType = ElasticSanStorageTargetType.Iscsi,
+                Encryption = ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey,
+                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             // vnet resource id is created by following instructions in https://docs.microsoft.com/en-us/azure/storage/common/storage-network-security?tabs=azure-portal
             var vnetResourceId = new ResourceIdentifier("/subscriptions/" + DefaultSubscription.Data.Id.Name + "/resourceGroups/" + ResourceGroupName + "/providers/Microsoft.Network/virtualNetworks/testvnet/subnets/subnet1");
@@ -43,25 +43,16 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeGroupResource volumeGroupResource = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, volumeGroupData)).Value;
             Assert.AreEqual(volumeGroupResource.Id.Name, volumeGroupName);
             Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroupResource.Data.Encryption);
-            Assert.AreEqual(StorageTargetType.Iscsi, volumeGroupResource.Data.ProtocolType);
+            Assert.AreEqual(ElasticSanStorageTargetType.Iscsi, volumeGroupResource.Data.ProtocolType);
             Assert.GreaterOrEqual(volumeGroupResource.Data.VirtualNetworkRules.Count, 1);
             Assert.AreEqual(vnetResourceId, volumeGroupResource.Data.VirtualNetworkRules[0].VirtualNetworkResourceId);
-        }
 
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            ElasticSanCollection elasticSanCollection = (await GetResourceGroupAsync(ResourceGroupName)).GetElasticSans();
-            ElasticSanVolumeGroupCollection collection = (await elasticSanCollection.GetAsync(ElasticSanName)).Value.GetElasticSanVolumeGroups();
-
-            string volumeGroupName = Recording.GenerateAssetName("testvolumegroup-");
-            _ = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeGroupName, new ElasticSanVolumeGroupData())).Value;
             ElasticSanVolumeGroupResource volumeGroup = (await collection.GetAsync(volumeGroupName)).Value;
-            Assert.AreEqual(volumeGroup.Id.Name, volumeGroupName);
-            Assert.IsEmpty(volumeGroup.Data.VirtualNetworkRules);
-            Assert.AreEqual(StorageTargetType.Iscsi, volumeGroup.Data.ProtocolType);
-            Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroup.Data.Encryption);
+            Assert.AreEqual(volumeGroupResource.Id.Name, volumeGroupName);
+            Assert.AreEqual(ElasticSanEncryptionType.EncryptionAtRestWithPlatformKey, volumeGroupResource.Data.Encryption);
+            Assert.AreEqual(ElasticSanStorageTargetType.Iscsi, volumeGroupResource.Data.ProtocolType);
+            Assert.GreaterOrEqual(volumeGroupResource.Data.VirtualNetworkRules.Count, 1);
+            Assert.AreEqual(vnetResourceId, volumeGroupResource.Data.VirtualNetworkRules[0].VirtualNetworkResourceId);
         }
 
         [Test]

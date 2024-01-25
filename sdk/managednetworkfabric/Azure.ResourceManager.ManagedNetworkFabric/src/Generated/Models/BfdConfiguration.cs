@@ -10,27 +10,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> BFD configuration properties. </summary>
     public partial class BfdConfiguration
     {
-        /// <summary> Initializes a new instance of BfdConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BfdConfiguration"/>. </summary>
         public BfdConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of BfdConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="BfdConfiguration"/>. </summary>
         /// <param name="administrativeState"> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </param>
-        /// <param name="interval"> interval in milliseconds. Example: 300. </param>
-        /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 3. </param>
-        internal BfdConfiguration(EnabledDisabledState? administrativeState, int? interval, int? multiplier)
+        /// <param name="intervalInMilliSeconds"> Interval in milliseconds. Example: 300. </param>
+        /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 5. </param>
+        internal BfdConfiguration(BfdAdministrativeState? administrativeState, int? intervalInMilliSeconds, int? multiplier)
         {
             AdministrativeState = administrativeState;
-            Interval = interval;
+            IntervalInMilliSeconds = intervalInMilliSeconds;
             Multiplier = multiplier;
         }
 
         /// <summary> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </summary>
-        public EnabledDisabledState? AdministrativeState { get; }
-        /// <summary> interval in milliseconds. Example: 300. </summary>
-        public int? Interval { get; }
-        /// <summary> Multiplier for the Bfd Configuration. Example: 3. </summary>
-        public int? Multiplier { get; }
+        public BfdAdministrativeState? AdministrativeState { get; }
+        /// <summary> Interval in milliseconds. Example: 300. </summary>
+        public int? IntervalInMilliSeconds { get; set; }
+        /// <summary> Multiplier for the Bfd Configuration. Example: 5. </summary>
+        public int? Multiplier { get; set; }
     }
 }

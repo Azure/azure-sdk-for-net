@@ -1,6 +1,6 @@
 # Release History
 
-## 4.6.0-beta.1 (Unreleased)
+## 4.6.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -8,9 +8,29 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 4.6.0-beta.2 (2023-11-13)
+
+### Other Changes
+
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
+
+## 4.6.0-beta.1 (2023-11-09)
+
+### Breaking Changes
+
+- Renamed tags reported on `SecretClient` activities to follow OpenTelemetry attribute naming conventions:
+  - `secret` to `az.keyvault.secret.name`
+  - `version` to `az.keyvault.secret.version`
+
+### Bugs Fixed
+
 - When a Key Vault is moved to another tenant, the client is reauthenticated.
 
 ### Other Changes
+
+- The default service version is now "7.5-preview.1".
 
 ## 4.5.0 (2023-03-14)
 

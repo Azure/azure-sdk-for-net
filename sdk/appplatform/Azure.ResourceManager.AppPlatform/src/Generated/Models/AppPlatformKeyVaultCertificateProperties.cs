@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Properties of certificate imported from key vault. </summary>
     public partial class AppPlatformKeyVaultCertificateProperties : AppPlatformCertificateProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformKeyVaultCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformKeyVaultCertificateProperties"/>. </summary>
         /// <param name="vaultUri"> The vault uri of user key vault. </param>
         /// <param name="keyVaultCertName"> The certificate name of key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultUri"/> or <paramref name="keyVaultCertName"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             CertificatePropertiesType = "KeyVaultCertificate";
         }
 
-        /// <summary> Initializes a new instance of AppPlatformKeyVaultCertificateProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformKeyVaultCertificateProperties"/>. </summary>
         /// <param name="certificatePropertiesType"> The type of the certificate source. </param>
         /// <param name="thumbprint"> The thumbprint of certificate. </param>
         /// <param name="issuer"> The issuer of certificate. </param>
@@ -38,17 +38,23 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="subjectName"> The subject name of certificate. </param>
         /// <param name="dnsNames"> The domain list of certificate. </param>
         /// <param name="provisioningState"> Provisioning state of the Certificate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vaultUri"> The vault uri of user key vault. </param>
         /// <param name="keyVaultCertName"> The certificate name of key vault. </param>
         /// <param name="certVersion"> The certificate version of key vault. </param>
         /// <param name="isPrivateKeyExcluded"> Optional. If set to true, it will not import private key from key vault. </param>
-        internal AppPlatformKeyVaultCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState, Uri vaultUri, string keyVaultCertName, string certVersion, bool? isPrivateKeyExcluded) : base(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames, provisioningState)
+        internal AppPlatformKeyVaultCertificateProperties(string certificatePropertiesType, string thumbprint, string issuer, DateTimeOffset? issuedOn, DateTimeOffset? expireOn, DateTimeOffset? activateOn, string subjectName, IReadOnlyList<string> dnsNames, AppPlatformCertificateProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri vaultUri, string keyVaultCertName, string certVersion, bool? isPrivateKeyExcluded) : base(certificatePropertiesType, thumbprint, issuer, issuedOn, expireOn, activateOn, subjectName, dnsNames, provisioningState, serializedAdditionalRawData)
         {
             VaultUri = vaultUri;
             KeyVaultCertName = keyVaultCertName;
             CertVersion = certVersion;
             IsPrivateKeyExcluded = isPrivateKeyExcluded;
             CertificatePropertiesType = certificatePropertiesType ?? "KeyVaultCertificate";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformKeyVaultCertificateProperties"/> for deserialization. </summary>
+        internal AppPlatformKeyVaultCertificateProperties()
+        {
         }
 
         /// <summary> The vault uri of user key vault. </summary>

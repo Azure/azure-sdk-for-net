@@ -5,40 +5,45 @@
 
 #nullable disable
 
+using Azure.Core;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
-    public partial class TerminalServerConfiguration : NetworkFabricLayer3IPPrefixProperties
+    public partial class TerminalServerConfiguration : TerminalServerPatchableProperties
     {
-        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
         public TerminalServerConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of TerminalServerConfiguration. </summary>
-        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.0/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a0/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix of CE-PE interconnect links. Example: 172.31.0.20/31. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix of CE-PE interconnect links. Example: 3FFE:FFFF:0:CD30::a4/126. The values can be specified at the time of creation or can be updated afterwards. Any update to the values post-provisioning may disrupt traffic. The 1st and 3rd IPs are to be configured on CE1 and CE2 for Option B interfaces. The 2nd and 4th IPs are to be configured on PE1 and PE2 for Option B interfaces. </param>
-        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerConfiguration"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        internal TerminalServerConfiguration(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, string networkDeviceId, string username, string password, string serialNumber) : base(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix)
+        /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        internal TerminalServerConfiguration(string username, string password, string serialNumber, ResourceIdentifier networkDeviceId, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(username, password, serialNumber)
         {
             NetworkDeviceId = networkDeviceId;
-            Username = username;
-            Password = password;
-            SerialNumber = serialNumber;
+            PrimaryIPv4Prefix = primaryIPv4Prefix;
+            PrimaryIPv6Prefix = primaryIPv6Prefix;
+            SecondaryIPv4Prefix = secondaryIPv4Prefix;
+            SecondaryIPv6Prefix = secondaryIPv6Prefix;
         }
 
         /// <summary> ARM Resource ID used for the NetworkDevice. </summary>
-        public string NetworkDeviceId { get; }
-        /// <summary> Username for the terminal server connection. </summary>
-        public string Username { get; set; }
-        /// <summary> Password for the terminal server connection. </summary>
-        public string Password { get; set; }
-        /// <summary> Serial Number of Terminal server. </summary>
-        public string SerialNumber { get; set; }
+        public ResourceIdentifier NetworkDeviceId { get; }
+        /// <summary> IPv4 Address Prefix. </summary>
+        public string PrimaryIPv4Prefix { get; set; }
+        /// <summary> IPv6 Address Prefix. </summary>
+        public string PrimaryIPv6Prefix { get; set; }
+        /// <summary> Secondary IPv4 Address Prefix. </summary>
+        public string SecondaryIPv4Prefix { get; set; }
+        /// <summary> Secondary IPv6 Address Prefix. </summary>
+        public string SecondaryIPv6Prefix { get; set; }
     }
 }

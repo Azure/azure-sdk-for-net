@@ -10,11 +10,17 @@ using Azure.ResourceManager.NetApp.Models;
 using Azure.ResourceManager.NetApp.Tests.Helpers;
 using FluentAssertions;
 using NUnit.Framework;
+using Polly.Contrib.WaitAndRetry;
+using Polly;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Tests
 {
     public class ANFBackupPolicyTests : NetAppTestBase
     {
+        private NetAppAccountCollection _netAppAccountCollection { get => _resourceGroup.GetNetAppAccounts(); }
+        //public static new AzureLocation DefaultLocation = AzureLocation.EastUS2;
+        public static new AzureLocation DefaultLocationString = DefaultLocation;
         internal NetAppBackupPolicyCollection _backupPolicyCollection { get => _netAppAccount.GetNetAppBackupPolicies(); }
 
         internal readonly NetAppBackupPolicyData _backupPolicy = new NetAppBackupPolicyData(DefaultLocation)
@@ -32,10 +38,9 @@ namespace Azure.ResourceManager.NetApp.Tests
         [SetUp]
         public async Task SetUp()
         {
-            _resourceGroup = await CreateResourceGroupAsync();
+            _resourceGroup = await CreateResourceGroupAsync(location: DefaultLocation);
             string accountName = await CreateValidAccountNameAsync(_accountNamePrefix, _resourceGroup, DefaultLocation);
-            NetAppAccountCollection netAppAccountCollection = _resourceGroup.GetNetAppAccounts();
-            _netAppAccount = (await netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters())).Value;
+            _netAppAccount = (await _netAppAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, GetDefaultNetAppAccountParameters(location: DefaultLocation))).Value;
         }
 
         [TearDown]
@@ -57,7 +62,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             _resourceGroup = null;
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
+        //[Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task CreateDeleteBackupPolicy()
         {
@@ -90,7 +95,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(404, exception.Status);
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task ListBackupPolicies()
         {
@@ -129,7 +133,6 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsFalse(await _backupPolicyCollection.ExistsAsync(backupPolicyName + "1"));
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
         public async Task UpdateBackupPolicy()
         {
@@ -140,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Tests
 
             //Update with patch
             NetAppBackupPolicyPatch backupPolicyPatch = new(DefaultLocation);
-            backupPolicyPatch.DailyBackupsToKeep = 1;
+            backupPolicyPatch.DailyBackupsToKeep = 2;
             NetAppBackupPolicyResource backupPolicyPatchedResource = (await backupPolicyResource1.UpdateAsync(WaitUntil.Completed, backupPolicyPatch)).Value;
             NetAppBackupPolicyResource backupPolicyPatchedResource2 = await _backupPolicyCollection.GetAsync(backupPolicyName);
             Assert.AreEqual(backupPolicyName, backupPolicyPatchedResource2.Id.Name);
@@ -150,10 +153,11 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.AreEqual(_backupPolicy.IsEnabled, backupPolicyPatchedResource2.Data.IsEnabled);
         }
 
-        [Ignore("Permission issue, disable this case temporary")]
         [RecordedTest]
+        [Ignore("Ignore for now due to service side issue, re-enable when service side issue is fixed")]
         public async Task CreateVolumeWithBackupPolicy()
         {
+            Console.WriteLine($"{DateTime.Now.ToLongTimeString()} CreateVolumeWithBackupPolicyTest ");
             //create CapacityPool
             var backupPolicyName = Recording.GenerateAssetName("backupPolicy-");
             NetAppBackupPolicyResource backupPolicyResource1 = await CreateBackupPolicy(DefaultLocation, backupPolicyName);
@@ -162,12 +166,12 @@ namespace Azure.ResourceManager.NetApp.Tests
             //create capacity pool
             _capacityPool = await CreateCapacityPool(DefaultLocation, NetAppFileServiceLevel.Premium, _poolSize);
             _volumeCollection = _capacityPool.GetNetAppVolumes();
-
             //Create volume
             var volumeName = Recording.GenerateAssetName("volumeName-");
             NetAppVolumeBackupConfiguration backupPolicyProperties = new() { BackupPolicyId = backupPolicyResource1.Id, IsPolicyEnforced = false, IsBackupEnabled = true };
             NetAppVolumeDataProtection dataProtectionProperties = new() { Backup = backupPolicyProperties};
-            await CreateVirtualNetwork();
+            //create vnet for volume
+            await CreateVirtualNetwork(location: DefaultLocation);
             NetAppVolumeResource volumeResource1 = await CreateVolume(DefaultLocation, NetAppFileServiceLevel.Premium, _defaultUsageThreshold, volumeName, subnetId:DefaultSubnetId, dataProtection: dataProtectionProperties);
 
             //Validate if created properly
@@ -177,8 +181,15 @@ namespace Azure.ResourceManager.NetApp.Tests
             Assert.IsNull(backupVolumeResource.Data.DataProtection.Replication);
             Assert.AreEqual(backupPolicyProperties.BackupPolicyId, backupVolumeResource.Data.DataProtection.Backup.BackupPolicyId);
 
-            await volumeResource1.DeleteAsync(WaitUntil.Completed);
+            //Disable backupPolicy to avoid server side issue
+            backupPolicyProperties = new() { BackupPolicyId = null, IsPolicyEnforced = false, IsBackupEnabled = false };
+            NetAppVolumePatch parameters = new(DefaultLocation);
+            NetAppVolumePatchDataProtection patchDataProtection = new() { Backup = backupPolicyProperties };
+            parameters.DataProtection = patchDataProtection;
+            volumeResource1 = (await volumeResource1.UpdateAsync(WaitUntil.Completed, parameters)).Value;
             await LiveDelay(40000);
+            await volumeResource1.DeleteAsync(WaitUntil.Completed);
+            await WaitForVolumeDeleted(_volumeCollection, volumeResource1);
             await _capacityPool.DeleteAsync(WaitUntil.Completed);
         }
 
@@ -186,6 +197,48 @@ namespace Azure.ResourceManager.NetApp.Tests
         {
             NetAppBackupPolicyResource backupPolicyResource = (await _backupPolicyCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, _backupPolicy)).Value;
             return backupPolicyResource;
+        }
+
+        private async Task WaitForVolumeDeleted(NetAppVolumeCollection volumeCollection, NetAppVolumeResource volumeResource = null)
+        {
+            Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Wait for volume deletion {volumeResource.Id.Name}");
+            var maxDelay = TimeSpan.FromSeconds(120);
+            int count = 0;
+            if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") == "Playback")
+            {
+                maxDelay = TimeSpan.FromMilliseconds(500);
+            }
+
+            IEnumerable<TimeSpan> delay = Backoff.DecorrelatedJitterBackoffV2(medianFirstRetryDelay: TimeSpan.FromSeconds(5), retryCount: 500)
+                    .Select(s => TimeSpan.FromTicks(Math.Min(s.Ticks, maxDelay.Ticks))); // use jitter strategy in the retry algorithm to prevent retries bunching into further spikes of load, with ceiling on delays (for larger retrycount)
+
+            Polly.Retry.AsyncRetryPolicy<bool> retryPolicy = Policy
+                .HandleResult<bool>(false) // retry if delegate executed asynchronously returns false
+                .WaitAndRetryAsync(delay);
+
+            try
+            {
+                await retryPolicy.ExecuteAsync(async () =>
+                {
+                    count++;
+                    bool exists = await volumeCollection.ExistsAsync(volumeResource.Id.Name);
+                    Console.WriteLine($"{DateTime.Now.ToLongTimeString()} Check if volume {volumeResource.Id.Name} exists {exists} ");
+                    if (exists)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        //retry
+                        return false;
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Final Throw {ex.Message}");
+                throw;
+            }
         }
     }
 }

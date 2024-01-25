@@ -8,13 +8,17 @@ azure-arm: true
 csharp: true
 library-name: ContainerService
 namespace: Azure.ResourceManager.ContainerService
-require: https://github.com/Azure/azure-rest-api-specs/blob/3b4a2c4af20e4aea66871c9ed067d0641ea2ac80/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md
-tag: package-preview-2022-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6fa7593a0ba4371e45991/specification/containerservice/resource-manager/Microsoft.ContainerService/aks/readme.md
+#tag: package-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug: 
+#  show-serialized-names: true
 
 request-path-to-singleton-resource:
   /subscriptions/{subscriptionId}/providers/Microsoft.ContainerService/locations/{location}/osOptions/default: osOptions/default
@@ -38,7 +42,6 @@ rename-mapping:
   PrivateLinkResource: ContainerServicePrivateLinkResourceData
   ManagedClusterAddonProfile.enabled: IsEnabled
   ManagedClusterPodIdentityProfile.enabled: IsEnabled
-  ManagedClusterSecurityProfileAzureDefender.enabled: IsEnabled
   WindowsGmsaProfile.enabled: IsEnabled
   TimeSpan.start: StartOn
   TimeSpan.end: EndOn
@@ -53,10 +56,8 @@ rename-mapping:
   RunCommandResult: ManagedClusterRunCommandResult
   UserAssignedIdentity.objectId: -|uuid
   UserAssignedIdentity.clientId: -|uuid
-#   ManagedClusterServicePrincipalProfile.clientId: -|uuid
   ManagedClusterAADProfile.serverAppID: -|uuid
   ManagedClusterAADProfile.clientAppID: -|uuid
-#   ManagedClusterAADProfile.adminGroupObjectIDs.items: -|uuid
   ManagedClusterSecurityProfileDefenderSecurityMonitoring.enabled: IsSecurityMonitoringEnabled
   AzureKeyVaultKms: ManagedClusterSecurityProfileKeyVaultKms
   AzureKeyVaultKms.enabled: IsEnabled
@@ -69,30 +70,26 @@ rename-mapping:
   Schedule: ContainerServiceMaintenanceSchedule
   WeeklySchedule: ContainerServiceMaintenanceWeeklySchedule
   BackendPoolType: ManagedClusterLoadBalancerBackendPoolType
-  ContainerServiceNetworkProfileKubeProxyConfig.enabled: IsEnabled
-  ContainerServiceNetworkProfileKubeProxyConfigIpvsConfig: ContainerServiceNetworkProfileKubeProxyIpvsConfig
-  IpvsScheduler: ContainerServiceNetworkProfileKubeProxyIpvsScheduler
-  Mode: ContainerServiceNetworkProfileKubeProxyMode
-  ControlledValues: ManagedClusterWorkloadAutoScalerControlledValue
-  GuardrailsProfile: ManagedClusterGuardrailsProfile
-  Level: ManagedClusterGuardrailsProfileLevel
   ManagedClusterAzureMonitorProfileKubeStateMetrics: ManagedClusterMonitorProfileKubeStateMetrics
   ManagedClusterAzureMonitorProfileMetrics: ManagedClusterMonitorProfileMetrics
   ManagedClusterAzureMonitorProfileMetrics.enabled: IsEnabled
-  ManagedClusterSecurityProfile.properties.nodeRestrictionEnabled: IsNodeRestrictionEnabled
-  ManagedClusterSecurityProfile.properties.workloadIdentityEnabled: IsWorkloadIdentityEnabled
   ManagedClusterSecurityProfileImageCleaner.enabled: IsEnabled
-  ManagedClusterWorkloadAutoScalerProfile.kedaEnabled: IsKedaEnabled
   ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler: ManagedClusterVerticalPodAutoscaler
-  ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled: IsEnabled
-  UpdateMode: ManagedClusterVerticalPodAutoscalerUpdateMode
+  ManagedClusterWorkloadAutoScalerProfileVerticalPodAutoscaler.enabled: IsVpaEnabled
   NodeOSUpgradeChannel: ManagedClusterNodeOSUpgradeChannel
   PortRange: AgentPoolNetworkPortRange
   Protocol: AgentPoolNetworkPortProtocol
-  RestrictionLevel: ManagedClusterNodeResourceGroupRestrictionLevel
   AgentPool.properties.capacityReservationGroupID: -|arm-id
   ManagedClusterAgentPoolProfileProperties.capacityReservationGroupID: -|arm-id
-  ManagedClusterIngressProfileWebAppRouting.enabled: IsEnabled
+  MaintenanceWindow.startDate: -|string
+  # Change from ManagedServiceIdentity to ManagedClusterIdentity
+  ManagedCluster.identity: ClusterIdentity
+  DelegatedResource: ManagedClusterDelegatedIdentity
+  ManagedCluster.properties.resourceUID: ResourceID|arm-id
+  IstioEgressGateway.enabled: IsEnabled
+  IstioIngressGateway.enabled: IsEnabled
+  ManagedClusterWorkloadAutoScalerProfileKeda.enabled: IsKedaEnabled
+  ManagedClusterSecurityProfileWorkloadIdentity.enabled: IsWorkloadIdentityEnabled
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -110,7 +107,7 @@ format-by-name-rules:
   'PrincipalId': 'uuid'
   'IPAddress': 'ip-address'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -184,19 +181,10 @@ prepend-rp-prefix:
   - PrivateLinkResourcesListResult
   - TagsObject
   - PowerState
-  - Fleet
-  - FleetMember
   - DateSpan
-  - FleetCredentialResult
-  - FleetCredentialResults
-  - FleetHubProfile
-  - FleetMemberProvisioningState
-  - FleetPatch
-  - FleetProvisioningState
   - IPTag
   - MaintenanceWindow
   - NetworkPluginMode
-  - NetworkProfileForSnapshot
   - TrustedAccessRole
   - TrustedAccessRoleBinding
   - TrustedAccessRoleRule

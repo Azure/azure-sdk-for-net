@@ -60,7 +60,10 @@ namespace Azure.ResourceManager.Logic
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definition);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(Definition.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(Definition))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             if (Optional.IsCollectionDefined(Parameters))

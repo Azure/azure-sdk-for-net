@@ -188,6 +188,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             options.PrefetchCount = 0;
             options.SessionIdleTimeout = TimeSpan.FromSeconds(1);
             options.MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(0);
+            options.MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan;
         }
 
         [Test]
@@ -443,6 +444,23 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             Assert.IsTrue(processMessageCalled);
             Assert.IsTrue(sessionOpenCalled);
             Assert.IsTrue(sessionCloseCalled);
+        }
+
+        [Test]
+        public void CanUpdateConcurrencyOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdateConcurrency(5, 2);
+            Assert.AreEqual(5, mockProcessor.MaxConcurrentSessions);
+            Assert.AreEqual(2, mockProcessor.MaxConcurrentCallsPerSession);
+        }
+
+        [Test]
+        public void CanUpdatePrefetchOnMockSessionProcessor()
+        {
+            var mockProcessor = new MockSessionProcessor();
+            mockProcessor.UpdatePrefetchCount(10);
+            Assert.AreEqual(10, mockProcessor.PrefetchCount);
         }
 
         [Test]

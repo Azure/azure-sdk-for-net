@@ -13,28 +13,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningContainerRegistryCredentials. </summary>
     public partial class MachineLearningContainerRegistryCredentials
     {
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
         internal MachineLearningContainerRegistryCredentials()
         {
             Passwords = new ChangeTrackingList<MachineLearningPasswordDetail>();
         }
 
-        /// <summary> Initializes a new instance of MachineLearningContainerRegistryCredentials. </summary>
-        /// <param name="location"></param>
-        /// <param name="username"></param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningContainerRegistryCredentials"/>. </summary>
+        /// <param name="location"> The location of the workspace ACR. </param>
         /// <param name="passwords"></param>
-        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, string username, IReadOnlyList<MachineLearningPasswordDetail> passwords)
+        /// <param name="username"> The username of the workspace ACR. </param>
+        internal MachineLearningContainerRegistryCredentials(AzureLocation? location, IReadOnlyList<MachineLearningPasswordDetail> passwords, string username)
         {
             Location = location;
-            Username = username;
             Passwords = passwords;
+            Username = username;
         }
 
-        /// <summary> Gets the location. </summary>
+        /// <summary> The location of the workspace ACR. </summary>
         public AzureLocation? Location { get; }
-        /// <summary> Gets the username. </summary>
-        public string Username { get; }
         /// <summary> Gets the passwords. </summary>
         public IReadOnlyList<MachineLearningPasswordDetail> Passwords { get; }
+        /// <summary> The username of the workspace ACR. </summary>
+        public string Username { get; }
     }
 }

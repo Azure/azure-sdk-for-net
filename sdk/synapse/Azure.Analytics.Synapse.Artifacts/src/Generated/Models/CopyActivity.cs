@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Copy activity. </summary>
     public partial class CopyActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of CopyActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="source">
         /// Copy activity source.
@@ -42,10 +42,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Copy";
         }
 
-        /// <summary> Initializes a new instance of CopyActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
+        /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
+        /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -76,7 +78,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="preserve"> Preserve rules. </param>
         /// <param name="validateDataConsistency"> Whether to enable Data Consistency validation. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="skipErrorFile"> Specify the fault tolerance for data consistency. </param>
-        internal CopyActivity(string name, string type, string description, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopySource source, CopySink sink, object translator, object enableStaging, StagingSettings stagingSettings, object parallelCopies, object dataIntegrationUnits, object enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, LogStorageSettings logStorageSettings, LogSettings logSettings, IList<object> preserveRules, IList<object> preserve, object validateDataConsistency, SkipErrorFile skipErrorFile) : base(name, type, description, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal CopyActivity(string name, string type, string description, ActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<ActivityDependency> dependsOn, IList<UserProperty> userProperties, IDictionary<string, object> additionalProperties, LinkedServiceReference linkedServiceName, ActivityPolicy policy, IList<DatasetReference> inputs, IList<DatasetReference> outputs, CopySource source, CopySink sink, object translator, object enableStaging, StagingSettings stagingSettings, object parallelCopies, object dataIntegrationUnits, object enableSkipIncompatibleRow, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings, LogStorageSettings logStorageSettings, LogSettings logSettings, IList<object> preserveRules, IList<object> preserve, object validateDataConsistency, SkipErrorFile skipErrorFile) : base(name, type, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             Inputs = inputs;
             Outputs = outputs;

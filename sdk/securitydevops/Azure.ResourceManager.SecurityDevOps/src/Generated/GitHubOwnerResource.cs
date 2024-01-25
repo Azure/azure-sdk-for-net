@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.SecurityDevOps
 {
     /// <summary>
     /// A Class representing a GitHubOwner along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="GitHubOwnerResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetGitHubOwnerResource method.
-    /// Otherwise you can get one from its parent resource <see cref="GitHubConnectorResource" /> using the GetGitHubOwner method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="GitHubOwnerResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetGitHubOwnerResource method.
+    /// Otherwise you can get one from its parent resource <see cref="GitHubConnectorResource"/> using the GetGitHubOwner method.
     /// </summary>
     public partial class GitHubOwnerResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="GitHubOwnerResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="gitHubConnectorName"> The gitHubConnectorName. </param>
+        /// <param name="gitHubOwnerName"> The gitHubOwnerName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string gitHubConnectorName, string gitHubOwnerName)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.SecurityDevOps/gitHubConnectors/{gitHubConnectorName}/owners/{gitHubOwnerName}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.SecurityDevOps
         private readonly GitHubOwnerRestOperations _gitHubOwnerRestClient;
         private readonly GitHubOwnerData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/gitHubConnectors/owners";
+
         /// <summary> Initializes a new instance of the <see cref="GitHubOwnerResource"/> class for mocking. </summary>
         protected GitHubOwnerResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "GitHubOwnerResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="GitHubOwnerResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal GitHubOwnerResource(ArmClient client, GitHubOwnerData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.SecurityDevOps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/gitHubConnectors/owners";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -90,7 +94,7 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <returns> An object representing collection of GitHubRepoResources and their operations over a GitHubRepoResource. </returns>
         public virtual GitHubRepoCollection GetGitHubRepos()
         {
-            return GetCachedClient(Client => new GitHubRepoCollection(Client, Id));
+            return GetCachedClient(client => new GitHubRepoCollection(client, Id));
         }
 
         /// <summary>
@@ -104,12 +108,20 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<GitHubRepoResource>> GetGitHubRepoAsync(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
@@ -127,12 +139,20 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="gitHubRepoName"> Name of the GitHub Repo. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="gitHubRepoName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="gitHubRepoName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<GitHubRepoResource> GetGitHubRepo(string gitHubRepoName, CancellationToken cancellationToken = default)
         {
@@ -149,6 +169,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -182,6 +210,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -213,6 +249,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,6 +295,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GitHubOwner_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GitHubOwnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

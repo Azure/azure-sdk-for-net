@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<string> value = default;
-            Optional<IList<DataFactoryActivity>> activities = default;
+            Optional<IList<PipelineActivity>> activities = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    List<DataFactoryActivity> array = new List<DataFactoryActivity>();
+                    List<PipelineActivity> array = new List<PipelineActivity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryActivity.DeserializeDataFactoryActivity(item));
+                        array.Add(PipelineActivity.DeserializePipelineActivity(item));
                     }
                     activities = array;
                     continue;

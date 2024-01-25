@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.DevCenter.Models
     /// <summary> Results of the Microsoft.DevCenter SKU list operation. </summary>
     internal partial class SkuListResult
     {
-        /// <summary> Initializes a new instance of SkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuListResult"/>. </summary>
         internal SkuListResult()
         {
             Value = new ChangeTrackingList<DevCenterSkuDetails>();
         }
 
-        /// <summary> Initializes a new instance of SkuListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkuListResult"/>. </summary>
         /// <param name="value"> Current page of results. </param>
         /// <param name="nextLink"> URL to get the next set of results if there are any. </param>
         internal SkuListResult(IReadOnlyList<DevCenterSkuDetails> value, string nextLink)

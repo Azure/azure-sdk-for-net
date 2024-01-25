@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,21 +14,54 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Specifies the peering configuration. </summary>
     public partial class ExpressRouteCircuitPeeringConfig
     {
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringConfig"/>. </summary>
         public ExpressRouteCircuitPeeringConfig()
         {
             AdvertisedPublicPrefixes = new ChangeTrackingList<string>();
             AdvertisedCommunities = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of ExpressRouteCircuitPeeringConfig. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExpressRouteCircuitPeeringConfig"/>. </summary>
         /// <param name="advertisedPublicPrefixes"> The reference to AdvertisedPublicPrefixes. </param>
         /// <param name="advertisedCommunities"> The communities of bgp peering. Specified for microsoft peering. </param>
         /// <param name="advertisedPublicPrefixesState"> The advertised public prefix state of the Peering resource. </param>
         /// <param name="legacyMode"> The legacy mode of the peering. </param>
         /// <param name="customerASN"> The CustomerASN of the peering. </param>
         /// <param name="routingRegistryName"> The RoutingRegistryName of the configuration. </param>
-        internal ExpressRouteCircuitPeeringConfig(IList<string> advertisedPublicPrefixes, IList<string> advertisedCommunities, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState, int? legacyMode, int? customerASN, string routingRegistryName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExpressRouteCircuitPeeringConfig(IList<string> advertisedPublicPrefixes, IList<string> advertisedCommunities, ExpressRouteCircuitPeeringAdvertisedPublicPrefixState? advertisedPublicPrefixesState, int? legacyMode, int? customerASN, string routingRegistryName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdvertisedPublicPrefixes = advertisedPublicPrefixes;
             AdvertisedCommunities = advertisedCommunities;
@@ -35,6 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             LegacyMode = legacyMode;
             CustomerASN = customerASN;
             RoutingRegistryName = routingRegistryName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The reference to AdvertisedPublicPrefixes. </summary>

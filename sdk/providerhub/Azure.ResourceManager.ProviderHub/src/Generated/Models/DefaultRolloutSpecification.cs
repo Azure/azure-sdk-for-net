@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> The DefaultRolloutSpecification. </summary>
     public partial class DefaultRolloutSpecification
     {
-        /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecification"/>. </summary>
         public DefaultRolloutSpecification()
         {
             ResourceTypeRegistrations = new ChangeTrackingList<ResourceTypeRegistrationData>();
         }
 
-        /// <summary> Initializes a new instance of DefaultRolloutSpecification. </summary>
+        /// <summary> Initializes a new instance of <see cref="DefaultRolloutSpecification"/>. </summary>
         /// <param name="canary"></param>
         /// <param name="lowTraffic"></param>
         /// <param name="mediumTraffic"></param>

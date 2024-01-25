@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using Azure.Core.TestFramework;
 using Azure.Identity;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
@@ -411,6 +412,81 @@ namespace Azure.Core.Extensions.Tests
             Assert.That(
                 () => ClientFactory.CreateCredential(configuration),
                 Throws.InstanceOf<ArgumentException>().With.Message.Contains("managedIdentityResourceId"));
+        }
+
+        [Test]
+        public void CreatesWorkloadIdentityCredentialsWithOptions()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("tokenFilePath", "ConfigurationTokenFilePath"),
+                new KeyValuePair<string, string>("credential", "workloadidentity")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
+
+            var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+
+            Assert.AreEqual("ConfigurationTenantId", credentialAssertion.TenantId);
+            Assert.AreEqual("ConfigurationClientId", credentialAssertion.ClientId);
+
+            Type fileCacheType = typeof(WorkloadIdentityCredential).Assembly.DefinedTypes.Single(x => x.FullName == "Azure.Identity.FileContentsCache");
+            var fileCache = typeof(WorkloadIdentityCredential).GetField("_tokenFileCache", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+            var actualTokenFilePath = fileCacheType.GetField("_tokenFilePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(fileCache);
+
+            Assert.AreEqual("ConfigurationTokenFilePath", actualTokenFilePath);
+        }
+
+        [Test]
+        public void CreatesWorkloadIdentityCredentialsWithEnvironmentVariables()
+        {
+            IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("credential", "workloadidentity"));
+            using var envVariables = new TestEnvVar(new Dictionary<string, string>
+            {
+                { "AZURE_TENANT_ID", "EnvTenantId" },
+                { "AZURE_CLIENT_ID", "EnvClientId" },
+                { "AZURE_FEDERATED_TOKEN_FILE", "EnvTokenFilePath" },
+            });
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<WorkloadIdentityCredential>(credential);
+            var workloadIdentityCredential = (WorkloadIdentityCredential)credential;
+
+            var credentialAssertion = (ClientAssertionCredential)typeof(WorkloadIdentityCredential).GetField("_clientAssertionCredential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+
+            Assert.AreEqual("EnvTenantId", credentialAssertion.TenantId);
+            Assert.AreEqual("EnvClientId", credentialAssertion.ClientId);
+
+            Type fileCacheType = typeof(WorkloadIdentityCredential).Assembly.DefinedTypes.Single(x => x.FullName == "Azure.Identity.FileContentsCache");
+            var fileCache = typeof(WorkloadIdentityCredential).GetField("_tokenFileCache", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(workloadIdentityCredential);
+            var actualTokenFilePath = fileCacheType.GetField("_tokenFilePath", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(fileCache);
+
+            Assert.AreEqual("EnvTokenFilePath", actualTokenFilePath);
+        }
+
+        [TestCase(null, null, null)]
+        [TestCase(null, "ConfigurationClientId", "ConfigurationTokenFilePath")]
+        [TestCase("ConfigurationTenantId", null, "ConfigurationTokenFilePath")]
+        [TestCase("ConfigurationTenantId", "ConfigurationClientId", null)]
+        [TestCase("ConfigurationTenantId", null, null)]
+        [TestCase(null, "ConfigurationClientId", null)]
+        [TestCase(null, null, "ConfigurationTokenFilePath")]
+        [TestCase(null, "ConfigurationClientId", null)]
+        public void CreatesWorkloadIdentityCredentialsWithoutNecessaryOptions(string tenantId, string clientId, string tokenFilePath)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("tenantId", tenantId),
+                new KeyValuePair<string, string>("clientId", clientId),
+                new KeyValuePair<string, string>("tokenFilePath", tokenFilePath),
+                new KeyValuePair<string, string>("credential", "workloadidentity")
+            );
+
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
         }
 
         [Test]

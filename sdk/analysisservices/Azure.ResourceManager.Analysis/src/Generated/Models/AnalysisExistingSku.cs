@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
@@ -12,18 +14,52 @@ namespace Azure.ResourceManager.Analysis.Models
     /// <summary> An object that represents SKU details for existing resources. </summary>
     public partial class AnalysisExistingSku
     {
-        /// <summary> Initializes a new instance of AnalysisExistingSku. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AnalysisExistingSku"/>. </summary>
         internal AnalysisExistingSku()
         {
         }
 
-        /// <summary> Initializes a new instance of AnalysisExistingSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="AnalysisExistingSku"/>. </summary>
         /// <param name="sku"> The SKU in SKU details for existing resources. </param>
         /// <param name="resourceType"> The resource type. </param>
-        internal AnalysisExistingSku(AnalysisResourceSku sku, ResourceType? resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisExistingSku(AnalysisResourceSku sku, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             ResourceType = resourceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU in SKU details for existing resources. </summary>

@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Resources.Models
     /// <summary> List of deployments. </summary>
     internal partial class ArmDeploymentListResult
     {
-        /// <summary> Initializes a new instance of ArmDeploymentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentListResult"/>. </summary>
         internal ArmDeploymentListResult()
         {
             Value = new ChangeTrackingList<ArmDeploymentData>();
         }
 
-        /// <summary> Initializes a new instance of ArmDeploymentListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentListResult"/>. </summary>
         /// <param name="value"> An array of deployments. </param>
         /// <param name="nextLink"> The URL to use for getting the next set of results. </param>
         internal ArmDeploymentListResult(IReadOnlyList<ArmDeploymentData> value, string nextLink)

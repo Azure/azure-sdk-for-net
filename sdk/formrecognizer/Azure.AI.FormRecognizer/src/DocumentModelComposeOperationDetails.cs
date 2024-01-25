@@ -12,8 +12,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
         /// Initializes a new instance of DocumentModelComposeOperationDetails. Used by the <see cref="DocumentAnalysisModelFactory"/>
         /// for mocking.
         /// </summary>
-        internal DocumentModelComposeOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModelDetails result)
-            : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, DocumentOperationKind.DocumentModelCompose, resourceLocation, apiVersion, tags, error)
+        internal DocumentModelComposeOperationDetails(string operationId, DocumentOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation, string serviceVersion, IReadOnlyDictionary<string, string> tags, ResponseError error, DocumentModelDetails result)
+            : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, DocumentOperationKind.DocumentModelCompose, resourceLocation, serviceVersion, tags, error)
         {
             Result = result;
         }

@@ -156,7 +156,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     document,
                     cancellationToken).ConfigureAwait(false);
 
@@ -219,7 +218,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     document,
                     cancellationToken);
 
@@ -282,7 +280,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     request,
                     cancellationToken).ConfigureAwait(false);
 
@@ -345,7 +342,6 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     options.Locale,
                     Constants.DefaultStringIndexType,
                     options.Features.Count == 0 ? null : options.Features,
-                    options.QueryFields.Count == 0 ? null : options.QueryFields,
                     request,
                     cancellationToken);
 

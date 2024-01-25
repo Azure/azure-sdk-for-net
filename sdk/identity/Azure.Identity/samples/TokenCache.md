@@ -3,20 +3,24 @@
 *Token caching* is a feature provided by the Azure Identity library that allows apps to:
 
 - Improve their resilience and performance.
-- Reduce the number of requests made to Azure Active Directory (Azure AD) to obtain access tokens.
+- Reduce the number of requests made to Microsoft Entra ID to obtain access tokens.
 - Reduce the number of times the user is prompted to authenticate.
 
-When an app needs to access a protected Azure resource, it typically needs to obtain an access token from Azure AD. Obtaining that token involves sending a request to Azure AD and may also involve prompting the user. Azure AD then validates the credentials provided in the request and issues an access token.
+When an app needs to access a protected Azure resource, it typically needs to obtain an access token from Microsoft Entra ID. Obtaining that token involves sending a request to Microsoft Entra ID and may also involve prompting the user. Microsoft Entra ID then validates the credentials provided in the request and issues an access token.
 
-Token caching, via the Azure Identity library, allows the app to store this access token [in memory](#in-memory-token-caching), where it's accessible to the current process, or [on disk](#persistent-token-caching) where it can be accessed across application or process invocations. The token can then be retrieved quickly and easily the next time the app needs to access the same resource. The app can avoid making another request to Azure AD, which reduces network traffic and improves resilience. Additionally, in scenarios where the app is authenticating users, token caching also avoids prompting the user each time new tokens are requested.
+Token caching, via the Azure Identity library, allows the app to store this access token [in memory](#in-memory-token-caching), where it's accessible to the current process, or [on disk](#persistent-token-caching) where it can be accessed across application or process invocations. The token can then be retrieved quickly and easily the next time the app needs to access the same resource. The app can avoid making another request to Microsoft Entra ID, which reduces network traffic and improves resilience. Additionally, in scenarios where the app is authenticating users, token caching also avoids prompting the user each time new tokens are requested.
 
 ### In-memory token caching
 
-*In-memory token caching* is the default option provided by the Azure Identity library. This caching approach allows apps to store access tokens in memory. With in-memory token caching, the library first determines if a valid access token for the requested resource is already stored in memory. If a valid token is found, it's returned to the app without the need to make another request to Azure AD. If a valid token isn't found, the library will automatically acquire a token by sending a request to Azure AD.
+*In-memory token caching* is the default option provided by the Azure Identity library. This caching approach allows apps to store access tokens in memory. With in-memory token caching, the library first determines if a valid access token for the requested resource is already stored in memory. If a valid token is found, it's returned to the app without the need to make another request to Microsoft Entra ID. If a valid token isn't found, the library will automatically acquire a token by sending a request to Microsoft Entra ID.
 
 The in-memory token cache provided by the Azure Identity library is thread-safe.
 
 **Note:** When Azure Identity library credentials are used with Azure service libraries (for example, Azure Blob Storage), the in-memory token caching is active in the `HttpPipeline` layer as well. All `TokenCredential` implementations are supported there, including custom implementations external to the Azure Identity library.
+
+#### Disable caching
+
+As there are many levels of cache, it's not possible to disable in-memory caching. However, the in-memory cache may be cleared by creating a new credential instance.
 
 ## Persistent token caching
 
@@ -28,10 +32,10 @@ The in-memory token cache provided by the Azure Identity library is thread-safe.
 | macOS            | Keychain          |
 | Windows          | DPAPI             |
 
-With persistent disk token caching enabled, the library first determines if a valid access token for the requested resource is already stored in the persistent cache. If a valid token is found, it's returned to the app without the need to make another request to Azure AD. Additionally, the tokens are preserved across app runs, which:
+With persistent disk token caching enabled, the library first determines if a valid access token for the requested resource is already stored in the persistent cache. If a valid token is found, it's returned to the app without the need to make another request to Microsoft Entra ID. Additionally, the tokens are preserved across app runs, which:
 
 - Makes the app more resilient to failures.
-- Ensures the app can continue to function during an Azure AD outage or disruption.
+- Ensures the app can continue to function during a Microsoft Entra ID outage or disruption.
 - Avoids having to prompt users to authenticate each time the process is restarted.
 
 
@@ -98,9 +102,10 @@ The following table indicates the state of in-memory and persistent caching in e
 | `ClientSecretCredential`       | Supported                                                              | Supported                     |
 | `DefaultAzureCredential`       | Supported if the target credential in the credential chain supports it | Not Supported                 |
 | `DeviceCodeCredential`         | Supported                                                              | Supported                     |
-| `VisualStudioCredential`       | Supported                                                              | Not Supported                 |
+| `EnvironmentCredential`        | Supported                                                              | Supported                     |
 | `InteractiveBrowserCredential` | Supported                                                              | Supported                     |
 | `ManagedIdentityCredential`    | Supported                                                              | Not Supported                 |
 | `OnBehalfOfCredential`         | Supported                                                              | Supported                     |
 | `UsernamePasswordCredential`   | Supported                                                              | Supported                     |
+| `VisualStudioCredential`       | Supported                                                              | Not Supported                 |
 | `WorkloadIdentityCredential`   | Supported                                                              | Supported                     |

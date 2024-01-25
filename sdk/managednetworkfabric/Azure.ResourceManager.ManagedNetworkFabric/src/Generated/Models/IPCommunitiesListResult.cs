@@ -11,26 +11,26 @@ using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> List of IPCommunities. </summary>
+    /// <summary> List of IP Communities. </summary>
     internal partial class IPCommunitiesListResult
     {
-        /// <summary> Initializes a new instance of IPCommunitiesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="IPCommunitiesListResult"/>. </summary>
         internal IPCommunitiesListResult()
         {
-            Value = new ChangeTrackingList<IPCommunityData>();
+            Value = new ChangeTrackingList<NetworkFabricIPCommunityData>();
         }
 
-        /// <summary> Initializes a new instance of IPCommunitiesListResult. </summary>
-        /// <param name="value"> List of IpCommunity resources. </param>
+        /// <summary> Initializes a new instance of <see cref="IPCommunitiesListResult"/>. </summary>
+        /// <param name="value"> List of IP Community resources. </param>
         /// <param name="nextLink"> Url to follow for getting next page of resources. </param>
-        internal IPCommunitiesListResult(IReadOnlyList<IPCommunityData> value, string nextLink)
+        internal IPCommunitiesListResult(IReadOnlyList<NetworkFabricIPCommunityData> value, string nextLink)
         {
             Value = value;
             NextLink = nextLink;
         }
 
-        /// <summary> List of IpCommunity resources. </summary>
-        public IReadOnlyList<IPCommunityData> Value { get; }
+        /// <summary> List of IP Community resources. </summary>
+        public IReadOnlyList<NetworkFabricIPCommunityData> Value { get; }
         /// <summary> Url to follow for getting next page of resources. </summary>
         public string NextLink { get; }
     }

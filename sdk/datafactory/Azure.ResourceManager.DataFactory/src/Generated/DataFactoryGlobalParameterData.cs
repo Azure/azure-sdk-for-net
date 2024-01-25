@@ -20,31 +20,31 @@ namespace Azure.ResourceManager.DataFactory
     /// </summary>
     public partial class DataFactoryGlobalParameterData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataFactoryGlobalParameterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterData"/>. </summary>
         /// <param name="properties"> Properties of the global parameter. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public DataFactoryGlobalParameterData(IDictionary<string, DataFactoryGlobalParameterSpecification> properties)
+        public DataFactoryGlobalParameterData(IDictionary<string, DataFactoryGlobalParameterProperties> properties)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
         }
 
-        /// <summary> Initializes a new instance of DataFactoryGlobalParameterData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryGlobalParameterData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="properties"> Properties of the global parameter. </param>
         /// <param name="eTag"> Etag identifies change in the resource. </param>
-        internal DataFactoryGlobalParameterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, DataFactoryGlobalParameterSpecification> properties, ETag? eTag) : base(id, name, resourceType, systemData)
+        internal DataFactoryGlobalParameterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, DataFactoryGlobalParameterProperties> properties, ETag? eTag) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             ETag = eTag;
         }
 
         /// <summary> Properties of the global parameter. </summary>
-        public IDictionary<string, DataFactoryGlobalParameterSpecification> Properties { get; }
+        public IDictionary<string, DataFactoryGlobalParameterProperties> Properties { get; }
         /// <summary> Etag identifies change in the resource. </summary>
         public ETag? ETag { get; }
     }

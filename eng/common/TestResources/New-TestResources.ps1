@@ -92,6 +92,9 @@ param (
     [Parameter()]
     [switch] $SuppressVsoCommands = ($null -eq $env:SYSTEM_TEAMPROJECTID),
 
+    [Parameter()]
+    [switch] $UserAuth,
+
     # Captures any arguments not declared here (no parameter errors)
     # This enables backwards compatibility with old script versions in
     # hotfix branches if and when the dynamic subscription configuration
@@ -290,7 +293,14 @@ function BuildDeploymentOutputs([string]$serviceName, [object]$azContext, [objec
         }
     }
 
-    return $deploymentOutputs
+    # Force capitalization of all keys to avoid Azure Pipelines confusion with
+    # variable auto-capitalization and OS env var capitalization differences
+    $capitalized = @{}
+    foreach ($item in $deploymentOutputs.GetEnumerator()) {
+        $capitalized[$item.Name.ToUpperInvariant()] = $item.Value
+    }
+
+    return $capitalized
 }
 
 function SetDeploymentOutputs(
@@ -604,8 +614,17 @@ try {
         }
     }
 
+    if ($UserAuth) {
+        if ($TestApplicationId) {
+            Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UserAuth is set."
+        }
+
+        $TestApplicationOid = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account).Id
+        $TestApplicationId = $testApplicationOid
+        Log "User-based app id '$TestApplicationId' will be used."
+    }
     # If no test application ID was specified during an interactive session, create a new service principal.
-    if (!$CI -and !$TestApplicationId) {
+    elseif (!$CI -and !$TestApplicationId) {
         # Cache the created service principal in this session for frequent reuse.
         $servicePrincipal = if ($AzureTestPrincipal -and (Get-AzADServicePrincipal -ApplicationId $AzureTestPrincipal.AppId) -and $AzureTestSubscription -eq $SubscriptionId) {
             Log "TestApplicationId was not specified; loading cached service principal '$($AzureTestPrincipal.AppId)'"
@@ -771,7 +790,6 @@ try {
                     -TemplateParameterObject $templateFileParameters `
                     -Force:$Force
         }
-
         if ($deployment.ProvisioningState -ne 'Succeeded') {
             Write-Host "Deployment '$($deployment.DeploymentName)' has state '$($deployment.ProvisioningState)' with CorrelationId '$($deployment.CorrelationId)'. Exiting..."
             Write-Host @'
@@ -803,6 +821,9 @@ try {
             Write-Verbose "Removing compiled bicep file $($templateFile.jsonFilePath)"
             Remove-Item $templateFile.jsonFilePath
         }
+
+        Write-Host "Deleting ARM deployment as it may contain secrets. Deployed resources will not be affected."
+        $null = $deployment | Remove-AzResourceGroupDeployment
     }
 
 } finally {
@@ -987,6 +1008,14 @@ Save test environment settings into a .env file next to test resources template.
 The contents of the file are protected via the .NET Data Protection API (DPAPI).
 This is supported only on Windows. The environment file is scoped to the current
 service directory.
+
+The environment file will be named for the test resources template that it was
+generated for. For ARM templates, it will be test-resources.json.env. For
+Bicep templates, test-resources.bicep.env.
+
+.PARAMETER UserAuth
+Create the resource group and deploy the template using the signed in user's credentials.
+No service principal will be created or used.
 
 The environment file will be named for the test resources template that it was
 generated for. For ARM templates, it will be test-resources.json.env. For

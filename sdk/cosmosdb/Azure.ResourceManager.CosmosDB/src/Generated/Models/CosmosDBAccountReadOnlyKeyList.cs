@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The read-only access keys for the given database account. </summary>
     public partial class CosmosDBAccountReadOnlyKeyList
     {
-        /// <summary> Initializes a new instance of CosmosDBAccountReadOnlyKeyList. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountReadOnlyKeyList"/>. </summary>
         internal CosmosDBAccountReadOnlyKeyList()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDBAccountReadOnlyKeyList. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBAccountReadOnlyKeyList"/>. </summary>
         /// <param name="primaryReadonlyMasterKey"> Base 64 encoded value of the primary read-only key. </param>
         /// <param name="secondaryReadonlyMasterKey"> Base 64 encoded value of the secondary read-only key. </param>
-        internal CosmosDBAccountReadOnlyKeyList(string primaryReadonlyMasterKey, string secondaryReadonlyMasterKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBAccountReadOnlyKeyList(string primaryReadonlyMasterKey, string secondaryReadonlyMasterKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PrimaryReadonlyMasterKey = primaryReadonlyMasterKey;
             SecondaryReadonlyMasterKey = secondaryReadonlyMasterKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Base 64 encoded value of the primary read-only key. </summary>

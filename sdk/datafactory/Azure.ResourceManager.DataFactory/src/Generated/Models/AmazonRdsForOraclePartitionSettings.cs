@@ -13,12 +13,12 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
     public partial class AmazonRdsForOraclePartitionSettings
     {
-        /// <summary> Initializes a new instance of AmazonRdsForOraclePartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOraclePartitionSettings"/>. </summary>
         public AmazonRdsForOraclePartitionSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of AmazonRdsForOraclePartitionSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRdsForOraclePartitionSettings"/>. </summary>
         /// <param name="partitionNames"> Names of the physical partitions of AmazonRdsForOracle table. </param>
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

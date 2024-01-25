@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
+            if (Optional.IsDefined(OSUpgradeVersion))
+            {
+                writer.WritePropertyName("osUpgradeVersion"u8);
+                writer.WriteStringValue(OSUpgradeVersion);
+            }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
             writer.WriteEndObject();

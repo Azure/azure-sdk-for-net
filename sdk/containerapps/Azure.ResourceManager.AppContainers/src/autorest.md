@@ -7,12 +7,20 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/905a9ad794ea9a1565ebe3857497b3a24872d553/specification/app/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ad997e99eccc15b7ab4cd66ae3f1f9534a1e2628/specification/app/resource-manager/readme.md
+# tag: package-2023-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -21,7 +29,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -217,6 +225,12 @@ rename-mapping:
   Job: ContainerAppJob
   JobsCollection: ContainerAppJobsCollection
   ManagedCertificate: ContainerAppManagedCertificate
+  Mtls.enabled: IsMtlsEnabled
+  ServiceBind: ContainerAppServiceBind
+  JobScale: ContainerAppJobScale
+  JobScale.pollingInterval: PollingIntervalInSeconds
+  JobScaleRule: ContainerAppJobScaleRule
+  JobConfigurationEventTriggerConfig: EventTriggerConfiguration
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate
@@ -231,7 +245,7 @@ override-operation-name:
     Namespaces_CheckNameAvailability: CheckContainerAppNameAvailability
 
 # mgmt-debug:
-#   show-serialized-names: true
+#    show-serialized-names: true
 
 directive:
   - from: swagger-document
@@ -239,4 +253,8 @@ directive:
     transform: >
       if ($['type'] === 'boolean')
         $['x-ms-client-name'] = 'IsEnabled'
+  # Change type to ResourceIdentifier
+  - from: CommonDefinitions.json
+    where: $.definitions.ServiceBind.properties.serviceId
+    transform: $['x-ms-format'] = 'arm-id'
 ```

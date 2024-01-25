@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
     /// <summary> List of remediations. </summary>
     internal partial class RemediationListResult
     {
-        /// <summary> Initializes a new instance of RemediationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationListResult"/>. </summary>
         internal RemediationListResult()
         {
             Value = new ChangeTrackingList<PolicyRemediationData>();
         }
 
-        /// <summary> Initializes a new instance of RemediationListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="RemediationListResult"/>. </summary>
         /// <param name="value"> Array of remediation definitions. </param>
         /// <param name="nextLink"> The URL to get the next set of results. </param>
         internal RemediationListResult(IReadOnlyList<PolicyRemediationData> value, string nextLink)

@@ -97,7 +97,7 @@ registryFilters.Phases.Add(ClinicalTrialPhase.Phase1);
 // Specify the clinical trial registry source as ClinicalTrials.Gov
 registryFilters.Sources.Add(ClinicalTrialSource.ClinicaltrialsGov);
 // Limit the clinical trial to a certain location, in this case California, USA
-registryFilters.FacilityLocations.Add(new GeographicLocation("United States") { State = "Arizona" , City = "Gilbert" });
+registryFilters.FacilityLocations.Add(new GeographicLocation("United States") { State = "Arizona", City = "Gilbert" });
 // Limit the trial to a specific study type, interventional
 registryFilters.StudyTypes.Add(ClinicalTrialStudyType.Interventional);
 
@@ -113,12 +113,12 @@ var trialMatcherData = new TrialMatcherData(new List<PatientRecord> { patient1 }
 Call MatchTrialsAsync to submit a trial matching async request and get the matching trials response
 
 ```C# Snippet:HealthInsightsClinicalMatchingMatchTrialsAsync
-TrialMatcherResult trialMatcherResult = default;
+TrialMatcherResults matcherResults = default;
 try
 {
     // Using ClinicalMatchingClient + MatchTrialsAsync
-    Operation<TrialMatcherResult> operation = await clinicalMatchingClient.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
-    trialMatcherResult = operation.Value;
+    Operation<TrialMatcherResults> operation = await clinicalMatchingClient.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+    matcherResults = operation.Value;
 }
 catch (Exception ex)
 {
@@ -130,10 +130,7 @@ catch (Exception ex)
 To view the final results:
 
 ```C# Snippet:HealthInsightsTrialMatcherMatchTrialsAsyncViewResults
-// View the match trials (eligible/ineligible)
-if (trialMatcherResult.Status == JobStatus.Succeeded)
-{
-    TrialMatcherResults matcherResults = trialMatcherResult.Results;
+    // View the match trials (eligible/ineligible)
     foreach (TrialMatcherPatientResult patientResult in matcherResults.Patients)
     {
         Console.WriteLine($"Inferences of Patient {patientResult.Id}");
@@ -143,14 +140,6 @@ if (trialMatcherResult.Status == JobStatus.Succeeded)
             Console.WriteLine($"Type: {tmInferences.Type.ToString()}  Value: {tmInferences.Value}");
             Console.WriteLine($"Description {tmInferences.Description}");
         }
-    }
-}
-else
-{
-    IReadOnlyList<ResponseError> matcherErrors = trialMatcherResult.Errors;
-    foreach (ResponseError error in matcherErrors)
-    {
-        Console.WriteLine($"{error.Code} : {error.Message}");
     }
 }
 ```

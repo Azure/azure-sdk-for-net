@@ -18,12 +18,12 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerNamespaceChannelData : ResourceData
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         public PartnerNamespaceChannelData()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerTopicInfo"> This property should be populated when channelType is PartnerTopic and represents information about the partner topic resource corresponding to the channel. </param>
         /// <param name="partnerDestinationInfo">
         /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
-        /// Please note <see cref="PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
         /// </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid
         public PartnerTopicInfo PartnerTopicInfo { get; set; }
         /// <summary>
         /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
-        /// Please note <see cref="PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
         /// </summary>
         public PartnerDestinationInfo PartnerDestinationInfo { get; set; }

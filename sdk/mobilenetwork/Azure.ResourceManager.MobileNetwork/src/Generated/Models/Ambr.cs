@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
     /// <summary> Aggregate maximum bit rate. </summary>
     public partial class Ambr
     {
-        /// <summary> Initializes a new instance of Ambr. </summary>
+        /// <summary> Initializes a new instance of <see cref="Ambr"/>. </summary>
         /// <param name="uplink"> Uplink bit rate. </param>
         /// <param name="downlink"> Downlink bit rate. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="uplink"/> or <paramref name="downlink"/> is null. </exception>

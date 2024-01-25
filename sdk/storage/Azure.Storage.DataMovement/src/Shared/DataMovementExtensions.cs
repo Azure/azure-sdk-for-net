@@ -2,42 +2,50 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
     internal static class DataMovementExtensions
     {
-        internal static StorageResourceProperties ToStorageResourceProperties(this FileInfo fileInfo)
+        internal static StorageResourceItemProperties ToStorageResourceProperties(this FileInfo fileInfo)
         {
-            return new StorageResourceProperties(
-                lastModified: fileInfo.LastWriteTimeUtc,
-                createdOn: fileInfo.CreationTimeUtc,
-                contentLength: fileInfo.Length,
-                lastAccessed: fileInfo.LastAccessTimeUtc);
+            Dictionary<string, object> properties = new Dictionary<string, object>();
+
+            return new StorageResourceItemProperties(
+                resourceLength: fileInfo.Length,
+                eTag: default,
+                lastModifiedTime: fileInfo.LastWriteTimeUtc,
+                properties: properties);
         }
 
-        public static async Task<StreamToUriJobPart> ToJobPartAsync(
+        public static StreamToUriJobPart ToJobPartAsync(
             this StreamToUriTransferJob baseJob,
             Stream planFileStream,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource)
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
-            StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
+            StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -45,25 +53,31 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<ServiceToServiceJobPart> ToJobPartAsync(
+        public static ServiceToServiceJobPart ToJobPartAsync(
             this ServiceToServiceTransferJob baseJob,
             Stream planFileStream,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource)
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
-            ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
+            ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -71,25 +85,31 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<UriToStreamJobPart> ToJobPartAsync(
+        public static UriToStreamJobPart ToJobPartAsync(
             this UriToStreamTransferJob baseJob,
             Stream planFileStream,
-            StorageResourceSingle sourceResource,
-            StorageResourceSingle destinationResource)
+            StorageResourceItem sourceResource,
+            StorageResourceItem destinationResource)
         {
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
-            UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
+            UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
                 sourceResource: sourceResource,
                 destinationResource: destinationResource,
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -97,7 +117,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<StreamToUriJobPart> ToJobPartAsync(
+        public static StreamToUriJobPart ToJobPartAsync(
             this StreamToUriTransferJob baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
@@ -106,20 +126,26 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
-            string childSourceName = childSourcePath.Substring(sourceResource.Path.Length + 1);
+            string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
             string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
-            StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
+            StreamToUriJobPart jobPart = StreamToUriJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourceName),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationName),
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -127,7 +153,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<ServiceToServiceJobPart> ToJobPartAsync(
+        public static ServiceToServiceJobPart ToJobPartAsync(
             this ServiceToServiceTransferJob baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
@@ -136,18 +162,24 @@ namespace Azure.Storage.DataMovement
             // Convert stream to job plan header
             JobPartPlanHeader header = JobPartPlanHeader.Deserialize(planFileStream);
 
-            // Apply credentials to the saved transfer job path
             string childSourcePath = header.SourcePath;
             string childDestinationPath = header.DestinationPath;
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
-            ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
+            ServiceToServiceJobPart jobPart = ServiceToServiceJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                sourceResource: sourceResource.GetStorageResourceReference(childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1)),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1)),
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -155,7 +187,7 @@ namespace Azure.Storage.DataMovement
             return jobPart;
         }
 
-        public static async Task<UriToStreamJobPart> ToJobPartAsync(
+        public static UriToStreamJobPart ToJobPartAsync(
             this UriToStreamTransferJob baseJob,
             Stream planFileStream,
             StorageResourceContainer sourceResource,
@@ -168,16 +200,23 @@ namespace Azure.Storage.DataMovement
             string childSourcePath = header.SourcePath;
             string childSourceName = childSourcePath.Substring(sourceResource.Uri.AbsoluteUri.Length + 1);
             string childDestinationPath = header.DestinationPath;
-            string childDestinationName = childDestinationPath.Substring(destinationResource.Path.Length + 1);
-            StorageTransferStatus jobPartStatus = header.AtomicJobStatus;
-            UriToStreamJobPart jobPart = await UriToStreamJobPart.CreateJobPartAsync(
+            string childDestinationName = childDestinationPath.Substring(destinationResource.Uri.AbsoluteUri.Length + 1);
+            // Override header values if options were specified by user.
+            long initialTransferSize = baseJob._initialTransferSize ?? header.InitialTransferSize;
+            long transferChunkSize = baseJob._maximumTransferChunkSize ?? header.ChunkSize;
+            StorageResourceCreationPreference createPreference =
+                baseJob._creationPreference != StorageResourceCreationPreference.Default ?
+                baseJob._creationPreference : header.CreatePreference;
+
+            UriToStreamJobPart jobPart = UriToStreamJobPart.CreateJobPartFromCheckpoint(
                 job: baseJob,
                 partNumber: Convert.ToInt32(header.PartNumber),
-                jobPartStatus: jobPartStatus,
-                sourceResource: sourceResource.GetChildStorageResource(childSourceName),
-                destinationResource: destinationResource.GetChildStorageResource(childDestinationName),
-                partPlanFileExists: true,
-                isFinalPart: header.IsFinalPart).ConfigureAwait(false);
+                sourceResource: sourceResource.GetStorageResourceReference(childSourceName),
+                destinationResource: destinationResource.GetStorageResourceReference(childDestinationName),
+                jobPartStatus: header.JobPartStatus,
+                initialTransferSize: initialTransferSize,
+                transferChunkSize: transferChunkSize,
+                createPreference: createPreference);
 
             jobPart.VerifyJobPartPlanHeader(header);
 
@@ -188,91 +227,25 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Translate the initial job part header to a job plan format file
         /// </summary>
-        internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart,
-            StorageTransferStatus jobStatus,
-            bool isFinalPart)
+        internal static JobPartPlanHeader ToJobPartPlanHeader(this JobPartInternal jobPart)
         {
-            JobPartPlanDestinationBlob dstBlobData = new JobPartPlanDestinationBlob(
-                blobType: JobPlanBlobType.Detect, // TODO: update when supported
-                noGuessMimeType: false, // TODO: update when supported
-                contentType: "", // TODO: update when supported
-                contentEncoding: "", // TODO: update when supported
-                contentLanguage: "", // TODO: update when supported
-                contentDisposition: "", // TODO: update when supported
-                cacheControl: "", // TODO: update when supported
-                blockBlobTier: JobPartPlanBlockBlobTier.None,// TODO: update when supported
-                pageBlobTier: JobPartPlanPageBlobTier.None,// TODO: update when supported
-                putMd5: false,// TODO: update when supported
-                metadata: "",// TODO: update when supported
-                blobTags: "",// TODO: update when supported
-                isSourceEncrypted: false,// TODO: update when supported
-                cpkScopeInfo: "",// TODO: update when supported
-                blockSize: jobPart._maximumTransferChunkSize);
-
-            JobPartPlanDestinationLocal dstLocalData = new JobPartPlanDestinationLocal(
-                preserveLastModifiedTime: false, // TODO: update when supported
-                checksumVerificationOption: 0); // TODO: update when supported
-
-            // Create the source Path
-            string sourcePath;
-            if (jobPart._sourceResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                sourcePath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                sourcePath = jobPart._sourceResource.Path;
-            }
-
-            string destinationPath;
-            if (jobPart._destinationResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                destinationPath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                destinationPath = jobPart._destinationResource.Path;
-            }
+            string sourcePath = jobPart._sourceResource.Uri.ToSanitizedString();
+            string destinationPath = jobPart._destinationResource.Uri.ToSanitizedString();
 
             return new JobPartPlanHeader(
-                version: DataMovementConstants.PlanFile.SchemaVersion,
-                startTime: DateTimeOffset.UtcNow, // TODO: update to job start time
+                version: DataMovementConstants.JobPartPlanFile.SchemaVersion,
                 transferId: jobPart._dataTransfer.Id,
-                partNumber: (uint)jobPart.PartNumber,
-                sourceResourceId: jobPart._sourceResource.ResourceId,
+                partNumber: jobPart.PartNumber,
+                createTime: DateTimeOffset.UtcNow,
+                sourceTypeId: jobPart._sourceResource.ResourceId,
+                destinationTypeId: jobPart._destinationResource.ResourceId,
                 sourcePath: sourcePath,
-                sourceExtraQuery: "", // TODO: convert options to string
-                destinationResourceId: jobPart._destinationResource.ResourceId,
                 destinationPath: destinationPath,
-                destinationExtraQuery: "", // TODO: convert options to string
-                isFinalPart: isFinalPart,
-                forceWrite: jobPart._createMode == StorageResourceCreateMode.Overwrite, // TODO: change to enum value
-                forceIfReadOnly: false, // TODO: revisit for Azure Files
-                autoDecompress: false, // TODO: revisit if we want to support this feature
+                createPreference: jobPart._createMode,
+                initialTransferSize: jobPart._initialTransferSize,
+                chunkSize: jobPart._transferChunkSize,
                 priority: 0, // TODO: add priority feature
-                ttlAfterCompletion: DateTimeOffset.MinValue, // TODO: revisit for Azure Files
-                jobPlanOperation: 0, // TODO: revisit when we add this feature
-                folderPropertyMode: FolderPropertiesMode.None, // TODO: revisit for Azure Files
-                numberChunks: 0, // TODO: revisit when added
-                dstBlobData: dstBlobData, // TODO: revisit when we add feature to cache this info
-                dstLocalData: dstLocalData, // TODO: revisit when we add feature to cache this info
-                preserveSMBPermissions: false, // TODO: revisit for Azure Files
-                preserveSMBInfo: false, // TODO: revisit for Azure Files
-                s2sGetPropertiesInBackend: false, // TODO: revisit for Azure Files
-                s2sSourceChangeValidation: false, // TODO: revisit for Azure Files
-                destLengthValidation: false, // TODO: revisit when features is added
-                s2sInvalidMetadataHandleOption: 0, // TODO: revisit when supported
-                deleteSnapshotsOption: JobPartDeleteSnapshotsOption.None, // TODO: revisit when feature is added
-                permanentDeleteOption: JobPartPermanentDeleteOption.None, // TODO: revisit when feature is added
-                rehydratePriorityType: JobPartPlanRehydratePriorityType.None, // TODO: revisit when feature is added
-                atomicJobStatus: jobStatus,
-                atomicPartStatus: jobPart.JobPartStatus);
+                jobPartStatus: jobPart.JobPartStatus);
         }
 
         /// <summary>
@@ -290,18 +263,8 @@ namespace Azure.Storage.DataMovement
             }
 
             // Check source path
-            string passedSourcePath;
-            if (jobPart._sourceResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._sourceResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                passedSourcePath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                passedSourcePath = jobPart._sourceResource.Path;
-            }
+            string passedSourcePath = jobPart._sourceResource.Uri.ToSanitizedString();
+
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches
             if (!header.SourcePath.StartsWith(passedSourcePath))
@@ -310,30 +273,13 @@ namespace Azure.Storage.DataMovement
             }
 
             // Check destination path
-            string passedDestinationPath;
-            if (jobPart._destinationResource.CanProduceUri)
-            {
-                // Remove any query or SAS that could be attach to the Uri
-                UriBuilder uriBuilder = new UriBuilder(jobPart._destinationResource.Uri.AbsoluteUri);
-                uriBuilder.Query = "";
-                passedDestinationPath = uriBuilder.Uri.AbsoluteUri;
-            }
-            else
-            {
-                passedDestinationPath = jobPart._destinationResource.Path;
-            }
+            string passedDestinationPath = jobPart._destinationResource.Uri.ToSanitizedString();
+
             // We only check if it starts with the path because if we're passed a container
             // then we only need to check if the prefix matches
             if (!header.DestinationPath.StartsWith(passedDestinationPath))
             {
                 throw Errors.MismatchResumeTransferArguments(nameof(header.DestinationPath), header.DestinationPath, passedDestinationPath);
-            }
-
-            // Check CreateMode / Overwrite
-            if ((header.ForceWrite && jobPart._createMode != StorageResourceCreateMode.Overwrite) ||
-                (!header.ForceWrite && jobPart._createMode == StorageResourceCreateMode.Overwrite))
-            {
-                throw Errors.MismatchResumeCreateMode(header.ForceWrite, jobPart._createMode);
             }
         }
     }

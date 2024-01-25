@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A Class representing a WorkbookRevision along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="WorkbookRevisionResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetWorkbookRevisionResource method.
-    /// Otherwise you can get one from its parent resource <see cref="WorkbookResource" /> using the GetWorkbookRevision method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="WorkbookRevisionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetWorkbookRevisionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="WorkbookResource"/> using the GetWorkbookRevision method.
     /// </summary>
     public partial class WorkbookRevisionResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="WorkbookRevisionResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        /// <param name="revisionId"> The revisionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName, string revisionId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         private readonly WorkbooksRestOperations _workbookRevisionWorkbooksRestClient;
         private readonly WorkbookData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooks/revisions";
+
         /// <summary> Initializes a new instance of the <see cref="WorkbookRevisionResource"/> class for mocking. </summary>
         protected WorkbookRevisionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "WorkbookRevisionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="WorkbookRevisionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal WorkbookRevisionResource(ArmClient client, WorkbookData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.ApplicationInsights
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooks/revisions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookRevisionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workbooks_RevisionGet</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WorkbookRevisionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

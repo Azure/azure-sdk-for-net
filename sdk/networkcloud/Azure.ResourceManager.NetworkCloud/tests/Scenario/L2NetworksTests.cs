@@ -17,50 +17,51 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public L2NetworksTests  (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task L2Networks()
         {
-            var l2NetworkCollection = ResourceGroupResource.GetL2Networks();
+            var l2NetworkCollection = ResourceGroupResource.GetNetworkCloudL2Networks();
             var l2NetworkName = Recording.GenerateAssetName("l2network");
 
-            var l2NetworkId = L2NetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, l2NetworkName);
-            var l2Network = Client.GetL2NetworkResource(l2NetworkId);
+            var l2NetworkId = NetworkCloudL2NetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, l2NetworkName);
+            var l2Network = Client.GetNetworkCloudL2NetworkResource(l2NetworkId);
 
             // Create
-            L2NetworkData data = new L2NetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), TestEnvironment.L2IsolationDomainId)
+            NetworkCloudL2NetworkData data = new NetworkCloudL2NetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), new ResourceIdentifier(TestEnvironment.L2IsolationDomainId))
             {};
-            ArmOperation<L2NetworkResource> l2NetworkResourceOp = await l2NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l2NetworkName, data);
+            ArmOperation<NetworkCloudL2NetworkResource> l2NetworkResourceOp = await l2NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l2NetworkName, data);
             Assert.AreEqual(l2NetworkResourceOp.Value.Data.Name ,l2NetworkName);
 
             // Get
-            L2NetworkResource getResult = await l2Network.GetAsync();
+            NetworkCloudL2NetworkResource getResult = await l2Network.GetAsync();
             Assert.AreEqual(getResult.Data.Name, l2NetworkName);
 
             // List by Resource Group
-            var listByResourceGroup = new List<L2NetworkResource>();
-            L2NetworkCollection collection = ResourceGroupResource.GetL2Networks();
-            await foreach (L2NetworkResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkCloudL2NetworkResource>();
+            NetworkCloudL2NetworkCollection collection = ResourceGroupResource.GetNetworkCloudL2Networks();
+            await foreach (NetworkCloudL2NetworkResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<L2NetworkResource>();
-              await foreach (L2NetworkResource item in SubscriptionResource.GetL2NetworksAsync())
+            var listBySubscription = new List<NetworkCloudL2NetworkResource>();
+              await foreach (NetworkCloudL2NetworkResource item in SubscriptionResource.GetNetworkCloudL2NetworksAsync())
             {
                 listBySubscription.Add(item);
             }
             Assert.IsNotEmpty(listBySubscription);
 
             // Update
-             L2NetworkPatch patch = new L2NetworkPatch()
+            NetworkCloudL2NetworkPatch patch = new NetworkCloudL2NetworkPatch()
             {
                 Tags =
                     {
                         ["key1"] = "myvalue1",
                     },
             };
-            L2NetworkResource updateResult = await l2Network.UpdateAsync(patch);
+            NetworkCloudL2NetworkResource updateResult = await l2Network.UpdateAsync(patch);
             Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
 
             // Delete

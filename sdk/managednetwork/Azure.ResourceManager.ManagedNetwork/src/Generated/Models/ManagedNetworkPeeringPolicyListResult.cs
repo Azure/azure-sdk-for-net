@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
     /// <summary> Result of the request to list Managed Network Peering Policies. It contains a list of policies and a URL link to get the next set of results. </summary>
     internal partial class ManagedNetworkPeeringPolicyListResult
     {
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyListResult"/>. </summary>
         internal ManagedNetworkPeeringPolicyListResult()
         {
             Value = new ChangeTrackingList<ManagedNetworkPeeringPolicyData>();
         }
 
-        /// <summary> Initializes a new instance of ManagedNetworkPeeringPolicyListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkPeeringPolicyListResult"/>. </summary>
         /// <param name="value"> Gets a page of Peering Policies. </param>
         /// <param name="nextLink"> Gets the URL to get the next page of results. </param>
         internal ManagedNetworkPeeringPolicyListResult(IReadOnlyList<ManagedNetworkPeeringPolicyData> value, string nextLink)

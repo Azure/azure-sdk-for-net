@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
     /// <summary> Contains all the contact details of the customer. </summary>
     public partial class DataBoxEdgeContactDetails
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeContactDetails. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/>. </summary>
         /// <param name="contactPerson"> The contact person name. </param>
         /// <param name="companyName"> The name of the company. </param>
         /// <param name="phone"> The phone number. </param>
@@ -34,17 +66,24 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             EmailList = emailList.ToList();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeContactDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/>. </summary>
         /// <param name="contactPerson"> The contact person name. </param>
         /// <param name="companyName"> The name of the company. </param>
         /// <param name="phone"> The phone number. </param>
         /// <param name="emailList"> The email list. </param>
-        internal DataBoxEdgeContactDetails(string contactPerson, string companyName, string phone, IList<string> emailList)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeContactDetails(string contactPerson, string companyName, string phone, IList<string> emailList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContactPerson = contactPerson;
             CompanyName = companyName;
             Phone = phone;
             EmailList = emailList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeContactDetails"/> for deserialization. </summary>
+        internal DataBoxEdgeContactDetails()
+        {
         }
 
         /// <summary> The contact person name. </summary>

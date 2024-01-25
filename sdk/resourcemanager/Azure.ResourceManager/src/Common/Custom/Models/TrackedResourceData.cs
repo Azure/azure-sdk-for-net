@@ -36,6 +36,13 @@ namespace Azure.ResourceManager.Models
             Location = location;
         }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="TrackedResourceData"/> for deserialization.
+        /// </summary>
+        protected TrackedResourceData()
+        {
+        }
+
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> The geo-location where the resource lives. </summary>

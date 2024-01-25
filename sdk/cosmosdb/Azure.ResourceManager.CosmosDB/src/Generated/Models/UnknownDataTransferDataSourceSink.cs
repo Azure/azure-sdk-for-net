@@ -5,16 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The UnknownDataTransferDataSourceSink. </summary>
     internal partial class UnknownDataTransferDataSourceSink : DataTransferDataSourceSink
     {
-        /// <summary> Initializes a new instance of UnknownDataTransferDataSourceSink. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
-        internal UnknownDataTransferDataSourceSink(DataTransferComponent component) : base(component)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(component, serializedAdditionalRawData)
         {
             Component = component;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataTransferDataSourceSink"/> for deserialization. </summary>
+        internal UnknownDataTransferDataSourceSink()
+        {
         }
     }
 }

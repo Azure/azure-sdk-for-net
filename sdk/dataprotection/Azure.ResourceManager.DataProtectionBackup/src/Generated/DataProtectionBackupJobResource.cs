@@ -18,13 +18,17 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     /// <summary>
     /// A Class representing a DataProtectionBackupJob along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="DataProtectionBackupJobResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetDataProtectionBackupJobResource method.
-    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupVaultResource" /> using the GetDataProtectionBackupJob method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DataProtectionBackupJobResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetDataProtectionBackupJobResource method.
+    /// Otherwise you can get one from its parent resource <see cref="DataProtectionBackupVaultResource"/> using the GetDataProtectionBackupJob method.
     /// </summary>
     public partial class DataProtectionBackupJobResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="DataProtectionBackupJobResource"/> instance. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="vaultName"> The vaultName. </param>
+        /// <param name="jobId"> The jobId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string vaultName, string jobId)
         {
             var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataProtection/backupVaults/{vaultName}/backupJobs/{jobId}";
@@ -35,12 +39,15 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly JobsRestOperations _dataProtectionBackupJobJobsRestClient;
         private readonly DataProtectionBackupJobData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupJobs";
+
         /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupJobResource"/> class for mocking. </summary>
         protected DataProtectionBackupJobResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "DataProtectionBackupJobResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="DataProtectionBackupJobResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal DataProtectionBackupJobResource(ArmClient client, DataProtectionBackupJobData data) : this(client, data.Id)
@@ -61,9 +68,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/backupJobs";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +101,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +140,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Jobs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

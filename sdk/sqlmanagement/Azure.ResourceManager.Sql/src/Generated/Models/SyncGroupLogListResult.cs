@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> A list of sync group log properties. </summary>
     internal partial class SyncGroupLogListResult
     {
-        /// <summary> Initializes a new instance of SyncGroupLogListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupLogListResult"/>. </summary>
         internal SyncGroupLogListResult()
         {
             Value = new ChangeTrackingList<SyncGroupLogProperties>();
         }
 
-        /// <summary> Initializes a new instance of SyncGroupLogListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="SyncGroupLogListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal SyncGroupLogListResult(IReadOnlyList<SyncGroupLogProperties> value, string nextLink)

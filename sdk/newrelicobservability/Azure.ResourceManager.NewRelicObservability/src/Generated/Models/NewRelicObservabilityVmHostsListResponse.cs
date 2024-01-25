@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
     /// <summary> Response of a list VM Host Operation. </summary>
     internal partial class NewRelicObservabilityVmHostsListResponse
     {
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmHostsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityVmHostsListResponse"/>. </summary>
         /// <param name="value"> The VMInfo items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal NewRelicObservabilityVmHostsListResponse(IEnumerable<NewRelicObservabilityVmInfo> value)
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of NewRelicObservabilityVmHostsListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="NewRelicObservabilityVmHostsListResponse"/>. </summary>
         /// <param name="value"> The VMInfo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         internal NewRelicObservabilityVmHostsListResponse(IReadOnlyList<NewRelicObservabilityVmInfo> value, Uri nextLink)

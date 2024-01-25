@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Microsoft Azure Cosmos Database (CosmosDB) linked service. </summary>
     public partial class CosmosDbLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of CosmosDbLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbLinkedService"/>. </summary>
         public CosmosDbLinkedService()
         {
             Type = "CosmosDb";
         }
 
-        /// <summary> Initializes a new instance of CosmosDbLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDbLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -34,13 +34,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </param>
-        internal CosmosDbLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object accountEndpoint, object database, SecretBase accountKey, object encryptedCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal CosmosDbLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object connectionString, object accountEndpoint, object database, SecretBase accountKey, object encryptedCredential, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             AccountEndpoint = accountEndpoint;
             Database = database;
             AccountKey = accountKey;
             EncryptedCredential = encryptedCredential;
+            Credential = credential;
             Type = type ?? "CosmosDb";
         }
 
@@ -58,5 +60,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public SecretBase AccountKey { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string (or Expression with resultType string). </summary>
         public object EncryptedCredential { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

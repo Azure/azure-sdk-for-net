@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<L3IsolationDomainData>> value = default;
+            Optional<IReadOnlyList<NetworkFabricL3IsolationDomainData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<L3IsolationDomainData> array = new List<L3IsolationDomainData>();
+                    List<NetworkFabricL3IsolationDomainData> array = new List<NetworkFabricL3IsolationDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L3IsolationDomainData.DeserializeL3IsolationDomainData(item));
+                        array.Add(NetworkFabricL3IsolationDomainData.DeserializeNetworkFabricL3IsolationDomainData(item));
                     }
                     value = array;
                     continue;

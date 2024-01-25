@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAzureIaasVmEnhancedProtectionPolicyDetails()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/V2Policy/v2-Get-Policy.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/V2Policy/v2-Get-Policy.json
             // this example is just showing the usage of "ProtectionPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetAzureIaasVmProtectionPolicyDetails()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/ProtectionPolicies_Get.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/ProtectionPolicies_Get.json
             // this example is just showing the usage of "ProtectionPolicies_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,12 +82,144 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
+        // Create or Update Azure Storage Vault Standard Protection Policy
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task Update_CreateOrUpdateAzureStorageVaultStandardProtectionPolicy()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectionPolicies_CreateOrUpdate_Hardened.json
+            // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BackupProtectionPolicyResource created on azure
+            // for more information of creating BackupProtectionPolicyResource, please refer to the document of BackupProtectionPolicyResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "SwaggerTestRg";
+            string vaultName = "swaggertestvault";
+            string policyName = "newPolicyV2";
+            ResourceIdentifier backupProtectionPolicyResourceId = BackupProtectionPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, policyName);
+            BackupProtectionPolicyResource backupProtectionPolicy = client.GetBackupProtectionPolicyResource(backupProtectionPolicyResourceId);
+
+            // invoke the operation
+            BackupProtectionPolicyData data = new BackupProtectionPolicyData(new AzureLocation("placeholder"))
+            {
+                Properties = new FileShareProtectionPolicy()
+                {
+                    WorkLoadType = BackupWorkloadType.AzureFileShare,
+                    SchedulePolicy = new SimpleSchedulePolicy()
+                    {
+                        ScheduleRunFrequency = ScheduleRunType.Daily,
+                        ScheduleRunTimes =
+{
+DateTimeOffset.Parse("2023-07-18T09:30:00.000Z")
+},
+                    },
+                    VaultRetentionPolicy = new VaultRetentionPolicy(new LongTermRetentionPolicy()
+                    {
+                        DailySchedule = new DailyRetentionSchedule()
+                        {
+                            RetentionTimes =
+{
+DateTimeOffset.Parse("2023-07-18T09:30:00.000Z")
+},
+                            RetentionDuration = new RetentionDuration()
+                            {
+                                Count = 30,
+                                DurationType = RetentionDurationType.Days,
+                            },
+                        },
+                        WeeklySchedule = new WeeklyRetentionSchedule()
+                        {
+                            DaysOfTheWeek =
+{
+BackupDayOfWeek.Sunday
+},
+                            RetentionTimes =
+{
+DateTimeOffset.Parse("2023-07-18T09:30:00.000Z")
+},
+                            RetentionDuration = new RetentionDuration()
+                            {
+                                Count = 12,
+                                DurationType = RetentionDurationType.Weeks,
+                            },
+                        },
+                        MonthlySchedule = new MonthlyRetentionSchedule()
+                        {
+                            RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
+                            RetentionScheduleWeekly = new WeeklyRetentionFormat()
+                            {
+                                DaysOfTheWeek =
+{
+BackupDayOfWeek.Sunday
+},
+                                WeeksOfTheMonth =
+{
+BackupWeekOfMonth.First
+},
+                            },
+                            RetentionTimes =
+{
+DateTimeOffset.Parse("2023-07-18T09:30:00.000Z")
+},
+                            RetentionDuration = new RetentionDuration()
+                            {
+                                Count = 60,
+                                DurationType = RetentionDurationType.Months,
+                            },
+                        },
+                        YearlySchedule = new YearlyRetentionSchedule()
+                        {
+                            RetentionScheduleFormatType = RetentionScheduleFormat.Weekly,
+                            MonthsOfYear =
+{
+BackupMonthOfYear.January
+},
+                            RetentionScheduleWeekly = new WeeklyRetentionFormat()
+                            {
+                                DaysOfTheWeek =
+{
+BackupDayOfWeek.Sunday
+},
+                                WeeksOfTheMonth =
+{
+BackupWeekOfMonth.First
+},
+                            },
+                            RetentionTimes =
+{
+DateTimeOffset.Parse("2023-07-18T09:30:00.000Z")
+},
+                            RetentionDuration = new RetentionDuration()
+                            {
+                                Count = 10,
+                                DurationType = RetentionDurationType.Years,
+                            },
+                        },
+                    }, 5),
+                    TimeZone = "UTC",
+                },
+            };
+            ArmOperation<BackupProtectionPolicyResource> lro = await backupProtectionPolicy.UpdateAsync(WaitUntil.Completed, data);
+            BackupProtectionPolicyResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BackupProtectionPolicyData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         // Create or Update Daily Azure Storage Protection Policy
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateDailyAzureStorageProtectionPolicy()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureStorage/ProtectionPolicies_CreateOrUpdate_Daily.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectionPolicies_CreateOrUpdate_Daily.json
             // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +351,7 @@ DateTimeOffset.Parse("2021-09-29T08:00:00.000Z")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateEnhancedAzureVmProtectionPolicyWithHourlyBackup()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/V2Policy/IaaS_v2_hourly.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/V2Policy/IaaS_v2_hourly.json
             // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -354,7 +486,7 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateEnhancedAzureVmProtectionPolicyWithDailyBackup()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/V2Policy/IaaS_v2_daily.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/V2Policy/IaaS_v2_daily.json
             // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -487,7 +619,7 @@ DateTimeOffset.Parse("2021-12-17T08:00:00+00:00")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateFullAzureVmProtectionPolicy()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/ProtectionPolicies_CreateOrUpdate_Complex.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/ProtectionPolicies_CreateOrUpdate_Complex.json
             // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -610,7 +742,7 @@ DateTimeOffset.Parse("2018-01-24T10:00:00Z")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateFullAzureWorkloadProtectionPolicy()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureWorkload/ProtectionPolicies_CreateOrUpdate_Complex.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureWorkload/ProtectionPolicies_CreateOrUpdate_Complex.json
             // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -783,7 +915,7 @@ DurationType = RetentionDurationType.Days,
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateHourlyAzureStorageProtectionPolicy()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureStorage/ProtectionPolicies_CreateOrUpdate_Hourly.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureStorage/ProtectionPolicies_CreateOrUpdate_Hourly.json
             // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -913,7 +1045,7 @@ BackupWeekOfMonth.First
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_CreateOrUpdateSimpleAzureVmProtectionPolicy()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/ProtectionPolicies_CreateOrUpdate_Simple.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/ProtectionPolicies_CreateOrUpdate_Simple.json
             // this example is just showing the usage of "ProtectionPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -976,7 +1108,7 @@ DateTimeOffset.Parse("2018-01-24T02:00:00Z")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeleteAzureVmProtectionPolicy()
         {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-02-01/examples/AzureIaasVm/ProtectionPolicies_Delete.json
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/ProtectionPolicies_Delete.json
             // this example is just showing the usage of "ProtectionPolicies_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

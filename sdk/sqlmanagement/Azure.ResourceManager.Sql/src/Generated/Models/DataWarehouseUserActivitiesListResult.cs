@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> User activities of a data warehouse. </summary>
     internal partial class DataWarehouseUserActivitiesListResult
     {
-        /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataWarehouseUserActivitiesListResult"/>. </summary>
         internal DataWarehouseUserActivitiesListResult()
         {
             Value = new ChangeTrackingList<DataWarehouseUserActivityData>();
         }
 
-        /// <summary> Initializes a new instance of DataWarehouseUserActivitiesListResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataWarehouseUserActivitiesListResult"/>. </summary>
         /// <param name="value"> Array of results. </param>
         /// <param name="nextLink"> Link to retrieve next page of results. </param>
         internal DataWarehouseUserActivitiesListResult(IReadOnlyList<DataWarehouseUserActivityData> value, string nextLink)

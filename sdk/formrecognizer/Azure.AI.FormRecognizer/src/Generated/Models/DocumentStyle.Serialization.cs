@@ -21,8 +21,8 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             Optional<bool> isHandwritten = default;
             Optional<string> similarFontFamily = default;
-            Optional<FontStyle> fontStyle = default;
-            Optional<FontWeight> fontWeight = default;
+            Optional<DocumentFontStyle> fontStyle = default;
+            Optional<DocumentFontWeight> fontWeight = default;
             Optional<string> color = default;
             Optional<string> backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -49,7 +49,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    fontStyle = new FontStyle(property.Value.GetString());
+                    fontStyle = new DocumentFontStyle(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fontWeight"u8))
@@ -58,7 +58,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     {
                         continue;
                     }
-                    fontWeight = new FontWeight(property.Value.GetString());
+                    fontWeight = new DocumentFontWeight(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("color"u8))

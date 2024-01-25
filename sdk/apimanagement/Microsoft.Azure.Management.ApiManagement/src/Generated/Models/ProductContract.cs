@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Product details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class ProductContract : Resource
+    public partial class ProductContract : ProxyResource
     {
         /// <summary>
         /// Initializes a new instance of the ProductContract class.

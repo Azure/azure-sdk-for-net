@@ -5,29 +5,71 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Certificate configuration which consist of non-trusted intermediates and root certificates. </summary>
     public partial class CertificateConfiguration
     {
-        /// <summary> Initializes a new instance of CertificateConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
         /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
         public CertificateConfiguration(CertificateConfigurationStoreName storeName)
         {
             StoreName = storeName;
         }
 
-        /// <summary> Initializes a new instance of CertificateConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/>. </summary>
         /// <param name="encodedCertificate"> Base64 Encoded certificate. </param>
         /// <param name="certificatePassword"> Certificate Password. </param>
         /// <param name="storeName"> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </param>
         /// <param name="certificate"> Certificate information. </param>
-        internal CertificateConfiguration(string encodedCertificate, string certificatePassword, CertificateConfigurationStoreName storeName, CertificateInformation certificate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CertificateConfiguration(string encodedCertificate, string certificatePassword, CertificateConfigurationStoreName storeName, CertificateInformation certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EncodedCertificate = encodedCertificate;
             CertificatePassword = certificatePassword;
             StoreName = storeName;
             Certificate = certificate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CertificateConfiguration"/> for deserialization. </summary>
+        internal CertificateConfiguration()
+        {
         }
 
         /// <summary> Base64 Encoded certificate. </summary>

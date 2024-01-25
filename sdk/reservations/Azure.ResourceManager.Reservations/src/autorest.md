@@ -10,6 +10,9 @@ namespace: Azure.ResourceManager.Reservations
 require: https://github.com/Azure/azure-rest-api-specs/blob/49b2b960e028825de1e3b95568c93ed235354e06/specification/reservations/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -35,7 +38,7 @@ override-operation-name:
   CalculateRefund_Post: CalculateRefund
   Return_Post: Return
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

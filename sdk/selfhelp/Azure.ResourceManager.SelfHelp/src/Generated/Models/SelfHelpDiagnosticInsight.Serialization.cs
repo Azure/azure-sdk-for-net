@@ -10,8 +10,34 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SelfHelpDiagnosticInsight
+    public partial class SelfHelpDiagnosticInsight : IUtf8JsonSerializable
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Title))
+            {
+                writer.WritePropertyName("title"u8);
+                writer.WriteStringValue(Title);
+            }
+            if (Optional.IsDefined(Results))
+            {
+                writer.WritePropertyName("results"u8);
+                writer.WriteStringValue(Results);
+            }
+            if (Optional.IsDefined(InsightImportanceLevel))
+            {
+                writer.WritePropertyName("importanceLevel"u8);
+                writer.WriteStringValue(InsightImportanceLevel.Value.ToString());
+            }
+            writer.WriteEndObject();
+        }
+
         internal static SelfHelpDiagnosticInsight DeserializeSelfHelpDiagnosticInsight(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)

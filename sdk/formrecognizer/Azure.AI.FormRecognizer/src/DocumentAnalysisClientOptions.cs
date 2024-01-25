@@ -12,7 +12,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
     /// </summary>
     public class DocumentAnalysisClientOptions : ClientOptions
     {
-        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_02_28_Preview;
+        internal const ServiceVersion LatestVersion = ServiceVersion.V2023_07_31;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentAnalysisClientOptions"/> class which allows
@@ -25,7 +25,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             VersionString = version switch
             {
                 ServiceVersion.V2022_08_31 => "2022-08-31",
-                ServiceVersion.V2023_02_28_Preview => "2023-02-28-preview",
+                ServiceVersion.V2023_07_31 => "2023-07-31",
                 _ => throw new NotSupportedException($"The service version {version} is not supported by this library."),
             };
 
@@ -44,9 +44,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             V2022_08_31 = 1,
 
             /// <summary>
-            /// The version 2023-02-28-preview of the service.
+            /// The version 2023-07-31 of the service.
             /// </summary>
-            V2023_02_28_Preview
+            V2023_07_31
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 

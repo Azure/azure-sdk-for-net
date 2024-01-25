@@ -14,7 +14,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Azure Data Explorer (Kusto) linked service. </summary>
     public partial class AzureDataExplorerLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureDataExplorerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedService"/>. </summary>
         /// <param name="endpoint"> The endpoint of Azure Data Explorer (the engine's endpoint). URL will be in the format https://&lt;clusterName&gt;.&lt;regionName&gt;.kusto.windows.net. Type: string (or Expression with resultType string). </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="database"/> is null. </exception>
@@ -28,7 +28,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "AzureDataExplorer";
         }
 
-        /// <summary> Initializes a new instance of AzureDataExplorerLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -44,13 +44,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// </param>
         /// <param name="database"> Database name for connection. Type: string (or Expression with resultType string). </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
-        internal AzureDataExplorerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object database, object tenant) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        /// <param name="credential"> The credential reference containing authentication information. </param>
+        internal AzureDataExplorerLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object endpoint, object servicePrincipalId, SecretBase servicePrincipalKey, object database, object tenant, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
         {
             Endpoint = endpoint;
             ServicePrincipalId = servicePrincipalId;
             ServicePrincipalKey = servicePrincipalKey;
             Database = database;
             Tenant = tenant;
+            Credential = credential;
             Type = type ?? "AzureDataExplorer";
         }
 
@@ -68,5 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public object Database { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public object Tenant { get; set; }
+        /// <summary> The credential reference containing authentication information. </summary>
+        public CredentialReference Credential { get; set; }
     }
 }

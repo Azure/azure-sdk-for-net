@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> MachineSkuSlot represents a single SKU and rack slot associated with the machine. </summary>
     public partial class MachineSkuSlot
     {
-        /// <summary> Initializes a new instance of MachineSkuSlot. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineSkuSlot"/>. </summary>
         internal MachineSkuSlot()
         {
             Disks = new ChangeTrackingList<MachineDisk>();
-            NetworkInterfaces = new ChangeTrackingList<NetworkInterface>();
+            NetworkInterfaces = new ChangeTrackingList<NetworkCloudNetworkInterface>();
         }
 
-        /// <summary> Initializes a new instance of MachineSkuSlot. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineSkuSlot"/>. </summary>
         /// <param name="rackSlot"> The position in the rack for the machine. </param>
         /// <param name="bootstrapProtocol"> The type of bootstrap protocol used. </param>
         /// <param name="cpuCores"> The count of CPU cores for this machine. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <param name="totalThreads"> The count of SMT and physical core threads for this machine. </param>
         /// <param name="vendor"> The make of the machine. </param>
-        internal MachineSkuSlot(long? rackSlot, BootstrapProtocol? bootstrapProtocol, long? cpuCores, long? cpuSockets, IReadOnlyList<MachineDisk> disks, string generation, string hardwareVersion, long? memoryCapacityGB, string model, IReadOnlyList<NetworkInterface> networkInterfaces, long? totalThreads, string vendor)
+        internal MachineSkuSlot(long? rackSlot, BootstrapProtocol? bootstrapProtocol, long? cpuCores, long? cpuSockets, IReadOnlyList<MachineDisk> disks, string generation, string hardwareVersion, long? memoryCapacityGB, string model, IReadOnlyList<NetworkCloudNetworkInterface> networkInterfaces, long? totalThreads, string vendor)
         {
             RackSlot = rackSlot;
             BootstrapProtocol = bootstrapProtocol;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The model of the machine. </summary>
         public string Model { get; }
         /// <summary> The list of network interfaces. </summary>
-        public IReadOnlyList<NetworkInterface> NetworkInterfaces { get; }
+        public IReadOnlyList<NetworkCloudNetworkInterface> NetworkInterfaces { get; }
         /// <summary> The count of SMT and physical core threads for this machine. </summary>
         public long? TotalThreads { get; }
         /// <summary> The make of the machine. </summary>

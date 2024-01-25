@@ -19,28 +19,75 @@ namespace Azure.ResourceManager.AppContainers
     /// </summary>
     public partial class ContainerAppReplicaData : ResourceData
     {
-        /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaData"/>. </summary>
         public ContainerAppReplicaData()
         {
             Containers = new ChangeTrackingList<ContainerAppReplicaContainer>();
+            InitContainers = new ChangeTrackingList<ContainerAppReplicaContainer>();
         }
 
-        /// <summary> Initializes a new instance of ContainerAppReplicaData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppReplicaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="createdOn"> Timestamp describing when the pod was created by controller. </param>
+        /// <param name="runningState"> Current running state of the replica. </param>
+        /// <param name="runningStateDetails"> The details of replica current running state. </param>
         /// <param name="containers"> The containers collection under a replica. </param>
-        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, IList<ContainerAppReplicaContainer> containers) : base(id, name, resourceType, systemData)
+        /// <param name="initContainers"> The init containers collection under a replica. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerAppReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? createdOn, ContainerAppReplicaRunningState? runningState, string runningStateDetails, IList<ContainerAppReplicaContainer> containers, IList<ContainerAppReplicaContainer> initContainers, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             CreatedOn = createdOn;
+            RunningState = runningState;
+            RunningStateDetails = runningStateDetails;
             Containers = containers;
+            InitContainers = initContainers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Timestamp describing when the pod was created by controller. </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> Current running state of the replica. </summary>
+        public ContainerAppReplicaRunningState? RunningState { get; }
+        /// <summary> The details of replica current running state. </summary>
+        public string RunningStateDetails { get; }
         /// <summary> The containers collection under a replica. </summary>
         public IList<ContainerAppReplicaContainer> Containers { get; }
+        /// <summary> The init containers collection under a replica. </summary>
+        public IList<ContainerAppReplicaContainer> InitContainers { get; }
     }
 }

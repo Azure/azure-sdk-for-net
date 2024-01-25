@@ -15,7 +15,39 @@ namespace Azure.ResourceManager.CostManagement.Models
     /// <summary> The properties of the scheduled action notification. </summary>
     public partial class NotificationProperties
     {
-        /// <summary> Initializes a new instance of NotificationProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NotificationProperties"/>. </summary>
         /// <param name="to"> Array of email addresses. </param>
         /// <param name="subject"> Subject of the email. Length is limited to 70 characters. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="to"/> or <paramref name="subject"/> is null. </exception>
@@ -28,19 +60,26 @@ namespace Azure.ResourceManager.CostManagement.Models
             Subject = subject;
         }
 
-        /// <summary> Initializes a new instance of NotificationProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="NotificationProperties"/>. </summary>
         /// <param name="to"> Array of email addresses. </param>
         /// <param name="language"> Locale of the email. </param>
         /// <param name="message"> Optional message to be added in the email. Length is limited to 250 characters. </param>
         /// <param name="regionalFormat"> Regional format used for formatting date/time and currency values in the email. </param>
         /// <param name="subject"> Subject of the email. Length is limited to 70 characters. </param>
-        internal NotificationProperties(IList<string> to, string language, string message, string regionalFormat, string subject)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NotificationProperties(IList<string> to, string language, string message, string regionalFormat, string subject, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             To = to;
             Language = language;
             Message = message;
             RegionalFormat = regionalFormat;
             Subject = subject;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NotificationProperties"/> for deserialization. </summary>
+        internal NotificationProperties()
+        {
         }
 
         /// <summary> Array of email addresses. </summary>

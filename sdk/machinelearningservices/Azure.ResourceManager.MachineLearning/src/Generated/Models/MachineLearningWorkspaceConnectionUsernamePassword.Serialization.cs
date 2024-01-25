@@ -15,15 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Username))
-            {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
-            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
+            }
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteStringValue(Username);
             }
             writer.WriteEndObject();
         }
@@ -34,22 +34,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<string> username = default;
             Optional<string> password = default;
+            Optional<string> username = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("username"u8))
-                {
-                    username = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("password"u8))
                 {
                     password = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("username"u8))
+                {
+                    username = property.Value.GetString();
+                    continue;
+                }
             }
-            return new MachineLearningWorkspaceConnectionUsernamePassword(username.Value, password.Value);
+            return new MachineLearningWorkspaceConnectionUsernamePassword(password.Value, username.Value);
         }
     }
 }

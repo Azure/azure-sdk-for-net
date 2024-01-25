@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SimGroupData>> value = default;
+            Optional<IReadOnlyList<MobileNetworkSimGroupData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    List<SimGroupData> array = new List<SimGroupData>();
+                    List<MobileNetworkSimGroupData> array = new List<MobileNetworkSimGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SimGroupData.DeserializeSimGroupData(item));
+                        array.Add(MobileNetworkSimGroupData.DeserializeMobileNetworkSimGroupData(item));
                     }
                     value = array;
                     continue;

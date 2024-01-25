@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobsClientBuilder = ClientBuilderExtensions.GetNewBlobsClientBuilder(Tenants, _serviceVersion);
         }
 
-        public async Task<DisposingBlobContainer> GetTestContainerAsync(
+        public async Task<DisposingContainer> GetTestContainerAsync(
             BlobServiceClient service = default,
             string containerName = default,
             IDictionary<string, string> metadata = default,
@@ -296,6 +296,8 @@ namespace Azure.Storage.DataMovement.Tests
                 BlobSasPermissions.Write);
             return builder.ToSasQueryParameters(userDelegationKey, accountName);
         }
+
+        public StorageSharedKeyCredential GetSharedKeyCredential() => Tenants.GetNewSharedKeyCredentials();
 
         public BlobServiceClient GetServiceClient_AccountSas(
             StorageSharedKeyCredential sharedKeyCredentials = default,

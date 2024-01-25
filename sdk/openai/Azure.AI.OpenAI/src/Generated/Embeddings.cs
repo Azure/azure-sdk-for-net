@@ -19,7 +19,7 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class Embeddings
     {
-        /// <summary> Initializes a new instance of Embeddings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> or <paramref name="usage"/> is null. </exception>
@@ -32,7 +32,7 @@ namespace Azure.AI.OpenAI
             Usage = usage;
         }
 
-        /// <summary> Initializes a new instance of Embeddings. </summary>
+        /// <summary> Initializes a new instance of <see cref="Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
         internal Embeddings(IReadOnlyList<EmbeddingItem> data, EmbeddingsUsage usage)

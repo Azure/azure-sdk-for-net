@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,23 +14,57 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> VpnClientConnectionHealth properties. </summary>
     public partial class VpnClientConnectionHealth
     {
-        /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealth"/>. </summary>
         internal VpnClientConnectionHealth()
         {
             AllocatedIPAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of VpnClientConnectionHealth. </summary>
+        /// <summary> Initializes a new instance of <see cref="VpnClientConnectionHealth"/>. </summary>
         /// <param name="totalIngressBytesTransferred"> Total of the Ingress Bytes Transferred in this P2S Vpn connection. </param>
         /// <param name="totalEgressBytesTransferred"> Total of the Egress Bytes Transferred in this connection. </param>
         /// <param name="vpnClientConnectionsCount"> The total of p2s vpn clients connected at this time to this P2SVpnGateway. </param>
         /// <param name="allocatedIPAddresses"> List of allocated ip addresses to the connected p2s vpn clients. </param>
-        internal VpnClientConnectionHealth(long? totalIngressBytesTransferred, long? totalEgressBytesTransferred, int? vpnClientConnectionsCount, IReadOnlyList<string> allocatedIPAddresses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VpnClientConnectionHealth(long? totalIngressBytesTransferred, long? totalEgressBytesTransferred, int? vpnClientConnectionsCount, IReadOnlyList<string> allocatedIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalIngressBytesTransferred = totalIngressBytesTransferred;
             TotalEgressBytesTransferred = totalEgressBytesTransferred;
             VpnClientConnectionsCount = vpnClientConnectionsCount;
             AllocatedIPAddresses = allocatedIPAddresses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total of the Ingress Bytes Transferred in this P2S Vpn connection. </summary>

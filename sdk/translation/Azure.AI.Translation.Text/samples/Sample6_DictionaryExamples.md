@@ -6,7 +6,7 @@ All samples are using `client` created in [Create a `TextTranslationClient`][cre
 
 Returns grammatical structure and context examples for the source term and target term pair.
 
-```C# Snippet:GetGrammaticalStructureAsync
+```C# Snippet:GetGrammaticalStructure
 try
 {
     string sourceLanguage = "en";
@@ -16,7 +16,7 @@ try
         new InputTextWithTranslation("fly", "volar")
     };
 
-    Response<IReadOnlyList<DictionaryExampleItem>> response = await client.LookupDictionaryExamplesAsync(sourceLanguage, targetLanguage, inputTextElements).ConfigureAwait(false);
+    Response<IReadOnlyList<DictionaryExampleItem>> response = client.LookupDictionaryExamples(sourceLanguage, targetLanguage, inputTextElements);
     IReadOnlyList<DictionaryExampleItem> dictionaryEntries = response.Value;
     DictionaryExampleItem dictionaryEntry = dictionaryEntries.FirstOrDefault();
 

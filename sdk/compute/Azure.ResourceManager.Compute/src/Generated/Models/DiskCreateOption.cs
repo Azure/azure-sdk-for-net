@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string CopyStartValue = "CopyStart";
         private const string ImportSecureValue = "ImportSecure";
         private const string UploadPreparedSecureValue = "UploadPreparedSecure";
+        private const string CopyFromSanSnapshotValue = "CopyFromSanSnapshot";
 
         /// <summary> Create an empty data disk of a size given by diskSizeGB. </summary>
         public static DiskCreateOption Empty { get; } = new DiskCreateOption(EmptyValue);
@@ -53,6 +54,8 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskCreateOption ImportSecure { get; } = new DiskCreateOption(ImportSecureValue);
         /// <summary> Similar to Upload create option. Create a new Trusted Launch VM or Confidential VM supported disk and upload using write token in both disk and VM guest state. </summary>
         public static DiskCreateOption UploadPreparedSecure { get; } = new DiskCreateOption(UploadPreparedSecureValue);
+        /// <summary> Create a new disk by exporting from elastic san volume snapshot. </summary>
+        public static DiskCreateOption CopyFromSanSnapshot { get; } = new DiskCreateOption(CopyFromSanSnapshotValue);
         /// <summary> Determines if two <see cref="DiskCreateOption"/> values are the same. </summary>
         public static bool operator ==(DiskCreateOption left, DiskCreateOption right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskCreateOption"/> values are not the same. </summary>

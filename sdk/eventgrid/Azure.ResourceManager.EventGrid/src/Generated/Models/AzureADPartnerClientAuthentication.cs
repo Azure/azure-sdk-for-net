@@ -12,13 +12,13 @@ namespace Azure.ResourceManager.EventGrid.Models
     /// <summary> Azure Active Directory Partner Client Authentication. </summary>
     public partial class AzureADPartnerClientAuthentication : PartnerClientAuthentication
     {
-        /// <summary> Initializes a new instance of AzureADPartnerClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureADPartnerClientAuthentication"/>. </summary>
         public AzureADPartnerClientAuthentication()
         {
             ClientAuthenticationType = PartnerClientAuthenticationType.AzureAD;
         }
 
-        /// <summary> Initializes a new instance of AzureADPartnerClientAuthentication. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureADPartnerClientAuthentication"/>. </summary>
         /// <param name="clientAuthenticationType"> Type of client authentication. </param>
         /// <param name="azureActiveDirectoryTenantId"> The Azure Active Directory Tenant ID to get the access token that will be included as the bearer token in delivery requests. </param>
         /// <param name="azureActiveDirectoryApplicationIdOrUri"> The Azure Active Directory Application ID or URI to get the access token that will be included as the bearer token in delivery requests. </param>

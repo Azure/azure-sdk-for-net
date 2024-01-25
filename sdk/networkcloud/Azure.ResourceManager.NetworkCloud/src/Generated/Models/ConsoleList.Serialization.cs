@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ConsoleData>> value = default;
+            Optional<IReadOnlyList<NetworkCloudVirtualMachineConsoleData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<ConsoleData> array = new List<ConsoleData>();
+                    List<NetworkCloudVirtualMachineConsoleData> array = new List<NetworkCloudVirtualMachineConsoleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsoleData.DeserializeConsoleData(item));
+                        array.Add(NetworkCloudVirtualMachineConsoleData.DeserializeNetworkCloudVirtualMachineConsoleData(item));
                     }
                     value = array;
                     continue;

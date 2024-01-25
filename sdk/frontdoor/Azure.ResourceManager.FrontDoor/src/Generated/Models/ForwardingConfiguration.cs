@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Describes Forwarding Route. </summary>
     public partial class ForwardingConfiguration : RouteConfiguration
     {
-        /// <summary> Initializes a new instance of ForwardingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingConfiguration"/>. </summary>
         public ForwardingConfiguration()
         {
             OdataType = "#Microsoft.Azure.FrontDoor.Models.FrontdoorForwardingConfiguration";
         }
 
-        /// <summary> Initializes a new instance of ForwardingConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ForwardingConfiguration"/>. </summary>
         /// <param name="odataType"></param>
         /// <param name="customForwardingPath"> A custom path used to rewrite resource paths matched by this rule. Leave empty to use incoming path. </param>
         /// <param name="forwardingProtocol"> Protocol this rule will use when forwarding traffic to backends. </param>

@@ -17,53 +17,54 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public L3NetworksTests  (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task L3Networks()
         {
-            var l3NetworkCollection = ResourceGroupResource.GetL3Networks();
+            var l3NetworkCollection = ResourceGroupResource.GetNetworkCloudL3Networks();
             var l3NetworkName = Recording.GenerateAssetName("l3network");
 
-            var l3NetworkId = L3NetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, l3NetworkName);
-            var l3Network = Client.GetL3NetworkResource(l3NetworkId);
+            var l3NetworkId = NetworkCloudL3NetworkResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, ResourceIdentifier.Parse(ResourceGroupResource.Id).Name, l3NetworkName);
+            var l3Network = Client.GetNetworkCloudL3NetworkResource(l3NetworkId);
 
             // Create
-            L3NetworkData data = new L3NetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), TestEnvironment.L3IsolationDomainId, TestEnvironment.L3Vlan)
+            NetworkCloudL3NetworkData data = new NetworkCloudL3NetworkData(new AzureLocation(TestEnvironment.Location), new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"), new ResourceIdentifier(TestEnvironment.L3IsolationDomainId), TestEnvironment.L3Vlan)
             {
                 IPv4ConnectedPrefix = TestEnvironment.L3Ipv4Prefix,
                 IPv6ConnectedPrefix = TestEnvironment.L3Ipv6Prefix,
             };
-            ArmOperation<L3NetworkResource> l3NetworkResourceOp = await l3NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l3NetworkName, data);
-            Assert.AreEqual(l3NetworkResourceOp.Value.Data.Name ,l3NetworkName);
+            ArmOperation<NetworkCloudL3NetworkResource> NetworkCloudL3NetworkResourceOp = await l3NetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, l3NetworkName, data);
+            Assert.AreEqual(NetworkCloudL3NetworkResourceOp.Value.Data.Name ,l3NetworkName);
 
             // Get
-            L3NetworkResource getResult = await l3Network.GetAsync();
+            NetworkCloudL3NetworkResource getResult = await l3Network.GetAsync();
             Assert.AreEqual(getResult.Data.Name, l3NetworkName);
 
             // List by Resource Group
-            var listByResourceGroup = new List<L3NetworkResource>();
-            L3NetworkCollection collection = ResourceGroupResource.GetL3Networks();
-            await foreach (L3NetworkResource item in collection.GetAllAsync())
+            var listByResourceGroup = new List<NetworkCloudL3NetworkResource>();
+            NetworkCloudL3NetworkCollection collection = ResourceGroupResource.GetNetworkCloudL3Networks();
+            await foreach (NetworkCloudL3NetworkResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
             Assert.IsNotEmpty(listByResourceGroup);
 
             // List by Subscription
-            var listBySubscription = new List<L3NetworkResource>();
-              await foreach (L3NetworkResource item in SubscriptionResource.GetL3NetworksAsync())
+            var listBySubscription = new List<NetworkCloudL3NetworkResource>();
+              await foreach (NetworkCloudL3NetworkResource item in SubscriptionResource.GetNetworkCloudL3NetworksAsync())
             {
                 listBySubscription.Add(item);
             }
             Assert.IsNotEmpty(listBySubscription);
 
             // Update
-             L3NetworkPatch patch = new L3NetworkPatch()
+            NetworkCloudL3NetworkPatch patch = new NetworkCloudL3NetworkPatch()
             {
                 Tags =
                     {
                         ["key1"] = "myvalue1",
                     },
             };
-            L3NetworkResource updateResult = await l3Network.UpdateAsync(patch);
+            NetworkCloudL3NetworkResource updateResult = await l3Network.UpdateAsync(patch);
             Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
 
             // Delete

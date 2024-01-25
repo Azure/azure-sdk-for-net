@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Models;
@@ -14,47 +14,48 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     /// <summary>
     /// A class representing the NetworkFabricSku data model.
-    /// The NetworkFabricSku resource definition.
+    /// The Network Fabric SKU resource definition.
     /// </summary>
     public partial class NetworkFabricSkuData : ResourceData
     {
-        /// <summary> Initializes a new instance of NetworkFabricSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
         public NetworkFabricSkuData()
         {
+            SupportedVersions = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of NetworkFabricSkuData. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricSkuData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="typePropertiesType"> Type of Network Fabric Sku. </param>
-        /// <param name="maxComputeRacks"> Maximum number of compute racks available for this Network Fabric SKU. </param>
-        /// <param name="minSupportedVer"> Minimum supported version. </param>
-        /// <param name="maxSupportedVer"> Maximum supported version. </param>
-        /// <param name="detailsUri"> The URI gives full details of sku. </param>
-        /// <param name="provisioningState"> Gets the provisioning state of the resource. </param>
-        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string typePropertiesType, int? maxComputeRacks, string minSupportedVer, string maxSupportedVer, Uri detailsUri, ProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="typePropertiesType"> Type of Network Fabric SKU. </param>
+        /// <param name="maxComputeRacks"> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </param>
+        /// <param name="maximumServerCount"> Maximum number of servers available for this Network Fabric SKU. </param>
+        /// <param name="supportedVersions"> List of supported Network Fabric SKU versions. </param>
+        /// <param name="details"> URL providing detailed configuration of the fabric SKU. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        internal NetworkFabricSkuData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NetworkFabricSkuType? typePropertiesType, int? maxComputeRacks, int? maximumServerCount, IReadOnlyList<string> supportedVersions, string details, NetworkFabricProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
         {
             TypePropertiesType = typePropertiesType;
             MaxComputeRacks = maxComputeRacks;
-            MinSupportedVer = minSupportedVer;
-            MaxSupportedVer = maxSupportedVer;
-            DetailsUri = detailsUri;
+            MaximumServerCount = maximumServerCount;
+            SupportedVersions = supportedVersions;
+            Details = details;
             ProvisioningState = provisioningState;
         }
 
-        /// <summary> Type of Network Fabric Sku. </summary>
-        public string TypePropertiesType { get; }
-        /// <summary> Maximum number of compute racks available for this Network Fabric SKU. </summary>
+        /// <summary> Type of Network Fabric SKU. </summary>
+        public NetworkFabricSkuType? TypePropertiesType { get; }
+        /// <summary> Maximum number of compute racks available for this Network Fabric SKU. The value of max count racks is 4 for 4 rack SKU and 8 for 8 rack SKU. </summary>
         public int? MaxComputeRacks { get; set; }
-        /// <summary> Minimum supported version. </summary>
-        public string MinSupportedVer { get; }
-        /// <summary> Maximum supported version. </summary>
-        public string MaxSupportedVer { get; }
-        /// <summary> The URI gives full details of sku. </summary>
-        public Uri DetailsUri { get; }
-        /// <summary> Gets the provisioning state of the resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
+        /// <summary> Maximum number of servers available for this Network Fabric SKU. </summary>
+        public int? MaximumServerCount { get; set; }
+        /// <summary> List of supported Network Fabric SKU versions. </summary>
+        public IReadOnlyList<string> SupportedVersions { get; }
+        /// <summary> URL providing detailed configuration of the fabric SKU. </summary>
+        public string Details { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public NetworkFabricProvisioningState? ProvisioningState { get; }
     }
 }

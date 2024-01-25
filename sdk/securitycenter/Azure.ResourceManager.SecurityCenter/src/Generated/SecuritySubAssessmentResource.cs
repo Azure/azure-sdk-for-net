@@ -18,13 +18,16 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     /// <summary>
     /// A Class representing a SecuritySubAssessment along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier" /> you can construct a <see cref="SecuritySubAssessmentResource" />
-    /// from an instance of <see cref="ArmClient" /> using the GetSecuritySubAssessmentResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource" /> using the GetSecuritySubAssessment method.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecuritySubAssessmentResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetSecuritySubAssessmentResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SecurityAssessmentResource"/> using the GetSecuritySubAssessment method.
     /// </summary>
     public partial class SecuritySubAssessmentResource : ArmResource
     {
         /// <summary> Generate the resource identifier of a <see cref="SecuritySubAssessmentResource"/> instance. </summary>
+        /// <param name="scope"> The scope. </param>
+        /// <param name="assessmentName"> The assessmentName. </param>
+        /// <param name="subAssessmentName"> The subAssessmentName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string scope, string assessmentName, string subAssessmentName)
         {
             var resourceId = $"{scope}/providers/Microsoft.Security/assessments/{assessmentName}/subAssessments/{subAssessmentName}";
@@ -35,12 +38,15 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly SubAssessmentsRestOperations _securitySubAssessmentSubAssessmentsRestClient;
         private readonly SecuritySubAssessmentData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/subAssessments";
+
         /// <summary> Initializes a new instance of the <see cref="SecuritySubAssessmentResource"/> class for mocking. </summary>
         protected SecuritySubAssessmentResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref = "SecuritySubAssessmentResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="SecuritySubAssessmentResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal SecuritySubAssessmentResource(ArmClient client, SecuritySubAssessmentData data) : this(client, data.Id)
@@ -61,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/assessments/subAssessments";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -97,6 +100,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -128,6 +139,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubAssessments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SecuritySubAssessmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

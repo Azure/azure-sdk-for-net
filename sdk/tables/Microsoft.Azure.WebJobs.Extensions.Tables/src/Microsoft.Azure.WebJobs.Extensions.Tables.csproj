@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <Version>1.2.0-beta.2</Version>
+        <Version>1.3.0-beta.1</Version>
         <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-        <ApiCompatVersion>1.1.0</ApiCompatVersion>
+        <ApiCompatVersion>1.2.1</ApiCompatVersion>
         <Description>This package extends the Microsoft.Azure.WebJobs library with Table triggers using Azure Table service.</Description>
         <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
         <NoWarn>$(NoWarn);

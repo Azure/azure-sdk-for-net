@@ -91,7 +91,7 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public void ValidateVisualStudioOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioTenantId, [Values] bool setAdditionallyAllowedTenants, [Values]bool setCredentialProcessTimeout)
+        public void ValidateVisualStudioOptionsHonored([Values] bool setTenantId, [Values] bool setVisualStudioTenantId, [Values] bool setAdditionallyAllowedTenants, [Values] bool setCredentialProcessTimeout)
         {
             // ignore when both setTenantId and setVisualStudioTenantId are true since we cannot set both
             if (setTenantId && setVisualStudioTenantId)
@@ -324,17 +324,32 @@ namespace Azure.Identity.Tests
             }
         }
 
+        public static IEnumerable<object[]> ExcludeCredOptions()
+        {
+            yield return new object[] { false, true, false, false, false, false, false, false, false, false };
+            yield return new object[] { false, false, true, false, false, false, false, false, false, false };
+            yield return new object[] { true, false, false, false, false, false, false, false, false, false };
+            yield return new object[] { false, false, false, true, false, false, false, false, false, false };
+            yield return new object[] { false, false, false, false, true, false, false, false, false, false };
+            yield return new object[] { false, false, false, false, false, true, false, false, false, false };
+            yield return new object[] { false, false, false, false, false, false, true, false, false, false };
+            yield return new object[] { false, false, false, false, false, false, false, true, false, false };
+            yield return new object[] { false, false, false, false, false, false, false, false, true, false };
+            yield return new object[] { false, false, false, false, false, false, false, false, false, true };
+        }
+
         [Test]
-        public void ValidateExcludeOptionsHonored([Values(true, false)] bool excludeEnvironmentCredential,
-                                                   [Values(true, false)] bool excludeWorkloadIdentityCredential,
-                                                   [Values(true, false)] bool excludeManagedIdentityCredential,
-                                                   [Values(true, false)] bool excludeDeveloperCliCredential,
-                                                   [Values(true, false)] bool excludeSharedTokenCacheCredential,
-                                                   [Values(true, false)] bool excludeVisualStudioCredential,
-                                                   [Values(true, false)] bool excludeVisualStudioCodeCredential,
-                                                   [Values(true, false)] bool excludeCliCredential,
-                                                   [Values(true, false)] bool excludeAzurePowerShellCredential,
-                                                   [Values(true, false)] bool excludeInteractiveBrowserCredential)
+        [TestCaseSource(nameof(ExcludeCredOptions))]
+        public void ValidateExcludeOptionsHonored(bool excludeEnvironmentCredential,
+                                                  bool excludeWorkloadIdentityCredential,
+                                                  bool excludeManagedIdentityCredential,
+                                                  bool excludeDeveloperCliCredential,
+                                                  bool excludeSharedTokenCacheCredential,
+                                                  bool excludeVisualStudioCredential,
+                                                  bool excludeVisualStudioCodeCredential,
+                                                  bool excludeCliCredential,
+                                                  bool excludeAzurePowerShellCredential,
+                                                  bool excludeInteractiveBrowserCredential)
         {
             using (new TestEnvVar(new Dictionary<string, string>
             {
@@ -359,7 +374,7 @@ namespace Azure.Identity.Tests
                 var options = new DefaultAzureCredentialOptions
                 {
                     ExcludeEnvironmentCredential = excludeEnvironmentCredential,
-                    ExcludeWorkloadIdentityCredential= excludeWorkloadIdentityCredential,
+                    ExcludeWorkloadIdentityCredential = excludeWorkloadIdentityCredential,
                     ExcludeManagedIdentityCredential = excludeManagedIdentityCredential,
                     ExcludeAzureDeveloperCliCredential = excludeDeveloperCliCredential,
                     ExcludeSharedTokenCacheCredential = excludeSharedTokenCacheCredential,

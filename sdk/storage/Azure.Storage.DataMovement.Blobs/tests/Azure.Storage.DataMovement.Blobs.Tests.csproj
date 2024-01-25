@@ -6,28 +6,20 @@
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.DataMovement.Blobs.csproj" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Storage.DataMovement.Blobs.csproj">
+      <Aliases>DMBlobs</Aliases>
+    </ProjectReference>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)CheckpointerTesting.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestBase.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageSharedTestSources)\DataProvider.cs" LinkBase="Shared\Storage" />
+    <Compile Include="$(AzureStorageSharedTestSources)\RandomExtensions.cs" LinkBase="Shared\Storage" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferDirection.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferUtility.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="$(AzureStorageDataMovementSharedSources)..\JobPlan\*.cs" LinkBase="Shared\DataMovement\JobPlanModels" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="$(AzureStorageSharedTestSources)\**\*.cs" LinkBase="Shared\Storage" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteFixture.cs" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\AzuriteNUnitFixture.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\tests\BlobsClientTestFixtureAttribute.cs" LinkBase="Shared" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\ClientSideEncryptionTestExtensions.cs" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\StorageTestBase.SasVersion.cs" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\Sas\*.cs" />
-    <Compile Remove="$(AzureStorageSharedTestSources)\TransferValidationTestBase.cs" />
     <None Include="$(AzureStorageSharedTestSources)\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

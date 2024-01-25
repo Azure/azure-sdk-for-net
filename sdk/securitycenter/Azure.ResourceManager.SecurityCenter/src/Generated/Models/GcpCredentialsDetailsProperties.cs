@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
     /// <summary> GCP cloud account connector based service to service credentials, the credentials are composed of the organization ID and a JSON API key (write only). </summary>
     public partial class GcpCredentialsDetailsProperties : AuthenticationDetailsProperties
     {
-        /// <summary> Initializes a new instance of GcpCredentialsDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/>. </summary>
         /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
         /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
         /// <param name="projectId"> Project ID field of the API key (write only). </param>
@@ -55,10 +55,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthenticationType = AuthenticationType.GcpCredentials;
         }
 
-        /// <summary> Initializes a new instance of GcpCredentialsDetailsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/>. </summary>
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="organizationId"> The organization ID of the GCP cloud account. </param>
         /// <param name="gcpCredentialType"> Type field of the API key (write only). </param>
         /// <param name="projectId"> Project ID field of the API key (write only). </param>
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tokenUri"> Token URI field of the API key (write only). </param>
         /// <param name="authProviderX509CertUri"> Auth provider x509 certificate URL field of the API key (write only). </param>
         /// <param name="clientX509CertUri"> Client x509 certificate URL field of the API key (write only). </param>
-        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        internal GcpCredentialsDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string organizationId, string gcpCredentialType, string projectId, string privateKeyId, string privateKey, string clientEmail, string clientId, Uri authUri, Uri tokenUri, Uri authProviderX509CertUri, Uri clientX509CertUri) : base(authenticationProvisioningState, grantedPermissions, authenticationType, serializedAdditionalRawData)
         {
             OrganizationId = organizationId;
             GcpCredentialType = gcpCredentialType;
@@ -84,6 +85,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             AuthProviderX509CertUri = authProviderX509CertUri;
             ClientX509CertUri = clientX509CertUri;
             AuthenticationType = authenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GcpCredentialsDetailsProperties"/> for deserialization. </summary>
+        internal GcpCredentialsDetailsProperties()
+        {
         }
 
         /// <summary> The organization ID of the GCP cloud account. </summary>

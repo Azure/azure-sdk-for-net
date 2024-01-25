@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Marketplace.Models
     /// <summary> Query approved plans response. </summary>
     public partial class QueryApprovedPlansResult
     {
-        /// <summary> Initializes a new instance of QueryApprovedPlansResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansResult"/>. </summary>
         internal QueryApprovedPlansResult()
         {
             Details = new ChangeTrackingList<QueryApprovedPlansDetails>();
         }
 
-        /// <summary> Initializes a new instance of QueryApprovedPlansResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryApprovedPlansResult"/>. </summary>
         /// <param name="details"> A list indicating for each plan which subscriptions are approved. Plan Id is unique. </param>
         internal QueryApprovedPlansResult(IReadOnlyList<QueryApprovedPlansDetails> details)
         {

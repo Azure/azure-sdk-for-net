@@ -38,17 +38,20 @@ namespace Azure.Identity.Tests
 
             var options = new ClientCertificateCredentialOptions
             {
-                Transport = config.Transport,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
-                IsSupportLoggingEnabled = config.IsSupportLoggingEnabled,
+                IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
             };
+            if (config.Transport != null)
+            {
+                options.Transport = config.Transport;
+            }
             var pipeline = CredentialPipeline.GetInstance(options);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var mockCert = new X509Certificate2(certificatePath);
 
             return InstrumentClient(
-                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, null)
+                new ClientCertificateCredential(config.TenantId, ClientId, mockCert, options, pipeline, config.MockConfidentialMsalClient)
             );
         }
 
@@ -199,7 +202,7 @@ namespace Azure.Identity.Tests
             TestSetup();
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
             var options = new ClientCertificateCredentialOptions { AdditionallyAllowedTenants = { TenantIdHint } };
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);
@@ -222,7 +225,7 @@ namespace Azure.Identity.Tests
             var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
             var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var context = new TokenRequestContext(new[] { Scope }, tenantId: TenantId);
-            expectedTenantId = TenantIdResolver.Resolve(TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(TenantId, context, TenantIdResolverBase.AllTenants);
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             var certificatePathPem = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pem");
             var mockCert = new X509Certificate2(certificatePath);

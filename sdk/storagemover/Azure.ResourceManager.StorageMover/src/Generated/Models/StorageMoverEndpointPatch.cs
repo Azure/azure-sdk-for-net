@@ -10,23 +10,27 @@ namespace Azure.ResourceManager.StorageMover.Models
     /// <summary> The Endpoint resource. </summary>
     public partial class StorageMoverEndpointPatch
     {
-        /// <summary> Initializes a new instance of StorageMoverEndpointPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointPatch"/>. </summary>
         public StorageMoverEndpointPatch()
         {
         }
 
-        /// <summary> The Endpoint resource, which contains information about file sources and targets. </summary>
-        internal EndpointBaseUpdateProperties Properties { get; set; }
-        /// <summary> A description for the Endpoint. </summary>
-        public string EndpointBaseUpdateDescription
+        /// <summary> Initializes a new instance of <see cref="StorageMoverEndpointPatch"/>. </summary>
+        /// <param name="properties">
+        /// The Endpoint resource, which contains information about file sources and targets.
+        /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
+        /// </param>
+        internal StorageMoverEndpointPatch(EndpointBaseUpdateProperties properties)
         {
-            get => Properties is null ? default : Properties.Description;
-            set
-            {
-                if (Properties is null)
-                    Properties = new EndpointBaseUpdateProperties();
-                Properties.Description = value;
-            }
+            Properties = properties;
         }
+
+        /// <summary>
+        /// The Endpoint resource, which contains information about file sources and targets.
+        /// Please note <see cref="EndpointBaseUpdateProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="AzureStorageBlobContainerEndpointUpdateProperties"/>, <see cref="AzureStorageSmbFileShareEndpointUpdateProperties"/>, <see cref="NfsMountEndpointUpdateProperties"/> and <see cref="SmbMountEndpointUpdateProperties"/>.
+        /// </summary>
+        public EndpointBaseUpdateProperties Properties { get; set; }
     }
 }

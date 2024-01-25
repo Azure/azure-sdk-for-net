@@ -65,8 +65,7 @@ public class SimpleBatchProcessor : PluggableCheckpointStoreEventProcessor<Event
 
             await UpdateCheckpointAsync(
                 partition.PartitionId,
-                lastEvent.Offset,
-                lastEvent.SequenceNumber,
+                CheckpointPosition.FromEvent(lastEvent),
                 cancellationToken);
         }
         catch (Exception ex)

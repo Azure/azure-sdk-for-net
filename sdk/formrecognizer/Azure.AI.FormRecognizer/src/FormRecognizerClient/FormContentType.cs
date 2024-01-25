@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.AI.FormRecognizer
 {
     /// <summary>
@@ -11,6 +13,7 @@ namespace Azure.AI.FormRecognizer
         /// <summary>
         /// Used for JSON files.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         Json,
 
         /// <summary>

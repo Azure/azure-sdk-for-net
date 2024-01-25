@@ -13,14 +13,14 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> Describes an Azure Table output data source. </summary>
     public partial class TableOutputDataSource : StreamingJobOutputDataSource
     {
-        /// <summary> Initializes a new instance of TableOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableOutputDataSource"/>. </summary>
         public TableOutputDataSource()
         {
             ColumnsToRemove = new ChangeTrackingList<string>();
             OutputDataSourceType = "Microsoft.Storage/Table";
         }
 
-        /// <summary> Initializes a new instance of TableOutputDataSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="TableOutputDataSource"/>. </summary>
         /// <param name="outputDataSourceType"> Indicates the type of data source output will be written to. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountName"> The name of the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>

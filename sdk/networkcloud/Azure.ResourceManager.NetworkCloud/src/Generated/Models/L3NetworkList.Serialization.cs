@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 return null;
             }
             Optional<string> nextLink = default;
-            Optional<IReadOnlyList<L3NetworkData>> value = default;
+            Optional<IReadOnlyList<NetworkCloudL3NetworkData>> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    List<L3NetworkData> array = new List<L3NetworkData>();
+                    List<NetworkCloudL3NetworkData> array = new List<NetworkCloudL3NetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(L3NetworkData.DeserializeL3NetworkData(item));
+                        array.Add(NetworkCloudL3NetworkData.DeserializeNetworkCloudL3NetworkData(item));
                     }
                     value = array;
                     continue;

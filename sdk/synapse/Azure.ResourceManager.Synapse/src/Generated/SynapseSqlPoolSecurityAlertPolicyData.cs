@@ -19,14 +19,14 @@ namespace Azure.ResourceManager.Synapse
     /// </summary>
     public partial class SynapseSqlPoolSecurityAlertPolicyData : ResourceData
     {
-        /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolSecurityAlertPolicyData"/>. </summary>
         public SynapseSqlPoolSecurityAlertPolicyData()
         {
             DisabledAlerts = new ChangeTrackingList<string>();
             EmailAddresses = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of SynapseSqlPoolSecurityAlertPolicyData. </summary>
+        /// <summary> Initializes a new instance of <see cref="SynapseSqlPoolSecurityAlertPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

@@ -5,16 +5,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
+namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 {
     public class NetworkFabricControllerTests : ManagedNetworkFabricManagementTestBase
     {
-        public NetworkFabricControllerTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) {}
-        public NetworkFabricControllerTests(bool isAsync) : base(isAsync) {}
+        public NetworkFabricControllerTests(bool isAsync, RecordedTestMode mode) : base(isAsync, mode) { }
+        public NetworkFabricControllerTests(bool isAsync) : base(isAsync) { }
 
         /// <summary>
         /// The test takes nearly one hour to complete the process. So max time 3600000ms = 1hr.
@@ -25,58 +25,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
         [AsyncOnly]
         public async Task NetworkFabricControllers()
         {
-            ResourceGroupResource NFCResourceGroupResource = null;
-            var resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.NFCResourceGroupName);
-            NFCResourceGroupResource = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricControllerCollection collection = ResourceGroupResource.GetNetworkFabricControllers();
 
-            NetworkFabricControllerCollection collection = NFCResourceGroupResource.GetNetworkFabricControllers();
-
-            string subscriptionId = TestEnvironment.SubscriptionId;
-            string resourceGroupName = TestEnvironment.NFCResourceGroupName;
-            string networkFabricControllerName = TestEnvironment.NetworkFabricControllerName;
-
-            TestContext.Out.WriteLine($"Entered into the NetworkFabricController tests....");
-            TestContext.Out.WriteLine($"Provided subscription-Id : {subscriptionId}");
-            TestContext.Out.WriteLine($"Provided resourceGroup : {resourceGroupName}");
-            TestContext.Out.WriteLine($"Provided NetworkFabricController : {networkFabricControllerName}");
-
-            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(subscriptionId, NFCResourceGroupResource.Id.Name, networkFabricControllerName);
+            ResourceIdentifier networkFabricControllerResourceId = NetworkFabricControllerResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.NetworkFabricControllerName);
             TestContext.Out.WriteLine($"networkFabricControllerId: {networkFabricControllerResourceId}");
 
-            ResourceIdentifier deleteNetworkFabricControllerId = new ResourceIdentifier("/subscriptions/61065ccc-9543-4b91-b2d1-0ce42a914507/resourceGroups/nfa-tool-ts-clisdktest-nfrg060523/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/nfa-tool-ts-sdk-nfc1-062023");
             TestContext.Out.WriteLine($"NFC Test started.....");
 
             NetworkFabricControllerResource networkFabricController = Client.GetNetworkFabricControllerResource(networkFabricControllerResourceId);
-            NetworkFabricControllerResource deleteNetworkFabricController = Client.GetNetworkFabricControllerResource(deleteNetworkFabricControllerId);
 
-            // Create
-            TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricControllerData data = new NetworkFabricControllerData(new AzureLocation(TestEnvironment.NFCLocation))
+            #region NFC Create Test
+
+            TestContext.Out.WriteLine($"NFC create started.....");
+            NetworkFabricControllerData data = new NetworkFabricControllerData(new AzureLocation(TestEnvironment.Location))
             {
+                Annotation = "annotation",
                 InfrastructureExpressRouteConnections =
                 {
-                    new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName")
+                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
                     {
-                        ExpressRouteAuthorizationKey = "asdghjklf"
+                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
                     }
                 },
                 WorkloadExpressRouteConnections =
                 {
-                    new ExpressRouteConnectionInformation("/subscriptions/xxxxx/resourceGroups/resourceGroupName/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName")
+                    new ExpressRouteConnectionInformation(new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Network/expressRouteCircuits/expressRouteCircuitName"))
                     {
-                        ExpressRouteAuthorizationKey = "asdghjklf"
+                        ExpressRouteAuthorizationKey = "1234ABCD-0A1B-1234-5678-123456ABCDEF",
                     }
                 },
-                IPv4AddressSpace = "172.253.0.0/19"
+                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration()
+                {
+                    Name = TestEnvironment.NetworkFabricControllerName + "-mrg",
+                    Location = new AzureLocation(TestEnvironment.Location),
+                },
+                IsWorkloadManagementNetworkEnabled = IsWorkloadManagementNetworkEnabled.True,
+                IPv4AddressSpace = "172.253.0.0/19",
+                IPv6AddressSpace = "::/60",
+                NfcSku = NetworkFabricControllerSKU.Standard,
             };
 
-            ArmOperation<NetworkFabricControllerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFabricControllerName, data);
+            ArmOperation<NetworkFabricControllerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.NetworkFabricControllerName, data);
+
+            #endregion
 
             // Get
-            TestContext.Out.WriteLine($"GET started.....");
+            TestContext.Out.WriteLine($"NFC GET started.....");
             NetworkFabricControllerResource getResult = await networkFabricController.GetAsync();
             TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, networkFabricControllerName);
+            Assert.AreEqual(getResult.Data.Name, TestEnvironment.NetworkFabricControllerName);
 
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
@@ -86,16 +83,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests
                 listByResourceGroup.Add(item);
             }
 
+            //List by subscription
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId);
+            SubscriptionResource subscriptionResource = Client.GetSubscriptionResource(subscriptionResourceId);
+
             TestContext.Out.WriteLine($"GET - List by Subscription started.....");
-            var listBySubscription = new List<NetworkFabricControllerResource>();
-            await foreach (var item in DefaultSubscription.GetNetworkFabricControllersAsync())
+
+            await foreach (NetworkFabricControllerResource item in subscriptionResource.GetNetworkFabricControllersAsync())
             {
-                listBySubscription.Add(item);
+                NetworkFabricControllerData resourceData = item.Data;
+                TestContext.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
+
+            TestContext.Out.WriteLine($"List by Subscription operation succeeded.");
 
             // Delete
             TestContext.Out.WriteLine($"DELETE started.....");
-            var deleteResponse = await networkFabricController.DeleteAsync(WaitUntil.Completed);
+            ArmOperation deleteResponse = await networkFabricController.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResponse.HasCompleted);
         }
     }

@@ -38,6 +38,8 @@ namespace Azure.Data.Tables.Tests
         private static readonly string s_someGuidString = "66cf3753-1cc9-44c4-b857-4546f744901b";
         private static readonly byte[] s_someBinary = new byte[] { 0x01, 0x02, 0x03, 0x04, 0xFF };
         private static readonly BinaryData s_someBinaryData = new BinaryData(new byte[] { 0x01, 0x02, 0x03, 0x04, 0xFF });
+        private static readonly Expression<Func<ComplexEntity, bool>> s_rename = x => x.RenamableStringProperty == "someString";
+        private static readonly Expression<Func<ComplexEntity, bool>> s_renameAndNonrename = x => x.RenamableStringProperty != "someString" && x.PartitionKey == Partition;
         private static readonly Expression<Func<TableItem, bool>> s_ne_TI = x => x.Name != TableName;
         private static readonly Expression<Func<ComplexEntity, bool>> s_ne = x => x.PartitionKey == Partition && x.RowKey != Row;
         private static readonly Expression<Func<TableEntity, bool>> s_neDE = x => x.PartitionKey == Partition && x.RowKey != Row;
@@ -94,6 +96,8 @@ namespace Azure.Data.Tables.Tests
 
         public static object[] TableEntityExpressionTestCases =
         {
+            new object[] {$"SomeNewName eq 'someString'", s_rename},
+            new object[] {$"(SomeNewName ne 'someString') and (PartitionKey eq '{Partition}')", s_renameAndNonrename},
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ne '{Row}')", s_ne },
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey gt '{Row}')", s_gt },
             new object[] { $"(PartitionKey eq '{Partition}') and (RowKey ge '{Row}')", s_ge },

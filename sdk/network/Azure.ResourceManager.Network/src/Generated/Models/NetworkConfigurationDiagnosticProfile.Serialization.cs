@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkConfigurationDiagnosticProfile : IUtf8JsonSerializable
+    public partial class NetworkConfigurationDiagnosticProfile : IUtf8JsonSerializable, IJsonModel<NetworkConfigurationDiagnosticProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkConfigurationDiagnosticProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkConfigurationDiagnosticProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationDiagnosticProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("direction"u8);
             writer.WriteStringValue(Direction.ToString());
@@ -25,11 +36,40 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStringValue(Destination);
             writer.WritePropertyName("destinationPort"u8);
             writer.WriteStringValue(DestinationPort);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkConfigurationDiagnosticProfile DeserializeNetworkConfigurationDiagnosticProfile(JsonElement element)
+        NetworkConfigurationDiagnosticProfile IJsonModel<NetworkConfigurationDiagnosticProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationDiagnosticProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkConfigurationDiagnosticProfile(document.RootElement, options);
+        }
+
+        internal static NetworkConfigurationDiagnosticProfile DeserializeNetworkConfigurationDiagnosticProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             string source = default;
             string destination = default;
             string destinationPort = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("direction"u8))
@@ -66,8 +108,44 @@ namespace Azure.ResourceManager.Network.Models
                     destinationPort = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkConfigurationDiagnosticProfile(direction, protocol, source, destination, destinationPort);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkConfigurationDiagnosticProfile(direction, protocol, source, destination, destinationPort, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkConfigurationDiagnosticProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationDiagnosticProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkConfigurationDiagnosticProfile IPersistableModel<NetworkConfigurationDiagnosticProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkConfigurationDiagnosticProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkConfigurationDiagnosticProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkConfigurationDiagnosticProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkConfigurationDiagnosticProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -111,9 +111,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(firstSubscription.ScopeIdentifier, subscriptionContract.ScopeIdentifier);
                     Assert.Equal(firstSubscription.OwnerId, subscriptionContract.OwnerId);
                     Assert.Equal(newSubscriptionState, subscriptionContract.State);
-                    Assert.Equal(newSubscriptionSk, subscriptionContract.SecondaryKey);
                     if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Assert.Equal(newSubscriptionSk, subscriptionContract.SecondaryKey);
                         Assert.Equal(newSubscriptionPk, subscriptionContract.PrimaryKey);
+                    }
                     Assert.Equal(newSubscriptionName, subscriptionContract.DisplayName);
 
                     var subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(
@@ -170,8 +172,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         newSubscriptionId);
                     if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
                         Assert.Equal(patchedPk, secretsResponse.PrimaryKey);
-                    Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
+                        Assert.Equal(patchedSk, secretsResponse.SecondaryKey);
+                    }
 
                     // regenerate primary key
                     testBase.client.Subscription.RegeneratePrimaryKey(
@@ -186,8 +190,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newSubscriptionId);
 
                     Assert.NotNull(keysResponse);
-                    Assert.NotEqual(patchedPk, keysResponse.PrimaryKey);
-                    Assert.Equal(patchedSk, keysResponse.SecondaryKey);
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Assert.NotEqual(patchedPk, keysResponse.PrimaryKey);
+                        Assert.Equal(patchedSk, keysResponse.SecondaryKey);
+                    }
 
                     // regenerate secondary key
                     testBase.client.Subscription.RegenerateSecondaryKey(
@@ -202,8 +209,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newSubscriptionId);
 
                     Assert.NotNull(keysHttpResponse);
-                    Assert.NotEqual(patchedPk, keysHttpResponse.Body.PrimaryKey);
-                    Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
+                    if (HttpMockServer.Mode != HttpRecorderMode.Playback)
+                    {
+                        Assert.NotEqual(patchedPk, keysHttpResponse.Body.PrimaryKey);
+                        Assert.NotEqual(patchedSk, keysHttpResponse.Body.SecondaryKey);
+                    }
 
                     // get the subscription to check the key
                     subscriptionResponse = await testBase.client.Subscription.GetWithHttpMessagesAsync(

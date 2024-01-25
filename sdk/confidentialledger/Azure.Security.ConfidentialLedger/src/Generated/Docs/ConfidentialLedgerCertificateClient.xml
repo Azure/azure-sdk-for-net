@@ -2,34 +2,48 @@
 <doc>
   <members>
     <member name="GetLedgerIdentityAsync(string,RequestContext)">
-<example>
-This sample shows how to call GetLedgerIdentityAsync with required parameters and parse the result.
+      <example>
+This sample shows how to call GetLedgerIdentityAsync and parse the result.
 <code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfidentialLedgerCertificateClient(endpoint);
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+
+Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
+]]></code>
+This sample shows how to call GetLedgerIdentityAsync with all parameters and parse the result.
+<code><![CDATA[
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
 Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("ledgerId").ToString());
 Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
     <member name="GetLedgerIdentity(string,RequestContext)">
-<example>
-This sample shows how to call GetLedgerIdentity with required parameters and parse the result.
+      <example>
+This sample shows how to call GetLedgerIdentity and parse the result.
 <code><![CDATA[
-var endpoint = new Uri("<https://my-service.azure.com>");
-var client = new ConfidentialLedgerCertificateClient(endpoint);
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+
+Response response = client.GetLedgerIdentity("<ledgerId>");
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
+]]></code>
+This sample shows how to call GetLedgerIdentity with all parameters and parse the result.
+<code><![CDATA[
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
 
 Response response = client.GetLedgerIdentity("<ledgerId>");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("ledgerId").ToString());
 Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-]]></code>
-</example>
+]]></code></example>
     </member>
   </members>
 </doc>

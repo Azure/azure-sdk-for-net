@@ -5,23 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> The MigrateSchemaSqlServerSqlDBTaskOutputError. </summary>
     public partial class MigrateSchemaSqlServerSqlDBTaskOutputError : MigrateSchemaSqlServerSqlDBTaskOutput
     {
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>. </summary>
         internal MigrateSchemaSqlServerSqlDBTaskOutputError()
         {
             ResultType = "SchemaErrorOutput";
         }
 
-        /// <summary> Initializes a new instance of MigrateSchemaSqlServerSqlDBTaskOutputError. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrateSchemaSqlServerSqlDBTaskOutputError"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="commandText"> Schema command which failed. </param>
         /// <param name="errorText"> Reason of failure. </param>
-        internal MigrateSchemaSqlServerSqlDBTaskOutputError(string id, string resultType, string commandText, string errorText) : base(id, resultType)
+        internal MigrateSchemaSqlServerSqlDBTaskOutputError(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string commandText, string errorText) : base(id, resultType, serializedAdditionalRawData)
         {
             CommandText = commandText;
             ErrorText = errorText;

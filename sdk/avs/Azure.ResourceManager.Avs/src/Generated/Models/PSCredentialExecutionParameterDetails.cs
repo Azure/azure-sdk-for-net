@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> a powershell credential object. </summary>
     public partial class PSCredentialExecutionParameterDetails : ScriptExecutionParameterDetails
     {
-        /// <summary> Initializes a new instance of PSCredentialExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public PSCredentialExecutionParameterDetails(string name) : base(name)
@@ -23,16 +24,22 @@ namespace Azure.ResourceManager.Avs.Models
             ParameterType = ScriptExecutionParameterType.Credential;
         }
 
-        /// <summary> Initializes a new instance of PSCredentialExecutionParameterDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="username"> username for login. </param>
         /// <param name="password"> password for login. </param>
-        internal PSCredentialExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, string username, string password) : base(name, parameterType)
+        internal PSCredentialExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData, string username, string password) : base(name, parameterType, serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             ParameterType = parameterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PSCredentialExecutionParameterDetails"/> for deserialization. </summary>
+        internal PSCredentialExecutionParameterDetails()
+        {
         }
 
         /// <summary> username for login. </summary>

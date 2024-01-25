@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Workloads.Models
     /// <summary> The SAP Software configuration Input when the software is to be installed by service. </summary>
     public partial class ServiceInitiatedSoftwareConfiguration : SapSoftwareConfiguration
     {
-        /// <summary> Initializes a new instance of ServiceInitiatedSoftwareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceInitiatedSoftwareConfiguration"/>. </summary>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
         /// <param name="softwareVersion"> The software version to install. </param>
         /// <param name="sapBitsStorageAccountId"> The SAP bits storage account id. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SoftwareInstallationType = SapSoftwareInstallationType.ServiceInitiated;
         }
 
-        /// <summary> Initializes a new instance of ServiceInitiatedSoftwareConfiguration. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceInitiatedSoftwareConfiguration"/>. </summary>
         /// <param name="softwareInstallationType"> The SAP software installation Type. </param>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>
         /// <param name="softwareVersion"> The software version to install. </param>

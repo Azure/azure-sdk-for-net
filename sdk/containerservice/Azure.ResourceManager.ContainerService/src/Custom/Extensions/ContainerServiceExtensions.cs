@@ -3,7 +3,12 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+using System.Threading;
+using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.ContainerService.Mocking;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ContainerService
@@ -18,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService
         /// <returns> Returns a <see cref="OSOptionProfileResource" /> object. </returns>
         public static OSOptionProfileResource GetOSOptionProfile(this SubscriptionResource subscriptionResource, AzureLocation location)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetOSOptionProfile(location);
+            return GetMockableContainerServiceSubscriptionResource(subscriptionResource).GetOSOptionProfile(location);
         }
     }
 }

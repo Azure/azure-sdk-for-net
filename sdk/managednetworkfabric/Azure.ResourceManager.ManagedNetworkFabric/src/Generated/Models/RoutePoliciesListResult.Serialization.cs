@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<RoutePolicyData>> value = default;
+            Optional<IReadOnlyList<NetworkFabricRoutePolicyData>> value = default;
             Optional<string> nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    List<RoutePolicyData> array = new List<RoutePolicyData>();
+                    List<NetworkFabricRoutePolicyData> array = new List<NetworkFabricRoutePolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RoutePolicyData.DeserializeRoutePolicyData(item));
+                        array.Add(NetworkFabricRoutePolicyData.DeserializeNetworkFabricRoutePolicyData(item));
                     }
                     value = array;
                     continue;

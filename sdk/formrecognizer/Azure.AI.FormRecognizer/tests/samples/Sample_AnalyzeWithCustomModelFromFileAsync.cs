@@ -20,9 +20,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis.Samples
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
 
             // Firstly, create a custom built model we can use to recognize the custom document. Please note
-            // that models can also be built using a graphical user interface such as the Form Recognizer
-            // Labeling Tool found here:
-            // https://aka.ms/azsdk/formrecognizer/labelingtool
+            // that models can also be built using a graphical user interface such as the Document Intelligence
+            // Studio found here:
+            // https://aka.ms/azsdk/formrecognizer/formrecognizerstudio
 
             var adminClient = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
             BuildDocumentModelOperation buildOperation = await adminClient.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);

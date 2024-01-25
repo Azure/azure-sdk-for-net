@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ResourceHealth
     /// </summary>
     public partial class ResourceHealthEventData : ResourceData
     {
-        /// <summary> Initializes a new instance of ResourceHealthEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventData"/>. </summary>
         internal ResourceHealthEventData()
         {
             Links = new ChangeTrackingList<ResourceHealthEventLink>();
@@ -27,12 +27,13 @@ namespace Azure.ResourceManager.ResourceHealth
             Faqs = new ChangeTrackingList<ResourceHealthEventFaq>();
         }
 
-        /// <summary> Initializes a new instance of ResourceHealthEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceHealthEventData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="eventType"> Type of event. </param>
+        /// <param name="eventSubType"> Sub type of the event. Currently used to determine retirement communications for health advisory events. </param>
         /// <param name="eventSource"> Source of event. </param>
         /// <param name="status"> Current status of event. </param>
         /// <param name="title"> Title text of event. </param>
@@ -60,9 +61,13 @@ namespace Azure.ResourceManager.ResourceHealth
         /// <param name="additionalInformation"> Additional information. </param>
         /// <param name="duration"> duration in seconds. </param>
         /// <param name="impactType"> The type of the impact. </param>
-        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthEventTypeValue? eventType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, string externalIncidentId, string reason, ResourceHealthEventArticle article, IReadOnlyList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IReadOnlyList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType) : base(id, name, resourceType, systemData)
+        /// <param name="maintenanceId"> Unique identifier for planned maintenance event. </param>
+        /// <param name="maintenanceType"> The type of planned maintenance event. </param>
+        /// <param name="argQuery"> Azure Resource Graph query to fetch the affected resources from their existing Azure Resource Graph locations. </param>
+        internal ResourceHealthEventData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResourceHealthEventTypeValue? eventType, EventSubTypeValue? eventSubType, ResourceHealthEventSourceValue? eventSource, ResourceHealthEventStatusValue? status, string title, string summary, string header, ResourceHealthEventInsightLevelValue? level, ResourceHealthEventLevelValue? eventLevel, string externalIncidentId, string reason, ResourceHealthEventArticle article, IReadOnlyList<ResourceHealthEventLink> links, DateTimeOffset? impactStartOn, DateTimeOffset? impactMitigationOn, IReadOnlyList<ResourceHealthEventImpact> impact, ResourceHealthEventRecommendedActions recommendedActions, IReadOnlyList<ResourceHealthEventFaq> faqs, bool? isHirEvent, bool? isMicrosoftSupportEnabled, string description, bool? isPlatformInitiated, bool? isChatWithUsEnabled, int? priority, DateTimeOffset? lastUpdateOn, string hirStage, ResourceHealthEventAdditionalInformation additionalInformation, int? duration, string impactType, string maintenanceId, string maintenanceType, string argQuery) : base(id, name, resourceType, systemData)
         {
             EventType = eventType;
+            EventSubType = eventSubType;
             EventSource = eventSource;
             Status = status;
             Title = title;
@@ -90,10 +95,15 @@ namespace Azure.ResourceManager.ResourceHealth
             AdditionalInformation = additionalInformation;
             Duration = duration;
             ImpactType = impactType;
+            MaintenanceId = maintenanceId;
+            MaintenanceType = maintenanceType;
+            ArgQuery = argQuery;
         }
 
         /// <summary> Type of event. </summary>
         public ResourceHealthEventTypeValue? EventType { get; }
+        /// <summary> Sub type of the event. Currently used to determine retirement communications for health advisory events. </summary>
+        public EventSubTypeValue? EventSubType { get; }
         /// <summary> Source of event. </summary>
         public ResourceHealthEventSourceValue? EventSource { get; }
         /// <summary> Current status of event. </summary>
@@ -154,5 +164,11 @@ namespace Azure.ResourceManager.ResourceHealth
         public int? Duration { get; }
         /// <summary> The type of the impact. </summary>
         public string ImpactType { get; }
+        /// <summary> Unique identifier for planned maintenance event. </summary>
+        public string MaintenanceId { get; }
+        /// <summary> The type of planned maintenance event. </summary>
+        public string MaintenanceType { get; }
+        /// <summary> Azure Resource Graph query to fetch the affected resources from their existing Azure Resource Graph locations. </summary>
+        public string ArgQuery { get; }
     }
 }

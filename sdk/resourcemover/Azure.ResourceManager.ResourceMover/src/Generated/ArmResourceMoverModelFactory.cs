@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmResourceMoverModelFactory
     {
-        /// <summary> Initializes a new instance of MoverResourceSetData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMover.MoverResourceSetData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,18 +36,21 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceSetData(id, name, resourceType, systemData, tags, location, etag, identity, properties);
         }
 
-        /// <summary> Initializes a new instance of MoverResourceSetProperties. </summary>
-        /// <param name="sourceRegion"> Gets or sets the source region. </param>
-        /// <param name="targetRegion"> Gets or sets the target region. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverResourceSetProperties"/>. </summary>
+        /// <param name="sourceLocation"> Gets or sets the source region. </param>
+        /// <param name="targetLocation"> Gets or sets the target region. </param>
+        /// <param name="moveLocation"> Gets or sets the move region which indicates the region where the VM Regional to Zonal move will be conducted. </param>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
+        /// <param name="version"> Gets or sets the version of move collection. </param>
+        /// <param name="moveType"> Defines the MoveType. </param>
         /// <param name="errorsProperties"> Defines the move collection errors. </param>
         /// <returns> A new <see cref="Models.MoverResourceSetProperties"/> instance for mocking. </returns>
-        public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation sourceRegion = default, AzureLocation targetRegion = default, MoverProvisioningState? provisioningState = null, ResponseError errorsProperties = null)
+        public static MoverResourceSetProperties MoverResourceSetProperties(AzureLocation? sourceLocation = null, AzureLocation? targetLocation = null, AzureLocation? moveLocation = null, MoverProvisioningState? provisioningState = null, string version = null, MoveType? moveType = null, ResponseError errorsProperties = null)
         {
-            return new MoverResourceSetProperties(sourceRegion, targetRegion, provisioningState, errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties) : null);
+            return new MoverResourceSetProperties(sourceLocation, targetLocation, moveLocation, provisioningState, version, moveType, errorsProperties != null ? new MoveCollectionPropertiesErrors(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of MoverOperationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverOperationStatus"/>. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <param name="name"> Operation name. </param>
         /// <param name="status"> Status of the operation. ARM expects the terminal status to be one of Succeeded/ Failed/ Canceled. All other values imply that the operation is still running. </param>
@@ -61,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverOperationStatus(id, name, status, startOn, endOn, error, properties);
         }
 
-        /// <summary> Initializes a new instance of MoverOperationStatusError. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverOperationStatusError"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
@@ -75,7 +78,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverOperationStatusError(code, message, details?.ToList(), additionalInfo?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MoverOperationErrorAdditionalInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverOperationErrorAdditionalInfo"/>. </summary>
         /// <param name="operationErrorAdditionalInfoType"> The error type. </param>
         /// <param name="infoMoverResources"> The operation error info. </param>
         /// <returns> A new <see cref="Models.MoverOperationErrorAdditionalInfo"/> instance for mocking. </returns>
@@ -86,7 +89,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverOperationErrorAdditionalInfo(operationErrorAdditionalInfoType, infoMoverResources != null ? new MoveErrorInfo(infoMoverResources?.ToList()) : null);
         }
 
-        /// <summary> Initializes a new instance of AffectedMoverResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.AffectedMoverResourceInfo"/>. </summary>
         /// <param name="id"> The affected move resource id. </param>
         /// <param name="sourceId"> The affected move resource source id. </param>
         /// <param name="moverResources"> The affected move resources. </param>
@@ -98,7 +101,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new AffectedMoverResourceInfo(id, sourceId, moverResources?.ToList());
         }
 
-        /// <summary> Initializes a new instance of MoverResourceData. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceMover.MoverResourceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -110,7 +113,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceData(id, name, resourceType, systemData, properties);
         }
 
-        /// <summary> Initializes a new instance of MoverResourceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverResourceProperties"/>. </summary>
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="sourceId"> Gets or sets the Source ARM Id of the resource. </param>
         /// <param name="targetId"> Gets or sets the Target ARM Id of the resource. </param>
@@ -139,7 +142,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceProperties(provisioningState, sourceId, targetId, existingTargetId, resourceSettings, sourceResourceSettings, moveStatus, dependsOn?.ToList(), dependsOnOverrides?.ToList(), isResolveRequired, errorsProperties != null ? new MoveResourcePropertiesErrors(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of MoverResourcePropertiesMoveStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverResourcePropertiesMoveStatus"/>. </summary>
         /// <param name="moveState"> Defines the MoveResource states. </param>
         /// <param name="jobStatus"> Defines the job status. </param>
         /// <param name="errorsProperties"> An error response from the azure resource mover service. </param>
@@ -149,7 +152,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourcePropertiesMoveStatus(moveState, jobStatus, errorsProperties != null ? new MoveResourceError(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of MoverResourceStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverResourceStatus"/>. </summary>
         /// <param name="moveState"> Defines the MoveResource states. </param>
         /// <param name="jobStatus"> Defines the job status. </param>
         /// <param name="errorsProperties"> An error response from the azure resource mover service. </param>
@@ -159,7 +162,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceStatus(moveState, jobStatus, errorsProperties != null ? new MoveResourceError(errorsProperties) : null);
         }
 
-        /// <summary> Initializes a new instance of MoverResourceJobStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverResourceJobStatus"/>. </summary>
         /// <param name="jobName"> Defines the job name. </param>
         /// <param name="jobProgress"> Gets or sets the monitoring job percentage. </param>
         /// <returns> A new <see cref="Models.MoverResourceJobStatus"/> instance for mocking. </returns>
@@ -168,7 +171,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceJobStatus(jobName, jobProgress);
         }
 
-        /// <summary> Initializes a new instance of MoverResourceDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverResourceDependency"/>. </summary>
         /// <param name="id"> Gets the source ARM ID of the dependent resource. </param>
         /// <param name="resolutionStatus"> Gets the dependency resolution status. </param>
         /// <param name="resolutionType"> Defines the resolution type. </param>
@@ -182,7 +185,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverResourceDependency(id, resolutionStatus, resolutionType, dependencyType, manualResolutionTargetId != null ? new ManualResolutionProperties(manualResolutionTargetId) : null, automaticResolutionResourceId != null ? new AutomaticResolutionProperties(automaticResolutionResourceId) : null, isOptional);
         }
 
-        /// <summary> Initializes a new instance of MoverUnresolvedDependency. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverUnresolvedDependency"/>. </summary>
         /// <param name="count"> Gets or sets the count. </param>
         /// <param name="id"> Gets or sets the arm id of the dependency. </param>
         /// <returns> A new <see cref="Models.MoverUnresolvedDependency"/> instance for mocking. </returns>
@@ -191,7 +194,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverUnresolvedDependency(count, id);
         }
 
-        /// <summary> Initializes a new instance of MoverOperationsDiscovery. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverOperationsDiscovery"/>. </summary>
         /// <param name="name">
         /// Gets or sets Name of the API.
         /// The name of the operation being performed on this particular object. It should
@@ -237,7 +240,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverOperationsDiscovery(name, isDataAction, display, origin, properties);
         }
 
-        /// <summary> Initializes a new instance of MoverDisplayInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MoverDisplayInfo"/>. </summary>
         /// <param name="provider">
         /// Gets or sets the provider.
         /// The localized friendly form of the resource provider name – it is expected to also
@@ -282,7 +285,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             return new MoverDisplayInfo(provider, resource, operation, description);
         }
 
-        /// <summary> Initializes a new instance of RequiredForResourcesList. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.RequiredForResourcesList"/>. </summary>
         /// <param name="sourceIds"> Gets or sets the list of source Ids for which the input resource is required. </param>
         /// <returns> A new <see cref="Models.RequiredForResourcesList"/> instance for mocking. </returns>
         public static RequiredForResourcesList RequiredForResourcesList(IEnumerable<string> sourceIds = null)

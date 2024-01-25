@@ -68,7 +68,7 @@ format-by-name-rules:
 override-operation-name:
   SignalR_CheckNameAvailability: CheckSignalRNameAvailability
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

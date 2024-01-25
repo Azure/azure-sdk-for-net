@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,10 +14,57 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     /// <summary> Work item configuration creation payload. </summary>
     public partial class WorkItemCreateConfiguration
     {
-        /// <summary> Initializes a new instance of WorkItemCreateConfiguration. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WorkItemCreateConfiguration"/>. </summary>
         public WorkItemCreateConfiguration()
         {
             WorkItemProperties = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkItemCreateConfiguration"/>. </summary>
+        /// <param name="connectorId"> Unique connector id. </param>
+        /// <param name="connectorDataConfiguration"> Serialized JSON object for detailed properties. </param>
+        /// <param name="isValidateOnly"> Boolean indicating validate only. </param>
+        /// <param name="workItemProperties"> Custom work item properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkItemCreateConfiguration(string connectorId, string connectorDataConfiguration, bool? isValidateOnly, IDictionary<string, string> workItemProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ConnectorId = connectorId;
+            ConnectorDataConfiguration = connectorDataConfiguration;
+            IsValidateOnly = isValidateOnly;
+            WorkItemProperties = workItemProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Unique connector id. </summary>

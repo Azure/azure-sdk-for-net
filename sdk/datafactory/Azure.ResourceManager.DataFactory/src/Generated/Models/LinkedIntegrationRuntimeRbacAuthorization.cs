@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
     public partial class LinkedIntegrationRuntimeRbacAuthorization : LinkedIntegrationRuntimeType
     {
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        public LinkedIntegrationRuntimeRbacAuthorization(string resourceId)
+        public LinkedIntegrationRuntimeRbacAuthorization(ResourceIdentifier resourceId)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
 
@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AuthorizationType = "RBAC";
         }
 
-        /// <summary> Initializes a new instance of LinkedIntegrationRuntimeRbacAuthorization. </summary>
+        /// <summary> Initializes a new instance of <see cref="LinkedIntegrationRuntimeRbacAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, string resourceId, DataFactoryCredentialReference credential) : base(authorizationType)
+        internal LinkedIntegrationRuntimeRbacAuthorization(string authorizationType, ResourceIdentifier resourceId, DataFactoryCredentialReference credential) : base(authorizationType)
         {
             ResourceId = resourceId;
             Credential = credential;
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The resource identifier of the integration runtime to be shared. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The credential reference containing authentication information. </summary>
         public DataFactoryCredentialReference Credential { get; set; }
     }

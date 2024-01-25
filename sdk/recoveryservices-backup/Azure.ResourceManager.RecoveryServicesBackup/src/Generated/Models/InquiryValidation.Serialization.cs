@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Text.Json;
 using Azure.Core;
 
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<string> status = default;
             Optional<BackupErrorDetail> errorDetail = default;
             Optional<string> additionalDetail = default;
+            Optional<BinaryData> protectableItemCount = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -58,8 +60,17 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalDetail = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("protectableItemCount"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protectableItemCount = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
             }
-            return new InquiryValidation(status.Value, errorDetail.Value, additionalDetail.Value);
+            return new InquiryValidation(status.Value, errorDetail.Value, additionalDetail.Value, protectableItemCount.Value);
         }
     }
 }

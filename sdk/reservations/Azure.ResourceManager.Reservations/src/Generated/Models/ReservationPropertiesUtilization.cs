@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> Reservation utilization. </summary>
     public partial class ReservationPropertiesUtilization
     {
-        /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationPropertiesUtilization"/>. </summary>
         internal ReservationPropertiesUtilization()
         {
             Aggregates = new ChangeTrackingList<ReservationUtilizationAggregates>();
         }
 
-        /// <summary> Initializes a new instance of ReservationPropertiesUtilization. </summary>
+        /// <summary> Initializes a new instance of <see cref="ReservationPropertiesUtilization"/>. </summary>
         /// <param name="trend"> last 7 day utilization trend for a reservation. </param>
         /// <param name="aggregates"> The array of aggregates of a reservation's utilization. </param>
         internal ReservationPropertiesUtilization(string trend, IReadOnlyList<ReservationUtilizationAggregates> aggregates)

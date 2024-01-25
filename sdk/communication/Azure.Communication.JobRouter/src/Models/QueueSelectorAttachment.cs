@@ -1,21 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("QueueSelectorAttachment")]
-    [JsonConverter(typeof(PolymorphicWriteOnlyJsonConverter<QueueSelectorAttachment>))]
-    public abstract partial class QueueSelectorAttachment
+    public abstract partial class QueueSelectorAttachment : IUtf8JsonSerializable
     {
-        /// <summary> Initializes a new instance of QueueSelectorAttachment. </summary>
-        internal QueueSelectorAttachment()
-        {
-        }
+        /// <summary> The type discriminator describing a sub-type of QueueSelectorAttachment. </summary>
+        public QueueSelectorAttachmentKind Kind { get; protected set; }
 
-        /// <summary> The type discriminator describing the type of label selector attachment. </summary>
-        protected string Kind { get; set; }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WriteEndObject();
+        }
     }
 }

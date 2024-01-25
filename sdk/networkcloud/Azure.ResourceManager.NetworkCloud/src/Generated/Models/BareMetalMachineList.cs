@@ -14,16 +14,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     /// <summary> BareMetalMachineList represents a list of bare metal machines. </summary>
     internal partial class BareMetalMachineList
     {
-        /// <summary> Initializes a new instance of BareMetalMachineList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineList"/>. </summary>
         internal BareMetalMachineList()
         {
-            Value = new ChangeTrackingList<BareMetalMachineData>();
+            Value = new ChangeTrackingList<NetworkCloudBareMetalMachineData>();
         }
 
-        /// <summary> Initializes a new instance of BareMetalMachineList. </summary>
+        /// <summary> Initializes a new instance of <see cref="BareMetalMachineList"/>. </summary>
         /// <param name="nextLink"> The link used to get the next page of operations. </param>
         /// <param name="value"> The list of bare metal machines. </param>
-        internal BareMetalMachineList(string nextLink, IReadOnlyList<BareMetalMachineData> value)
+        internal BareMetalMachineList(string nextLink, IReadOnlyList<NetworkCloudBareMetalMachineData> value)
         {
             NextLink = nextLink;
             Value = value;
@@ -32,6 +32,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> The link used to get the next page of operations. </summary>
         public string NextLink { get; }
         /// <summary> The list of bare metal machines. </summary>
-        public IReadOnlyList<BareMetalMachineData> Value { get; }
+        public IReadOnlyList<NetworkCloudBareMetalMachineData> Value { get; }
     }
 }

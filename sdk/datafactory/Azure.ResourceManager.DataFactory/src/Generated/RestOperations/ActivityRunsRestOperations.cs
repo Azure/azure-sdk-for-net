@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<DataFactoryActivityRunsResult>> QueryByPipelineRunAsync(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        public async Task<Response<PipelineActivityRunsResult>> QueryByPipelineRunAsync(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -87,9 +87,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryActivityRunsResult value = default;
+                        PipelineActivityRunsResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = DataFactoryActivityRunsResult.DeserializeDataFactoryActivityRunsResult(document.RootElement);
+                        value = PipelineActivityRunsResult.DeserializePipelineActivityRunsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="factoryName"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<DataFactoryActivityRunsResult> QueryByPipelineRun(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
+        public Response<PipelineActivityRunsResult> QueryByPipelineRun(string subscriptionId, string resourceGroupName, string factoryName, string runId, RunFilterContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.DataFactory
             {
                 case 200:
                     {
-                        DataFactoryActivityRunsResult value = default;
+                        PipelineActivityRunsResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = DataFactoryActivityRunsResult.DeserializeDataFactoryActivityRunsResult(document.RootElement);
+                        value = PipelineActivityRunsResult.DeserializePipelineActivityRunsResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

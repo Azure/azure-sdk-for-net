@@ -10,9 +10,16 @@ namespace Azure.ResourceManager.StorageSync.Models
     /// <summary> Backup request. </summary>
     public partial class CloudEndpointBackupContent
     {
-        /// <summary> Initializes a new instance of CloudEndpointBackupContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointBackupContent"/>. </summary>
         public CloudEndpointBackupContent()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CloudEndpointBackupContent"/>. </summary>
+        /// <param name="azureFileShare"> Azure File Share. </param>
+        internal CloudEndpointBackupContent(string azureFileShare)
+        {
+            AzureFileShare = azureFileShare;
         }
 
         /// <summary> Azure File Share. </summary>

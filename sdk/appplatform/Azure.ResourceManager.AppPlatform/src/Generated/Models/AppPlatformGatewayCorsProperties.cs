@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,7 +14,39 @@ namespace Azure.ResourceManager.AppPlatform.Models
     /// <summary> Cross-Origin Resource Sharing property. </summary>
     public partial class AppPlatformGatewayCorsProperties
     {
-        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCorsProperties"/>. </summary>
         public AppPlatformGatewayCorsProperties()
         {
             AllowedOrigins = new ChangeTrackingList<string>();
@@ -22,14 +55,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
             ExposedHeaders = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of AppPlatformGatewayCorsProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppPlatformGatewayCorsProperties"/>. </summary>
         /// <param name="allowedOrigins"> Allowed origins to make cross-site requests. The special value `*` allows all domains. </param>
         /// <param name="allowedMethods"> Allowed HTTP methods on cross-site requests. The special value `*` allows all methods. If not set, `GET` and `HEAD` are allowed by default. </param>
         /// <param name="allowedHeaders"> Allowed headers in cross-site requests. The special value `*` allows actual requests to send any header. </param>
         /// <param name="maxAge"> How long, in seconds, the response from a pre-flight request can be cached by clients. </param>
         /// <param name="areCredentialsAllowed"> Whether user credentials are supported on cross-site requests. Valid values: `true`, `false`. </param>
         /// <param name="exposedHeaders"> HTTP response headers to expose for cross-site requests. </param>
-        internal AppPlatformGatewayCorsProperties(IList<string> allowedOrigins, IList<string> allowedMethods, IList<string> allowedHeaders, int? maxAge, bool? areCredentialsAllowed, IList<string> exposedHeaders)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppPlatformGatewayCorsProperties(IList<string> allowedOrigins, IList<string> allowedMethods, IList<string> allowedHeaders, int? maxAge, bool? areCredentialsAllowed, IList<string> exposedHeaders, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AllowedOrigins = allowedOrigins;
             AllowedMethods = allowedMethods;
@@ -37,6 +71,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             MaxAge = maxAge;
             AreCredentialsAllowed = areCredentialsAllowed;
             ExposedHeaders = exposedHeaders;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Allowed origins to make cross-site requests. The special value `*` allows all domains. </summary>

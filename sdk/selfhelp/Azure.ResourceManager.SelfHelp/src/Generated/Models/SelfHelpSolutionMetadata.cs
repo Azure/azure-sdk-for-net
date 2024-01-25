@@ -11,39 +11,27 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    /// <summary> Solution Metadata resource. </summary>
+    /// <summary> Metadata resource. </summary>
     public partial class SelfHelpSolutionMetadata : ResourceData
     {
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         public SelfHelpSolutionMetadata()
         {
-            RequiredParameterSets = new ChangeTrackingList<IList<string>>();
+            Solutions = new ChangeTrackingList<SolutionMetadataProperties>();
         }
 
-        /// <summary> Initializes a new instance of SelfHelpSolutionMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="SelfHelpSolutionMetadata"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="solutionId"> Solution Id. </param>
-        /// <param name="solutionType"> Solution Type. </param>
-        /// <param name="description"> A detailed description of solution. </param>
-        /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
-        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string solutionType, string description, IList<IList<string>> requiredParameterSets) : base(id, name, resourceType, systemData)
+        /// <param name="solutions"> List of metadata. </param>
+        internal SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IList<SolutionMetadataProperties> solutions) : base(id, name, resourceType, systemData)
         {
-            SolutionId = solutionId;
-            SolutionType = solutionType;
-            Description = description;
-            RequiredParameterSets = requiredParameterSets;
+            Solutions = solutions;
         }
 
-        /// <summary> Solution Id. </summary>
-        public string SolutionId { get; set; }
-        /// <summary> Solution Type. </summary>
-        public string SolutionType { get; set; }
-        /// <summary> A detailed description of solution. </summary>
-        public string Description { get; set; }
-        /// <summary> Required parameters for invoking this particular solution. </summary>
-        public IList<IList<string>> RequiredParameterSets { get; }
+        /// <summary> List of metadata. </summary>
+        public IList<SolutionMetadataProperties> Solutions { get; }
     }
 }

@@ -13,13 +13,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
     /// <summary> Properties of the vault. </summary>
     public partial class RecoveryServicesVaultProperties
     {
-        /// <summary> Initializes a new instance of RecoveryServicesVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultProperties"/>. </summary>
         public RecoveryServicesVaultProperties()
         {
             PrivateEndpointConnections = new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
         }
 
-        /// <summary> Initializes a new instance of RecoveryServicesVaultProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="RecoveryServicesVaultProperties"/>. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="upgradeDetails"> Details for upgrading vault. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>
@@ -31,9 +31,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="backupStorageVersion"> Backup storage version. </param>
         /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="restoreSettings"> Restore Settings of the vault. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
-        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, VaultPropertiesRedundancySettings redundancySettings, SecuritySettings securitySettings)
+        /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
+        internal RecoveryServicesVaultProperties(string provisioningState, VaultUpgradeDetails upgradeDetails, IReadOnlyList<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections, VaultPrivateEndpointState? privateEndpointStateForBackup, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery, VaultPropertiesEncryption encryption, VaultPropertiesMoveDetails moveDetails, ResourceMoveState? moveState, BackupStorageVersion? backupStorageVersion, VaultPublicNetworkAccess? publicNetworkAccess, VaultMonitoringSettings monitoringSettings, RestoreSettings restoreSettings, VaultPropertiesRedundancySettings redundancySettings, RecoveryServicesSecuritySettings securitySettings, SecureScoreLevel? secureScore)
         {
             ProvisioningState = provisioningState;
             UpgradeDetails = upgradeDetails;
@@ -46,8 +48,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             BackupStorageVersion = backupStorageVersion;
             PublicNetworkAccess = publicNetworkAccess;
             MonitoringSettings = monitoringSettings;
+            RestoreSettings = restoreSettings;
             RedundancySettings = redundancySettings;
             SecuritySettings = securitySettings;
+            SecureScore = secureScore;
         }
 
         /// <summary> Provisioning State. </summary>
@@ -72,20 +76,25 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public VaultPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Monitoring Settings of the vault. </summary>
         public VaultMonitoringSettings MonitoringSettings { get; set; }
+        /// <summary> Restore Settings of the vault. </summary>
+        internal RestoreSettings RestoreSettings { get; set; }
+        /// <summary> Gets or sets the cross subscription restore state. </summary>
+        public CrossSubscriptionRestoreState? CrossSubscriptionRestoreState
+        {
+            get => RestoreSettings is null ? default : RestoreSettings.CrossSubscriptionRestoreState;
+            set
+            {
+                if (RestoreSettings is null)
+                    RestoreSettings = new RestoreSettings();
+                RestoreSettings.CrossSubscriptionRestoreState = value;
+            }
+        }
+
         /// <summary> The redundancy Settings of a Vault. </summary>
         public VaultPropertiesRedundancySettings RedundancySettings { get; set; }
         /// <summary> Security Settings of the vault. </summary>
-        internal SecuritySettings SecuritySettings { get; set; }
-        /// <summary> Gets or sets the immutability state. </summary>
-        public ImmutabilityState? ImmutabilityState
-        {
-            get => SecuritySettings is null ? default : SecuritySettings.ImmutabilityState;
-            set
-            {
-                if (SecuritySettings is null)
-                    SecuritySettings = new SecuritySettings();
-                SecuritySettings.ImmutabilityState = value;
-            }
-        }
+        public RecoveryServicesSecuritySettings SecuritySettings { get; set; }
+        /// <summary> Secure Score of Recovery Services Vault. </summary>
+        public SecureScoreLevel? SecureScore { get; }
     }
 }

@@ -12,9 +12,16 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/8a28143c7271d4496296
 tag: package-2022-12
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+# mgmt-debug:
+#   show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -28,7 +35,7 @@ format-by-name-rules:
   'tokenId': 'arm-id'
   'scopeMapId': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -209,6 +216,7 @@ rename-mapping:
   RegistryListResult: ContainerRegistryListResult
   RegistryUsageListResult: ContainerRegistryUsageListResult
   StepType: ContainerRegistryTaskStepType
+  TaskStepProperties.type: ContainerRegistryTaskStepType
   ImageUpdateTrigger.id: -|uuid
   SourceTriggerDescriptor.id: -|uuid
   EventContent.id: -|uuid

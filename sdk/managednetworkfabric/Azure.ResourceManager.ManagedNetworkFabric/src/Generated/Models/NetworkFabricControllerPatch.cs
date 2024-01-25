@@ -10,19 +10,26 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    /// <summary> The NetworkFabricControllerPatch payload definition. </summary>
-    public partial class NetworkFabricControllerPatch
+    /// <summary> The Network Fabric Controller Patch payload definition. </summary>
+    public partial class NetworkFabricControllerPatch : NetworkRackPatch
     {
-        /// <summary> Initializes a new instance of NetworkFabricControllerPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerPatch"/>. </summary>
         public NetworkFabricControllerPatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
             InfrastructureExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
             WorkloadExpressRouteConnections = new ChangeTrackingList<ExpressRouteConnectionInformation>();
         }
 
-        /// <summary> Azure resource tags that will replace the existing ones. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
+        /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
+        internal NetworkFabricControllerPatch(IDictionary<string, string> tags, IList<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IList<ExpressRouteConnectionInformation> workloadExpressRouteConnections) : base(tags)
+        {
+            InfrastructureExpressRouteConnections = infrastructureExpressRouteConnections;
+            WorkloadExpressRouteConnections = workloadExpressRouteConnections;
+        }
+
         /// <summary> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </summary>
         public IList<ExpressRouteConnectionInformation> InfrastructureExpressRouteConnections { get; }
         /// <summary> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </summary>

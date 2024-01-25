@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> Update appliance for protected item input properties. </summary>
     public partial class UpdateApplianceForReplicationProtectedItemProperties
     {
-        /// <summary> Initializes a new instance of UpdateApplianceForReplicationProtectedItemProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="UpdateApplianceForReplicationProtectedItemProperties"/>. </summary>
         /// <param name="targetApplianceId"> The target appliance Id. </param>
         /// <param name="providerSpecificDetails">
         /// The provider specific input to update replication protected item.

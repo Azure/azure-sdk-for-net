@@ -5,29 +5,66 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> The collection of validation rule properties. </summary>
     public partial class WebTestPropertiesValidationRules
     {
-        /// <summary> Initializes a new instance of WebTestPropertiesValidationRules. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesValidationRules"/>. </summary>
         public WebTestPropertiesValidationRules()
         {
         }
 
-        /// <summary> Initializes a new instance of WebTestPropertiesValidationRules. </summary>
+        /// <summary> Initializes a new instance of <see cref="WebTestPropertiesValidationRules"/>. </summary>
         /// <param name="contentValidation"> The collection of content validation properties. </param>
         /// <param name="checkSsl"> Checks to see if the SSL cert is still valid. </param>
         /// <param name="sslCertRemainingLifetimeCheck"> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </param>
         /// <param name="expectedHttpStatusCode"> Validate that the WebTest returns the http status code provided. </param>
         /// <param name="ignoreHttpStatusCode"> When set, validation will ignore the status code. </param>
-        internal WebTestPropertiesValidationRules(WebTestPropertiesValidationRulesContentValidation contentValidation, bool? checkSsl, int? sslCertRemainingLifetimeCheck, int? expectedHttpStatusCode, bool? ignoreHttpStatusCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestPropertiesValidationRules(WebTestPropertiesValidationRulesContentValidation contentValidation, bool? checkSsl, int? sslCertRemainingLifetimeCheck, int? expectedHttpStatusCode, bool? ignoreHttpStatusCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentValidation = contentValidation;
             CheckSsl = checkSsl;
             SSLCertRemainingLifetimeCheck = sslCertRemainingLifetimeCheck;
             ExpectedHttpStatusCode = expectedHttpStatusCode;
             IgnoreHttpStatusCode = ignoreHttpStatusCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of content validation properties. </summary>

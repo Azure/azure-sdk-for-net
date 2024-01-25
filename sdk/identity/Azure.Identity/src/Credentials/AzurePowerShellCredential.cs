@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -16,7 +16,7 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Azure Active Directory using Azure PowerShell to obtain an access token.
+    /// Enables authentication to Microsoft Entra ID using Azure PowerShell to obtain an access token.
     /// </summary>
     public class AzurePowerShellCredential : TokenCredential
     {
@@ -24,6 +24,7 @@ namespace Azure.Identity
         private readonly IProcessService _processService;
         internal TimeSpan ProcessTimeout { get; private set; }
         internal bool UseLegacyPowerShell { get; set; }
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         private const string Troubleshooting = "See the troubleshooting guide for more information. https://aka.ms/azsdk/net/identity/powershellcredential/troubleshoot";
         internal const string AzurePowerShellFailedError = "Azure PowerShell authentication failed due to an unknown error. " + Troubleshooting;
@@ -40,7 +41,7 @@ namespace Azure.Identity
         private readonly bool _logAccountDetails;
         internal readonly bool _isChainedCredential;
         internal const string AzurePowerShellNotLogInError = "Please run 'Connect-AzAccount' to set up account.";
-        internal const string AzurePowerShellModuleNotInstalledError = "Az.Account module >= 2.2.0 is not installed.";
+        internal const string AzurePowerShellModuleNotInstalledError = "Az.Accounts module >= 2.2.0 is not installed.";
         internal const string PowerShellNotInstalledError = "PowerShell is not installed.";
         internal const string AzurePowerShellTimeoutError = "Azure PowerShell authentication timed out.";
 
@@ -61,11 +62,12 @@ namespace Azure.Identity
         internal AzurePowerShellCredential(AzurePowerShellCredentialOptions options, CredentialPipeline pipeline, IProcessService processService)
         {
             UseLegacyPowerShell = false;
-            _logPII = options?.IsSupportLoggingEnabled ?? false;
+            _logPII = options?.IsUnsafeSupportLoggingEnabled ?? false;
             _logAccountDetails = options?.Diagnostics?.IsAccountIdentifierLoggingEnabled ?? false;
-            TenantId = options?.TenantId;
+            TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
             _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
             _processService = processService ?? ProcessService.Default;
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(10);
             _isChainedCredential = options?.IsChainedCredential ?? false;
@@ -139,8 +141,11 @@ namespace Azure.Identity
         {
             string resource = ScopeUtilities.ScopesToResource(context.Scopes);
 
-            ScopeUtilities.ValidateScope(resource);
             var tenantId = TenantIdResolver.Resolve(TenantId, context, AdditionallyAllowedTenantIds);
+
+            Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
+
+            ScopeUtilities.ValidateScope(resource);
 
             GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzurePowerShellProcessStartInfo(fileName, argument);
@@ -202,7 +207,7 @@ namespace Azure.Identity
 
         private static void ValidateResult(string output)
         {
-            if (output.IndexOf("Microsoft.Azure.Commands.Profile.Models.PSAccessToken", StringComparison.OrdinalIgnoreCase) < 0)
+            if (output.IndexOf(@"<Property Name=""Token"" Type=""System.String"">", StringComparison.OrdinalIgnoreCase) < 0)
             {
                 throw new CredentialUnavailableException("PowerShell did not return a valid response.");
             }
@@ -246,8 +251,11 @@ if (! $m) {{
 }}
 
 $token = Get-AzAccessToken -ResourceUrl '{resource}'{tenantIdArg}
+$customToken = New-Object -TypeName psobject
+$customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+$customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
 
-$x = $token | ConvertTo-Xml
+$x = $customToken | ConvertTo-Xml
 return $x.Objects.FirstChild.OuterXml
 ";
 
@@ -285,7 +293,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.Parse(e.Value, CultureInfo.CurrentCulture).ToUniversalTime();
+                        expiresOn = DateTimeOffset.FromUnixTimeSeconds(long.Parse(e.Value));
                         break;
                 }
 

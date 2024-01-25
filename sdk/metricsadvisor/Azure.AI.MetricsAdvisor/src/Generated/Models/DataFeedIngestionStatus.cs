@@ -13,7 +13,7 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The IngestionStatus. </summary>
     public partial class DataFeedIngestionStatus
     {
-        /// <summary> Initializes a new instance of DataFeedIngestionStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFeedIngestionStatus"/>. </summary>
         /// <param name="timestamp"> data slice timestamp. </param>
         /// <param name="status"> latest ingestion task status for this data slice. </param>
         /// <param name="message"> the trimmed message of last ingestion job. </param>

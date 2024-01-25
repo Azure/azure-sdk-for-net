@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerActiveDirectoryAdministratorData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerActiveDirectoryAdministratorData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerActiveDirectoryAdministratorData(id, name, resourceType, systemData, principalType, principalName, objectId, tenantId);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerBackupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerBackupData(id, name, resourceType, systemData, backupType, completedOn, source);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerCapabilityProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Name of flexible servers capability. </param>
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerCapabilityProperties(capabilityStatus, reason, name, supportedServerEditions?.ToList(), supportedServerVersions?.ToList(), supportFastProvisioning, supportedFastProvisioningEditions?.ToList(), geoBackupSupported, zoneRedundantHaSupported, zoneRedundantHaAndGeoBackupSupported, storageAutoGrowthSupported, onlineResizeSupported, restricted);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Server edition name. </param>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerEditionCapability(capabilityStatus, reason, name, defaultSkuName, supportedStorageEditions?.ToList(), supportedServerSkus?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Storage edition name. </param>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerStorageEditionCapability(capabilityStatus, reason, name, defaultStorageSizeMb, supportedStorageCapabilities?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="supportedIops"> Supported IOPS. </param>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerStorageCapability(capabilityStatus, reason, supportedIops, storageSizeInMB, defaultIopsTier, supportedIopsTiers?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorageTierCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Name to represent Storage tier capability. </param>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerStorageTierCapability(capabilityStatus, reason, name, iops);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlBaseCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlBaseCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <returns> A new <see cref="Models.PostgreSqlBaseCapability"/> instance for mocking. </returns>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlBaseCapability(capabilityStatus, reason);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerSkuCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerSkuCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Sku name. </param>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerSkuCapability(capabilityStatus, reason, name, vCores, supportedIops, supportedMemoryPerVcoreMb, supportedZones?.ToList(), supportedHaMode?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerServerVersionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="name"> Server version. </param>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerServerVersionCapability(capabilityStatus, reason, name, supportedVersionsToUpgrade?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFastProvisioningEditionCapability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
         /// <param name="supportedTier"> Fast provisioning supported tier name. </param>
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(capabilityStatus, reason, supportedTier, supportedSku, supportedStorageGb, supportedServerVersions, serverCount);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResult"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerNameAvailabilityResult(isNameAvailable, reason, message, name, resourceType);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNameAvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNameAvailabilityResponse"/>. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is available. </param>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerNameAvailabilityResponse(isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerConfigurationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerConfigurationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerConfigurationData(id, name, resourceType, systemData, value, description, defaultValue, dataType, allowedValues, source, isDynamicConfig, isReadOnly, isConfigPendingRestart, unit, documentationLink);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDatabaseData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerDatabaseData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerDatabaseData(id, name, resourceType, systemData, charset, collation);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerFirewallRuleData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerFirewallRuleData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerFirewallRuleData(id, name, resourceType, systemData, startIPAddress, endIPAddress);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlFlexibleServerData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerData(id, name, resourceType, systemData, tags, location, sku, identity, administratorLogin, administratorLoginPassword, version, minorVersion, state, fullyQualifiedDomainName, storage, authConfig, dataEncryption, backup, network, highAvailability, maintenanceWindow, sourceServerResourceId, pointInTimeUtc, availabilityZone, replicationRole, replicaCapacity, createMode);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerUserAssignedIdentity. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerUserAssignedIdentity"/>. </summary>
         /// <param name="userAssignedIdentities"> represents user assigned identities map. </param>
         /// <param name="identityType"> the types of identities associated with this resource; currently restricted to 'None and UserAssigned'. </param>
         /// <param name="tenantId"> Tenant id of the server. </param>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerUserAssignedIdentity(userAssignedIdentities, identityType, tenantId);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerStorage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorage"/>. </summary>
         /// <param name="storageSizeInGB"> Max storage allowed for a server. </param>
         /// <param name="autoGrow"> Flag to enable / disable Storage Auto grow for flexible server. </param>
         /// <param name="tier"> Name of storage tier for IOPS. </param>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerStorage(storageSizeInGB, autoGrow, tier, iops);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerBackupProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerBackupProperties"/>. </summary>
         /// <param name="backupRetentionDays"> Backup retention days for the server. </param>
         /// <param name="geoRedundantBackup"> A value indicating whether Geo-Redundant backup is enabled on the server. </param>
         /// <param name="earliestRestoreOn"> The earliest restore point time (ISO8601 format) for server. </param>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerBackupProperties(backupRetentionDays, geoRedundantBackup, earliestRestoreOn);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerNetwork. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNetwork"/>. </summary>
         /// <param name="publicNetworkAccess"> public network access is enabled or not. </param>
         /// <param name="delegatedSubnetResourceId"> Delegated subnet arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
         /// <param name="privateDnsZoneArmResourceId"> Private dns zone arm resource id. This is required to be passed during create, in case we want the server to be VNET injected, i.e. Private access server. During update, pass this only if we want to update the value for Private DNS zone. </param>
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerNetwork(publicNetworkAccess, delegatedSubnetResourceId, privateDnsZoneArmResourceId);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerHighAvailability. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerHighAvailability"/>. </summary>
         /// <param name="mode"> The HA mode for the server. </param>
         /// <param name="state"> A state of a HA server that is visible to user. </param>
         /// <param name="standbyAvailabilityZone"> availability zone information of the standby. </param>
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerHighAvailability(mode, state, standbyAvailabilityZone);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlMigrationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlMigrationData(id, name, resourceType, systemData, tags, location, migrationId, currentStatus, migrationMode, sourceDbServerMetadata, targetDbServerMetadata, sourceDbServerResourceId, sourceDbServerFullyQualifiedDomainName, targetDbServerResourceId, targetDbServerFullyQualifiedDomainName, secretParameters, dbsToMigrate?.ToList(), setupLogicalReplicationOnSourceDbIfNeeded, overwriteDbsInTarget, migrationWindowStartTimeInUtc, migrationWindowEndTimeInUtc, startDataMigration, triggerCutover, dbsToTriggerCutoverOn?.ToList(), cancel, dbsToCancelMigrationOn?.ToList());
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlMigrationStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlMigrationStatus"/>. </summary>
         /// <param name="state"> State of migration. </param>
         /// <param name="error"> Error message, if any, for the migration state. </param>
         /// <param name="currentSubState"> Current Migration sub state details. </param>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlMigrationStatus(state, error, currentSubState != null ? new PostgreSqlMigrationSubStateDetails(currentSubState) : null);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlServerMetadata. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlServerMetadata"/>. </summary>
         /// <param name="location"> Location of database server. </param>
         /// <param name="version"> Version for database engine. </param>
         /// <param name="storageMb"> Storage size in MB for database server. </param>
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlServerMetadata(location, version, storageMb, sku);
         }
 
-        /// <summary> Initializes a new instance of ServerSku. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ServerSku"/>. </summary>
         /// <param name="name"> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </param>
         /// <param name="tier"> The tier of the particular SKU, e.g. Burstable. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new ServerSku(name, tier);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlCheckMigrationNameAvailabilityContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlCheckMigrationNameAvailabilityContent"/>. </summary>
         /// <param name="name"> The resource name to verify. </param>
         /// <param name="resourceType"> The type of the resource. </param>
         /// <param name="isNameAvailable"> Indicates whether the resource name is available. </param>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlCheckMigrationNameAvailabilityContent(name, resourceType, isNameAvailable, reason, message);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLogFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLogFile"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerLogFile(id, name, resourceType, systemData, createdOn, lastModifiedOn, sizeInKb, typePropertiesType, uri);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult"/>. </summary>
         /// <param name="delegatedSubnetsUsage"></param>
         /// <param name="location"> location of the delegated subnet usage. </param>
         /// <param name="subscriptionId"> subscriptionId of the delegated subnet usage. </param>
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerVirtualNetworkSubnetUsageResult(delegatedSubnetsUsage?.ToList(), location, subscriptionId);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerDelegatedSubnetUsage. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerDelegatedSubnetUsage"/>. </summary>
         /// <param name="subnetName"> Name of the delegated subnet for which IP addresses are in use. </param>
         /// <param name="usage"> Number of IP addresses used by the delegated subnet. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerDelegatedSubnetUsage"/> instance for mocking. </returns>
@@ -463,7 +463,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName, usage);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrPreBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/>. </summary>
         /// <param name="numberOfContainers"> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </param>
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrPreBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrPreBackupResult PostgreSqlFlexibleServerLtrPreBackupResult(int numberOfContainers = default)
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerLtrPreBackupResult(numberOfContainers);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlFlexibleServerLtrBackupResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerLtrBackupResult"/>. </summary>
         /// <param name="datasourceSizeInBytes"> Size of datasource in bytes. </param>
         /// <param name="dataTransferredInBytes"> Data transferred in bytes. </param>
         /// <param name="backupName"> Name of Backup operation. </param>
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new PostgreSqlFlexibleServerLtrBackupResult(datasourceSizeInBytes, dataTransferredInBytes, backupName, backupMetadata, status, startOn, endOn, percentComplete, errorCode, errorMessage);
         }
 
-        /// <summary> Initializes a new instance of PostgreSqlLtrServerBackupOperationData. </summary>
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlLtrServerBackupOperationData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
