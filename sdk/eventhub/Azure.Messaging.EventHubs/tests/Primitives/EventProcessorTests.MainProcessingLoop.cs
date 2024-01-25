@@ -2530,7 +2530,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockLogger
                 .Setup(log => log.EventProcessorPartitionProcessingStopComplete(
-                    It.IsAny<string>(),
+                    firstPartiton,
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<string>(),
@@ -2553,7 +2553,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockLoadBalancer
                 .Setup(lb => lb.IsPartitionOwned(It.IsAny<string>()))
-                .Returns<string>(partition => ownedPartitions.Contains(partition));
+                .Returns<string>(ownedPartitions.Contains);
 
             mockLoadBalancer
                 .SetupSequence(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -2622,8 +2622,6 @@ namespace Azure.Messaging.EventHubs.Tests
             await Task.WhenAny(Task.WhenAll(stopCompletionSource.Task, processCompletionSource.Task), Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            var activeProcessors = GetActivePartitionProcessors(mockProcessor.Object);
-            Assert.That(activeProcessors.ContainsKey(firstPartiton), Is.False, "The partition processing for the first partition should not be active.");
             Assert.That(loadBalancingCount, Is.GreaterThan(loadBalancingCountAtDelay), "The load balancing cycle should not have been held up by the partition stopping.");
 
             mockProcessor
@@ -2638,6 +2636,15 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.Is<EventProcessorPartition>(value => value.PartitionId == secondPartition),
                     It.IsAny<CancellationTokenSource>(),
                     It.IsAny<EventPosition?>()),
+                Times.Once);
+
+            mockLogger
+                .Verify(log => log.EventProcessorPartitionProcessingStopComplete(
+                    firstPartiton,
+                    mockProcessor.Object.Identifier,
+                    mockProcessor.Object.EventHubName,
+                    mockProcessor.Object.ConsumerGroup,
+                    It.IsAny<double>()),
                 Times.Once);
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
