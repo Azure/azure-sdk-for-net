@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    [PersistableModelProxy(typeof(UnknownPartnerUpdateDestinationInfo))]
-    public partial class PartnerUpdateDestinationInfo : IUtf8JsonSerializable, IJsonModel<PartnerUpdateDestinationInfo>
+    internal partial class UnknownPartnerUpdateDestinationInfo : IUtf8JsonSerializable, IJsonModel<PartnerUpdateDestinationInfo>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerUpdateDestinationInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePartnerUpdateDestinationInfo(document.RootElement, options);
+            return DeserializeUnknownPartnerUpdateDestinationInfo(document.RootElement, options);
         }
 
-        internal static PartnerUpdateDestinationInfo DeserializePartnerUpdateDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownPartnerUpdateDestinationInfo DeserializeUnknownPartnerUpdateDestinationInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -66,14 +66,23 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("endpointType", out JsonElement discriminator))
+            PartnerEndpointType endpointType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("endpointType"u8))
                 {
-                    case "WebHook": return WebhookUpdatePartnerDestinationInfo.DeserializeWebhookUpdatePartnerDestinationInfo(element);
+                    endpointType = new PartnerEndpointType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownPartnerUpdateDestinationInfo.DeserializeUnknownPartnerUpdateDestinationInfo(element);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownPartnerUpdateDestinationInfo(endpointType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PartnerUpdateDestinationInfo>.Write(ModelReaderWriterOptions options)
@@ -98,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePartnerUpdateDestinationInfo(document.RootElement, options);
+                        return DeserializeUnknownPartnerUpdateDestinationInfo(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(PartnerUpdateDestinationInfo)} does not support '{options.Format}' format.");
