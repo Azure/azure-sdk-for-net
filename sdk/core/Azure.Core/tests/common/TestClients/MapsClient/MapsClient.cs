@@ -70,7 +70,7 @@ public class MapsClient
     private HttpMessage CreateGetLocationRequest(string ipAddress, RequestContext context)
     {
         HttpMessage message = _pipeline.CreateMessage();
-        message.Apply(context);
+        context.Apply(message);
         message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         Request request = message.Request;

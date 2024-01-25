@@ -87,34 +87,5 @@ namespace Azure
         /// used in a method call.</exception>
         public void AddClassifier(ResponseClassificationHandler classifier)
             => base.AddClassifier(classifier);
-
-        internal ResponseClassifier Apply(ResponseClassifier classifier)
-        {
-            return classifier;
-
-            // TODO: reimplement
-            //if (_statusCodes == null && _handlers == null)
-            //{
-            //    return classifier;
-            //}
-
-            //if (classifier is StatusCodeClassifier statusCodeClassifier)
-            //{
-            //    StatusCodeClassifier clone = statusCodeClassifier.Clone();
-            //    clone.Handlers = _handlers;
-
-            //    if (_statusCodes != null)
-            //    {
-            //        foreach (var classification in _statusCodes)
-            //        {
-            //            clone.AddClassifier(classification.Status, classification.IsError);
-            //        }
-            //    }
-
-            //    return clone;
-            //}
-
-            //return new ChainingClassifier(_statusCodes, _handlers, classifier);
-        }
     }
 }

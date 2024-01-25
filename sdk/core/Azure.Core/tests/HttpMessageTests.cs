@@ -194,7 +194,8 @@ namespace Azure.Core.Tests
             RequestContext context = new RequestContext();
             context.AddClassifier(new StatusCodeHandler(304, true));
 
-            message.ResponseClassifier = context.Apply(ResponseClassifier200204304);
+            message.ResponseClassifier = ResponseClassifier200204304;
+            context.Apply(message);
 
             // This replaces the base classifier with one that only thinks 404 is a non-error
             // and doesn't have opinions on anything else.

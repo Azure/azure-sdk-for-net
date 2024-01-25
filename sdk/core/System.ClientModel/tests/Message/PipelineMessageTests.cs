@@ -17,7 +17,7 @@ public class PipelineMessageTests
 
         RequestOptions options = new RequestOptions();
         options.AddHeader("MockHeader", "MockValue");
-        message.Apply(options);
+        options.Apply(message);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
         Assert.AreEqual("MockValue", value);
@@ -34,7 +34,7 @@ public class PipelineMessageTests
 
         RequestOptions options = new RequestOptions();
         options.CancellationToken = cts.Token;
-        message.Apply(options);
+        options.Apply(message);
 
         Assert.AreEqual(message.CancellationToken, cts.Token);
         Assert.IsFalse(message.CancellationToken.IsCancellationRequested);

@@ -124,7 +124,7 @@ public class RequestOptions
     }
 
     // Set options on the message before sending it through the pipeline.
-    internal void Apply(PipelineMessage message)
+    public virtual void Apply(PipelineMessage message)
     {
         Freeze();
 
@@ -138,7 +138,7 @@ public class RequestOptions
         // This preserves any values set by the client author, and is also
         // needed for Azure.Core-based clients so we don't overwrite a default
         // Azure.Core ResponseClassifier.
-        message.MessageClassifier ??= PipelineMessageClassifier.Default;
+        message.MessageClassifier = ApplyClassifier(message.MessageClassifier ?? PipelineMessageClassifier.Default);
 
         // Copy custom pipeline policies to the message.
         message.PerCallPolicies = _perCallPolicies;
