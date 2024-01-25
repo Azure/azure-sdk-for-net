@@ -18,6 +18,19 @@ namespace Azure.AI.OpenAI
     public partial class ChatCompletionsFunctionToolCall : ChatCompletionsToolCall
     {
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolCall"/>. </summary>
+        /// <param name="id"> The ID of the tool call. </param>
+        /// <param name="function"> The details of the function invocation requested by the tool call. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="function"/> is null. </exception>
+        public ChatCompletionsFunctionToolCall(string id, FunctionCall function) : base(id)
+        {
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(function, nameof(function));
+
+            Type = "function";
+            Function = function;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
