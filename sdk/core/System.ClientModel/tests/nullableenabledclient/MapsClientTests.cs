@@ -1,16 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Maps;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Maps.NullableEnabled;
+using NUnit.Framework;
 
-namespace System.ClientModel.Tests.Client;
+namespace System.ClientModel.Tests.NullableEnableClient;
 
 public class MapsClientTests
 {
@@ -32,6 +32,38 @@ public class MapsClientTests
 
             Assert.AreEqual("US", output.Value.CountryRegion.IsoCode);
             Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), output.Value.IpAddress);
+        }
+        catch (ClientResultException e)
+        {
+            Assert.Fail($"Error: Response status code: '{e.Status}'");
+        }
+    }
+
+    [Test]
+    [Ignore("Test support project")]
+    public void TestGetIfExists()
+    {
+        string key = Environment.GetEnvironmentVariable("MAPS_API_KEY") ?? string.Empty;
+        ApiKeyCredential credential = new ApiKeyCredential(key);
+        MapsClient client = new MapsClient(new Uri("https://atlas.microsoft.com"), credential);
+
+        try
+        {
+            IPAddress ipAddress = IPAddress.Parse("2001:4898:80e8:b::189");
+            ClientResult<IPAddressCountryPair?> result = client.GetCountryCodeIfExists(ipAddress);
+            if (result.Value is not null)
+            {
+                // It existed
+
+                Assert.AreEqual("US", result.Value.CountryRegion.IsoCode);
+                Assert.AreEqual(IPAddress.Parse("2001:4898:80e8:b::189"), result.Value.IpAddress);
+            }
+            else
+            {
+                // It did not exist
+
+                Assert.AreEqual(404, result.GetRawResponse().Status);
+            }
         }
         catch (ClientResultException e)
         {
@@ -318,8 +350,8 @@ public class MapsClientTests
 
         private class CustomTransportRequest : PipelineRequest
         {
-            private string _method;
-            private Uri _uri;
+            private string? _method;
+            private Uri? _uri;
             private PipelineRequestHeaders _headers;
 
             public CustomTransportRequest()
@@ -349,7 +381,7 @@ public class MapsClientTests
             protected override void SetUriCore(Uri uri)
                 => _uri = uri;
 
-            protected override void SetContentCore(BinaryContent content)
+            protected override void SetContentCore(BinaryContent? content)
             {
                 throw new NotImplementedException();
             }
@@ -357,7 +389,7 @@ public class MapsClientTests
 
         private class CustomTransportResponse : PipelineResponse
         {
-            private Stream _stream;
+            private Stream? _stream;
 
             public CustomTransportResponse()
             {
@@ -369,7 +401,7 @@ public class MapsClientTests
 
             public override string ReasonPhrase => "CustomTransportResponse";
 
-            public override Stream ContentStream
+            public override Stream? ContentStream
             {
                 get => _stream;
                 set => _stream = value;

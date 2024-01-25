@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 using System.Net;
 using System.Text;
 
-namespace Maps;
+namespace Maps.NullableEnabled;
 
 public class MapsClient
 {
@@ -16,7 +16,7 @@ public class MapsClient
     private readonly ClientPipeline _pipeline;
     private readonly string _apiVersion;
 
-    public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions options = default)
+    public MapsClient(Uri endpoint, ApiKeyCredential credential, MapsClientOptions? options = default)
     {
         if (endpoint is null) throw new ArgumentNullException(nameof(endpoint));
         if (credential is null) throw new ArgumentNullException(nameof(credential));
@@ -38,15 +38,34 @@ public class MapsClient
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 
-        ClientResult output = GetCountryCode(ipAddress.ToString());
+        ClientResult result = GetCountryCode(ipAddress.ToString());
 
-        PipelineResponse response = output.GetRawResponse();
+        PipelineResponse response = result.GetRawResponse();
         IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
 
         return ClientResult.FromValue(value, response);
     }
 
-    public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions options = null)
+    public virtual ClientResult<IPAddressCountryPair?> GetCountryCodeIfExists(IPAddress ipAddress)
+    {
+        if (ipAddress is null)
+            throw new ArgumentNullException(nameof(ipAddress));
+
+        ClientResult result = GetCountryCode(ipAddress.ToString());
+
+        PipelineResponse response = result.GetRawResponse();
+
+        // Note: We must add the status code check
+        if (response.Status == 404)
+        {
+            return ClientResult.FromOptionalValue<IPAddressCountryPair?>(default, response);
+        }
+
+        IPAddressCountryPair value = IPAddressCountryPair.FromResponse(response);
+        return ClientResult.FromOptionalValue(value, response);
+    }
+
+    public virtual ClientResult GetCountryCode(string ipAddress, RequestOptions? options = null)
     {
         if (ipAddress is null) throw new ArgumentNullException(nameof(ipAddress));
 

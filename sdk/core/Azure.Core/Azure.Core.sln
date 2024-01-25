@@ -63,6 +63,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ClientModel.Tests.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ClientModel.Tests.Internal.Perf", "..\System.ClientModel\tests\internal.perf\System.ClientModel.Tests.Internal.Perf.csproj", "{14F5E486-2C03-4293-ACA7-47B3E069956E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.ClientModel.Tests.NullableEnabledClient", "..\System.ClientModel\tests\nullableenabledclient\System.ClientModel.Tests.NullableEnabledClient.csproj", "{596EA833-B84F-41C2-BB0C-1FE3A2CADEAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -161,6 +163,10 @@ Global
 		{14F5E486-2C03-4293-ACA7-47B3E069956E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14F5E486-2C03-4293-ACA7-47B3E069956E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14F5E486-2C03-4293-ACA7-47B3E069956E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{596EA833-B84F-41C2-BB0C-1FE3A2CADEAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{596EA833-B84F-41C2-BB0C-1FE3A2CADEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{596EA833-B84F-41C2-BB0C-1FE3A2CADEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{596EA833-B84F-41C2-BB0C-1FE3A2CADEAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
