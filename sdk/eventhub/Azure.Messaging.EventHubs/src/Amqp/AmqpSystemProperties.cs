@@ -64,7 +64,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                 {
                     if (key == Properties.MessageIdName)
                     {
-                        return _amqpMessage.Properties.MessageId;
+                        return _amqpMessage.Properties.MessageId?.ToString();
                     }
 
                     if (key == Properties.UserIdName)
@@ -74,7 +74,7 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     if (key == Properties.ToName)
                     {
-                        return _amqpMessage.Properties.To;
+                        return _amqpMessage.Properties.To?.ToString();
                     }
 
                     if (key == Properties.SubjectName)
@@ -84,12 +84,12 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                     if (key == Properties.ReplyToName)
                     {
-                        return _amqpMessage.Properties.ReplyTo;
+                        return _amqpMessage.Properties.ReplyTo?.ToString();
                     }
 
                     if (key == Properties.CorrelationIdName)
                     {
-                        return _amqpMessage.Properties.CorrelationId;
+                        return _amqpMessage.Properties.CorrelationId?.ToString();
                     }
 
                     if (key == Properties.ContentTypeName)
@@ -130,7 +130,12 @@ namespace Azure.Messaging.EventHubs.Amqp
 
                 if (_amqpMessage.HasSection(AmqpMessageSection.MessageAnnotations))
                 {
-                   return _amqpMessage.MessageAnnotations[key];
+                    return _amqpMessage.MessageAnnotations[key] switch
+                    {
+                        AmqpMessageId id => id.ToString(),
+                        AmqpAddress address => address.ToString(),
+                        object value => value
+                    };
                 }
 
                 // If no section was available to delegate to, mimic the behavior of the standard dictionary implementation.

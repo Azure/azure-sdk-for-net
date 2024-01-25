@@ -1,14 +1,17 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0 (2024-01-26)
+
+This release is the first stable release of the Azure NetworkAnalytics library.
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Upgrading the existing beta version to stable.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
 
 ## 1.0.0-beta.2 (2023-11-29)
 

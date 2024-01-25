@@ -281,7 +281,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The <see cref="SasQueryParameters"/> used for authenticating requests.
         /// </returns>
-        [CallerShouldAudit(Reason = "https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));

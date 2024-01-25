@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.EventGrid.Models
 {
     /// <summary> Static delivery attribute mapping details. </summary>
@@ -19,9 +22,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="StaticDeliveryAttributeMapping"/>. </summary>
         /// <param name="name"> Name of the delivery attribute or header. </param>
         /// <param name="mappingType"> Type of the delivery attribute or header name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> Value of the delivery attribute. </param>
         /// <param name="isSecret"> Boolean flag to tell if the attribute contains sensitive information . </param>
-        internal StaticDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, string value, bool? isSecret) : base(name, mappingType)
+        internal StaticDeliveryAttributeMapping(string name, DeliveryAttributeMappingType mappingType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value, bool? isSecret) : base(name, mappingType, serializedAdditionalRawData)
         {
             Value = value;
             IsSecret = isSecret;

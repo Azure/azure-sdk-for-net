@@ -94,6 +94,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -125,6 +133,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +174,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_Register</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Register</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +250,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Features_Unregister</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -247,6 +287,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Features_Unregister</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FeatureResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

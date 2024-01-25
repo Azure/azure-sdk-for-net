@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchIndexerDataNoneIdentity"/>. </summary>
-        /// <param name="oDataType"> Identifies the concrete type of the identity. </param>
+        /// <param name="oDataType"> A URI fragment specifying the type of identity. </param>
         internal SearchIndexerDataNoneIdentity(string oDataType) : base(oDataType)
         {
             ODataType = oDataType ?? "#Microsoft.Azure.Search.DataNoneIdentity";

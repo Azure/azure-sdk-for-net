@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,26 +15,163 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkDefaultAdminRule : IUtf8JsonSerializable
+    public partial class NetworkDefaultAdminRule : IUtf8JsonSerializable, IJsonModel<NetworkDefaultAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkDefaultAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkDefaultAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDefaultAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkDefaultAdminRule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
             if (Optional.IsDefined(Flag))
             {
                 writer.WritePropertyName("flag"u8);
                 writer.WriteStringValue(Flag);
             }
+            if (options.Format != "W" && Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Sources))
+            {
+                writer.WritePropertyName("sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Sources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Destinations))
+            {
+                writer.WritePropertyName("destinations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Destinations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SourcePortRanges))
+            {
+                writer.WritePropertyName("sourcePortRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourcePortRanges)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DestinationPortRanges))
+            {
+                writer.WritePropertyName("destinationPortRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in DestinationPortRanges)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Access))
+            {
+                writer.WritePropertyName("access"u8);
+                writer.WriteStringValue(Access.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Direction))
+            {
+                writer.WritePropertyName("direction"u8);
+                writer.WriteStringValue(Direction.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkDefaultAdminRule DeserializeNetworkDefaultAdminRule(JsonElement element)
+        NetworkDefaultAdminRule IJsonModel<NetworkDefaultAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDefaultAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkDefaultAdminRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkDefaultAdminRule(document.RootElement, options);
+        }
+
+        internal static NetworkDefaultAdminRule DeserializeNetworkDefaultAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,6 +194,8 @@ namespace Azure.ResourceManager.Network.Models
             Optional<SecurityConfigurationRuleDirection> direction = default;
             Optional<NetworkProvisioningState> provisioningState = default;
             Optional<Guid> resourceGuid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -228,8 +368,44 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkDefaultAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, flag.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new NetworkDefaultAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), serializedAdditionalRawData, description.Value, flag.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
         }
+
+        BinaryData IPersistableModel<NetworkDefaultAdminRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDefaultAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkDefaultAdminRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkDefaultAdminRule IPersistableModel<NetworkDefaultAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDefaultAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkDefaultAdminRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkDefaultAdminRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkDefaultAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

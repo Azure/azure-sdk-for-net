@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS virtual network
+        /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -248,6 +248,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -269,7 +277,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Gets the Hybrid AKS virtual network
+        /// Gets the specified virtual network resource
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -278,6 +286,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_Retrieve</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -299,7 +315,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Lists the Hybrid AKS virtual networks by subscription
+        /// Lists the virtual networks in the specified subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -308,6 +324,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -327,7 +351,7 @@ namespace Azure.ResourceManager.HybridContainerService
         }
 
         /// <summary>
-        /// Lists the Hybrid AKS virtual networks by subscription
+        /// Lists the virtual networks in the specified subscription
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -336,6 +360,14 @@ namespace Azure.ResourceManager.HybridContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>virtualNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridContainerServiceVirtualNetworkResource"/></description>
         /// </item>
         /// </list>
         /// <item>

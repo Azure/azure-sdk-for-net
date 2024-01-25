@@ -1,6 +1,7 @@
 parameters:
   ArtifactLocation: 'not-specified'
   PackageRepository: 'not-specified'
+  PackageFilter: ''
   ReleaseSha: 'not-specified'
   RepoId: $(Build.Repository.Name)
   WorkingDirectory: ''
@@ -14,6 +15,7 @@ steps:
     arguments: >
       -artifactLocation ${{ parameters.ArtifactLocation }}
       -packageRepository ${{ parameters.PackageRepository }}
+      -packageFilter "${{ parameters.PackageFilter }}"
       -releaseSha ${{ parameters.ReleaseSha }}
       -repoId ${{ parameters.RepoId }}
       -workingDirectory '${{ parameters.WorkingDirectory }}'

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityAutomationTriggeringRule : IUtf8JsonSerializable
+    public partial class SecurityAutomationTriggeringRule : IUtf8JsonSerializable, IJsonModel<SecurityAutomationTriggeringRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAutomationTriggeringRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityAutomationTriggeringRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PropertyJPath))
             {
@@ -35,11 +46,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityAutomationTriggeringRule DeserializeSecurityAutomationTriggeringRule(JsonElement element)
+        SecurityAutomationTriggeringRule IJsonModel<SecurityAutomationTriggeringRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAutomationTriggeringRule(document.RootElement, options);
+        }
+
+        internal static SecurityAutomationTriggeringRule DeserializeSecurityAutomationTriggeringRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +88,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<AutomationTriggeringRulePropertyType> propertyType = default;
             Optional<string> expectedValue = default;
             Optional<AutomationTriggeringRuleOperator> @operator = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyJPath"u8))
@@ -78,8 +120,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     @operator = new AutomationTriggeringRuleOperator(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityAutomationTriggeringRule(propertyJPath.Value, Optional.ToNullable(propertyType), expectedValue.Value, Optional.ToNullable(@operator));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SecurityAutomationTriggeringRule(propertyJPath.Value, Optional.ToNullable(propertyType), expectedValue.Value, Optional.ToNullable(@operator), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityAutomationTriggeringRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SecurityAutomationTriggeringRule IPersistableModel<SecurityAutomationTriggeringRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationTriggeringRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityAutomationTriggeringRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAutomationTriggeringRule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityAutomationTriggeringRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

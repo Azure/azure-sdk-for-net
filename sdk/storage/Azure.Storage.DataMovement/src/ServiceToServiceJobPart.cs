@@ -179,22 +179,17 @@ namespace Azure.Storage.DataMovement
         {
             await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
 
-            // Attempt to get the length, it's possible the file could
-            // not be accessible (or does not exist).
             long? fileLength = _sourceResource.Length;
-            if (!fileLength.HasValue)
+            try
             {
-                try
-                {
-                    StorageResourceProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
-                    fileLength = properties.ContentLength;
-                }
-                catch (Exception ex)
-                {
-                    // TODO: logging when given the event handler
-                    await InvokeFailedArg(ex).ConfigureAwait(false);
-                    return;
-                }
+                StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                fileLength = properties.ResourceLength;
+            }
+            catch (Exception ex)
+            {
+                // TODO: logging when given the event handler
+                await InvokeFailedArg(ex).ConfigureAwait(false);
+                return;
             }
             if (!fileLength.HasValue)
             {
@@ -247,6 +242,7 @@ namespace Azure.Storage.DataMovement
             {
                 StorageResourceCopyFromUriOptions options =
                     await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
+
                 await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
                     overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,

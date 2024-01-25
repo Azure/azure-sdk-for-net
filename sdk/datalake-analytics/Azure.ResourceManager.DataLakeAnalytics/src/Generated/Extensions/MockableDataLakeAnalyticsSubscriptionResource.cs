@@ -60,6 +60,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -71,7 +79,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeAnalyticsAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeAnalyticsAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic(e), DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -85,6 +93,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -96,7 +112,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DataLakeAnalyticsAccountAccountsRestClient.CreateListRequest(Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DataLakeAnalyticsAccountAccountsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, options.Filter, options.Top, options.Skip, options.Select, options.Orderby, options.Count);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic, DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataLakeAnalyticsAccountBasic.DeserializeDataLakeAnalyticsAccountBasic(e), DataLakeAnalyticsAccountAccountsClientDiagnostics, Pipeline, "MockableDataLakeAnalyticsSubscriptionResource.GetAccounts", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -109,6 +125,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,6 +169,14 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataLakeAnalyticsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -180,6 +212,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The resource location without whitespace. </param>
@@ -210,6 +246,10 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_GetCapability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2016-11-01</description>
         /// </item>
         /// </list>
         /// </summary>

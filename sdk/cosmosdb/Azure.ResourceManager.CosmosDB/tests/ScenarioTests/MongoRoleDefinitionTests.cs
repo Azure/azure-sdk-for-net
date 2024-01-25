@@ -40,8 +40,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             _resourceGroup = await ArmClient.GetResourceGroupResource(_resourceGroupIdentifier).GetAsync();
 
             List<CosmosDBAccountCapability> capabilities = new List<CosmosDBAccountCapability>();
-            capabilities.Add(new CosmosDBAccountCapability("EnableMongo"));
-            capabilities.Add(new CosmosDBAccountCapability("EnableMongoRoleBasedAccessControl"));
+            capabilities.Add(new CosmosDBAccountCapability("EnableMongo", null));
+            capabilities.Add(new CosmosDBAccountCapability("EnableMongoRoleBasedAccessControl", null));
             _databaseAccount = await CreateDatabaseAccount(Recording.GenerateAssetName("dbaccount-"), CosmosDBAccountKind.MongoDB, capabilities);
 
             _mongoDBDatabase = await MongoDBDatabaseTests.CreateMongoDBDatabase(SessionRecording.GenerateAssetName("mongodb-"), null, _databaseAccount.GetMongoDBDatabases());

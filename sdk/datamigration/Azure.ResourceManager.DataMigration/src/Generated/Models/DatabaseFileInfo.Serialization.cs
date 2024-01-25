@@ -5,15 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class DatabaseFileInfo
+    public partial class DatabaseFileInfo : IUtf8JsonSerializable, IJsonModel<DatabaseFileInfo>
     {
-        internal static DatabaseFileInfo DeserializeDatabaseFileInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseFileInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatabaseFileInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DatabaseName))
+            {
+                writer.WritePropertyName("databaseName"u8);
+                writer.WriteStringValue(DatabaseName);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(LogicalName))
+            {
+                writer.WritePropertyName("logicalName"u8);
+                writer.WriteStringValue(LogicalName);
+            }
+            if (Optional.IsDefined(PhysicalFullName))
+            {
+                writer.WritePropertyName("physicalFullName"u8);
+                writer.WriteStringValue(PhysicalFullName);
+            }
+            if (Optional.IsDefined(RestoreFullName))
+            {
+                writer.WritePropertyName("restoreFullName"u8);
+                writer.WriteStringValue(RestoreFullName);
+            }
+            if (Optional.IsDefined(FileType))
+            {
+                writer.WritePropertyName("fileType"u8);
+                writer.WriteStringValue(FileType.Value.ToString());
+            }
+            if (Optional.IsDefined(SizeMB))
+            {
+                writer.WritePropertyName("sizeMB"u8);
+                writer.WriteNumberValue(SizeMB.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DatabaseFileInfo IJsonModel<DatabaseFileInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseFileInfo(document.RootElement, options);
+        }
+
+        internal static DatabaseFileInfo DeserializeDatabaseFileInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<string> restoreFullName = default;
             Optional<DatabaseFileType> fileType = default;
             Optional<double> sizeMB = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databaseName"u8))
@@ -70,8 +153,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     sizeMB = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Optional.ToNullable(fileType), Optional.ToNullable(sizeMB));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DatabaseFileInfo(databaseName.Value, id.Value, logicalName.Value, physicalFullName.Value, restoreFullName.Value, Optional.ToNullable(fileType), Optional.ToNullable(sizeMB), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatabaseFileInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DatabaseFileInfo IPersistableModel<DatabaseFileInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatabaseFileInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabaseFileInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> The profile for supported VM skus. </summary>
+    /// <summary> The profile for supported VM SKUs. </summary>
     public partial class HybridContainerServiceVmSkuProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVmSkuProperties"/>. </summary>
         public HybridContainerServiceVmSkuProperties()
         {
@@ -20,29 +53,31 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceVmSkuProperties"/>. </summary>
-        /// <param name="resourceType"> The resource type of the vm. </param>
-        /// <param name="capabilities"> A name value pair to describe the specific vm's capability. </param>
-        /// <param name="name"> The name of the VM Family. </param>
-        /// <param name="tier"> The tier of the VM Family. </param>
-        /// <param name="size"> The size of the VM Family. </param>
-        internal HybridContainerServiceVmSkuProperties(string resourceType, IReadOnlyList<HybridContainerServiceVmSkuCapabilities> capabilities, string name, string tier, string size)
+        /// <param name="resourceType"> The type of resource the SKU applies to. </param>
+        /// <param name="capabilities"> The list of name-value pairs to describe VM SKU capabilities like MemoryGB, vCPUs, etc. </param>
+        /// <param name="name"> The name of the VM SKU. </param>
+        /// <param name="tier"> The tier of the VM SKU. </param>
+        /// <param name="size"> The size of the VM SKU. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridContainerServiceVmSkuProperties(string resourceType, IReadOnlyList<HybridContainerServiceVmSkuCapabilities> capabilities, string name, string tier, string size, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Capabilities = capabilities;
             Name = name;
             Tier = tier;
             Size = size;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource type of the vm. </summary>
+        /// <summary> The type of resource the SKU applies to. </summary>
         public string ResourceType { get; }
-        /// <summary> A name value pair to describe the specific vm's capability. </summary>
+        /// <summary> The list of name-value pairs to describe VM SKU capabilities like MemoryGB, vCPUs, etc. </summary>
         public IReadOnlyList<HybridContainerServiceVmSkuCapabilities> Capabilities { get; }
-        /// <summary> The name of the VM Family. </summary>
+        /// <summary> The name of the VM SKU. </summary>
         public string Name { get; }
-        /// <summary> The tier of the VM Family. </summary>
+        /// <summary> The tier of the VM SKU. </summary>
         public string Tier { get; }
-        /// <summary> The size of the VM Family. </summary>
+        /// <summary> The size of the VM SKU. </summary>
         public string Size { get; }
     }
 }

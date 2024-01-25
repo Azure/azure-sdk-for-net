@@ -123,6 +123,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -145,6 +153,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,6 +192,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
@@ -198,6 +222,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +254,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,6 +284,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -265,6 +313,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +352,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Information for a certificate order. </param>
@@ -333,6 +389,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +428,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_CheckAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="identifier"> Name of the domain. </param>
@@ -402,6 +466,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,6 +496,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -445,6 +525,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_GetControlCenterSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -476,6 +560,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_GetControlCenterSsoRequest</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -506,6 +594,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_ListRecommendations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
@@ -531,6 +623,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_ListRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -558,6 +654,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -580,6 +684,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -601,6 +713,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -628,6 +748,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detailed">
@@ -654,6 +782,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
@@ -676,6 +812,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -700,6 +844,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -723,6 +875,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -745,6 +905,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -782,6 +950,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -818,6 +994,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubeEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -840,6 +1024,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubeEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -861,6 +1053,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Provider_GetAvailableStacksOnPrem</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -885,6 +1081,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetAvailableStacksOnPrem</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
@@ -907,6 +1107,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -932,6 +1136,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
@@ -955,6 +1163,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_ResetAllFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -986,6 +1198,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_ResetAllFilters</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1015,6 +1231,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1051,6 +1271,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Rule name. </param>
@@ -1086,6 +1310,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceHealthMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1108,6 +1336,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceHealthMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1129,6 +1361,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListBillingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1154,6 +1390,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListBillingMeters</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
@@ -1177,6 +1417,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1212,6 +1456,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Name availability request. </param>
@@ -1246,6 +1494,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>GetSubscriptionDeploymentLocations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1275,6 +1527,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetSubscriptionDeploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1306,6 +1562,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListGeoRegions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -1331,6 +1591,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListGeoRegions</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1358,6 +1622,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListPremierAddOnOffers</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1380,6 +1648,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListPremierAddOnOffers</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1401,6 +1673,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1432,6 +1708,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1461,6 +1741,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VerifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1496,6 +1780,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>VerifyHostingEnvironmentVnet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> VNET information. </param>
@@ -1529,6 +1817,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_PreviewWorkflow</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1565,6 +1857,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>StaticSites_PreviewWorkflow</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location where you plan to create the static site. </param>
@@ -1600,6 +1896,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1621,6 +1925,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1644,6 +1956,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1665,6 +1985,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

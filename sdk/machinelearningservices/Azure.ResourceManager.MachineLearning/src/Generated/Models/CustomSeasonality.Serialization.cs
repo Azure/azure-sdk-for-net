@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CustomSeasonality : IUtf8JsonSerializable
+    public partial class CustomSeasonality : IUtf8JsonSerializable, IJsonModel<CustomSeasonality>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomSeasonality>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomSeasonality>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSeasonality>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomSeasonality)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteNumberValue(Value);
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomSeasonality DeserializeCustomSeasonality(JsonElement element)
+        CustomSeasonality IJsonModel<CustomSeasonality>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSeasonality>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomSeasonality)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomSeasonality(document.RootElement, options);
+        }
+
+        internal static CustomSeasonality DeserializeCustomSeasonality(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int value = default;
             SeasonalityMode mode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     mode = new SeasonalityMode(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomSeasonality(mode, value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomSeasonality(mode, serializedAdditionalRawData, value);
         }
+
+        BinaryData IPersistableModel<CustomSeasonality>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSeasonality>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomSeasonality)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomSeasonality IPersistableModel<CustomSeasonality>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomSeasonality>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomSeasonality(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomSeasonality)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomSeasonality>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void StartProcessingRespectsACancelledToken(bool async)
+        public void StartProcessingRespectsACanceledToken(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -70,10 +70,12 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
+                .Callback(() => completionSource.TrySetResult(true))
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockProcessor
@@ -89,16 +91,18 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StartProcessing(cancellationSource.Token);
             }
 
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
             Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
             Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
-            mockProcessor.Verify(processor => processor.CreateConnection(), Times.Once);
 
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
         }
 
         /// <summary>
@@ -180,10 +184,12 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
+                .Callback(() => completionSource.TrySetResult(true))
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockProcessor
@@ -198,6 +204,8 @@ namespace Azure.Messaging.EventHubs.Tests
             {
                 mockProcessor.Object.StartProcessing(cancellationSource.Token);
             }
+
+            await completionSource.Task.AwaitWithCancellation(cancellationSource.Token);
 
             Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
@@ -790,7 +798,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public void StopProcessingRespectsACancelledToken(bool async)
+        public void StopProcessingRespectsACanceledToken(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
@@ -1046,52 +1054,6 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         [TestCase(true)]
         [TestCase(false)]
-        public async Task StopProcessingSurfacesExceptions(bool async)
-        {
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            var expectedException = new DivideByZeroException("BOOM!");
-            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-
-            mockProcessor
-                .Setup(processor => processor.CreateConnection())
-                .Callback(() => completionSource.TrySetResult(true))
-                .Throws(expectedException);
-
-            mockProcessor
-                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
-
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            await completionSource.Task;
-
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Faulted), "The processor status should report that it is in a faulted state.");
-
-            if (async)
-            {
-                Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token), Throws.Exception.SameAs(expectedException), "The asynchronous close call should bubble the exception.");
-            }
-            else
-            {
-                Assert.That(() => mockProcessor.Object.StopProcessing(cancellationSource.Token), Throws.Exception.SameAs(expectedException), "The synchronous close call should bubble the exception.");
-            }
-
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation source should not have been triggered.");
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should report that it is stopped.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.NotRunning), "The processor status should report that it is not running.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.StopProcessing" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
         public async Task StopProcessingResetsState(bool async)
         {
             using var cancellationSource = new CancellationTokenSource();
@@ -1109,31 +1071,23 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
 
-            // Starting the processor should result in an exception on the first call, which should leave it in a faulted state.
-
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
+
+            // In a real scenario, the processor would fail validation in the cases that would cause a background task
+            // fault and be observable by the call to start processing.  Because the test is injecting a mock fault in
+            // a very specific location, only the background task will fail but it may not be observable immediately.
+            // Spin with a short delay to allow the fault to be observed.
+
+            while ((!cancellationSource.IsCancellationRequested) && (GetRunningProcessorTask(mockProcessor.Object) != null))
+            {
+                await Task.Delay(75, cancellationSource.Token);
+            }
+
+            // Starting the processor should result in an exception on the first call, which will fault and cause it to stop and
+            // reset state.
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation source should not have been triggered.");
             Assert.That(mockProcessor.Object.IsRunning, Is.False, "The start call should have triggered an exception.");
-            Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Faulted), "The processor status should report that it is faulted.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsFaulted, Is.True, "The task for processing should be faulted.");
-
-            // The processor should not reset the faulted state when calling start a second time.
-
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The start call should not have been able to reset the failure state.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsFaulted, Is.True, "The task for processing should be faulted.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsFaulted, Is.True, "The task for processing should be faulted.");
-
-            // Stopping the processor should clear the faulted state, as well as surface the fault.
-
-            if (async)
-            {
-                Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token), Throws.Exception.SameAs(expectedException), "The asynchronous close call should bubble the exception.");
-            }
-            else
-            {
-                Assert.That(() => mockProcessor.Object.StopProcessing(cancellationSource.Token), Throws.Exception.SameAs(expectedException), "The synchronous close call should bubble the exception.");
-            }
-
             Assert.That(GetRunningProcessorTask(mockProcessor.Object), Is.Null, "There should be no active task for processing.");
 
             // After stopping, the processor state should be reset and it should be able to start.
@@ -1276,71 +1230,6 @@ namespace Azure.Messaging.EventHubs.Tests
                    mockProcessor.Object.EventHubName,
                    mockProcessor.Object.ConsumerGroup,
                    It.IsAny<string>()),
-               Times.Once);
-
-            mockEventSource
-                .Verify(log => log.EventProcessorStopComplete(
-                    mockProcessor.Object.Identifier,
-                    mockProcessor.Object.EventHubName,
-                    mockProcessor.Object.ConsumerGroup),
-                Times.Once);
-        }
-
-        /// <summary>
-        ///   Verifies functionality of the <see cref="EventProcessor{TPartition}.StopProcessing" />
-        ///   method.
-        /// </summary>
-        ///
-        [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task StopProcessingLogsFaultedTaskDuringShutdown(bool async)
-        {
-            using var cancellationSource = new CancellationTokenSource();
-            cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-            var expectedException = new DivideByZeroException("BOOM!");
-            var mockEventSource = new Mock<EventHubsEventSource>();
-            var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-
-            mockProcessor.Object.Logger = mockEventSource.Object;
-
-            mockProcessor
-                .Setup(processor => processor.CreateConnection())
-                .Throws(expectedException);
-
-            mockProcessor
-                .Setup(processor => processor.ValidateProcessingPreconditions(It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
-
-            await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
-            Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should have faulted during startup.");
-            Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsFaulted, Is.True, "The task for processing should be faulted.");
-
-            if (async)
-            {
-                Assert.That(async () => await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token), Throws.Exception, "The asynchronous close call should encounter an exception.");
-            }
-            else
-            {
-                Assert.That(() => mockProcessor.Object.StopProcessing(cancellationSource.Token), Throws.Exception, "The synchronous close call should encounter an exception.");
-            }
-
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-
-            mockEventSource
-                .Verify(log => log.EventProcessorStop(
-                    mockProcessor.Object.Identifier,
-                    mockProcessor.Object.EventHubName,
-                    mockProcessor.Object.ConsumerGroup),
-                Times.Once);
-
-            mockEventSource
-               .Verify(log => log.EventProcessorTaskError(
-                   mockProcessor.Object.Identifier,
-                   mockProcessor.Object.EventHubName,
-                   mockProcessor.Object.ConsumerGroup,
-                   expectedException.Message),
                Times.Once);
 
             mockEventSource
