@@ -623,7 +623,7 @@ try {
         $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
         $userAccountName = $userAccount.UserPrincipalName
-        Log "User authentication with user '$userAccountName'('$TestApplicationId') will be used."
+        Log "User authentication with user '$userAccountName' ('$TestApplicationId') will be used."
     }
     # If no test application ID was specified during an interactive session, create a new service principal.
     elseif (!$CI -and !$TestApplicationId) {
@@ -704,7 +704,7 @@ try {
    # considered a critical failure, as the test application may have subscription-level permissions and not require
    # the explicit grant.
    if (!$resourceGroupRoleAssigned) {
-        $idSlug = if ($userAuth) { "user '$userAccountName'('$TestApplicationId')"} else { "Test Application '$TestApplicationId'"};
+        $idSlug = if ($userAuth) { "User '$userAccountName' ('$TestApplicationId')"} else { "Test Application '$TestApplicationId'"};
         Log "Attempting to assign the 'Owner' role for '$ResourceGroupName' to the $idSlug"
         $ownerAssignment = New-AzRoleAssignment `
                             -RoleDefinitionName "Owner" `
