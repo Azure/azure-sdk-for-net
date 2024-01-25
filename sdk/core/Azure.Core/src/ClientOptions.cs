@@ -94,7 +94,6 @@ namespace Azure.Core
         /// <summary>
         /// Gets the client retry options.
         /// </summary>
-        // TODO: Make freezable
         public RetryOptions Retry { get; }
 
         /// <summary>
