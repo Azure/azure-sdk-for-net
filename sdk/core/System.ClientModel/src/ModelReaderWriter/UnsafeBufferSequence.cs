@@ -11,17 +11,17 @@ namespace System.ClientModel.Internal;
 /// Since there is no way to ensure someone didn't keep a reference to one of the buffers
 /// it must be disposed of in the same context it was created and its referenced should not be stored or shared.
 /// </summary>
-internal sealed partial class BufferSequence : IBufferWriter<byte>, IDisposable
+internal sealed partial class UnsafeBufferSequence : IBufferWriter<byte>, IDisposable
 {
     private volatile BufferSegment[] _buffers; // this is an array so items can be accessed by ref
     private volatile int _count;
     private readonly int _segmentSize;
 
     /// <summary>
-    /// Initializes a new instance of <see cref="BufferSequence"/>.
+    /// Initializes a new instance of <see cref="UnsafeBufferSequence"/>.
     /// </summary>
     /// <param name="segmentSize">The size of each buffer segment.</param>
-    public BufferSequence(int segmentSize = 16384)
+    public UnsafeBufferSequence(int segmentSize = 16384)
     {
         // we perf tested a very large and a small model and found that the performance
         // for 4k, 8k, 16k, 32k, was neglible for the small model but had a 30% alloc improvment
@@ -31,7 +31,7 @@ internal sealed partial class BufferSequence : IBufferWriter<byte>, IDisposable
     }
 
     /// <summary>
-    /// Notifies the <see cref="BufferSequence"/> that bytes bytes were written to the output <see cref="Span{T}"/> or <see cref="Memory{T}"/>.
+    /// Notifies the <see cref="UnsafeBufferSequence"/> that bytes bytes were written to the output <see cref="Span{T}"/> or <see cref="Memory{T}"/>.
     /// You must request a new buffer after calling <see cref="Advance(int)"/> to continue writing more data; you cannot write to a previously acquired buffer.
     /// </summary>
     /// <param name="bytesWritten">The number of bytes written to the <see cref="Span{T}"/> or <see cref="Memory{T}"/>.</param>

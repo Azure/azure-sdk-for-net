@@ -33,7 +33,7 @@ public static class ModelReaderWriter
 
         if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
-            using (BufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).GetSequenceBufferReader())
+            using (UnsafeBufferSequence.Reader reader = new ModelWriter<T>(jsonModel, options).GetSequenceBufferReader())
             {
                 return reader.ToBinaryData();
             }
@@ -70,7 +70,7 @@ public static class ModelReaderWriter
 
         if (ShouldWriteAsJson(iModel, options, out IJsonModel<object>? jsonModel))
         {
-            using (BufferSequence.Reader reader = new ModelWriter<object>(jsonModel, options).GetSequenceBufferReader())
+            using (UnsafeBufferSequence.Reader reader = new ModelWriter<object>(jsonModel, options).GetSequenceBufferReader())
             {
                 return reader.ToBinaryData();
             }

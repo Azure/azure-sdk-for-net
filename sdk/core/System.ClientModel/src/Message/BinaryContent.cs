@@ -85,7 +85,7 @@ public abstract class BinaryContent : IDisposable
         private readonly ModelReaderWriterOptions _options;
 
         // Used when _model is an IJsonModel
-        private BufferSequence.Reader? _sequenceReader;
+        private UnsafeBufferSequence.Reader? _sequenceReader;
 
         // Used when _model is an IModel
         private BinaryData? _data;
@@ -96,7 +96,7 @@ public abstract class BinaryContent : IDisposable
             _options = options;
         }
 
-        private BufferSequence.Reader SequenceReader
+        private UnsafeBufferSequence.Reader SequenceReader
         {
             get
             {
@@ -129,12 +129,8 @@ public abstract class BinaryContent : IDisposable
 
         public override bool TryComputeLength(out long length)
         {
-            if (ModelReaderWriter.ShouldWriteAsJson(_model, _options))
-            {
-                return SequenceReader.TryComputeLength(out length);
-            }
+            length = ModelReaderWriter.ShouldWriteAsJson(_model, _options) ? SequenceReader.Length : Data.ToMemory().Length;
 
-            length = Data.ToMemory().Length;
             return true;
         }
 
