@@ -236,7 +236,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 
 [`DefaultAzureCredential`][ref_DefaultAzureCredential] and [`EnvironmentCredential`][ref_EnvironmentCredential] can be configured with environment variables. Each type of authentication requires values for specific variables:
 
-#### Service principal with secret
+### Service principal with secret
 
 |Variable name|Value
 |-|-
@@ -244,7 +244,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 |`AZURE_TENANT_ID`|ID of the application's Microsoft Entra tenant
 |`AZURE_CLIENT_SECRET`|one of the application's client secrets
 
-#### Service principal with certificate
+### Service principal with certificate
 
 |variable name|Value
 |-|-
@@ -254,7 +254,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 |`AZURE_CLIENT_CERTIFICATE_PASSWORD`|(optional) the password protecting the certificate file (currently only supported for PFX (PKCS12) certificates)
 |`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 
-#### Username and password
+### Username and password
 
 |Variable name|Value
 |-|-
@@ -263,7 +263,7 @@ Not all credentials require this configuration. Credentials which authenticate t
 |`AZURE_USERNAME`|a username (usually an email address)
 |`AZURE_PASSWORD`|that user's password
 
-#### Managed identity
+### Managed identity (`DefaultAzureCredential`)
 
 |Variable name|Value
 |-|-
