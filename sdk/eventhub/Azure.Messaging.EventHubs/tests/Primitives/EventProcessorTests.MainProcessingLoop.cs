@@ -2642,7 +2642,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            var processorErrorCompletionSource = new TaskCompletionSource<bool>();
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var expectedException = new DivideByZeroException("BOOM!");
             var mockEventSource = new Mock<EventHubsEventSource>();
             var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
@@ -2650,12 +2650,11 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor.Object.Logger = mockEventSource.Object;
 
             mockEventSource
-                .Setup(log => log.EventProcessorFatalTaskError(
-                    It.IsAny<string>(),
+                .Setup(log => log.EventProcessorStopComplete(
                     It.IsAny<string>(),
                     It.IsAny<string>(),
                     It.IsAny<string>()))
-                .Callback(() => processorErrorCompletionSource.SetResult(true));
+                .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
@@ -2667,17 +2666,9 @@ namespace Azure.Messaging.EventHubs.Tests
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
-            // In a real scenario, the processor would fail validation in the cases that would cause a background task
-            // fault and be observable by the call to start processing.  Because the test is injecting a mock fault in
-            // a very specific location, only the background task will fail but it may not be observable immediately.
-            // Spin with a short delay to allow the fault to be observed.
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
-            while ((!cancellationSource.IsCancellationRequested) && (mockProcessor.Object.IsRunning))
-            {
-                await Task.Delay(75, cancellationSource.Token);
-            }
-
-            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation source should not have been triggered.");
             Assert.That(mockProcessor.Object.IsRunning, Is.False, "The processor should have faulted during startup.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 

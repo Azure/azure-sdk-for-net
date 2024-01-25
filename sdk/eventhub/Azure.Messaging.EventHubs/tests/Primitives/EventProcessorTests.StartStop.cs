@@ -70,10 +70,12 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
+            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockProcessor = new Mock<MinimalProcessorMock>(4, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
 
             mockProcessor
                 .Setup(processor => processor.CreateConnection())
+                .Callback(() => completionSource.TrySetResult(true))
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockProcessor
@@ -89,16 +91,18 @@ namespace Azure.Messaging.EventHubs.Tests
                 mockProcessor.Object.StartProcessing(cancellationSource.Token);
             }
 
+            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
             Assert.That(mockProcessor.Object.IsRunning, Is.True, "The processor should report that it is running.");
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor status should report that it is running.");
             Assert.That(GetRunningProcessorTask(mockProcessor.Object).IsCompleted, Is.False, "The task for processing should be active.");
-            mockProcessor.Verify(processor => processor.CreateConnection(), Times.Once);
 
             // Shut the processor down to ensure resource clean-up, but ignore any errors since it isn't the
             // subject of this test.
 
             await mockProcessor.Object.StopProcessingAsync(cancellationSource.Token).IgnoreExceptions();
+            cancellationSource.Cancel();
         }
 
         /// <summary>
