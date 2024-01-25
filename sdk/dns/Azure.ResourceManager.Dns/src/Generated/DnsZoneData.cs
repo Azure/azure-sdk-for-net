@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Dns
     /// </summary>
     public partial class DnsZoneData : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of <see cref="DnsZoneData"/>. </summary>
+        /// <summary> Initializes a new instance of DnsZoneData. </summary>
         /// <param name="location"> The location. </param>
         public DnsZoneData(AzureLocation location) : base(location)
         {
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Dns
             SigningKeys = new ChangeTrackingList<DnsSigningKey>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DnsZoneData"/>. </summary>
+        /// <summary> Initializes a new instance of DnsZoneData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>

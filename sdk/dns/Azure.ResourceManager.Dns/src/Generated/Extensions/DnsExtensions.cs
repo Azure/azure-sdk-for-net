@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Dns.Mocking;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
 
@@ -20,245 +19,328 @@ namespace Azure.ResourceManager.Dns
     /// <summary> A class to add extension methods to Azure.ResourceManager.Dns. </summary>
     public static partial class DnsExtensions
     {
-        private static MockableDnsArmClient GetMockableDnsArmClient(ArmClient client)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmResource resource)
         {
-            return client.GetCachedClient(client0 => new MockableDnsArmClient(client0));
+            return resource.GetCachedClient(client =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, resource.Id);
+            });
         }
 
-        private static MockableDnsResourceGroupResource GetMockableDnsResourceGroupResource(ArmResource resource)
+        private static ResourceGroupResourceExtensionClient GetResourceGroupResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
         {
-            return resource.GetCachedClient(client => new MockableDnsResourceGroupResource(client, resource.Id));
+            return client.GetResourceClient(() =>
+            {
+                return new ResourceGroupResourceExtensionClient(client, scope);
+            });
         }
 
-        private static MockableDnsSubscriptionResource GetMockableDnsSubscriptionResource(ArmResource resource)
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MockableDnsSubscriptionResource(client, resource.Id));
+            return resource.GetCachedClient(client =>
+            {
+                return new SubscriptionResourceExtensionClient(client, resource.Id);
+            });
         }
 
+        private static SubscriptionResourceExtensionClient GetSubscriptionResourceExtensionClient(ArmClient client, ResourceIdentifier scope)
+        {
+            return client.GetResourceClient(() =>
+            {
+                return new SubscriptionResourceExtensionClient(client, scope);
+            });
+        }
+        #region DnssecConfigResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DnssecConfigResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnssecConfigResource.CreateResourceIdentifier" /> to create a <see cref="DnssecConfigResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnssecConfigResource" /> object. </returns>
+        public static DnssecConfigResource GetDnssecConfigResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient(() =>
+            {
+                DnssecConfigResource.ValidateResourceId(id);
+                return new DnssecConfigResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DnsARecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsARecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsARecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsARecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsARecordResource" /> object. </returns>
         public static DnsARecordResource GetDnsARecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsARecordResource(id);
+            return client.GetResourceClient<DnsARecordResource>(() =>
+            {
+                DnsARecordResource.ValidateResourceId(id);
+                return new DnsARecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsAaaaRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsAaaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsAaaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsAaaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsAaaaRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsAaaaRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsAaaaRecordResource" /> object. </returns>
         public static DnsAaaaRecordResource GetDnsAaaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsAaaaRecordResource(id);
+            return client.GetResourceClient<DnsAaaaRecordResource>(() =>
+            {
+                DnsAaaaRecordResource.ValidateResourceId(id);
+                return new DnsAaaaRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsCaaRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsCaaRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsCaaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCaaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsCaaRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsCaaRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsCaaRecordResource" /> object. </returns>
         public static DnsCaaRecordResource GetDnsCaaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsCaaRecordResource(id);
+            return client.GetResourceClient<DnsCaaRecordResource>(() =>
+            {
+                DnsCaaRecordResource.ValidateResourceId(id);
+                return new DnsCaaRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsCnameRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsCnameRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsCnameRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsCnameRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsCnameRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsCnameRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsCnameRecordResource" /> object. </returns>
         public static DnsCnameRecordResource GetDnsCnameRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsCnameRecordResource(id);
+            return client.GetResourceClient<DnsCnameRecordResource>(() =>
+            {
+                DnsCnameRecordResource.ValidateResourceId(id);
+                return new DnsCnameRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsMXRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsMXRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsMXRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsMXRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsMXRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsMXRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsMXRecordResource" /> object. </returns>
         public static DnsMXRecordResource GetDnsMXRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsMXRecordResource(id);
+            return client.GetResourceClient<DnsMXRecordResource>(() =>
+            {
+                DnsMXRecordResource.ValidateResourceId(id);
+                return new DnsMXRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsNSRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsNSRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsNSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsNSRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsNSRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsNSRecordResource" /> object. </returns>
         public static DnsNSRecordResource GetDnsNSRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsNSRecordResource(id);
+            return client.GetResourceClient<DnsNSRecordResource>(() =>
+            {
+                DnsNSRecordResource.ValidateResourceId(id);
+                return new DnsNSRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsPtrRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsPtrRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsPtrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsPtrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsPtrRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsPtrRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsPtrRecordResource" /> object. </returns>
         public static DnsPtrRecordResource GetDnsPtrRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsPtrRecordResource(id);
+            return client.GetResourceClient<DnsPtrRecordResource>(() =>
+            {
+                DnsPtrRecordResource.ValidateResourceId(id);
+                return new DnsPtrRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsSoaRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsSoaRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsSoaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSoaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsSoaRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsSoaRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsSoaRecordResource" /> object. </returns>
         public static DnsSoaRecordResource GetDnsSoaRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsSoaRecordResource(id);
+            return client.GetResourceClient<DnsSoaRecordResource>(() =>
+            {
+                DnsSoaRecordResource.ValidateResourceId(id);
+                return new DnsSoaRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsSrvRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsSrvRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsSrvRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsSrvRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsSrvRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsSrvRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsSrvRecordResource" /> object. </returns>
         public static DnsSrvRecordResource GetDnsSrvRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsSrvRecordResource(id);
+            return client.GetResourceClient<DnsSrvRecordResource>(() =>
+            {
+                DnsSrvRecordResource.ValidateResourceId(id);
+                return new DnsSrvRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsTxtRecordResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsTxtRecordResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsTxtRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTxtRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsTxtRecordResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsTxtRecordResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsTxtRecordResource" /> object. </returns>
         public static DnsTxtRecordResource GetDnsTxtRecordResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsTxtRecordResource(id);
+            return client.GetResourceClient<DnsTxtRecordResource>(() =>
+            {
+                DnsTxtRecordResource.ValidateResourceId(id);
+                return new DnsTxtRecordResource(client, id);
+            }
+            );
         }
+        #endregion
 
+        #region DnsTlsaRecordResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsTlsaRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsTlsaRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsTlsaRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsTlsaRecordResource" /> object. </returns>
+        public static DnsTlsaRecordResource GetDnsTlsaRecordResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient<DnsTlsaRecordResource>(() =>
+            {
+                DnsTlsaRecordResource.ValidateResourceId(id);
+                return new DnsTlsaRecordResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DnsDSRecordResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsDSRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsDSRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsDSRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsDSRecordResource" /> object. </returns>
+        public static DnsDSRecordResource GetDnsDSRecordResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient<DnsDSRecordResource>(() =>
+            {
+                DnsDSRecordResource.ValidateResourceId(id);
+                return new DnsDSRecordResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DnsNaptrRecordResource
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsNaptrRecordResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsNaptrRecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsNaptrRecordResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsNaptrRecordResource" /> object. </returns>
+        public static DnsNaptrRecordResource GetDnsNaptrRecordResource(this ArmClient client, ResourceIdentifier id)
+        {
+            return client.GetResourceClient<DnsNaptrRecordResource>(() =>
+            {
+                DnsNaptrRecordResource.ValidateResourceId(id);
+                return new DnsNaptrRecordResource(client, id);
+            }
+            );
+        }
+        #endregion
+
+        #region DnsZoneResource
         /// <summary>
         /// Gets an object representing a <see cref="DnsZoneResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsZoneResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsArmClient.GetDnsZoneResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DnsZoneResource"/> object. </returns>
+        /// <returns> Returns a <see cref="DnsZoneResource" /> object. </returns>
         public static DnsZoneResource GetDnsZoneResource(this ArmClient client, ResourceIdentifier id)
         {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableDnsArmClient(client).GetDnsZoneResource(id);
+            return client.GetResourceClient<DnsZoneResource>(() =>
+            {
+                DnsZoneResource.ValidateResourceId(id);
+                return new DnsZoneResource(client, id);
+            }
+            );
         }
+        #endregion
 
-        /// <summary>
-        /// Gets a collection of DnsZoneResources in the ResourceGroupResource.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsResourceGroupResource.GetDnsZones()"/> instead.</description>
-        /// </item>
-        /// </summary>
+        /// <summary> Gets a collection of DnsZoneResources in the ResourceGroupResource. </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         /// <returns> An object representing collection of DnsZoneResources and their operations over a DnsZoneResource. </returns>
         public static DnsZoneCollection GetDnsZones(this ResourceGroupResource resourceGroupResource)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZones();
+            return GetResourceGroupResourceExtensionClient(resourceGroupResource).GetDnsZones();
         }
 
         /// <summary>
@@ -272,31 +354,17 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_Get</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsZoneResource"/></description>
-        /// </item>
         /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsResourceGroupResource.GetDnsZoneAsync(string,CancellationToken)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="zoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         [ForwardsClientCalls]
         public static async Task<Response<DnsZoneResource>> GetDnsZoneAsync(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZoneAsync(zoneName, cancellationToken).ConfigureAwait(false);
+            return await resourceGroupResource.GetDnsZones().GetAsync(zoneName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -310,31 +378,17 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_Get</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsZoneResource"/></description>
-        /// </item>
         /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsResourceGroupResource.GetDnsZone(string,CancellationToken)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="zoneName"> The name of the DNS zone (without a terminating dot). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="zoneName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="zoneName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="zoneName"/> is null. </exception>
         [ForwardsClientCalls]
         public static Response<DnsZoneResource> GetDnsZone(this ResourceGroupResource resourceGroupResource, string zoneName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableDnsResourceGroupResource(resourceGroupResource).GetDnsZone(zoneName, cancellationToken);
+            return resourceGroupResource.GetDnsZones().Get(zoneName, cancellationToken);
         }
 
         /// <summary>
@@ -348,30 +402,15 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsZoneResource"/></description>
-        /// </item>
         /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsZones(int?,CancellationToken)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DnsZoneResource> GetDnsZonesAsync(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsZonesAsync(top, cancellationToken);
         }
 
         /// <summary>
@@ -385,30 +424,15 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DnsZoneResource"/></description>
-        /// </item>
         /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsZones(int?,CancellationToken)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="DnsZoneResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="DnsZoneResource" /> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DnsZoneResource> GetDnsZones(this SubscriptionResource subscriptionResource, int? top = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
-
-            return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsZones(top, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsZones(top, cancellationToken);
         }
 
         /// <summary>
@@ -422,25 +446,17 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
-        /// </item>
         /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent,CancellationToken)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static async Task<Response<DnsResourceReferenceResult>> GetDnsResourceReferencesByTargetResourcesAsync(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return await GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
+            return await GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResourceReferencesByTargetResourcesAsync(content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -454,25 +470,17 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
         /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
-        /// </item>
         /// </list>
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableDnsSubscriptionResource.GetDnsResourceReferencesByTargetResources(DnsResourceReferenceContent,CancellationToken)"/> instead.</description>
-        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="content"> Properties for dns resource reference request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public static Response<DnsResourceReferenceResult> GetDnsResourceReferencesByTargetResources(this SubscriptionResource subscriptionResource, DnsResourceReferenceContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+            Argument.AssertNotNull(content, nameof(content));
 
-            return GetMockableDnsSubscriptionResource(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
+            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetDnsResourceReferencesByTargetResources(content, cancellationToken);
         }
     }
 }
