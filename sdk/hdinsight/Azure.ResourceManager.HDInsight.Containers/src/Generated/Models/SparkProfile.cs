@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
@@ -12,6 +13,38 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
     /// <summary> The spark cluster profile. </summary>
     public partial class SparkProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SparkProfile"/>. </summary>
         public SparkProfile()
         {
@@ -21,11 +54,13 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <param name="defaultStorageUriString"> The default storage URL. </param>
         /// <param name="metastoreSpec"> The metastore specification for Spark cluster. </param>
         /// <param name="userPluginsSpec"> Spark user plugins spec. </param>
-        internal SparkProfile(string defaultStorageUriString, SparkMetastoreSpec metastoreSpec, SparkUserPluginListResult userPluginsSpec)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SparkProfile(string defaultStorageUriString, SparkMetastoreSpec metastoreSpec, SparkUserPluginListResult userPluginsSpec, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DefaultStorageUriString = defaultStorageUriString;
             MetastoreSpec = metastoreSpec;
             UserPluginsSpec = userPluginsSpec;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The default storage URL. </summary>

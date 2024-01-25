@@ -257,9 +257,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             StorageResourceItem resource = containerResource.GetStorageResourceReference("bar");
 
             // Assert
-            StorageResourceProperties properties = await resource.GetPropertiesAsync();
+            StorageResourceItemProperties properties = await resource.GetPropertiesAsync();
             Assert.IsNotNull(properties);
-            Assert.IsNotNull(properties.ETag);
         }
 
         [Test]

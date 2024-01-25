@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="KubernetesClusterVaultTierRestoreCriteria"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="includeClusterScopeResources"> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore from vault. </param>
         /// <param name="includedNamespaces"> Gets or sets the include namespaces property. This property sets the namespaces to be included during restore from vault. </param>
         /// <param name="excludedNamespaces"> Gets or sets the exclude namespaces property. This property sets the namespaces to be excluded during restore from vault. </param>
@@ -42,7 +44,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="restoreHookReferences"> Gets or sets the restore hook references. This property sets the hook reference to be executed during restore from vault. </param>
         /// <param name="stagingResourceGroupId"> Gets or sets the staging RG Id for creating staging disks and snapshots during restore from vault. </param>
         /// <param name="stagingStorageAccountId"> Gets or sets the staging Storage Account Id for creating backup extension object store data during restore from vault. </param>
-        internal KubernetesClusterVaultTierRestoreCriteria(string objectType, bool includeClusterScopeResources, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, PersistentVolumeRestoreMode? persistentVolumeRestoreMode, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy, IDictionary<string, string> namespaceMappings, IList<NamespacedName> restoreHookReferences, ResourceIdentifier stagingResourceGroupId, ResourceIdentifier stagingStorageAccountId) : base(objectType)
+        internal KubernetesClusterVaultTierRestoreCriteria(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool includeClusterScopeResources, IList<string> includedNamespaces, IList<string> excludedNamespaces, IList<string> includedResourceTypes, IList<string> excludedResourceTypes, IList<string> labelSelectors, PersistentVolumeRestoreMode? persistentVolumeRestoreMode, KubernetesClusterRestoreExistingResourcePolicy? conflictPolicy, IDictionary<string, string> namespaceMappings, IList<NamespacedName> restoreHookReferences, ResourceIdentifier stagingResourceGroupId, ResourceIdentifier stagingStorageAccountId) : base(objectType, serializedAdditionalRawData)
         {
             IncludeClusterScopeResources = includeClusterScopeResources;
             IncludedNamespaces = includedNamespaces;
@@ -57,6 +59,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             StagingResourceGroupId = stagingResourceGroupId;
             StagingStorageAccountId = stagingStorageAccountId;
             ObjectType = objectType ?? "KubernetesClusterVaultTierRestoreCriteria";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="KubernetesClusterVaultTierRestoreCriteria"/> for deserialization. </summary>
+        internal KubernetesClusterVaultTierRestoreCriteria()
+        {
         }
 
         /// <summary> Gets or sets the include cluster resources property. This property if enabled will include cluster scope resources during restore from vault. </summary>

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -20,8 +21,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="UpdateAdministrativeStateContent"/>. </summary>
         /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="state"> Administrative state. </param>
-        internal UpdateAdministrativeStateContent(IList<ResourceIdentifier> resourceIds, AdministrativeEnableState? state) : base(resourceIds)
+        internal UpdateAdministrativeStateContent(IList<ResourceIdentifier> resourceIds, IDictionary<string, BinaryData> serializedAdditionalRawData, AdministrativeEnableState? state) : base(resourceIds, serializedAdditionalRawData)
         {
             State = state;
         }
