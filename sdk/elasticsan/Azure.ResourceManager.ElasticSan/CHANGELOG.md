@@ -1,16 +1,19 @@
 # Release History
 
-## 1.0.0-beta.7 (Unreleased)
+## 1.0.0 (2024-01-26)
+
+This is the first stable release of ElasticSan client library.
 
 ### Features Added
 
+- Supported snapshot and CMK for ElasticSan
+- Supported private endpoints for ElasticSan
+- Supported ElasticSan basic operations 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
-### Breaking Changes
-
-### Bugs Fixed
-
 ### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
 
 ## 1.0.0-beta.6 (2023-11-29)
 
