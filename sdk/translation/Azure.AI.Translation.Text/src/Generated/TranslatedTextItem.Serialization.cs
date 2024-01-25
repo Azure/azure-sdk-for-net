@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -12,10 +14,70 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class TranslatedTextItem
+    public partial class TranslatedTextItem : IUtf8JsonSerializable, IJsonModel<TranslatedTextItem>
     {
-        internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslatedTextItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TranslatedTextItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DetectedLanguage))
+            {
+                writer.WritePropertyName("detectedLanguage"u8);
+                writer.WriteObjectValue(DetectedLanguage);
+            }
+            writer.WritePropertyName("translations"u8);
+            writer.WriteStartArray();
+            foreach (var item in Translations)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(SourceText))
+            {
+                writer.WritePropertyName("sourceText"u8);
+                writer.WriteObjectValue(SourceText);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TranslatedTextItem IJsonModel<TranslatedTextItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTranslatedTextItem(document.RootElement, options);
+        }
+
+        internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +85,8 @@ namespace Azure.AI.Translation.Text
             Optional<DetectedLanguage> detectedLanguage = default;
             IReadOnlyList<Translation> translations = default;
             Optional<SourceText> sourceText = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("detectedLanguage"u8))
@@ -53,9 +117,45 @@ namespace Azure.AI.Translation.Text
                     sourceText = SourceText.DeserializeSourceText(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new TranslatedTextItem(detectedLanguage.Value, translations, sourceText.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TranslatedTextItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        TranslatedTextItem IPersistableModel<TranslatedTextItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTranslatedTextItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TranslatedTextItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -63,6 +163,14 @@ namespace Azure.AI.Translation.Text
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeTranslatedTextItem(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }
