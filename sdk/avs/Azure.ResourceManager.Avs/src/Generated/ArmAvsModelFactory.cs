@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using Azure.Core;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsSubscriptionTrialAvailabilityResult"/> instance for mocking. </returns>
         public static AvsSubscriptionTrialAvailabilityResult AvsSubscriptionTrialAvailabilityResult(AvsSubscriptionTrialStatus? status = null, int? availableHosts = null)
         {
-            return new AvsSubscriptionTrialAvailabilityResult(status, availableHosts);
+            return new AvsSubscriptionTrialAvailabilityResult(status, availableHosts, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsSubscriptionQuotaAvailabilityResult"/>. </summary>
@@ -35,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hostsRemaining ??= new Dictionary<string, int>();
 
-            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining, quotaEnabled);
+            return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining, quotaEnabled, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudData"/>. </summary>
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Models
             extendedNetworkBlocks ??= new List<string>();
             externalCloudLinks ??= new List<ResourceIdentifier>();
 
-            return new AvsPrivateCloudData(id, name, resourceType, systemData, tags, location, skuName != null ? new AvsSku(skuName) : null, identity, managementCluster, internet, identitySources?.ToList(), availability, encryption, extendedNetworkBlocks?.ToList(), provisioningState, circuit, endpoints, networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork, vCenterPassword, nsxtPassword, vCenterCertificateThumbprint, nsxtCertificateThumbprint, externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised);
+            return new AvsPrivateCloudData(id, name, resourceType, systemData, tags, location, skuName != null ? new AvsSku(skuName, serializedAdditionalRawData: null) : null, identity, managementCluster, internet, identitySources?.ToList(), availability, encryption, extendedNetworkBlocks?.ToList(), provisioningState, circuit, endpoints, networkBlock, managementNetwork, provisioningNetwork, vMotionNetwork, vCenterPassword, nsxtPassword, vCenterCertificateThumbprint, nsxtCertificateThumbprint, externalCloudLinks?.ToList(), secondaryCircuit, nsxPublicIPQuotaRaised, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExpressRouteCircuit"/>. </summary>
@@ -86,7 +87,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.ExpressRouteCircuit"/> instance for mocking. </returns>
         public static ExpressRouteCircuit ExpressRouteCircuit(string primarySubnet = null, string secondarySubnet = null, ResourceIdentifier expressRouteId = null, ResourceIdentifier expressRoutePrivatePeeringId = null)
         {
-            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId);
+            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsPrivateCloudEndpoints"/>. </summary>
@@ -96,7 +97,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsPrivateCloudEndpoints"/> instance for mocking. </returns>
         public static AvsPrivateCloudEndpoints AvsPrivateCloudEndpoints(string nsxtManager = null, string vcsa = null, string hcxCloudManager = null)
         {
-            return new AvsPrivateCloudEndpoints(nsxtManager, vcsa, hcxCloudManager);
+            return new AvsPrivateCloudEndpoints(nsxtManager, vcsa, hcxCloudManager, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsManagementCluster"/>. </summary>
@@ -109,7 +110,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hosts ??= new List<string>();
 
-            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts?.ToList());
+            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CommonClusterProperties"/>. </summary>
@@ -122,7 +123,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hosts ??= new List<string>();
 
-            return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts?.ToList());
+            return new CommonClusterProperties(clusterSize, provisioningState, clusterId, hosts?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsEncryptionKeyVaultProperties"/>. </summary>
@@ -135,7 +136,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsEncryptionKeyVaultProperties"/> instance for mocking. </returns>
         public static AvsEncryptionKeyVaultProperties AvsEncryptionKeyVaultProperties(string keyName = null, string keyVersion = null, string autoDetectedKeyVersion = null, Uri keyVaultUri = null, AvsEncryptionKeyStatus? keyState = null, AvsEncryptionVersionType? versionType = null)
         {
-            return new AvsEncryptionKeyVaultProperties(keyName, keyVersion, autoDetectedKeyVersion, keyVaultUri, keyState, versionType);
+            return new AvsEncryptionKeyVaultProperties(keyName, keyVersion, autoDetectedKeyVersion, keyVaultUri, keyState, versionType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
@@ -153,7 +154,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hosts ??= new List<string>();
 
-            return new AvsPrivateCloudClusterData(id, name, resourceType, systemData, skuName != null ? new AvsSku(skuName) : null, clusterSize, provisioningState, clusterId, hosts?.ToList());
+            return new AvsPrivateCloudClusterData(id, name, resourceType, systemData, skuName != null ? new AvsSku(skuName, serializedAdditionalRawData: null) : null, clusterSize, provisioningState, clusterId, hosts?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsClusterZone"/>. </summary>
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             hosts ??= new List<string>();
 
-            return new AvsClusterZone(hosts?.ToList(), zone);
+            return new AvsClusterZone(hosts?.ToList(), zone, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudDatastoreData"/>. </summary>
@@ -179,7 +180,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.AvsPrivateCloudDatastoreData"/> instance for mocking. </returns>
         public static AvsPrivateCloudDatastoreData AvsPrivateCloudDatastoreData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudDatastoreProvisioningState? provisioningState = null, ResourceIdentifier netAppVolumeId = null, DiskPoolVolume diskPoolVolume = null, DatastoreStatus? status = null)
         {
-            return new AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId != null ? ResourceManagerModelFactory.WritableSubResource(netAppVolumeId) : null, diskPoolVolume, status);
+            return new AvsPrivateCloudDatastoreData(id, name, resourceType, systemData, provisioningState, netAppVolumeId != null ? ResourceManagerModelFactory.WritableSubResource(netAppVolumeId) : null, diskPoolVolume, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskPoolVolume"/>. </summary>
@@ -190,7 +191,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.DiskPoolVolume"/> instance for mocking. </returns>
         public static DiskPoolVolume DiskPoolVolume(ResourceIdentifier targetId = null, string lunName = null, LunMountMode? mountOption = null, string path = null)
         {
-            return new DiskPoolVolume(targetId, lunName, mountOption, path);
+            return new DiskPoolVolume(targetId, lunName, mountOption, path, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AdminCredentials"/>. </summary>
@@ -201,7 +202,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AdminCredentials"/> instance for mocking. </returns>
         public static AdminCredentials AdminCredentials(string nsxtUsername = null, string nsxtPassword = null, string vCenterUsername = null, string vCenterPassword = null)
         {
-            return new AdminCredentials(nsxtUsername, nsxtPassword, vCenterUsername, vCenterPassword);
+            return new AdminCredentials(nsxtUsername, nsxtPassword, vCenterUsername, vCenterPassword, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.HcxEnterpriseSiteData"/>. </summary>
@@ -214,7 +215,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.HcxEnterpriseSiteData"/> instance for mocking. </returns>
         public static HcxEnterpriseSiteData HcxEnterpriseSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string activationKey = null, HcxEnterpriseSiteStatus? status = null)
         {
-            return new HcxEnterpriseSiteData(id, name, resourceType, systemData, activationKey, status);
+            return new HcxEnterpriseSiteData(id, name, resourceType, systemData, activationKey, status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ExpressRouteAuthorizationData"/>. </summary>
@@ -229,7 +230,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.ExpressRouteAuthorizationData"/> instance for mocking. </returns>
         public static ExpressRouteAuthorizationData ExpressRouteAuthorizationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ExpressRouteAuthorizationProvisioningState? provisioningState = null, ResourceIdentifier expressRouteAuthorizationId = null, string expressRouteAuthorizationKey = null, ResourceIdentifier expressRouteId = null)
         {
-            return new ExpressRouteAuthorizationData(id, name, resourceType, systemData, provisioningState, expressRouteAuthorizationId, expressRouteAuthorizationKey, expressRouteId);
+            return new ExpressRouteAuthorizationData(id, name, resourceType, systemData, provisioningState, expressRouteAuthorizationId, expressRouteAuthorizationKey, expressRouteId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.GlobalReachConnectionData"/>. </summary>
@@ -246,7 +247,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.GlobalReachConnectionData"/> instance for mocking. </returns>
         public static GlobalReachConnectionData GlobalReachConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GlobalReachConnectionProvisioningState? provisioningState = null, string addressPrefix = null, string authorizationKey = null, GlobalReachConnectionStatus? circuitConnectionStatus = null, ResourceIdentifier peerExpressRouteCircuit = null, ResourceIdentifier expressRouteId = null)
         {
-            return new GlobalReachConnectionData(id, name, resourceType, systemData, provisioningState, addressPrefix, authorizationKey, circuitConnectionStatus, peerExpressRouteCircuit, expressRouteId);
+            return new GlobalReachConnectionData(id, name, resourceType, systemData, provisioningState, addressPrefix, authorizationKey, circuitConnectionStatus, peerExpressRouteCircuit, expressRouteId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkData"/>. </summary>
@@ -257,7 +258,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.WorkloadNetworkData"/> instance for mocking. </returns>
         public static WorkloadNetworkData WorkloadNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new WorkloadNetworkData(id, name, resourceType, systemData);
+            return new WorkloadNetworkData(id, name, resourceType, systemData, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkSegmentData"/>. </summary>
@@ -277,7 +278,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             portVif ??= new List<WorkloadNetworkSegmentPortVif>();
 
-            return new WorkloadNetworkSegmentData(id, name, resourceType, systemData, displayName, connectedGateway, subnet, portVif?.ToList(), status, provisioningState, revision);
+            return new WorkloadNetworkSegmentData(id, name, resourceType, systemData, displayName, connectedGateway, subnet, portVif?.ToList(), status, provisioningState, revision, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkSegmentPortVif"/>. </summary>
@@ -285,7 +286,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.WorkloadNetworkSegmentPortVif"/> instance for mocking. </returns>
         public static WorkloadNetworkSegmentPortVif WorkloadNetworkSegmentPortVif(string portName = null)
         {
-            return new WorkloadNetworkSegmentPortVif(portName);
+            return new WorkloadNetworkSegmentPortVif(portName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkDhcpData"/>. </summary>
@@ -301,7 +302,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.WorkloadNetworkDhcpData"/> instance for mocking. </returns>
         public static WorkloadNetworkDhcpData WorkloadNetworkDhcpData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, WorkloadNetworkDhcpEntity properties = null)
         {
-            return new WorkloadNetworkDhcpData(id, name, resourceType, systemData, properties);
+            return new WorkloadNetworkDhcpData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDhcpEntity"/>. </summary>
@@ -315,7 +316,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             segments ??= new List<string>();
 
-            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName, segments?.ToList(), provisioningState, revision);
+            return new UnknownWorkloadNetworkDhcpEntity(dhcpType, displayName, segments?.ToList(), provisioningState, revision, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkGatewayData"/>. </summary>
@@ -328,7 +329,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.WorkloadNetworkGatewayData"/> instance for mocking. </returns>
         public static WorkloadNetworkGatewayData WorkloadNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string path = null)
         {
-            return new WorkloadNetworkGatewayData(id, name, resourceType, systemData, displayName, path);
+            return new WorkloadNetworkGatewayData(id, name, resourceType, systemData, displayName, path, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkPortMirroringProfileData"/>. </summary>
@@ -346,7 +347,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.WorkloadNetworkPortMirroringProfileData"/> instance for mocking. </returns>
         public static WorkloadNetworkPortMirroringProfileData WorkloadNetworkPortMirroringProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, PortMirroringProfileDirection? direction = null, string source = null, string destination = null, PortMirroringProfileStatus? status = null, WorkloadNetworkPortMirroringProfileProvisioningState? provisioningState = null, long? revision = null)
         {
-            return new WorkloadNetworkPortMirroringProfileData(id, name, resourceType, systemData, displayName, direction, source, destination, status, provisioningState, revision);
+            return new WorkloadNetworkPortMirroringProfileData(id, name, resourceType, systemData, displayName, direction, source, destination, status, provisioningState, revision, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVmGroupData"/>. </summary>
@@ -364,7 +365,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             members ??= new List<string>();
 
-            return new WorkloadNetworkVmGroupData(id, name, resourceType, systemData, displayName, members?.ToList(), status, provisioningState, revision);
+            return new WorkloadNetworkVmGroupData(id, name, resourceType, systemData, displayName, members?.ToList(), status, provisioningState, revision, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkVirtualMachineData"/>. </summary>
@@ -377,7 +378,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.WorkloadNetworkVirtualMachineData"/> instance for mocking. </returns>
         public static WorkloadNetworkVirtualMachineData WorkloadNetworkVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, WorkloadNetworkVmType? vmType = null)
         {
-            return new WorkloadNetworkVirtualMachineData(id, name, resourceType, systemData, displayName, vmType);
+            return new WorkloadNetworkVirtualMachineData(id, name, resourceType, systemData, displayName, vmType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkDnsServiceData"/>. </summary>
@@ -398,7 +399,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             fqdnZones ??= new List<string>();
 
-            return new WorkloadNetworkDnsServiceData(id, name, resourceType, systemData, displayName, dnsServiceIP, defaultDnsZone, fqdnZones?.ToList(), logLevel, status, provisioningState, revision);
+            return new WorkloadNetworkDnsServiceData(id, name, resourceType, systemData, displayName, dnsServiceIP, defaultDnsZone, fqdnZones?.ToList(), logLevel, status, provisioningState, revision, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkDnsZoneData"/>. </summary>
@@ -419,7 +420,7 @@ namespace Azure.ResourceManager.Avs.Models
             domain ??= new List<string>();
             dnsServerIPs ??= new List<IPAddress>();
 
-            return new WorkloadNetworkDnsZoneData(id, name, resourceType, systemData, displayName, domain?.ToList(), dnsServerIPs?.ToList(), sourceIP, dnsServices, provisioningState, revision);
+            return new WorkloadNetworkDnsZoneData(id, name, resourceType, systemData, displayName, domain?.ToList(), dnsServerIPs?.ToList(), sourceIP, dnsServices, provisioningState, revision, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.WorkloadNetworkPublicIPData"/>. </summary>
@@ -434,7 +435,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.WorkloadNetworkPublicIPData"/> instance for mocking. </returns>
         public static WorkloadNetworkPublicIPData WorkloadNetworkPublicIPData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, long? numberOfPublicIPs = null, string publicIPBlock = null, WorkloadNetworkPublicIPProvisioningState? provisioningState = null)
         {
-            return new WorkloadNetworkPublicIPData(id, name, resourceType, systemData, displayName, numberOfPublicIPs, publicIPBlock, provisioningState);
+            return new WorkloadNetworkPublicIPData(id, name, resourceType, systemData, displayName, numberOfPublicIPs, publicIPBlock, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsCloudLinkData"/>. </summary>
@@ -447,7 +448,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.AvsCloudLinkData"/> instance for mocking. </returns>
         public static AvsCloudLinkData AvsCloudLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsCloudLinkStatus? status = null, ResourceIdentifier linkedCloud = null)
         {
-            return new AvsCloudLinkData(id, name, resourceType, systemData, status, linkedCloud);
+            return new AvsCloudLinkData(id, name, resourceType, systemData, status, linkedCloud, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudAddonData"/>. </summary>
@@ -463,7 +464,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.AvsPrivateCloudAddonData"/> instance for mocking. </returns>
         public static AvsPrivateCloudAddonData AvsPrivateCloudAddonData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AvsPrivateCloudAddonProperties properties = null)
         {
-            return new AvsPrivateCloudAddonData(id, name, resourceType, systemData, properties);
+            return new AvsPrivateCloudAddonData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvsPrivateCloudAddonProperties"/>. </summary>
@@ -472,7 +473,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AvsPrivateCloudAddonProperties"/> instance for mocking. </returns>
         public static AvsPrivateCloudAddonProperties AvsPrivateCloudAddonProperties(string addonType = "Unknown", AddonProvisioningState? provisioningState = null)
         {
-            return new UnknownAddonProperties(addonType, provisioningState);
+            return new UnknownAddonProperties(addonType, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/>. </summary>
@@ -487,7 +488,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.AvsPrivateCloudClusterVirtualMachineData"/> instance for mocking. </returns>
         public static AvsPrivateCloudClusterVirtualMachineData AvsPrivateCloudClusterVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string moRefId = null, string folderPath = null, VirtualMachineRestrictMovementState? restrictMovement = null)
         {
-            return new AvsPrivateCloudClusterVirtualMachineData(id, name, resourceType, systemData, displayName, moRefId, folderPath, restrictMovement);
+            return new AvsPrivateCloudClusterVirtualMachineData(id, name, resourceType, systemData, displayName, moRefId, folderPath, restrictMovement, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.PlacementPolicyData"/>. </summary>
@@ -503,7 +504,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.PlacementPolicyData"/> instance for mocking. </returns>
         public static PlacementPolicyData PlacementPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlacementPolicyProperties properties = null)
         {
-            return new PlacementPolicyData(id, name, resourceType, systemData, properties);
+            return new PlacementPolicyData(id, name, resourceType, systemData, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PlacementPolicyProperties"/>. </summary>
@@ -514,7 +515,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.PlacementPolicyProperties"/> instance for mocking. </returns>
         public static PlacementPolicyProperties PlacementPolicyProperties(string policyType = "Unknown", PlacementPolicyState? state = null, string displayName = null, PlacementPolicyProvisioningState? provisioningState = null)
         {
-            return new UnknownPlacementPolicyProperties(policyType, state, displayName, provisioningState);
+            return new UnknownPlacementPolicyProperties(policyType, state, displayName, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptPackageData"/>. </summary>
@@ -529,7 +530,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Avs.ScriptPackageData"/> instance for mocking. </returns>
         public static ScriptPackageData ScriptPackageData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string version = null, string company = null, Uri uri = null)
         {
-            return new ScriptPackageData(id, name, resourceType, systemData, description, version, company, uri);
+            return new ScriptPackageData(id, name, resourceType, systemData, description, version, company, uri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptCmdletData"/>. </summary>
@@ -545,7 +546,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             parameters ??= new List<ScriptParameter>();
 
-            return new ScriptCmdletData(id, name, resourceType, systemData, description, timeout, parameters?.ToList());
+            return new ScriptCmdletData(id, name, resourceType, systemData, description, timeout, parameters?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScriptParameter"/>. </summary>
@@ -557,7 +558,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.ScriptParameter"/> instance for mocking. </returns>
         public static ScriptParameter ScriptParameter(ScriptParameterType? parameterType = null, string name = null, string description = null, ParameterVisibilityStatus? visibility = null, ParameterOptionalityStatus? optional = null)
         {
-            return new ScriptParameter(parameterType, name, description, visibility, optional);
+            return new ScriptParameter(parameterType, name, description, visibility, optional, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Avs.ScriptExecutionData"/>. </summary>
@@ -598,7 +599,7 @@ namespace Azure.ResourceManager.Avs.Models
             warnings ??= new List<string>();
             errors ??= new List<string>();
 
-            return new ScriptExecutionData(id, name, resourceType, systemData, scriptCmdletId, parameters?.ToList(), hiddenParameters?.ToList(), failureReason, timeout, retention, submittedOn, startedOn, finishedOn, provisioningState, output?.ToList(), namedOutputs, information?.ToList(), warnings?.ToList(), errors?.ToList());
+            return new ScriptExecutionData(id, name, resourceType, systemData, scriptCmdletId, parameters?.ToList(), hiddenParameters?.ToList(), failureReason, timeout, retention, submittedOn, startedOn, finishedOn, provisioningState, output?.ToList(), namedOutputs, information?.ToList(), warnings?.ToList(), errors?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonSrmProperties"/>. </summary>
@@ -607,7 +608,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonSrmProperties"/> instance for mocking. </returns>
         public static AddonSrmProperties AddonSrmProperties(AddonProvisioningState? provisioningState = null, string licenseKey = null)
         {
-            return new AddonSrmProperties(AddonType.SRM, provisioningState, licenseKey);
+            return new AddonSrmProperties(AddonType.SRM, provisioningState, serializedAdditionalRawData: null, licenseKey);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonVrProperties"/>. </summary>
@@ -616,7 +617,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonVrProperties"/> instance for mocking. </returns>
         public static AddonVrProperties AddonVrProperties(AddonProvisioningState? provisioningState = null, int vrsCount = default)
         {
-            return new AddonVrProperties(AddonType.VR, provisioningState, vrsCount);
+            return new AddonVrProperties(AddonType.VR, provisioningState, serializedAdditionalRawData: null, vrsCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonHcxProperties"/>. </summary>
@@ -625,7 +626,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonHcxProperties"/> instance for mocking. </returns>
         public static AddonHcxProperties AddonHcxProperties(AddonProvisioningState? provisioningState = null, string offer = null)
         {
-            return new AddonHcxProperties(AddonType.HCX, provisioningState, offer);
+            return new AddonHcxProperties(AddonType.HCX, provisioningState, serializedAdditionalRawData: null, offer);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddonArcProperties"/>. </summary>
@@ -634,7 +635,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <returns> A new <see cref="Models.AddonArcProperties"/> instance for mocking. </returns>
         public static AddonArcProperties AddonArcProperties(AddonProvisioningState? provisioningState = null, string vCenter = null)
         {
-            return new AddonArcProperties(AddonType.Arc, provisioningState, vCenter);
+            return new AddonArcProperties(AddonType.Arc, provisioningState, serializedAdditionalRawData: null, vCenter);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDhcpServer"/>. </summary>
@@ -649,7 +650,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             segments ??= new List<string>();
 
-            return new WorkloadNetworkDhcpServer(DhcpTypeEnum.Server, displayName, segments?.ToList(), provisioningState, revision, serverAddress, leaseTime);
+            return new WorkloadNetworkDhcpServer(DhcpTypeEnum.Server, displayName, segments?.ToList(), provisioningState, revision, serializedAdditionalRawData: null, serverAddress, leaseTime);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WorkloadNetworkDhcpRelay"/>. </summary>
@@ -664,7 +665,7 @@ namespace Azure.ResourceManager.Avs.Models
             segments ??= new List<string>();
             serverAddresses ??= new List<string>();
 
-            return new WorkloadNetworkDhcpRelay(DhcpTypeEnum.Relay, displayName, segments?.ToList(), provisioningState, revision, serverAddresses?.ToList());
+            return new WorkloadNetworkDhcpRelay(DhcpTypeEnum.Relay, displayName, segments?.ToList(), provisioningState, revision, serializedAdditionalRawData: null, serverAddresses?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmPlacementPolicyProperties"/>. </summary>
@@ -678,7 +679,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             vmMembers ??= new List<ResourceIdentifier>();
 
-            return new VmPlacementPolicyProperties(PlacementPolicyType.VmVm, state, displayName, provisioningState, vmMembers?.ToList(), affinityType);
+            return new VmPlacementPolicyProperties(PlacementPolicyType.VmVm, state, displayName, provisioningState, serializedAdditionalRawData: null, vmMembers?.ToList(), affinityType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VmHostPlacementPolicyProperties"/>. </summary>
@@ -696,7 +697,7 @@ namespace Azure.ResourceManager.Avs.Models
             vmMembers ??= new List<ResourceIdentifier>();
             hostMembers ??= new List<string>();
 
-            return new VmHostPlacementPolicyProperties(PlacementPolicyType.VmHost, state, displayName, provisioningState, vmMembers?.ToList(), hostMembers?.ToList(), affinityType, affinityStrength, azureHybridBenefitType);
+            return new VmHostPlacementPolicyProperties(PlacementPolicyType.VmHost, state, displayName, provisioningState, serializedAdditionalRawData: null, vmMembers?.ToList(), hostMembers?.ToList(), affinityType, affinityStrength, azureHybridBenefitType);
         }
     }
 }

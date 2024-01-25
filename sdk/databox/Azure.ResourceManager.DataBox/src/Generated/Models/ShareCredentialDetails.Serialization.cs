@@ -5,16 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class ShareCredentialDetails
+    public partial class ShareCredentialDetails : IUtf8JsonSerializable, IJsonModel<ShareCredentialDetails>
     {
-        internal static ShareCredentialDetails DeserializeShareCredentialDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ShareCredentialDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ShareCredentialDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ShareName))
+            {
+                writer.WritePropertyName("shareName"u8);
+                writer.WriteStringValue(ShareName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ShareType))
+            {
+                writer.WritePropertyName("shareType"u8);
+                writer.WriteStringValue(ShareType.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UserName))
+            {
+                writer.WritePropertyName("userName"u8);
+                writer.WriteStringValue(UserName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteStringValue(Password);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedAccessProtocols))
+            {
+                writer.WritePropertyName("supportedAccessProtocols"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedAccessProtocols)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ShareCredentialDetails IJsonModel<ShareCredentialDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeShareCredentialDetails(document.RootElement, options);
+        }
+
+        internal static ShareCredentialDetails DeserializeShareCredentialDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +99,8 @@ namespace Azure.ResourceManager.DataBox.Models
             Optional<string> userName = default;
             Optional<string> password = default;
             Optional<IReadOnlyList<DataBoxAccessProtocol>> supportedAccessProtocols = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("shareName"u8))
@@ -64,8 +141,44 @@ namespace Azure.ResourceManager.DataBox.Models
                     supportedAccessProtocols = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ShareCredentialDetails(shareName.Value, Optional.ToNullable(shareType), userName.Value, password.Value, Optional.ToList(supportedAccessProtocols));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ShareCredentialDetails(shareName.Value, Optional.ToNullable(shareType), userName.Value, password.Value, Optional.ToList(supportedAccessProtocols), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ShareCredentialDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ShareCredentialDetails IPersistableModel<ShareCredentialDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ShareCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeShareCredentialDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ShareCredentialDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

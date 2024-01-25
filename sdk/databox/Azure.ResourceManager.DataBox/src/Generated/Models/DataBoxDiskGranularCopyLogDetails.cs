@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -20,11 +22,12 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <summary> Initializes a new instance of <see cref="DataBoxDiskGranularCopyLogDetails"/>. </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="accountId"> Account id. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
-        internal DataBoxDiskGranularCopyLogDetails(DataBoxOrderType copyLogDetailsType, string serialNumber, ResourceIdentifier accountId, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType)
+        internal DataBoxDiskGranularCopyLogDetails(DataBoxOrderType copyLogDetailsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string serialNumber, ResourceIdentifier accountId, string errorLogLink, string verboseLogLink) : base(copyLogDetailsType, serializedAdditionalRawData)
         {
             SerialNumber = serialNumber;
             AccountId = accountId;
