@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections.Immutable;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 
@@ -50,6 +49,7 @@ public class PipelineResponseTests
         ClientResult<bool?> result = ClientResult.FromOptionalValue<bool?>(true, response);
 
         Assert.IsTrue(result.Value);
+        Assert.IsTrue(result.Value.HasValue);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
 
         response = new MockPipelineResponse(400);
@@ -62,6 +62,7 @@ public class PipelineResponseTests
         result = ClientResult.FromOptionalValue<bool?>(null, response);
 
         Assert.IsNull(result.Value);
+        Assert.IsFalse(result.Value.HasValue);
         Assert.AreEqual(response.Status, result.GetRawResponse().Status);
     }
 
@@ -174,11 +175,13 @@ public class PipelineResponseTests
         ClientResult<int?> result = client.GetOptionalCount(1, hasValue: true);
 
         Assert.IsNotNull(result.Value);
+        Assert.IsTrue(result.Value.HasValue);
         Assert.AreEqual(1, result.Value);
         Assert.AreEqual(200, result.GetRawResponse().Status);
 
         result = client.GetOptionalCount(1, hasValue: false);
         Assert.IsNull(result.Value);
+        Assert.IsFalse(result.Value.HasValue);
         Assert.AreEqual(404, result.GetRawResponse().Status);
     }
 

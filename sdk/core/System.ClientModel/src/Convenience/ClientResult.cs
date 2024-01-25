@@ -42,9 +42,7 @@ public class ClientResult
     }
 
     public static ClientResult<T?> FromOptionalValue<T>(T? value, PipelineResponse response)
-    {
-        return new ClientResult<T?>(value, response);
-    }
+        => new ClientResult<T?>(value, response);
 
     #endregion
 }

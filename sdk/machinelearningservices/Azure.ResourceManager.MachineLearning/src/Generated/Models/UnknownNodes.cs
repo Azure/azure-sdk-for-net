@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownNodes. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNodes"/>. </summary>
         /// <param name="nodesValueType"> [Required] Type of the Nodes value. </param>
-        internal UnknownNodes(NodesValueType nodesValueType) : base(nodesValueType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNodes(NodesValueType nodesValueType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(nodesValueType, serializedAdditionalRawData)
         {
             NodesValueType = nodesValueType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownNodes"/> for deserialization. </summary>
+        internal UnknownNodes()
+        {
         }
     }
 }

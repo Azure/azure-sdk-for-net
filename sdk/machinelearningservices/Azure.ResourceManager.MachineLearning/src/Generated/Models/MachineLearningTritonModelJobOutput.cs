@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -21,12 +22,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningTritonModelJobOutput"/>. </summary>
         /// <param name="description"> Description for the output. </param>
         /// <param name="jobOutputType"> [Required] Specifies the type of job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="assetName"> Output Asset Name. </param>
         /// <param name="assetVersion"> Output Asset Version. </param>
         /// <param name="autoDeleteSetting"> Auto delete setting of output data asset. </param>
         /// <param name="mode"> Output Asset Delivery Mode. </param>
         /// <param name="uri"> Output Asset URI. </param>
-        internal MachineLearningTritonModelJobOutput(string description, JobOutputType jobOutputType, string assetName, string assetVersion, AutoDeleteSetting autoDeleteSetting, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType)
+        internal MachineLearningTritonModelJobOutput(string description, JobOutputType jobOutputType, IDictionary<string, BinaryData> serializedAdditionalRawData, string assetName, string assetVersion, AutoDeleteSetting autoDeleteSetting, MachineLearningOutputDeliveryMode? mode, Uri uri) : base(description, jobOutputType, serializedAdditionalRawData)
         {
             AssetName = assetName;
             AssetVersion = assetVersion;
