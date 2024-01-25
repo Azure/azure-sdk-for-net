@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.Dns.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="DnssecConfigResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnssecConfigResource.CreateResourceIdentifier" /> to create a <see cref="DnssecConfigResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnssecConfigResource"/> object. </returns>
+        public virtual DnssecConfigResource GetDnssecConfigResource(ResourceIdentifier id)
+        {
+            DnssecConfigResource.ValidateResourceId(id);
+            return new DnssecConfigResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="DnsARecordResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="DnsARecordResource.CreateResourceIdentifier" /> to create a <see cref="DnsARecordResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -154,6 +166,42 @@ namespace Azure.ResourceManager.Dns.Mocking
         {
             DnsTxtRecordResource.ValidateResourceId(id);
             return new DnsTxtRecordResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsZoneTLSAResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsZoneTLSAResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneTLSAResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsZoneTLSAResource"/> object. </returns>
+        public virtual DnsZoneTLSAResource GetDnsZoneTLSAResource(ResourceIdentifier id)
+        {
+            DnsZoneTLSAResource.ValidateResourceId(id);
+            return new DnsZoneTLSAResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsZoneDResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsZoneDResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneDResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsZoneDResource"/> object. </returns>
+        public virtual DnsZoneDResource GetDnsZoneDResource(ResourceIdentifier id)
+        {
+            DnsZoneDResource.ValidateResourceId(id);
+            return new DnsZoneDResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="DnsZoneNAPTRResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="DnsZoneNAPTRResource.CreateResourceIdentifier" /> to create a <see cref="DnsZoneNAPTRResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="DnsZoneNAPTRResource"/> object. </returns>
+        public virtual DnsZoneNAPTRResource GetDnsZoneNAPTRResource(ResourceIdentifier id)
+        {
+            DnsZoneNAPTRResource.ValidateResourceId(id);
+            return new DnsZoneNAPTRResource(Client, id);
         }
 
         /// <summary>

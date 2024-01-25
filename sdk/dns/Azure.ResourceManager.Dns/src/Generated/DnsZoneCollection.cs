@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

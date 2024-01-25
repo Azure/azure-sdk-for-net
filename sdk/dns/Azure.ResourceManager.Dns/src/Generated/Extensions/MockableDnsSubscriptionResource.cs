@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2018-05-01</description>
+        /// <description>2023-07-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
