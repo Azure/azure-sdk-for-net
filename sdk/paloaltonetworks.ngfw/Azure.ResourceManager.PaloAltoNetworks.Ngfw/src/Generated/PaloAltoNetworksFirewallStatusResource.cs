@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         private readonly FirewallStatusRestOperations _paloAltoNetworksFirewallStatusFirewallStatusRestClient;
         private readonly PaloAltoNetworksFirewallStatusData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls/statuses";
+
         /// <summary> Initializes a new instance of the <see cref="PaloAltoNetworksFirewallStatusResource"/> class for mocking. </summary>
         protected PaloAltoNetworksFirewallStatusResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls/statuses";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <term>Operation Id</term>
         /// <description>FirewallStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallStatusResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PaloAltoNetworksFirewallStatusResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

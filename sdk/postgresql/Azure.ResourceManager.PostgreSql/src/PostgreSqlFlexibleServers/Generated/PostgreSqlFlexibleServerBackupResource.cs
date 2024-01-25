@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         private readonly BackupsRestOperations _postgreSqlFlexibleServerBackupBackupsRestClient;
         private readonly PostgreSqlFlexibleServerBackupData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/backups";
+
         /// <summary> Initializes a new instance of the <see cref="PostgreSqlFlexibleServerBackupResource"/> class for mocking. </summary>
         protected PostgreSqlFlexibleServerBackupResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforPostgreSQL/flexibleServers/backups";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Backups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Backups_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PostgreSqlFlexibleServerBackupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

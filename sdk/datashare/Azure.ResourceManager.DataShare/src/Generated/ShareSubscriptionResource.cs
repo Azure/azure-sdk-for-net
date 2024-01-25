@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.DataShare
         private readonly ConsumerSourceDataSetsRestOperations _consumerSourceDataSetsRestClient;
         private readonly ShareSubscriptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions";
+
         /// <summary> Initializes a new instance of the <see cref="ShareSubscriptionResource"/> class for mocking. </summary>
         protected ShareSubscriptionResource()
         {
@@ -71,9 +74,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/accounts/shareSubscriptions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -114,6 +114,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="dataSetMappingName"> The name of the dataSetMapping. </param>
@@ -136,6 +144,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataSetMappings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareDataSetMappingResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,6 +183,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
@@ -190,6 +214,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>Triggers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareTriggerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="triggerName"> The name of the trigger. </param>
@@ -212,6 +244,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -245,6 +285,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -276,6 +324,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -311,6 +367,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -344,6 +408,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -383,6 +455,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -420,6 +500,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_CancelSynchronization</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,6 +547,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_CancelSynchronization</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -497,6 +593,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_ListSourceShareSynchronizationSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
@@ -506,7 +610,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting(e), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -520,6 +624,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_ListSourceShareSynchronizationSettings</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
@@ -529,7 +641,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSourceShareSynchronizationSettingsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SourceShareSynchronizationSetting.DeserializeSourceShareSynchronizationSetting(e), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSourceShareSynchronizationSettings", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -542,6 +654,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_ListSynchronizationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -558,7 +678,7 @@ namespace Azure.ResourceManager.DataShare
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SynchronizationDetails.DeserializeSynchronizationDetails(e), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -571,6 +691,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_ListSynchronizationDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,7 +715,7 @@ namespace Azure.ResourceManager.DataShare
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationDetailsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, shareSubscriptionSynchronization, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SynchronizationDetails.DeserializeSynchronizationDetails, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SynchronizationDetails.DeserializeSynchronizationDetails(e), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -600,6 +728,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_ListSynchronizations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -612,7 +748,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization(e), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -626,6 +762,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_ListSynchronizations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
@@ -637,7 +781,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _shareSubscriptionRestClient.CreateListSynchronizationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _shareSubscriptionRestClient.CreateListSynchronizationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken, filter, orderby);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization, _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ShareSubscriptionSynchronization.DeserializeShareSubscriptionSynchronization(e), _shareSubscriptionClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetSynchronizations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -650,6 +794,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Synchronize</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,6 +841,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ShareSubscriptions_Synchronize</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ShareSubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -727,6 +887,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerSourceDataSets_ListByShareSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
@@ -736,7 +900,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumerSourceDataSet.DeserializeConsumerSourceDataSet(e), _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -750,6 +914,10 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerSourceDataSets_ListByShareSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> Continuation token. </param>
@@ -759,7 +927,7 @@ namespace Azure.ResourceManager.DataShare
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _consumerSourceDataSetsRestClient.CreateListByShareSubscriptionNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumerSourceDataSet.DeserializeConsumerSourceDataSet, _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumerSourceDataSet.DeserializeConsumerSourceDataSet(e), _consumerSourceDataSetsClientDiagnostics, Pipeline, "ShareSubscriptionResource.GetConsumerSourceDataSets", "value", "nextLink", cancellationToken);
         }
     }
 }

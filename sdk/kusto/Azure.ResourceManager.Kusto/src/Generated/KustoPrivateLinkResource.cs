@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Kusto
         private readonly PrivateLinkResourcesRestOperations _kustoPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly KustoPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="KustoPrivateLinkResource"/> class for mocking. </summary>
         protected KustoPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Kusto
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Kusto/clusters/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Kusto
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.Kusto
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KustoPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

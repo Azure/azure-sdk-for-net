@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2024-01-15)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-11' to 'package-2024-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/8e674dd2a88ae73868c6fa7593a0ba4371e45991/specification/hybridaks/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+## 1.0.0-beta.4 (2024-01-03)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2022-09' to 'package-preview-2023-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/21467ecae50d3ec069557cc6841d91fd805cc3b3/specification/hybridaks/resource-manager/readme.md.
 
 ## 1.0.0-beta.3 (2023-11-29)
 

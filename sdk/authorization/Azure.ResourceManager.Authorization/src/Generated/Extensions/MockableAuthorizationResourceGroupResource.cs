@@ -59,6 +59,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResourceGroup_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -67,7 +71,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -81,6 +85,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResourceGroup_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,7 +97,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceGroupRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceGroupClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -102,6 +110,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +134,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -135,6 +147,10 @@ namespace Azure.ResourceManager.Authorization.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzurePermissionsForResource_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +171,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => AzurePermissionsForResourceRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AzurePermissionsForResourceRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RoleDefinitionPermission.DeserializeRoleDefinitionPermission, AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RoleDefinitionPermission.DeserializeRoleDefinitionPermission(e), AzurePermissionsForResourceClientDiagnostics, Pipeline, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResources", "value", "nextLink", cancellationToken);
         }
     }
 }

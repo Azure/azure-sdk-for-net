@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -15,16 +16,83 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(OperationStatusResultConverter))]
-    public partial class OperationStatusResult : IUtf8JsonSerializable
+    public partial class OperationStatusResult : IUtf8JsonSerializable, IJsonModel<OperationStatusResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationStatusResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationStatusResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
+            {
+                writer.WritePropertyName("percentComplete"u8);
+                writer.WriteNumberValue(PercentComplete.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Operations))
+            {
+                writer.WritePropertyName("operations"u8);
+                writer.WriteStartArray();
+                foreach (var item in Operations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element)
+        OperationStatusResult IJsonModel<OperationStatusResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationStatusResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationStatusResult(document.RootElement, options);
+        }
+
+        internal static OperationStatusResult DeserializeOperationStatusResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -111,6 +179,37 @@ namespace Azure.ResourceManager.Models
             }
             return new OperationStatusResult(id, name.Value, status, Optional.ToNullable(percentComplete), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(operations), error.Value);
         }
+
+        BinaryData IPersistableModel<OperationStatusResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationStatusResult IPersistableModel<OperationStatusResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationStatusResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationStatusResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationStatusResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationStatusResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class OperationStatusResultConverter : JsonConverter<OperationStatusResult>
         {

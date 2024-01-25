@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.Sql
         private readonly JobStepsRestOperations _sqlServerJobVersionStepJobStepsRestClient;
         private readonly SqlServerJobStepData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs/versions/steps";
+
         /// <summary> Initializes a new instance of the <see cref="SqlServerJobVersionStepResource"/> class for mocking. </summary>
         protected SqlServerJobVersionStepResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/jobAgents/jobs/versions/steps";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -104,6 +104,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>JobSteps_GetByVersion</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobVersionStepResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobSteps_GetByVersion</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlServerJobVersionStepResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

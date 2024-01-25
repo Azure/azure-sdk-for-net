@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ContainerService
         private readonly ManagedClustersRestOperations _managedClusterUpgradeProfileManagedClustersRestClient;
         private readonly ManagedClusterUpgradeProfileData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/upgradeProfiles";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedClusterUpgradeProfileResource"/> class for mocking. </summary>
         protected ManagedClusterUpgradeProfileResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ContainerService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerService/managedClusters/upgradeProfiles";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetUpgradeProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedClusterUpgradeProfileResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.ContainerService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedClusters_GetUpgradeProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedClusterUpgradeProfileResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

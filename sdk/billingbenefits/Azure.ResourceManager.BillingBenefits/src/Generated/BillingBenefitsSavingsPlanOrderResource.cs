@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.BillingBenefits
         private readonly SavingsPlanOrderRestOperations _billingBenefitsSavingsPlanOrderSavingsPlanOrderRestClient;
         private readonly BillingBenefitsSavingsPlanOrderData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrders";
+
         /// <summary> Initializes a new instance of the <see cref="BillingBenefitsSavingsPlanOrderResource"/> class for mocking. </summary>
         protected BillingBenefitsSavingsPlanOrderResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.BillingBenefits
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.BillingBenefits/savingsPlanOrders";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -107,6 +107,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanId"> ID of the savings plan. </param>
@@ -154,6 +170,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +212,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -221,6 +253,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Elevate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -250,6 +290,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Elevate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

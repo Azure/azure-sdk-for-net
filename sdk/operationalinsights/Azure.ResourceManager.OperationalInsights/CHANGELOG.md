@@ -1,5 +1,17 @@
 # Release History
 
+## 1.3.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+- Add `IsRetentionInDaysAsDefault`,`IsTotalRetentionInDaysAsDefault` to replace the original `RetentionInDaysAsDefault`, `TotalRetentionInDaysAsDefault` to solve the deserialization issue
+
+### Other Changes
+
 ## 1.2.0 (2023-11-29)
 
 ### Features Added

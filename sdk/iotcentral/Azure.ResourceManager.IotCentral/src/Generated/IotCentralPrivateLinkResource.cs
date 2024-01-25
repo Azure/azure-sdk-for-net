@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.IotCentral
         private readonly PrivateLinksRestOperations _iotCentralPrivateLinkResourcePrivateLinksRestClient;
         private readonly IotCentralPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="IotCentralPrivateLinkResource"/> class for mocking. </summary>
         protected IotCentralPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.IotCentral
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.IoTCentral/iotApps/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.IotCentral
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotCentralPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

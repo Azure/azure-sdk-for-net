@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
         private readonly DesktopsRestOperations _virtualDesktopDesktopsRestClient;
         private readonly VirtualDesktopData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/applicationGroups/desktops";
+
         /// <summary> Initializes a new instance of the <see cref="VirtualDesktopResource"/> class for mocking. </summary>
         protected VirtualDesktopResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.DesktopVirtualization
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DesktopVirtualization/applicationGroups/desktops";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>Desktops_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <term>Operation Id</term>
         /// <description>Desktops_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +181,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Desktops_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +223,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Desktops_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-05</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualDesktopResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

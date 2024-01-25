@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Compute
         private readonly CommunityGalleriesRestOperations _communityGalleryRestClient;
         private readonly CommunityGalleryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/communityGalleries";
+
         /// <summary> Initializes a new instance of the <see cref="CommunityGalleryResource"/> class for mocking. </summary>
         protected CommunityGalleryResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Compute
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Compute/locations/communityGalleries";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -108,6 +108,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CommunityGalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.Compute
         /// <term>Operation Id</term>
         /// <description>CommunityGalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> The name of the community gallery image definition. </param>
@@ -153,6 +169,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.Compute
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunityGalleries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-03</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunityGalleryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

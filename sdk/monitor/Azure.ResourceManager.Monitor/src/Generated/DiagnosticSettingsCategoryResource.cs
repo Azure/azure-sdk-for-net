@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Monitor
         private readonly DiagnosticSettingsCategoryRestOperations _diagnosticSettingsCategoryRestClient;
         private readonly DiagnosticSettingsCategoryData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettingsCategories";
+
         /// <summary> Initializes a new instance of the <see cref="DiagnosticSettingsCategoryResource"/> class for mocking. </summary>
         protected DiagnosticSettingsCategoryResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Monitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Insights/diagnosticSettingsCategories";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.Monitor
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.Monitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DiagnosticSettingsCategory_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DiagnosticSettingsCategoryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

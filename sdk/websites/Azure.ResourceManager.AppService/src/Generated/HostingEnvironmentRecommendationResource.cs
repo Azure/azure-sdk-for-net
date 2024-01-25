@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppService
         private readonly RecommendationsRestOperations _hostingEnvironmentRecommendationRecommendationsRestClient;
         private readonly RecommendationRuleData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/recommendations";
+
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentRecommendationResource"/> class for mocking. </summary>
         protected HostingEnvironmentRecommendationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/recommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_GetRuleDetailsByHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateSeen"> Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of the recommendation object. </param>
@@ -169,6 +185,14 @@ namespace Azure.ResourceManager.AppService
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForHostingEnvironment</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="environmentName"> Site name. </param>
@@ -202,6 +226,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForHostingEnvironment</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

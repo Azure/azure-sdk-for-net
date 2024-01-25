@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
@@ -20,9 +21,10 @@ namespace Azure.ResourceManager.DataShare.Models
 
         /// <summary> Initializes a new instance of <see cref="ScheduledSourceSynchronizationSetting"/>. </summary>
         /// <param name="kind"> Kind of synchronization setting on share. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
         /// <param name="synchronizeOn"> Synchronization time. </param>
-        internal ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind kind, DataShareSynchronizationRecurrenceInterval? recurrenceInterval, DateTimeOffset? synchronizeOn) : base(kind)
+        internal ScheduledSourceSynchronizationSetting(SourceShareSynchronizationSettingKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DataShareSynchronizationRecurrenceInterval? recurrenceInterval, DateTimeOffset? synchronizeOn) : base(kind, serializedAdditionalRawData)
         {
             RecurrenceInterval = recurrenceInterval;
             SynchronizeOn = synchronizeOn;

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppService
         private readonly DiagnosticsRestOperations _hostingEnvironmentDetectorDiagnosticsRestClient;
         private readonly AppServiceDetectorData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="HostingEnvironmentDetectorResource"/> class for mocking. </summary>
         protected HostingEnvironmentDetectorResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppService
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Web/hostingEnvironments/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.AppService
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Diagnostics_GetHostingEnvironmentDetectorResponse</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HostingEnvironmentDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

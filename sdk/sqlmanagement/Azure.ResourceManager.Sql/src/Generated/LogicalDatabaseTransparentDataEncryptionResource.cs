@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Sql
         private readonly TransparentDataEncryptionsRestOperations _logicalDatabaseTransparentDataEncryptionTransparentDataEncryptionsRestClient;
         private readonly LogicalDatabaseTransparentDataEncryptionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/transparentDataEncryption";
+
         /// <summary> Initializes a new instance of the <see cref="LogicalDatabaseTransparentDataEncryptionResource"/> class for mocking. </summary>
         protected LogicalDatabaseTransparentDataEncryptionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/databases/transparentDataEncryption";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +103,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TransparentDataEncryptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>TransparentDataEncryptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TransparentDataEncryptions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +228,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TransparentDataEncryptions_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalDatabaseTransparentDataEncryptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

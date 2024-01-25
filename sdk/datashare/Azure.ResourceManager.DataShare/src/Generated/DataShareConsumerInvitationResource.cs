@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.DataShare
         private readonly ConsumerInvitationsRestOperations _dataShareConsumerInvitationConsumerInvitationsRestClient;
         private readonly DataShareConsumerInvitationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataShare/locations/consumerInvitations";
+
         /// <summary> Initializes a new instance of the <see cref="DataShareConsumerInvitationResource"/> class for mocking. </summary>
         protected DataShareConsumerInvitationResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.DataShare
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataShare/locations/consumerInvitations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.DataShare
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.DataShare
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConsumerInvitations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataShareConsumerInvitationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

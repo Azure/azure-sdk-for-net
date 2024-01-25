@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Billing
         private readonly PaymentMethodsRestOperations _billingAccountPaymentMethodPaymentMethodsRestClient;
         private readonly BillingPaymentMethodData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/paymentMethods";
+
         /// <summary> Initializes a new instance of the <see cref="BillingAccountPaymentMethodResource"/> class for mocking. </summary>
         protected BillingAccountPaymentMethodResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Billing
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Billing/billingAccounts/paymentMethods";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.Billing
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.Billing
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PaymentMethods_GetByBillingAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPaymentMethodResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

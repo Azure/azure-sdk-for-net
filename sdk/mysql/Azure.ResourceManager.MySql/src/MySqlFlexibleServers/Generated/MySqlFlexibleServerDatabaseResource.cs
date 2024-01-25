@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         private readonly DatabasesRestOperations _mySqlFlexibleServerDatabaseDatabasesRestClient;
         private readonly MySqlFlexibleServerDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/databases";
+
         /// <summary> Initializes a new instance of the <see cref="MySqlFlexibleServerDatabaseResource"/> class for mocking. </summary>
         protected MySqlFlexibleServerDatabaseResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DBforMySQL/flexibleServers/databases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Databases_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,6 +223,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <term>Operation Id</term>
         /// <description>Databases_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -232,6 +264,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +310,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Databases_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MySqlFlexibleServerDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

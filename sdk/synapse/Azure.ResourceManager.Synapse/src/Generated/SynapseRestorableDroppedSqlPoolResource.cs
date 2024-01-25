@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Synapse
         private readonly RestorableDroppedSqlPoolsRestOperations _synapseRestorableDroppedSqlPoolRestorableDroppedSqlPoolsRestClient;
         private readonly SynapseRestorableDroppedSqlPoolData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/restorableDroppedSqlPools";
+
         /// <summary> Initializes a new instance of the <see cref="SynapseRestorableDroppedSqlPoolResource"/> class for mocking. </summary>
         protected SynapseRestorableDroppedSqlPoolResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Synapse
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Synapse/workspaces/restorableDroppedSqlPools";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Synapse
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorableDroppedSqlPoolResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.Synapse
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RestorableDroppedSqlPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SynapseRestorableDroppedSqlPoolResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

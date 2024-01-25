@@ -15,6 +15,19 @@ namespace Azure.ResourceManager.Nginx.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="NginxDeploymentUpdateProperties"/>. </summary>
+        /// <param name="enableDiagnosticsSupport"></param>
+        /// <param name="logging"></param>
+        /// <param name="scalingProperties"></param>
+        /// <param name="userProfile"></param>
+        internal NginxDeploymentUpdateProperties(bool? enableDiagnosticsSupport, NginxLogging logging, NginxDeploymentScalingProperties scalingProperties, NginxDeploymentUserProfile userProfile)
+        {
+            EnableDiagnosticsSupport = enableDiagnosticsSupport;
+            Logging = logging;
+            ScalingProperties = scalingProperties;
+            UserProfile = userProfile;
+        }
+
         /// <summary> Gets or sets the enable diagnostics support. </summary>
         public bool? EnableDiagnosticsSupport { get; set; }
         /// <summary> Gets or sets the logging. </summary>
@@ -28,6 +41,34 @@ namespace Azure.ResourceManager.Nginx.Models
                 if (Logging is null)
                     Logging = new NginxLogging();
                 Logging.StorageAccount = value;
+            }
+        }
+
+        /// <summary> Gets or sets the scaling properties. </summary>
+        internal NginxDeploymentScalingProperties ScalingProperties { get; set; }
+        /// <summary> Gets or sets the scaling capacity. </summary>
+        public int? ScalingCapacity
+        {
+            get => ScalingProperties is null ? default : ScalingProperties.Capacity;
+            set
+            {
+                if (ScalingProperties is null)
+                    ScalingProperties = new NginxDeploymentScalingProperties();
+                ScalingProperties.Capacity = value;
+            }
+        }
+
+        /// <summary> Gets or sets the user profile. </summary>
+        internal NginxDeploymentUserProfile UserProfile { get; set; }
+        /// <summary> The preferred support contact email address of the user used for sending alerts and notification. Can be an empty string or a valid email address. </summary>
+        public string UserPreferredEmail
+        {
+            get => UserProfile is null ? default : UserProfile.PreferredEmail;
+            set
+            {
+                if (UserProfile is null)
+                    UserProfile = new NginxDeploymentUserProfile();
+                UserProfile.PreferredEmail = value;
             }
         }
     }

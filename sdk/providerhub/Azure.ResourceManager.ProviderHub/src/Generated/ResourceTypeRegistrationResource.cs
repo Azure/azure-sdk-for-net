@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.ProviderHub
         private readonly ResourceTypeRegistrationsRestOperations _resourceTypeRegistrationRestClient;
         private readonly ResourceTypeRegistrationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/resourcetypeRegistrations";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceTypeRegistrationResource"/> class for mocking. </summary>
         protected ResourceTypeRegistrationResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.ProviderHub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ProviderHub/providerRegistrations/resourcetypeRegistrations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -107,6 +107,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sku"> The SKU. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +179,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_GetNestedResourceTypeFirst</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeFirstSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_GetNestedResourceTypeFirst</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeFirstSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +254,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_GetNestedResourceTypeSecond</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeSecondSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
@@ -246,6 +286,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Skus_GetNestedResourceTypeSecond</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeSecondSkuResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +332,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_GetNestedResourceTypeThird</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
@@ -310,6 +366,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>Skus_GetNestedResourceTypeThird</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NestedResourceTypeThirdSkuResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nestedResourceTypeFirst"> The first child resource type. </param>
@@ -335,6 +399,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceTypeRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +440,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>ResourceTypeRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -399,6 +479,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceTypeRegistrations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -434,6 +522,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <term>Operation Id</term>
         /// <description>ResourceTypeRegistrations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -467,6 +563,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceTypeRegistrations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -505,6 +609,14 @@ namespace Azure.ResourceManager.ProviderHub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceTypeRegistrations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceTypeRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

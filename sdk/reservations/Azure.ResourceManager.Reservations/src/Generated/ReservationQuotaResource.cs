@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Reservations
         private readonly QuotaRestOperations _reservationQuotaQuotaRestClient;
         private readonly ReservationQuotaData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimits";
+
         /// <summary> Initializes a new instance of the <see cref="ReservationQuotaResource"/> class for mocking. </summary>
         protected ReservationQuotaResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Reservations
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Capacity/resourceProviders/locations/serviceLimits";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.Reservations
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,6 +185,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +235,14 @@ namespace Azure.ResourceManager.Reservations
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quota_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ReservationQuotaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

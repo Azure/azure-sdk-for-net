@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> The NetworkPacketBroker patch resource definition. </summary>
@@ -12,6 +15,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     {
         /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerPatch"/>. </summary>
         public NetworkPacketBrokerPatch()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkPacketBrokerPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkPacketBrokerPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tags, serializedAdditionalRawData)
         {
         }
     }

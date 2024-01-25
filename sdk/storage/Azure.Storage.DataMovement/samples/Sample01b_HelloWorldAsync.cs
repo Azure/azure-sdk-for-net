@@ -65,16 +65,13 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create simple transfer single blob upload job
                 #region Snippet:SimpleBlobUpload_BasePackage
-                async Task TransferAsync(StorageResource source, StorageResource destination,
-                    TransferOptions transferOptions = default, CancellationToken cancellationToken = default)
-                {
-                    DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-                        source,
-                        destination,
-                        transferOptions,
-                        cancellationToken);
-                    await dataTransfer.WaitForCompletionAsync(cancellationToken);
-                }
+                LocalFilesStorageResourceProvider files = new();
+                BlobsStorageResourceProvider blobs = new(tokenCredential);
+                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                    files.FromFile("C:/path/to/file.txt"),
+                    blobs.FromBlob("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
+                    cancellationToken: cancellationToken);
+                await dataTransfer.WaitForCompletionAsync(cancellationToken);
                 #endregion
 
                 await TransferAsync(
@@ -213,7 +210,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 StorageResource destinationResource = new BlockBlobStorageResource(container.GetBlockBlobClient("sample-blob"));
 
                 StorageSharedKeyCredential credential = new(StorageAccountName, StorageAccountKey);
-                #region Snippet:RehydrateResources
                 async Task<(StorageResource Source, StorageResource Destination)> MakeResourcesAsync(DataTransferProperties info)
                 {
                     StorageResource sourceResource = null, destinationResource = null;
@@ -237,21 +233,18 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     }
                     return (sourceResource, destinationResource);
                 }
-                #endregion
 
                 // Get a reference to a destination blob
                 TransferManager transferManager = new TransferManager();
                 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
                     sourceResource, destinationResource);
 
-                #region Snippet:ResumeAllTransfers
                 List<DataTransfer> resumedTransfers = new();
                 await foreach (DataTransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
                 {
                     (StorageResource resumeSource, StorageResource resumeDestination) = await MakeResourcesAsync(transferProperties);
                     resumedTransfers.Add(await transferManager.ResumeTransferAsync(transferProperties.TransferId, resumeSource, resumeDestination));
                 }
-                #endregion
 
                 await Task.WhenAll(resumedTransfers.Select(transfer => transfer.WaitForCompletionAsync()));
             }

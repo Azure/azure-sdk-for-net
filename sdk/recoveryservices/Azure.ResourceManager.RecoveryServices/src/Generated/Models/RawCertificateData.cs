@@ -17,6 +17,15 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="RawCertificateData"/>. </summary>
+        /// <param name="authType"> Specifies the authentication type. </param>
+        /// <param name="certificate"> The base64 encoded certificate raw data string. </param>
+        internal RawCertificateData(RecoveryServicesAuthType? authType, byte[] certificate)
+        {
+            AuthType = authType;
+            Certificate = certificate;
+        }
+
         /// <summary> Specifies the authentication type. </summary>
         public RecoveryServicesAuthType? AuthType { get; set; }
         /// <summary> The base64 encoded certificate raw data string. </summary>

@@ -164,5 +164,18 @@ namespace Azure.Communication.CallAutomation
         {
             return new TranscriptionFailed(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
         }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionUpdated"/>. </summary>
+        /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
+        /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <returns> A new <see cref="CallAutomation.TranscriptionUpdated"/> instance for mocking. </returns>
+        public static TranscriptionUpdated TranscriptionUpdated(string operationContext = null, ResultInformation resultInformation = null, TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null)
+        {
+            return new TranscriptionUpdated(operationContext, resultInformation, transcriptionUpdate, callConnectionId, serverCallId, correlationId);
+        }
     }
 }

@@ -19,6 +19,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL3NetworkPatch"/>. </summary>
+        /// <param name="tags"> The Azure resource tags that will replace the existing ones. </param>
+        internal NetworkCloudL3NetworkPatch(IDictionary<string, string> tags)
+        {
+            Tags = tags;
+        }
+
         /// <summary> The Azure resource tags that will replace the existing ones. </summary>
         public IDictionary<string, string> Tags { get; }
     }

@@ -43,6 +43,9 @@ namespace Azure.ResourceManager.WorkloadMonitor
         private readonly HealthMonitorsRestOperations _healthMonitorStateChangeHealthMonitorsRestClient;
         private readonly HealthMonitorStateChangeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors/history";
+
         /// <summary> Initializes a new instance of the <see cref="HealthMonitorStateChangeResource"/> class for mocking. </summary>
         protected HealthMonitorStateChangeResource()
         {
@@ -69,9 +72,6 @@ namespace Azure.ResourceManager.WorkloadMonitor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.WorkloadMonitor/monitors/history";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -105,6 +105,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Optionally expand the monitor’s evidence and/or configuration. Example: $expand=evidence,configuration. </param>
@@ -137,6 +145,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HealthMonitors_GetStateChange</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HealthMonitorStateChangeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

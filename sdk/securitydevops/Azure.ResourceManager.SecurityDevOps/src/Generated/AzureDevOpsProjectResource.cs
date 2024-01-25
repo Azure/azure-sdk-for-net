@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         private readonly AzureDevOpsProjectRestOperations _azureDevOpsProjectRestClient;
         private readonly AzureDevOpsProjectData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors/orgs/projects";
+
         /// <summary> Initializes a new instance of the <see cref="AzureDevOpsProjectResource"/> class for mocking. </summary>
         protected AzureDevOpsProjectResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.SecurityDevOps
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SecurityDevOps/azureDevOpsConnectors/orgs/projects";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -109,6 +109,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsRepoName"> Name of the AzureDevOps Repo. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsRepo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsRepoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="azureDevOpsRepoName"> Name of the AzureDevOps Repo. </param>
@@ -154,6 +170,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsProject_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -187,6 +211,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsProject_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsProjectResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -218,6 +250,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsProject_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,6 +296,14 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AzureDevOpsProject_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AzureDevOpsProjectResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

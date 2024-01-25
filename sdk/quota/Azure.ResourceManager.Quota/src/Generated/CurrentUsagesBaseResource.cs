@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Quota
         private readonly UsagesRestOperations _currentUsagesBaseUsagesRestClient;
         private readonly CurrentUsagesBaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Quota/usages";
+
         /// <summary> Initializes a new instance of the <see cref="CurrentUsagesBaseResource"/> class for mocking. </summary>
         protected CurrentUsagesBaseResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Quota
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Quota/usages";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.Quota
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.Quota
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CurrentUsagesBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Relay
         private readonly PrivateLinkResourcesRestOperations _relayPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly RelayPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="RelayPrivateLinkResource"/> class for mocking. </summary>
         protected RelayPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Relay
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Relay/namespaces/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Relay
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.Relay
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RelayPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

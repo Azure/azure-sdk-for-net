@@ -15,6 +15,8 @@ namespace Azure.Messaging.EventHubs
     ///   to configure its behavior.
     /// </summary>
     ///
+    /// <seealso href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventhub/Azure.Messaging.EventHubs/samples">Event Hubs samples and discussion</seealso>
+    ///
     public class EventHubConnectionOptions
     {
         // <summary>The amount of time to allow a connection to have no observed traffic before considering it idle.</summary>
@@ -61,27 +63,31 @@ namespace Azure.Messaging.EventHubs
         ///   The size of the buffer used for sending information via the active transport.
         /// </summary>
         ///
-        /// <value>The size of the buffer, in bytes.  The default size is 8,192 bytes.</value>
+        /// <value>The size of the buffer, in bytes.  The default value is -1, which instructs the transport to use the host's default buffer size.</value>
         ///
         /// <remarks>
         ///   This value is used to configure the <see cref="Socket.SendBufferSize" /> used by
-        ///   the active transport.
+        ///   the active transport.  It is recommended that the host's default buffer size be used
+        ///   unless there is a specific application scenario that requires it to be adjusted and
+        ///   the new value has been tested thoroughly.
         /// </remarks>
         ///
-        public int SendBufferSizeInBytes { get; set; } = 8192;
+        public int SendBufferSizeInBytes { get; set; } = -1;
 
         /// <summary>
         ///   The size of the buffer used for receiving information via the active transport.
         /// </summary>
         ///
-        /// <value>The size of the buffer, in bytes.  The default size is 8,192 bytes.</value>
+        /// <value>The size of the buffer, in bytes.  The default value is -1, which instructs the transport to use the host's default buffer size.</value>
         ///
         /// <remarks>
         ///   This value is used to configure the <see cref="Socket.ReceiveBufferSize" /> used by
-        ///   the active transport.
+        ///   the active transport.  It is recommended that the host's default buffer size be used
+        ///   unless there is a specific application scenario that requires it to be adjusted and
+        ///   the new value has been tested thoroughly.
         /// </remarks>
         ///
-        public int ReceiveBufferSizeInBytes { get; set; } = 8192;
+        public int ReceiveBufferSizeInBytes { get; set; } = -1;
 
         /// <summary>
         ///   The proxy to use for communication over web sockets.

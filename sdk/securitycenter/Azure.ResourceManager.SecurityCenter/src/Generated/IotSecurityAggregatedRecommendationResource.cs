@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly IotSecuritySolutionsAnalyticsRecommendationRestOperations _iotSecurityAggregatedRecommendationIotSecuritySolutionsAnalyticsRecommendationRestClient;
         private readonly IotSecurityAggregatedRecommendationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
+
         /// <summary> Initializes a new instance of the <see cref="IotSecurityAggregatedRecommendationResource"/> class for mocking. </summary>
         protected IotSecurityAggregatedRecommendationResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/iotSecuritySolutions/analyticsModels/aggregatedRecommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedRecommendationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotSecuritySolutionsAnalyticsRecommendation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotSecurityAggregatedRecommendationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

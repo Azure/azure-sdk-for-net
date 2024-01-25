@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Base class for feature object. </summary>
@@ -14,6 +17,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public BackupFeatureValidationContent()
         {
             ObjectType = "FeatureValidationRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupFeatureValidationContent"/>. </summary>
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="featureType"> backup support feature type. </param>
+        /// <param name="featureName"> backup support feature name. </param>
+        internal BackupFeatureValidationContent(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, BackupSupportedFeatureType? featureType, string featureName) : base(objectType, serializedAdditionalRawData)
+        {
+            FeatureType = featureType;
+            FeatureName = featureName;
+            ObjectType = objectType ?? "FeatureValidationRequest";
         }
 
         /// <summary> backup support feature type. </summary>

@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ManagedEnvironmentDiagnosticsRestOperations _containerAppManagedEnvironmentDetectorManagedEnvironmentDiagnosticsRestClient;
         private readonly ContainerAppDiagnosticData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectors";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerAppManagedEnvironmentDetectorResource"/> class for mocking. </summary>
         protected ContainerAppManagedEnvironmentDetectorResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AppContainers
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/managedEnvironments/detectors";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedEnvironmentDiagnostics_GetDetector</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerAppManagedEnvironmentDetectorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

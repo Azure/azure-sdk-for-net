@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly DeletedBackupInstancesRestOperations _deletedDataProtectionBackupInstanceDeletedBackupInstancesRestClient;
         private readonly DeletedDataProtectionBackupInstanceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/deletedBackupInstances";
+
         /// <summary> Initializes a new instance of the <see cref="DeletedDataProtectionBackupInstanceResource"/> class for mocking. </summary>
         protected DeletedDataProtectionBackupInstanceResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/backupVaults/deletedBackupInstances";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +179,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Undelete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,6 +220,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedBackupInstances_Undelete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedDataProtectionBackupInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

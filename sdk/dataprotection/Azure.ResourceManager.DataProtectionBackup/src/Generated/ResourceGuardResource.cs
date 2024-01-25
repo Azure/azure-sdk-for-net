@@ -42,6 +42,9 @@ namespace Azure.ResourceManager.DataProtectionBackup
         private readonly ResourceGuardsRestOperations _resourceGuardRestClient;
         private readonly ResourceGuardData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/resourceGuards";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceGuardResource"/> class for mocking. </summary>
         protected ResourceGuardResource()
         {
@@ -68,9 +71,6 @@ namespace Azure.ResourceManager.DataProtectionBackup
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DataProtection/resourceGuards";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -104,6 +104,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -136,6 +144,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -167,6 +183,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +226,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -235,6 +267,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Patch</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -270,6 +310,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Patch</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Request body for operation. </param>
@@ -304,6 +352,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDisableSoftDeleteRequestsObjects</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -312,7 +368,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -326,6 +382,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDisableSoftDeleteRequestsObjects</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -334,7 +398,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDisableSoftDeleteRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDisableSoftDeleteObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -347,6 +411,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -356,7 +428,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -370,6 +442,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -378,7 +458,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteResourceGuardProxyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteResourceGuardProxyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -391,6 +471,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +488,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -414,6 +502,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -422,7 +518,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -435,6 +531,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDeleteProtectedItemRequestsObjects</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,7 +548,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -458,6 +562,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDeleteProtectedItemRequestsObjects</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -466,7 +578,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetDeleteProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetDeleteProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -479,6 +591,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetUpdateProtectionPolicyRequestsObjects</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,7 +608,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -502,6 +622,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetUpdateProtectionPolicyRequestsObjects</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -510,7 +638,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectionPolicyRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectionPolicyObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -523,6 +651,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetUpdateProtectedItemRequestsObjects</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,7 +668,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -546,6 +682,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetUpdateProtectedItemRequestsObjects</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -554,7 +698,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetUpdateProtectedItemRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData, _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetUpdateProtectedItemObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -567,6 +711,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -603,6 +755,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestName"> The <see cref="string"/> to use. </param>
@@ -637,6 +797,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -673,6 +841,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultDeleteResourceGuardProxyRequestsObject</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestName"> The <see cref="string"/> to use. </param>
@@ -707,6 +883,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -743,6 +927,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestName"> The <see cref="string"/> to use. </param>
@@ -777,6 +969,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultDeleteProtectedItemRequestsObject</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -813,6 +1013,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultDeleteProtectedItemRequestsObject</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestName"> The <see cref="string"/> to use. </param>
@@ -847,6 +1055,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -883,6 +1099,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestName"> The <see cref="string"/> to use. </param>
@@ -917,6 +1141,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -953,6 +1185,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="requestName"> The <see cref="string"/> to use. </param>
@@ -987,6 +1227,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1042,6 +1290,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1096,6 +1352,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1145,6 +1409,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1193,6 +1465,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1245,6 +1525,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Advisor
         private readonly RecommendationsRestOperations _resourceRecommendationBaseRecommendationsRestClient;
         private readonly ResourceRecommendationBaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations";
+
         /// <summary> Initializes a new instance of the <see cref="ResourceRecommendationBaseResource"/> class for mocking. </summary>
         protected ResourceRecommendationBaseResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Advisor
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Advisor/recommendations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -106,6 +106,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Suppressions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SuppressionContractResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
@@ -129,6 +137,14 @@ namespace Azure.ResourceManager.Advisor
         /// <term>Operation Id</term>
         /// <description>Suppressions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SuppressionContractResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the suppression. </param>
@@ -151,6 +167,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +207,14 @@ namespace Azure.ResourceManager.Advisor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceRecommendationBaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

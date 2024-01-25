@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.AgFoodPlatform
         private readonly PrivateLinkResourcesRestOperations _agFoodPlatformPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly AgFoodPlatformPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="AgFoodPlatformPrivateLinkResource"/> class for mocking. </summary>
         protected AgFoodPlatformPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.AgFoodPlatform
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.AgFoodPlatform/farmBeats/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgFoodPlatformPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AgFoodPlatformPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

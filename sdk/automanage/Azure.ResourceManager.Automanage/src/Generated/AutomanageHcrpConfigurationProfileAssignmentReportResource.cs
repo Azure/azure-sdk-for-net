@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Automanage
         private readonly HcrpReportsRestOperations _automanageHcrpConfigurationProfileAssignmentReportHCRPReportsRestClient;
         private readonly AutomanageConfigurationProfileAssignmentReportData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
+
         /// <summary> Initializes a new instance of the <see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/> class for mocking. </summary>
         protected AutomanageHcrpConfigurationProfileAssignmentReportResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Automanage
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Automanage/configurationProfileAssignments/reports";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.Automanage
         /// <term>Operation Id</term>
         /// <description>HCRPReports_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Automanage
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HCRPReports_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-04</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomanageHcrpConfigurationProfileAssignmentReportResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

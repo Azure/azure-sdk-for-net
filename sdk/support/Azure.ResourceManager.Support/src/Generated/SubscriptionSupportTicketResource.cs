@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Support
         private readonly CommunicationsRestOperations _supportTicketCommunicationCommunicationsRestClient;
         private readonly SupportTicketData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets";
+
         /// <summary> Initializes a new instance of the <see cref="SubscriptionSupportTicketResource"/> class for mocking. </summary>
         protected SubscriptionSupportTicketResource()
         {
@@ -70,9 +73,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -113,6 +113,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="communicationName"> Communication name. </param>
@@ -135,6 +143,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Communications_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -166,6 +182,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
@@ -189,6 +213,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="chatTranscriptName"> ChatTranscript name. </param>
@@ -211,6 +243,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -244,6 +284,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,6 +323,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,6 +366,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>SupportTickets_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionSupportTicketResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="updateSupportTicket"> UpdateSupportTicket object. </param>
@@ -344,6 +408,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>Communications_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Input to check. </param>
@@ -377,6 +449,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Communications_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

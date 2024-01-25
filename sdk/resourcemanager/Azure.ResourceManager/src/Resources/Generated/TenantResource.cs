@@ -33,6 +33,9 @@ namespace Azure.ResourceManager.Resources
         private readonly ProvidersRestOperations _providersRestClient;
         private readonly TenantData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
+
         /// <summary> Initializes a new instance of the <see cref="TenantResource"/> class for mocking. </summary>
         protected TenantResource()
         {
@@ -55,9 +58,6 @@ namespace Azure.ResourceManager.Resources
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Resources/tenants";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -98,6 +98,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetBuiltIn</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicyDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyDefinitionName"> The name of the built-in policy definition to get. </param>
@@ -120,6 +128,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicyDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicyDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,6 +167,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_GetBuiltIn</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicySetDefinitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policySetDefinitionName"> The name of the policy set definition to get. </param>
@@ -173,6 +197,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PolicySetDefinitions_GetBuiltIn</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantPolicySetDefinitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,6 +236,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>DataPolicyManifests_GetByPolicyMode</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataPolicyManifestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyMode"> The policy mode of the data policy manifest to get. </param>
@@ -226,6 +266,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataPolicyManifests_GetByPolicyMode</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataPolicyManifestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,6 +312,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Subscriptions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
@@ -286,6 +342,14 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscriptions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,6 +374,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_ListAtTenantScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -319,7 +391,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TenantResourceProvider.DeserializeTenantResourceProvider(e), _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -333,6 +405,14 @@ namespace Azure.ResourceManager.Resources
         /// <term>Operation Id</term>
         /// <description>Providers_ListAtTenantScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceProviderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> The properties to include in the results. For example, use &amp;$expand=metadata in the query string to retrieve resource provider metadata. To include property aliases in response, use $expand=resourceTypes/aliases. </param>
@@ -342,7 +422,7 @@ namespace Azure.ResourceManager.Resources
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeRequest(expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceProviderProvidersRestClient.CreateListAtTenantScopeNextPageRequest(nextLink, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, TenantResourceProvider.DeserializeTenantResourceProvider, _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TenantResourceProvider.DeserializeTenantResourceProvider(e), _resourceProviderProvidersClientDiagnostics, Pipeline, "TenantResource.GetTenantResourceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -355,6 +435,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_GetAtTenantScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,6 +475,10 @@ namespace Azure.ResourceManager.Resources
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Providers_GetAtTenantScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
         /// </item>
         /// </list>
         /// </summary>

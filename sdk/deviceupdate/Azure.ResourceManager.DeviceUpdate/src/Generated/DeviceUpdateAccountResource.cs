@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.DeviceUpdate
         private readonly AccountsRestOperations _deviceUpdateAccountAccountsRestClient;
         private readonly DeviceUpdateAccountData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
+
         /// <summary> Initializes a new instance of the <see cref="DeviceUpdateAccountResource"/> class for mocking. </summary>
         protected DeviceUpdateAccountResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.DeviceUpdate
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.DeviceUpdate/accounts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -110,6 +110,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Instances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="instanceName"> Instance name. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Instances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +179,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -185,6 +209,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +248,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The group ID of the private link resource. </param>
@@ -238,6 +278,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +317,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
@@ -292,6 +348,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnectionProxies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdatePrivateEndpointConnectionProxyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionProxyId"> The ID of the private endpoint connection proxy object. </param>
@@ -314,6 +378,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +419,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -378,6 +458,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,6 +501,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -446,6 +542,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -485,6 +589,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -522,6 +634,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -577,6 +697,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -631,6 +759,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -680,6 +816,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -728,6 +872,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -780,6 +932,14 @@ namespace Azure.ResourceManager.DeviceUpdate
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeviceUpdateAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

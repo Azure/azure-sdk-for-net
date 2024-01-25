@@ -29,12 +29,16 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 return null;
             }
-            Optional<string> subnetId = default;
+            Optional<ResourceIdentifier> subnetId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
                 {
-                    subnetId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
             }

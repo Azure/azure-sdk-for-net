@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.Support
         private readonly ChatTranscriptsRestOperations _supportTicketChatTranscriptChatTranscriptsRestClient;
         private readonly ChatTranscriptDetailData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/chatTranscripts";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketChatTranscriptResource"/> class for mocking. </summary>
         protected SupportTicketChatTranscriptResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/chatTranscripts";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ChatTranscripts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketChatTranscriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

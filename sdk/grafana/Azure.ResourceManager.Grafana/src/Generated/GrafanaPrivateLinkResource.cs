@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Grafana
         private readonly PrivateLinkResourcesRestOperations _grafanaPrivateLinkResourcePrivateLinkResourcesRestClient;
         private readonly GrafanaPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="GrafanaPrivateLinkResource"/> class for mocking. </summary>
         protected GrafanaPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Grafana
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Dashboard/grafana/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Grafana
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.Grafana
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GrafanaPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

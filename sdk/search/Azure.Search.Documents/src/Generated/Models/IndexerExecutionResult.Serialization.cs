@@ -21,6 +21,8 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexerExecutionStatus status = default;
+            Optional<IndexerExecutionStatusDetail?> statusDetail = default;
+            Optional<IndexerState> currentState = default;
             Optional<string> errorMessage = default;
             Optional<DateTimeOffset> startTime = default;
             Optional<DateTimeOffset?> endTime = default;
@@ -35,6 +37,25 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (property.NameEquals("status"u8))
                 {
                     status = property.Value.GetString().ToIndexerExecutionStatus();
+                    continue;
+                }
+                if (property.NameEquals("statusDetail"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        statusDetail = null;
+                        continue;
+                    }
+                    statusDetail = new IndexerExecutionStatusDetail(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("currentState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    currentState = IndexerState.DeserializeIndexerState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorMessage"u8))
@@ -102,7 +123,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new IndexerExecutionResult(status, errorMessage.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), errors, warnings, itemsProcessed, itemsFailed, initialTrackingState.Value, finalTrackingState.Value);
+            return new IndexerExecutionResult(status, Optional.ToNullable(statusDetail), currentState.Value, errorMessage.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), errors, warnings, itemsProcessed, itemsFailed, initialTrackingState.Value, finalTrackingState.Value);
         }
     }
 }

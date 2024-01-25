@@ -15,6 +15,13 @@ namespace Azure.Communication.CallAutomation
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="StopTranscriptionRequestInternal"/>. </summary>
+        /// <param name="operationContext"> The value to identify context of the operation. </param>
+        internal StopTranscriptionRequestInternal(string operationContext)
+        {
+            OperationContext = operationContext;
+        }
+
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }
     }

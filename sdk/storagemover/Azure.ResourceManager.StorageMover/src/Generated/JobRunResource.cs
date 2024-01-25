@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.StorageMover
         private readonly JobRunsRestOperations _jobRunRestClient;
         private readonly JobRunData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/projects/jobDefinitions/jobRuns";
+
         /// <summary> Initializes a new instance of the <see cref="JobRunResource"/> class for mocking. </summary>
         protected JobRunResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.StorageMover
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.StorageMover/storageMovers/projects/jobDefinitions/jobRuns";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +103,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobRunResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.StorageMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobRuns_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JobRunResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

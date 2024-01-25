@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Sql
         private readonly RecoverableDatabasesRestOperations _recoverableDatabaseRestClient;
         private readonly RecoverableDatabaseData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/recoverableDatabases";
+
         /// <summary> Initializes a new instance of the <see cref="RecoverableDatabaseResource"/> class for mocking. </summary>
         protected RecoverableDatabaseResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/servers/recoverableDatabases";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -100,6 +100,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoverableDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoverableDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoverableDatabases_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoverableDatabaseResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

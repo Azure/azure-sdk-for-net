@@ -15,6 +15,13 @@ namespace Azure.ResourceManager.Reservations.Models
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="PatchPropertiesRenewProperties"/>. </summary>
+        /// <param name="purchaseProperties"> The request for reservation purchase. </param>
+        internal PatchPropertiesRenewProperties(ReservationPurchaseContent purchaseProperties)
+        {
+            PurchaseProperties = purchaseProperties;
+        }
+
         /// <summary> The request for reservation purchase. </summary>
         public ReservationPurchaseContent PurchaseProperties { get; set; }
     }

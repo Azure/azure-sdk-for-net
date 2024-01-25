@@ -44,6 +44,9 @@ namespace Azure.ResourceManager.WebPubSub
         private readonly WebPubSubPrivateLinkResourcesRestOperations _webPubSubPrivateLinkResourcesRestClient;
         private readonly WebPubSubData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub";
+
         /// <summary> Initializes a new instance of the <see cref="WebPubSubResource"/> class for mocking. </summary>
         protected WebPubSubResource()
         {
@@ -72,9 +75,6 @@ namespace Azure.ResourceManager.WebPubSub
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.SignalRService/webPubSub";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -115,6 +115,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSubHubs_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubHubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hubName"> The hub name. </param>
@@ -137,6 +145,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSubHubs_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubHubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +184,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSubPrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -190,6 +214,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSubPrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,6 +253,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSubSharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubSharedPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
@@ -244,6 +284,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSubSharedPrivateLinkResources_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubSharedPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource. </param>
@@ -266,6 +314,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,6 +355,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -330,6 +394,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,6 +437,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -398,6 +478,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -437,6 +525,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -475,6 +571,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -505,6 +609,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -534,6 +646,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -573,6 +693,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -611,6 +739,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Restart</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -644,6 +780,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Restart</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -679,6 +823,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -700,6 +852,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -720,6 +880,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSubPrivateLinkResources_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -743,6 +907,10 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSubPrivateLinkResources_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -764,6 +932,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -819,6 +995,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -873,6 +1057,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -922,6 +1114,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -970,6 +1170,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1022,6 +1230,14 @@ namespace Azure.ResourceManager.WebPubSub
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebPubSub_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebPubSubResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

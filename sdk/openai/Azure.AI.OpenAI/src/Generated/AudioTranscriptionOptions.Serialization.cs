@@ -17,6 +17,11 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("file"u8);
             writer.WriteBase64StringValue(AudioData.ToArray(), "D");
+            if (Optional.IsDefined(Filename))
+            {
+                writer.WritePropertyName("filename"u8);
+                writer.WriteStringValue(Filename);
+            }
             if (Optional.IsDefined(ResponseFormat))
             {
                 writer.WritePropertyName("response_format"u8);

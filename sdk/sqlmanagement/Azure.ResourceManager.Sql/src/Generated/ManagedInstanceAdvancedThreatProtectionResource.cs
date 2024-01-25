@@ -40,6 +40,9 @@ namespace Azure.ResourceManager.Sql
         private readonly ManagedInstanceAdvancedThreatProtectionSettingsRestOperations _managedInstanceAdvancedThreatProtectionManagedInstanceAdvancedThreatProtectionSettingsRestClient;
         private readonly ManagedInstanceAdvancedThreatProtectionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings";
+
         /// <summary> Initializes a new instance of the <see cref="ManagedInstanceAdvancedThreatProtectionResource"/> class for mocking. </summary>
         protected ManagedInstanceAdvancedThreatProtectionResource()
         {
@@ -66,9 +69,6 @@ namespace Azure.ResourceManager.Sql
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Sql/managedInstances/advancedThreatProtectionSettings";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -102,6 +102,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.Sql
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceAdvancedThreatProtectionSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -165,6 +181,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,6 +227,14 @@ namespace Azure.ResourceManager.Sql
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedInstanceAdvancedThreatProtectionSettings_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedInstanceAdvancedThreatProtectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

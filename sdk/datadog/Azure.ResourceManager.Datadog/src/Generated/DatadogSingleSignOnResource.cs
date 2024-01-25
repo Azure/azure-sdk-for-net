@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Datadog
         private readonly SingleSignOnConfigurationsRestOperations _datadogSingleSignOnResourceSingleSignOnConfigurationsRestClient;
         private readonly DatadogSingleSignOnResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/singleSignOnConfigurations";
+
         /// <summary> Initializes a new instance of the <see cref="DatadogSingleSignOnResource"/> class for mocking. </summary>
         protected DatadogSingleSignOnResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Datadog
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Datadog/monitors/singleSignOnConfigurations";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -133,6 +141,14 @@ namespace Azure.ResourceManager.Datadog
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -164,6 +180,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -202,6 +226,14 @@ namespace Azure.ResourceManager.Datadog
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SingleSignOnConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatadogSingleSignOnResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

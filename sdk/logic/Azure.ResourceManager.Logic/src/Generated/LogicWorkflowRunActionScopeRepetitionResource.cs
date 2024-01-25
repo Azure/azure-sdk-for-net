@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.Logic
         private readonly WorkflowRunActionScopeRepetitionsRestOperations _logicWorkflowRunActionScopeRepetitionWorkflowRunActionScopeRepetitionsRestClient;
         private readonly LogicWorkflowRunActionRepetitionDefinitionData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/scopeRepetitions";
+
         /// <summary> Initializes a new instance of the <see cref="LogicWorkflowRunActionScopeRepetitionResource"/> class for mocking. </summary>
         protected LogicWorkflowRunActionScopeRepetitionResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.Logic
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Logic/workflows/runs/actions/scopeRepetitions";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +103,14 @@ namespace Azure.ResourceManager.Logic
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.Logic
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkflowRunActionScopeRepetitions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowRunActionScopeRepetitionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

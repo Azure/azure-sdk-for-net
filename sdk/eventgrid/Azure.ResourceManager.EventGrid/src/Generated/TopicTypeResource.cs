@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.EventGrid
         private readonly TopicTypesRestOperations _topicTypeRestClient;
         private readonly TopicTypeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topicTypes";
+
         /// <summary> Initializes a new instance of the <see cref="TopicTypeResource"/> class for mocking. </summary>
         protected TopicTypeResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.EventGrid
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.EventGrid/topicTypes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +181,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>TopicTypes_ListEventTypes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -172,7 +196,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<EventTypeUnderTopic> GetEventTypesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListEventTypesRequest(Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => EventTypeUnderTopic.DeserializeEventTypeUnderTopic(e), _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -186,6 +210,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>TopicTypes_ListEventTypes</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -193,7 +225,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<EventTypeUnderTopic> GetEventTypes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _topicTypeRestClient.CreateListEventTypesRequest(Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, EventTypeUnderTopic.DeserializeEventTypeUnderTopic, _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => EventTypeUnderTopic.DeserializeEventTypeUnderTopic(e), _topicTypeClientDiagnostics, Pipeline, "TopicTypeResource.GetEventTypes", "value", null, cancellationToken);
         }
     }
 }

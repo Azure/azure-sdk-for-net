@@ -37,6 +37,9 @@ namespace Azure.ResourceManager.Support
         private readonly CommunicationsNoSubscriptionRestOperations _supportTicketNoSubCommunicationCommunicationsNoSubscriptionRestClient;
         private readonly SupportTicketCommunicationData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/communications";
+
         /// <summary> Initializes a new instance of the <see cref="SupportTicketNoSubCommunicationResource"/> class for mocking. </summary>
         protected SupportTicketNoSubCommunicationResource()
         {
@@ -63,9 +66,6 @@ namespace Azure.ResourceManager.Support
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Support/supportTickets/communications";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -99,6 +99,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>CommunicationsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -131,6 +139,14 @@ namespace Azure.ResourceManager.Support
         /// <term>Operation Id</term>
         /// <description>CommunicationsNoSubscription_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -162,6 +178,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationsNoSubscription_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -200,6 +224,14 @@ namespace Azure.ResourceManager.Support
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationsNoSubscription_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SupportTicketNoSubCommunicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

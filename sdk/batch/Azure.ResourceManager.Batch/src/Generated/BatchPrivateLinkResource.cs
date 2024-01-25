@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.Batch
         private readonly PrivateLinkResourceRestOperations _batchPrivateLinkResourcePrivateLinkResourceRestClient;
         private readonly BatchPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="BatchPrivateLinkResource"/> class for mocking. </summary>
         protected BatchPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.Batch
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Batch/batchAccounts/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.Batch
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.Batch
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BatchPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

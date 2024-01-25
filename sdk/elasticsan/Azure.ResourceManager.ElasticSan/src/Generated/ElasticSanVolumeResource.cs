@@ -41,6 +41,9 @@ namespace Azure.ResourceManager.ElasticSan
         private readonly VolumesRestOperations _elasticSanVolumeVolumesRestClient;
         private readonly ElasticSanVolumeData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/volumes";
+
         /// <summary> Initializes a new instance of the <see cref="ElasticSanVolumeResource"/> class for mocking. </summary>
         protected ElasticSanVolumeResource()
         {
@@ -67,9 +70,6 @@ namespace Azure.ResourceManager.ElasticSan
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ElasticSan/elasticSans/volumegroups/volumes";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -103,6 +103,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -134,6 +142,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanVolumeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,20 +183,28 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>Volumes_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsDeleteSnapshots"> Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false. </param>
-        /// <param name="xMsForceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
+        /// <param name="xmsDeleteSnapshots"> Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false. </param>
+        /// <param name="xmsForceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, XMsDeleteSnapshot? xMsDeleteSnapshots = null, XMsForceDelete? xMsForceDelete = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, XmsDeleteSnapshot? xmsDeleteSnapshots = null, XmsForceDelete? xmsForceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeResource.Delete");
             scope.Start();
             try
             {
-                var response = await _elasticSanVolumeVolumesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xMsDeleteSnapshots, xMsForceDelete, cancellationToken).ConfigureAwait(false);
-                var operation = new ElasticSanArmOperation(_elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xMsDeleteSnapshots, xMsForceDelete).Request, response, OperationFinalStateVia.Location);
+                var response = await _elasticSanVolumeVolumesRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xmsDeleteSnapshots, xmsForceDelete, cancellationToken).ConfigureAwait(false);
+                var operation = new ElasticSanArmOperation(_elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xmsDeleteSnapshots, xmsForceDelete).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -203,20 +227,28 @@ namespace Azure.ResourceManager.ElasticSan
         /// <term>Operation Id</term>
         /// <description>Volumes_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanVolumeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="xMsDeleteSnapshots"> Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false. </param>
-        /// <param name="xMsForceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
+        /// <param name="xmsDeleteSnapshots"> Optional, used to delete snapshots under volume. Allowed value are only true or false. Default value is false. </param>
+        /// <param name="xmsForceDelete"> Optional, used to delete volume if active sessions present. Allowed value are only true or false. Default value is false. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation Delete(WaitUntil waitUntil, XMsDeleteSnapshot? xMsDeleteSnapshots = null, XMsForceDelete? xMsForceDelete = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation Delete(WaitUntil waitUntil, XmsDeleteSnapshot? xmsDeleteSnapshots = null, XmsForceDelete? xmsForceDelete = null, CancellationToken cancellationToken = default)
         {
             using var scope = _elasticSanVolumeVolumesClientDiagnostics.CreateScope("ElasticSanVolumeResource.Delete");
             scope.Start();
             try
             {
-                var response = _elasticSanVolumeVolumesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xMsDeleteSnapshots, xMsForceDelete, cancellationToken);
-                var operation = new ElasticSanArmOperation(_elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xMsDeleteSnapshots, xMsForceDelete).Request, response, OperationFinalStateVia.Location);
+                var response = _elasticSanVolumeVolumesRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xmsDeleteSnapshots, xmsForceDelete, cancellationToken);
+                var operation = new ElasticSanArmOperation(_elasticSanVolumeVolumesClientDiagnostics, Pipeline, _elasticSanVolumeVolumesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, xmsDeleteSnapshots, xmsForceDelete).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -238,6 +270,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanVolumeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,6 +316,14 @@ namespace Azure.ResourceManager.ElasticSan
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Volumes_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanVolumeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -20,6 +20,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="DataFactoryPatch"/>. </summary>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
+        internal DataFactoryPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, DataFactoryPublicNetworkAccess? publicNetworkAccess)
+        {
+            Tags = tags;
+            Identity = identity;
+            PublicNetworkAccess = publicNetworkAccess;
+        }
+
         /// <summary> The resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
         /// <summary> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </summary>

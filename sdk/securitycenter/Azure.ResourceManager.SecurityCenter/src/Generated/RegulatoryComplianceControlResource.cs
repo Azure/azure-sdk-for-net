@@ -38,6 +38,9 @@ namespace Azure.ResourceManager.SecurityCenter
         private readonly RegulatoryComplianceControlsRestOperations _regulatoryComplianceControlRestClient;
         private readonly RegulatoryComplianceControlData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls";
+
         /// <summary> Initializes a new instance of the <see cref="RegulatoryComplianceControlResource"/> class for mocking. </summary>
         protected RegulatoryComplianceControlResource()
         {
@@ -64,9 +67,6 @@ namespace Azure.ResourceManager.SecurityCenter
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Security/regulatoryComplianceStandards/regulatoryComplianceControls";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -107,6 +107,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
@@ -130,6 +138,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceAssessments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceAssessmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="regulatoryComplianceAssessmentName"> Name of the regulatory compliance assessment object. </param>
@@ -152,6 +168,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,6 +208,14 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RegulatoryComplianceControls_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RegulatoryComplianceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

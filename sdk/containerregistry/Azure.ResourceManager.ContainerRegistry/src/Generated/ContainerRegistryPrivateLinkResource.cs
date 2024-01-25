@@ -39,6 +39,9 @@ namespace Azure.ResourceManager.ContainerRegistry
         private readonly RegistriesRestOperations _containerRegistryPrivateLinkResourceRegistriesRestClient;
         private readonly ContainerRegistryPrivateLinkResourceData _data;
 
+        /// <summary> Gets the resource type for the operations. </summary>
+        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/privateLinkResources";
+
         /// <summary> Initializes a new instance of the <see cref="ContainerRegistryPrivateLinkResource"/> class for mocking. </summary>
         protected ContainerRegistryPrivateLinkResource()
         {
@@ -65,9 +68,6 @@ namespace Azure.ResourceManager.ContainerRegistry
 			ValidateResourceId(Id);
 #endif
         }
-
-        /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.ContainerRegistry/registries/privateLinkResources";
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
@@ -101,6 +101,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <term>Operation Id</term>
         /// <description>Registries_GetPrivateLinkResource</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +140,14 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_GetPrivateLinkResource</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerRegistryPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
