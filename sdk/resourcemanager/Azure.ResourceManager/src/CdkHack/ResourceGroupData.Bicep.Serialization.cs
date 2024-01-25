@@ -6,40 +6,30 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text;
-using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources
 {
-    public partial class ResourceGroupData : IModelJsonSerializable<ResourceGroupData>
+    public partial class ResourceGroupData : IJsonModel<ResourceGroupData>
     {
-        void IModelJsonSerializable<ResourceGroupData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        ResourceGroupData IModelJsonSerializable<ResourceGroupData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceGroupData(document.RootElement);
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
         }
 
-        BinaryData IModelSerializable<ResourceGroupData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        ResourceGroupData IModelSerializable<ResourceGroupData>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeResourceGroupData(document.RootElement);
-        }
-
-        private BinaryData SerializeBicep()
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");

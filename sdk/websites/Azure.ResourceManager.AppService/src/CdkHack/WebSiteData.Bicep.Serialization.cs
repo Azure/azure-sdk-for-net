@@ -6,37 +6,48 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class WebSiteData : IModelJsonSerializable<WebSiteData>
+    public partial class WebSiteData : IJsonModel<WebSiteData>
     {
-        void IModelJsonSerializable<WebSiteData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<WebSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        WebSiteData IModelJsonSerializable<WebSiteData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        WebSiteData IJsonModel<WebSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeWebSiteData(doc.RootElement);
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebSiteData(document.RootElement);
         }
 
-        BinaryData IModelSerializable<WebSiteData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<WebSiteData>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
-        WebSiteData IModelSerializable<WebSiteData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WebSiteData IPersistableModel<WebSiteData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeWebSiteData(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<WebSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");

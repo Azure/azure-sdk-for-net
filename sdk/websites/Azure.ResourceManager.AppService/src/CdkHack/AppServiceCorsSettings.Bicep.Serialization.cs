@@ -6,38 +6,48 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCorsSettings : IModelJsonSerializable<AppServiceCorsSettings>
+    public partial class AppServiceCorsSettings : IJsonModel<AppServiceCorsSettings>
     {
-        void IModelJsonSerializable<AppServiceCorsSettings>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<AppServiceCorsSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        AppServiceCorsSettings IModelJsonSerializable<AppServiceCorsSettings>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        AppServiceCorsSettings IJsonModel<AppServiceCorsSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServiceCorsSettings(doc.RootElement);
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceCorsSettings(document.RootElement);
         }
 
-        BinaryData IModelSerializable<AppServiceCorsSettings>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<AppServiceCorsSettings>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
-        AppServiceCorsSettings IModelSerializable<AppServiceCorsSettings>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceCorsSettings IPersistableModel<AppServiceCorsSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeAppServiceCorsSettings(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<AppServiceCorsSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             if (Optional.IsCollectionDefined(AllowedOrigins))

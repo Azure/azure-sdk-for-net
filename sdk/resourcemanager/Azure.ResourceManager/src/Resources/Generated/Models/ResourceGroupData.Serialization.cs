@@ -187,19 +187,6 @@ namespace Azure.ResourceManager.Resources
             return new ResourceGroupData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, properties.Value, managedBy.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ResourceGroupData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
-            }
-        }
-
         ResourceGroupData IPersistableModel<ResourceGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;

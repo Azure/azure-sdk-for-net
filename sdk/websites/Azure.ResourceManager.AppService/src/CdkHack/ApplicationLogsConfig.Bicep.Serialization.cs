@@ -5,38 +5,49 @@
 
 #nullable disable
 
-using System.Text;
 using System;
+using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ApplicationLogsConfig : IModelJsonSerializable<ApplicationLogsConfig>
+    public partial class ApplicationLogsConfig : IJsonModel<ApplicationLogsConfig>
     {
-        void IModelJsonSerializable<ApplicationLogsConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<ApplicationLogsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        ApplicationLogsConfig IModelJsonSerializable<ApplicationLogsConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ApplicationLogsConfig IJsonModel<ApplicationLogsConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeApplicationLogsConfig(doc.RootElement);
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationLogsConfig(document.RootElement);
         }
 
-        BinaryData IModelSerializable<ApplicationLogsConfig>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<ApplicationLogsConfig>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
-        ApplicationLogsConfig IModelSerializable<ApplicationLogsConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationLogsConfig IPersistableModel<ApplicationLogsConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeApplicationLogsConfig(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<ApplicationLogsConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  fileSystem: {{");

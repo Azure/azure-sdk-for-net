@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppService
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.AppService.AppServicePlanResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.AppServicePlanResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class AppServicePlanData : Azure.ResourceManager.Models.TrackedResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.AppServicePlanData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.AppServicePlanData>
+    public partial class AppServicePlanData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.AppServicePlanData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServicePlanData>
     {
         public AppServicePlanData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -637,10 +637,11 @@ namespace Azure.ResourceManager.AppService
         public int? TargetWorkerCount { get { throw null; } set { } }
         public int? TargetWorkerSizeId { get { throw null; } set { } }
         public string WorkerTierName { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.AppServicePlanData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.AppServicePlanData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.AppServicePlanData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.AppServicePlanData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.AppServicePlanData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.AppServicePlanData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.AppServicePlanData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.AppServicePlanData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.AppServicePlanData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.AppServicePlanData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServicePlanData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServicePlanData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.AppServicePlanData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AppServicePlanHybridConnectionNamespaceRelayCollection : Azure.ResourceManager.ArmCollection
     {
@@ -895,15 +896,16 @@ namespace Azure.ResourceManager.AppService
         public System.Uri Uri { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebJobType? WebJobType { get { throw null; } set { } }
     }
-    public partial class CsmPublishingCredentialsPoliciesEntityData : Azure.ResourceManager.Models.ResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>
+    public partial class CsmPublishingCredentialsPoliciesEntityData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>
     {
         public CsmPublishingCredentialsPoliciesEntityData() { }
         public bool? Allow { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeletedSiteCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.DeletedSiteResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.DeletedSiteResource>, System.Collections.IEnumerable
     {
@@ -2065,7 +2067,7 @@ namespace Azure.ResourceManager.AppService
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.AppService.SiteInstanceProcessResource>> GetSiteInstanceProcessAsync(string processId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.AppService.SiteInstanceProcessCollection GetSiteInstanceProcesses() { throw null; }
     }
-    public partial class SiteLogsConfigData : Azure.ResourceManager.Models.ResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.SiteLogsConfigData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.SiteLogsConfigData>
+    public partial class SiteLogsConfigData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteLogsConfigData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteLogsConfigData>
     {
         public SiteLogsConfigData() { }
         public Azure.ResourceManager.AppService.Models.ApplicationLogsConfig ApplicationLogs { get { throw null; } set { } }
@@ -2073,10 +2075,11 @@ namespace Azure.ResourceManager.AppService
         public bool? IsDetailedErrorMessagesEnabled { get { throw null; } set { } }
         public bool? IsFailedRequestsTracingEnabled { get { throw null; } set { } }
         public string Kind { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.SiteLogsConfigData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.SiteLogsConfigData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.SiteLogsConfigData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.SiteLogsConfigData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.SiteLogsConfigData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.SiteLogsConfigData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.SiteLogsConfigData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteLogsConfigData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.SiteLogsConfigData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.SiteLogsConfigData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteLogsConfigData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteLogsConfigData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.SiteLogsConfigData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SiteNetworkConfigResource : Azure.ResourceManager.ArmResource
     {
@@ -3427,7 +3430,7 @@ namespace Azure.ResourceManager.AppService
         public virtual Azure.Response StopContinuousWebJob(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> StopContinuousWebJobAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WebSiteData : Azure.ResourceManager.Models.TrackedResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.WebSiteData>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.WebSiteData>
+    public partial class WebSiteData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebSiteData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebSiteData>
     {
         public WebSiteData(Azure.Core.AzureLocation location) { }
         public Azure.Core.ResourceIdentifier AppServicePlanId { get { throw null; } set { } }
@@ -3474,10 +3477,11 @@ namespace Azure.ResourceManager.AppService
         public System.Collections.Generic.IReadOnlyList<string> TrafficManagerHostNames { get { throw null; } }
         public Azure.ResourceManager.AppService.Models.AppServiceUsageState? UsageState { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkSubnetId { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.WebSiteData Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.WebSiteData>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.WebSiteData>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.WebSiteData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.WebSiteData>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.WebSiteData>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.WebSiteData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebSiteData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.WebSiteData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.WebSiteData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebSiteData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebSiteData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.WebSiteData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebSiteExtensionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.AppService.WebSiteExtensionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppService.WebSiteExtensionResource>, System.Collections.IEnumerable
     {
@@ -4842,16 +4846,17 @@ namespace Azure.ResourceManager.AppService.Models
         public bool? IsDefaultOff { get { throw null; } }
         public bool? IsSupported { get { throw null; } }
     }
-    public partial class ApplicationLogsConfig : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>
+    public partial class ApplicationLogsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>
     {
         public ApplicationLogsConfig() { }
         public Azure.ResourceManager.AppService.Models.AppServiceBlobStorageApplicationLogsConfig AzureBlobStorage { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceTableStorageApplicationLogsConfig AzureTableStorage { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.WebAppLogLevel? FileSystemLevel { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.ApplicationLogsConfig Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.Models.ApplicationLogsConfig Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.Models.ApplicationLogsConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.ApplicationLogsConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.ApplicationLogsConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ApplicationStack
     {
@@ -5055,25 +5060,27 @@ namespace Azure.ResourceManager.AppService.Models
         public string KeyVaultSecretName { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.KeyVaultSecretStatus? ProvisioningState { get { throw null; } }
     }
-    public partial class AppServiceConfigurationDictionary : Azure.ResourceManager.Models.ResourceData, Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>
+    public partial class AppServiceConfigurationDictionary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>
     {
         public AppServiceConfigurationDictionary() { }
         public string Kind { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
-        Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceConfigurationDictionary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AppServiceCorsSettings : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>
+    public partial class AppServiceCorsSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>
     {
         public AppServiceCorsSettings() { }
         public System.Collections.Generic.IList<string> AllowedOrigins { get { throw null; } }
         public bool? IsCredentialsSupported { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.AppServiceCorsSettings Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.Models.AppServiceCorsSettings Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.Models.AppServiceCorsSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.AppServiceCorsSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceCorsSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AppServiceDatabaseBackupSetting
     {
@@ -5315,15 +5322,16 @@ namespace Azure.ResourceManager.AppService.Models
         Standard = 0,
         Repository = 1,
     }
-    public partial class AppServiceHttpLogsConfig : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>
+    public partial class AppServiceHttpLogsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>
     {
         public AppServiceHttpLogsConfig() { }
         public Azure.ResourceManager.AppService.Models.AppServiceBlobStorageHttpLogsConfig AzureBlobStorage { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig FileSystem { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceHttpLogsConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AppServiceHttpSettings
     {
@@ -5515,7 +5523,7 @@ namespace Azure.ResourceManager.AppService.Models
         public int? Minimum { get { throw null; } set { } }
         public string ScaleType { get { throw null; } set { } }
     }
-    public partial class AppServiceSkuDescription : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>
+    public partial class AppServiceSkuDescription : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>
     {
         public AppServiceSkuDescription() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.AppService.Models.AppServiceSkuCapability> Capabilities { get { throw null; } }
@@ -5526,10 +5534,11 @@ namespace Azure.ResourceManager.AppService.Models
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.AppService.Models.AppServiceSkuCapacity SkuCapacity { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.AppServiceSkuDescription Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.Models.AppServiceSkuDescription Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.Models.AppServiceSkuDescription System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.AppServiceSkuDescription System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.AppServiceSkuDescription>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppServiceSkuName : System.IEquatable<Azure.ResourceManager.AppService.Models.AppServiceSkuName>
@@ -6636,16 +6645,17 @@ namespace Azure.ResourceManager.AppService.Models
         public string Keywords { get { throw null; } set { } }
         public int? MaxDomainRecommendations { get { throw null; } set { } }
     }
-    public partial class FileSystemHttpLogsConfig : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>
+    public partial class FileSystemHttpLogsConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>
     {
         public FileSystemHttpLogsConfig() { }
         public bool? IsEnabled { get { throw null; } set { } }
         public int? RetentionInDays { get { throw null; } set { } }
         public int? RetentionInMb { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.FileSystemHttpLogsConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ForwardProxyConvention
     {
@@ -7552,7 +7562,7 @@ namespace Azure.ResourceManager.AppService.Models
         public string Description { get { throw null; } }
         public string Name { get { throw null; } }
     }
-    public partial class SiteConfigProperties : Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.SiteConfigProperties>, Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.SiteConfigProperties>
+    public partial class SiteConfigProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteConfigProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigProperties>
     {
         public SiteConfigProperties() { }
         public string AcrUserManagedIdentityId { get { throw null; } set { } }
@@ -7622,10 +7632,11 @@ namespace Azure.ResourceManager.AppService.Models
         public string WebsiteTimeZone { get { throw null; } set { } }
         public string WindowsFxVersion { get { throw null; } set { } }
         public int? XManagedServiceIdentityId { get { throw null; } set { } }
-        Azure.ResourceManager.AppService.Models.SiteConfigProperties Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        void Azure.Core.Serialization.IModelJsonSerializable<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options) { }
-        Azure.ResourceManager.AppService.Models.SiteConfigProperties Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        System.BinaryData Azure.Core.Serialization.IModelSerializable<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Serialize(Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
+        Azure.ResourceManager.AppService.Models.SiteConfigProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppService.Models.SiteConfigProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppService.Models.SiteConfigProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SiteConfigPropertiesDictionary
     {

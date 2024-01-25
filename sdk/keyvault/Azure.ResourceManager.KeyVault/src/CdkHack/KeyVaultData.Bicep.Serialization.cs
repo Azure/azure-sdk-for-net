@@ -6,37 +6,50 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Serialization;
+using Azure.ResourceManager.KeyVault.Models;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class KeyVaultData : IModelJsonSerializable<KeyVaultData>
+    public partial class KeyVaultData : IJsonModel<KeyVaultData>
     {
-        void IModelJsonSerializable<KeyVaultData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<KeyVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        KeyVaultData IModelJsonSerializable<KeyVaultData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        KeyVaultData IJsonModel<KeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeKeyVaultData(document.RootElement);
         }
 
-        BinaryData IModelSerializable<KeyVaultData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<KeyVaultData>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
 
-        KeyVaultData IModelSerializable<KeyVaultData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KeyVaultData IPersistableModel<KeyVaultData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeKeyVaultData(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<KeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");
