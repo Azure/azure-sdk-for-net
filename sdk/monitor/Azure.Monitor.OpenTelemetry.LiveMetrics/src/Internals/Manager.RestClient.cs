@@ -102,14 +102,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     _lastSuccessfulPost = DateTimeOffset.UtcNow;
 
-                    bool etagUpdated = false;
-                    if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
-                    {
-                        Debug.WriteLine($"OnPost: updated etag: {response.ConfigurationEtag}");
-                        _etag = response.ConfigurationEtag;
-                        etagUpdated = true;
-                    }
-
                     if (!response.Subscribed)
                     {
                         Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}");
@@ -119,9 +111,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                     }
                     else
                     {
-                        if (etagUpdated && response.CollectionConfigurationInfo != null)
+                        if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
                         {
-                            _collectionConfigurationInfo = response.CollectionConfigurationInfo;
+                            Debug.WriteLine($"OnPost: updated etag: {response.ConfigurationEtag}");
+                            _etag = response.ConfigurationEtag;
+                            if (response.CollectionConfigurationInfo != null)
+                            {
+                                _collectionConfigurationInfo = response.CollectionConfigurationInfo;
+                            }
                         }
                     }
 
