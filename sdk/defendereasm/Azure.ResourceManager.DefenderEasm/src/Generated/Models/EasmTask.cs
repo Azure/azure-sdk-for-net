@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.DefenderEasm.Models
     /// <summary> Task details. </summary>
     public partial class EasmTask : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EasmTask"/>. </summary>
         public EasmTask()
         {
@@ -32,7 +65,8 @@ namespace Azure.ResourceManager.DefenderEasm.Models
         /// <param name="phase"> the phase the task is in. </param>
         /// <param name="reason"> The reason the task was moved into its current state, if the task wasn't completed. </param>
         /// <param name="metadata"> The reason the task was moved into its current state, if the task wasn't completed. </param>
-        internal EasmTask(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EasmResourceProvisioningState? provisioningState, string startedAt, string completedAt, string lastPolledAt, string state, string phase, string reason, BinaryData metadata) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EasmTask(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EasmResourceProvisioningState? provisioningState, string startedAt, string completedAt, string lastPolledAt, string state, string phase, string reason, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             StartedAt = startedAt;
@@ -42,6 +76,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             Phase = phase;
             Reason = reason;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource provisioning state. </summary>

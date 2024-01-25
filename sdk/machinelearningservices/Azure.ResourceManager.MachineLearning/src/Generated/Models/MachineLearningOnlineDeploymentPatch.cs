@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -19,8 +20,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineDeploymentPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> Sku details required for ARM contract for Autoscaling. </param>
-        internal MachineLearningOnlineDeploymentPatch(IDictionary<string, string> tags, MachineLearningSkuPatch sku) : base(tags)
+        internal MachineLearningOnlineDeploymentPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningSkuPatch sku) : base(tags, serializedAdditionalRawData)
         {
             Sku = sku;
         }

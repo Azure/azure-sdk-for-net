@@ -1405,9 +1405,10 @@ namespace Azure.Communication.CallAutomation
     {
         internal TranscriptionData() { }
         public double Confidence { get { throw null; } set { } }
+        public ulong Duration { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TextFormat Format { get { throw null; } set { } }
         public ulong Offset { get { throw null; } set { } }
-        public Azure.Communication.CommunicationUserIdentifier Participant { get { throw null; } set { } }
+        public Azure.Communication.CommunicationIdentifier Participant { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.ResultStatus ResultStatus { get { throw null; } set { } }
         public string Text { get { throw null; } set { } }
         public System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.WordData> Words { get { throw null; } set { } }
@@ -1607,6 +1608,8 @@ namespace Azure.Communication.CallAutomation
     public partial class WordData
     {
         public WordData() { }
+        [System.Text.Json.Serialization.JsonPropertyNameAttribute("duration")]
+        public ulong Duration { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("offset")]
         public ulong Offset { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("text")]

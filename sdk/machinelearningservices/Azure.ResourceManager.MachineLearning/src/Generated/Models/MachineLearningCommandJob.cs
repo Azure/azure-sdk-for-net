@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentId"> ARM resource ID of the component resource. </param>
         /// <param name="computeId"> ARM resource ID of the compute resource. </param>
         /// <param name="displayName"> Display name of job. </param>
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="parameters"> Input parameters. </param>
         /// <param name="queueSettings"> Queue settings for the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, AutologgerSettings autologgerSettings, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, JobQueueSettings queueSettings, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
+        internal MachineLearningCommandJob(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier componentId, ResourceIdentifier computeId, string displayName, string experimentName, MachineLearningIdentityConfiguration identity, bool? isArchived, JobType jobType, NotificationSetting notificationSetting, IDictionary<string, SecretConfiguration> secretsConfiguration, IDictionary<string, MachineLearningJobService> services, MachineLearningJobStatus? status, AutologgerSettings autologgerSettings, ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, MachineLearningJobInput> inputs, MachineLearningCommandJobLimits limits, IDictionary<string, MachineLearningJobOutput> outputs, BinaryData parameters, JobQueueSettings queueSettings, MachineLearningJobResourceConfiguration resources) : base(description, properties, tags, serializedAdditionalRawData, componentId, computeId, displayName, experimentName, identity, isArchived, jobType, notificationSetting, secretsConfiguration, services, status)
         {
             AutologgerSettings = autologgerSettings;
             CodeId = codeId;
@@ -93,6 +94,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             QueueSettings = queueSettings;
             Resources = resources;
             JobType = jobType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningCommandJob"/> for deserialization. </summary>
+        internal MachineLearningCommandJob()
+        {
         }
 
         /// <summary> Distribution configuration of the job. If set, this should be one of Mpi, Tensorflow, PyTorch, or null. </summary>

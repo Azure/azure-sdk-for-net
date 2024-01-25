@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Azure ML online inferencing configurations. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureMLOnlineInferencingServer"/>. </summary>
         /// <param name="serverType"> [Required] Inferencing server type for various targets. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="codeConfiguration"> Code configuration for AML inferencing server. </param>
-        internal AzureMLOnlineInferencingServer(InferencingServerType serverType, MachineLearningCodeConfiguration codeConfiguration) : base(serverType)
+        internal AzureMLOnlineInferencingServer(InferencingServerType serverType, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningCodeConfiguration codeConfiguration) : base(serverType, serializedAdditionalRawData)
         {
             CodeConfiguration = codeConfiguration;
             ServerType = serverType;

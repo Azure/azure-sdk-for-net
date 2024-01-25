@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> AML Token identity configuration. </summary>
@@ -18,7 +21,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="AmlToken"/>. </summary>
         /// <param name="identityType"> [Required] Specifies the type of identity framework. </param>
-        internal AmlToken(IdentityConfigurationType identityType) : base(identityType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AmlToken(IdentityConfigurationType identityType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(identityType, serializedAdditionalRawData)
         {
             IdentityType = identityType;
         }

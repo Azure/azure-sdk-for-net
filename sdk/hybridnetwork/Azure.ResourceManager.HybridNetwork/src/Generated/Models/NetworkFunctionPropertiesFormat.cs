@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -17,6 +18,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// </summary>
     public abstract partial class NetworkFunctionPropertiesFormat
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFunctionPropertiesFormat"/>. </summary>
         protected NetworkFunctionPropertiesFormat()
         {
@@ -40,7 +73,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             PublisherName = publisherName;
@@ -54,6 +88,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             AllowSoftwareUpdate = allowSoftwareUpdate;
             ConfigurationType = configurationType;
             RoleOverrideValues = roleOverrideValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the network function resource. </summary>

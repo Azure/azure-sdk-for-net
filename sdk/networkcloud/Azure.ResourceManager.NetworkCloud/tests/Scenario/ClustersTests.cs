@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public ClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task Clusters()
         {
             var clusterName = Recording.GenerateAssetName("cluster");

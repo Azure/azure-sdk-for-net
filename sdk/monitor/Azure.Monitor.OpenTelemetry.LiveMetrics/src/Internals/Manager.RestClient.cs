@@ -107,7 +107,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                         _etag = response.ConfigurationEtag;
                     }
 
-                    if (response.Subscribed)
+                    if (!response.Subscribed)
                     {
                         Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}");
                         _etag = string.Empty;
