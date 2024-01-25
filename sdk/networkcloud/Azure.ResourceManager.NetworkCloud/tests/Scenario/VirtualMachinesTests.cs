@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public VirtualMachinesTests(bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task VirtualMachines()
         {
             NetworkCloudVirtualMachineCollection collection = ResourceGroupResource.GetNetworkCloudVirtualMachines();

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -22,8 +23,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="meterGuid"> Validation status of requested data center and transport. </param>
-        internal Pav2MeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, Guid? meterGuid) : base(billingType, multiplier, chargingType)
+        internal Pav2MeterDetails(BillingType billingType, double? multiplier, EdgeOrderProductChargingType? chargingType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid? meterGuid) : base(billingType, multiplier, chargingType, serializedAdditionalRawData)
         {
             MeterGuid = meterGuid;
             BillingType = billingType;

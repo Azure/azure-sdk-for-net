@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public L3NetworksTests  (bool isAsync) : base(isAsync) {}
 
         [Test, MaxTime(1800000)]
+        [RecordedTest]
         public async Task L3Networks()
         {
             var l3NetworkCollection = ResourceGroupResource.GetNetworkCloudL3Networks();

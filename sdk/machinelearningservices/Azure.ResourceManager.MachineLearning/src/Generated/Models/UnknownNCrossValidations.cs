@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownNCrossValidations. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNCrossValidations"/>. </summary>
         /// <param name="mode"> [Required] Mode for determining N-Cross validations. </param>
-        internal UnknownNCrossValidations(NCrossValidationsMode mode) : base(mode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNCrossValidations(NCrossValidationsMode mode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, serializedAdditionalRawData)
         {
             Mode = mode;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownNCrossValidations"/> for deserialization. </summary>
+        internal UnknownNCrossValidations()
+        {
         }
     }
 }
