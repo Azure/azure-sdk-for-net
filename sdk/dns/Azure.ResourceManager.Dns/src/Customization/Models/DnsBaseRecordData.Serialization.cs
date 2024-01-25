@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Dns
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            Optional<ResourceManager.Models.SystemData> systemData = default;
             Optional<IDictionary<string, string>> metadata = default;
             Optional<long> ttl = default;
             Optional<string> fqdn = default;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Dns
                         property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
+                    systemData = JsonSerializer.Deserialize<ResourceManager.Models.SystemData>(property.Value.ToString());
                     continue;
                 }
                 if (property.NameEquals("properties"))
