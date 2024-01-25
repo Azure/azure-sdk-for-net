@@ -58,6 +58,8 @@ public sealed partial class ClientPipeline
     {
         Argument.AssertNotNull(options, nameof(options));
 
+        options.Freeze();
+
         // Add length of client-specific policies.
         int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
 
