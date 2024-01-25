@@ -278,6 +278,16 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockConnection = new Mock<EventHubConnection>();
             var mockProcessor = new Mock<MinimalProcessorMock>(65, "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), options, mockLoadBalancer.Object) { CallBase = true };
 
+            mockLogger
+                .Setup(logger => logger.EventProcessorLoadBalancingCycleComplete(
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<int>(),
+                    It.IsAny<int>(),
+                    It.IsAny<double>(),
+                    It.IsAny<double>()))
+                .Callback(() => completionSource.TrySetResult(true));
+
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
                 .Callback(() =>
@@ -305,8 +315,7 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                .Protected()
                .Setup<Task>("OnProcessingErrorAsync", ItExpr.IsAny<Exception>(), ItExpr.IsAny<EventProcessorPartition>(), ItExpr.IsAny<string>(), ItExpr.IsAny<CancellationToken>())
-               .Callback(() => completionSource.TrySetResult(true))
-               .Returns(Task.Delay(TimeSpan.FromSeconds(20)));
+               .Returns(Task.Delay(TimeSpan.FromSeconds(20), cancellationSource.Token));
 
             expectedException.SetFailureOperation(Resources.OperationClaimOwnership);
             expectedException.SetFailureData(partitionId);
