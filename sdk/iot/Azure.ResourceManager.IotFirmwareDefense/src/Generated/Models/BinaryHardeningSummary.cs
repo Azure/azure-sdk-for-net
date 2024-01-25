@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
     /// <summary> Binary hardening summary percentages. </summary>
     public partial class BinaryHardeningSummary
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BinaryHardeningSummary"/>. </summary>
         internal BinaryHardeningSummary()
         {
@@ -22,7 +57,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="relro"> RELRO summary percentage. </param>
         /// <param name="canary"> Canary summary percentage. </param>
         /// <param name="stripped"> Stripped summary percentage. </param>
-        internal BinaryHardeningSummary(long? totalFiles, int? nx, int? pie, int? relro, int? canary, int? stripped)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BinaryHardeningSummary(long? totalFiles, int? nx, int? pie, int? relro, int? canary, int? stripped, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TotalFiles = totalFiles;
             Nx = nx;
@@ -30,6 +66,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             Relro = relro;
             Canary = canary;
             Stripped = stripped;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Total number of binaries that were analyzed. </summary>
