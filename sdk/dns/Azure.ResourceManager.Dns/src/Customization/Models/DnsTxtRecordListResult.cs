@@ -44,6 +44,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// </para>
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DnsTxtRecordListResult"/>. </summary>
         internal DnsTxtRecordListResult()
         {

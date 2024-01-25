@@ -49,6 +49,7 @@ namespace Azure.ResourceManager.Dns
         /// </para>
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DnsRecordData"/>. </summary>
         public DnsRecordData()
         {
