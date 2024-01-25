@@ -35,7 +35,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task HappyPath()
         {
-            SequenceBufferReader reader = new ModelWriter(_resourceProviderData, _wireOptions).GetSequenceBufferReader();
+            BufferSequence.Reader reader = new ModelWriter(_resourceProviderData, _wireOptions).GetSequenceBufferReader();
             Assert.IsTrue(reader.TryComputeLength(out var length));
             Assert.AreEqual(_modelSize, length);
 

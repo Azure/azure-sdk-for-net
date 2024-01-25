@@ -85,7 +85,7 @@ public abstract class BinaryContent : IDisposable
         private readonly ModelReaderWriterOptions _options;
 
         // Used when _model is an IJsonModel
-        private SequenceBufferReader? _sequenceReader;
+        private BufferSequence.Reader? _sequenceReader;
 
         // Used when _model is an IModel
         private BinaryData? _data;
@@ -96,7 +96,7 @@ public abstract class BinaryContent : IDisposable
             _options = options;
         }
 
-        private SequenceBufferReader SequenceReader
+        private BufferSequence.Reader SequenceReader
         {
             get
             {

@@ -10,9 +10,9 @@ using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
 {
-    public class SequenceBufferReaderTests
+    public class BufferSequenceReaderTests
     {
-        private readonly FieldInfo _copyCountField = typeof(SequenceBufferReader).GetField("_copyCount", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private readonly FieldInfo _copyCountField = typeof(BufferSequence.Reader).GetField("_copyCount", BindingFlags.NonPublic | BindingFlags.Instance)!;
         private const int _bufferSize = 100000000;
 
         [Test]
@@ -21,7 +21,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             using MemoryStream stream = new MemoryStream();
             using MemoryStream stream2 = new MemoryStream();
 
-            SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader(totalSize: _bufferSize);
+            BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
 
             //start the first copy before disposing
             var copyTask = StartAsyncTask(() => reader.CopyTo(stream, default));
@@ -36,7 +36,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var disposeTask = StartAsyncTask(reader.Dispose);
 
             //make sure the dispose bit has been flipped
-            while (!SequenceBufferHelper.IsDisposedField.GetValue(reader)!.Equals(1))
+            while (!BufferSequenceHelper.IsDisposedField.GetValue(reader)!.Equals(1))
             {
                 Thread.Sleep(0);
             }
@@ -64,7 +64,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             using MemoryStream stream = new MemoryStream();
             using MemoryStream stream2 = new MemoryStream();
 
-            SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader(totalSize: _bufferSize);
+            BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
 
             //start the first copy before disposing
             var copyTask = StartAsyncTask(async () =>
@@ -82,7 +82,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var disposeTask = StartAsyncTask(reader.Dispose);
 
             //make sure the dispose bit has been flipped
-            while (!SequenceBufferHelper.IsDisposedField.GetValue(reader)!.Equals(1))
+            while (!BufferSequenceHelper.IsDisposedField.GetValue(reader)!.Equals(1))
             {
                 Thread.Sleep(0);
             }
@@ -110,7 +110,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             BinaryData? data = null;
             BinaryData? data2 = null;
 
-            SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader(totalSize: _bufferSize);
+            BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader(totalSize: _bufferSize);
 
             //start the first copy before disposing
             var copyTask = StartAsyncTask(() => data = reader.ToBinaryData());
@@ -125,7 +125,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
             var disposeTask = StartAsyncTask(reader.Dispose);
 
             //make sure the dispose bit has been flipped
-            while (!SequenceBufferHelper.IsDisposedField.GetValue(reader)!.Equals(1))
+            while (!BufferSequenceHelper.IsDisposedField.GetValue(reader)!.Equals(1))
             {
                 Thread.Sleep(0);
             }
@@ -154,7 +154,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public void UseAfterDispose()
         {
-            SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader(totalSize: 4096);
+            BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader(totalSize: 4096);
             reader.Dispose();
 
             Assert.Throws<ObjectDisposedException>(() => reader.TryComputeLength(out var length));
@@ -168,7 +168,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void ParallelComputLength()
         {
             int size = 100000;
-            using SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader();
+            using BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader();
 
             Parallel.For(0, 1000000, i =>
             {
@@ -181,7 +181,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void ParallelCopy()
         {
             int size = 100000;
-            using SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader();
+            using BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader();
 
             Parallel.For(0, 10000, i =>
             {
@@ -195,7 +195,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         public void ParallelCopyAsync()
         {
             int size = 100000;
-            using SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader();
+            using BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader();
 
             Parallel.For(0, 10000, async i =>
             {
@@ -208,7 +208,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task CancellationToken()
         {
-            using SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader();
+            using BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader();
             reader.TryComputeLength(out var length);
             using MemoryStream stream = new MemoryStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -233,7 +233,7 @@ namespace System.ClientModel.Tests.Internal.ModelReaderWriterTests
         [Test]
         public async Task CancellationTokenAsync()
         {
-            using SequenceBufferReader reader = SequenceBufferHelper.SetUpBufferReader();
+            using BufferSequence.Reader reader = BufferSequenceHelper.SetUpBufferReader();
             reader.TryComputeLength(out var length);
             using MemoryStream stream = new MemoryStream();
             CancellationTokenSource tokenSource = new CancellationTokenSource();

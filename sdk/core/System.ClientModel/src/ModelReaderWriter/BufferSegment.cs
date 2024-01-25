@@ -3,7 +3,7 @@
 
 namespace System.ClientModel.Internal;
 
-internal struct SequenceBuffer
+internal struct BufferSegment
 {
     public byte[] Array;
     public int Written;

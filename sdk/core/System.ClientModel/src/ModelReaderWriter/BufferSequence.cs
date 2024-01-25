@@ -11,34 +11,34 @@ namespace System.ClientModel.Internal;
 /// Since there is no way to ensure someone didn't keep a reference to one of the buffers
 /// it must be disposed of in the same context it was created and its referenced should not be stored or shared.
 /// </summary>
-internal sealed class SequenceBufferWriter : IBufferWriter<byte>, IDisposable
+internal sealed partial class BufferSequence : IBufferWriter<byte>, IDisposable
 {
-    private volatile SequenceBuffer[] _buffers; // this is an array so items can be accessed by ref
+    private volatile BufferSegment[] _buffers; // this is an array so items can be accessed by ref
     private volatile int _count;
     private readonly int _segmentSize;
 
     /// <summary>
-    /// Initializes a new instance of <see cref="SequenceBufferWriter"/>.
+    /// Initializes a new instance of <see cref="BufferSequence"/>.
     /// </summary>
     /// <param name="segmentSize">The size of each buffer segment.</param>
-    public SequenceBufferWriter(int segmentSize = 16384)
+    public BufferSequence(int segmentSize = 16384)
     {
         // we perf tested a very large and a small model and found that the performance
         // for 4k, 8k, 16k, 32k, was neglible for the small model but had a 30% alloc improvment
         // from 4k to 16k on the very large model.
         _segmentSize = segmentSize;
-        _buffers = Array.Empty<SequenceBuffer>();
+        _buffers = Array.Empty<BufferSegment>();
     }
 
     /// <summary>
-    /// Notifies the <see cref="SequenceBufferWriter"/> that bytes bytes were written to the output <see cref="Span{T}"/> or <see cref="Memory{T}"/>.
+    /// Notifies the <see cref="BufferSequence"/> that bytes bytes were written to the output <see cref="Span{T}"/> or <see cref="Memory{T}"/>.
     /// You must request a new buffer after calling <see cref="Advance(int)"/> to continue writing more data; you cannot write to a previously acquired buffer.
     /// </summary>
     /// <param name="bytesWritten">The number of bytes written to the <see cref="Span{T}"/> or <see cref="Memory{T}"/>.</param>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     public void Advance(int bytesWritten)
     {
-        ref SequenceBuffer last = ref _buffers[_count - 1];
+        ref BufferSegment last = ref _buffers[_count - 1];
         last.Written += bytesWritten;
         if (last.Written > last.Array.Length)
         {
@@ -65,7 +65,7 @@ internal sealed class SequenceBufferWriter : IBufferWriter<byte>, IDisposable
             ExpandBuffers(sizeToRent);
         }
 
-        ref SequenceBuffer last = ref _buffers[_count - 1];
+        ref BufferSegment last = ref _buffers[_count - 1];
         Memory<byte> free = last.Array.AsMemory(last.Written);
         if (free.Length >= sizeHint)
         {
@@ -85,7 +85,7 @@ internal sealed class SequenceBufferWriter : IBufferWriter<byte>, IDisposable
         {
             int bufferCount = _count == 0 ? 1 : _count * 2;
 
-            SequenceBuffer[] resized = new SequenceBuffer[bufferCount];
+            BufferSegment[] resized = new BufferSegment[bufferCount];
             if (_count > 0)
             {
                 _buffers.CopyTo(resized, 0);
@@ -113,13 +113,13 @@ internal sealed class SequenceBufferWriter : IBufferWriter<byte>, IDisposable
     public void Dispose()
     {
         int bufferCountToFree;
-        SequenceBuffer[] buffersToFree;
+        BufferSegment[] buffersToFree;
         lock (_lock)
         {
             bufferCountToFree = _count;
             buffersToFree = _buffers;
             _count = 0;
-            _buffers = Array.Empty<SequenceBuffer>();
+            _buffers = Array.Empty<BufferSegment>();
         }
 
         for (int i = 0; i < bufferCountToFree; i++)
@@ -128,13 +128,13 @@ internal sealed class SequenceBufferWriter : IBufferWriter<byte>, IDisposable
         }
     }
 
-    public SequenceBufferReader GetSequenceBufferReader()
+    public Reader ExtractSequenceBufferReader()
     {
         lock (_lock)
         {
-            SequenceBufferReader reader = new SequenceBufferReader(_buffers, _count);
+            Reader reader = new ReaderInstance(_buffers, _count);
             _count = 0;
-            _buffers = Array.Empty<SequenceBuffer>();
+            _buffers = Array.Empty<BufferSegment>();
             return reader;
         }
     }
