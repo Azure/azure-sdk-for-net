@@ -271,7 +271,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var partitionIds = new[] { "0", partitionId };
             var wrappedExcepton = new NotImplementedException("BOOM!");
             var expectedException = new EventHubsException(false, "eh", "LB FAIL", EventHubsException.FailureReason.GeneralError, wrappedExcepton);
-            var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var loadBalanceCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+            var errorHandlerCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var options = new EventProcessorOptions { LoadBalancingStrategy = LoadBalancingStrategy.Balanced, LoadBalancingUpdateInterval = TimeSpan.FromSeconds(10), PartitionOwnershipExpirationInterval = TimeSpan.FromSeconds(30) };
             var mockLogger = new Mock<EventHubsEventSource>();
             var mockLoadBalancer = new Mock<PartitionLoadBalancer>();
@@ -286,7 +287,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     It.IsAny<int>(),
                     It.IsAny<double>(),
                     It.IsAny<double>()))
-                .Callback(() => completionSource.TrySetResult(true));
+                .Callback(() => loadBalanceCompletionSource.TrySetResult(true));
 
             mockLoadBalancer
                 .Setup(lb => lb.RunLoadBalancingAsync(partitionIds, It.IsAny<CancellationToken>()))
@@ -315,14 +316,15 @@ namespace Azure.Messaging.EventHubs.Tests
             mockProcessor
                .Protected()
                .Setup<Task>("OnProcessingErrorAsync", ItExpr.IsAny<Exception>(), ItExpr.IsAny<EventProcessorPartition>(), ItExpr.IsAny<string>(), ItExpr.IsAny<CancellationToken>())
-               .Returns(Task.Delay(TimeSpan.FromSeconds(20), cancellationSource.Token));
+               .Returns(Task.Delay(TimeSpan.FromSeconds(20), cancellationSource.Token))
+               .Callback(() => errorHandlerCompletionSource.TrySetResult(true));
 
             expectedException.SetFailureOperation(Resources.OperationClaimOwnership);
             expectedException.SetFailureData(partitionId);
 
             await mockProcessor.Object.StartProcessingAsync(cancellationSource.Token);
 
-            await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
+            await Task.WhenAny(Task.WhenAll(loadBalanceCompletionSource.Task, errorHandlerCompletionSource.Task), Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             Assert.That(mockProcessor.Object.Status, Is.EqualTo(EventProcessorStatus.Running), "The processor should not fault if a load balancing cycle fails.");
