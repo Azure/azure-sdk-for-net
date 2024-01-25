@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -47,16 +48,16 @@ namespace Azure.Communication.JobRouter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RouterQueue"/>. </summary>
-        /// <param name="etag"> The entity tag for this resource. </param>
+        /// <param name="eTag"> The entity tag for this resource. </param>
         /// <param name="id"> Id of a queue. </param>
         /// <param name="name"> Friendly name of this queue. </param>
         /// <param name="distributionPolicyId"> Id of a distribution policy that will determine how a job is distributed to workers. </param>
         /// <param name="labels"> A set of key/value pairs that are identifying attributes used by the rules engines to make decisions. Values must be primitive values - number, string, boolean. </param>
         /// <param name="exceptionPolicyId"> Id of an exception policy that determines various job escalation rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouterQueue(string etag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RouterQueue(ETag eTag, string id, string name, string distributionPolicyId, IDictionary<string, object> labels, string exceptionPolicyId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            _etag = etag;
+            ETag = eTag;
             Id = id;
             Name = name;
             DistributionPolicyId = distributionPolicyId;

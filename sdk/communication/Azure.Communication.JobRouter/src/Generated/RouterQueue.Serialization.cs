@@ -30,7 +30,7 @@ namespace Azure.Communication.JobRouter
             if (options.Format != "W")
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(_etag);
+                writer.WriteStringValue(ETag.ToString());
             }
             if (options.Format != "W")
             {
@@ -106,7 +106,7 @@ namespace Azure.Communication.JobRouter
             {
                 return null;
             }
-            string etag = default;
+            ETag etag = default;
             string id = default;
             Optional<string> name = default;
             Optional<string> distributionPolicyId = default;
@@ -118,7 +118,7 @@ namespace Azure.Communication.JobRouter
             {
                 if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
