@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="provisioningState"> Provisioning State of the DNSSEC configuration. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
         /// <returns> A new <see cref="Dns.DnssecConfigData"/> instance for mocking. </returns>
-        public static DnssecConfigData DnssecConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, ETag? etag = null, string provisioningState = null, IEnumerable<SigningKey> signingKeys = null)
+        public static DnssecConfigData DnssecConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string provisioningState = null, IEnumerable<SigningKey> signingKeys = null)
         {
             signingKeys ??= new List<SigningKey>();
 
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
         /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, ResourceManager.Models.SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? maxNumberOfRecordsPerRecord = null, long? numberOfRecords = null, IEnumerable<string> nameServers = null, DnsZoneType? zoneType = null, IEnumerable<WritableSubResource> registrationVirtualNetworks = null, IEnumerable<WritableSubResource> resolutionVirtualNetworks = null, IEnumerable<SigningKey> signingKeys = null)
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, long? maxNumberOfRecords = null, long? maxNumberOfRecordsPerRecord = null, long? numberOfRecords = null, IEnumerable<string> nameServers = null, DnsZoneType? zoneType = null, IEnumerable<WritableSubResource> registrationVirtualNetworks = null, IEnumerable<WritableSubResource> resolutionVirtualNetworks = null, IEnumerable<SigningKey> signingKeys = null)
         {
             tags ??= new Dictionary<string, string>();
             nameServers ??= new List<string>();
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.Dns.DnsZoneData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<WritableSubResource> registrationVirtualNetworks, IEnumerable<WritableSubResource> resolutionVirtualNetworks)
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IEnumerable<string> nameServers, DnsZoneType? zoneType, IEnumerable<WritableSubResource> registrationVirtualNetworks, IEnumerable<WritableSubResource> resolutionVirtualNetworks)
         {
             return DnsZoneData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, maxNumberOfRecords: maxNumberOfRecords, maxNumberOfRecordsPerRecord: maxNumberOfRecordsPerRecord, numberOfRecords: numberOfRecords, nameServers: nameServers, zoneType: zoneType, registrationVirtualNetworks: registrationVirtualNetworks, resolutionVirtualNetworks: resolutionVirtualNetworks, signingKeys: default);
         }

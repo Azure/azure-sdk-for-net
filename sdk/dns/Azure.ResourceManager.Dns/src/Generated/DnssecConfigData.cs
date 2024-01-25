@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="etag"> The etag of the DNSSEC configuration. </param>
         /// <param name="provisioningState"> Provisioning State of the DNSSEC configuration. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
-        internal DnssecConfigData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, ETag? etag, string provisioningState, IReadOnlyList<SigningKey> signingKeys) : base(id, name, resourceType, systemData)
+        internal DnssecConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string provisioningState, IReadOnlyList<SigningKey> signingKeys) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             ProvisioningState = provisioningState;

@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Dns
         /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
-        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IReadOnlyList<string> nameServers, DnsZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks, IReadOnlyList<SigningKey> signingKeys) : base(id, name, resourceType, systemData, tags, location)
+        internal DnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, long? maxNumberOfRecords, long? maxNumberOfRecordsPerRecord, long? numberOfRecords, IReadOnlyList<string> nameServers, DnsZoneType? zoneType, IList<WritableSubResource> registrationVirtualNetworks, IList<WritableSubResource> resolutionVirtualNetworks, IReadOnlyList<SigningKey> signingKeys) : base(id, name, resourceType, systemData, tags, location)
         {
             ETag = etag;
             MaxNumberOfRecords = maxNumberOfRecords;
