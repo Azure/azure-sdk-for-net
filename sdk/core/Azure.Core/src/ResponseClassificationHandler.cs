@@ -34,10 +34,48 @@ namespace Azure.Core
         /// TBD.
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="isError"></param>
+        /// <returns></returns>
+        public override sealed bool TryClassify(PipelineMessage message, out bool isError)
+        {
+            HttpMessage httpMessage = AssertHttpMessage(message);
+
+            return TryClassify(httpMessage, out isError);
+        }
+
+        // TODO: remove duplication with this an retry policy version
+        private static HttpMessage AssertHttpMessage(PipelineMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Invalid type for PipelineMessage: '{message?.GetType()}'.");
+            }
+
+            return httpMessage;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
         /// <param name="exception"></param>
         /// <param name="isRetriable"></param>
         /// <returns></returns>
         public virtual bool TryClassify(HttpMessage message, Exception? exception, out bool isRetriable)
             => base.TryClassify(message, exception, out isRetriable);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <param name="isRetriable"></param>
+        /// <returns></returns>
+        public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            HttpMessage httpMessage = AssertHttpMessage(message);
+
+            return TryClassify(httpMessage, exception, out isRetriable);
+        }
     }
 }

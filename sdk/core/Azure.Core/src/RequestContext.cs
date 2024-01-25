@@ -87,5 +87,21 @@ namespace Azure
         /// used in a method call.</exception>
         public void AddClassifier(ResponseClassificationHandler classifier)
             => base.AddClassifier(classifier);
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        public override void Apply(PipelineMessage message)
+        {
+            base.Apply(message);
+
+            // Replace with Azure.Core type.  TODO: maybe we can optimize
+            if (message.MessageClassifier is not null &&
+                message.MessageClassifier is not ResponseClassifier)
+            {
+                message.MessageClassifier = new ChainingClassifier(default, default, message.MessageClassifier);
+            }
+        }
     }
 }

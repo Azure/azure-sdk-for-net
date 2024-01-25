@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 
 namespace Azure.Core
 {
@@ -20,11 +21,11 @@ namespace Azure.Core
     internal class ChainingClassifier : ResponseClassifier
     {
         private ResponseClassificationHandler[]? _handlers;
-        private ResponseClassifier _endOfChain;
+        private PipelineMessageClassifier _endOfChain;
 
         public ChainingClassifier((int Status, bool IsError)[]? statusCodes,
             ResponseClassificationHandler[]? handlers,
-            ResponseClassifier endOfChain)
+            PipelineMessageClassifier endOfChain)
         {
             if (handlers != null)
             {

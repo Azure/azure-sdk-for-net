@@ -214,6 +214,7 @@ namespace Azure
         public new Azure.ErrorOptions ErrorOptions { get { throw null; } set { } }
         public void AddClassifier(Azure.Core.ResponseClassificationHandler classifier) { }
         public void AddPolicy(Azure.Core.Pipeline.HttpPipelinePolicy policy, Azure.Core.HttpPipelinePosition position) { }
+        public override void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
         public static implicit operator Azure.RequestContext (Azure.ErrorOptions options) { throw null; }
     }
     public partial class RequestFailedException : System.ClientModel.ClientResultException, System.Runtime.Serialization.ISerializable
@@ -675,6 +676,8 @@ namespace Azure.Core
         public ResponseClassificationHandler() { }
         public virtual bool TryClassify(Azure.Core.HttpMessage message, out bool isError) { throw null; }
         public virtual bool TryClassify(Azure.Core.HttpMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
+        public sealed override bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError) { throw null; }
+        public override bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
     }
     public partial class ResponseClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {
