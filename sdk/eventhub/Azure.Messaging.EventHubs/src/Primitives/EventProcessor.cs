@@ -986,7 +986,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             // Start processing in the background and return the processor metadata.  Since the task is
             // expected to run continually until the processor is stopped or ownership changes, mark it as
-            // long-running.  Other than the long-running designation, use the options used intentionally match
+            // long-running.  Other than the long-running designation, the options used intentionally match
             // the recommended defaults used by Task.Run.
             //
             // For more context, see: https://devblogs.microsoft.com/pfxteam/task-run-vs-task-factory-startnew/
@@ -1373,7 +1373,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 // Start processing in the background. Since the task is expected to run continually
                 // until the processor is stopped or ownership changes, mark it as long-running.
-                // Other than the long-running designation, use the options used intentionally match
+                // Other than the long-running designation, the options used intentionally match
                 // the recommended defaults used by Task.Run.
                 //
                 // For more context, see: https://devblogs.microsoft.com/pfxteam/task-run-vs-task-factory-startnew/
