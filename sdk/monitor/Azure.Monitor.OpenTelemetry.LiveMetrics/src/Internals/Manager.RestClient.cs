@@ -48,8 +48,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                     if (response.Subscribed)
                     {
-                        Debug.WriteLine($"OnPing: Subscribed: {response.Subscribed}");
-                        UpdateConfigurationIfUpdated(response);
+                        Debug.WriteLine($"OnPing: Subscribed: {response.Subscribed}.");
+                        RefreshConfigurationOnEtagChange(response);
                         SetPostState();
                     }
                 }
@@ -99,13 +99,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
                     if (!response.Subscribed)
                     {
-                        Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}");
+                        Debug.WriteLine($"OnPost: Subscribed: {response.Subscribed}.");
                         _etag = string.Empty;
                         SetPingState();
                     }
                     else
                     {
-                        UpdateConfigurationIfUpdated(response);
+                        RefreshConfigurationOnEtagChange(response);
                     }
 
                     // TODO: if parsing "x-ms-qps-subscribed" failed, what should do we with the data which was supposed to be sent? (QuickPulseTelemetryModule.OnReturnFailedSamples).
@@ -119,11 +119,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         }
 
         // This method updates etag and CollectionConfigurationInfo if needed. It should be called whenever Subscribed is true.
-        private void UpdateConfigurationIfUpdated(QuickPulseResponse response)
+        private void RefreshConfigurationOnEtagChange(QuickPulseResponse response)
         {
             if (response.ConfigurationEtag != null && response.ConfigurationEtag != _etag)
             {
-                Debug.WriteLine($"Updated etag: {response.ConfigurationEtag}");
+                Debug.WriteLine($"Updated etag: {response.ConfigurationEtag}.");
                 _etag = response.ConfigurationEtag;
                 if (response.CollectionConfigurationInfo != null)
                 {
