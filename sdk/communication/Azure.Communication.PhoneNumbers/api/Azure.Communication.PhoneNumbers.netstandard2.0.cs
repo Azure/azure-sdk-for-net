@@ -1,9 +1,5 @@
 namespace Azure.Communication.PhoneNumbers
 {
-    public partial class AvailablePhoneNumberCost : Azure.Communication.PhoneNumbers.PhoneNumberCost
-    {
-        internal AvailablePhoneNumberCost() { }
-    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BillingFrequency : System.IEquatable<Azure.Communication.PhoneNumbers.BillingFrequency>
     {
