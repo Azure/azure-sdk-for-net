@@ -181,6 +181,7 @@ public class PipelineResponseTests
 
         result = client.GetOptionalCount(1, hasValue: false);
         Assert.IsNull(result.Value);
+        Assert.IsFalse(result.Value.HasValue);
         Assert.AreEqual(404, result.GetRawResponse().Status);
     }
 
