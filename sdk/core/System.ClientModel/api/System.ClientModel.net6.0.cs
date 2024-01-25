@@ -170,6 +170,9 @@ namespace System.ClientModel.Primitives
         protected internal PipelineMessageClassifier() { }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
         public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public virtual bool IsRetriable(System.ClientModel.Primitives.PipelineMessage message, System.Exception exception) { throw null; }
+        public virtual bool IsRetriableException(System.Exception exception) { throw null; }
+        public virtual bool IsRetriableResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
     }
     public abstract partial class PipelinePolicy
     {

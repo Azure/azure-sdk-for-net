@@ -4,7 +4,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Diagnostics;
 
@@ -86,12 +85,6 @@ public partial class RetryPolicy
             Response? response = httpMessage.HasResponse ? httpMessage.Response : default;
             return _delayStrategy.GetNextDelay(response, tryCount + 1);
         }
-
-        protected override async Task WaitCoreAsync(TimeSpan time, CancellationToken cancellationToken)
-            => await _pipelinePolicy.WaitAsync(time, cancellationToken).ConfigureAwait(false);
-
-        protected override void WaitCore(TimeSpan time, CancellationToken cancellationToken)
-            => _pipelinePolicy.Wait(time, cancellationToken);
 
         private static HttpMessage AssertHttpMessage(PipelineMessage message)
         {

@@ -93,17 +93,7 @@ namespace Azure.Core.Pipeline
         /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
         /// <returns>Whether or not to retry.</returns>
         protected virtual bool ShouldRetry(HttpMessage message, Exception? exception)
-        {
-            if (message.RetryNumber >= _maxRetries)
-            {
-                // We've exceeded the maximum number of retries, so don't retry.
-                return false;
-            }
-
-            return exception is null ?
-                message.ResponseClassifier.IsRetriableResponse(message) :
-                message.ResponseClassifier.IsRetriable(message, exception);
-        }
+            => _policy.ShouldRetry(message, exception);
 
         /// <summary>
         /// This method can be overriden to control whether a request should be retried.  It will be called for any response where
@@ -113,8 +103,8 @@ namespace Azure.Core.Pipeline
         /// <param name="message">The message containing the request and response.</param>
         /// <param name="exception">The exception that occurred, if any, which can be used to determine if a retry should occur.</param>
         /// <returns>Whether or not to retry.</returns>
-        protected virtual ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception)
-            => new(ShouldRetry(message, exception));
+        protected virtual async ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception? exception)
+            => await _policy.ShouldRetryAsync(message, exception).ConfigureAwait(false);
 
         /// <summary>
         /// This method can be overridden to introduce logic before each request attempt is sent. This will run even for the first attempt.
@@ -145,13 +135,9 @@ namespace Azure.Core.Pipeline
         protected virtual ValueTask OnRequestSentAsync(HttpMessage message) => default;
 
         internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-        {
-            await Task.Delay(time, cancellationToken).ConfigureAwait(false);
-        }
+            => await _policy.WaitAsync(time, cancellationToken).ConfigureAwait(false);
 
         internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
-        {
-            cancellationToken.WaitHandle.WaitOne(time);
-        }
+            => _policy.Wait(time, cancellationToken);
     }
 }
