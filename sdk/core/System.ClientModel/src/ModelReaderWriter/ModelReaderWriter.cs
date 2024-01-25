@@ -33,9 +33,9 @@ public static class ModelReaderWriter
 
         if (ShouldWriteAsJson(model, options, out IJsonModel<T>? jsonModel))
         {
-            using (ModelWriter<T> writer = new ModelWriter<T>(jsonModel, options))
+            using (SequenceBufferReader reader = new ModelWriter<T>(jsonModel, options).GetSequenceBufferReader())
             {
-                return writer.ToBinaryData();
+                return reader.ToBinaryData();
             }
         }
         else
@@ -70,9 +70,9 @@ public static class ModelReaderWriter
 
         if (ShouldWriteAsJson(iModel, options, out IJsonModel<object>? jsonModel))
         {
-            using (ModelWriter<object> writer = new ModelWriter<object>(jsonModel, options))
+            using (SequenceBufferReader reader = new ModelWriter<object>(jsonModel, options).GetSequenceBufferReader())
             {
-                return writer.ToBinaryData();
+                return reader.ToBinaryData();
             }
         }
         else
