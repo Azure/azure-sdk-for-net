@@ -670,12 +670,11 @@ namespace Azure.Core
         public static bool operator !=(Azure.Core.ResourceType left, Azure.Core.ResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class ResponseClassificationHandler
+    public partial class ResponseClassificationHandler
     {
-        protected ResponseClassificationHandler() { }
-        public abstract bool TryClassify(Azure.Core.HttpMessage message, out bool isError);
-        public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, out bool isRetriable) { throw null; }
-        public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, System.Exception exception, out bool isRetriable) { throw null; }
+        public ResponseClassificationHandler() { }
+        public virtual bool TryClassify(Azure.Core.HttpMessage message, out bool isError) { throw null; }
+        public virtual bool TryClassifyRetriable(Azure.Core.HttpMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
     }
     public partial class ResponseClassifier : System.ClientModel.Primitives.PipelineMessageClassifier
     {

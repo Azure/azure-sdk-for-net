@@ -78,7 +78,7 @@ namespace Azure.Core
             {
                 foreach (var handler in _handlers)
                 {
-                    if (handler.TryClassifyRetriable(message, out bool isRetriable))
+                    if (handler.TryClassifyRetriable(message, default, out bool isRetriable))
                     {
                         return isRetriable;
                     }

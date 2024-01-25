@@ -427,13 +427,6 @@ namespace Azure.Core.Tests
                 return false;
             }
 
-            public override bool TryClassifyRetriable(HttpMessage message, out bool isRetriable)
-            {
-                // Only retry timeouts, and disable default functionality
-                isRetriable = message.Response.Status == 408;
-                return true;
-            }
-
             public override bool TryClassifyRetriable(HttpMessage message, Exception exception, out bool isRetriable)
             {
                 // Only retry timeouts, and disable default functionality
