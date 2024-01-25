@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Primitives;
-using System.Collections.Immutable;
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 

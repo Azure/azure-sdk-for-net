@@ -14,6 +14,4 @@ public class ClientResult<T> : ClientResult
     }
 
     public virtual T Value { get; }
-
-    // Notice: HasValue goes away.
 }
