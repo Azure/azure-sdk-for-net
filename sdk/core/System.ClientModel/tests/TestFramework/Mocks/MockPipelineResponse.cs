@@ -14,7 +14,7 @@ public class MockPipelineResponse : PipelineResponse
     private string _reasonPhrase;
     private Stream? _contentStream;
 
-    private readonly PipelineResponseHeaders _headers;
+    private readonly MockResponseHeaders _headers;
 
     private bool _disposed;
 
@@ -51,6 +51,9 @@ public class MockPipelineResponse : PipelineResponse
     }
 
     protected override PipelineResponseHeaders GetHeadersCore() => _headers;
+
+    public void AddHeader(string  key, string value)
+        => _headers.AddHeader(key, value);
 
     public sealed override void Dispose()
     {
