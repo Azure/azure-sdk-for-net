@@ -21,7 +21,7 @@
   The directory path where the package information is stored.
 
 .EXAMPLE
-  Verify-RestApiSpecLocation -ServiceDirectory "/home/azure-sdk-for-net/sdk/serviceab" -PackageName "MyPackage" -ArtifactLocation "/home/ab/artifacts" -GitHubPat "xxxxxxxxxxxx" -PackageInfoDirectory "/home/ab/artifacts/PackageInfo"
+  Verify-RestApiSpecLocation -ServiceDirectory "template" -PackageName "Azure.Template" -ArtifactLocation "/home/ab/artifacts" -GitHubPat "xxxxxxxxxxxx" -PackageInfoDirectory "/home/ab/artifacts/PackageInfo"
 
 #>
 [CmdletBinding()]
@@ -164,16 +164,6 @@ function Verify-YamlContent([string]$markdownContent, [string]$configFilePath) {
 
 function Verify-PackageVersion() {
   try {
-    $packages = @{}
-    if ($FindArtifactForApiReviewFn -and (Test-Path "Function:$FindArtifactForApiReviewFn")) {
-      $packages = &$FindArtifactForApiReviewFn $ArtifactLocation $PackageName
-    }
-    else {
-      LogError "The function for 'FindArtifactForApiReviewFn' was not found.`
-      Make sure it is present in eng/scripts/Language-Settings.ps1 and referenced in eng/common/scripts/common.ps1.`
-      See https://github.com/Azure/azure-sdk-tools/blob/main/doc/common/common_engsys.md#code-structure"
-      exit 1
-    }
     if (-not $PackageInfoDirectory) {
       $PackageInfoDirectory = Join-Path -Path $ArtifactLocation "PackageInfo"
       if (-not (Test-Path -Path $PackageInfoDirectory)) {
@@ -182,39 +172,29 @@ function Verify-PackageVersion() {
         & $savePropertiesScriptPath -serviceDirectory $ServiceDirectory -outDirectory $PackageInfoDirectory
       }
     }
-
-    $continueValidation = $false
-    if ($packages) {
-      foreach ($pkgPath in $packages.Values) {
-        $pkgPropPath = Join-Path -Path $PackageInfoDirectory "$PackageName.json"
-        if (-Not (Test-Path $pkgPropPath)) {
-          Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Package property file path $($pkgPropPath) is invalid."
-          continue
-        }
-        # Get package info from json file
-        $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
-        $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
-        if ($null -eq $version) {
-          LogError "ServiceDir:$ServiceDirectory, Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
-          exit 1
-        }
-
-        Write-Host "Version: $($version)"
-        Write-Host "SDK Type: $($pkgInfo.SdkType)"
-        Write-Host "Release Status: $($pkgInfo.ReleaseStatus)"
-
-        # Ignore the validation if the package is not GA version
-        if ($version.IsPrerelease) {
-          Write-Host "ServiceDir:$ServiceDirectory, Package $PackageName is marked with version $version, the version is a prerelease version and the validation of spec location is ignored."
-          exit 0
-        }
-        $continueValidation = $true
-      }
-    }
-    if ($continueValidation -eq $false) {
-      Write-Host "ServiceDir:$ServiceDirectory, no package info is found for package $PackageName, the validation of spec location is ignored."
+    $pkgPropPath = Join-Path -Path $PackageInfoDirectory "$PackageName.json"
+    if (-Not (Test-Path $pkgPropPath)) {
+      Write-Host "ServiceDir:$ServiceDirectory, no package info is found for package $PackageName at $pkgPropPath, the validation of spec location is ignored."
       exit 0
     }
+    # Get package info from json file
+    $pkgInfo = Get-Content $pkgPropPath | ConvertFrom-Json
+    $version = [AzureEngSemanticVersion]::ParseVersionString($pkgInfo.Version)
+    if ($null -eq $version) {
+      LogError "ServiceDir:$ServiceDirectory, Version info is not available for package $PackageName, because version '$(pkgInfo.Version)' is invalid. Please check if the version follows Azure SDK package versioning guidelines."
+      exit 1
+    }
+
+    Write-Host "Version: $($version)"
+    Write-Host "SDK Type: $($pkgInfo.SdkType)"
+    Write-Host "Release Status: $($pkgInfo.ReleaseStatus)"
+
+    # Ignore the validation if the package is not GA version
+    if ($version.IsPrerelease) {
+      Write-Host "ServiceDir:$ServiceDirectory, Package $PackageName is marked with version $version, the version is a prerelease version and the validation of spec location is ignored."
+      exit 0
+    }
+
     # Return the package info
     return $pkgInfo
   }
@@ -247,6 +227,7 @@ try {
   $tspLocationYamlPath = Join-Path $PackageDirectory "tsp-location.yaml"
   $autorestMdPath = Join-Path $PackageDirectory "src/autorest.md"
   $swaggerReadmePath = Join-Path $PackageDirectory "swagger/README.md"
+  $autorestMdPathForGo = Join-Path $PackageDirectory "autorest.md"
   $tspLocationYaml = @{}
   if (Test-Path -Path $tspLocationYamlPath) {
     # typespec scenario
@@ -279,6 +260,18 @@ try {
       }
       catch {
         Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse swagger/readme.md file:$swaggerReadmePath with exception:`n$_ "
+      }
+    }
+    if ($Language -eq "go") {
+      # for go language we also need to check the 'autorest.md' file
+      if (Test-Path -Path $autorestMdPathForGo) {
+        try {
+          $autorestMdContent = Get-Content -Path $autorestMdPathForGo -Raw
+          Verify-YamlContent $autorestMdContent $autorestMdPathForGo
+        }
+        catch {
+          Write-Host "ServiceDir:$ServiceDirectory, PackageName:$PackageName. Failed to parse autorest.md file:$autorestMdPathForGo with exception:`n$_ "
+        }
       }
     }
   }
