@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class OAuth2WebhookClientCredential : IUtf8JsonSerializable
+    public partial class OAuth2WebhookClientCredential
     {
         /// <summary> Initializes a new instance of OAuth2WebhookClientCredential. </summary>
         /// <param name="clientId"> ClientId for Contoso Authorization server. </param>
@@ -25,21 +24,5 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> Client secret for Contoso Authorization server. </summary>
         internal string ClientSecret { get; }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ClientId))
-            {
-                writer.WritePropertyName("clientId"u8);
-                writer.WriteStringValue(ClientId);
-            }
-            if (Optional.IsDefined(ClientSecret))
-            {
-                writer.WritePropertyName("clientSecret"u8);
-                writer.WriteStringValue(ClientSecret);
-            }
-            writer.WriteEndObject();
-        }
     }
 }

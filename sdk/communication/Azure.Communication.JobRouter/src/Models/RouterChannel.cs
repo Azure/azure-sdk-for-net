@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterChannel : IUtf8JsonSerializable
+    public partial class RouterChannel
     {
         /// <summary>
         /// Represents the capacity a job in this channel will consume from a worker.
@@ -25,22 +23,5 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The maximum number of jobs that can be supported concurrently for this channel. </summary>
         public int? MaxNumberOfJobs { get; set; }
-
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("channelId"u8);
-            writer.WriteStringValue(ChannelId);
-            writer.WritePropertyName("capacityCostPerJob"u8);
-            writer.WriteNumberValue(CapacityCostPerJob);
-
-            if (Optional.IsDefined(MaxNumberOfJobs))
-            {
-                writer.WritePropertyName("maxNumberOfJobs"u8);
-                writer.WriteNumberValue(MaxNumberOfJobs.Value);
-            }
-
-            writer.WriteEndObject();
-        }
     }
 }
