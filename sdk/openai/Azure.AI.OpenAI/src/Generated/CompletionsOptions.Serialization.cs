@@ -205,16 +205,7 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("logit_bias"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<int, int> dictionary = new Dictionary<int, int>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetInt32());
-                    }
-                    logitBias = dictionary;
+                    DeserializeTokenSelectionBiases(property, ref logitBias);
                     continue;
                 }
                 if (property.NameEquals("user"u8))
