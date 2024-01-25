@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkDeviceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkDeviceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData>
     {
         public NetworkDeviceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -149,6 +149,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public string SerialNumber { get { throw null; } set { } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkDeviceInterfaceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceResource>, System.Collections.IEnumerable
     {
@@ -167,7 +172,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkDeviceInterfaceData : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkDeviceInterfaceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData>
     {
         public NetworkDeviceInterfaceData() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -178,6 +183,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public string IPv6Address { get { throw null; } }
         public string PhysicalIdentifier { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceInterfaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkDeviceInterfaceResource : Azure.ResourceManager.ArmResource
     {
@@ -241,7 +251,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkDeviceSkuData : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkDeviceSkuData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData>
     {
         public NetworkDeviceSkuData(string model) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties> Interfaces { get { throw null; } }
@@ -250,6 +260,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName> SupportedRoleTypes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties> SupportedVersions { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkDeviceSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkDeviceSkuResource : Azure.ResourceManager.ArmResource
     {
@@ -278,7 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricAccessControlListData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricAccessControlListData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData>
     {
         public NetworkFabricAccessControlListData(Azure.Core.AzureLocation location) { }
         public System.Uri AclsUri { get { throw null; } set { } }
@@ -291,6 +306,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public System.DateTimeOffset? LastSyncedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration> MatchConfigurations { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricAccessControlListData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricAccessControlListResource : Azure.ResourceManager.ArmResource
     {
@@ -352,7 +372,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricControllerData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricControllerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData>
     {
         public NetworkFabricControllerData(Azure.Core.AzureLocation location) { }
         public string Annotation { get { throw null; } set { } }
@@ -369,6 +389,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> TenantInternetGatewayIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> WorkloadExpressRouteConnections { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices WorkloadServices { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricControllerResource : Azure.ResourceManager.ArmResource
     {
@@ -390,7 +415,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricControllerResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class NetworkFabricData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData>
     {
         public NetworkFabricData(Azure.Core.AzureLocation location, string networkFabricSku, Azure.Core.ResourceIdentifier networkFabricControllerId, int serverCountPerRack, string ipv4Prefix, long fabricAsn, Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration terminalServerConfiguration, Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties managementNetworkConfiguration) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -411,6 +436,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public System.Collections.Generic.IReadOnlyList<string> RouterIds { get { throw null; } }
         public int ServerCountPerRack { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration TerminalServerConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricExternalNetworkCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkResource>, System.Collections.IEnumerable
     {
@@ -429,7 +459,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricExternalNetworkData : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkFabricExternalNetworkData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData>
     {
         public NetworkFabricExternalNetworkData(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption peeringOption) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -444,6 +474,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties OptionBProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption PeeringOption { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricExternalNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricExternalNetworkResource : Azure.ResourceManager.ArmResource
     {
@@ -480,7 +515,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricInternalNetworkData : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkFabricInternalNetworkData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData>
     {
         public NetworkFabricInternalNetworkData(int vlanId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -501,6 +536,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration StaticRouteConfiguration { get { throw null; } set { } }
         public int VlanId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternalNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricInternalNetworkResource : Azure.ResourceManager.ArmResource
     {
@@ -537,7 +577,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricInternetGatewayData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricInternetGatewayData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>
     {
         public NetworkFabricInternetGatewayData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType typePropertiesType, Azure.Core.ResourceIdentifier networkFabricControllerId) { }
         public string Annotation { get { throw null; } set { } }
@@ -550,6 +590,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public int? Port { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType TypePropertiesType { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricInternetGatewayResource : Azure.ResourceManager.ArmResource
     {
@@ -586,13 +631,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricInternetGatewayRuleData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricInternetGatewayRuleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData>
     {
         public NetworkFabricInternetGatewayRuleData(Azure.Core.AzureLocation location, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules ruleProperties) { }
         public string Annotation { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> InternetGatewayIds { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules RuleProperties { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricInternetGatewayRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -631,7 +681,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricIPCommunityData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricIPCommunityData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData>
     {
         public NetworkFabricIPCommunityData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -639,6 +689,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule> IPCommunityRules { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPCommunityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricIPCommunityResource : Azure.ResourceManager.ArmResource
     {
@@ -677,7 +732,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricIPExtendedCommunityData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricIPExtendedCommunityData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData>
     {
         public NetworkFabricIPExtendedCommunityData(Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule> ipExtendedCommunityRules) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -685,6 +740,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule> IPExtendedCommunityRules { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricIPExtendedCommunityResource : Azure.ResourceManager.ArmResource
     {
@@ -723,7 +783,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricIPPrefixData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricIPPrefixData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData>
     {
         public NetworkFabricIPPrefixData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -731,6 +791,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule> IPPrefixRules { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricIPPrefixData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricIPPrefixResource : Azure.ResourceManager.ArmResource
     {
@@ -769,7 +834,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricL2IsolationDomainData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricL2IsolationDomainData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData>
     {
         public NetworkFabricL2IsolationDomainData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId, int vlanId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -779,6 +844,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.Core.ResourceIdentifier NetworkFabricId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public int VlanId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL2IsolationDomainData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricL2IsolationDomainResource : Azure.ResourceManager.ArmResource
     {
@@ -823,7 +893,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricL3IsolationDomainData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricL3IsolationDomainData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData>
     {
         public NetworkFabricL3IsolationDomainData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -835,6 +905,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet? RedistributeConnectedSubnets { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute? RedistributeStaticRoutes { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricL3IsolationDomainData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricL3IsolationDomainResource : Azure.ResourceManager.ArmResource
     {
@@ -885,7 +960,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricNeighborGroupData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricNeighborGroupData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData>
     {
         public NetworkFabricNeighborGroupData(Azure.Core.AzureLocation location) { }
         public string Annotation { get { throw null; } set { } }
@@ -893,6 +968,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NetworkTapIds { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NetworkTapRuleIds { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricNeighborGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricNeighborGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -972,7 +1052,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricRoutePolicyData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkFabricRoutePolicyData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData>
     {
         public NetworkFabricRoutePolicyData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType? AddressFamilyType { get { throw null; } set { } }
@@ -983,6 +1063,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.Core.ResourceIdentifier NetworkFabricId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties> Statements { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricRoutePolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricRoutePolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -1025,7 +1110,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkFabricSkuData : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkFabricSkuData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData>
     {
         public NetworkFabricSkuData() { }
         public string Details { get { throw null; } }
@@ -1034,6 +1119,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedVersions { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType? TypePropertiesType { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkFabricSkuData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkFabricSkuResource : Azure.ResourceManager.ArmResource
     {
@@ -1062,7 +1152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkPacketBrokerData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkPacketBrokerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData>
     {
         public NetworkPacketBrokerData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NeighborGroupIds { get { throw null; } }
@@ -1071,6 +1161,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> NetworkTapIds { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.ResourceIdentifier> SourceInterfaceIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkPacketBrokerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkPacketBrokerResource : Azure.ResourceManager.ArmResource
     {
@@ -1109,7 +1204,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkRackData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkRackData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData>
     {
         public NetworkRackData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkFabricId) { }
         public string Annotation { get { throw null; } set { } }
@@ -1117,6 +1212,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.Core.ResourceIdentifier NetworkFabricId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType? NetworkRackType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkRackData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkRackResource : Azure.ResourceManager.ArmResource
     {
@@ -1155,7 +1255,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkTapData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkTapData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData>
     {
         public NetworkTapData(Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier networkPacketBrokerId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem> destinations) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -1166,6 +1266,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType? PollingType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceTapRuleId { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkTapResource : Azure.ResourceManager.ArmResource
     {
@@ -1208,7 +1313,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkTapRuleData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class NetworkTapRuleData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData>
     {
         public NetworkTapRuleData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -1222,6 +1327,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond? PollingIntervalInSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public System.Uri TapRulesUri { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkTapRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkTapRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -1266,7 +1376,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class NetworkToNetworkInterconnectData : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkToNetworkInterconnectData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData>
     {
         public NetworkToNetworkInterconnectData(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue useOptionB) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -1282,6 +1392,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration OptionBLayer3Configuration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue UseOptionB { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.NetworkToNetworkInterconnectData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NetworkToNetworkInterconnectResource : Azure.ResourceManager.ArmResource
     {
@@ -1433,13 +1548,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Mocking
 }
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class AccessControlListAction
+    public partial class AccessControlListAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction>
     {
         public AccessControlListAction() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType? AclActionType { get { throw null; } set { } }
         public string CounterName { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AccessControlListMatchCondition : Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions
+    public partial class AccessControlListMatchCondition : Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition>
     {
         public AccessControlListMatchCondition() { }
         public System.Collections.Generic.IList<string> DscpMarkings { get { throw null; } }
@@ -1448,8 +1568,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<string> IPLengths { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition PortCondition { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> TtlValues { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AccessControlListMatchConfiguration
+    public partial class AccessControlListMatchConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration>
     {
         public AccessControlListMatchConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListAction> Actions { get { throw null; } }
@@ -1457,11 +1582,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchCondition> MatchConditions { get { throw null; } }
         public string MatchConfigurationName { get { throw null; } set { } }
         public long? SequenceNumber { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AccessControlListPortCondition : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition
+    public partial class AccessControlListPortCondition : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition>
     {
         public AccessControlListPortCondition(Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol layer4Protocol) : base (default(Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol)) { }
         public System.Collections.Generic.IList<string> Flags { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListPortCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AclActionType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType>
@@ -1482,17 +1617,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.AclActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ActionIPCommunityProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties
+    public partial class ActionIPCommunityProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties>
     {
         public ActionIPCommunityProperties() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> DeleteIPCommunityIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SetIPCommunityIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ActionIPExtendedCommunityProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties
+    public partial class ActionIPExtendedCommunityProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties>
     {
         public ActionIPExtendedCommunityProperties() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> DeleteIPExtendedCommunityIds { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> SetIPExtendedCommunityIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AddressFamilyType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.AddressFamilyType>
@@ -1530,16 +1675,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState left, Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AggregateRoute
+    public partial class AggregateRoute : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute>
     {
         public AggregateRoute(string prefix) { }
         public string Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AggregateRouteConfiguration
+    public partial class AggregateRouteConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration>
     {
         public AggregateRouteConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute> IPv4Routes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRoute> IPv6Routes { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AllowASOverride : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride>
@@ -1559,10 +1714,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride left, Azure.ResourceManager.ManagedNetworkFabric.Models.AllowASOverride right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AnnotationResourceProperties
+    public partial class AnnotationResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties>
     {
         public AnnotationResourceProperties() { }
         public string Annotation { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmManagedNetworkFabricModelFactory
     {
@@ -1631,14 +1791,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState left, Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BfdConfiguration
+    public partial class BfdConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration>
     {
         public BfdConfiguration() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdAdministrativeState? AdministrativeState { get { throw null; } }
         public int? IntervalInMilliSeconds { get { throw null; } set { } }
         public int? Multiplier { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BgpConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties
+    public partial class BgpConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>
     {
         public BgpConfiguration() { }
         public int? AllowAS { get { throw null; } set { } }
@@ -1651,20 +1816,35 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<string> IPv6ListenRangePrefixes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress> IPv6NeighborAddress { get { throw null; } }
         public long? PeerAsn { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CommonDynamicMatchConfiguration
+    public partial class CommonDynamicMatchConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration>
     {
         public CommonDynamicMatchConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties> IPGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties> PortGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties> VlanGroups { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CommonMatchConditions
+    public partial class CommonMatchConditions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions>
     {
         public CommonMatchConditions() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition IPCondition { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ProtocolTypes { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition VlanMatchCondition { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CommunityActionType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType>
@@ -1684,43 +1864,73 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ConnectedSubnet : Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties
+    public partial class ConnectedSubnet : Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet>
     {
         public ConnectedSubnet(string prefix) { }
         public string Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnet>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ConnectedSubnetRoutePolicy
+    public partial class ConnectedSubnetRoutePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy>
     {
         public ConnectedSubnetRoutePolicy() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy ExportRoutePolicy { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExportRoutePolicyId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DeviceUpdateCommonPostActionResult : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult
+    public partial class DeviceUpdateCommonPostActionResult : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>
     {
         internal DeviceUpdateCommonPostActionResult() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> FailedDevices { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SuccessfulDevices { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.DeviceUpdateCommonPostActionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportRoutePolicy
+    public partial class ExportRoutePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy>
     {
         public ExportRoutePolicy() { }
         public Azure.Core.ResourceIdentifier ExportIPv4RoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExportIPv6RoutePolicyId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportRoutePolicyInformation
+    public partial class ExportRoutePolicyInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation>
     {
         public ExportRoutePolicyInformation() { }
         public Azure.Core.ResourceIdentifier ExportIPv4RoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExportIPv6RoutePolicyId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExportRoutePolicyInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExpressRouteConnectionInformation
+    public partial class ExpressRouteConnectionInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>
     {
         public ExpressRouteConnectionInformation(Azure.Core.ResourceIdentifier expressRouteCircuitId) { }
         public string ExpressRouteAuthorizationKey { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExpressRouteCircuitId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExternalNetworkOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties
+    public partial class ExternalNetworkOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>
     {
         public ExternalNetworkOptionAProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
@@ -1730,8 +1940,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? Mtu { get { throw null; } set { } }
         public long? PeerAsn { get { throw null; } set { } }
         public int? VlanId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkOptionAProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExternalNetworkPatchOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties
+    public partial class ExternalNetworkPatchOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties>
     {
         public ExternalNetworkPatchOptionAProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
@@ -1741,27 +1956,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? Mtu { get { throw null; } set { } }
         public long? PeerAsn { get { throw null; } set { } }
         public int? VlanId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ImportRoutePolicy
+    public partial class ImportRoutePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy>
     {
         public ImportRoutePolicy() { }
         public Azure.Core.ResourceIdentifier ImportIPv4RoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ImportIPv6RoutePolicyId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ImportRoutePolicyInformation
+    public partial class ImportRoutePolicyInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation>
     {
         public ImportRoutePolicyInformation() { }
         public Azure.Core.ResourceIdentifier ImportIPv4RoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ImportIPv6RoutePolicyId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ImportRoutePolicyInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InternalNetworkBgpConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration
+    public partial class InternalNetworkBgpConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.BgpConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>
     {
         public InternalNetworkBgpConfiguration() { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkBgpConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class InternalNetworkStaticRouteConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration
+    public partial class InternalNetworkStaticRouteConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration>
     {
         public InternalNetworkStaticRouteConfiguration() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension? Extension { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternalNetworkStaticRouteConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InternetGatewayRuleAction : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction>
@@ -1781,11 +2021,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction left, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class InternetGatewayRules
+    public partial class InternetGatewayRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules>
     {
         public InternetGatewayRules(Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction action, System.Collections.Generic.IEnumerable<string> addressList) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRuleAction Action { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> AddressList { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct InternetGatewayType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType>
@@ -1805,43 +2050,73 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType left, Azure.ResourceManager.ManagedNetworkFabric.Models.InternetGatewayType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IPCommunityAddOperationProperties
+    public partial class IPCommunityAddOperationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties>
     {
         public IPCommunityAddOperationProperties() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> AddIPCommunityIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityAddOperationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IPCommunityIdList
+    public partial class IPCommunityIdList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList>
     {
         public IPCommunityIdList() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> IPCommunityIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IPCommunityRule
+    public partial class IPCommunityRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule>
     {
         public IPCommunityRule(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType action, long sequenceNumber, System.Collections.Generic.IEnumerable<string> communityMembers) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType Action { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> CommunityMembers { get { throw null; } }
         public long SequenceNumber { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity> WellKnownCommunities { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IPExtendedCommunityAddOperationProperties
+    public partial class IPExtendedCommunityAddOperationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties>
     {
         public IPExtendedCommunityAddOperationProperties() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> AddIPExtendedCommunityIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityAddOperationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IPExtendedCommunityRule
+    public partial class IPExtendedCommunityRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule>
     {
         public IPExtendedCommunityRule(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType action, long sequenceNumber, System.Collections.Generic.IEnumerable<string> routeTargets) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType Action { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RouteTargets { get { throw null; } }
         public long SequenceNumber { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class IPMatchCondition
+    public partial class IPMatchCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition>
     {
         public IPMatchCondition() { }
         public System.Collections.Generic.IList<string> IPGroupNames { get { throw null; } }
         public System.Collections.Generic.IList<string> IPPrefixValues { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType? PrefixType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType? SourceDestinationType { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IPMatchConditionPrefixType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType>
@@ -1861,7 +2136,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType left, Azure.ResourceManager.ManagedNetworkFabric.Models.IPMatchConditionPrefixType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IPPrefixRule
+    public partial class IPPrefixRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule>
     {
         public IPPrefixRule(Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType action, long sequenceNumber, string networkPrefix) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType Action { get { throw null; } set { } }
@@ -1869,6 +2144,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string NetworkPrefix { get { throw null; } set { } }
         public long SequenceNumber { get { throw null; } set { } }
         public string SubnetMaskLength { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IPPrefixRuleCondition : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRuleCondition>
@@ -1944,11 +2224,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IsolationDomainProperties
+    public partial class IsolationDomainProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties>
     {
         public IsolationDomainProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainEncapsulationType? Encapsulation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> NeighborGroupIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IsWorkloadManagementNetworkEnabled : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled>
@@ -1968,32 +2253,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled left, Azure.ResourceManager.ManagedNetworkFabric.Models.IsWorkloadManagementNetworkEnabled right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class L3ExportRoutePolicy
+    public partial class L3ExportRoutePolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy>
     {
         public L3ExportRoutePolicy() { }
         public Azure.Core.ResourceIdentifier ExportIPv4RoutePolicyId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ExportIPv6RoutePolicyId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3ExportRoutePolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class L3OptionBProperties
+    public partial class L3OptionBProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>
     {
         public L3OptionBProperties() { }
         public System.Collections.Generic.IList<string> ExportRouteTargets { get { throw null; } }
         public System.Collections.Generic.IList<string> ImportRouteTargets { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation RouteTargets { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Layer2Configuration
+    public partial class Layer2Configuration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>
     {
         public Layer2Configuration() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> Interfaces { get { throw null; } }
         public int? Mtu { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Layer3IPPrefixProperties
+    public partial class Layer3IPPrefixProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>
     {
         public Layer3IPPrefixProperties() { }
         public string PrimaryIPv4Prefix { get { throw null; } set { } }
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
         public string SecondaryIPv4Prefix { get { throw null; } set { } }
         public string SecondaryIPv6Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Layer4Protocol : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol>
@@ -2013,42 +2318,72 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol left, Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedResourceGroupConfiguration
+    public partial class ManagedResourceGroupConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration>
     {
         public ManagedResourceGroupConfiguration() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagedResourceGroupConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementNetworkConfigurationPatchableProperties
+    public partial class ManagementNetworkConfigurationPatchableProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties>
     {
         public ManagementNetworkConfigurationPatchableProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties InfrastructureVpnConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties WorkloadVpnConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationPatchableProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagementNetworkConfigurationProperties
+    public partial class ManagementNetworkConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties>
     {
         public ManagementNetworkConfigurationProperties(Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties infrastructureVpnConfiguration, Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties workloadVpnConfiguration) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties InfrastructureVpnConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties WorkloadVpnConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ManagementNetworkConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MatchConfigurationIPGroupProperties
+    public partial class MatchConfigurationIPGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties>
     {
         public MatchConfigurationIPGroupProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType? IPAddressType { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> IPPrefixes { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.MatchConfigurationIPGroupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NeighborAddress
+    public partial class NeighborAddress : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress>
     {
         public NeighborAddress() { }
         public string Address { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborAddress>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NeighborGroupDestination
+    public partial class NeighborGroupDestination : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination>
     {
         public NeighborGroupDestination() { }
         public System.Collections.Generic.IList<System.Net.IPAddress> IPv4Addresses { get { throw null; } }
         public System.Collections.Generic.IList<string> IPv6Addresses { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkDeviceAdministrativeState : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState>
@@ -2070,17 +2405,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkDeviceInterfacePatch
+    public partial class NetworkDeviceInterfacePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch>
     {
         public NetworkDeviceInterfacePatch() { }
         public string Annotation { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkDeviceInterfaceProperties
+    public partial class NetworkDeviceInterfaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties>
     {
         public NetworkDeviceInterfaceProperties() { }
         public string Identifier { get { throw null; } set { } }
         public string InterfaceType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties> SupportedConnectorTypes { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkDeviceInterfaceType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType>
@@ -2100,17 +2445,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceInterfaceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkDevicePatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkDevicePatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch>
     {
         public NetworkDevicePatch() { }
         public string Annotation { get { throw null; } set { } }
         public string HostName { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDevicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkDeviceRebootContent
+    public partial class NetworkDeviceRebootContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent>
     {
         public NetworkDeviceRebootContent() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType? RebootType { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkDeviceRebootType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRebootType>
@@ -2174,7 +2529,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceRoleName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkFabricAccessControlListPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricAccessControlListPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch>
     {
         public NetworkFabricAccessControlListPatch() { }
         public System.Uri AclsUri { get { throw null; } set { } }
@@ -2183,6 +2538,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.AccessControlListMatchConfiguration> MatchConfigurations { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAccessControlListPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkFabricAdministrativeState : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState>
@@ -2266,17 +2626,27 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkFabricControllerPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricControllerPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch>
     {
         public NetworkFabricControllerPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> InfrastructureExpressRouteConnections { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.ExpressRouteConnectionInformation> WorkloadExpressRouteConnections { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricControllerServices
+    public partial class NetworkFabricControllerServices : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices>
     {
         internal NetworkFabricControllerServices() { }
         public System.Collections.Generic.IReadOnlyList<string> IPv4AddressSpaces { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> IPv6AddressSpaces { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerServices>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkFabricControllerSKU : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU>
@@ -2297,12 +2667,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricControllerSKU right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkFabricErrorResult
+    public partial class NetworkFabricErrorResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult>
     {
         internal NetworkFabricErrorResult() { }
         public Azure.ResponseError Error { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricExternalNetworkPatch
+    public partial class NetworkFabricExternalNetworkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch>
     {
         public NetworkFabricExternalNetworkPatch() { }
         public string Annotation { get { throw null; } set { } }
@@ -2313,8 +2688,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ExternalNetworkPatchOptionAProperties OptionAProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.L3OptionBProperties OptionBProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption? PeeringOption { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricExternalNetworkPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricInternalNetworkPatch
+    public partial class NetworkFabricInternalNetworkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch>
     {
         public NetworkFabricInternalNetworkPatch() { }
         public string Annotation { get { throw null; } set { } }
@@ -2330,15 +2710,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.IsMonitoringEnabled? IsMonitoringEnabled { get { throw null; } set { } }
         public int? Mtu { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration StaticRouteConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternalNetworkPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricInternetGatewayPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricInternetGatewayPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch>
     {
         public NetworkFabricInternetGatewayPatch() { }
         public Azure.Core.ResourceIdentifier InternetGatewayRuleId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricInternetGatewayRulePatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricInternetGatewayRulePatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch>
     {
         public NetworkFabricInternetGatewayRulePatch() { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricInternetGatewayRulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkFabricIPAddressType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType>
@@ -2358,30 +2753,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPAddressType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkFabricIPCommunityPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricIPCommunityPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch>
     {
         public NetworkFabricIPCommunityPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityRule> IPCommunityRules { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPCommunityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricIPExtendedCommunityPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricIPExtendedCommunityPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch>
     {
         public NetworkFabricIPExtendedCommunityPatch() { }
         public string Annotation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.IPExtendedCommunityRule> IPExtendedCommunityRules { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPExtendedCommunityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricIPPrefixPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricIPPrefixPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch>
     {
         public NetworkFabricIPPrefixPatch() { }
         public string Annotation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.IPPrefixRule> IPPrefixRules { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricIPPrefixPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricL2IsolationDomainPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricL2IsolationDomainPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch>
     {
         public NetworkFabricL2IsolationDomainPatch() { }
         public string Annotation { get { throw null; } set { } }
         public int? Mtu { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL2IsolationDomainPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricL3IsolationDomainPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricL3IsolationDomainPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch>
     {
         public NetworkFabricL3IsolationDomainPatch() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AggregateRouteConfiguration AggregateRouteConfiguration { get { throw null; } set { } }
@@ -2389,14 +2804,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet? RedistributeConnectedSubnets { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeStaticRoute? RedistributeStaticRoutes { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricL3IsolationDomainPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricNeighborGroupPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricNeighborGroupPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch>
     {
         public NetworkFabricNeighborGroupPatch() { }
         public string Annotation { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NeighborGroupDestination Destination { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricNeighborGroupPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>
     {
         public NetworkFabricPatch() { }
         public string Annotation { get { throw null; } set { } }
@@ -2407,22 +2832,37 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public int? RackCount { get { throw null; } set { } }
         public int? ServerCountPerRack { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration TerminalServerConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties
+    public partial class NetworkFabricPatchablePropertiesTerminalServerConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>
     {
         public NetworkFabricPatchablePropertiesTerminalServerConfiguration() { }
         public string PrimaryIPv4Prefix { get { throw null; } set { } }
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
         public string SecondaryIPv4Prefix { get { throw null; } set { } }
         public string SecondaryIPv6Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPatchablePropertiesTerminalServerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkFabricPortCondition
+    public partial class NetworkFabricPortCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition>
     {
         public NetworkFabricPortCondition(Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol layer4Protocol) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.Layer4Protocol Layer4Protocol { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> PortGroupNames { get { throw null; } }
         public System.Collections.Generic.IList<string> Ports { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType? PortType { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkFabricPortType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortType>
@@ -2464,11 +2904,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkFabricRoutePolicyPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkFabricRoutePolicyPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch>
     {
         public NetworkFabricRoutePolicyPatch() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.CommunityActionType? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties> Statements { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricRoutePolicyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkFabricSkuType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType>
@@ -2488,10 +2933,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricSkuType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkFabricUpdateVersionContent
+    public partial class NetworkFabricUpdateVersionContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent>
     {
         public NetworkFabricUpdateVersionContent() { }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricUpdateVersionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkFabricValidateAction : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction>
@@ -2512,14 +2962,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkPacketBrokerPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkPacketBrokerPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch>
     {
         public NetworkPacketBrokerPatch() { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkPacketBrokerPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkRackPatch
+    public partial class NetworkRackPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch>
     {
         public NetworkRackPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkRackType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType>
@@ -2540,7 +3000,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkTapDestinationProperties
+    public partial class NetworkTapDestinationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties>
     {
         public NetworkTapDestinationProperties() { }
         public Azure.Core.ResourceIdentifier DestinationId { get { throw null; } set { } }
@@ -2548,6 +3008,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType? DestinationType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.IsolationDomainProperties IsolationDomainProperties { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkTapDestinationType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationType>
@@ -2585,16 +3050,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkTapPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkTapPatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch>
     {
         public NetworkTapPatch() { }
         public string Annotation { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem> Destinations { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType? PollingType { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkTapPatchableParametersDestinationsItem : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties
+    public partial class NetworkTapPatchableParametersDestinationsItem : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem>
     {
         public NetworkTapPatchableParametersDestinationsItem() { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPatchableParametersDestinationsItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NetworkTapPollingType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType>
@@ -2614,11 +3089,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPollingType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NetworkTapPropertiesDestinationsItem : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties
+    public partial class NetworkTapPropertiesDestinationsItem : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapDestinationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem>
     {
         public NetworkTapPropertiesDestinationsItem() { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapPropertiesDestinationsItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkTapRuleAction
+    public partial class NetworkTapRuleAction : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction>
     {
         public NetworkTapRuleAction() { }
         public Azure.Core.ResourceIdentifier DestinationId { get { throw null; } set { } }
@@ -2626,14 +3106,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string MatchConfigurationName { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType? TapRuleActionType { get { throw null; } set { } }
         public string Truncate { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkTapRuleMatchCondition : Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions
+    public partial class NetworkTapRuleMatchCondition : Azure.ResourceManager.ManagedNetworkFabric.Models.CommonMatchConditions, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition>
     {
         public NetworkTapRuleMatchCondition() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapEncapsulationType? EncapsulationType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricPortCondition PortCondition { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkTapRuleMatchConfiguration
+    public partial class NetworkTapRuleMatchConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration>
     {
         public NetworkTapRuleMatchConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleAction> Actions { get { throw null; } }
@@ -2641,8 +3131,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchCondition> MatchConditions { get { throw null; } }
         public string MatchConfigurationName { get { throw null; } set { } }
         public long? SequenceNumber { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkTapRulePatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch
+    public partial class NetworkTapRulePatch : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkRackPatch, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch>
     {
         public NetworkTapRulePatch() { }
         public string Annotation { get { throw null; } set { } }
@@ -2650,12 +3145,22 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.CommonDynamicMatchConfiguration> DynamicMatchConfigurations { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRuleMatchConfiguration> MatchConfigurations { get { throw null; } }
         public System.Uri TapRulesUri { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkTapRulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration
+    public partial class NetworkToNetworkInterconnectOptionBLayer3Configuration : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration>
     {
         public NetworkToNetworkInterconnectOptionBLayer3Configuration() { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectOptionBLayer3Configuration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NetworkToNetworkInterconnectPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class NetworkToNetworkInterconnectPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch>
     {
         public NetworkToNetworkInterconnectPatch() { }
         public Azure.Core.ResourceIdentifier EgressAclId { get { throw null; } set { } }
@@ -2665,6 +3170,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.Layer2Configuration Layer2Configuration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration NpbStaticRouteConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration OptionBLayer3Configuration { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkToNetworkInterconnectPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NniType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.NniType>
@@ -2684,34 +3194,54 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.NniType left, Azure.ResourceManager.ManagedNetworkFabric.Models.NniType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NpbStaticRouteConfiguration
+    public partial class NpbStaticRouteConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>
     {
         public NpbStaticRouteConfiguration() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties> IPv4Routes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties> IPv6Routes { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.NpbStaticRouteConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OptionAProperties
+    public partial class OptionAProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>
     {
         public OptionAProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
         public int? Mtu { get { throw null; } set { } }
         public long? PeerAsn { get { throw null; } set { } }
         public int? VlanId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OptionBLayer3Configuration : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties
+    public partial class OptionBLayer3Configuration : Azure.ResourceManager.ManagedNetworkFabric.Models.Layer3IPPrefixProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>
     {
         public OptionBLayer3Configuration() { }
         public long? FabricAsn { get { throw null; } }
         public long? PeerAsn { get { throw null; } set { } }
         public int? VlanId { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBLayer3Configuration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OptionBProperties
+    public partial class OptionBProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties>
     {
         public OptionBProperties() { }
         public System.Collections.Generic.IList<string> ExportRouteTargets { get { throw null; } }
         public System.Collections.Generic.IList<string> ImportRouteTargets { get { throw null; } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation RouteTargets { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PeeringOption : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption>
@@ -2750,11 +3280,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond left, Azure.ResourceManager.ManagedNetworkFabric.Models.PollingIntervalInSecond right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class PortGroupProperties
+    public partial class PortGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties>
     {
         public PortGroupProperties() { }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Ports { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.PortGroupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RedistributeConnectedSubnet : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.RedistributeConnectedSubnet>
@@ -2829,20 +3364,30 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class RoutePolicyStatementProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties
+    public partial class RoutePolicyStatementProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.AnnotationResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties>
     {
         public RoutePolicyStatementProperties(long sequenceNumber, Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties condition, Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties action) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties Action { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties Condition { get { throw null; } set { } }
         public long SequenceNumber { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyStatementProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RouteTargetInformation
+    public partial class RouteTargetInformation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>
     {
         public RouteTargetInformation() { }
         public System.Collections.Generic.IList<string> ExportIPv4RouteTargets { get { throw null; } }
         public System.Collections.Generic.IList<string> ExportIPv6RouteTargets { get { throw null; } }
         public System.Collections.Generic.IList<string> ImportIPv4RouteTargets { get { throw null; } }
         public System.Collections.Generic.IList<string> ImportIPv6RouteTargets { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.RouteTargetInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SourceDestinationType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType>
@@ -2862,32 +3407,52 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType left, Azure.ResourceManager.ManagedNetworkFabric.Models.SourceDestinationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StatementActionProperties
+    public partial class StatementActionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties>
     {
         public StatementActionProperties(Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType actionType) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyActionType ActionType { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPCommunityProperties IPCommunityProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.ActionIPExtendedCommunityProperties IPExtendedCommunityProperties { get { throw null; } set { } }
         public long? LocalPreference { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementActionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StatementConditionProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList
+    public partial class StatementConditionProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.IPCommunityIdList, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties>
     {
         public StatementConditionProperties() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> IPExtendedCommunityIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier IPPrefixId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.RoutePolicyConditionType? RoutePolicyConditionType { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StatementConditionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StateUpdateCommonPostActionResult : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult
+    public partial class StateUpdateCommonPostActionResult : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>
     {
         internal StateUpdateCommonPostActionResult() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StateUpdateCommonPostActionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StaticRouteConfiguration
+    public partial class StaticRouteConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration>
     {
         public StaticRouteConfiguration() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.BfdConfiguration BfdConfiguration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties> IPv4Routes { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties> IPv6Routes { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StaticRouteConfigurationExtension : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension>
@@ -2907,25 +3472,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension left, Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteConfigurationExtension right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StaticRouteProperties
+    public partial class StaticRouteProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties>
     {
         public StaticRouteProperties(string prefix, System.Collections.Generic.IEnumerable<string> nextHop) { }
         public System.Collections.Generic.IList<string> NextHop { get { throw null; } }
         public string Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.StaticRouteProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportedConnectorProperties
+    public partial class SupportedConnectorProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties>
     {
         public SupportedConnectorProperties() { }
         public string ConnectorType { get { throw null; } set { } }
         public int? MaxSpeedInMbps { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedConnectorProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SupportedVersionProperties
+    public partial class SupportedVersionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties>
     {
         public SupportedVersionProperties() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricBooleanValue? IsDefault { get { throw null; } set { } }
         public string VendorFirmwareVersion { get { throw null; } set { } }
         public string VendorOSVersion { get { throw null; } set { } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.SupportedVersionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TapRuleActionType : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType>
@@ -2950,7 +3530,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType left, Azure.ResourceManager.ManagedNetworkFabric.Models.TapRuleActionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TerminalServerConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties
+    public partial class TerminalServerConfiguration : Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>
     {
         public TerminalServerConfiguration() { }
         public Azure.Core.ResourceIdentifier NetworkDeviceId { get { throw null; } }
@@ -2958,78 +3538,138 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
         public string SecondaryIPv4Prefix { get { throw null; } set { } }
         public string SecondaryIPv6Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TerminalServerPatchableProperties
+    public partial class TerminalServerPatchableProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>
     {
         public TerminalServerPatchableProperties() { }
         public string Password { get { throw null; } set { } }
         public string SerialNumber { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.TerminalServerPatchableProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpdateAdministrativeStateContent : Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources
+    public partial class UpdateAdministrativeStateContent : Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent>
     {
         public UpdateAdministrativeStateContent() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.AdministrativeEnableState? State { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpdateAdministrativeStateOnResources
+    public partial class UpdateAdministrativeStateOnResources : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources>
     {
         public UpdateAdministrativeStateOnResources() { }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ResourceIds { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class UpdateDeviceAdministrativeStateContent : Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources
+    public partial class UpdateDeviceAdministrativeStateContent : Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateAdministrativeStateOnResources, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent>
     {
         public UpdateDeviceAdministrativeStateContent() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkDeviceAdministrativeState? State { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.UpdateDeviceAdministrativeStateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ValidateConfigurationContent
+    public partial class ValidateConfigurationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent>
     {
         public ValidateConfigurationContent() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricValidateAction? ValidateAction { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ValidateConfigurationResult : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult
+    public partial class ValidateConfigurationResult : Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricErrorResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult>
     {
         internal ValidateConfigurationResult() { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricConfigurationState? ConfigurationState { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.ValidateConfigurationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VlanGroupProperties
+    public partial class VlanGroupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties>
     {
         public VlanGroupProperties() { }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Vlans { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanGroupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VlanMatchCondition
+    public partial class VlanMatchCondition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>
     {
         public VlanMatchCondition() { }
         public System.Collections.Generic.IList<string> InnerVlans { get { throw null; } }
         public System.Collections.Generic.IList<string> VlanGroupNames { get { throw null; } }
         public System.Collections.Generic.IList<string> Vlans { get { throw null; } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VlanMatchCondition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VpnConfigurationOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties
+    public partial class VpnConfigurationOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>
     {
         public VpnConfigurationOptionAProperties() { }
         public string PrimaryIPv4Prefix { get { throw null; } set { } }
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
         public string SecondaryIPv4Prefix { get { throw null; } set { } }
         public string SecondaryIPv6Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VpnConfigurationPatchableOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties
+    public partial class VpnConfigurationPatchableOptionAProperties : Azure.ResourceManager.ManagedNetworkFabric.Models.OptionAProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>
     {
         public VpnConfigurationPatchableOptionAProperties() { }
         public string PrimaryIPv4Prefix { get { throw null; } set { } }
         public string PrimaryIPv6Prefix { get { throw null; } set { } }
         public string SecondaryIPv4Prefix { get { throw null; } set { } }
         public string SecondaryIPv6Prefix { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VpnConfigurationPatchableProperties
+    public partial class VpnConfigurationPatchableProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties>
     {
         public VpnConfigurationPatchableProperties() { }
         public Azure.Core.ResourceIdentifier NetworkToNetworkInterconnectId { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableOptionAProperties OptionAProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties OptionBProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption? PeeringOption { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationPatchableProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VpnConfigurationProperties
+    public partial class VpnConfigurationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>
     {
         public VpnConfigurationProperties(Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption peeringOption) { }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.NetworkFabricAdministrativeState? AdministrativeState { get { throw null; } }
@@ -3037,6 +3677,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationOptionAProperties OptionAProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.OptionBProperties OptionBProperties { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetworkFabric.Models.PeeringOption PeeringOption { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetworkFabric.Models.VpnConfigurationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WellKnownCommunity : System.IEquatable<Azure.ResourceManager.ManagedNetworkFabric.Models.WellKnownCommunity>

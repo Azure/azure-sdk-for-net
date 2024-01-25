@@ -14,8 +14,6 @@ namespace Azure
     /// </summary>
     public class RequestContext : RequestOptions
     {
-        private bool _frozen;
-
         private (int Status, bool IsError)[]? _statusCodes;
         internal (int Status, bool IsError)[]? StatusCodes => _statusCodes;
 
@@ -98,10 +96,7 @@ namespace Azure
         {
             Argument.AssertInRange(statusCode, 100, 599, nameof(statusCode));
 
-            if (_frozen)
-            {
-                throw new InvalidOperationException("Cannot modify classifiers after this type has been used in a method call.");
-            }
+            AssertNotFrozen();
 
             int length = _statusCodes == null ? 0 : _statusCodes.Length;
             Array.Resize(ref _statusCodes, length + 1);
@@ -124,20 +119,12 @@ namespace Azure
         /// used in a method call.</exception>
         public void AddClassifier(ResponseClassificationHandler classifier)
         {
-            if (_frozen)
-            {
-                throw new InvalidOperationException("Cannot modify classifiers after this type has been used in a method call.");
-            }
+            AssertNotFrozen();
 
             int length = _handlers == null ? 0 : _handlers.Length;
             Array.Resize(ref _handlers, length + 1);
             Array.Copy(_handlers, 0, _handlers, 1, length);
             _handlers[0] = classifier;
-        }
-
-        internal void Freeze()
-        {
-            _frozen = true;
         }
 
         internal ResponseClassifier Apply(ResponseClassifier classifier)

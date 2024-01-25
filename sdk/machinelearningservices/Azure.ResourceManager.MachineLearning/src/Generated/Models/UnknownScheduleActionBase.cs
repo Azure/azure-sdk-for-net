@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownScheduleActionBase. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownScheduleActionBase"/>. </summary>
         /// <param name="actionType"> [Required] Specifies the action type of the schedule. </param>
-        internal UnknownScheduleActionBase(ScheduleActionType actionType) : base(actionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownScheduleActionBase(ScheduleActionType actionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(actionType, serializedAdditionalRawData)
         {
             ActionType = actionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownScheduleActionBase"/> for deserialization. </summary>
+        internal UnknownScheduleActionBase()
+        {
         }
     }
 }

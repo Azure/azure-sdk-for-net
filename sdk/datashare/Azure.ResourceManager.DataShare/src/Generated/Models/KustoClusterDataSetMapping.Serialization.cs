@@ -6,31 +6,105 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class KustoClusterDataSetMapping : IUtf8JsonSerializable
+    public partial class KustoClusterDataSetMapping : IUtf8JsonSerializable, IJsonModel<KustoClusterDataSetMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoClusterDataSetMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KustoClusterDataSetMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoClusterDataSetMapping)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataSetId"u8);
             writer.WriteStringValue(DataSetId);
+            if (options.Format != "W" && Optional.IsDefined(DataSetMappingStatus))
+            {
+                writer.WritePropertyName("dataSetMappingStatus"u8);
+                writer.WriteStringValue(DataSetMappingStatus.Value.ToString());
+            }
             writer.WritePropertyName("kustoClusterResourceId"u8);
             writer.WriteStringValue(KustoClusterResourceId);
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KustoClusterDataSetMapping DeserializeKustoClusterDataSetMapping(JsonElement element)
+        KustoClusterDataSetMapping IJsonModel<KustoClusterDataSetMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KustoClusterDataSetMapping)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKustoClusterDataSetMapping(document.RootElement, options);
+        }
+
+        internal static KustoClusterDataSetMapping DeserializeKustoClusterDataSetMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -45,6 +119,8 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier kustoClusterResourceId = default;
             Optional<AzureLocation> location = default;
             Optional<DataShareProvisioningState> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -125,8 +201,44 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KustoClusterDataSetMapping(id, name, type, systemData.Value, kind, dataSetId, Optional.ToNullable(dataSetMappingStatus), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KustoClusterDataSetMapping(id, name, type, systemData.Value, kind, serializedAdditionalRawData, dataSetId, Optional.ToNullable(dataSetMappingStatus), kustoClusterResourceId, Optional.ToNullable(location), Optional.ToNullable(provisioningState));
         }
+
+        BinaryData IPersistableModel<KustoClusterDataSetMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KustoClusterDataSetMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KustoClusterDataSetMapping IPersistableModel<KustoClusterDataSetMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KustoClusterDataSetMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKustoClusterDataSetMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KustoClusterDataSetMapping)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KustoClusterDataSetMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

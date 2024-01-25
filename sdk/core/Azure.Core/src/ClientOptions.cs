@@ -17,6 +17,8 @@ namespace Azure.Core
         private HttpPipelineTransport _transport;
         internal bool IsCustomTransportSet { get; private set; }
 
+        private HttpPipelinePolicy? _retryPolicy;
+
         /// <summary>
         /// Gets the default set of <see cref="ClientOptions"/>. Changes to the <see cref="Default"/> options would be reflected
         /// in new instances of <see cref="ClientOptions"/> type created after changes to <see cref="Default"/> were made.
@@ -77,6 +79,8 @@ namespace Azure.Core
             get => _transport;
             set
             {
+                AssertNotFrozen();
+
                 _transport = value ?? throw new ArgumentNullException(nameof(value));
                 IsCustomTransportSet = true;
             }
@@ -98,7 +102,16 @@ namespace Azure.Core
         /// If <see cref="RetryPolicy.Process"/> is overridden or a custom <see cref="HttpPipelinePolicy"/> is specified,
         /// it is the implementer's responsibility to update the <see cref="HttpMessage.ProcessingContext"/> values.
         /// </summary>
-        public new HttpPipelinePolicy? RetryPolicy { get; set; }
+        public new HttpPipelinePolicy? RetryPolicy
+        {
+            get => _retryPolicy;
+            set
+            {
+                AssertNotFrozen();
+
+                _retryPolicy = value;
+            }
+        }
 
         /// <summary>
         /// Adds an <see cref="HttpPipeline"/> policy into the client pipeline. The position of policy in the pipeline is controlled by the <paramref name="position"/> parameter.
@@ -109,6 +122,8 @@ namespace Azure.Core
         /// <param name="position">The position of policy in the pipeline.</param>
         public void AddPolicy(HttpPipelinePolicy policy, HttpPipelinePosition position)
         {
+            AssertNotFrozen();
+
             if (position != HttpPipelinePosition.PerCall &&
                 position != HttpPipelinePosition.PerRetry &&
                 position != HttpPipelinePosition.BeforeTransport)
@@ -133,5 +148,16 @@ namespace Azure.Core
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string? ToString() => base.ToString();
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        public override void Freeze()
+        {
+            Diagnostics.Freeze();
+            Retry.Freeze();
+
+            base.Freeze();
+        }
     }
 }

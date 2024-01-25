@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> The InternalNetwork patch resource definition. </summary>
     public partial class NetworkFabricInternalNetworkPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkFabricInternalNetworkPatch"/>. </summary>
         public NetworkFabricInternalNetworkPatch()
         {
@@ -34,7 +67,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="isMonitoringEnabled"> To check whether monitoring of internal network is enabled or not. </param>
         /// <param name="bgpConfiguration"> BGP configuration properties. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration properties. </param>
-        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricInternalNetworkPatch(string annotation, int? mtu, IList<ConnectedSubnet> connectedIPv4Subnets, IList<ConnectedSubnet> connectedIPv6Subnets, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId, IsMonitoringEnabled? isMonitoringEnabled, BgpConfiguration bgpConfiguration, StaticRouteConfiguration staticRouteConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Annotation = annotation;
             Mtu = mtu;
@@ -49,6 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsMonitoringEnabled = isMonitoringEnabled;
             BgpConfiguration = bgpConfiguration;
             StaticRouteConfiguration = staticRouteConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Switch configuration description. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
 {
     public class KustoClusterTests : KustoManagementTestBase
     {
-        private readonly KustoSku _sku = new(KustoSkuName.StandardE2aV4, 2, KustoSkuTier.Standard);
+        private readonly KustoSku _sku = new(KustoSkuName.StandardE2aV4, 2, KustoSkuTier.Standard, null);
 
         public KustoClusterTests(bool isAsync)
             : base(isAsync) //, RecordedTestMode.Record)
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
                 IsStreamingIngestEnabled = false,
                 OptimizedAutoscale = new OptimizedAutoscale(1, true, 2, 5),
                 PublicIPType = "DualStack",
-                TrustedExternalTenants = {new KustoClusterTrustedExternalTenant(TE.TenantId)},
+                TrustedExternalTenants = {new KustoClusterTrustedExternalTenant(TE.TenantId, null)},
                 // TODO: figure out how to authenticate
                 // KeyVaultProperties = new KustoKeyVaultProperties(
                 //     TE.KeyName,

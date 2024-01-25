@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> option A properties. </summary>
@@ -20,11 +23,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="vlanId"> Vlan Id.Example : 501. </param>
         /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
         /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
-        internal VpnConfigurationOptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(mtu, vlanId, peerAsn, bfdConfiguration)
+        internal VpnConfigurationOptionAProperties(int? mtu, int? vlanId, long? peerAsn, BfdConfiguration bfdConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData, string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix) : base(mtu, vlanId, peerAsn, bfdConfiguration, serializedAdditionalRawData)
         {
             PrimaryIPv4Prefix = primaryIPv4Prefix;
             PrimaryIPv6Prefix = primaryIPv6Prefix;

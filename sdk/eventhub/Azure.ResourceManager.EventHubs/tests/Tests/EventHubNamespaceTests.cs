@@ -495,14 +495,14 @@ namespace Azure.ResourceManager.EventHubs.Tests
             {
                 KeyName = Key1,
                 KeyVaultUri = kvData.Properties.VaultUri,
-                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
+                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString(), null)
             });
 
             eventHubsNamespaceData.Encryption.KeyVaultProperties.Add(new EventHubsKeyVaultProperties()
             {
                 KeyName = Key2,
                 KeyVaultUri = kvData.Properties.VaultUri,
-                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString())
+                Identity = new UserAssignedIdentityProperties(identityResponse_1.Value.Data.Id.ToString(), null)
             });
 
             resource = (await namespaceCollection.CreateOrUpdateAsync(WaitUntil.Completed, namespaceName, eventHubsNamespaceData)).Value;
