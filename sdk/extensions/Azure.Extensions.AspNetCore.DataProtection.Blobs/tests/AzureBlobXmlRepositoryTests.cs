@@ -30,7 +30,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
             var mock = new Mock<BlobClient>();
 
-            mock.Setup(c => c.UploadAsync(
+            mock.Setup(c => c.Upload(
                     It.IsAny<Stream>(),
                     It.IsAny<BlobHttpHeaders>(),
                     It.IsAny<IDictionary<string, string>>(),
@@ -39,15 +39,13 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
                     It.IsAny<AccessTier?>(),
                     It.IsAny<StorageTransferOptions>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(async (Stream strm, BlobHttpHeaders headers, IDictionary<string, string> metaData, BlobRequestConditions conditions, IProgress<long> progress, AccessTier? access, StorageTransferOptions transfer, CancellationToken token) =>
+                .Returns((Stream strm, BlobHttpHeaders headers, IDictionary<string, string> metaData, BlobRequestConditions conditions, IProgress<long> progress, AccessTier? access, StorageTransferOptions transfer, CancellationToken token) =>
                 {
                     using var memoryStream = new MemoryStream();
                     strm.CopyTo(memoryStream);
                     bytes = memoryStream.ToArray();
                     uploadConditions = conditions;
                     contentType = headers?.ContentType;
-
-                    await Task.Yield();
 
                     var mockResponse = new Mock<Response<BlobContentInfo>>();
                     var blobContentInfo = BlobsModelFactory.BlobContentInfo(ETag.All, DateTimeOffset.Now.AddDays(-1), Array.Empty<byte>(), "", 1);
@@ -73,15 +71,15 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
 
             var mock = new Mock<BlobClient>();
 
-            mock.Setup(c => c.DownloadToAsync(
+            mock.Setup(c => c.DownloadTo(
                     It.IsAny<Stream>(),
                     It.IsAny<BlobRequestConditions>(),
                     It.IsAny<StorageTransferOptions>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(async (Stream target, BlobRequestConditions conditions, StorageTransferOptions options, CancellationToken token) =>
+                .Returns((Stream target, BlobRequestConditions conditions, StorageTransferOptions options, CancellationToken token) =>
                 {
                     var data = GetEnvelopedContent("<Element1 />");
-                    await target.WriteAsync(data, 0, data.Length);
+                    target.Write(data, 0, data.Length);
 
                     var response = new MockResponse(200);
                     response.AddHeader(new HttpHeader("ETag", "*"));
@@ -89,7 +87,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
                 })
                 .Verifiable();
 
-            mock.Setup(c => c.UploadAsync(
+            mock.Setup(c => c.Upload(
                     It.IsAny<Stream>(),
                     It.IsAny<BlobHttpHeaders>(),
                     It.IsAny<IDictionary<string, string>>(),
@@ -101,7 +99,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
                 .Throws(new RequestFailedException(status: 412, message: ""))
                 .Verifiable();
 
-            mock.Setup(c => c.UploadAsync(
+            mock.Setup(c => c.Upload(
                     It.IsAny<Stream>(),
                     It.IsAny<BlobHttpHeaders>(),
                     It.IsAny<IDictionary<string, string>>(),
@@ -110,13 +108,11 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs.Tests
                     It.IsAny<AccessTier?>(),
                     It.IsAny<StorageTransferOptions>(),
                     It.IsAny<CancellationToken>()))
-                .Returns(async (Stream strm, BlobHttpHeaders headers, IDictionary<string, string> metaData, BlobRequestConditions conditions, IProgress<long> progress, AccessTier? access, StorageTransferOptions transfer, CancellationToken token) =>
+                .Returns((Stream strm, BlobHttpHeaders headers, IDictionary<string, string> metaData, BlobRequestConditions conditions, IProgress<long> progress, AccessTier? access, StorageTransferOptions transfer, CancellationToken token) =>
                 {
                     using var memoryStream = new MemoryStream();
                     strm.CopyTo(memoryStream);
                     bytes = memoryStream.ToArray();
-
-                    await Task.Yield();
 
                     var mockResponse = new Mock<Response<BlobContentInfo>>();
                     var blobContentInfo = BlobsModelFactory.BlobContentInfo(ETag.All, DateTimeOffset.Now.AddDays(-1), Array.Empty<byte>(), "", 1);

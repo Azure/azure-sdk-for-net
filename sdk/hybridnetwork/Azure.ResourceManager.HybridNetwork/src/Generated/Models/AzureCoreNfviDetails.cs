@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -21,8 +23,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <summary> Initializes a new instance of <see cref="AzureCoreNfviDetails"/>. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="location"> Location of the Azure core. </param>
-        internal AzureCoreNfviDetails(string name, NfviType nfviType, AzureLocation? location) : base(name, nfviType)
+        internal AzureCoreNfviDetails(string name, NfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, AzureLocation? location) : base(name, nfviType, serializedAdditionalRawData)
         {
             Location = location;
             NfviType = nfviType;
