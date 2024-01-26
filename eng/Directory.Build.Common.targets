@@ -211,6 +211,7 @@
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)FixedDelayWithNoJitterStrategy.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)FormUrlEncodedContent.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)HeaderSource.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)HttpPipelineExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
