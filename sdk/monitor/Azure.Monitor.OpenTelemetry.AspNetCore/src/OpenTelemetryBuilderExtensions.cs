@@ -111,6 +111,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                                 }
                                 return true;
                             })
+                            .AddProcessor<ProfilingSessionTraceProcessor>()
                             .AddAzureMonitorTraceExporter());
 
             builder.WithMetrics(b => b
