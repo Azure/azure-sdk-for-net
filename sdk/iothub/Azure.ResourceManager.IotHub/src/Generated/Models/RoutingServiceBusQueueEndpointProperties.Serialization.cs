@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingServiceBusQueueEndpointProperties : IUtf8JsonSerializable
+    public partial class RoutingServiceBusQueueEndpointProperties : IUtf8JsonSerializable, IJsonModel<RoutingServiceBusQueueEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingServiceBusQueueEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoutingServiceBusQueueEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingServiceBusQueueEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingServiceBusQueueEndpointProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -58,11 +68,40 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("resourceGroup"u8);
                 writer.WriteStringValue(ResourceGroup);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoutingServiceBusQueueEndpointProperties DeserializeRoutingServiceBusQueueEndpointProperties(JsonElement element)
+        RoutingServiceBusQueueEndpointProperties IJsonModel<RoutingServiceBusQueueEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingServiceBusQueueEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingServiceBusQueueEndpointProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingServiceBusQueueEndpointProperties(document.RootElement, options);
+        }
+
+        internal static RoutingServiceBusQueueEndpointProperties DeserializeRoutingServiceBusQueueEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +115,8 @@ namespace Azure.ResourceManager.IotHub.Models
             string name = default;
             Optional<string> subscriptionId = default;
             Optional<string> resourceGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -135,8 +176,44 @@ namespace Azure.ResourceManager.IotHub.Models
                     resourceGroup = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoutingServiceBusQueueEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RoutingServiceBusQueueEndpointProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, entityPath.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoutingServiceBusQueueEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingServiceBusQueueEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoutingServiceBusQueueEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RoutingServiceBusQueueEndpointProperties IPersistableModel<RoutingServiceBusQueueEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingServiceBusQueueEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoutingServiceBusQueueEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutingServiceBusQueueEndpointProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoutingServiceBusQueueEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

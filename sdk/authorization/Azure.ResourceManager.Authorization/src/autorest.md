@@ -113,9 +113,6 @@ generate-arm-resource-extensions:
   - /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}
   - /{scope}/providers/Microsoft.Authorization/roleEligibilityScheduleInstances/{roleEligibilityScheduleInstanceName}
 
-request-path-to-resource-type:
-  /{scope}/providers/Microsoft.Authorization/roleManagementPolicyAssignments/{roleManagementPolicyAssignmentName}: Microsoft.Authorization/roleManagementPolicyAssignment
-
 directive:
   # The requested resource does not support http method 'DELETE'
   - remove-operation: 'RoleManagementPolicies_Delete'

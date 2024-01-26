@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class BudgetTimePeriod : IUtf8JsonSerializable
+    public partial class BudgetTimePeriod : IUtf8JsonSerializable, IJsonModel<BudgetTimePeriod>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BudgetTimePeriod>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BudgetTimePeriod>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BudgetTimePeriod)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("startDate"u8);
             writer.WriteStringValue(StartOn, "O");
@@ -23,17 +33,48 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BudgetTimePeriod DeserializeBudgetTimePeriod(JsonElement element)
+        BudgetTimePeriod IJsonModel<BudgetTimePeriod>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BudgetTimePeriod)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBudgetTimePeriod(document.RootElement, options);
+        }
+
+        internal static BudgetTimePeriod DeserializeBudgetTimePeriod(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset startDate = default;
             Optional<DateTimeOffset> endDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDate"u8))
@@ -50,8 +91,44 @@ namespace Azure.ResourceManager.Consumption.Models
                     endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BudgetTimePeriod(startDate, Optional.ToNullable(endDate));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BudgetTimePeriod(startDate, Optional.ToNullable(endDate), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BudgetTimePeriod>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BudgetTimePeriod)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BudgetTimePeriod IPersistableModel<BudgetTimePeriod>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BudgetTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBudgetTimePeriod(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BudgetTimePeriod)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BudgetTimePeriod>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

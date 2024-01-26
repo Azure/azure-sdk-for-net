@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabEvaluatePolicy : IUtf8JsonSerializable
+    public partial class DevTestLabEvaluatePolicy : IUtf8JsonSerializable, IJsonModel<DevTestLabEvaluatePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabEvaluatePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevTestLabEvaluatePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FactName))
             {
@@ -35,7 +46,110 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("userObjectId"u8);
                 writer.WriteStringValue(UserObjectId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DevTestLabEvaluatePolicy IJsonModel<DevTestLabEvaluatePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabEvaluatePolicy(document.RootElement, options);
+        }
+
+        internal static DevTestLabEvaluatePolicy DeserializeDevTestLabEvaluatePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<string> factName = default;
+            Optional<string> factData = default;
+            Optional<string> valueOffset = default;
+            Optional<string> userObjectId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("factName"u8))
+                {
+                    factName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("factData"u8))
+                {
+                    factData = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("valueOffset"u8))
+                {
+                    valueOffset = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("userObjectId"u8))
+                {
+                    userObjectId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DevTestLabEvaluatePolicy(factName.Value, factData.Value, valueOffset.Value, userObjectId.Value, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DevTestLabEvaluatePolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabEvaluatePolicy IPersistableModel<DevTestLabEvaluatePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabEvaluatePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabEvaluatePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabEvaluatePolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabEvaluatePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

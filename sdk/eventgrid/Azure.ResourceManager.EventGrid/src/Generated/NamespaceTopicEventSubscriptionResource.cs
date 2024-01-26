@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<DeliveryAttributeMapping> GetDeliveryAttributesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(e), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<DeliveryAttributeMapping> GetDeliveryAttributes(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _namespaceTopicEventSubscriptionRestClient.CreateGetDeliveryAttributesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping, _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DeliveryAttributeMapping.DeserializeDeliveryAttributeMapping(e), _namespaceTopicEventSubscriptionClientDiagnostics, Pipeline, "NamespaceTopicEventSubscriptionResource.GetDeliveryAttributes", "value", null, cancellationToken);
         }
     }
 }

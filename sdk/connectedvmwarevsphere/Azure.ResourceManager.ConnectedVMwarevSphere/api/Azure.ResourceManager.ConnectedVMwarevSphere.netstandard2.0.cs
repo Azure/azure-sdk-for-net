@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VCenterInventoryItemData : Azure.ResourceManager.Models.ResourceData
+    public partial class VCenterInventoryItemData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData>
     {
         public VCenterInventoryItemData(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType inventoryType) { }
         public string Kind { get { throw null; } set { } }
@@ -75,6 +75,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string MoName { get { throw null; } set { } }
         public string MoRefId { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VCenterInventoryItemResource : Azure.ResourceManager.ArmResource
     {
@@ -90,7 +95,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ConnectedVMwarevSphere.VCenterInventoryItemData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VmInstanceGuestAgentData : Azure.ResourceManager.Models.ResourceData
+    public partial class VmInstanceGuestAgentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData>
     {
         public VmInstanceGuestAgentData() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential Credentials { get { throw null; } set { } }
@@ -102,6 +107,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string Status { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus> Statuses { get { throw null; } }
         public string Uuid { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VmInstanceGuestAgentResource : Azure.ResourceManager.ArmResource
     {
@@ -117,12 +127,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceGuestAgentResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VmInstanceHybridIdentityMetadataData : Azure.ResourceManager.Models.ResourceData
+    public partial class VmInstanceHybridIdentityMetadataData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData>
     {
         public VmInstanceHybridIdentityMetadataData() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState? ProvisioningState { get { throw null; } }
         public string PublicKey { get { throw null; } set { } }
         public string ResourceUid { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VmInstanceHybridIdentityMetadataData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VmInstanceHybridIdentityMetadataResource : Azure.ResourceManager.ArmResource
     {
@@ -151,7 +166,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareClusterData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VMwareClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData>
     {
         public VMwareClusterData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
@@ -170,6 +185,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public long? UsedMemoryGB { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string VCenterId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareClusterResource : Azure.ResourceManager.ArmResource
     {
@@ -208,7 +228,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareDatastoreData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VMwareDatastoreData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData>
     {
         public VMwareDatastoreData(Azure.Core.AzureLocation location) { }
         public long? CapacityGB { get { throw null; } }
@@ -223,6 +243,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus> Statuses { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string VCenterId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareDatastoreData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareDatastoreResource : Azure.ResourceManager.ArmResource
     {
@@ -261,7 +286,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareHostData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VMwareHostData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData>
     {
         public VMwareHostData(Azure.Core.AzureLocation location) { }
         public long? CpuMhz { get { throw null; } }
@@ -280,6 +305,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus> Statuses { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string VCenterId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareHostData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareHostResource : Azure.ResourceManager.ArmResource
     {
@@ -318,7 +348,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareResourcePoolData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VMwareResourcePoolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData>
     {
         public VMwareResourcePoolData(Azure.Core.AzureLocation location) { }
         public long? CpuCapacityMHz { get { throw null; } }
@@ -343,6 +373,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus> Statuses { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string VCenterId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareResourcePoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareResourcePoolResource : Azure.ResourceManager.ArmResource
     {
@@ -381,7 +416,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareVCenterData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VMwareVCenterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData>
     {
         public VMwareVCenterData(Azure.Core.AzureLocation location, string fqdn) { }
         public string ConnectionStatus { get { throw null; } }
@@ -396,6 +431,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus> Statuses { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVCenterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareVCenterResource : Azure.ResourceManager.ArmResource
     {
@@ -437,7 +477,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VMwareVirtualNetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData>
     {
         public VMwareVirtualNetworkData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
@@ -450,6 +490,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus> Statuses { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string VCenterId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareVirtualNetworkResource : Azure.ResourceManager.ArmResource
     {
@@ -471,7 +516,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public virtual Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkResource> Update(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVirtualNetworkResource>> UpdateAsync(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class VMwareVmInstanceData : Azure.ResourceManager.Models.ResourceData
+    public partial class VMwareVmInstanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData>
     {
         public VMwareVmInstanceData() { }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -486,6 +531,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public bool? SecureBootEnabled { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus> Statuses { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile StorageProfile { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmInstanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareVmInstanceResource : Azure.ResourceManager.ArmResource
     {
@@ -528,7 +578,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VMwareVmTemplateData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VMwareVmTemplateData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData>
     {
         public VMwareVmTemplateData(Azure.Core.AzureLocation location) { }
         public string CustomResourceName { get { throw null; } }
@@ -552,6 +602,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
         public string ToolsVersionStatus { get { throw null; } }
         public string Uuid { get { throw null; } }
         public string VCenterId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.VMwareVmTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VMwareVmTemplateResource : Azure.ResourceManager.ArmResource
     {
@@ -702,14 +757,19 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NicIPAddressSettings
+    public partial class NicIPAddressSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings>
     {
         internal NicIPAddressSettings() { }
         public string AllocationMethod { get { throw null; } }
         public string IPAddress { get { throw null; } }
         public string SubnetMask { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPAddressSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class NicIPSettings
+    public partial class NicIPSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings>
     {
         public NicIPSettings() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.IPAddressAllocationMethod? AllocationMethod { get { throw null; } set { } }
@@ -720,8 +780,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string PrimaryWinsServer { get { throw null; } }
         public string SecondaryWinsServer { get { throw null; } }
         public string SubnetMask { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.NicIPSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OSProfileForVmInstance
+    public partial class OSProfileForVmInstance : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance>
     {
         public OSProfileForVmInstance() { }
         public string AdminPassword { get { throw null; } set { } }
@@ -733,14 +798,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string ToolsRunningStatus { get { throw null; } }
         public string ToolsVersion { get { throw null; } }
         public string ToolsVersionStatus { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.OSProfileForVmInstance>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PlacementProfile
+    public partial class PlacementProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile>
     {
         public PlacementProfile() { }
         public string ClusterId { get { throw null; } set { } }
         public string DatastoreId { get { throw null; } set { } }
         public string HostId { get { throw null; } set { } }
         public string ResourcePoolId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PlacementProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PowerOnBootOption : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption>
@@ -780,12 +855,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StopVirtualMachineContent
+    public partial class StopVirtualMachineContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent>
     {
         public StopVirtualMachineContent() { }
         public bool? SkipShutdown { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.StopVirtualMachineContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VCenterInfrastructureProfile
+    public partial class VCenterInfrastructureProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile>
     {
         public VCenterInfrastructureProfile() { }
         public string CustomResourceName { get { throw null; } }
@@ -798,6 +878,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string SmbiosUuid { get { throw null; } set { } }
         public string TemplateId { get { throw null; } set { } }
         public string VCenterId { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInfrastructureProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VCenterInventoryType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType>
@@ -822,13 +907,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VCenterInventoryType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VICredential
+    public partial class VICredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential>
     {
         public VICredential() { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VICredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VirtualScsiController
+    public partial class VirtualScsiController : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController>
     {
         internal VirtualScsiController() { }
         public int? BusNumber { get { throw null; } }
@@ -836,6 +926,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.ScsiControllerType? ScsiControllerType { get { throw null; } }
         public int? ScsiCtlrUnitNumber { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing? Sharing { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VirtualScsiSharing : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing>
@@ -856,13 +951,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiSharing right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VmInstanceGuestCredential
+    public partial class VmInstanceGuestCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential>
     {
         public VmInstanceGuestCredential() { }
         public string Password { get { throw null; } set { } }
         public string Username { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceGuestCredential>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VmInstanceHardwareProfile
+    public partial class VmInstanceHardwareProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile>
     {
         public VmInstanceHardwareProfile() { }
         public bool? CpuHotAddEnabled { get { throw null; } }
@@ -871,6 +971,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public int? MemorySizeMB { get { throw null; } set { } }
         public int? NumCoresPerSocket { get { throw null; } set { } }
         public int? NumCpus { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VMwareDiskMode : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskMode>
@@ -932,7 +1037,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareFirmwareType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VMwareNetworkInterface
+    public partial class VMwareNetworkInterface : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface>
     {
         public VMwareNetworkInterface() { }
         public int? DeviceKey { get { throw null; } set { } }
@@ -946,8 +1051,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string NetworkMoRefId { get { throw null; } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType? NicType { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption? PowerOnBoot { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterface>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VMwareNetworkInterfaceUpdate
+    public partial class VMwareNetworkInterfaceUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate>
     {
         public VMwareNetworkInterfaceUpdate() { }
         public int? DeviceKey { get { throw null; } set { } }
@@ -955,6 +1065,11 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string NetworkId { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType? NicType { get { throw null; } set { } }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.PowerOnBootOption? PowerOnBoot { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VMwareNicType : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNicType>
@@ -997,10 +1112,15 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareOSType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VMwareResourcePatchContent
+    public partial class VMwareResourcePatchContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent>
     {
         public VMwareResourcePatchContent() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourcePatchContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VMwareResourceProvisioningState : System.IEquatable<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState>
@@ -1026,7 +1146,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public static bool operator !=(Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState left, Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VMwareResourceStatus
+    public partial class VMwareResourceStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus>
     {
         internal VMwareResourceStatus() { }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
@@ -1035,14 +1155,24 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string ResourceStatusType { get { throw null; } }
         public string Severity { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareResourceStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VMwareStorageProfile
+    public partial class VMwareStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile>
     {
         public VMwareStorageProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk> Disks { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VirtualScsiController> ScsiControllers { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VMwareVirtualDisk
+    public partial class VMwareVirtualDisk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk>
     {
         public VMwareVirtualDisk() { }
         public int? ControllerKey { get { throw null; } set { } }
@@ -1055,8 +1185,13 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public string Label { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public int? UnitNumber { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDisk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VMwareVirtualDiskUpdate
+    public partial class VMwareVirtualDiskUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate>
     {
         public VMwareVirtualDiskUpdate() { }
         public int? ControllerKey { get { throw null; } set { } }
@@ -1067,12 +1202,22 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareDiskType? DiskType { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public int? UnitNumber { get { throw null; } set { } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VMwareVmInstancePatch
+    public partial class VMwareVmInstancePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch>
     {
         public VMwareVmInstancePatch() { }
         public Azure.ResourceManager.ConnectedVMwarevSphere.Models.VmInstanceHardwareProfile HardwareProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareNetworkInterfaceUpdate> NetworkInterfaces { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVirtualDiskUpdate> StorageDisks { get { throw null; } }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ConnectedVMwarevSphere.Models.VMwareVmInstancePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

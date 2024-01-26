@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,11 +15,39 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Media
 {
-    public partial class MediaServicesAccountFilterData : IUtf8JsonSerializable
+    public partial class MediaServicesAccountFilterData : IUtf8JsonSerializable, IJsonModel<MediaServicesAccountFilterData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaServicesAccountFilterData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaServicesAccountFilterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountFilterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaServicesAccountFilterData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PresentationTimeRange))
@@ -41,11 +71,40 @@ namespace Azure.ResourceManager.Media
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MediaServicesAccountFilterData DeserializeMediaServicesAccountFilterData(JsonElement element)
+        MediaServicesAccountFilterData IJsonModel<MediaServicesAccountFilterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountFilterData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaServicesAccountFilterData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaServicesAccountFilterData(document.RootElement, options);
+        }
+
+        internal static MediaServicesAccountFilterData DeserializeMediaServicesAccountFilterData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -57,6 +116,8 @@ namespace Azure.ResourceManager.Media
             Optional<PresentationTimeRange> presentationTimeRange = default;
             Optional<FirstQuality> firstQuality = default;
             Optional<IList<FilterTrackSelection>> tracks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -127,8 +188,44 @@ namespace Azure.ResourceManager.Media
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MediaServicesAccountFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Optional.ToList(tracks));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MediaServicesAccountFilterData(id, name, type, systemData.Value, presentationTimeRange.Value, firstQuality.Value, Optional.ToList(tracks), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaServicesAccountFilterData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountFilterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MediaServicesAccountFilterData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MediaServicesAccountFilterData IPersistableModel<MediaServicesAccountFilterData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaServicesAccountFilterData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaServicesAccountFilterData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MediaServicesAccountFilterData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaServicesAccountFilterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
