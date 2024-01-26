@@ -300,6 +300,7 @@ namespace Azure.Communication
             Assert.AreEqual(expectedIdentifier, identifier);
         }
 
+        [Test]
         public void SerializeMicrosoftTeamsApp()
         {
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(
