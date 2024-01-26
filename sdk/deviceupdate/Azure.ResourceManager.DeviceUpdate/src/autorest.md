@@ -16,6 +16,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -45,7 +46,7 @@ rename-mapping:
   PrivateLinkServiceProxy.id: -|arm-id
   RemotePrivateEndpoint.id: -|arm-id
   RemotePrivateEndpoint.immutableResourceId: -|arm-id
-  
+
 prepend-rp-prefix:
   - Account
   - Instance

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -20,8 +22,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="OpenDeploymentResourceReference"/>. </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="id"> Resource ID. </param>
-        internal OpenDeploymentResourceReference(IdType idType, ResourceIdentifier id) : base(idType)
+        internal OpenDeploymentResourceReference(IdType idType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier id) : base(idType, serializedAdditionalRawData)
         {
             Id = id;
             IdType = idType;

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StorageCache.Tests
         {
             Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
-            DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync("rg-rdupuisstoragecache");
+            DefaultResourceGroup = await this.DefaultSubscription.GetResourceGroupAsync("rg-amajaistoragecache");
             amlFSResourceGroup = DefaultResourceGroup;
             amlFSStorageAccountId = "/subscriptions/" + DefaultSubscription.Id.SubscriptionId +"/resourceGroups/"+ DefaultResourceGroup.Id.Name +"/providers/Microsoft.Storage/storageAccounts/" + "sdktestingstorageaccount";
             amlFSSubnetResourceId = this.amlFSResourceGroup.Id + "/providers/Microsoft.Network/virtualNetworks/" + "vnet1" + "/subnets/fsSubnet";
