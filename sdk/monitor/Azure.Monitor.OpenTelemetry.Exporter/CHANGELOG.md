@@ -8,6 +8,9 @@
 
 ### Bugs Fixed
 
+* Fix issue that caused Request OperationName to display routing pattern instead of url path.
+  ([41623](https://github.com/Azure/azure-sdk-for-net/pull/41623))
+
 ### Other Changes
 
 ## 1.2.0 (2024-01-24)
