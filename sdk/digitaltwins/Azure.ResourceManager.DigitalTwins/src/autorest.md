@@ -19,7 +19,6 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
-use-model-reader-writer: true
 
 rename-mapping:
   AzureDataExplorerConnectionProperties.adxResourceId: -|arm-id
