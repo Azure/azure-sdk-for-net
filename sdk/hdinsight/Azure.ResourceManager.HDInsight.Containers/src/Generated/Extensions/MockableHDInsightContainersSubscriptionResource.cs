@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ClusterPoolVersion.DeserializeClusterPoolVersion(e), AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterPoolVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterPoolVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ClusterPoolVersion.DeserializeClusterPoolVersion, AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ClusterPoolVersion.DeserializeClusterPoolVersion(e), AvailableClusterPoolVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterPoolVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => HDInsightClusterVersion.DeserializeHDInsightClusterVersion(e), AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AvailableClusterVersionsRestClient.CreateListByLocationRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AvailableClusterVersionsRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, HDInsightClusterVersion.DeserializeHDInsightClusterVersion, AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => HDInsightClusterVersion.DeserializeHDInsightClusterVersion(e), AvailableClusterVersionsClientDiagnostics, Pipeline, "MockableHDInsightContainersSubscriptionResource.GetAvailableClusterVersionsByLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

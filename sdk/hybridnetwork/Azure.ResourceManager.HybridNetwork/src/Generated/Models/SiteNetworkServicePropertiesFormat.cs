@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     /// <summary> Site network service properties. </summary>
     public partial class SiteNetworkServicePropertiesFormat
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SiteNetworkServicePropertiesFormat"/>. </summary>
         public SiteNetworkServicePropertiesFormat()
         {
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="desiredStateConfigurationGroupValueReferences"> The goal state of the site network service resource. This has references to the configuration group value objects that describe the desired state of the site network service. </param>
         /// <param name="lastStateNetworkServiceDesignVersionName"> The network service design version for the site network service. </param>
         /// <param name="lastStateConfigurationGroupValueReferences"> The last state of the site network service resource. </param>
-        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, WritableSubResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, string networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteNetworkServicePropertiesFormat(ProvisioningState? provisioningState, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, WritableSubResource siteReference, string publisherName, PublisherScope? publisherScope, string networkServiceDesignGroupName, string networkServiceDesignVersionName, string networkServiceDesignVersionOfferingLocation, DeploymentResourceIdReference networkServiceDesignVersionResourceReference, IDictionary<string, WritableSubResource> desiredStateConfigurationGroupValueReferences, string lastStateNetworkServiceDesignVersionName, IReadOnlyDictionary<string, WritableSubResource> lastStateConfigurationGroupValueReferences, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
@@ -52,6 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             DesiredStateConfigurationGroupValueReferences = desiredStateConfigurationGroupValueReferences;
             LastStateNetworkServiceDesignVersionName = lastStateNetworkServiceDesignVersionName;
             LastStateConfigurationGroupValueReferences = lastStateConfigurationGroupValueReferences;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The provisioning state of the site network service resource. </summary>

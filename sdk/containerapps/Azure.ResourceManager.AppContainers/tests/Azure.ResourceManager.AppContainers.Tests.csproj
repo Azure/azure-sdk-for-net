@@ -8,4 +8,8 @@
     <PackageReference Include="Azure.ResourceManager.KubernetesConfiguration" />
     <PackageReference Include="Azure.ResourceManager.ContainerRegistry" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
+  </ItemGroup>
 </Project>

@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    internal partial class WindowsOSInfo : IUtf8JsonSerializable
+    internal partial class WindowsOSInfo : IUtf8JsonSerializable, IJsonModel<WindowsOSInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsOSInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WindowsOSInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsOSInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(WindowsOSState))
             {
                 writer.WritePropertyName("windowsOsState"u8);
                 writer.WriteStringValue(WindowsOSState.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WindowsOSInfo DeserializeWindowsOSInfo(JsonElement element)
+        WindowsOSInfo IJsonModel<WindowsOSInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsOSInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsOSInfo(document.RootElement, options);
+        }
+
+        internal static WindowsOSInfo DeserializeWindowsOSInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<WindowsOSState> windowsOSState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("windowsOsState"u8))
@@ -41,8 +83,44 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     windowsOSState = new WindowsOSState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WindowsOSInfo(Optional.ToNullable(windowsOSState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new WindowsOSInfo(Optional.ToNullable(windowsOSState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WindowsOSInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsOSInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        WindowsOSInfo IPersistableModel<WindowsOSInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsOSInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWindowsOSInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WindowsOSInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WindowsOSInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
