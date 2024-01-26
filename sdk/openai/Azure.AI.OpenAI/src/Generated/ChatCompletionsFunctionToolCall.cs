@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,5 +17,19 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class ChatCompletionsFunctionToolCall : ChatCompletionsToolCall
     {
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolCall"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="id"> The ID of the tool call. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="function"> The details of the function invocation requested by the tool call. </param>
+        internal ChatCompletionsFunctionToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, FunctionCall function) : base(type, id, serializedAdditionalRawData)
+        {
+            Function = function;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ChatCompletionsFunctionToolCall"/> for deserialization. </summary>
+        internal ChatCompletionsFunctionToolCall()
+        {
+        }
     }
 }
