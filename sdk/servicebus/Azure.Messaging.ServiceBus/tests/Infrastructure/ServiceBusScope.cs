@@ -17,7 +17,11 @@ namespace Azure.Messaging.ServiceBus.Tests
     public static class ServiceBusScope
     {
         /// <summary> The client used to create and delete resources on the Service Bus namespace. </summary>
-        private static readonly ServiceBusAdministrationClient s_adminClient = new ServiceBusAdministrationClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+        private static readonly ServiceBusAdministrationClient s_adminClient =
+            new ServiceBusAdministrationClient(
+                ServiceBusTestEnvironment.Instance.ServiceBusConnectionString,
+                // disable tracing so as not to impact any tracing tests
+                new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
 
         /// <summary>
         ///   Creates a Service Bus scope associated with a queue instance, intended to be used in the context
