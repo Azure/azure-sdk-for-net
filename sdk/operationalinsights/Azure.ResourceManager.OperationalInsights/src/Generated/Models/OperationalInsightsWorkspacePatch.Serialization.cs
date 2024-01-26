@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -35,8 +44,43 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomerId))
+            {
+                writer.WritePropertyName("customerId"u8);
+                writer.WriteStringValue(CustomerId.Value);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
@@ -59,6 +103,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("workspaceCapping"u8);
                 writer.WriteObjectValue(WorkspaceCapping);
             }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdDate"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("modifiedDate"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
+            }
             if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
                 writer.WritePropertyName("publicNetworkAccessForIngestion"u8);
@@ -74,6 +128,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("forceCmkForQuery"u8);
                 writer.WriteBooleanValue(ForceCmkForQuery.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
+            {
+                writer.WritePropertyName("privateLinkScopedResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateLinkScopedResources)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
@@ -85,11 +149,40 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element)
+        OperationalInsightsWorkspacePatch IJsonModel<OperationalInsightsWorkspacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,6 +207,8 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
             Optional<OperationalInsightsWorkspaceFeatures> features = default;
             Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -307,8 +402,44 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsWorkspacePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsWorkspacePatch IPersistableModel<OperationalInsightsWorkspacePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
