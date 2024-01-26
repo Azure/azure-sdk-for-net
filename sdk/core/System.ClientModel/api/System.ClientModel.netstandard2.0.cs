@@ -19,7 +19,7 @@ namespace System.ClientModel
     public partial class ClientResult
     {
         protected ClientResult(System.ClientModel.Primitives.PipelineResponse response) { }
-        public static System.ClientModel.OptionalClientResult<T> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
+        public static System.ClientModel.ClientResult<T?> FromOptionalValue<T>(T? value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult FromResponse(System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public static System.ClientModel.ClientResult<T> FromValue<T>(T value, System.ClientModel.Primitives.PipelineResponse response) { throw null; }
         public System.ClientModel.Primitives.PipelineResponse GetRawResponse() { throw null; }
@@ -33,18 +33,10 @@ namespace System.ClientModel
         public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context) { }
         public System.ClientModel.Primitives.PipelineResponse? GetRawResponse() { throw null; }
     }
-    public partial class ClientResult<T> : System.ClientModel.OptionalClientResult<T>
+    public partial class ClientResult<T> : System.ClientModel.ClientResult
     {
-        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(T), default(System.ClientModel.Primitives.PipelineResponse)) { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public sealed override bool HasValue { get { throw null; } }
-        public sealed override T Value { get { throw null; } }
-    }
-    public partial class OptionalClientResult<T> : System.ClientModel.ClientResult
-    {
-        protected internal OptionalClientResult(T? value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
-        public virtual bool HasValue { get { throw null; } }
-        public virtual T? Value { get { throw null; } }
+        protected internal ClientResult(T value, System.ClientModel.Primitives.PipelineResponse response) : base (default(System.ClientModel.Primitives.PipelineResponse)) { }
+        public virtual T Value { get { throw null; } }
     }
 }
 namespace System.ClientModel.Primitives
@@ -80,6 +72,8 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
     }
     public partial class ClientRetryPolicy : System.ClientModel.Primitives.PipelinePolicy
     {
@@ -249,6 +243,8 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
+        protected void AssertNotFrozen() { }
+        public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
     }
     public partial class ResponseBufferingPolicy : System.ClientModel.Primitives.PipelinePolicy

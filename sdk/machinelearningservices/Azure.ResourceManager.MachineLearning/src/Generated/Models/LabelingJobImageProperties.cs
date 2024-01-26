@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Properties of a labeling job for image data. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="LabelingJobImageProperties"/>. </summary>
         /// <param name="mediaType"> [Required] Media type of the job. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="annotationType"> Annotation type of image labeling job. </param>
-        internal LabelingJobImageProperties(MediaType mediaType, ImageAnnotationType? annotationType) : base(mediaType)
+        internal LabelingJobImageProperties(MediaType mediaType, IDictionary<string, BinaryData> serializedAdditionalRawData, ImageAnnotationType? annotationType) : base(mediaType, serializedAdditionalRawData)
         {
             AnnotationType = annotationType;
             MediaType = mediaType;
