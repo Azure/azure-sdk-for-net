@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Query parameters can also be specified in the body, specifying the same parameter in both the body and query parameters will result in an error. </summary>
     public partial class SubscriptionResourceGetMonitorMetricsWithPostContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetMonitorMetricsWithPostContent"/>. </summary>
         public SubscriptionResourceGetMonitorMetricsWithPostContent()
         {
@@ -38,7 +71,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="metricNamespace"> Metric namespace where the metrics you want reside. </param>
         /// <param name="autoAdjustTimegrain"> When set to true, if the timespan passed in is not supported by this metric, the API will return the result using the closest supported timespan. When set to false, an error is returned for invalid timespan parameters. Defaults to false. </param>
         /// <param name="validateDimensions"> When set to false, invalid filter parameter values will be ignored. When set to true, an error is returned for invalid filter parameters. Defaults to true. </param>
-        internal SubscriptionResourceGetMonitorMetricsWithPostContent(TimeSpan? timespan, TimeSpan? interval, string metricNames, string aggregation, string filter, int? top, string orderBy, string rollUpBy, MonitorMetricResultType? resultType, string metricNamespace, bool? autoAdjustTimegrain, bool? validateDimensions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SubscriptionResourceGetMonitorMetricsWithPostContent(TimeSpan? timespan, TimeSpan? interval, string metricNames, string aggregation, string filter, int? top, string orderBy, string rollUpBy, MonitorMetricResultType? resultType, string metricNamespace, bool? autoAdjustTimegrain, bool? validateDimensions, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Timespan = timespan;
             Interval = interval;
@@ -52,6 +86,7 @@ namespace Azure.ResourceManager.Monitor.Models
             MetricNamespace = metricNamespace;
             AutoAdjustTimegrain = autoAdjustTimegrain;
             ValidateDimensions = validateDimensions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </summary>

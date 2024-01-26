@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Select audio tracks from the input by specifying a track identifier. </summary>
@@ -20,12 +23,18 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="SelectAudioTrackById"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="channelMapping"> Optional designation for single channel audio tracks.  Can be used to combine the tracks into stereo or multi-channel audio tracks. </param>
         /// <param name="trackId"> Track identifier to select. </param>
-        internal SelectAudioTrackById(string odataType, ChannelMapping? channelMapping, long trackId) : base(odataType, channelMapping)
+        internal SelectAudioTrackById(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, ChannelMapping? channelMapping, long trackId) : base(odataType, serializedAdditionalRawData, channelMapping)
         {
             TrackId = trackId;
             OdataType = odataType ?? "#Microsoft.Media.SelectAudioTrackById";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SelectAudioTrackById"/> for deserialization. </summary>
+        internal SelectAudioTrackById()
+        {
         }
 
         /// <summary> Track identifier to select. </summary>

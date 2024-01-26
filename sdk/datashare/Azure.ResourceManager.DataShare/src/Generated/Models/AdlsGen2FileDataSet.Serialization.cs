@@ -6,21 +6,56 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    public partial class AdlsGen2FileDataSet : IUtf8JsonSerializable
+    public partial class AdlsGen2FileDataSet : IUtf8JsonSerializable, IJsonModel<AdlsGen2FileDataSet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdlsGen2FileDataSet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AdlsGen2FileDataSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AdlsGen2FileDataSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdlsGen2FileDataSet)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DataSetId))
+            {
+                writer.WritePropertyName("dataSetId"u8);
+                writer.WriteStringValue(DataSetId.Value);
+            }
             writer.WritePropertyName("filePath"u8);
             writer.WriteStringValue(FilePath);
             writer.WritePropertyName("fileSystem"u8);
@@ -32,11 +67,40 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WritePropertyName("subscriptionId"u8);
             writer.WriteStringValue(SubscriptionId);
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdlsGen2FileDataSet DeserializeAdlsGen2FileDataSet(JsonElement element)
+        AdlsGen2FileDataSet IJsonModel<AdlsGen2FileDataSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AdlsGen2FileDataSet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdlsGen2FileDataSet)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdlsGen2FileDataSet(document.RootElement, options);
+        }
+
+        internal static AdlsGen2FileDataSet DeserializeAdlsGen2FileDataSet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,6 +116,8 @@ namespace Azure.ResourceManager.DataShare.Models
             string resourceGroup = default;
             string storageAccountName = default;
             string subscriptionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -129,8 +195,44 @@ namespace Azure.ResourceManager.DataShare.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AdlsGen2FileDataSet(id, name, type, systemData.Value, kind, Optional.ToNullable(dataSetId), filePath, fileSystem, resourceGroup, storageAccountName, subscriptionId);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AdlsGen2FileDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(dataSetId), filePath, fileSystem, resourceGroup, storageAccountName, subscriptionId);
         }
+
+        BinaryData IPersistableModel<AdlsGen2FileDataSet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdlsGen2FileDataSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AdlsGen2FileDataSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AdlsGen2FileDataSet IPersistableModel<AdlsGen2FileDataSet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdlsGen2FileDataSet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAdlsGen2FileDataSet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdlsGen2FileDataSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AdlsGen2FileDataSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

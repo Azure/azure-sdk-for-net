@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class HybridComputeWindowsParameters : IUtf8JsonSerializable
+    public partial class HybridComputeWindowsParameters : IUtf8JsonSerializable, IJsonModel<HybridComputeWindowsParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridComputeWindowsParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HybridComputeWindowsParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeWindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
@@ -55,7 +66,151 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("maxPatchPublishDate"u8);
                 writer.WriteStringValue(MaxPatchPublishOn.Value, "O");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        HybridComputeWindowsParameters IJsonModel<HybridComputeWindowsParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeWindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHybridComputeWindowsParameters(document.RootElement, options);
+        }
+
+        internal static HybridComputeWindowsParameters DeserializeHybridComputeWindowsParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            Optional<IList<VmGuestPatchClassificationWindow>> classificationsToInclude = default;
+            Optional<IList<string>> kbNumbersToInclude = default;
+            Optional<IList<string>> kbNumbersToExclude = default;
+            Optional<bool> excludeKbsRequiringReboot = default;
+            Optional<DateTimeOffset> maxPatchPublishDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("classificationsToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VmGuestPatchClassificationWindow> array = new List<VmGuestPatchClassificationWindow>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new VmGuestPatchClassificationWindow(item.GetString()));
+                    }
+                    classificationsToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("kbNumbersToInclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    kbNumbersToInclude = array;
+                    continue;
+                }
+                if (property.NameEquals("kbNumbersToExclude"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    kbNumbersToExclude = array;
+                    continue;
+                }
+                if (property.NameEquals("excludeKbsRequiringReboot"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    excludeKbsRequiringReboot = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("maxPatchPublishDate"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxPatchPublishDate = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HybridComputeWindowsParameters(Optional.ToList(classificationsToInclude), Optional.ToList(kbNumbersToInclude), Optional.ToList(kbNumbersToExclude), Optional.ToNullable(excludeKbsRequiringReboot), Optional.ToNullable(maxPatchPublishDate), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<HybridComputeWindowsParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeWindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HybridComputeWindowsParameters IPersistableModel<HybridComputeWindowsParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HybridComputeWindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHybridComputeWindowsParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HybridComputeWindowsParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

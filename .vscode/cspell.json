@@ -433,7 +433,8 @@
         "Inprogress",
         "Twilio",
         "Vertica",
-        "Xero"
+        "Xero",
+		    "Soql"
       ]
     },
     {

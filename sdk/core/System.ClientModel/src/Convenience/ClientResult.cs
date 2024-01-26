@@ -30,11 +30,10 @@ public class ClientResult
 
     public static ClientResult<T> FromValue<T>(T value, PipelineResponse response)
     {
-        // Null values must use OptionalClientResult<T>
         if (value is null)
         {
             string message = "ClientResult<T> contract guarantees that ClientResult<T>.Value is non-null. " +
-                "If you need to return a ClientResult where the Value is null, please use OptionalClientResult<T> instead.";
+                "If you need to return a ClientResult where the Value is null, please use call ClientResult.FromOptionalValue instead.";
 
             throw new ArgumentNullException(nameof(value), message);
         }
@@ -42,8 +41,8 @@ public class ClientResult
         return new ClientResult<T>(value, response);
     }
 
-    public static OptionalClientResult<T> FromOptionalValue<T>(T? value, PipelineResponse response)
-        => new OptionalClientResult<T>(value, response);
+    public static ClientResult<T?> FromOptionalValue<T>(T? value, PipelineResponse response)
+        => new ClientResult<T?>(value, response);
 
     #endregion
 }

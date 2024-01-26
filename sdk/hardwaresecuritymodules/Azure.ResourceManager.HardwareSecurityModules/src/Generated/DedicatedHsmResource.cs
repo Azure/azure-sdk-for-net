@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dedicatedHsmRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint, _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OutboundEnvironmentEndpoint.DeserializeOutboundEnvironmentEndpoint(e), _dedicatedHsmClientDiagnostics, Pipeline, "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
