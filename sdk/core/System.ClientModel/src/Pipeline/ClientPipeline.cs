@@ -128,20 +128,21 @@ public sealed partial class ClientPipeline
 
     #endregion
 
-    public PipelineMessage CreateMessage() => _transport.CreateMessage();
+    public PipelineMessage CreateMessage()
+    {
+        PipelineMessage message = _transport.CreateMessage();
+        message.NetworkTimeout = _networkTimeout;
+        return message;
+    }
 
     public void Send(PipelineMessage message)
     {
-        message.NetworkTimeout ??= _networkTimeout;
-
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         policies[0].Process(message, policies, 0);
     }
 
     public async ValueTask SendAsync(PipelineMessage message)
     {
-        message.NetworkTimeout ??= _networkTimeout;
-
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
