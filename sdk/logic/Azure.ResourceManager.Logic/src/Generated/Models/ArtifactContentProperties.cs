@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -22,10 +23,11 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Anything. </param>
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
-        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(createdOn, changedOn, metadata)
+        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(createdOn, changedOn, metadata, serializedAdditionalRawData)
         {
             Content = content;
             ContentType = contentType;
