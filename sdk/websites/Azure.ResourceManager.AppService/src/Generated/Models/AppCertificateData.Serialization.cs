@@ -7,11 +7,9 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
