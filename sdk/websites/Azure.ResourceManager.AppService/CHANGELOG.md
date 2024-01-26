@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+-Add `200` to the response code of the `SyncFunctionTriggers`
+
 ### Other Changes
 
 ## 1.1.0-beta.4 (2023-11-30)
