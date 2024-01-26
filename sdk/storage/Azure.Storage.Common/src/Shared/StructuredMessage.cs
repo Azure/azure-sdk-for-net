@@ -101,7 +101,7 @@ internal static class StructuredMessage
         #endregion
 
         #region SegmentFooter
-        public static int WriteSegmentFooter(Span<byte> buffer, Span<byte> crc64 = default)
+        public static int WriteSegmentFooter(Span<byte> buffer, ReadOnlySpan<byte> crc64 = default)
         {
             int requiredSpace = 0;
             if (!crc64.IsEmpty)
@@ -130,7 +130,7 @@ internal static class StructuredMessage
         public static IDisposable GetSegmentFooterBytes(
             ArrayPool<byte> pool,
             out Memory<byte> bytes,
-            Span<byte> crc64 = default)
+            ReadOnlySpan<byte> crc64 = default)
         {
             Argument.AssertNotNull(pool, nameof(pool));
             IDisposable disposable = pool.RentAsMemoryDisposable(StreamHeaderLength, out bytes);

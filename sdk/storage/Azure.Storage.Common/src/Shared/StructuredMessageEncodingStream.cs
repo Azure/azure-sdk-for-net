@@ -22,6 +22,7 @@ internal class StructuredMessageEncodingStream : Stream
     private readonly int _segmentContentLength;
 
     private readonly StructuredMessage.Flags _flags;
+    private bool UseCrcSegment => _flags.HasFlag(StructuredMessage.Flags.CrcSegment);
 
     private bool _disposed;
 
@@ -29,7 +30,30 @@ internal class StructuredMessageEncodingStream : Stream
     /// Gets the 1-indexed segment number the underlying stream is currently positioned in.
     /// 1-indexed to match segment labelling as specified by SM spec.
     /// </summary>
-    private int CurrentSegment => (int)Math.Floor(_innerStream.Position / (float)_segmentContentLength) + 1;
+    private int CurrentInnerSegment => (int)Math.Floor(_innerStream.Position / (float)_segmentContentLength) + 1;
+
+    /// <summary>
+    /// Gets the 1-indexed segment number the encoded data stream is currently positioned in.
+    /// 1-indexed to match segment labelling as specified by SM spec.
+    /// </summary>
+    private int CurrentEncodingSegment
+    {
+        get
+        {
+            // edge case: always on final segment when at end of inner stream
+            if (_innerStream.Position == _innerStream.Length)
+            {
+                return TotalSegments;
+            }
+            // when writing footer, inner stream is positioned at next segment,
+            // but this stream is still writing the previous one
+            if (_currentRegion == SMRegion.SegmentFooter)
+            {
+                return CurrentInnerSegment - 1;
+            }
+            return CurrentInnerSegment;
+        }
+    }
 
     /// <summary>
     /// Segment length including header and footer.
@@ -75,14 +99,15 @@ internal class StructuredMessageEncodingStream : Stream
                     _currentRegionPosition,
                 SMRegion.SegmentHeader => _innerStream.Position +
                     _streamHeaderLength +
-                    (CurrentSegment - 1) * (_segmentHeaderLength + _segmentFooterLength) +
+                    (CurrentEncodingSegment - 1) * (_segmentHeaderLength + _segmentFooterLength) +
                     _currentRegionPosition,
                 SMRegion.SegmentFooter => _innerStream.Position +
                     _streamHeaderLength +
-                    CurrentSegment * (_segmentHeaderLength + _segmentFooterLength) -
+                    // Inner stream has moved to next segment but we're still writing the previous segment footer
+                    CurrentEncodingSegment * (_segmentHeaderLength + _segmentFooterLength) -
                     _segmentFooterLength + _currentRegionPosition,
                 SMRegion.SegmentContent => _streamHeaderLength +
-                    CurrentSegment * (_segmentHeaderLength + _segmentFooterLength) -
+                    CurrentEncodingSegment * (_segmentHeaderLength + _segmentFooterLength) -
                     _segmentFooterLength,
                 _ => throw new InvalidDataException($"{nameof(StructuredMessageEncodingStream)} invalid state."),
             };
@@ -105,13 +130,13 @@ internal class StructuredMessageEncodingStream : Stream
                 return;
             }
             int segmentPosition = (int)(Position - _streamHeaderLength -
-                ((CurrentSegment - 1) * (_segmentHeaderLength + _segmentFooterLength + _segmentContentLength)));
+                ((CurrentInnerSegment - 1) * (_segmentHeaderLength + _segmentFooterLength + _segmentContentLength)));
 
             if (segmentPosition < _segmentHeaderLength)
             {
                 _currentRegion = SMRegion.SegmentHeader;
                 _currentRegionPosition = (int)((value - _streamHeaderLength) % SegmentTotalLength);
-                _innerStream.Position = (CurrentSegment - 1) * _segmentContentLength;
+                _innerStream.Position = (CurrentInnerSegment - 1) * _segmentContentLength;
                 return;
             }
             if (segmentPosition < _segmentHeaderLength + _segmentContentLength)
@@ -119,14 +144,14 @@ internal class StructuredMessageEncodingStream : Stream
                 _currentRegion = SMRegion.SegmentContent;
                 _currentRegionPosition = (int)((value - _streamHeaderLength) % SegmentTotalLength) -
                     _segmentHeaderLength;
-                _innerStream.Position = (CurrentSegment - 1) * _segmentContentLength + _currentRegionPosition;
+                _innerStream.Position = (CurrentInnerSegment - 1) * _segmentContentLength + _currentRegionPosition;
                 return;
             }
 
             _currentRegion = SMRegion.SegmentFooter;
             _currentRegionPosition = (int)((value - _streamHeaderLength) % SegmentTotalLength) -
                     _segmentHeaderLength - _segmentContentLength;
-            _innerStream.Position = CurrentSegment * _segmentContentLength;
+            _innerStream.Position = CurrentInnerSegment * _segmentContentLength;
         }
     }
     #endregion
@@ -156,8 +181,7 @@ internal class StructuredMessageEncodingStream : Stream
         _streamHeaderLength = StructuredMessage.V1_0.StreamHeaderLength;
         _streamFooterLength = 0;
         _segmentHeaderLength = StructuredMessage.V1_0.SegmentHeaderLength;
-        _segmentFooterLength = (flags & StructuredMessage.Flags.CrcSegment) == StructuredMessage.Flags.CrcSegment
-            ? StructuredMessage.Crc64Length : 0;
+        _segmentFooterLength = UseCrcSegment ? StructuredMessage.Crc64Length : 0;
     }
 
     #region Write
@@ -298,7 +322,7 @@ internal class StructuredMessageEncodingStream : Stream
     {
         int read = Math.Min(buffer.Length, _segmentHeaderLength - _currentRegionPosition);
         using IDisposable _ = StructuredMessage.V1_0.GetSegmentHeaderBytes(
-            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, CurrentSegment, _segmentContentLength);
+            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, CurrentInnerSegment, _segmentContentLength);
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
         _currentRegionPosition += read;
 
@@ -314,8 +338,13 @@ internal class StructuredMessageEncodingStream : Stream
     private int ReadFromSegmentFooter(Span<byte> buffer)
     {
         int read = Math.Min(buffer.Length, _segmentFooterLength - _currentRegionPosition);
+        if (read < 0)
+        {
+            return 0;
+        }
+
         using IDisposable _ = StructuredMessage.V1_0.GetSegmentFooterBytes(
-            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, crc64: default);
+            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, crc64: UseCrcSegment ? new byte[8] : default); //TODO
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
         _currentRegionPosition += read;
 

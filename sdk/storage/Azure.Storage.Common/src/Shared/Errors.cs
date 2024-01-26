@@ -88,7 +88,7 @@ namespace Azure.Storage
             }
         }
 
-        internal static void AssertBufferExactSize(Span<byte> buffer, int size, string paramName)
+        internal static void AssertBufferExactSize(ReadOnlySpan<byte> buffer, int size, string paramName)
         {
             if (buffer.Length != size)
             {
