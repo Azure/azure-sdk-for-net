@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -16,6 +17,38 @@ namespace Azure.AI.OpenAI
     /// </summary>
     internal partial class AzureCosmosDBChatExtensionParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionParameters"/>. </summary>
         /// <param name="authentication">
         /// The authentication method to use when accessing the defined data source.
@@ -33,7 +66,8 @@ namespace Azure.AI.OpenAI
         /// <param name="indexName"> The MongoDB vCore index name to use with Azure Cosmos DB. </param>
         /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
         /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
-        internal AzureCosmosDBChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, string databaseName, string containerName, string indexName, AzureCosmosDBFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureCosmosDBChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, string databaseName, string containerName, string indexName, AzureCosmosDBFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             DocumentCount = documentCount;
@@ -45,6 +79,7 @@ namespace Azure.AI.OpenAI
             IndexName = indexName;
             FieldMappingOptions = fieldMappingOptions;
             EmbeddingDependency = embeddingDependency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
