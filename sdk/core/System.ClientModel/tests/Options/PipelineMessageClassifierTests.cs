@@ -94,7 +94,7 @@ public class PipelineMessageClassifierTests
 
         message.SetResponse(new MockPipelineResponse(500));
         Assert.IsTrue(classifier.TryClassify(message, out isError));
-        Assert.IsFalse(isError);
+        Assert.IsTrue(isError);
     }
 
     #region Helpers
