@@ -346,15 +346,27 @@ namespace Azure.Monitor.Query.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
             IEnumerable<ResourceIdentifier> resourceIdentifiers = new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) };
+            MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions
+            {
+                // Set Granularity to 5 minutes.
+                Granularity = new TimeSpan(0, 5, 0),
+                // Set Aggregations to be Average and Count.
+                Aggregations = new List<MetricAggregationType> { MetricAggregationType.Average, MetricAggregationType.Count },
+                // Set Size to 10 for 10 data points.
+                Size = 10
+            };
             Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
                 resourceIds: resourceIdentifiers,
                 metricNames: new List<string> { "Ingress" },
-                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+                metricNamespace: "Microsoft.Storage/storageAccounts",
+                options).ConfigureAwait(false);
 
             MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
             Assert.AreEqual(1, metricsQueryResults.Values.Count);
             Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
             Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
+            Assert.AreEqual(TestEnvironment.Location, metricsQueryResults.Values[0].ResourceRegion);
+            Assert.AreEqual(new TimeSpan(0, 5, 0), metricsQueryResults.Values[0].Granularity);
             for (int i = 0; i < metricsQueryResults.Values.Count; i++)
             {
                 foreach (MetricResult value in metricsQueryResults.Values[i].Metrics)
