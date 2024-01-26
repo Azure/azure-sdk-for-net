@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    [PersistableModelProxy(typeof(UnknownFunctionRetrieveDefaultDefinitionParameters))]
-    public partial class FunctionRetrieveDefaultDefinitionContent : IUtf8JsonSerializable, IJsonModel<FunctionRetrieveDefaultDefinitionContent>
+    internal partial class UnknownFunctionRetrieveDefaultDefinitionParameters : IUtf8JsonSerializable, IJsonModel<FunctionRetrieveDefaultDefinitionContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FunctionRetrieveDefaultDefinitionContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -55,10 +55,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
+            return DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(document.RootElement, options);
         }
 
-        internal static FunctionRetrieveDefaultDefinitionContent DeserializeFunctionRetrieveDefaultDefinitionContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownFunctionRetrieveDefaultDefinitionParameters DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -66,17 +66,23 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("bindingType", out JsonElement discriminator))
+            string bindingType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("bindingType"u8))
                 {
-                    case "Microsoft.MachineLearning/WebService": return MachineLearningStudioFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningStudioFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.MachineLearningServices": return MachineLearningServiceFunctionRetrieveDefaultDefinitionContent.DeserializeMachineLearningServiceFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.StreamAnalytics/CLRUdf": return CSharpFunctionRetrieveDefaultDefinitionContent.DeserializeCSharpFunctionRetrieveDefaultDefinitionContent(element);
-                    case "Microsoft.StreamAnalytics/JavascriptUdf": return JavaScriptFunctionRetrieveDefaultDefinitionContent.DeserializeJavaScriptFunctionRetrieveDefaultDefinitionContent(element);
+                    bindingType = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownFunctionRetrieveDefaultDefinitionParameters.DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(element);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownFunctionRetrieveDefaultDefinitionParameters(bindingType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FunctionRetrieveDefaultDefinitionContent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +107,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFunctionRetrieveDefaultDefinitionContent(document.RootElement, options);
+                        return DeserializeUnknownFunctionRetrieveDefaultDefinitionParameters(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(FunctionRetrieveDefaultDefinitionContent)} does not support '{options.Format}' format.");
