@@ -5,16 +5,132 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class VMwareCbtNicDetails
+    public partial class VMwareCbtNicDetails : IUtf8JsonSerializable, IJsonModel<VMwareCbtNicDetails>
     {
-        internal static VMwareCbtNicDetails DeserializeVMwareCbtNicDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareCbtNicDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareCbtNicDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtNicDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(NicId))
+            {
+                writer.WritePropertyName("nicId"u8);
+                writer.WriteStringValue(NicId);
+            }
+            if (Optional.IsDefined(IsPrimaryNic))
+            {
+                writer.WritePropertyName("isPrimaryNic"u8);
+                writer.WriteStringValue(IsPrimaryNic);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddress))
+            {
+                writer.WritePropertyName("sourceIPAddress"u8);
+                writer.WriteStringValue(SourceIPAddress.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddressType))
+            {
+                writer.WritePropertyName("sourceIPAddressType"u8);
+                writer.WriteStringValue(SourceIPAddressType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceNetworkId))
+            {
+                writer.WritePropertyName("sourceNetworkId"u8);
+                writer.WriteStringValue(SourceNetworkId);
+            }
+            if (Optional.IsDefined(TargetIPAddress))
+            {
+                writer.WritePropertyName("targetIPAddress"u8);
+                writer.WriteStringValue(TargetIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TargetIPAddressType))
+            {
+                writer.WritePropertyName("targetIPAddressType"u8);
+                writer.WriteStringValue(TargetIPAddressType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetSubnetName))
+            {
+                writer.WritePropertyName("targetSubnetName"u8);
+                writer.WriteStringValue(TargetSubnetName);
+            }
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                writer.WritePropertyName("testNetworkId"u8);
+                writer.WriteStringValue(TestNetworkId);
+            }
+            if (Optional.IsDefined(TestSubnetName))
+            {
+                writer.WritePropertyName("testSubnetName"u8);
+                writer.WriteStringValue(TestSubnetName);
+            }
+            if (Optional.IsDefined(TestIPAddress))
+            {
+                writer.WritePropertyName("testIPAddress"u8);
+                writer.WriteStringValue(TestIPAddress.ToString());
+            }
+            if (Optional.IsDefined(TestIPAddressType))
+            {
+                writer.WritePropertyName("testIPAddressType"u8);
+                writer.WriteStringValue(TestIPAddressType.Value.ToString());
+            }
+            if (Optional.IsDefined(TargetNicName))
+            {
+                writer.WritePropertyName("targetNicName"u8);
+                writer.WriteStringValue(TargetNicName);
+            }
+            if (Optional.IsDefined(IsSelectedForMigration))
+            {
+                writer.WritePropertyName("isSelectedForMigration"u8);
+                writer.WriteStringValue(IsSelectedForMigration);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VMwareCbtNicDetails IJsonModel<VMwareCbtNicDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareCbtNicDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareCbtNicDetails(document.RootElement, options);
+        }
+
+        internal static VMwareCbtNicDetails DeserializeVMwareCbtNicDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,6 +149,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<SiteRecoveryEthernetAddressType> testIPAddressType = default;
             Optional<string> targetNicName = default;
             Optional<string> isSelectedForMigration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nicId"u8))
@@ -137,8 +255,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     isSelectedForMigration = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareCbtNicDetails(nicId.Value, isPrimaryNic.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testNetworkId.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), targetNicName.Value, isSelectedForMigration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new VMwareCbtNicDetails(nicId.Value, isPrimaryNic.Value, sourceIPAddress.Value, Optional.ToNullable(sourceIPAddressType), sourceNetworkId.Value, targetIPAddress.Value, Optional.ToNullable(targetIPAddressType), targetSubnetName.Value, testNetworkId.Value, testSubnetName.Value, testIPAddress.Value, Optional.ToNullable(testIPAddressType), targetNicName.Value, isSelectedForMigration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VMwareCbtNicDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareCbtNicDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        VMwareCbtNicDetails IPersistableModel<VMwareCbtNicDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtNicDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVMwareCbtNicDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareCbtNicDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareCbtNicDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

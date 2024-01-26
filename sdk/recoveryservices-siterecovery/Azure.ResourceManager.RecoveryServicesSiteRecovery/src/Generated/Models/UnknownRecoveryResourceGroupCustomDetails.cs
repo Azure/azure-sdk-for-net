@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     /// <summary> The UnknownRecoveryResourceGroupCustomDetails. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRecoveryResourceGroupCustomDetails"/>. </summary>
         /// <param name="resourceType"> The class type. </param>
-        internal UnknownRecoveryResourceGroupCustomDetails(string resourceType) : base(resourceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRecoveryResourceGroupCustomDetails(string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(resourceType, serializedAdditionalRawData)
         {
             ResourceType = resourceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRecoveryResourceGroupCustomDetails"/> for deserialization. </summary>
+        internal UnknownRecoveryResourceGroupCustomDetails()
+        {
         }
     }
 }

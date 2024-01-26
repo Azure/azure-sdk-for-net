@@ -144,7 +144,10 @@ namespace Azure.AI.AnomalyDetector.Tests.Samples
             try
             {
                 Console.WriteLine("Start batch detect...");
-                MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, 10, startTime, endTime);
+                MultivariateBatchDetectionOptions request = new MultivariateBatchDetectionOptions(datasource, startTime, endTime)
+                {
+                    TopContributorCount = 10
+                };
 
                 Console.WriteLine("Start batch detection, this might take a few minutes...");
                 MultivariateDetectionResult response = client.GetMultivariateClient().DetectMultivariateBatchAnomaly(modelId, request);

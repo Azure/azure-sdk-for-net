@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class PccRuleConfiguration : IUtf8JsonSerializable
+    public partial class PccRuleConfiguration : IUtf8JsonSerializable, IJsonModel<PccRuleConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PccRuleConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PccRuleConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("ruleName"u8);
             writer.WriteStringValue(RuleName);
@@ -37,11 +47,40 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PccRuleConfiguration DeserializePccRuleConfiguration(JsonElement element)
+        PccRuleConfiguration IJsonModel<PccRuleConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePccRuleConfiguration(document.RootElement, options);
+        }
+
+        internal static PccRuleConfiguration DeserializePccRuleConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +90,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             Optional<PccRuleQosPolicy> ruleQosPolicy = default;
             Optional<MobileNetworkTrafficControlPermission> trafficControl = default;
             IList<MobileNetworkServiceDataFlowTemplate> serviceDataFlowTemplates = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleName"u8))
@@ -91,8 +132,44 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     serviceDataFlowTemplates = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Optional.ToNullable(trafficControl), serviceDataFlowTemplates);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PccRuleConfiguration(ruleName, rulePrecedence, ruleQosPolicy.Value, Optional.ToNullable(trafficControl), serviceDataFlowTemplates, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PccRuleConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PccRuleConfiguration IPersistableModel<PccRuleConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PccRuleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePccRuleConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PccRuleConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PccRuleConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class ThreatIntelligenceGranularMarkingEntity : IUtf8JsonSerializable
+    public partial class ThreatIntelligenceGranularMarkingEntity : IUtf8JsonSerializable, IJsonModel<ThreatIntelligenceGranularMarkingEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThreatIntelligenceGranularMarkingEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ThreatIntelligenceGranularMarkingEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceGranularMarkingEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Language))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThreatIntelligenceGranularMarkingEntity DeserializeThreatIntelligenceGranularMarkingEntity(JsonElement element)
+        ThreatIntelligenceGranularMarkingEntity IJsonModel<ThreatIntelligenceGranularMarkingEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceGranularMarkingEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThreatIntelligenceGranularMarkingEntity(document.RootElement, options);
+        }
+
+        internal static ThreatIntelligenceGranularMarkingEntity DeserializeThreatIntelligenceGranularMarkingEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +87,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Optional<string> language = default;
             Optional<int> markingRef = default;
             Optional<IList<string>> selectors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -78,8 +119,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     selectors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ThreatIntelligenceGranularMarkingEntity(language.Value, Optional.ToNullable(markingRef), Optional.ToList(selectors));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ThreatIntelligenceGranularMarkingEntity(language.Value, Optional.ToNullable(markingRef), Optional.ToList(selectors), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ThreatIntelligenceGranularMarkingEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceGranularMarkingEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ThreatIntelligenceGranularMarkingEntity IPersistableModel<ThreatIntelligenceGranularMarkingEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceGranularMarkingEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeThreatIntelligenceGranularMarkingEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ThreatIntelligenceGranularMarkingEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

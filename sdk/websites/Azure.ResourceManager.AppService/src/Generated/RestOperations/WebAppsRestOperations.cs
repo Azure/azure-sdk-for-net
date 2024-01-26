@@ -32228,6 +32228,7 @@ namespace Azure.ResourceManager.AppService
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
+                case 200:
                 case 204:
                     return message.Response;
                 default:
@@ -32252,6 +32253,7 @@ namespace Azure.ResourceManager.AppService
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
+                case 200:
                 case 204:
                     return message.Response;
                 default:
