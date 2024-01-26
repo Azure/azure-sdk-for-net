@@ -13,6 +13,53 @@
         "UnboundAccess": "read,write"
       },
       "Value": null
+    },
+    {
+      "Key": {
+        "Type": "Common.CachingType?",
+        "Name": "Caching",
+        "SummaryComment": "Specifies the caching requirements. Possible values are: None, ReadOnly, ReadWrite. The default values are: None for Standard storage. ReadOnly for Premium storage.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": {
+        "Type": "Models.CachingType?",
+        "Name": "Caching"
+      }
+    },
+    {
+      "Key": {
+        "Type": "ManagedDisk",
+        "Name": "ManagedDisk",
+        "SummaryComment": "The managed disk parameters.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "int?",
+        "Name": "DiskSizeGB",
+        "SummaryComment": "The initial disk size in GB when creating new OS disk.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
+    },
+    {
+      "Key": {
+        "Type": "bool?",
+        "Name": "WriteAcceleratorEnabled",
+        "SummaryComment": "Specifies whether writeAccelerator should be enabled or disabled on the disk.",
+        "RemarksComment": null,
+        "BoundAccess": "read,write",
+        "UnboundAccess": "read,write"
+      },
+      "Value": null
     }
   ]
 }

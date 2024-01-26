@@ -18,12 +18,7 @@ public partial class AudioTranscription
     {
         if (response.Headers.ContentType.Contains("text/plain"))
         {
-            return new AudioTranscription(
-                text: response.Content.ToString(),
-                internalAudioTaskLabel: null,
-                language: null,
-                duration: default,
-                segments: new ChangeTrackingList<AudioTranscriptionSegment>());
+            return new AudioTranscription(response.Content.ToString());
         }
         else
         {

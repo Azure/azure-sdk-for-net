@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.NetworkCloud
     /// </summary>
     public partial class NetworkCloudL2NetworkData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
@@ -54,7 +86,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="l2IsolationDomainId"> The resource ID of the Network Fabric l2IsolationDomain. </param>
         /// <param name="provisioningState"> The provisioning state of the L2 network. </param>
         /// <param name="virtualMachinesAssociatedIds"> Field Deprecated. These fields will be empty/omitted. The list of virtual machine resource ID(s), excluding any Hybrid AKS virtual machines, that are currently using this L2 network. </param>
-        internal NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, ResourceIdentifier l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkCloudL2NetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, IReadOnlyList<ResourceIdentifier> associatedResourceIds, ResourceIdentifier clusterId, L2NetworkDetailedStatus? detailedStatus, string detailedStatusMessage, IReadOnlyList<ResourceIdentifier> hybridAksClustersAssociatedIds, HybridAksPluginType? hybridAksPluginType, string interfaceName, ResourceIdentifier l2IsolationDomainId, L2NetworkProvisioningState? provisioningState, IReadOnlyList<ResourceIdentifier> virtualMachinesAssociatedIds, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ExtendedLocation = extendedLocation;
             AssociatedResourceIds = associatedResourceIds;
@@ -67,6 +100,12 @@ namespace Azure.ResourceManager.NetworkCloud
             L2IsolationDomainId = l2IsolationDomainId;
             ProvisioningState = provisioningState;
             VirtualMachinesAssociatedIds = virtualMachinesAssociatedIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkCloudL2NetworkData"/> for deserialization. </summary>
+        internal NetworkCloudL2NetworkData()
+        {
         }
 
         /// <summary> The extended location of the cluster associated with the resource. </summary>

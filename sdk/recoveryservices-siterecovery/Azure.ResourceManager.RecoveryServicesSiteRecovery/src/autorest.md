@@ -17,7 +17,7 @@ sample-gen:
   clear-output-folder: true
   skipped-operations:
     # The discriminator value is incorrect
-    - ReplicationFabrics_Create 
+    - ReplicationFabrics_Create
     - ReplicationProtectionContainers_Create
     - ReplicationProtectedItems_Delete
     - ReplicationProtectionContainerMappings_Create
@@ -26,8 +26,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -307,10 +308,10 @@ rename-mapping:
   VMNicDetails.enableAcceleratedNetworkingOnTfo: IsAcceleratedNetworkingOnTfoEnabled
   VMNicDetails.reuseExistingNic: IsReuseExistingNicAllowed
   VMNicDetails.tfoReuseExistingNic: IsTfoReuseExistingNicAllowed
-  VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId: -|arm-id 
-  VMwareCbtEnableMigrationInput.snapshotRunAsAccountId: -|arm-id 
-  VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id 
-  VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id 
+  VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId: -|arm-id
+  VMwareCbtEnableMigrationInput.snapshotRunAsAccountId: -|arm-id
+  VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id
+  VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id
   VMwareV2FabricSpecificDetails.serviceResourceId: -|arm-id
 
 format-by-name-rules:

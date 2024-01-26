@@ -22,5 +22,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         {
             ConnectionType = connectionType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownTimeSeriesDatabaseConnectionProperties"/> for deserialization. </summary>
+        internal UnknownTimeSeriesDatabaseConnectionProperties()
+        {
+        }
     }
 }

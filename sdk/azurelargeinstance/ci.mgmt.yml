@@ -10,13 +10,13 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/largeinstance/ci.mgmt.yml
-    - sdk/largeinstance/Azure.ResourceManager.LargeInstance/
+    - sdk/azurelargeinstance/ci.mgmt.yml
+    - sdk/azurelargeinstance/Azure.ResourceManager.LargeInstance/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
-    ServiceDirectory: largeinstance
+    ServiceDirectory: azurelargeinstance
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.LargeInstance

@@ -30,12 +30,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="address"> The IP address as string, e.g. 127.0.0.1 (either in Ipv4 or Ipv6). </param>
         /// <param name="location"> The geo-location context attached to the ip entity. </param>
         /// <param name="threatIntelligence"> A list of TI contexts attached to the ip entity. </param>
-        internal SecurityInsightsIPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IPAddress address, SecurityInsightsIPEntityGeoLocation location, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsIPEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IPAddress address, SecurityInsightsIPEntityGeoLocation location, IReadOnlyList<SecurityInsightsThreatIntelligence> threatIntelligence) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
