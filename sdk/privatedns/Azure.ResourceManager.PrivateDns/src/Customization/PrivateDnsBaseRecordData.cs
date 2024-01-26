@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="isAutoRegistered"> Is the record set auto-registered in the Private DNS zone through a virtual network link?. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateDnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, serializedAdditionalRawData)
+        internal PrivateDnsBaseRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, IDictionary<string, string> metadata, long? ttl, string fqdn, bool? isAutoRegistered, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             Metadata = metadata;
