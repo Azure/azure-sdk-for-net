@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RuleEngineQueueSelectorAttachment
+    public partial class RuleEngineQueueSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of RuleEngineQueueSelectorAttachment. </summary>
         /// <param name="rule">
@@ -31,6 +32,16 @@ namespace Azure.Communication.JobRouter
 
             Kind = QueueSelectorAttachmentKind.RuleEngine;
             Rule = rule;
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("rule"u8);
+            writer.WriteObjectValue(Rule);
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WriteEndObject();
         }
     }
 }

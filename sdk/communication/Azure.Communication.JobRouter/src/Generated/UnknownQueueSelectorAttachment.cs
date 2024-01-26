@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Unknown version of QueueSelectorAttachment. </summary>
@@ -15,13 +12,7 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kind, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownQueueSelectorAttachment"/> for deserialization. </summary>
-        internal UnknownQueueSelectorAttachment()
+        internal UnknownQueueSelectorAttachment(QueueSelectorAttachmentKind kind) : base(kind)
         {
         }
     }

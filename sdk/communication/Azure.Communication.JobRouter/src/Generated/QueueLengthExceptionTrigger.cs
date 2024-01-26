@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-
 namespace Azure.Communication.JobRouter
 {
     /// <summary> Trigger for an exception action on exceeding queue length. </summary>
@@ -15,16 +12,10 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of <see cref="QueueLengthExceptionTrigger"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionTrigger. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
-        internal QueueLengthExceptionTrigger(ExceptionTriggerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, int threshold) : base(kind, serializedAdditionalRawData)
+        internal QueueLengthExceptionTrigger(ExceptionTriggerKind kind, int threshold) : base(kind)
         {
             Threshold = threshold;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="QueueLengthExceptionTrigger"/> for deserialization. </summary>
-        internal QueueLengthExceptionTrigger()
-        {
         }
 
         /// <summary> Threshold of number of jobs ahead in the queue to for this trigger to fire. </summary>

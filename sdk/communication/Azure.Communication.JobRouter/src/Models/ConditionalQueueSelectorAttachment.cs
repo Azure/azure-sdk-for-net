@@ -2,11 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ConditionalQueueSelectorAttachment
+    public partial class ConditionalQueueSelectorAttachment : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of ConditionalQueueSelectorAttachment. </summary>
         /// <param name="condition">
@@ -34,5 +35,22 @@ namespace Azure.Communication.JobRouter
 
         /// <summary> The queue selectors to attach. </summary>
         public IList<RouterQueueSelector> QueueSelectors { get; } = new List<RouterQueueSelector>();
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("condition"u8);
+            writer.WriteObjectValue(Condition);
+            writer.WritePropertyName("queueSelectors"u8);
+            writer.WriteStartArray();
+            foreach (var item in QueueSelectors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WriteEndObject();
+        }
     }
 }

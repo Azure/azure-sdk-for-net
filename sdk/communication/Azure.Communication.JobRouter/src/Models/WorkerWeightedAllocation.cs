@@ -1,14 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
 using System.Collections.Generic;
+using System;
 using System.Linq;
+using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class WorkerWeightedAllocation
+    public partial class WorkerWeightedAllocation : IUtf8JsonSerializable
     {
         /// <summary> Initializes a new instance of WorkerWeightedAllocation. </summary>
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
@@ -23,6 +24,21 @@ namespace Azure.Communication.JobRouter
 
             Weight = weight;
             WorkerSelectors = workerSelectors.ToList();
+        }
+
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("weight"u8);
+            writer.WriteNumberValue(Weight);
+            writer.WritePropertyName("workerSelectors"u8);
+            writer.WriteStartArray();
+            foreach (var item in WorkerSelectors)
+            {
+                writer.WriteObjectValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
         }
     }
 }

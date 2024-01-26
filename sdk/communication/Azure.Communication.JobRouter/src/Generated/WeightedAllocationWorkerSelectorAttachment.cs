@@ -17,16 +17,10 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of <see cref="WeightedAllocationWorkerSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of WorkerSelectorAttachment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="allocations"> A collection of percentage based weighted allocations. </param>
-        internal WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<WorkerWeightedAllocation> allocations) : base(kind, serializedAdditionalRawData)
+        internal WeightedAllocationWorkerSelectorAttachment(WorkerSelectorAttachmentKind kind, IReadOnlyList<WorkerWeightedAllocation> allocations) : base(kind)
         {
             Allocations = allocations;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WeightedAllocationWorkerSelectorAttachment"/> for deserialization. </summary>
-        internal WeightedAllocationWorkerSelectorAttachment()
-        {
         }
 
         /// <summary> A collection of percentage based weighted allocations. </summary>

@@ -5,71 +5,16 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class ExpressionRouterRule : IUtf8JsonSerializable, IJsonModel<ExpressionRouterRule>
+    public partial class ExpressionRouterRule
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExpressionRouterRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
-
-        void IJsonModel<ExpressionRouterRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal static ExpressionRouterRule DeserializeExpressionRouterRule(JsonElement element)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support '{format}' format.");
-            }
-
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Language))
-            {
-                writer.WritePropertyName("language"u8);
-                writer.WriteStringValue(Language);
-            }
-            writer.WritePropertyName("expression"u8);
-            writer.WriteStringValue(Expression);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
-
-        ExpressionRouterRule IJsonModel<ExpressionRouterRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExpressionRouterRule(document.RootElement, options);
-        }
-
-        internal static ExpressionRouterRule DeserializeExpressionRouterRule(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,8 +22,6 @@ namespace Azure.Communication.JobRouter
             Optional<string> language = default;
             string expression = default;
             RouterRuleKind kind = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("language"u8))
@@ -96,45 +39,9 @@ namespace Azure.Communication.JobRouter
                     kind = new RouterRuleKind(property.Value.GetString());
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressionRouterRule(kind, serializedAdditionalRawData, language.Value, expression);
+            return new ExpressionRouterRule(kind, language.Value, expression);
         }
-
-        BinaryData IPersistableModel<ExpressionRouterRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support '{options.Format}' format.");
-            }
-        }
-
-        ExpressionRouterRule IPersistableModel<ExpressionRouterRule>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ExpressionRouterRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExpressionRouterRule(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ExpressionRouterRule)} does not support '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ExpressionRouterRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -142,14 +49,6 @@ namespace Azure.Communication.JobRouter
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeExpressionRouterRule(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal override RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
         }
     }
 }
