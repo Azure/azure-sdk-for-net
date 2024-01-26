@@ -104,9 +104,9 @@ public class PipelineMessageClassifierTests
         var last = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201, 204 });
 
         ChainingClassifier classifier = new ChainingClassifier(last);
-        classifier.AddClassifier(new RetriableStatussCodeClassifier(403, isRetriable: false));
-        classifier.AddClassifier(new RetriableStatussCodeClassifier(404, isRetriable: false));
-        classifier.AddClassifier(new RetriableStatussCodeClassifier(201, isRetriable: true));
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(403, isRetriable: false));
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(404, isRetriable: false));
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(201, isRetriable: true));
 
         MockPipelineMessage message = new();
 
@@ -145,7 +145,7 @@ public class PipelineMessageClassifierTests
         var last = PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 201, 204 });
 
         ChainingClassifier classifier = new ChainingClassifier(last);
-        classifier.AddClassifier(new RetriableStatussCodeClassifier(429, isRetriable: false));
+        classifier.AddClassifier(new RetriableStatusCodeClassifier(429, isRetriable: false));
         classifier.AddClassifier(new ErrorStatusCodeClassifier(404, isError: false));
         classifier.AddClassifier(new ErrorStatusCodeClassifier(201, isError: true));
 
@@ -218,11 +218,11 @@ public class PipelineMessageClassifierTests
         }
     }
 
-    internal class RetriableStatussCodeClassifier : PipelineMessageClassifier
+    internal class RetriableStatusCodeClassifier : PipelineMessageClassifier
     {
         private readonly (int, bool) _code;
 
-        public RetriableStatussCodeClassifier(int code, bool isRetriable)
+        public RetriableStatusCodeClassifier(int code, bool isRetriable)
         {
             _code = (code, isRetriable);
         }
