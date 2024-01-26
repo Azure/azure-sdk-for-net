@@ -5,15 +5,68 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
 {
-    public partial class DenseCaption
+    public partial class DenseCaption : IUtf8JsonSerializable, IJsonModel<DenseCaption>
     {
-        internal static DenseCaption DeserializeDenseCaption(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DenseCaption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DenseCaption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DenseCaption)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("confidence"u8);
+            writer.WriteNumberValue(Confidence);
+            writer.WritePropertyName("text"u8);
+            writer.WriteStringValue(Text);
+            writer.WritePropertyName("boundingBox"u8);
+            writer.WriteObjectValue(BoundingBox);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DenseCaption IJsonModel<DenseCaption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DenseCaption)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDenseCaption(document.RootElement, options);
+        }
+
+        internal static DenseCaption DeserializeDenseCaption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +74,8 @@ namespace Azure.AI.Vision.ImageAnalysis
             float confidence = default;
             string text = default;
             ImageBoundingBox boundingBox = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidence"u8))
@@ -38,9 +93,45 @@ namespace Azure.AI.Vision.ImageAnalysis
                     boundingBox = ImageBoundingBox.DeserializeImageBoundingBox(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DenseCaption(confidence, text, boundingBox);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DenseCaption(confidence, text, boundingBox, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DenseCaption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DenseCaption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DenseCaption IPersistableModel<DenseCaption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DenseCaption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDenseCaption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DenseCaption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DenseCaption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -48,6 +139,14 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDenseCaption(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

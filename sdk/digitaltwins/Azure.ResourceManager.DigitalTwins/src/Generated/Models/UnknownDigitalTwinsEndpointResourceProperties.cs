@@ -26,5 +26,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         {
             EndpointType = endpointType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDigitalTwinsEndpointResourceProperties"/> for deserialization. </summary>
+        internal UnknownDigitalTwinsEndpointResourceProperties()
+        {
+        }
     }
 }

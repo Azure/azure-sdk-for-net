@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    internal partial class SqlWorkloadTypeUpdateSettings : IUtf8JsonSerializable
+    internal partial class SqlWorkloadTypeUpdateSettings : IUtf8JsonSerializable, IJsonModel<SqlWorkloadTypeUpdateSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlWorkloadTypeUpdateSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlWorkloadTypeUpdateSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlWorkloadTypeUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlWorkloadTypeUpdateSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlWorkloadType))
             {
                 writer.WritePropertyName("sqlWorkloadType"u8);
                 writer.WriteStringValue(SqlWorkloadType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlWorkloadTypeUpdateSettings DeserializeSqlWorkloadTypeUpdateSettings(JsonElement element)
+        SqlWorkloadTypeUpdateSettings IJsonModel<SqlWorkloadTypeUpdateSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlWorkloadTypeUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlWorkloadTypeUpdateSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlWorkloadTypeUpdateSettings(document.RootElement, options);
+        }
+
+        internal static SqlWorkloadTypeUpdateSettings DeserializeSqlWorkloadTypeUpdateSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<SqlWorkloadType> sqlWorkloadType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sqlWorkloadType"u8))
@@ -41,8 +83,44 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     sqlWorkloadType = new SqlWorkloadType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlWorkloadTypeUpdateSettings(Optional.ToNullable(sqlWorkloadType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlWorkloadTypeUpdateSettings(Optional.ToNullable(sqlWorkloadType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlWorkloadTypeUpdateSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlWorkloadTypeUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlWorkloadTypeUpdateSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlWorkloadTypeUpdateSettings IPersistableModel<SqlWorkloadTypeUpdateSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlWorkloadTypeUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlWorkloadTypeUpdateSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlWorkloadTypeUpdateSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlWorkloadTypeUpdateSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

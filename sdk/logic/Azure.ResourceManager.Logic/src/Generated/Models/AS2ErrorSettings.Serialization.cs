@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class AS2ErrorSettings : IUtf8JsonSerializable
+    public partial class AS2ErrorSettings : IUtf8JsonSerializable, IJsonModel<AS2ErrorSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AS2ErrorSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AS2ErrorSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ErrorSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AS2ErrorSettings)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("suspendDuplicateMessage"u8);
             writer.WriteBooleanValue(SuspendDuplicateMessage);
             writer.WritePropertyName("resendIfMDNNotReceived"u8);
             writer.WriteBooleanValue(ResendIfMdnNotReceived);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AS2ErrorSettings DeserializeAS2ErrorSettings(JsonElement element)
+        AS2ErrorSettings IJsonModel<AS2ErrorSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ErrorSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AS2ErrorSettings)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAS2ErrorSettings(document.RootElement, options);
+        }
+
+        internal static AS2ErrorSettings DeserializeAS2ErrorSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool suspendDuplicateMessage = default;
             bool resendIfMdnNotReceived = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("suspendDuplicateMessage"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.Logic.Models
                     resendIfMdnNotReceived = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AS2ErrorSettings(suspendDuplicateMessage, resendIfMdnNotReceived);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AS2ErrorSettings(suspendDuplicateMessage, resendIfMdnNotReceived, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AS2ErrorSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ErrorSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AS2ErrorSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AS2ErrorSettings IPersistableModel<AS2ErrorSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AS2ErrorSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAS2ErrorSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AS2ErrorSettings)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AS2ErrorSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

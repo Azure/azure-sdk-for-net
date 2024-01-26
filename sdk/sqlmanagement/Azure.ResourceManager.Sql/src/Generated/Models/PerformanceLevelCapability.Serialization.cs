@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class PerformanceLevelCapability
+    public partial class PerformanceLevelCapability : IUtf8JsonSerializable, IJsonModel<PerformanceLevelCapability>
     {
-        internal static PerformanceLevelCapability DeserializePerformanceLevelCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerformanceLevelCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PerformanceLevelCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteNumberValue(Value.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PerformanceLevelCapability IJsonModel<PerformanceLevelCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePerformanceLevelCapability(document.RootElement, options);
+        }
+
+        internal static PerformanceLevelCapability DeserializePerformanceLevelCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<double> value = default;
             Optional<PerformanceLevelUnit> unit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -40,8 +98,44 @@ namespace Azure.ResourceManager.Sql.Models
                     unit = new PerformanceLevelUnit(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PerformanceLevelCapability(Optional.ToNullable(value), Optional.ToNullable(unit));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PerformanceLevelCapability(Optional.ToNullable(value), Optional.ToNullable(unit), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PerformanceLevelCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PerformanceLevelCapability IPersistableModel<PerformanceLevelCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePerformanceLevelCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PerformanceLevelCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PerformanceLevelCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiOperationProperties : IUtf8JsonSerializable
+    public partial class LogicApiOperationProperties : IUtf8JsonSerializable, IJsonModel<LogicApiOperationProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiOperationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LogicApiOperationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Summary))
             {
@@ -82,11 +92,40 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WritePropertyName("isNotification"u8);
                 writer.WriteBooleanValue(IsNotification.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element)
+        LogicApiOperationProperties IJsonModel<LogicApiOperationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiOperationProperties(document.RootElement, options);
+        }
+
+        internal static LogicApiOperationProperties DeserializeLogicApiOperationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -103,6 +142,8 @@ namespace Azure.ResourceManager.Logic.Models
             Optional<IDictionary<string, SwaggerSchema>> responsesDefinition = default;
             Optional<bool> isWebhook = default;
             Optional<bool> isNotification = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -198,8 +239,44 @@ namespace Azure.ResourceManager.Logic.Models
                     isNotification = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Optional.ToDictionary(responsesDefinition), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogicApiOperationProperties(summary.Value, description.Value, visibility.Value, trigger.Value, triggerHint.Value, Optional.ToNullable(pageable), annotation.Value, api.Value, inputsDefinition.Value, Optional.ToDictionary(responsesDefinition), Optional.ToNullable(isWebhook), Optional.ToNullable(isNotification), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LogicApiOperationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        LogicApiOperationProperties IPersistableModel<LogicApiOperationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogicApiOperationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogicApiOperationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

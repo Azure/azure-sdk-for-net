@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ReservationUtilizationAggregates
+    public partial class ReservationUtilizationAggregates : IUtf8JsonSerializable, IJsonModel<ReservationUtilizationAggregates>
     {
-        internal static ReservationUtilizationAggregates DeserializeReservationUtilizationAggregates(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationUtilizationAggregates>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReservationUtilizationAggregates>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Grain))
+            {
+                writer.WritePropertyName("grain"u8);
+                writer.WriteNumberValue(Grain.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GrainUnit))
+            {
+                writer.WritePropertyName("grainUnit"u8);
+                writer.WriteStringValue(GrainUnit);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteNumberValue(Value.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ValueUnit))
+            {
+                writer.WritePropertyName("valueUnit"u8);
+                writer.WriteStringValue(ValueUnit);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReservationUtilizationAggregates IJsonModel<ReservationUtilizationAggregates>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReservationUtilizationAggregates(document.RootElement, options);
+        }
+
+        internal static ReservationUtilizationAggregates DeserializeReservationUtilizationAggregates(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.Reservations.Models
             Optional<string> grainUnit = default;
             Optional<float> value = default;
             Optional<string> valueUnit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("grain"u8))
@@ -52,8 +120,44 @@ namespace Azure.ResourceManager.Reservations.Models
                     valueUnit = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReservationUtilizationAggregates(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ReservationUtilizationAggregates(Optional.ToNullable(grain), grainUnit.Value, Optional.ToNullable(value), valueUnit.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReservationUtilizationAggregates>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ReservationUtilizationAggregates IPersistableModel<ReservationUtilizationAggregates>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReservationUtilizationAggregates>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReservationUtilizationAggregates(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReservationUtilizationAggregates)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReservationUtilizationAggregates>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

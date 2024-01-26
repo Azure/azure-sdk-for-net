@@ -13,6 +13,38 @@ namespace Azure.ResourceManager.SelfHelp.Models
     /// <summary> Solutions metrics based chart. </summary>
     public partial class MetricsBasedChart
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MetricsBasedChart"/>. </summary>
         public MetricsBasedChart()
         {
@@ -25,7 +57,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="title"> Chart title. </param>
         /// <param name="filterGroup"> Filter group. </param>
         /// <param name="replacementKey"> Place holder used in HTML Content replace control with the content. </param>
-        internal MetricsBasedChart(string name, AggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, FilterGroup filterGroup, string replacementKey)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MetricsBasedChart(string name, AggregationType? aggregationType, TimeSpan? timeSpanDuration, string title, FilterGroup filterGroup, string replacementKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             AggregationType = aggregationType;
@@ -33,6 +66,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             Title = title;
             FilterGroup = filterGroup;
             ReplacementKey = replacementKey;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Chart name. </summary>

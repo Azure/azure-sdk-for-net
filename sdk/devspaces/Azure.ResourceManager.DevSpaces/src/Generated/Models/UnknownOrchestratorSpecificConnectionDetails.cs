@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DevSpaces.Models
         {
             InstanceType = instanceType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownOrchestratorSpecificConnectionDetails"/> for deserialization. </summary>
+        internal UnknownOrchestratorSpecificConnectionDetails()
+        {
+        }
     }
 }

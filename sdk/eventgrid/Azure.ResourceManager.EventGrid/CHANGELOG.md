@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
@@ -40,9 +42,9 @@
 - Added support for Namespace Topic EventSubscriptions.
 - Added support for pull events from Namespace topics.
 - Added support for Namespace Clients.
-- Added support for Namespace ClientGroups. 
-- Added support for Namespace CaCertificates. 
-- Added support for Namespace TopicSpaces. 
+- Added support for Namespace ClientGroups.
+- Added support for Namespace CaCertificates.
+- Added support for Namespace TopicSpaces.
 - Added support for Namespace Permission Bindings.
 
 ## 1.1.0-beta.1 (2023-05-30)

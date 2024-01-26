@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class IaasVmRecoveryPoint : IUtf8JsonSerializable
+    public partial class IaasVmRecoveryPoint : IUtf8JsonSerializable, IJsonModel<IaasVmRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IaasVmRecoveryPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IaasVmRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointType))
             {
@@ -131,11 +140,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IaasVmRecoveryPoint DeserializeIaasVmRecoveryPoint(JsonElement element)
+        IaasVmRecoveryPoint IJsonModel<IaasVmRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIaasVmRecoveryPoint(document.RootElement, options);
+        }
+
+        internal static IaasVmRecoveryPoint DeserializeIaasVmRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -160,6 +198,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<bool> isPrivateAccessEnabledOnAnyDisk = default;
             Optional<ExtendedLocation> extendedLocation = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointType"u8))
@@ -329,8 +369,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IaasVmRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Optional.ToNullable(isInstantIlrSessionActive), Optional.ToList(recoveryPointTierDetails), Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, Optional.ToList(zones), Optional.ToDictionary(recoveryPointMoveReadinessInfo), securityType.Value, recoveryPointProperties.Value, Optional.ToNullable(isPrivateAccessEnabledOnAnyDisk), extendedLocation);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IaasVmRecoveryPoint(objectType, serializedAdditionalRawData, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), recoveryPointAdditionalInfo.Value, sourceVmStorageType.Value, Optional.ToNullable(isSourceVmEncrypted), keyAndSecret.Value, Optional.ToNullable(isInstantIlrSessionActive), Optional.ToList(recoveryPointTierDetails), Optional.ToNullable(isManagedVirtualMachine), virtualMachineSize.Value, Optional.ToNullable(originalStorageAccountOption), osType.Value, recoveryPointDiskConfiguration.Value, Optional.ToList(zones), Optional.ToDictionary(recoveryPointMoveReadinessInfo), securityType.Value, recoveryPointProperties.Value, Optional.ToNullable(isPrivateAccessEnabledOnAnyDisk), extendedLocation);
         }
+
+        BinaryData IPersistableModel<IaasVmRecoveryPoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IaasVmRecoveryPoint IPersistableModel<IaasVmRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IaasVmRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIaasVmRecoveryPoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IaasVmRecoveryPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IaasVmRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

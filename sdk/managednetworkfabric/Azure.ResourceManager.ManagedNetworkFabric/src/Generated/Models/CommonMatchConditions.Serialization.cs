@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class CommonMatchConditions : IUtf8JsonSerializable
+    public partial class CommonMatchConditions : IUtf8JsonSerializable, IJsonModel<CommonMatchConditions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommonMatchConditions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommonMatchConditions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommonMatchConditions)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -36,11 +46,40 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("ipCondition"u8);
                 writer.WriteObjectValue(IPCondition);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CommonMatchConditions DeserializeCommonMatchConditions(JsonElement element)
+        CommonMatchConditions IJsonModel<CommonMatchConditions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommonMatchConditions)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommonMatchConditions(document.RootElement, options);
+        }
+
+        internal static CommonMatchConditions DeserializeCommonMatchConditions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -48,6 +87,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             Optional<IList<string>> protocolTypes = default;
             Optional<VlanMatchCondition> vlanMatchCondition = default;
             Optional<IPMatchCondition> ipCondition = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protocolTypes"u8))
@@ -82,8 +123,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     ipCondition = IPMatchCondition.DeserializeIPMatchCondition(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommonMatchConditions(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CommonMatchConditions(Optional.ToList(protocolTypes), vlanMatchCondition.Value, ipCondition.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommonMatchConditions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CommonMatchConditions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CommonMatchConditions IPersistableModel<CommonMatchConditions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommonMatchConditions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommonMatchConditions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommonMatchConditions)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommonMatchConditions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

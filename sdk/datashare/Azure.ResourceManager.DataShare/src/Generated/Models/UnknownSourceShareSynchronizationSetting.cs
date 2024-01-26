@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataShare.Models
         {
             Kind = kind;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSourceShareSynchronizationSetting"/> for deserialization. </summary>
+        internal UnknownSourceShareSynchronizationSetting()
+        {
+        }
     }
 }
