@@ -170,6 +170,15 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
             Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
         }
 
+        [TestCaseSource(nameof(TestData_PlayOperationsAsync_WithBargeIn))]
+        public async Task MediaOperationsWithBargeInAsync_Return202Accepted(Func<CallMedia, Task<Response<PlayResult>>> operation)
+        {
+            _callMedia = GetCallMedia(202);
+            var result = await operation(_callMedia);
+            Assert.IsNotNull(result);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, result.GetRawResponse().Status);
+        }
+
         [TestCaseSource(nameof(TestData_CancelOperationsAsync))]
         public async Task CancelOperationsAsync_Return202Accepted(Func<CallMedia, Task<Response<CancelAllMediaOperationsResult>>> operation)
         {
@@ -578,6 +587,34 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                    callMedia => {
                        _ssmlPlayToAllOptions.InterruptCallMediaOperation = true;
                        return callMedia.PlayToAll(_ssmlPlayToAllOptions);
+                    }
+                },
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_PlayOperationsAsync_WithBargeIn()
+        {
+            return new[]
+            {
+                new Func<CallMedia, Task<Response<PlayResult>>>?[]
+                {
+                   callMedia => {
+                       _filePlayToAllOptions.InterruptCallMediaOperation = true;
+                       return callMedia.PlayToAllAsync(_filePlayToAllOptions);
+                    }
+                },
+                new Func<CallMedia, Task<Response<PlayResult>>>?[]
+                {
+                   callMedia => {
+                       _textPlayToAllOptions.InterruptCallMediaOperation = true;
+                       return callMedia.PlayToAllAsync(_textPlayToAllOptions);
+                    }
+                },
+                new Func<CallMedia, Task<Response<PlayResult>>>?[]
+                {
+                   callMedia => {
+                       _ssmlPlayToAllOptions.InterruptCallMediaOperation = true;
+                       return callMedia.PlayToAllAsync(_ssmlPlayToAllOptions);
                     }
                 },
             };

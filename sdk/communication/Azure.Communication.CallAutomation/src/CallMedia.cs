@@ -253,7 +253,8 @@ namespace Azure.Communication.CallAutomation
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri,
-                    Loop = options.Loop
+                    Loop = options.Loop,
+                    InterruptCallMediaOperation = options.InterruptCallMediaOperation,
                 };
                 return Play(playOptions, cancellationToken);
             }
