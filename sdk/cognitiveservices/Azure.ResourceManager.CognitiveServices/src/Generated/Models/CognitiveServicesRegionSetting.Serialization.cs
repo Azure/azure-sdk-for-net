@@ -114,19 +114,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesRegionSetting(name.Value, Optional.ToNullable(value), customsubdomain.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CognitiveServicesRegionSetting>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesRegionSetting>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesRegionSetting)} does not support '{options.Format}' format.");
-            }
-        }
-
         CognitiveServicesRegionSetting IPersistableModel<CognitiveServicesRegionSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesRegionSetting>)this).GetFormatFromOptions(options) : options.Format;

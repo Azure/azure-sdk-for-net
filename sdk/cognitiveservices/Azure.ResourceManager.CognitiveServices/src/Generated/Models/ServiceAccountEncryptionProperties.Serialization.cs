@@ -107,19 +107,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new ServiceAccountEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ServiceAccountEncryptionProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(ServiceAccountEncryptionProperties)} does not support '{options.Format}' format.");
-            }
-        }
-
         ServiceAccountEncryptionProperties IPersistableModel<ServiceAccountEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;

@@ -5,39 +5,32 @@
 
 #nullable disable
 
-using System.Reflection;
-using System.Text;
 using System;
-using System.Text.Json;
+using System.ClientModel.Primitives;
+using System.Text;
 using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CognitiveServicesAccountDeploymentModel : IModelJsonSerializable<CognitiveServicesAccountDeploymentModel>
+    public partial class CognitiveServicesAccountDeploymentModel
     {
-        void IModelJsonSerializable<CognitiveServicesAccountDeploymentModel>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        CognitiveServicesAccountDeploymentModel IModelJsonSerializable<CognitiveServicesAccountDeploymentModel>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData global::System.ClientModel.Primitives.IPersistableModel<CognitiveServicesAccountDeploymentModel>.Write(ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeCognitiveServicesAccountDeploymentModel(doc.RootElement);
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
         }
 
-        BinaryData IModelSerializable<CognitiveServicesAccountDeploymentModel>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        CognitiveServicesAccountDeploymentModel IModelSerializable<CognitiveServicesAccountDeploymentModel>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeCognitiveServicesAccountDeploymentModel(document.RootElement);
-        }
-
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder sb = new StringBuilder();
             if (Optional.IsDefined(Format))

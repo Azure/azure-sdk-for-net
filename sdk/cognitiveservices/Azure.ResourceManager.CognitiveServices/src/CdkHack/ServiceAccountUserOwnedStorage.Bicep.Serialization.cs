@@ -6,37 +6,31 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
-using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class ServiceAccountUserOwnedStorage : IModelJsonSerializable<ServiceAccountUserOwnedStorage>
+    public partial class ServiceAccountUserOwnedStorage
     {
-        void IModelJsonSerializable<ServiceAccountUserOwnedStorage>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        ServiceAccountUserOwnedStorage IModelJsonSerializable<ServiceAccountUserOwnedStorage>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData global::System.ClientModel.Primitives.IPersistableModel<ServiceAccountUserOwnedStorage>.Write(ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceAccountUserOwnedStorage(doc.RootElement);
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
         }
 
-        BinaryData IModelSerializable<ServiceAccountUserOwnedStorage>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        ServiceAccountUserOwnedStorage IModelSerializable<ServiceAccountUserOwnedStorage>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeServiceAccountUserOwnedStorage(document.RootElement);
-        }
-
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder sb = new StringBuilder();
             if (Optional.IsDefined(ResourceId))

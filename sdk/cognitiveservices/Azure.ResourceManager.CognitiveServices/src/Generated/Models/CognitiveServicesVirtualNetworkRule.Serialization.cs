@@ -111,19 +111,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesVirtualNetworkRule(id, state.Value, Optional.ToNullable(ignoreMissingVnetServiceEndpoint), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CognitiveServicesVirtualNetworkRule>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesVirtualNetworkRule)} does not support '{options.Format}' format.");
-            }
-        }
-
         CognitiveServicesVirtualNetworkRule IPersistableModel<CognitiveServicesVirtualNetworkRule>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;

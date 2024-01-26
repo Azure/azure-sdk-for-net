@@ -214,19 +214,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesAccountDeploymentProperties(Optional.ToNullable(provisioningState), model.Value, scaleSettings.Value, Optional.ToDictionary(capabilities), raiPolicyName.Value, callRateLimit.Value, Optional.ToList(rateLimits), Optional.ToNullable(versionUpgradeOption), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesAccountDeploymentProperties)} does not support '{options.Format}' format.");
-            }
-        }
-
         CognitiveServicesAccountDeploymentProperties IPersistableModel<CognitiveServicesAccountDeploymentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesAccountDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
