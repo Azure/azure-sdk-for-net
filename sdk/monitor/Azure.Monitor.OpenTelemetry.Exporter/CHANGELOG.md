@@ -2,9 +2,9 @@
 
 ## 1.3.0-beta.1 (Unreleased)
 
-### Breaking Changes
-
 ### Features Added
+
+### Breaking Changes
 
 ### Bugs Fixed
 
