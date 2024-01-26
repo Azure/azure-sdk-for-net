@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Client options for BatchDocumentTranslationClient. </summary>
-    public partial class BatchDocumentTranslationClientOptions : ClientOptions
+    /// <summary> Client options for DocumentTranslationRestClient. </summary>
+    public partial class DocumentTranslationRestClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_0;
 
@@ -24,8 +24,8 @@ namespace Azure.AI.Translation.Document
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of BatchDocumentTranslationClientOptions. </summary>
-        public BatchDocumentTranslationClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of DocumentTranslationRestClientOptions. </summary>
+        public DocumentTranslationRestClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

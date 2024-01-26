@@ -11,25 +11,25 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="BatchDocumentTranslationClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="DocumentTranslationRestClient"/> to client builder. </summary>
     public static partial class AITranslationDocumentClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="BatchDocumentTranslationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentTranslationRestClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        public static IAzureClientBuilder<BatchDocumentTranslationClient, BatchDocumentTranslationClientOptions> AddBatchDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<DocumentTranslationRestClient, DocumentTranslationRestClientOptions> AddDocumentTranslationRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<BatchDocumentTranslationClient, BatchDocumentTranslationClientOptions>((options) => new BatchDocumentTranslationClient(endpoint, options));
+            return builder.RegisterClientFactory<DocumentTranslationRestClient, DocumentTranslationRestClientOptions>((options) => new DocumentTranslationRestClient(endpoint, options));
         }
 
-        /// <summary> Registers a <see cref="BatchDocumentTranslationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="DocumentTranslationRestClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<BatchDocumentTranslationClient, BatchDocumentTranslationClientOptions> AddBatchDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<DocumentTranslationRestClient, DocumentTranslationRestClientOptions> AddDocumentTranslationRestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<BatchDocumentTranslationClient, BatchDocumentTranslationClientOptions>(configuration);
+            return builder.RegisterClientFactory<DocumentTranslationRestClient, DocumentTranslationRestClientOptions>(configuration);
         }
     }
 }

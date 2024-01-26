@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Batch Request Options. </summary>
     public partial class BatchRequestOptions

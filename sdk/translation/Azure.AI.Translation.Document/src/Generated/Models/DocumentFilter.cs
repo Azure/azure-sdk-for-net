@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> Document filter. </summary>
     internal partial class DocumentFilter

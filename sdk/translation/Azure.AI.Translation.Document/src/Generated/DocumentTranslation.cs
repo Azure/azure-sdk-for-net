@@ -11,6 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
 using Azure;
+using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
 

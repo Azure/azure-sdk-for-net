@@ -8,18 +8,20 @@
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
-    public partial class BatchRequestOptions : IUtf8JsonSerializable
+    public partial class StartTranslationDetails : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(PdfOutputAdditionalFormat))
+            writer.WritePropertyName("inputs"u8);
+            writer.WriteStartArray();
+            foreach (var item in Inputs)
             {
-                writer.WritePropertyName("pdfOutputAdditionalFormat"u8);
-                writer.WriteStringValue(PdfOutputAdditionalFormat.Value.ToString());
+                writer.WriteObjectValue(item);
             }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 

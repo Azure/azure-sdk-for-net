@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
     /// <summary> List of possible additional output formats. </summary>
     public readonly partial struct AdditionalOutputFileFormat : IEquatable<AdditionalOutputFileFormat>

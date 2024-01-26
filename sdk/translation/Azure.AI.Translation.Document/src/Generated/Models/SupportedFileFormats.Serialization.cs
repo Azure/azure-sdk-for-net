@@ -8,40 +8,41 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.AI.Translation.Document;
 
-namespace Azure.AI.Translation.Document
+namespace Azure.AI.Translation.Document.Models
 {
-    public partial class SupportedStorageSources
+    public partial class SupportedFileFormats
     {
-        internal static SupportedStorageSources DeserializeSupportedStorageSources(JsonElement element)
+        internal static SupportedFileFormats DeserializeSupportedFileFormats(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<StorageSource> value = default;
+            IReadOnlyList<DocumentTranslationFileFormat> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<StorageSource> array = new List<StorageSource>();
+                    List<DocumentTranslationFileFormat> array = new List<DocumentTranslationFileFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(new StorageSource(item.GetString()));
+                        array.Add(DocumentTranslationFileFormat.DeserializeDocumentTranslationFileFormat(item));
                     }
                     value = array;
                     continue;
                 }
             }
-            return new SupportedStorageSources(value);
+            return new SupportedFileFormats(value);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SupportedStorageSources FromResponse(Response response)
+        internal static SupportedFileFormats FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSupportedStorageSources(document.RootElement);
+            return DeserializeSupportedFileFormats(document.RootElement);
         }
     }
 }

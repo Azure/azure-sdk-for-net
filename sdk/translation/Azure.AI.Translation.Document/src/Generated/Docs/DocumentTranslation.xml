@@ -6,7 +6,7 @@
 This sample shows how to call StartTranslationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
 {
@@ -20,7 +20,7 @@ Response response = await client.StartTranslationAsync(startTranslationDetails);
 This sample shows how to call StartTranslationAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
 {
@@ -54,7 +54,7 @@ Response response = await client.StartTranslationAsync(startTranslationDetails);
 This sample shows how to call StartTranslation.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
 {
@@ -68,7 +68,7 @@ Response response = client.StartTranslation(startTranslationDetails);
 This sample shows how to call StartTranslation with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
 {
@@ -102,7 +102,7 @@ Response response = client.StartTranslation(startTranslationDetails);
 This sample shows how to call StartTranslationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -132,7 +132,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call StartTranslationAsync with all request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -189,7 +189,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call StartTranslation.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -219,7 +219,7 @@ Console.WriteLine(response.Status);
 This sample shows how to call StartTranslation with all request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -276,14 +276,14 @@ Console.WriteLine(response.Status);
 This sample shows how to call GetDocumentStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync("<id>", "<documentId>");
 ]]></code>
 This sample shows how to call GetDocumentStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync("<id>", "<documentId>");
 ]]></code></example>
@@ -293,14 +293,14 @@ Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync("<
 This sample shows how to call GetDocumentStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<DocumentStatusResult> response = client.GetDocumentStatus("<id>", "<documentId>");
 ]]></code>
 This sample shows how to call GetDocumentStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<DocumentStatusResult> response = client.GetDocumentStatus("<id>", "<documentId>");
 ]]></code></example>
@@ -310,7 +310,7 @@ Response<DocumentStatusResult> response = client.GetDocumentStatus("<id>", "<doc
 This sample shows how to call GetDocumentStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetDocumentStatusAsync("<id>", "<documentId>", null);
 
@@ -326,7 +326,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetDocumentStatusAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetDocumentStatusAsync("<id>", "<documentId>", null);
 
@@ -353,7 +353,7 @@ Console.WriteLine(result.GetProperty("characterCharged").ToString());
 This sample shows how to call GetDocumentStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetDocumentStatus("<id>", "<documentId>", null);
 
@@ -369,7 +369,7 @@ Console.WriteLine(result.GetProperty("id").ToString());
 This sample shows how to call GetDocumentStatus with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetDocumentStatus("<id>", "<documentId>", null);
 
@@ -396,14 +396,14 @@ Console.WriteLine(result.GetProperty("characterCharged").ToString());
 This sample shows how to call GetTranslationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync("<id>");
 ]]></code>
 This sample shows how to call GetTranslationStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync("<id>");
 ]]></code></example>
@@ -413,14 +413,14 @@ Response<TranslationStatusResult> response = await client.GetTranslationStatusAs
 This sample shows how to call GetTranslationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = client.GetTranslationStatus("<id>");
 ]]></code>
 This sample shows how to call GetTranslationStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = client.GetTranslationStatus("<id>");
 ]]></code></example>
@@ -430,7 +430,7 @@ Response<TranslationStatusResult> response = client.GetTranslationStatus("<id>")
 This sample shows how to call GetTranslationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetTranslationStatusAsync("<id>", null);
 
@@ -450,7 +450,7 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call GetTranslationStatusAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetTranslationStatusAsync("<id>", null);
 
@@ -479,7 +479,7 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call GetTranslationStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetTranslationStatus("<id>", null);
 
@@ -499,7 +499,7 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call GetTranslationStatus with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetTranslationStatus("<id>", null);
 
@@ -528,14 +528,14 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call CancelTranslationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = await client.CancelTranslationAsync("<id>");
 ]]></code>
 This sample shows how to call CancelTranslationAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = await client.CancelTranslationAsync("<id>");
 ]]></code></example>
@@ -545,14 +545,14 @@ Response<TranslationStatusResult> response = await client.CancelTranslationAsync
 This sample shows how to call CancelTranslation.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = client.CancelTranslation("<id>");
 ]]></code>
 This sample shows how to call CancelTranslation with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<TranslationStatusResult> response = client.CancelTranslation("<id>");
 ]]></code></example>
@@ -562,7 +562,7 @@ Response<TranslationStatusResult> response = client.CancelTranslation("<id>");
 This sample shows how to call CancelTranslationAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.CancelTranslationAsync("<id>", null);
 
@@ -582,7 +582,7 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call CancelTranslationAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.CancelTranslationAsync("<id>", null);
 
@@ -611,7 +611,7 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call CancelTranslation and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.CancelTranslation("<id>", null);
 
@@ -631,7 +631,7 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call CancelTranslation with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.CancelTranslation("<id>", null);
 
@@ -660,14 +660,14 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharg
 This sample shows how to call GetSupportedDocumentFormatsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
 ]]></code>
 This sample shows how to call GetSupportedDocumentFormatsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
 ]]></code></example>
@@ -677,14 +677,14 @@ Response<SupportedFileFormats> response = await client.GetSupportedDocumentForma
 This sample shows how to call GetSupportedDocumentFormats.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
 ]]></code>
 This sample shows how to call GetSupportedDocumentFormats with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
 ]]></code></example>
@@ -694,7 +694,7 @@ Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
 This sample shows how to call GetSupportedDocumentFormatsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetSupportedDocumentFormatsAsync(null);
 
@@ -706,7 +706,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].
 This sample shows how to call GetSupportedDocumentFormatsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetSupportedDocumentFormatsAsync(null);
 
@@ -723,7 +723,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToSt
 This sample shows how to call GetSupportedDocumentFormats and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetSupportedDocumentFormats(null);
 
@@ -735,7 +735,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].
 This sample shows how to call GetSupportedDocumentFormats with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetSupportedDocumentFormats(null);
 
@@ -752,14 +752,14 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToSt
 This sample shows how to call GetSupportedGlossaryFormatsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
 ]]></code>
 This sample shows how to call GetSupportedGlossaryFormatsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
 ]]></code></example>
@@ -769,14 +769,14 @@ Response<SupportedFileFormats> response = await client.GetSupportedGlossaryForma
 This sample shows how to call GetSupportedGlossaryFormats.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
 ]]></code>
 This sample shows how to call GetSupportedGlossaryFormats with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
 ]]></code></example>
@@ -786,7 +786,7 @@ Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
 This sample shows how to call GetSupportedGlossaryFormatsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetSupportedGlossaryFormatsAsync(null);
 
@@ -798,7 +798,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].
 This sample shows how to call GetSupportedGlossaryFormatsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetSupportedGlossaryFormatsAsync(null);
 
@@ -815,7 +815,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToSt
 This sample shows how to call GetSupportedGlossaryFormats and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetSupportedGlossaryFormats(null);
 
@@ -827,7 +827,7 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].
 This sample shows how to call GetSupportedGlossaryFormats with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetSupportedGlossaryFormats(null);
 
@@ -844,14 +844,14 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToSt
 This sample shows how to call GetSupportedStorageSourcesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
 ]]></code>
 This sample shows how to call GetSupportedStorageSourcesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
 ]]></code></example>
@@ -861,14 +861,14 @@ Response<SupportedStorageSources> response = await client.GetSupportedStorageSou
 This sample shows how to call GetSupportedStorageSources.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
 ]]></code>
 This sample shows how to call GetSupportedStorageSources with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
 ]]></code></example>
@@ -878,7 +878,7 @@ Response<SupportedStorageSources> response = client.GetSupportedStorageSources()
 This sample shows how to call GetSupportedStorageSourcesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetSupportedStorageSourcesAsync(null);
 
@@ -888,7 +888,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetSupportedStorageSourcesAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = await client.GetSupportedStorageSourcesAsync(null);
 
@@ -901,7 +901,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetSupportedStorageSources and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetSupportedStorageSources(null);
 
@@ -911,7 +911,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetSupportedStorageSources with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 Response response = client.GetSupportedStorageSources(null);
 
@@ -924,7 +924,7 @@ Console.WriteLine(result.GetProperty("value")[0].ToString());
 This sample shows how to call GetTranslationsStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync())
 {
@@ -933,7 +933,7 @@ await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync
 This sample shows how to call GetTranslationsStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -945,7 +945,7 @@ await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync
 This sample shows how to call GetTranslationsStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (TranslationStatusResult item in client.GetTranslationsStatus())
 {
@@ -954,7 +954,7 @@ foreach (TranslationStatusResult item in client.GetTranslationsStatus())
 This sample shows how to call GetTranslationsStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (TranslationStatusResult item in client.GetTranslationsStatus(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -966,7 +966,7 @@ foreach (TranslationStatusResult item in client.GetTranslationsStatus(maxCount: 
 This sample shows how to call GetTranslationsStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (BinaryData item in client.GetTranslationsStatusAsync(null, null, null, null, null, null, null, null, null))
 {
@@ -987,7 +987,7 @@ await foreach (BinaryData item in client.GetTranslationsStatusAsync(null, null, 
 This sample shows how to call GetTranslationsStatusAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (BinaryData item in client.GetTranslationsStatusAsync(1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {
@@ -1017,7 +1017,7 @@ await foreach (BinaryData item in client.GetTranslationsStatusAsync(1234, 1234, 
 This sample shows how to call GetTranslationsStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (BinaryData item in client.GetTranslationsStatus(null, null, null, null, null, null, null, null, null))
 {
@@ -1038,7 +1038,7 @@ foreach (BinaryData item in client.GetTranslationsStatus(null, null, null, null,
 This sample shows how to call GetTranslationsStatus with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (BinaryData item in client.GetTranslationsStatus(1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {
@@ -1068,7 +1068,7 @@ foreach (BinaryData item in client.GetTranslationsStatus(1234, 1234, 1234, new s
 This sample shows how to call GetDocumentsStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync("<id>"))
 {
@@ -1077,7 +1077,7 @@ await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync("<id>
 This sample shows how to call GetDocumentsStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync("<id>", maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -1089,7 +1089,7 @@ await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync("<id>
 This sample shows how to call GetDocumentsStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (DocumentStatusResult item in client.GetDocumentsStatus("<id>"))
 {
@@ -1098,7 +1098,7 @@ foreach (DocumentStatusResult item in client.GetDocumentsStatus("<id>"))
 This sample shows how to call GetDocumentsStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (DocumentStatusResult item in client.GetDocumentsStatus("<id>", maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -1110,7 +1110,7 @@ foreach (DocumentStatusResult item in client.GetDocumentsStatus("<id>", maxCount
 This sample shows how to call GetDocumentsStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (BinaryData item in client.GetDocumentsStatusAsync("<id>", null, null, null, null, null, null, null, null, null))
 {
@@ -1127,7 +1127,7 @@ await foreach (BinaryData item in client.GetDocumentsStatusAsync("<id>", null, n
 This sample shows how to call GetDocumentsStatusAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 await foreach (BinaryData item in client.GetDocumentsStatusAsync("<id>", 1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {
@@ -1155,7 +1155,7 @@ await foreach (BinaryData item in client.GetDocumentsStatusAsync("<id>", 1234, 1
 This sample shows how to call GetDocumentsStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (BinaryData item in client.GetDocumentsStatus("<id>", null, null, null, null, null, null, null, null, null))
 {
@@ -1172,7 +1172,7 @@ foreach (BinaryData item in client.GetDocumentsStatus("<id>", null, null, null, 
 This sample shows how to call GetDocumentsStatus with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
-DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
 foreach (BinaryData item in client.GetDocumentsStatus("<id>", 1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {

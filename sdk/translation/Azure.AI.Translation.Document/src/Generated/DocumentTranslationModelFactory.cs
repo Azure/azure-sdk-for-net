@@ -7,15 +7,16 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Azure.AI.Translation.Document.Models;
 
 namespace Azure.AI.Translation.Document
 {
     /// <summary> Model factory for models. </summary>
     public static partial class DocumentTranslationModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Document.SupportedFileFormats"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SupportedFileFormats"/>. </summary>
         /// <param name="value"> list of objects. </param>
-        /// <returns> A new <see cref="Document.SupportedFileFormats"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SupportedFileFormats"/> instance for mocking. </returns>
         public static SupportedFileFormats SupportedFileFormats(IEnumerable<DocumentTranslationFileFormat> value = null)
         {
             value ??= new List<DocumentTranslationFileFormat>();
@@ -39,9 +40,9 @@ namespace Azure.AI.Translation.Document
             return new DocumentTranslationFileFormat(format, fileExtensions?.ToList(), contentTypes?.ToList(), defaultFormatVersion, formatVersions?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Document.SupportedStorageSources"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SupportedStorageSources"/>. </summary>
         /// <param name="value"> list of objects. </param>
-        /// <returns> A new <see cref="Document.SupportedStorageSources"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Models.SupportedStorageSources"/> instance for mocking. </returns>
         public static SupportedStorageSources SupportedStorageSources(IEnumerable<StorageSource> value = null)
         {
             value ??= new List<StorageSource>();

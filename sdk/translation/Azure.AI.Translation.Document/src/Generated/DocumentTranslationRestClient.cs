@@ -12,8 +12,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Translation.Document
 {
     // Data plane generated client.
-    /// <summary> The BatchDocumentTranslation service client. </summary>
-    public partial class BatchDocumentTranslationClient
+    /// <summary> The DocumentTranslationRest service client. </summary>
+    public partial class DocumentTranslationRestClient
     {
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
@@ -24,26 +24,26 @@ namespace Azure.AI.Translation.Document
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of BatchDocumentTranslationClient for mocking. </summary>
-        protected BatchDocumentTranslationClient()
+        /// <summary> Initializes a new instance of DocumentTranslationRestClient for mocking. </summary>
+        protected DocumentTranslationRestClient()
         {
         }
 
-        /// <summary> Initializes a new instance of BatchDocumentTranslationClient. </summary>
+        /// <summary> Initializes a new instance of DocumentTranslationRestClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public BatchDocumentTranslationClient(Uri endpoint) : this(endpoint, new BatchDocumentTranslationClientOptions())
+        public DocumentTranslationRestClient(Uri endpoint) : this(endpoint, new DocumentTranslationRestClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of BatchDocumentTranslationClient. </summary>
+        /// <summary> Initializes a new instance of DocumentTranslationRestClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public BatchDocumentTranslationClient(Uri endpoint, BatchDocumentTranslationClientOptions options)
+        public DocumentTranslationRestClient(Uri endpoint, DocumentTranslationRestClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            options ??= new BatchDocumentTranslationClientOptions();
+            options ??= new DocumentTranslationRestClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());

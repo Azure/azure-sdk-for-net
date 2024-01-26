@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Translation.Document;
+using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 using Azure.Identity;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ namespace Azure.AI.Translation.Document.Samples
         public void Example_DocumentTranslationOperations_StartTranslation_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -57,7 +58,7 @@ language = "<language>",
         public async Task Example_DocumentTranslationOperations_StartTranslation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -90,7 +91,7 @@ language = "<language>",
         public void Example_DocumentTranslationOperations_StartTranslation_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
             {
@@ -107,7 +108,7 @@ new TranslationTarget(new Uri("<targetUrl>"), "<language>")
         public async Task Example_DocumentTranslationOperations_StartTranslation_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
             {
@@ -124,7 +125,7 @@ new TranslationTarget(new Uri("<targetUrl>"), "<language>")
         public void Example_DocumentTranslationOperations_StartTranslation_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -181,7 +182,7 @@ storageType = "Folder",
         public async Task Example_DocumentTranslationOperations_StartTranslation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -238,7 +239,7 @@ storageType = "Folder",
         public void Example_DocumentTranslationOperations_StartTranslation_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
             {
@@ -272,7 +273,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_StartTranslation_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
             {
@@ -306,7 +307,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetDocumentStatus("<id>", "<documentId>", null);
 
@@ -325,7 +326,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetDocumentStatusAsync("<id>", "<documentId>", null);
 
@@ -344,7 +345,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<DocumentStatusResult> response = client.GetDocumentStatus("<id>", "<documentId>");
         }
@@ -354,7 +355,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync("<id>", "<documentId>");
         }
@@ -364,7 +365,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetDocumentStatus("<id>", "<documentId>", null);
 
@@ -391,7 +392,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetDocumentStatusAsync("<id>", "<documentId>", null);
 
@@ -418,7 +419,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<DocumentStatusResult> response = client.GetDocumentStatus("<id>", "<documentId>");
         }
@@ -428,7 +429,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync("<id>", "<documentId>");
         }
@@ -438,7 +439,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetTranslationStatus("<id>", null);
 
@@ -461,7 +462,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetTranslationStatusAsync("<id>", null);
 
@@ -484,7 +485,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = client.GetTranslationStatus("<id>");
         }
@@ -494,7 +495,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync("<id>");
         }
@@ -504,7 +505,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetTranslationStatus("<id>", null);
 
@@ -533,7 +534,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetTranslationStatusAsync("<id>", null);
 
@@ -562,7 +563,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = client.GetTranslationStatus("<id>");
         }
@@ -572,7 +573,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync("<id>");
         }
@@ -582,7 +583,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_CancelTranslation_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.CancelTranslation("<id>", null);
 
@@ -605,7 +606,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_CancelTranslation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.CancelTranslationAsync("<id>", null);
 
@@ -628,7 +629,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_CancelTranslation_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = client.CancelTranslation("<id>");
         }
@@ -638,7 +639,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_CancelTranslation_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = await client.CancelTranslationAsync("<id>");
         }
@@ -648,7 +649,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_CancelTranslation_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.CancelTranslation("<id>", null);
 
@@ -677,7 +678,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_CancelTranslation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.CancelTranslationAsync("<id>", null);
 
@@ -706,7 +707,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_CancelTranslation_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = client.CancelTranslation("<id>");
         }
@@ -716,7 +717,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_CancelTranslation_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<TranslationStatusResult> response = await client.CancelTranslationAsync("<id>");
         }
@@ -726,7 +727,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetSupportedDocumentFormats(null);
 
@@ -741,7 +742,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetSupportedDocumentFormatsAsync(null);
 
@@ -756,7 +757,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
         }
@@ -766,7 +767,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
         }
@@ -776,7 +777,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetSupportedDocumentFormats(null);
 
@@ -793,7 +794,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetSupportedDocumentFormatsAsync(null);
 
@@ -810,7 +811,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
         }
@@ -820,7 +821,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
         }
@@ -830,7 +831,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetSupportedGlossaryFormats(null);
 
@@ -845,7 +846,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetSupportedGlossaryFormatsAsync(null);
 
@@ -860,7 +861,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
         }
@@ -870,7 +871,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
         }
@@ -880,7 +881,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetSupportedGlossaryFormats(null);
 
@@ -897,7 +898,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetSupportedGlossaryFormatsAsync(null);
 
@@ -914,7 +915,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
         }
@@ -924,7 +925,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
         }
@@ -934,7 +935,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetSupportedStorageSources(null);
 
@@ -947,7 +948,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetSupportedStorageSourcesAsync(null);
 
@@ -960,7 +961,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
         }
@@ -970,7 +971,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
         }
@@ -980,7 +981,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = client.GetSupportedStorageSources(null);
 
@@ -993,7 +994,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response response = await client.GetSupportedStorageSourcesAsync(null);
 
@@ -1006,7 +1007,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
         }
@@ -1016,7 +1017,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
         }
@@ -1026,7 +1027,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (BinaryData item in client.GetTranslationsStatus(null, null, null, null, null, null, null, null, null))
             {
@@ -1050,7 +1051,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (BinaryData item in client.GetTranslationsStatusAsync(null, null, null, null, null, null, null, null, null))
             {
@@ -1074,7 +1075,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (TranslationStatusResult item in client.GetTranslationsStatus())
             {
@@ -1086,7 +1087,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync())
             {
@@ -1098,7 +1099,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (BinaryData item in client.GetTranslationsStatus(1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
@@ -1128,7 +1129,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (BinaryData item in client.GetTranslationsStatusAsync(1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
@@ -1158,7 +1159,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (TranslationStatusResult item in client.GetTranslationsStatus(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {
@@ -1170,7 +1171,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {
@@ -1182,7 +1183,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (BinaryData item in client.GetDocumentsStatus("<id>", null, null, null, null, null, null, null, null, null))
             {
@@ -1202,7 +1203,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (BinaryData item in client.GetDocumentsStatusAsync("<id>", null, null, null, null, null, null, null, null, null))
             {
@@ -1222,7 +1223,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (DocumentStatusResult item in client.GetDocumentsStatus("<id>"))
             {
@@ -1234,7 +1235,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync("<id>"))
             {
@@ -1246,7 +1247,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (BinaryData item in client.GetDocumentsStatus("<id>", 1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
@@ -1274,7 +1275,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (BinaryData item in client.GetDocumentsStatusAsync("<id>", 1234, 1234, 1234, new string[] { "<ids>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
@@ -1302,7 +1303,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public void Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             foreach (DocumentStatusResult item in client.GetDocumentsStatus("<id>", maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {
@@ -1314,7 +1315,7 @@ StorageUriKind = StorageInputUriKind.Folder,
         public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
-            DocumentTranslation client = new BatchDocumentTranslationClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslation client = new DocumentTranslationRestClient(endpoint).GetDocumentTranslationClient(apiVersion: "v1.0");
 
             await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync("<id>", maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new string[] { "<ids>" }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {

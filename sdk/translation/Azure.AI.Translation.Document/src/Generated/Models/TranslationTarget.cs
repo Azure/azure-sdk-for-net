@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
