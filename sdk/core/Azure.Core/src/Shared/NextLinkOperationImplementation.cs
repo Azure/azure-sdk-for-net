@@ -75,33 +75,20 @@ namespace Azure.Core
 
         public static IOperation? Create(
             HttpPipeline pipeline,
-            string id,
+            RehydrationToken rehydrationToken,
             string? apiVersionOverride = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
-            if (!Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri))
-                throw new InvalidOperationException("Invalid initial URI");
-            if (!lroDetails.TryGetValue("NextRequestUri", out var nextRequestUri))
-                throw new InvalidOperationException("Invalid next request URI");
-            RequestMethod requestMethod = new RequestMethod(lroDetails["RequestMethod"]);
-            bool originalResponseHasLocation = bool.Parse(lroDetails["OriginalResponseHasLocation"]);
-            string lastKnownLocation = lroDetails["LastKnownLocation"];
-            if (!Enum.TryParse(lroDetails["FinalStateVia"], out OperationFinalStateVia finalStateVia))
-                finalStateVia = OperationFinalStateVia.Location;
-            string? apiVersionStr = apiVersionOverride ?? (TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null);
-            if (!Enum.TryParse(lroDetails["HeaderSource"], out HeaderSource headerSource))
-                headerSource = HeaderSource.None;
-
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, originalResponseHasLocation, lastKnownLocation, finalStateVia, apiVersionStr);
+            string? apiVersionStr = apiVersionOverride ?? (TryGetApiVersion(rehydrationToken.InitialUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null);
+            return new NextLinkOperationImplementation(pipeline, rehydrationToken.RequestMethod, rehydrationToken.InitialUri, rehydrationToken.NextRequestUri, rehydrationToken.HeaderSource, rehydrationToken.OriginalResponseHasLocation, rehydrationToken.LastKnownLocation, rehydrationToken.FinalStateVia, apiVersionStr);
         }
 
         public static IOperation<T>? Create<T>(
             IOperationSource<T> operationSource,
             HttpPipeline pipeline,
-            string id,
+            RehydrationToken rehydrationToken,
             string? apiVersionOverride = null)
         {
-            var operation = Create(pipeline, id, apiVersionOverride);
+            var operation = Create(pipeline, rehydrationToken, apiVersionOverride);
             return new OperationToOperationOfT<T>(operationSource, operation!);
         }
 
