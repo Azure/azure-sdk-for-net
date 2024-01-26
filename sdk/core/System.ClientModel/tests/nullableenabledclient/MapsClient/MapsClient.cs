@@ -113,7 +113,7 @@ public class MapsClient
 
         // Note: due to addition of SetHeader method on RequestOptions, we now
         // need to apply options at the end of the CreateRequest routine.
-        message.Apply(options);
+        options.Apply(message);
 
         return message;
     }

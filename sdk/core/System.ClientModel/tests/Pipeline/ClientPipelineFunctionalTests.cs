@@ -372,7 +372,7 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
 
         // Set CancellationToken on the message.
         RequestOptions options = new() { CancellationToken = cts.Token };
-        message.Apply(options);
+        options.Apply(message);
 
         var task = Task.Run(() => pipeline.SendSyncOrAsync(message, IsAsync));
 

@@ -96,7 +96,7 @@ public class RequestOptions
     }
 
     // Set options on the message before sending it through the pipeline.
-    internal void Apply(PipelineMessage message)
+    public virtual void Apply(PipelineMessage message)
     {
         Freeze();
 

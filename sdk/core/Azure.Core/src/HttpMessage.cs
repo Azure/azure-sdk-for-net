@@ -106,7 +106,7 @@ namespace Azure.Core
                 ResponseClassifier = context.Apply(classifier);
             }
 
-            Apply(context);
+            context.Apply(this);
         }
 
         internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
