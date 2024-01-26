@@ -519,7 +519,7 @@ namespace Azure.Core.Tests
 
             public ValueTask<OperationState<int>> UpdateStateAsync(bool async, CancellationToken cancellationToken) => _updateStateAsyncHandler(async, cancellationToken);
 
-            public string GetRehydrationToken() => null;
+            public RehydrationToken? GetRehydrationToken() => null;
         }
 
         private class CallCountStrategy : DelayStrategy

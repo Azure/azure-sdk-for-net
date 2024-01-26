@@ -296,12 +296,8 @@ namespace Azure.Core
 
         private RequestMethod? GetRequestMethod()
         {
-            var rehydrationToken = _operation.GetRehydrationToken();
-            if (rehydrationToken is null)
-            {
-                return null;
-            }
-            return ModelReaderWriter.Read<RehydrationToken>(new BinaryData(rehydrationToken)).RequestMethod;
+            RehydrationToken? rehydrationToken = _operation.GetRehydrationToken();
+            return rehydrationToken?.RequestMethod;
         }
 
         public virtual RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();

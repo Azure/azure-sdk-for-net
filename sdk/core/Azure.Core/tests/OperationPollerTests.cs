@@ -56,7 +56,7 @@ namespace Azure.Core.Tests.DelayStrategies
 
         private class EndlessOperation : IOperation
         {
-            public string GetRehydrationToken() => null;
+            public RehydrationToken? GetRehydrationToken() => null;
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(OperationState.Pending(new MockResponse(200)));
         }

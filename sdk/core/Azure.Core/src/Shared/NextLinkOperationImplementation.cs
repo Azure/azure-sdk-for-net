@@ -16,7 +16,6 @@ namespace Azure.Core
 {
     internal class NextLinkOperationImplementation : IOperation
     {
-        private const string RehydrationTokenVersion = "1.0.0";
         private const string ApiVersionParam = "api-version";
         private static readonly string[] FailureStates = { "failed", "canceled" };
         private static readonly string[] SuccessStates = { "succeeded" };
@@ -136,10 +135,10 @@ namespace Azure.Core
             bool originalResponseHasLocation,
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia)
-            => new RehydrationToken(null, RehydrationTokenVersion, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia);
+            => new RehydrationToken(null, null, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia);
 
         public RehydrationToken? GetRehydrationToken()
-            => new RehydrationToken(null, RehydrationTokenVersion, _headerSource, _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia);
+            => new RehydrationToken(null, null, _headerSource, _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia);
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {

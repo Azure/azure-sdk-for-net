@@ -70,7 +70,7 @@ namespace Azure.Core
             return OperationState<T>.Pending(state.RawResponse);
         }
 
-        string? IOperation<T>.GetRehydrationToken()
+        RehydrationToken? IOperation<T>.GetRehydrationToken()
         {
             return _nextLinkOperation.GetRehydrationToken();
         }
