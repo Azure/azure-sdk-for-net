@@ -90,7 +90,7 @@ public class OpenAIClient
 
         // Note: due to addition of SetHeader method on RequestOptions, we now
         // need to apply options at the end of the CreateRequest routine.
-        options.Apply(message);
+        message.Apply(options);
 
         return message;
     }

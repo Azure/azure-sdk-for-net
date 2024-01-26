@@ -150,6 +150,7 @@ namespace System.ClientModel.Primitives
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
+        public void Apply(System.ClientModel.Primitives.RequestOptions options) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public void SetProperty(System.Type type, object value) { }
@@ -242,7 +243,6 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.ClientErrorBehaviors ErrorOptions { get { throw null; } set { } }
         public void AddHeader(string name, string value) { }
         public void AddPolicy(System.ClientModel.Primitives.PipelinePolicy policy, System.ClientModel.Primitives.PipelinePosition position) { }
-        public virtual void Apply(System.ClientModel.Primitives.PipelineMessage message) { }
         protected void AssertNotFrozen() { }
         public virtual void Freeze() { }
         public void SetHeader(string name, string value) { }
