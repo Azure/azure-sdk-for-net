@@ -149,19 +149,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultAccessPolicyParameters(id, name, type, systemData.Value, Optional.ToNullable(location), properties, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KeyVaultAccessPolicyParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicyParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultAccessPolicyParameters)} does not support '{options.Format}' format.");
-            }
-        }
-
         KeyVaultAccessPolicyParameters IPersistableModel<KeyVaultAccessPolicyParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultAccessPolicyParameters>)this).GetFormatFromOptions(options) : options.Format;

@@ -6,37 +6,30 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
-using System.Text.Json;
-using Azure.Core;
-using Azure.Core.Serialization;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class KeyVaultAccessPolicyParameters : IModelJsonSerializable<KeyVaultAccessPolicyParameters>
+    public partial class KeyVaultAccessPolicyParameters
     {
-        void IModelJsonSerializable<KeyVaultAccessPolicyParameters>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
-
-        KeyVaultAccessPolicyParameters IModelJsonSerializable<KeyVaultAccessPolicyParameters>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        BinaryData global::System.ClientModel.Primitives.IPersistableModel<KeyVaultAccessPolicyParameters>.Write(ModelReaderWriterOptions options)
         {
-            using var document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyVaultAccessPolicyParameters(document.RootElement);
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+            }
         }
 
-        BinaryData IModelSerializable<KeyVaultAccessPolicyParameters>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
-        {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
-
-        KeyVaultAccessPolicyParameters IModelSerializable<KeyVaultAccessPolicyParameters>.Deserialize(BinaryData data, ModelSerializerOptions options)
-        {
-            using var document = JsonDocument.Parse(data);
-            return DeserializeKeyVaultAccessPolicyParameters(document.RootElement);
-        }
-
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");

@@ -93,19 +93,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultSku(family, name, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KeyVaultSku>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSku>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultSku)} does not support '{options.Format}' format.");
-            }
-        }
-
         KeyVaultSku IPersistableModel<KeyVaultSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSku>)this).GetFormatFromOptions(options) : options.Format;

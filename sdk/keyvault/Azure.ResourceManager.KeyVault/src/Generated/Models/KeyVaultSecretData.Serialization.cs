@@ -176,19 +176,6 @@ namespace Azure.ResourceManager.KeyVault
             return new KeyVaultSecretData(id, name, type, systemData.Value, properties, Optional.ToNullable(location), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(KeyVaultSecretData)} does not support '{options.Format}' format.");
-            }
-        }
-
         KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSecretData>)this).GetFormatFromOptions(options) : options.Format;

@@ -140,19 +140,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new SecretProperties(value.Value, contentType.Value, attributes.Value, secretUri.Value, secretUriWithVersion.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SecretProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(SecretProperties)} does not support '{options.Format}' format.");
-            }
-        }
-
         SecretProperties IPersistableModel<SecretProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecretProperties>)this).GetFormatFromOptions(options) : options.Format;

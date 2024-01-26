@@ -177,19 +177,6 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new IdentityAccessPermissions(Optional.ToList(keys), Optional.ToList(secrets), Optional.ToList(certificates), Optional.ToList(storage), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IdentityAccessPermissions>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(IdentityAccessPermissions)} does not support '{options.Format}' format.");
-            }
-        }
-
         IdentityAccessPermissions IPersistableModel<IdentityAccessPermissions>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessPermissions>)this).GetFormatFromOptions(options) : options.Format;
