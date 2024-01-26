@@ -128,7 +128,7 @@ namespace Azure.Core
             _apiVersion = apiVersion;
         }
 
-        internal static string GetOperationId(
+        internal static RehydrationToken GetRehydrationToken(
             RequestMethod requestMethod,
             Uri startRequestUri,
             string nextRequestUri,
@@ -136,16 +136,10 @@ namespace Azure.Core
             bool originalResponseHasLocation,
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia)
-        {
-            var rehydrationToken = new RehydrationToken(RehydrationTokenVersion, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia);
-            return ((IPersistableModel<RehydrationToken>)rehydrationToken).Write(new ModelReaderWriterOptions("J")).ToString();
-        }
+            => new RehydrationToken(null, RehydrationTokenVersion, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia);
 
-        public string GetRehydrationToken()
-        {
-            var rehydrationToken = new RehydrationToken(RehydrationTokenVersion, _headerSource, _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia);
-            return ((IPersistableModel<RehydrationToken>)rehydrationToken).Write(new ModelReaderWriterOptions("J")).ToString();
-        }
+        public RehydrationToken? GetRehydrationToken()
+            => new RehydrationToken(null, RehydrationTokenVersion, _headerSource, _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia);
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
@@ -458,7 +452,7 @@ namespace Azure.Core
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
 
-            public string? GetRehydrationToken() => null;
+            public RehydrationToken? GetRehydrationToken() => null;
         }
 
         private sealed class OperationToOperationOfT<T> : IOperation<T>
@@ -492,10 +486,7 @@ namespace Azure.Core
                 return OperationState<T>.Pending(state.RawResponse);
             }
 
-            public string? GetRehydrationToken()
-            {
-                return _operation.GetRehydrationToken();
-            }
+            public RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
         }
     }
 }

@@ -9,14 +9,15 @@ using System.Text.Json;
 
 namespace Azure.Core
 {
-    internal partial struct RehydrationToken : IJsonModel<RehydrationToken>
+    public partial struct RehydrationToken : IJsonModel<RehydrationToken>
     {
-        private RehydrationToken DeserializeRehydrationToken(JsonElement element, ModelReaderWriterOptions options)
+        internal RehydrationToken DeserializeRehydrationToken(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return default;
             }
+            Optional<Guid> id = default;
             string version = string.Empty;
             HeaderSource headerSource = default;
             string nextRequestUri = string.Empty;
@@ -28,6 +29,14 @@ namespace Azure.Core
 
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("id"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = Guid.Parse(property.Value.GetString());
+                }
                 if (property.NameEquals("version"u8))
                 {
                     version = property.Value.GetString();
@@ -79,12 +88,14 @@ namespace Azure.Core
                     continue;
                 }
             }
-            return new RehydrationToken(version, headerSource, nextRequestUri, initialUri, requestMethod, originalResponseHasLocation, lastKnownLocation.Value, finalStateVia);
+            return new RehydrationToken(id.Value, version, headerSource, nextRequestUri, initialUri, requestMethod, originalResponseHasLocation, lastKnownLocation.Value, finalStateVia);
         }
 
         void IJsonModel<RehydrationToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id.ToString());
             writer.WritePropertyName("version"u8);
             writer.WriteStringValue(Version);
             writer.WritePropertyName("headerSource"u8);

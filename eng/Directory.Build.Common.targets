@@ -231,8 +231,6 @@
     <Compile Include="$(AzureCoreSharedSources)PageableHelpers.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ProtocolOperation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ProtocolOperationHelpers.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)RehydrationToken.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)RehydrationToken.Serialization.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RequestContentHelper.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RequestHeaderExtensions.cs" LinkBase="Shared/Core" />

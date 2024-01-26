@@ -62,16 +62,16 @@ namespace Azure.Core
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="value">The final result of the long-running operation.</param>
-        /// <param name="operationId">operation id</param>
-        public static OperationInternal<T> Succeeded(Response rawResponse, T value, string? operationId = null) => new(OperationState<T>.Success(rawResponse, value, operationId));
+        /// <param name="rehydrationToken">rehydration token</param>
+        public static OperationInternal<T> Succeeded(Response rawResponse, T value, RehydrationToken? rehydrationToken = null) => new(OperationState<T>.Success(rawResponse, value, rehydrationToken));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal"/> class in a final failed state.
         /// </summary>
         /// <param name="rawResponse">The final value of <see cref="OperationInternalBase.RawResponse"/>.</param>
         /// <param name="operationFailedException">The exception that will be thrown by <c>UpdateStatusAsync</c>.</param>
-        /// <param name="operationId"></param>
-        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, string? operationId) => new(OperationState<T>.Failure(rawResponse, operationFailedException, operationId));
+        /// <param name="rehydrationToken">rehydration token</param>
+        public static OperationInternal<T> Failed(Response rawResponse, RequestFailedException operationFailedException, RehydrationToken? rehydrationToken) => new(OperationState<T>.Failure(rawResponse, operationFailedException, rehydrationToken));
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OperationInternal{T}"/> class.
@@ -131,7 +131,7 @@ namespace Azure.Core
         {
             // FinalOperation represents operation that is in final state and can't be updated.
             // It implements IOperation<T> and throws exception when UpdateStateAsync is called.
-            _operation = new FinalOperation(finalState.OperationId);
+            _operation = new FinalOperation(finalState.RehydrationToken);
             _rawResponse = finalState.RawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
         }
@@ -304,10 +304,7 @@ namespace Azure.Core
             return ModelReaderWriter.Read<RehydrationToken>(new BinaryData(rehydrationToken)).RequestMethod;
         }
 
-        public virtual string? GetRehydrationToken()
-        {
-            return _operation.GetRehydrationToken();
-        }
+        public virtual RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
 
         private static Response GetResponseFromState(OperationState<T> state, RequestMethod? requestmethod = null)
         {
@@ -327,9 +324,9 @@ namespace Azure.Core
 
         private class FinalOperation : IOperation<T>
         {
-            private string? _rehydrationToken;
+            private RehydrationToken? _rehydrationToken;
 
-            public FinalOperation(string? rehydrationToken)
+            public FinalOperation(RehydrationToken? rehydrationToken)
             {
                 _rehydrationToken = rehydrationToken;
             }
@@ -337,7 +334,7 @@ namespace Azure.Core
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
 
-            public string? GetRehydrationToken() => _rehydrationToken;
+            public RehydrationToken? GetRehydrationToken() => _rehydrationToken;
         }
     }
 
@@ -382,7 +379,7 @@ namespace Azure.Core
         /// <summary>
         /// To get the token of the operation for rehydration purpose.
         /// </summary>
-        string? GetRehydrationToken();
+        RehydrationToken? GetRehydrationToken();
     }
 
     /// <summary>
@@ -397,14 +394,14 @@ namespace Azure.Core
     /// <typeparam name="T">The final result of the long-running operation. Must match the type used in <see cref="Operation{T}"/>.</typeparam>
     internal readonly struct OperationState<T>
     {
-        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException, string? operationId)
+        private OperationState(Response rawResponse, bool hasCompleted, bool hasSucceeded, T? value, RequestFailedException? operationFailedException, RehydrationToken? rehydrationToken)
         {
             RawResponse = rawResponse;
             HasCompleted = hasCompleted;
             HasSucceeded = hasSucceeded;
             Value = value;
             OperationFailedException = operationFailedException;
-            OperationId = operationId;
+            RehydrationToken = rehydrationToken;
         }
 
         public Response RawResponse { get; }
@@ -417,17 +414,17 @@ namespace Azure.Core
 
         public RequestFailedException? OperationFailedException { get; }
 
-        public string? OperationId { get; }
+        public RehydrationToken? RehydrationToken { get; }
 
         /// <summary>
         /// Instantiates an <see cref="OperationState{T}"/> indicating the operation has completed successfully.
         /// </summary>
         /// <param name="rawResponse">The HTTP response obtained during the status update.</param>
         /// <param name="value">The final result of the long-running operation.</param>
-        /// <param name="operationId">operation id</param>
+        /// <param name="rehydrationToken">rehydration token</param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> or <paramref name="value"/> is <c>null</c>.</exception>
-        public static OperationState<T> Success(Response rawResponse, T value, string? operationId = null)
+        public static OperationState<T> Success(Response rawResponse, T value, RehydrationToken? rehydrationToken = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
 
@@ -436,7 +433,7 @@ namespace Azure.Core
                 throw new ArgumentNullException(nameof(value));
             }
 
-            return new OperationState<T>(rawResponse, true, true, value, default, operationId);
+            return new OperationState<T>(rawResponse, true, true, value, default, rehydrationToken);
         }
 
         /// <summary>
@@ -448,13 +445,13 @@ namespace Azure.Core
         /// <see cref="OperationInternal{T}.Value"/> is called. If left <c>null</c>, a default exception is created based on the
         /// <paramref name="rawResponse"/> parameter.
         /// </param>
-        /// <param name="operationId">operation id</param>
+        /// <param name="rehydrationToken">rehydration token</param>
         /// <returns>A new <see cref="OperationState{T}"/> instance.</returns>
         /// <exception cref="ArgumentNullException">Thrown if <paramref name="rawResponse"/> is <c>null</c>.</exception>
-        public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null, string? operationId = null)
+        public static OperationState<T> Failure(Response rawResponse, RequestFailedException? operationFailedException = null, RehydrationToken? rehydrationToken = null)
         {
             Argument.AssertNotNull(rawResponse, nameof(rawResponse));
-            return new OperationState<T>(rawResponse, true, false, default, operationFailedException, operationId);
+            return new OperationState<T>(rawResponse, true, false, default, operationFailedException, rehydrationToken);
         }
 
         /// <summary>
