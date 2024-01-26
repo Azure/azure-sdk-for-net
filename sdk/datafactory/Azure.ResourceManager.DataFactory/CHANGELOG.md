@@ -7,9 +7,12 @@
   - Add warehouse linkedService, dataSet
   - Add snowflake v2 linkedService, dataSet
   - Add SalesforceV2 and SalesforceCloudServiceV2 linkedService, dataSet
-  - Add metadata Into StoreWriteSettings For Bug Fix.
   - Update MySql & Mariadb LinkedService.json with new properties.
+
+### Bugs Fixed
+
   - Fix headers and schema definition bug for Azure Function activity and Web Activity.
+  - Add metadata Into StoreWriteSettings For Bug Fix.
 
 ## 1.0.0-beta.5 (2023-11-16)
 
