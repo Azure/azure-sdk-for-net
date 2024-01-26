@@ -10,7 +10,7 @@ namespace Azure.Core
     /// <summary>
     /// Represents a token that can be used to rehydrate a long-running operation.
     /// </summary>
-    public partial struct RehydrationToken
+    public readonly partial struct RehydrationToken
     {
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
