@@ -334,6 +334,17 @@ namespace Azure.Messaging.EventHubs
         ///   A unique name used to identify this event processor.
         /// </summary>
         ///
+        /// <remarks>
+        ///   The identifier can be set using the <see cref="EventProcessorClientOptions.Identifier"/> property on the
+        ///   <see cref="EventProcessorClientOptions"/> passed when constructing the processor.  If not specified, a
+        ///   random identifier will be generated.
+        ///
+        ///   It is recommended that you set a stable unique identifier for processor instances, as this allows
+        ///   the processor to recover partition ownership when an application or host instance is restarted.  It
+        ///   also aids readability in Azure SDK logs and allows for more easily correlating logs to a specific
+        ///   processor instance.
+        /// </remarks>
+        ///
         public new string Identifier => base.Identifier;
 
         /// <summary>

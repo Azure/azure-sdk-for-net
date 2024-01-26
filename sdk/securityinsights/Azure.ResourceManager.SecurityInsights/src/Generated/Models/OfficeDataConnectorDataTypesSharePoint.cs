@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> SharePoint data type connection. </summary>
@@ -17,7 +20,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> Initializes a new instance of <see cref="OfficeDataConnectorDataTypesSharePoint"/>. </summary>
         /// <param name="state"> Describe whether this data type connection is enabled or not. </param>
-        internal OfficeDataConnectorDataTypesSharePoint(SecurityInsightsDataTypeConnectionState? state) : base(state)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OfficeDataConnectorDataTypesSharePoint(SecurityInsightsDataTypeConnectionState? state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(state, serializedAdditionalRawData)
         {
         }
     }

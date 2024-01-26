@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             AdditionalProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/> for deserialization. </summary>
+        internal FacetErrorDetails()
+        {
+        }
+
         /// <summary> Error code identifying the specific error. </summary>
         public string Code { get; }
         /// <summary> A human readable error message. </summary>

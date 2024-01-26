@@ -5,21 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class StorageInsightStatus
+    public partial class StorageInsightStatus : IUtf8JsonSerializable, IJsonModel<StorageInsightStatus>
     {
-        internal static StorageInsightStatus DeserializeStorageInsightStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageInsightStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageInsightStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageInsightStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageInsightStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageInsightStatus IJsonModel<StorageInsightStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageInsightStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageInsightStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageInsightStatus(document.RootElement, options);
+        }
+
+        internal static StorageInsightStatus DeserializeStorageInsightStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             StorageInsightState state = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -32,8 +87,44 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageInsightStatus(state, description.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageInsightStatus(state, description.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageInsightStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageInsightStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageInsightStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageInsightStatus IPersistableModel<StorageInsightStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageInsightStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageInsightStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageInsightStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageInsightStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

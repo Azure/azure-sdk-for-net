@@ -5,16 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerStorageCapability
+    public partial class PostgreSqlFlexibleServerStorageCapability : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerStorageCapability>
     {
-        internal static PostgreSqlFlexibleServerStorageCapability DeserializePostgreSqlFlexibleServerStorageCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerStorageCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PostgreSqlFlexibleServerStorageCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerStorageCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(SupportedIops))
+            {
+                writer.WritePropertyName("supportedIops"u8);
+                writer.WriteNumberValue(SupportedIops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageSizeInMB))
+            {
+                writer.WritePropertyName("storageSizeMb"u8);
+                writer.WriteNumberValue(StorageSizeInMB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultIopsTier))
+            {
+                writer.WritePropertyName("defaultIopsTier"u8);
+                writer.WriteStringValue(DefaultIopsTier);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedIopsTiers))
+            {
+                writer.WritePropertyName("supportedIopsTiers"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedIopsTiers)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PostgreSqlFlexibleServerStorageCapability IJsonModel<PostgreSqlFlexibleServerStorageCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerStorageCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerStorageCapability(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerStorageCapability DeserializePostgreSqlFlexibleServerStorageCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +105,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<IReadOnlyList<PostgreSqlFlexibleServerStorageTierCapability>> supportedIopsTiers = default;
             Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
             Optional<string> reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedIops"u8))
@@ -78,8 +160,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerStorageCapability(Optional.ToNullable(status), reason.Value, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMb), defaultIopsTier.Value, Optional.ToList(supportedIopsTiers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostgreSqlFlexibleServerStorageCapability(Optional.ToNullable(status), reason.Value, serializedAdditionalRawData, Optional.ToNullable(supportedIops), Optional.ToNullable(storageSizeMb), defaultIopsTier.Value, Optional.ToList(supportedIopsTiers));
         }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerStorageCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerStorageCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlFlexibleServerStorageCapability IPersistableModel<PostgreSqlFlexibleServerStorageCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerStorageCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlFlexibleServerStorageCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerStorageCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerStorageCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

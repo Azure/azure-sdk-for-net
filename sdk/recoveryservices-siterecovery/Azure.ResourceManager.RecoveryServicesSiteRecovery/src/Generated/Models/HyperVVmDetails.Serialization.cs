@@ -5,16 +5,108 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVVmDetails
+    public partial class HyperVVmDetails : IUtf8JsonSerializable, IJsonModel<HyperVVmDetails>
     {
-        internal static HyperVVmDetails DeserializeHyperVVmDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVVmDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HyperVVmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SourceItemId))
+            {
+                writer.WritePropertyName("sourceItemId"u8);
+                writer.WriteStringValue(SourceItemId);
+            }
+            if (Optional.IsDefined(Generation))
+            {
+                writer.WritePropertyName("generation"u8);
+                writer.WriteStringValue(Generation);
+            }
+            if (Optional.IsDefined(OSDetails))
+            {
+                writer.WritePropertyName("osDetails"u8);
+                writer.WriteObjectValue(OSDetails);
+            }
+            if (Optional.IsCollectionDefined(DiskDetails))
+            {
+                writer.WritePropertyName("diskDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in DiskDetails)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(HasPhysicalDisk))
+            {
+                writer.WritePropertyName("hasPhysicalDisk"u8);
+                writer.WriteStringValue(HasPhysicalDisk.Value.ToString());
+            }
+            if (Optional.IsDefined(HasFibreChannelAdapter))
+            {
+                writer.WritePropertyName("hasFibreChannelAdapter"u8);
+                writer.WriteStringValue(HasFibreChannelAdapter.Value.ToString());
+            }
+            if (Optional.IsDefined(HasSharedVhd))
+            {
+                writer.WritePropertyName("hasSharedVhd"u8);
+                writer.WriteStringValue(HasSharedVhd.Value.ToString());
+            }
+            if (Optional.IsDefined(HyperVHostId))
+            {
+                writer.WritePropertyName("hyperVHostId"u8);
+                writer.WriteStringValue(HyperVHostId);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HyperVVmDetails IJsonModel<HyperVVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVVmDetails(document.RootElement, options);
+        }
+
+        internal static HyperVVmDetails DeserializeHyperVVmDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -35,6 +127,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<HyperVVmDiskPresenceStatus> hasSharedVhd = default;
             Optional<string> hyperVHostId = default;
             string instanceType = "HyperVVirtualMachine";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceItemId"u8))
@@ -107,8 +201,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVVmDetails(instanceType, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HyperVVmDetails(instanceType, serializedAdditionalRawData, sourceItemId.Value, generation.Value, osDetails.Value, Optional.ToList(diskDetails), Optional.ToNullable(hasPhysicalDisk), Optional.ToNullable(hasFibreChannelAdapter), Optional.ToNullable(hasSharedVhd), hyperVHostId.Value);
         }
+
+        BinaryData IPersistableModel<HyperVVmDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HyperVVmDetails IPersistableModel<HyperVVmDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVVmDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVVmDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVVmDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVVmDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
