@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,7 +32,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> A new <see cref="ImageAnalysis.ImageAnalysisResult"/> instance for mocking. </returns>
         public static ImageAnalysisResult ImageAnalysisResult(CaptionResult caption = null, DenseCaptionsResult denseCaptions = null, ImageMetadata metadata = null, string modelVersion = null, ObjectsResult objects = null, PeopleResult people = null, ReadResult read = null, SmartCropsResult smartCrops = null, TagsResult tags = null)
         {
-            return new ImageAnalysisResult(caption, denseCaptions, metadata, modelVersion, objects, people, read, smartCrops, tags);
+            return new ImageAnalysisResult(caption, denseCaptions, metadata, modelVersion, objects, people, read, smartCrops, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.CaptionResult"/>. </summary>
@@ -42,16 +41,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="text"> The text of the caption. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         /// <returns> A new <see cref="ImageAnalysis.CaptionResult"/> instance for mocking. </returns>
         public static CaptionResult CaptionResult(float confidence = default, string text = null)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-
-            return new CaptionResult(confidence, text);
+            return new CaptionResult(confidence, text, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DenseCaptionsResult"/>. </summary>
@@ -61,7 +54,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             values ??= new List<DenseCaption>();
 
-            return new DenseCaptionsResult(values?.ToList());
+            return new DenseCaptionsResult(values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DenseCaption"/>. </summary>
@@ -71,20 +64,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="text"> The text of the caption. </param>
         /// <param name="boundingBox"> The image region of which this caption applies. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> or <paramref name="boundingBox"/> is null. </exception>
         /// <returns> A new <see cref="ImageAnalysis.DenseCaption"/> instance for mocking. </returns>
         public static DenseCaption DenseCaption(float confidence = default, string text = null, ImageBoundingBox boundingBox = null)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-            if (boundingBox == null)
-            {
-                throw new ArgumentNullException(nameof(boundingBox));
-            }
-
-            return new DenseCaption(confidence, text, boundingBox);
+            return new DenseCaption(confidence, text, boundingBox, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageBoundingBox"/>. </summary>
@@ -95,7 +78,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> A new <see cref="ImageAnalysis.ImageBoundingBox"/> instance for mocking. </returns>
         public static ImageBoundingBox ImageBoundingBox(int x = default, int y = default, int width = default, int height = default)
         {
-            return new ImageBoundingBox(x, y, width, height);
+            return new ImageBoundingBox(x, y, width, height, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImageMetadata"/>. </summary>
@@ -104,7 +87,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> A new <see cref="ImageAnalysis.ImageMetadata"/> instance for mocking. </returns>
         public static ImageMetadata ImageMetadata(int height = default, int width = default)
         {
-            return new ImageMetadata(height, width);
+            return new ImageMetadata(height, width, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ObjectsResult"/>. </summary>
@@ -114,7 +97,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             values ??= new List<DetectedObject>();
 
-            return new ObjectsResult(values?.ToList());
+            return new ObjectsResult(values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedObject"/>. </summary>
@@ -125,7 +108,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             tags ??= new List<DetectedTag>();
 
-            return new DetectedObject(boundingBox, tags?.ToList());
+            return new DetectedObject(boundingBox, tags?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTag"/>. </summary>
@@ -134,16 +117,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Higher values indicating higher confidence.
         /// </param>
         /// <param name="name"> Name of the entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <returns> A new <see cref="ImageAnalysis.DetectedTag"/> instance for mocking. </returns>
         public static DetectedTag DetectedTag(float confidence = default, string name = null)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            return new DetectedTag(confidence, name);
+            return new DetectedTag(confidence, name, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.PeopleResult"/>. </summary>
@@ -153,7 +130,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             values ??= new List<DetectedPerson>();
 
-            return new PeopleResult(values?.ToList());
+            return new PeopleResult(values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedPerson"/>. </summary>
@@ -165,7 +142,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> A new <see cref="ImageAnalysis.DetectedPerson"/> instance for mocking. </returns>
         public static DetectedPerson DetectedPerson(ImageBoundingBox boundingBox = null, float confidence = default)
         {
-            return new DetectedPerson(boundingBox, confidence);
+            return new DetectedPerson(boundingBox, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ReadResult"/>. </summary>
@@ -175,7 +152,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             blocks ??= new List<DetectedTextBlock>();
 
-            return new ReadResult(blocks?.ToList());
+            return new ReadResult(blocks?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextBlock"/>. </summary>
@@ -185,7 +162,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             lines ??= new List<DetectedTextLine>();
 
-            return new DetectedTextBlock(lines?.ToList());
+            return new DetectedTextBlock(lines?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextLine"/>. </summary>
@@ -198,7 +175,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             boundingPolygon ??= new List<ImagePoint>();
             words ??= new List<DetectedTextWord>();
 
-            return new DetectedTextLine(text, boundingPolygon?.ToList(), words?.ToList());
+            return new DetectedTextLine(text, boundingPolygon?.ToList(), words?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.ImagePoint"/>. </summary>
@@ -207,7 +184,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <returns> A new <see cref="ImageAnalysis.ImagePoint"/> instance for mocking. </returns>
         public static ImagePoint ImagePoint(int x = default, int y = default)
         {
-            return new ImagePoint(x, y);
+            return new ImagePoint(x, y, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.DetectedTextWord"/>. </summary>
@@ -219,7 +196,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             boundingPolygon ??= new List<ImagePoint>();
 
-            return new DetectedTextWord(text, boundingPolygon?.ToList(), confidence);
+            return new DetectedTextWord(text, boundingPolygon?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.SmartCropsResult"/>. </summary>
@@ -229,7 +206,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             values ??= new List<CropRegion>();
 
-            return new SmartCropsResult(values?.ToList());
+            return new SmartCropsResult(values?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.CropRegion"/>. </summary>
@@ -240,16 +217,10 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Otherwise, it will be in the range 0.5 to 2.0 (inclusive).
         /// </param>
         /// <param name="boundingBox"> The bounding box of the region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="boundingBox"/> is null. </exception>
         /// <returns> A new <see cref="ImageAnalysis.CropRegion"/> instance for mocking. </returns>
         public static CropRegion CropRegion(float aspectRatio = default, ImageBoundingBox boundingBox = null)
         {
-            if (boundingBox == null)
-            {
-                throw new ArgumentNullException(nameof(boundingBox));
-            }
-
-            return new CropRegion(aspectRatio, boundingBox);
+            return new CropRegion(aspectRatio, boundingBox, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageAnalysis.TagsResult"/>. </summary>
@@ -259,7 +230,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         {
             values ??= new List<DetectedTag>();
 
-            return new TagsResult(values?.ToList());
+            return new TagsResult(values?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }
