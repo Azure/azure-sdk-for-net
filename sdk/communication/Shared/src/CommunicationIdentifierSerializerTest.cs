@@ -300,23 +300,20 @@ namespace Azure.Communication
             Assert.AreEqual(expectedIdentifier, identifier);
         }
 
-
-        [TestCase(null)]
-        [TestCase(TestRawId)]
-        public void SerializeMicrosoftTeamsApp(string? rawId)
+        public void SerializeMicrosoftTeamsApp()
         {
             CommunicationIdentifierModel model = CommunicationIdentifierSerializer.Serialize(
-                new MicrosoftTeamsAppIdentifier(TestTeamsAppId, CommunicationCloudEnvironment.Dod, rawId));
+                new MicrosoftTeamsAppIdentifier(TestTeamsAppId, CommunicationCloudEnvironment.Dod));
 
             Assert.AreEqual(TestTeamsAppId, model.MicrosoftTeamsApp.AppId);
-            Assert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.MicrosoftTeamsUser.Cloud);
-            Assert.AreEqual(rawId ?? $"8:dod:{TestTeamsAppId}", model.RawId);
+            Assert.AreEqual(CommunicationCloudEnvironmentModel.Dod, model.MicrosoftTeamsApp.Cloud);
+            Assert.AreEqual($"28:dod:{TestTeamsAppId}", model.RawId);
         }
 
         [Test]
         public void DeserializeMicrosoftTeamsApp()
         {
-            MicrosoftTeamsUserIdentifier identifier = (MicrosoftTeamsAppIdentifier)CommunicationIdentifierSerializer.Deserialize(
+            MicrosoftTeamsAppIdentifier identifier = (MicrosoftTeamsAppIdentifier)CommunicationIdentifierSerializer.Deserialize(
                 new CommunicationIdentifierModel
                 {
                     MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(TestTeamsAppId)
@@ -326,7 +323,7 @@ namespace Azure.Communication
                     RawId = TestRawId,
                 });
 
-            MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, CommunicationCloudEnvironment.Gcch, TestRawId);
+            MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, CommunicationCloudEnvironment.Gcch);
 
             Assert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
             Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);
@@ -348,7 +345,7 @@ namespace Azure.Communication
                     RawId = TestRawId,
                 });
 
-            MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, false, CommunicationCloudEnvironment.Gcch, TestRawId);
+            MicrosoftTeamsAppIdentifier expectedIdentifier = new(TestTeamsAppId, CommunicationCloudEnvironment.Gcch);
 
             Assert.AreEqual(expectedIdentifier.AppId, identifier.AppId);
             Assert.AreEqual(expectedIdentifier.Cloud, identifier.Cloud);

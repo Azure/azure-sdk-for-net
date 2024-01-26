@@ -48,8 +48,7 @@ namespace Azure.Communication
                 var app = identifier.MicrosoftTeamsApp;
                 return new MicrosoftTeamsAppIdentifier(
                       AssertNotNull(app.AppId, nameof(app.AppId), nameof(MicrosoftTeamsAppIdentifierModel)),
-                      Deserialize(AssertNotNull(app.Cloud, nameof(app.Cloud), nameof(MicrosoftTeamsAppIdentifierModel))),
-                      rawId);
+                      Deserialize(AssertNotNull(app.Cloud, nameof(app.Cloud), nameof(MicrosoftTeamsAppIdentifierModel))));
             }
 
             return new UnknownIdentifier(rawId);
@@ -135,7 +134,7 @@ namespace Azure.Communication
                     RawId = app.RawId,
                     MicrosoftTeamsApp = new MicrosoftTeamsAppIdentifierModel(app.AppId)
                     {
-                        Cloud = Serialize(u.Cloud),
+                        Cloud = Serialize(app.Cloud),
                     }
                 },
                 UnknownIdentifier u => new CommunicationIdentifierModel
