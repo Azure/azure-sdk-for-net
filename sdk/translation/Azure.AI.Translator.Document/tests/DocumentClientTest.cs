@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.AI.Translator.Document.Tests
 {
@@ -25,8 +27,8 @@ namespace Azure.AI.Translator.Document.Tests
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
-            var translateContent = new DocumentContent(new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html"));
-            var response = client.DocumentTranslate("hi", translateContent);
+            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
+            var response = client.DocumentTranslate("hi", sourceDocument);
             File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
         }
 
@@ -38,11 +40,15 @@ namespace Azure.AI.Translator.Document.Tests
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
-            var translateContent = new DocumentContent(new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html"));
+            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
             filePath = Path.Combine("TestData", "test-glossary.csv");
             using Stream glossaryStream = File.OpenRead(filePath);
-            translateContent.Glossary.Add(new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv"));
-            var response = await client.DocumentTranslateAsync("hi", translateContent).ConfigureAwait(false);
+            var sourceGlossaries = new List<MultipartFormFileData>()
+            {
+                new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv")
+            };
+
+            var response = await client.DocumentTranslateAsync("hi", sourceDocument, sourceGlossaries).ConfigureAwait(false);
             File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
         }
 
