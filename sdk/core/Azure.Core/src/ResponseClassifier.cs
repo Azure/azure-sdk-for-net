@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
@@ -21,18 +22,11 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriableResponse(HttpMessage message)
         {
-            switch (message.Response.Status)
-            {
-                case 408: // Request Timeout
-                case 429: // Too Many Requests
-                case 500: // Internal Server Error
-                case 502: // Bad Gateway
-                case 503: // Service Unavailable
-                case 504: // Gateway Timeout
-                    return true;
-                default:
-                    return false;
-            }
+            bool classified = Default.TryClassify(message, exception: default, out bool isRetriable);
+
+            Debug.Assert(classified);
+
+            return isRetriable;
         }
 
         /// <summary>
@@ -49,9 +43,16 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriable(HttpMessage message, Exception exception)
         {
-            return IsRetriableException(exception) ||
-                   // Retry non-user initiated cancellations
-                   (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
+            if (IsRetriableException(exception))
+            {
+                return true;
+            }
+
+            bool classified = Default.TryClassify(message, exception, out bool isRetriable);
+
+            Debug.Assert(classified);
+
+            return isRetriable;
         }
 
         /// <summary>
@@ -72,11 +73,32 @@ namespace Azure.Core
         /// <param name="message"></param>
         /// <param name="isError"></param>
         /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public sealed override bool TryClassify(PipelineMessage message, out bool isError)
         {
             HttpMessage httpMessage = AssertHttpMessage(message);
 
             isError = IsErrorResponse(httpMessage);
+
+            return true;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="exception"></param>
+        /// <param name="isRetriable"></param>
+        /// <returns></returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public sealed override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            HttpMessage httpMessage = AssertHttpMessage(message);
+
+            isRetriable = exception is null ?
+                IsRetriableResponse(httpMessage) :
+                IsRetriable(httpMessage, exception);
+
             return true;
         }
 

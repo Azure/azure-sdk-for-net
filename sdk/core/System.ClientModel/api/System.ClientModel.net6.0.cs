@@ -160,8 +160,10 @@ namespace System.ClientModel.Primitives
     public partial class PipelineMessageClassifier
     {
         protected PipelineMessageClassifier() { }
+        public static System.ClientModel.Primitives.PipelineMessageClassifier Default { get { throw null; } }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
         public virtual bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError) { throw null; }
+        public virtual bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
     }
     public abstract partial class PipelinePolicy
     {
