@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = options?.HttpHeadersOptions,
                 Metadata = options?.MetadataOptions,
-                Tags = options?.Tags,
+                Tags = options?.TagsOptions,
                 Conditions = new AppendBlobRequestConditions()
                 {
                     IfMatch = options?.DestinationConditions?.IfMatch,
@@ -327,7 +327,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = options?.HttpHeadersOptions,
                 Metadata = options?.MetadataOptions,
-                Tags = options?.Tags,
+                Tags = options?.TagsOptions,
                 AccessTier = options?.AccessTier,
                 TransferOptions = new StorageTransferOptions()
                 {
@@ -366,7 +366,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = options?.HttpHeadersOptions,
                 Metadata = options?.MetadataOptions,
-                Tags = options?.Tags,
+                Tags = options?.TagsOptions,
                 SourceConditions = new BlobRequestConditions()
                 {
                     IfMatch = options?.SourceConditions?.IfMatch,
@@ -410,7 +410,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 HttpHeaders = options?.HttpHeadersOptions,
                 Metadata = options?.MetadataOptions,
-                Tags = options?.Tags,
+                Tags = options?.TagsOptions,
                 AccessTier = options?.AccessTier,
                 Conditions = CreateRequestConditions(options?.DestinationConditions, overwrite)
             };
@@ -511,7 +511,7 @@ namespace Azure.Storage.DataMovement.Blobs
             return new()
             {
                 MetadataOptions = checkpointData.MetadataOptions,
-                Tags = checkpointData.TagsOptions,
+                TagsOptions = checkpointData.TagsOptions,
                 HttpHeadersOptions = checkpointData.ContentHeaders,
                 AccessTier = checkpointData.AccessTier,
             };
@@ -559,7 +559,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobOptions = new BlobStorageResourceOptions()
                 {
                     MetadataOptions = options?.BlobOptions?.MetadataOptions,
-                    Tags = options?.BlobOptions?.Tags,
+                    TagsOptions = options?.BlobOptions?.TagsOptions,
                     HttpHeadersOptions = options?.BlobOptions?.HttpHeadersOptions,
                     AccessTier = options?.BlobOptions?.AccessTier,
                 }

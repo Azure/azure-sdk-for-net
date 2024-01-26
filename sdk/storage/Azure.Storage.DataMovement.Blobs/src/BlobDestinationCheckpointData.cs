@@ -6,7 +6,6 @@ using System.IO;
 using System.Text;
 using Azure.Core;
 using Azure.Storage.Blobs.Models;
-using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs
 {

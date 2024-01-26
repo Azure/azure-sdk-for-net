@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.DataMovement
 {
@@ -59,6 +57,16 @@ namespace Azure.Storage.DataMovement
         /// Specifies whether to preserve the HttpHeaders.
         /// </summary>
         internal bool _preserve;
+
+        internal BlobHttpHeaders BlobHttpHeaders => new BlobHttpHeaders()
+        {
+            CacheControl = _cacheControl,
+            ContentType = _contentType,
+            ContentDisposition = _contentDisposition,
+            ContentEncoding = _contentEncoding,
+            ContentLanguage = _contentLanguage,
+            ContentHash = _contentHash,
+        };
 
         /// <summary>
         /// Constructor for mocking.

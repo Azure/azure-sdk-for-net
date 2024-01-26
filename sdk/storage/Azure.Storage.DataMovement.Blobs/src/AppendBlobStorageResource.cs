@@ -303,7 +303,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.HttpHeadersOptions,
                 _options?.AccessTier,
                 _options?.MetadataOptions,
-                _options?.Tags);
+                _options?.TagsOptions);
         }
     }
 }

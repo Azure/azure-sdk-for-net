@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement.Blobs
         internal BlobStorageResourceOptions(BlobStorageResourceOptions other)
         {
             MetadataOptions = other?.MetadataOptions;
-            Tags = other?.Tags;
+            TagsOptions = other?.TagsOptions;
             HttpHeadersOptions = other?.HttpHeadersOptions;
             AccessTier = other?.AccessTier;
         }
@@ -33,7 +33,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Applies to upload and copy transfers.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
-        public BlobTransferMetadataOptions MetadataOptions { get; set; }
+        public DataTransferProperty<Metadata> MetadataOptions { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Applies to upload and copy transfers.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
-        public BlobTransferTagsOptions Tags { get; set; }
+        public DataTransferProperty<Tags> TagsOptions { get; set; }
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
-        public BlobTransferHttpHeadersOptions HttpHeadersOptions { get; set; }
+        public DataTransferProperty<BlobHttpHeaders> HttpHeadersOptions { get; set; }
 
         /// <summary>
         /// Optional. See <see cref="Storage.Blobs.Models.AccessTier"/>.

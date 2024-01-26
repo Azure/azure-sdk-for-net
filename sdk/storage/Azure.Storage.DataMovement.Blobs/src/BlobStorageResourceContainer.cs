@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 _options?.BlobOptions?.HttpHeadersOptions,
                 _options?.BlobOptions?.AccessTier,
                 _options?.BlobOptions?.MetadataOptions,
-                _options?.BlobOptions?.Tags);
+                _options?.BlobOptions?.TagsOptions);
         }
 
         private string ApplyOptionalPrefix(string path)

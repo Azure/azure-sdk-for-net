@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:ResourceConstruction_Blobs_WithOptions_BlockBlob
                 BlockBlobStorageResourceOptions resourceOptions = new()
                 {
-                    MetadataOptions = new DataTransferMetadataOptions(
+                    MetadataOptions = new DataTransferProperty<Dictionary<string, string>> (
                         new Dictionary<string, string>
                         {
                             { "key", "value" }

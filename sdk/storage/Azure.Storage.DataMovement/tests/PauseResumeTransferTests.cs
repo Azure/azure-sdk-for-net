@@ -586,7 +586,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobStorageResourceOptions testOptions = new()
             {
                 MetadataOptions = DataProvider.BuildMetadata(),
-                Tags = DataProvider.BuildTags(),
+                TagsOptions = DataProvider.BuildTags(),
                 AccessTier = AccessTier.Cool,
                 HttpHeadersOptions = new BlobHttpHeaders()
                 {
@@ -628,7 +628,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobClient blob = blobContainer.Container.GetBlockBlobClient(builder.BlobName);
             BlobProperties props = (await blob.GetPropertiesAsync()).Value;
             Assert.AreEqual(testOptions.MetadataOptions, props.Metadata);
-            Assert.AreEqual(testOptions.Tags.Count, props.TagCount);
+            Assert.AreEqual(testOptions.TagsOptions.Count, props.TagCount);
             Assert.AreEqual(testOptions.AccessTier, new AccessTier(props.AccessTier));
             Assert.AreEqual(testOptions.HttpHeadersOptions.ContentLanguage, props.ContentLanguage);
         }
