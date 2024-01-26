@@ -43,16 +43,13 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsRetriable(HttpMessage message, Exception exception)
         {
-            if (IsRetriableException(exception))
-            {
-                return true;
-            }
+            // Azure.Core cannot use default logic in this case to support end-user overrides
+            // of virtual IsRetriableException method.
 
-            bool classified = Default.TryClassify(message, exception, out bool isRetriable);
-
-            Debug.Assert(classified);
-
-            return isRetriable;
+            return IsRetriableException(exception) ||
+                // Retry non-user initiated cancellations
+                (exception is OperationCanceledException &&
+                !message.CancellationToken.IsCancellationRequested);
         }
 
         /// <summary>
