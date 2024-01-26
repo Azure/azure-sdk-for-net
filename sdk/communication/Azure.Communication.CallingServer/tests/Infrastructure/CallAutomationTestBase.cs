@@ -31,7 +31,8 @@ namespace Azure.Communication.CallingServer
                                         "\"callConnectionState\": \"connecting\"," +
                                         "\"subject\": \"dummySubject\"," +
                                         "\"callbackUri\": \"https://bot.contoso.com/callback\"," +
-                                        "\"mediaSubscriptionId\": {0}" +
+                                        "\"mediaSubscriptionId\": {0}," +
+                                        "\"dataSubscriptionId\": {1}" +
                                         "}}";
         protected const string SourceId = "sourceId";
         protected const string TargetId = "targetId";

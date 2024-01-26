@@ -41,6 +41,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceIdentity">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
+        /// <param name="dataSubscriptionId">The subscriptionId for transcription.</param>
         /// <param name="answeredBy">AnsweredBy identity.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
         public static CallConnectionProperties CallConnectionProperties(
@@ -52,9 +53,10 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier sourceIdentity = default,
             PhoneNumberIdentifier sourceCallerIdNumber = default,
             string sourceDisplayName = default,
+            string dataSubscriptionId = default,
             CommunicationIdentifier answeredBy = default)
         {
-            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, answeredBy);
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, dataSubscriptionId, answeredBy);
         }
 
         /// <summary> Initializes a new instance of CallParticipant. </summary>

@@ -10,17 +10,15 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlayOptionsInternal : IUtf8JsonSerializable
+    internal partial class StopTranscriptionRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("loop"u8);
-            writer.WriteBooleanValue(Loop);
-            if (Optional.IsDefined(InterruptCallMediaOperation))
+            if (Optional.IsDefined(OperationContext))
             {
-                writer.WritePropertyName("interruptCallMediaOperation"u8);
-                writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
             }
             writer.WriteEndObject();
         }

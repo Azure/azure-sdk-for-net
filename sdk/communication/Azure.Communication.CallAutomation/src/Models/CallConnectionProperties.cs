@@ -19,6 +19,7 @@ namespace Azure.Communication.CallAutomation
             CommunicationIdentifier sourceIdentity,
             PhoneNumberIdentifier sourceCallerIdNumber,
             string sourceDisplayName,
+            string dataSubscriptionId,
             CommunicationIdentifier answeredBy)
         {
             CallConnectionId = callConnectionId;
@@ -29,6 +30,7 @@ namespace Azure.Communication.CallAutomation
             Source = sourceIdentity;
             SourceCallerIdNumber = sourceCallerIdNumber;
             SourceDisplayName = sourceDisplayName;
+            DataSubscriptionId = dataSubscriptionId;
             AnsweredBy = new CommunicationUserIdentifier(answeredBy.RawId);
         }
 
@@ -48,6 +50,7 @@ namespace Azure.Communication.CallAutomation
             }
 
             CallbackUri = new Uri(callConnectionPropertiesDtoInternal.CallbackUri);
+            DataSubscriptionId = callConnectionPropertiesDtoInternal.DataSubscriptionId;
             Source = callConnectionPropertiesDtoInternal.Source == null? null : CommunicationIdentifierSerializer.Deserialize(callConnectionPropertiesDtoInternal.Source);
             SourceDisplayName = callConnectionPropertiesDtoInternal.SourceDisplayName;
             CorrelationId = callConnectionPropertiesDtoInternal.CorrelationId;
@@ -69,6 +72,8 @@ namespace Azure.Communication.CallAutomation
         public CallConnectionState CallConnectionState { get; }
         /// <summary> The callback URI. </summary>
         public Uri CallbackUri { get; }
+        /// <summary> SubscriptionId for transcription. </summary>
+        public string DataSubscriptionId { get; }
         /// <summary>
         /// Caller ID phone number to appear on the invitee.
         /// </summary>
