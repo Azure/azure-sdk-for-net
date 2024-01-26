@@ -10,16 +10,18 @@ public class PipelineMessageClassifier
     public static PipelineMessageClassifier Create(ReadOnlySpan<ushort> successStatusCodes)
         => new ResponseStatusClassifier(successStatusCodes);
 
-    protected internal PipelineMessageClassifier() { }
+    protected PipelineMessageClassifier() { }
 
     /// <summary>
     /// Specifies if the response contained in the <paramref name="message"/> is not successful.
     /// </summary>
-    public virtual bool IsErrorResponse(PipelineMessage message)
+    public virtual bool TryClassify(PipelineMessage message, out bool isError)
     {
         message.AssertResponse();
 
         int statusKind = message.Response!.Status / 100;
-        return statusKind == 4 || statusKind == 5;
+        isError = statusKind == 4 || statusKind == 5;
+
+        return true;
     }
 }

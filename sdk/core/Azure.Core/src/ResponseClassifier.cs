@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Diagnostics;
 using System.IO;
 
 namespace Azure.Core
@@ -57,6 +58,37 @@ namespace Azure.Core
         /// Specifies if the response contained in the <paramref name="message"/> is not successful.
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
-            => base.IsErrorResponse(message);
+        {
+            bool classified = base.TryClassify(message, out bool isError);
+
+            Debug.Assert(classified);
+
+            return isError;
+        }
+
+        /// <summary>
+        /// TBD.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="isError"></param>
+        /// <returns></returns>
+        public sealed override bool TryClassify(PipelineMessage message, out bool isError)
+        {
+            HttpMessage httpMessage = AssertHttpMessage(message);
+
+            isError = IsErrorResponse(httpMessage);
+            return true;
+        }
+
+        // TODO: remove duplication with this and other instances
+        private static HttpMessage AssertHttpMessage(PipelineMessage message)
+        {
+            if (message is not HttpMessage httpMessage)
+            {
+                throw new InvalidOperationException($"Invalid type for PipelineMessage: '{message?.GetType()}'.");
+            }
+
+            return httpMessage;
+        }
     }
 }

@@ -41,9 +41,19 @@ public abstract class PipelineTransport : PipelinePolicy
         message.Response.SetIsError(ClassifyResponse(message));
     }
 
-    private static bool ClassifyResponse(PipelineMessage message) =>
-        message.MessageClassifier?.IsErrorResponse(message) ??
-        PipelineMessageClassifier.Default.IsErrorResponse(message);
+    private static bool ClassifyResponse(PipelineMessage message)
+    {
+        var classifier = message.MessageClassifier ?? PipelineMessageClassifier.Default;
+
+        if (!classifier.TryClassify(message, out bool isError))
+        {
+            bool classified = PipelineMessageClassifier.Default.TryClassify(message, out isError);
+
+            Debug.Assert(classified);
+        }
+
+        return isError;
+    }
 
     protected abstract void ProcessCore(PipelineMessage message);
 

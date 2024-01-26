@@ -4,6 +4,7 @@
 using ClientModel.Tests.Mocks;
 using NUnit.Framework;
 using System.ClientModel.Primitives;
+using System.Runtime.CompilerServices;
 
 namespace System.ClientModel.Tests.Options;
 
@@ -23,7 +24,8 @@ public class PipelineMessageClassifierTests
                 MockPipelineMessage message = new MockPipelineMessage();
                 message.SetResponse(new MockPipelineResponse(code));
 
-                bool isNonError = !classifier.IsErrorResponse(message);
+                classifier.TryClassify(message, out bool isError);
+                bool isNonError = !isError;
 
                 if (nonError == code)
                 {
@@ -50,6 +52,7 @@ public class PipelineMessageClassifierTests
         MockPipelineMessage message = new MockPipelineMessage();
         message.SetResponse(new MockPipelineResponse(code));
 
-        Assert.AreEqual(isError, classifier.IsErrorResponse(message));
+        Assert.IsTrue(classifier.TryClassify(message, out bool error));
+        Assert.AreEqual(isError, error);
     }
 }

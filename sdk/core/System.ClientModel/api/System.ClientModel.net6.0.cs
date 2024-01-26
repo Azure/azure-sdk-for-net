@@ -159,9 +159,9 @@ namespace System.ClientModel.Primitives
     }
     public partial class PipelineMessageClassifier
     {
-        protected internal PipelineMessageClassifier() { }
+        protected PipelineMessageClassifier() { }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
-        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public virtual bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError) { throw null; }
     }
     public abstract partial class PipelinePolicy
     {

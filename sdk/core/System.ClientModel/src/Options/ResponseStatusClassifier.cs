@@ -3,39 +3,41 @@
 
 using System.ClientModel.Internal;
 
-namespace System.ClientModel.Primitives
+namespace System.ClientModel.Primitives;
+
+internal class ResponseStatusClassifier : PipelineMessageClassifier
 {
-    internal class ResponseStatusClassifier : PipelineMessageClassifier
+    private BitVector640 _successCodes;
+
+    /// <summary>
+    /// Creates a new instance of <see cref="ResponseStatusClassifier"/>.
+    /// </summary>
+    /// <param name="successStatusCodes">The status codes that this classifier
+    /// will consider not to be errors.</param>
+    public ResponseStatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
     {
-        private BitVector640 _successCodes;
+        _successCodes = new();
 
-        /// <summary>
-        /// Creates a new instance of <see cref="ResponseStatusClassifier"/>.
-        /// </summary>
-        /// <param name="successStatusCodes">The status codes that this classifier
-        /// will consider not to be errors.</param>
-        public ResponseStatusClassifier(ReadOnlySpan<ushort> successStatusCodes)
+        foreach (int statusCode in successStatusCodes)
         {
-            _successCodes = new();
-
-            foreach (int statusCode in successStatusCodes)
-            {
-                AddClassifier(statusCode, isError: false);
-            }
+            AddClassifier(statusCode, isError: false);
         }
+    }
 
-        public sealed override bool IsErrorResponse(PipelineMessage message)
-        {
-            message.AssertResponse();
+    public override bool TryClassify(PipelineMessage message, out bool isError)
+    {
+        message.AssertResponse();
 
-            return !_successCodes[message.Response!.Status];
-        }
+        isError = !_successCodes[message.Response!.Status];
 
-        private void AddClassifier(int statusCode, bool isError)
-        {
-            Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
+        // BitVector-based classifiers should always end any composition chain.
+        return true;
+    }
 
-            _successCodes[statusCode] = !isError;
-        }
+    private void AddClassifier(int statusCode, bool isError)
+    {
+        Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
+
+        _successCodes[statusCode] = !isError;
     }
 }
