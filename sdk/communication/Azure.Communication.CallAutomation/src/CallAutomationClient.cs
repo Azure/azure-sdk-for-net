@@ -252,6 +252,7 @@ options: options)
             }
 
             request.AnsweredBy = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id);
+            request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             request.OperationContext = options.OperationContext;
 
             return request;
@@ -621,6 +622,7 @@ options: options)
             }
 
             request.OperationContext = options.OperationContext;
+            request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             return request;
         }
 
@@ -648,6 +650,7 @@ options: options)
             }
 
             request.OperationContext = options.OperationContext;
+            request.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
             return request;
         }
 
@@ -661,6 +664,14 @@ options: options)
                 return false;
             var uriString = uri.AbsoluteUri;
             return Uri.IsWellFormedUriString(uriString, UriKind.Absolute) && new Uri(uriString).Scheme == Uri.UriSchemeHttps;
+        }
+
+        private static TranscriptionOptionsInternal CreateTranscriptionOptionsInternal(TranscriptionOptions configuration)
+        {
+            return configuration == default
+                ? default
+                : new TranscriptionOptionsInternal(configuration.TransportUrl.AbsoluteUri, configuration.TranscriptionTransport, configuration.Locale,
+                configuration.StartTranscription);
         }
 
         /// <summary> Initializes a new instance of CallConnection. <see cref="CallConnection"/>.</summary>

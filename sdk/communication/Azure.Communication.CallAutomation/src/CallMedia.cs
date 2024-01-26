@@ -175,6 +175,7 @@ namespace Azure.Communication.CallAutomation
             if (options != null)
             {
                 request.PlayOptions = new PlayOptionsInternal(options.Loop);
+                request.PlayOptions.InterruptCallMediaOperation = options.InterruptCallMediaOperation;
                 request.OperationContext = options.OperationContext;
                 request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
             }
@@ -203,7 +204,8 @@ namespace Azure.Communication.CallAutomation
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri,
-                    Loop = options.Loop
+                    Loop = options.Loop,
+                    InterruptCallMediaOperation = options.InterruptCallMediaOperation,
                 };
                 return await PlayAsync(playOptions, cancellationToken).ConfigureAwait(false);
             }
@@ -251,7 +253,8 @@ namespace Azure.Communication.CallAutomation
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri,
-                    Loop = options.Loop
+                    Loop = options.Loop,
+                    InterruptCallMediaOperation = options.InterruptCallMediaOperation,
                 };
                 return Play(playOptions, cancellationToken);
             }
@@ -875,6 +878,150 @@ namespace Azure.Communication.CallAutomation
                 result.SetEventProcessor(EventProcessor, CallConnectionId, response.Value.OperationContext);
 
                 return Response.FromValue(result, response.GetRawResponse());
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts transcription in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing start transcription options and configurations.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StartTranscription(StartTranscriptionOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartTranscription)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StartTranscriptionRequestInternal()
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+
+                return CallMediaRestClient.StartTranscription(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Starts transcription in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing start transcription options and configurations.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StartTranscriptionAsync(StartTranscriptionOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StartTranscription)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StartTranscriptionRequestInternal()
+                    : new StartTranscriptionRequestInternal() { Locale = options.Locale, OperationContext = options.OperationContext };
+
+                return await CallMediaRestClient.StartTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops transcription in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing stop transcription options and configurations.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response StopTranscription(StopTranscriptionOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StopTranscriptionRequestInternal()
+                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext };
+
+                return CallMediaRestClient.StopTranscription(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Stops transcription in the call.
+        /// </summary>
+        /// <param name="options">An optional object containing stop transcription options and configurations.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> StopTranscriptionAsync(StopTranscriptionOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(StopTranscription)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new StopTranscriptionRequestInternal()
+                    : new StopTranscriptionRequestInternal() { OperationContext = options.OperationContext };
+
+                return await CallMediaRestClient.StopTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to change transcription language.
+        /// </summary>
+        /// <param name="locale">Defines new locale for transcription.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response UpdateTranscription(string locale, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
+            scope.Start();
+            try
+            {
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
+                return CallMediaRestClient.UpdateTranscription(CallConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// API to change transcription language.
+        /// </summary>
+        /// <param name="locale">Defines new locale for transcription.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> UpdateTranscriptionAsync(string locale, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(UpdateTranscription)}");
+            scope.Start();
+            try
+            {
+                UpdateTranscriptionRequestInternal request = new UpdateTranscriptionRequestInternal(locale);
+                return await CallMediaRestClient.UpdateTranscriptionAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

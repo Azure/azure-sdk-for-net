@@ -19,5 +19,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> The option to play the provided audio source in loop when set to true. </summary>
         public bool Loop { get; }
+        /// <summary> If set play can barge into other existing queued-up/currently-processing requests. </summary>
+        public bool? InterruptCallMediaOperation { get; set; }
     }
 }
