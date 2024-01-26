@@ -520,10 +520,10 @@ namespace Azure.Core
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public partial struct RehydrationToken : System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>
+    public readonly partial struct RehydrationToken : System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>
     {
-        private object _dummy;
-        private int _dummyPrimitive;
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
         public System.Guid? Id { get { throw null; } }
         Azure.Core.RehydrationToken System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
