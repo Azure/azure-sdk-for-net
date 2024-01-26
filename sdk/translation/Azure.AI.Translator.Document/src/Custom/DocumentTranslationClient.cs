@@ -10,11 +10,11 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Translator.Document
 {
-    // [CodeGenSuppress("CreateDocumentTranslateRequest", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
-    // [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(DocumentContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    // [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(DocumentContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
-    // [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
-    // [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("CreateDocumentTranslateRequest", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
+    [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     public partial class DocumentTranslationClient
     {
         /// <summary> API to translate a document. </summary>
@@ -229,7 +229,7 @@ namespace Azure.AI.Translator.Document
 
             if (sourceGlossaries != null)
             {
-                foreach (var glossary in sourceGlossaries)
+                foreach (MultipartFormFileData glossary in sourceGlossaries)
                 {
                     requestContent.Add(glossary.Content, "glossary", glossary.Name, new Dictionary<string, string>(glossary.Headers)
                 {
