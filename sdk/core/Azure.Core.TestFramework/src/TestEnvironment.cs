@@ -209,7 +209,8 @@ namespace Azure.Core.TestFramework
                     var clientSecret = ClientSecret;
                     if (string.IsNullOrWhiteSpace(clientSecret))
                     {
-                        _credential = new DefaultAzureCredential();
+                        _credential = new DefaultAzureCredential(
+                            new DefaultAzureCredentialOptions { ExcludeManagedIdentityCredential = true });
                     }
                     else
                     {
@@ -217,7 +218,7 @@ namespace Azure.Core.TestFramework
                             TenantId,
                             ClientId,
                             clientSecret,
-                            new ClientSecretCredentialOptions() { AuthorityHost = new Uri(AuthorityHostUrl) }
+                            new ClientSecretCredentialOptions { AuthorityHost = new Uri(AuthorityHostUrl) }
                         );
                     }
                 }
