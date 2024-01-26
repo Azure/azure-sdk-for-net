@@ -9,8 +9,6 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
 {
     private BitVector640 _successCodes;
 
-    internal MessageClassificationHandler[]? Handlers { get; set; }
-
     /// <summary>
     /// Creates a new instance of <see cref="ResponseStatusClassifier"/>.
     /// </summary>
@@ -26,23 +24,17 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
         }
     }
 
-    private ResponseStatusClassifier(BitVector640 successCodes, MessageClassificationHandler[]? handlers)
-    {
-        _successCodes = successCodes;
-        Handlers = handlers;
-    }
-
-    public sealed override bool IsErrorResponse(PipelineMessage message)
+    public override bool TryClassify(PipelineMessage message, out bool isError)
     {
         message.AssertResponse();
 
-        return !_successCodes[message.Response!.Status];
+        isError = !_successCodes[message.Response!.Status];
+
+        // BitVector-based classifiers should always end any composition chain.
+        return true;
     }
 
-    internal virtual ResponseStatusClassifier Clone()
-        => new(_successCodes, Handlers);
-
-    internal void AddClassifier(int statusCode, bool isError)
+    private void AddClassifier(int statusCode, bool isError)
     {
         Argument.AssertInRange(statusCode, 0, 639, nameof(statusCode));
 

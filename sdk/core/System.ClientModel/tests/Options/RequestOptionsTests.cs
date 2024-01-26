@@ -18,7 +18,7 @@ public class RequestOptionsTests
 
         RequestOptions options = new RequestOptions();
         options.AddHeader("MockHeader", "MockValue");
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
         Assert.AreEqual("MockValue", value);
@@ -33,7 +33,7 @@ public class RequestOptionsTests
         RequestOptions options = new RequestOptions();
         options.AddHeader("MockHeader", "MockValue1");
         options.AddHeader("MockHeader", "MockValue2");
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
         Assert.AreEqual("MockValue1,MockValue2", value);
@@ -47,7 +47,7 @@ public class RequestOptionsTests
 
         RequestOptions options = new RequestOptions();
         options.SetHeader("MockHeader", "MockValue");
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
         Assert.AreEqual("MockValue", value);
@@ -62,7 +62,7 @@ public class RequestOptionsTests
         RequestOptions options = new RequestOptions();
         options.AddHeader("MockHeader", "MockValue1");
         options.SetHeader("MockHeader", "MockValue2");
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
         Assert.AreEqual("MockValue2", value);
@@ -78,7 +78,7 @@ public class RequestOptionsTests
 
         RequestOptions options = new RequestOptions();
         options.AddHeader("MockHeader", "RequestOptions Value");
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
         Assert.AreEqual("Message.Request Value,RequestOptions Value", value);
@@ -94,7 +94,7 @@ public class RequestOptionsTests
 
         RequestOptions options = new RequestOptions();
         options.SetHeader("MockHeader", "RequestOptions Value");
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader", out string? value));
         Assert.AreEqual("RequestOptions Value", value);
@@ -120,7 +120,7 @@ public class RequestOptionsTests
         options.SetHeader("MockHeader2", "RequestOptions SetHeader Value 1");
         options.AddHeader("MockHeader2", "RequestOptions AddHeader Value 2");
 
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.IsTrue(message.Request.Headers.TryGetValue("MockHeader1", out string? value1));
         Assert.AreEqual("RequestOptions SetHeader Value 2", value1);
@@ -139,7 +139,7 @@ public class RequestOptionsTests
         PipelineMessage message = pipeline.CreateMessage();
 
         RequestOptions options = new RequestOptions();
-        options.Apply(message);
+        message.Apply(options);
 
         Assert.Throws<InvalidOperationException>(() => options.CancellationToken = CancellationToken.None);
         Assert.Throws<InvalidOperationException>(() => options.ErrorOptions = ClientErrorBehaviors.NoThrow);

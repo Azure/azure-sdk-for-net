@@ -66,6 +66,14 @@ public class PipelineMessage : IDisposable
     // at the end of the chain.
     public PipelineMessageClassifier? MessageClassifier { get; set; }
 
+    public void Apply(RequestOptions options)
+    {
+        // This design moves the client-author API (options.Apply) off the
+        // client-user type RequestOptions.  Its only purpose is to call through to
+        // the internal options.Apply method.
+        options.Apply(this);
+    }
+
     public bool TryGetProperty(Type type, out object? value) =>
         _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
 

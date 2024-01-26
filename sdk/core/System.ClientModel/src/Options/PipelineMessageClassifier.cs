@@ -7,63 +7,85 @@ namespace System.ClientModel.Primitives;
 
 public class PipelineMessageClassifier
 {
-    internal static PipelineMessageClassifier Default { get; } = new PipelineMessageClassifier();
+    public static PipelineMessageClassifier Default { get; } = new EndOfChainClassifier();
 
     public static PipelineMessageClassifier Create(ReadOnlySpan<ushort> successStatusCodes)
         => new ResponseStatusClassifier(successStatusCodes);
 
-    protected internal PipelineMessageClassifier() { }
+    protected PipelineMessageClassifier() { }
 
-    /// <summary>
-    /// Specifies if the response contained in the <paramref name="message"/> is not successful.
-    /// </summary>
-    public virtual bool IsErrorResponse(PipelineMessage message)
+    public virtual bool TryClassify(PipelineMessage message, out bool isError)
     {
-        message.AssertResponse();
-
-        int statusKind = message.Response!.Status / 100;
-        return statusKind == 4 || statusKind == 5;
+        isError = false;
+        return false;
     }
 
-    public virtual bool IsRetriableResponse(PipelineMessage message)
+    public virtual bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
     {
-        message.AssertResponse();
+        isRetriable = false;
+        return false;
+    }
 
-        return message.Response!.Status switch
+    internal class EndOfChainClassifier : PipelineMessageClassifier
+    {
+        public override bool TryClassify(PipelineMessage message, out bool isError)
         {
-            // Request Timeout
-            408 => true,
+            message.AssertResponse();
 
-            // Too Many Requests
-            429 => true,
+            int statusKind = message.Response!.Status / 100;
+            isError = statusKind == 4 || statusKind == 5;
 
-            // Internal Server Error
-            500 => true,
+            // Always classify the message
+            return true;
+        }
 
-            // Bad Gateway
-            502 => true,
+        public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            isRetriable = exception is null ?
+                IsRetriable(message) :
+                IsRetriable(message, exception);
 
-            // Service Unavailable
-            503 => true,
+            // Always classify the message
+            return true;
+        }
 
-            // Gateway Timeout
-            504 => true,
+        private static bool IsRetriable(PipelineMessage message)
+        {
+            message.AssertResponse();
 
-            // Default case
-            _ => false
-        };
-    }
+            return message.Response!.Status switch
+            {
+                // Request Timeout
+                408 => true,
 
-    public virtual bool IsRetriableException(Exception exception)
-    {
-        return (exception is IOException) ||
-               (exception is ClientResultException requestFailed && requestFailed.Status == 0);
-    }
+                // Too Many Requests
+                429 => true,
 
-    public virtual bool IsRetriable(PipelineMessage message, Exception exception)
-    {
-        return IsRetriableException(exception) ||
-               // Retry non-user initiated cancellations
-               (exception is OperationCanceledException && !message.CancellationToken.IsCancellationRequested);
+                // Internal Server Error
+                500 => true,
+
+                // Bad Gateway
+                502 => true,
+
+                // Service Unavailable
+                503 => true,
+
+                // Gateway Timeout
+                504 => true,
+
+                // Default case
+                _ => false
+            };
+        }
+
+        private static bool IsRetriable(PipelineMessage message, Exception exception)
+            => IsRetriable(exception) ||
+                // Retry non-user initiated cancellations
+                (exception is OperationCanceledException &&
+                !message.CancellationToken.IsCancellationRequested);
+
+        private static bool IsRetriable(Exception exception)
+            => (exception is IOException) ||
+                (exception is ClientResultException ex && ex.Status == 0);
     }
 }

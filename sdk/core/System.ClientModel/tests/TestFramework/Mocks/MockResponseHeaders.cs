@@ -16,16 +16,15 @@ public class MockResponseHeaders : PipelineResponseHeaders
         _headers = new Dictionary<string, string>();
     }
 
-    public void AddHeader(string key, string value)
-        => _headers.Add(key, value);
-
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
         throw new NotImplementedException();
     }
 
     public override bool TryGetValue(string name, out string? value)
-        => _headers.TryGetValue(name, out value);
+    {
+        return _headers.TryGetValue(name, out value);
+    }
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
     {
