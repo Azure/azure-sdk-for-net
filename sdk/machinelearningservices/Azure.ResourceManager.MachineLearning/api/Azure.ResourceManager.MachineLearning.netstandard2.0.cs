@@ -7114,7 +7114,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public partial class MachineLearningPartialManagedServiceIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.MachineLearningPartialManagedServiceIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearning.Models.MachineLearningPartialManagedServiceIdentity>
     {
         public MachineLearningPartialManagedServiceIdentity() { }
-        public MachineLearningPartialManagedServiceIdentity(System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData = null) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentityType? ManagedServiceIdentityType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> UserAssignedIdentities { get { throw null; } }
         Azure.ResourceManager.MachineLearning.Models.MachineLearningPartialManagedServiceIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearning.Models.MachineLearningPartialManagedServiceIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

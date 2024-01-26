@@ -25,7 +25,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             details ??= new List<DocumentIntelligenceError>();
 
-            return new DocumentIntelligenceError(code, message, target, details?.ToList(), innererror);
+            return new DocumentIntelligenceError(code, message, target, details?.ToList(), innererror, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.InnerError"/>. </summary>
@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> A new <see cref="DocumentIntelligence.InnerError"/> instance for mocking. </returns>
         public static InnerError InnerError(string code = null, string message = null, InnerError innerErrorObject = null)
         {
-            return new InnerError(code, message, innerErrorObject);
+            return new InnerError(code, message, innerErrorObject, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzeResult"/>. </summary>
@@ -71,7 +71,7 @@ namespace Azure.AI.DocumentIntelligence
             languages ??= new List<DocumentLanguage>();
             documents ??= new List<AnalyzedDocument>();
 
-            return new AnalyzeResult(apiVersion, modelId, stringIndexType, contentFormat, content, pages?.ToList(), paragraphs?.ToList(), tables?.ToList(), figures?.ToList(), lists?.ToList(), sections?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList());
+            return new AnalyzeResult(apiVersion, modelId, stringIndexType, contentFormat, content, pages?.ToList(), paragraphs?.ToList(), tables?.ToList(), figures?.ToList(), lists?.ToList(), sections?.ToList(), keyValuePairs?.ToList(), styles?.ToList(), languages?.ToList(), documents?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentPage"/>. </summary>
@@ -105,7 +105,7 @@ namespace Azure.AI.DocumentIntelligence
             barcodes ??= new List<DocumentBarcode>();
             formulas ??= new List<DocumentFormula>();
 
-            return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), barcodes?.ToList(), formulas?.ToList());
+            return new DocumentPage(pageNumber, angle, width, height, unit, spans?.ToList(), words?.ToList(), selectionMarks?.ToList(), lines?.ToList(), barcodes?.ToList(), formulas?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentSpan"/>. </summary>
@@ -114,7 +114,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSpan"/> instance for mocking. </returns>
         public static DocumentSpan DocumentSpan(int offset = default, int length = default)
         {
-            return new DocumentSpan(offset, length);
+            return new DocumentSpan(offset, length, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentWord"/>. </summary>
@@ -132,7 +132,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             polygon ??= new List<float>();
 
-            return new DocumentWord(content, polygon?.ToList(), span, confidence);
+            return new DocumentWord(content, polygon?.ToList(), span, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentSelectionMark"/>. </summary>
@@ -150,7 +150,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             polygon ??= new List<float>();
 
-            return new DocumentSelectionMark(state, polygon?.ToList(), span, confidence);
+            return new DocumentSelectionMark(state, polygon?.ToList(), span, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentLine"/>. </summary>
@@ -168,7 +168,7 @@ namespace Azure.AI.DocumentIntelligence
             polygon ??= new List<float>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentLine(content, polygon?.ToList(), spans?.ToList());
+            return new DocumentLine(content, polygon?.ToList(), spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentBarcode"/>. </summary>
@@ -187,7 +187,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             polygon ??= new List<float>();
 
-            return new DocumentBarcode(kind, value, polygon?.ToList(), span, confidence);
+            return new DocumentBarcode(kind, value, polygon?.ToList(), span, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFormula"/>. </summary>
@@ -206,7 +206,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             polygon ??= new List<float>();
 
-            return new DocumentFormula(kind, value, polygon?.ToList(), span, confidence);
+            return new DocumentFormula(kind, value, polygon?.ToList(), span, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentParagraph"/>. </summary>
@@ -220,7 +220,7 @@ namespace Azure.AI.DocumentIntelligence
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentParagraph(role, content, boundingRegions?.ToList(), spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BoundingRegion"/>. </summary>
@@ -236,7 +236,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             polygon ??= new List<float>();
 
-            return new BoundingRegion(pageNumber, polygon?.ToList());
+            return new BoundingRegion(pageNumber, polygon?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentTable"/>. </summary>
@@ -255,7 +255,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             footnotes ??= new List<DocumentFootnote>();
 
-            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList(), caption, footnotes?.ToList());
+            return new DocumentTable(rowCount, columnCount, cells?.ToList(), boundingRegions?.ToList(), spans?.ToList(), caption, footnotes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentTableCell"/>. </summary>
@@ -275,7 +275,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             elements ??= new List<string>();
 
-            return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+            return new DocumentTableCell(kind, rowIndex, columnIndex, rowSpan, columnSpan, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentCaption"/>. </summary>
@@ -290,7 +290,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             elements ??= new List<string>();
 
-            return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+            return new DocumentCaption(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFootnote"/>. </summary>
@@ -305,7 +305,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             elements ??= new List<string>();
 
-            return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+            return new DocumentFootnote(content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFigure"/>. </summary>
@@ -322,7 +322,7 @@ namespace Azure.AI.DocumentIntelligence
             elements ??= new List<string>();
             footnotes ??= new List<DocumentFootnote>();
 
-            return new DocumentFigure(boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), caption, footnotes?.ToList());
+            return new DocumentFigure(boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), caption, footnotes?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentList"/>. </summary>
@@ -334,7 +334,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             items ??= new List<DocumentListItem>();
 
-            return new DocumentList(spans?.ToList(), items?.ToList());
+            return new DocumentList(spans?.ToList(), items?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentListItem"/>. </summary>
@@ -350,7 +350,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             elements ??= new List<string>();
 
-            return new DocumentListItem(level, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList());
+            return new DocumentListItem(level, content, boundingRegions?.ToList(), spans?.ToList(), elements?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentSection"/>. </summary>
@@ -362,7 +362,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             elements ??= new List<string>();
 
-            return new DocumentSection(spans?.ToList(), elements?.ToList());
+            return new DocumentSection(spans?.ToList(), elements?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentKeyValuePair"/>. </summary>
@@ -372,7 +372,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> A new <see cref="DocumentIntelligence.DocumentKeyValuePair"/> instance for mocking. </returns>
         public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = null, DocumentKeyValueElement value = null, float confidence = default)
         {
-            return new DocumentKeyValuePair(key, value, confidence);
+            return new DocumentKeyValuePair(key, value, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentKeyValueElement"/>. </summary>
@@ -385,7 +385,7 @@ namespace Azure.AI.DocumentIntelligence
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList());
+            return new DocumentKeyValueElement(content, boundingRegions?.ToList(), spans?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentStyle"/>. </summary>
@@ -405,7 +405,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence);
+            return new DocumentStyle(isHandwritten, similarFontFamily, fontStyle, fontWeight, color, backgroundColor, spans?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentLanguage"/>. </summary>
@@ -423,7 +423,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentLanguage(locale, spans?.ToList(), confidence);
+            return new DocumentLanguage(locale, spans?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AnalyzedDocument"/>. </summary>
@@ -439,7 +439,7 @@ namespace Azure.AI.DocumentIntelligence
             spans ??= new List<DocumentSpan>();
             fields ??= new Dictionary<string, DocumentField>();
 
-            return new AnalyzedDocument(docType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence);
+            return new AnalyzedDocument(docType, boundingRegions?.ToList(), spans?.ToList(), fields, confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentField"/>. </summary>
@@ -470,7 +470,7 @@ namespace Azure.AI.DocumentIntelligence
             boundingRegions ??= new List<BoundingRegion>();
             spans ??= new List<DocumentSpan>();
 
-            return new DocumentField(type, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMark, valueSignature, valueCountryRegion, valueArray?.ToList(), valueObject, valueCurrency, valueAddress, valueBoolean, content, boundingRegions?.ToList(), spans?.ToList(), confidence);
+            return new DocumentField(type, valueString, valueDate, valueTime, valuePhoneNumber, valueNumber, valueInteger, valueSelectionMark, valueSignature, valueCountryRegion, valueArray?.ToList(), valueObject, valueCurrency, valueAddress, valueBoolean, content, boundingRegions?.ToList(), spans?.ToList(), confidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CurrencyValue"/>. </summary>
@@ -480,7 +480,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> A new <see cref="DocumentIntelligence.CurrencyValue"/> instance for mocking. </returns>
         public static CurrencyValue CurrencyValue(double amount = default, string currencySymbol = null, string currencyCode = null)
         {
-            return new CurrencyValue(amount, currencySymbol, currencyCode);
+            return new CurrencyValue(amount, currencySymbol, currencyCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AddressValue"/>. </summary>
@@ -504,7 +504,19 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> A new <see cref="DocumentIntelligence.AddressValue"/> instance for mocking. </returns>
         public static AddressValue AddressValue(string houseNumber = null, string poBox = null, string road = null, string city = null, string state = null, string postalCode = null, string countryRegion = null, string streetAddress = null, string unit = null, string cityDistrict = null, string stateDistrict = null, string suburb = null, string house = null, string level = null)
         {
-            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level);
+            return new AddressValue(houseNumber, poBox, road, city, state, postalCode, countryRegion, streetAddress, unit, cityDistrict, stateDistrict, suburb, house, level, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.AuthorizeCopyContent"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.AuthorizeCopyContent"/> instance for mocking. </returns>
+        public static AuthorizeCopyContent AuthorizeCopyContent(string modelId = null, string description = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new AuthorizeCopyContent(modelId, description, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelDetails"/>. </summary>
@@ -530,7 +542,7 @@ namespace Azure.AI.DocumentIntelligence
             tags ??= new Dictionary<string, string>();
             docTypes ??= new Dictionary<string, DocumentTypeDetails>();
 
-            return new DocumentModelDetails(modelId, description, createdDateTime, expirationDateTime, apiVersion, tags, buildMode, azureBlobSource, azureBlobFileListSource, docTypes);
+            return new DocumentModelDetails(modelId, description, createdDateTime, expirationDateTime, apiVersion, tags, buildMode, azureBlobSource, azureBlobFileListSource, docTypes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentTypeDetails"/>. </summary>
@@ -544,7 +556,7 @@ namespace Azure.AI.DocumentIntelligence
             fieldSchema ??= new Dictionary<string, DocumentFieldSchema>();
             fieldConfidence ??= new Dictionary<string, float>();
 
-            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence);
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentFieldSchema"/>. </summary>
@@ -558,26 +570,16 @@ namespace Azure.AI.DocumentIntelligence
         {
             properties ??= new Dictionary<string, DocumentFieldSchema>();
 
-            return new DocumentFieldSchema(type, description, example, items, properties);
+            return new DocumentFieldSchema(type, description, example, items, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ResourceDetails"/>. </summary>
         /// <param name="customDocumentModels"> Details regarding custom document models. </param>
         /// <param name="customNeuralDocumentModelBuilds"> Quota used, limit, and next reset date/time. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="customDocumentModels"/> or <paramref name="customNeuralDocumentModelBuilds"/> is null. </exception>
         /// <returns> A new <see cref="DocumentIntelligence.ResourceDetails"/> instance for mocking. </returns>
         public static ResourceDetails ResourceDetails(CustomDocumentModelsDetails customDocumentModels = null, QuotaDetails customNeuralDocumentModelBuilds = null)
         {
-            if (customDocumentModels == null)
-            {
-                throw new ArgumentNullException(nameof(customDocumentModels));
-            }
-            if (customNeuralDocumentModelBuilds == null)
-            {
-                throw new ArgumentNullException(nameof(customNeuralDocumentModelBuilds));
-            }
-
-            return new ResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds);
+            return new ResourceDetails(customDocumentModels, customNeuralDocumentModelBuilds, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/>. </summary>
@@ -586,7 +588,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
         public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = default, int limit = default)
         {
-            return new CustomDocumentModelsDetails(count, limit);
+            return new CustomDocumentModelsDetails(count, limit, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.QuotaDetails"/>. </summary>
@@ -596,7 +598,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <returns> A new <see cref="DocumentIntelligence.QuotaDetails"/> instance for mocking. </returns>
         public static QuotaDetails QuotaDetails(int used = default, int quota = default, DateTimeOffset quotaResetDateTime = default)
         {
-            return new QuotaDetails(used, quota, quotaResetDateTime);
+            return new QuotaDetails(used, quota, quotaResetDateTime, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.OperationDetails"/>. </summary>
@@ -615,7 +617,19 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new UnknownOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error);
+            return new UnknownOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentClassifierContent"/>. </summary>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="description"> Document classifier description. </param>
+        /// <param name="docTypes"> List of document types to classify against. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentClassifierContent"/> instance for mocking. </returns>
+        public static BuildDocumentClassifierContent BuildDocumentClassifierContent(string classifierId = null, string description = null, IDictionary<string, ClassifierDocumentTypeDetails> docTypes = null)
+        {
+            docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
+
+            return new BuildDocumentClassifierContent(classifierId, description, docTypes, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierBuildOperationDetails"/>. </summary>
@@ -634,7 +648,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentClassifierBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentClassifierBuild, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData: null, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentClassifierDetails"/>. </summary>
@@ -649,7 +663,28 @@ namespace Azure.AI.DocumentIntelligence
         {
             docTypes ??= new Dictionary<string, ClassifierDocumentTypeDetails>();
 
-            return new DocumentClassifierDetails(classifierId, description, createdDateTime, expirationDateTime, apiVersion, docTypes);
+            return new DocumentClassifierDetails(classifierId, description, createdDateTime, expirationDateTime, apiVersion, docTypes, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.BuildDocumentModelContent"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="buildMode"> Custom document model build mode. </param>
+        /// <param name="azureBlobSource">
+        /// Azure Blob Storage location containing the training data.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
+        /// <param name="azureBlobFileListSource">
+        /// Azure Blob Storage file list specifying the training data.  Either
+        /// azureBlobSource or azureBlobFileListSource must be specified.
+        /// </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.BuildDocumentModelContent"/> instance for mocking. </returns>
+        public static BuildDocumentModelContent BuildDocumentModelContent(string modelId = null, string description = null, DocumentBuildMode buildMode = default, AzureBlobContentSource azureBlobSource = null, AzureBlobFileListContentSource azureBlobFileListSource = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new BuildDocumentModelContent(modelId, description, buildMode, azureBlobSource, azureBlobFileListSource, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelBuildOperationDetails"/>. </summary>
@@ -668,7 +703,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelBuild, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentModelBuildOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelBuild, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData: null, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelComposeOperationDetails"/>. </summary>
@@ -687,7 +722,7 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCompose, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentModelComposeOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCompose, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData: null, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.DocumentModelCopyToOperationDetails"/>. </summary>
@@ -706,7 +741,21 @@ namespace Azure.AI.DocumentIntelligence
         {
             tags ??= new Dictionary<string, string>();
 
-            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCopyTo, resourceLocation, apiVersion, tags, error, result);
+            return new DocumentModelCopyToOperationDetails(operationId, status, percentCompleted, createdDateTime, lastUpdatedDateTime, OperationKind.DocumentModelCopyTo, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData: null, result);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentIntelligence.ComposeDocumentModelContent"/>. </summary>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="description"> Document model description. </param>
+        /// <param name="componentModels"> List of component document models to compose. </param>
+        /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
+        /// <returns> A new <see cref="DocumentIntelligence.ComposeDocumentModelContent"/> instance for mocking. </returns>
+        public static ComposeDocumentModelContent ComposeDocumentModelContent(string modelId = null, string description = null, IEnumerable<ComponentDocumentModelDetails> componentModels = null, IDictionary<string, string> tags = null)
+        {
+            componentModels ??= new List<ComponentDocumentModelDetails>();
+            tags ??= new Dictionary<string, string>();
+
+            return new ComposeDocumentModelContent(modelId, description, componentModels?.ToList(), tags, serializedAdditionalRawData: null);
         }
     }
 }

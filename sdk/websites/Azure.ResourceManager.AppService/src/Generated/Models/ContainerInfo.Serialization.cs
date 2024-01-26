@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerInfo : IUtf8JsonSerializable
+    public partial class ContainerInfo : IUtf8JsonSerializable, IJsonModel<ContainerInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrentTimeStamp))
             {
@@ -56,11 +66,40 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("eth0"u8);
                 writer.WriteObjectValue(Eth0);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerInfo DeserializeContainerInfo(JsonElement element)
+        ContainerInfo IJsonModel<ContainerInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerInfo(document.RootElement, options);
+        }
+
+        internal static ContainerInfo DeserializeContainerInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -73,6 +112,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> name = default;
             Optional<string> id = default;
             Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentTimeStamp"u8))
@@ -139,8 +180,44 @@ namespace Azure.ResourceManager.AppService.Models
                     eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerInfo IPersistableModel<ContainerInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

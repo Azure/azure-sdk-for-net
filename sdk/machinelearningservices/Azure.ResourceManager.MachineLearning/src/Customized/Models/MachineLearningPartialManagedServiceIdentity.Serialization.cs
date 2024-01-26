@@ -6,10 +6,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Runtime;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -84,7 +82,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ManagedServiceIdentityType managedServiceIdentityType = default;
+            Azure.ResourceManager.Models.ManagedServiceIdentityType managedServiceIdentityType = default;
             IDictionary<string, BinaryData> userAssignedIdentities = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,7 +90,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 if (property.NameEquals("managedServiceIdentityType"u8))
                 {
-                    managedServiceIdentityType = new ManagedServiceIdentityType(property.Value.GetString());
+                    managedServiceIdentityType = new Azure.ResourceManager.Models.ManagedServiceIdentityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
@@ -122,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MachineLearningPartialManagedServiceIdentity(serializedAdditionalRawData);
+            return new MachineLearningPartialManagedServiceIdentity(managedServiceIdentityType, userAssignedIdentities, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MachineLearningPartialManagedServiceIdentity>.Write(ModelReaderWriterOptions options)

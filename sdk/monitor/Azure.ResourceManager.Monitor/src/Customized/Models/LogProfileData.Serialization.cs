@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,12 +16,18 @@ using SystemData = Azure.ResourceManager.Models.SystemData;
 
 namespace Azure.ResourceManager.Monitor
 {
-    public partial class LogProfileData
+    public partial class LogProfileData : IUtf8JsonSerializable, IJsonModel<LogProfileData>
     {
         // this customization method is here to fix the deserialization issue for some non-nullable properties
         // they will return as nullable in the service response
-        internal static LogProfileData DeserializeLogProfileData(JsonElement element)
+        internal static LogProfileData DeserializeLogProfileData(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
             Optional<IDictionary<string, string>> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -31,6 +39,8 @@ namespace Azure.ResourceManager.Monitor
             IList<AzureLocation> locations = default;
             IList<string> categories = default;
             RetentionPolicy retentionPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"))
@@ -146,8 +156,13 @@ namespace Azure.ResourceManager.Monitor
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new LogProfileData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, storageAccountId.Value, serviceBusRuleId.Value, locations, categories, retentionPolicy,serializedAdditionalRawData);
         }
     }
 }

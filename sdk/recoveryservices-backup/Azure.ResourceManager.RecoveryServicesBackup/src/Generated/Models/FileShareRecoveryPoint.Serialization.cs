@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class FileShareRecoveryPoint : IUtf8JsonSerializable
+    public partial class FileShareRecoveryPoint : IUtf8JsonSerializable, IJsonModel<FileShareRecoveryPoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareRecoveryPoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FileShareRecoveryPoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointType))
             {
@@ -43,11 +53,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FileShareRecoveryPoint DeserializeFileShareRecoveryPoint(JsonElement element)
+        FileShareRecoveryPoint IJsonModel<FileShareRecoveryPoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFileShareRecoveryPoint(document.RootElement, options);
+        }
+
+        internal static FileShareRecoveryPoint DeserializeFileShareRecoveryPoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -58,6 +97,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<int> recoveryPointSizeInGB = default;
             Optional<RecoveryPointProperties> recoveryPointProperties = default;
             string objectType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("recoveryPointType"u8))
@@ -106,8 +147,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     objectType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FileShareRecoveryPoint(objectType, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FileShareRecoveryPoint(objectType, serializedAdditionalRawData, recoveryPointType.Value, Optional.ToNullable(recoveryPointTime), fileShareSnapshotUri.Value, Optional.ToNullable(recoveryPointSizeInGB), recoveryPointProperties.Value);
         }
+
+        BinaryData IPersistableModel<FileShareRecoveryPoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FileShareRecoveryPoint IPersistableModel<FileShareRecoveryPoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FileShareRecoveryPoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFileShareRecoveryPoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FileShareRecoveryPoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FileShareRecoveryPoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

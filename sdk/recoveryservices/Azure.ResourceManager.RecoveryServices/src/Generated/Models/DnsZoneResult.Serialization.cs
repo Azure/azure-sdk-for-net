@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class DnsZoneResult : IUtf8JsonSerializable
+    public partial class DnsZoneResult : IUtf8JsonSerializable, IJsonModel<DnsZoneResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsZoneResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DnsZoneResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(RequiredZoneNames))
             {
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("subResource"u8);
                 writer.WriteStringValue(SubResource.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsZoneResult DeserializeDnsZoneResult(JsonElement element)
+        DnsZoneResult IJsonModel<DnsZoneResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsZoneResult(document.RootElement, options);
+        }
+
+        internal static DnsZoneResult DeserializeDnsZoneResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<string>> requiredZoneNames = default;
             Optional<VaultSubResourceType> subResource = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requiredZoneNames"u8))
@@ -67,8 +108,44 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     subResource = new VaultSubResourceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DnsZoneResult(Optional.ToNullable(subResource), Optional.ToList(requiredZoneNames));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DnsZoneResult(Optional.ToNullable(subResource), serializedAdditionalRawData, Optional.ToList(requiredZoneNames));
         }
+
+        BinaryData IPersistableModel<DnsZoneResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DnsZoneResult IPersistableModel<DnsZoneResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDnsZoneResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsZoneResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

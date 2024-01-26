@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -21,7 +22,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="tierType"> Recovery point tier type. </param>
         /// <param name="status"> Recovery point tier status. </param>
         /// <param name="extendedInfo"> Recovery point tier status. </param>
-        internal RecoveryPointTierInformationV2(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo) : base(tierType, status, extendedInfo)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RecoveryPointTierInformationV2(RecoveryPointTierType? tierType, RecoveryPointTierStatus? status, IDictionary<string, string> extendedInfo, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(tierType, status, extendedInfo, serializedAdditionalRawData)
         {
         }
     }
