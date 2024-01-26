@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Translator.Document
 {
     // Data plane generated client.
-    /// <summary> The DocumentTranslation service client. </summary>
-    public partial class DocumentTranslationClient
+    /// <summary> The SingleDocumentTranslation service client. </summary>
+    public partial class SingleDocumentTranslationClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -32,37 +32,37 @@ namespace Azure.AI.Translator.Document
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of DocumentTranslationClient for mocking. </summary>
-        protected DocumentTranslationClient()
+        /// <summary> Initializes a new instance of SingleDocumentTranslationClient for mocking. </summary>
+        protected SingleDocumentTranslationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
+        /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
         /// <param name="endpoint"> Supported document Translation endpoints (protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
+        public SingleDocumentTranslationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new SingleDocumentTranslationClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
+        /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
         /// <param name="endpoint"> Supported document Translation endpoints (protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DocumentTranslationClientOptions())
+        public SingleDocumentTranslationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new SingleDocumentTranslationClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
+        /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
         /// <param name="endpoint"> Supported document Translation endpoints (protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, AzureKeyCredential credential, DocumentTranslationClientOptions options)
+        public SingleDocumentTranslationClient(Uri endpoint, AzureKeyCredential credential, SingleDocumentTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new DocumentTranslationClientOptions();
+            options ??= new SingleDocumentTranslationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -71,16 +71,16 @@ namespace Azure.AI.Translator.Document
             _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
+        /// <summary> Initializes a new instance of SingleDocumentTranslationClient. </summary>
         /// <param name="endpoint"> Supported document Translation endpoints (protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options)
+        public SingleDocumentTranslationClient(Uri endpoint, TokenCredential credential, SingleDocumentTranslationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new DocumentTranslationClientOptions();
+            options ??= new SingleDocumentTranslationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

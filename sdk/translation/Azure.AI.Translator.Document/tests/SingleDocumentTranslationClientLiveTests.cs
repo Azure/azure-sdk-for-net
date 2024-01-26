@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -11,9 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translator.Document.Tests
 {
-    public class DocumentClientTest: RecordedTestBase<DocumentClientTestEnvironment>
+    public class SingleDocumentTranslationClientLiveTests: RecordedTestBase<DocumentClientTestEnvironment>
     {
-        public DocumentClientTest(bool isAsync) : base(isAsync)
+        public SingleDocumentTranslationClientLiveTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -22,21 +23,21 @@ namespace Azure.AI.Translator.Document.Tests
         [RecordedTest]
         public void TranslateTextDocument()
         {
-            var client = new DocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
-            string testOutputFileName = "test-output.txt";
+            var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
             var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
             var response = client.DocumentTranslate("hi", sourceDocument);
-            File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
+            var requestString = File.ReadAllText(filePath);
+            var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
+            Assert.AreNotEqual(requestString, responseString);
         }
 
         [RecordedTest]
         public async Task TranslateTextDocumentWithCsvGlossary()
         {
-            var client = new DocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
-            string testOutputFileName = "test-glossay-output.txt";
+            var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
@@ -49,7 +50,10 @@ namespace Azure.AI.Translator.Document.Tests
             };
 
             var response = await client.DocumentTranslateAsync("hi", sourceDocument, sourceGlossaries).ConfigureAwait(false);
-            File.WriteAllBytes(Path.Combine("D:\\Test\\SDT", testOutputFileName), response.Value.ToArray());
+
+            var outputString = Encoding.UTF8.GetString(response.Value.ToArray());
+
+            Assert.IsTrue(outputString.ToLowerInvariant().Contains("test"), $"'{outputString}' does not contain glossary 'test'");
         }
 
         #region Helpers

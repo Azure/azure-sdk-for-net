@@ -8,17 +8,15 @@ namespace Azure.AI.Translator.Document.Tests
 {
     public class DocumentClientTestEnvironment : TestEnvironment
     {
-        // public string Endpoint => GetRecordedVariable("Document_ENDPOINT");
-
-        public DocumentClientTestEnvironment()
-        {
-        }
-
         /// <summary>The name of the environment variable from which the Document Translator resource's endpoint will be extracted for the live tests.</summary>
         private const string EndpointEnvironmentVariableName = "DOCUMENT_TRANSLATOR_ENDPOINT";
 
         /// <summary>The name of the environment variable from which the Document Translator resource's API key will be extracted for the live tests.</summary>
         private const string ApiKeyEnvironmentVariableName = "DOCUMENT_TRANSLATOR_API_KEY";
+
+        public DocumentClientTestEnvironment()
+        {
+        }
 
         public string ApiKey => GetRecordedVariable(ApiKeyEnvironmentVariableName, options => options.IsSecret());
         public string Endpoint => GetRecordedVariable(EndpointEnvironmentVariableName);

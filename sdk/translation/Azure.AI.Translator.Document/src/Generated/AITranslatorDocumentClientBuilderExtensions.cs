@@ -12,35 +12,35 @@ using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="DocumentTranslationClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="SingleDocumentTranslationClient"/> to client builder. </summary>
     public static partial class AITranslatorDocumentClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="DocumentTranslationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Supported document Translation endpoints (protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<DocumentTranslationClient, DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<SingleDocumentTranslationClient, SingleDocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<DocumentTranslationClient, DocumentTranslationClientOptions>((options) => new DocumentTranslationClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<SingleDocumentTranslationClient, SingleDocumentTranslationClientOptions>((options) => new SingleDocumentTranslationClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentTranslationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Supported document Translation endpoints (protocol and hostname, for example: https://{TranslatorResourceName}.cognitiveservices.azure.com/translator). </param>
-        public static IAzureClientBuilder<DocumentTranslationClient, DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<SingleDocumentTranslationClient, SingleDocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<DocumentTranslationClient, DocumentTranslationClientOptions>((options, cred) => new DocumentTranslationClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<SingleDocumentTranslationClient, SingleDocumentTranslationClientOptions>((options, cred) => new SingleDocumentTranslationClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="DocumentTranslationClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="SingleDocumentTranslationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<DocumentTranslationClient, DocumentTranslationClientOptions> AddDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<SingleDocumentTranslationClient, SingleDocumentTranslationClientOptions> AddSingleDocumentTranslationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<DocumentTranslationClient, DocumentTranslationClientOptions>(configuration);
+            return builder.RegisterClientFactory<SingleDocumentTranslationClient, SingleDocumentTranslationClientOptions>(configuration);
         }
     }
 }
