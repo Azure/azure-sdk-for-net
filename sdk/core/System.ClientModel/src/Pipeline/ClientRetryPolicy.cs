@@ -4,7 +4,6 @@
 using System.ClientModel.Internal;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -166,9 +165,7 @@ public class ClientRetryPolicy : PipelinePolicy
             return false;
         }
 
-        Debug.Assert(message.MessageClassifier is not null);
-
-        if (message.MessageClassifier!.TryClassify(message, exception, out bool isRetriable))
+        if (message.MessageClassifier.TryClassify(message, exception, out bool isRetriable))
         {
             bool classified = PipelineMessageClassifier.Default.TryClassify(message, exception, out isRetriable);
 
