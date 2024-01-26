@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    [PersistableModelProxy(typeof(UnknownServerPropertiesForCreate))]
-    public partial class MySqlServerPropertiesForCreate : IUtf8JsonSerializable, IJsonModel<MySqlServerPropertiesForCreate>
+    internal partial class UnknownServerPropertiesForCreate : IUtf8JsonSerializable, IJsonModel<MySqlServerPropertiesForCreate>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPropertiesForCreate>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.MySql.Models
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMySqlServerPropertiesForCreate(document.RootElement, options);
+            return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
         }
 
-        internal static MySqlServerPropertiesForCreate DeserializeMySqlServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownServerPropertiesForCreate DeserializeUnknownServerPropertiesForCreate(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -96,17 +96,83 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("createMode", out JsonElement discriminator))
+            Optional<MySqlServerVersion> version = default;
+            Optional<MySqlSslEnforcementEnum> sslEnforcement = default;
+            Optional<MySqlMinimalTlsVersionEnum> minimalTlsVersion = default;
+            Optional<MySqlInfrastructureEncryption> infrastructureEncryption = default;
+            Optional<MySqlPublicNetworkAccessEnum> publicNetworkAccess = default;
+            Optional<MySqlStorageProfile> storageProfile = default;
+            MySqlCreateMode createMode = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                switch (discriminator.GetString())
+                if (property.NameEquals("version"u8))
                 {
-                    case "Default": return MySqlServerPropertiesForDefaultCreate.DeserializeMySqlServerPropertiesForDefaultCreate(element);
-                    case "GeoRestore": return MySqlServerPropertiesForGeoRestore.DeserializeMySqlServerPropertiesForGeoRestore(element);
-                    case "PointInTimeRestore": return MySqlServerPropertiesForRestore.DeserializeMySqlServerPropertiesForRestore(element);
-                    case "Replica": return MySqlServerPropertiesForReplica.DeserializeMySqlServerPropertiesForReplica(element);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    version = new MySqlServerVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("sslEnforcement"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sslEnforcement = property.Value.GetString().ToMySqlSslEnforcementEnum();
+                    continue;
+                }
+                if (property.NameEquals("minimalTlsVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimalTlsVersion = new MySqlMinimalTlsVersionEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("infrastructureEncryption"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    infrastructureEncryption = new MySqlInfrastructureEncryption(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new MySqlPublicNetworkAccessEnum(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("storageProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    storageProfile = MySqlStorageProfile.DeserializeMySqlStorageProfile(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("createMode"u8))
+                {
+                    createMode = new MySqlCreateMode(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return UnknownServerPropertiesForCreate.DeserializeUnknownServerPropertiesForCreate(element);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UnknownServerPropertiesForCreate(Optional.ToNullable(version), Optional.ToNullable(sslEnforcement), Optional.ToNullable(minimalTlsVersion), Optional.ToNullable(infrastructureEncryption), Optional.ToNullable(publicNetworkAccess), storageProfile.Value, createMode, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MySqlServerPropertiesForCreate>.Write(ModelReaderWriterOptions options)
@@ -131,7 +197,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMySqlServerPropertiesForCreate(document.RootElement, options);
+                        return DeserializeUnknownServerPropertiesForCreate(document.RootElement, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MySqlServerPropertiesForCreate)} does not support '{options.Format}' format.");
