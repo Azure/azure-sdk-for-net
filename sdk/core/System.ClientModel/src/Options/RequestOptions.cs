@@ -16,6 +16,9 @@ public class RequestOptions
 {
     private bool _frozen;
 
+    private CancellationToken _cancellationToken = CancellationToken.None;
+    private ClientErrorBehaviors _errorOptions = ClientErrorBehaviors.Default;
+
     private PipelinePolicy[]? _perCallPolicies;
     private PipelinePolicy[]? _perTryPolicies;
     private PipelinePolicy[]? _beforeTransportPolicies;
@@ -24,13 +27,29 @@ public class RequestOptions
 
     public RequestOptions()
     {
-        CancellationToken = CancellationToken.None;
-        ErrorOptions = ClientErrorBehaviors.Default;
     }
 
-    public CancellationToken CancellationToken { get; set; }
+    public CancellationToken CancellationToken
+    {
+        get => _cancellationToken;
+        set
+        {
+            AssertNotFrozen();
 
-    public ClientErrorBehaviors ErrorOptions { get; set; }
+            _cancellationToken = value;
+        }
+    }
+
+    public ClientErrorBehaviors ErrorOptions
+    {
+        get => _errorOptions;
+        set
+        {
+            AssertNotFrozen();
+
+            _errorOptions = value;
+        }
+    }
 
     public void AddHeader(string name, string value)
     {
@@ -79,7 +98,7 @@ public class RequestOptions
     // Set options on the message before sending it through the pipeline.
     internal void Apply(PipelineMessage message)
     {
-        _frozen = true;
+        Freeze();
 
         // Set the cancellation token on the message so pipeline policies
         // will have access to it as the message flows through the pipeline.
@@ -119,7 +138,9 @@ public class RequestOptions
         }
     }
 
-    private void AssertNotFrozen()
+    public virtual void Freeze() => _frozen = true;
+
+    protected void AssertNotFrozen()
     {
         if (_frozen)
         {

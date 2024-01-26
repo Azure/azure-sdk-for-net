@@ -607,12 +607,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             PageBlobStorageResource storageResource = new PageBlobStorageResource(blobClient);
 
             // Act
-            StorageResourceProperties result = await storageResource.GetPropertiesAsync();
+            StorageResourceItemProperties result = await storageResource.GetPropertiesAsync();
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual(result.ContentLength, Constants.KB);
-            Assert.NotNull(result.ETag);
+            Assert.AreEqual(result.ResourceLength, Constants.KB);
+            Assert.NotNull(result.RawProperties);
         }
 
         [RecordedTest]
