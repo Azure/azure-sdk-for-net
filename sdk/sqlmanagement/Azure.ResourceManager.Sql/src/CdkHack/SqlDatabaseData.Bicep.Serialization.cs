@@ -6,40 +6,47 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql.Models;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class SqlDatabaseData : IModelJsonSerializable<SqlDatabaseData>
+    public partial class SqlDatabaseData : IJsonModel<SqlDatabaseData>
     {
-        void IModelJsonSerializable<SqlDatabaseData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<SqlDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        SqlDatabaseData IModelJsonSerializable<SqlDatabaseData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        SqlDatabaseData IJsonModel<SqlDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlDatabaseData(document.RootElement);
         }
 
-        BinaryData IModelSerializable<SqlDatabaseData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<SqlDatabaseData>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseData>)this).GetFormatFromOptions(options) : options.Format;
 
-        SqlDatabaseData IModelSerializable<SqlDatabaseData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlDatabaseData IPersistableModel<SqlDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeSqlDatabaseData(document.RootElement);
         }
 
-        private BinaryData SerializeBicep()
+        string IPersistableModel<SqlDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");
