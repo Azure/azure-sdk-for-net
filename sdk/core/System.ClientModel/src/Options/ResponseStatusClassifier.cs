@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Diagnostics;
 
 namespace System.ClientModel.Primitives;
 
@@ -30,7 +31,17 @@ internal class ResponseStatusClassifier : PipelineMessageClassifier
 
         isError = !_successCodes[message.Response!.Status];
 
-        // BitVector-based classifiers should always end any composition chain.
+        // BitVector-based classifiers should always end any chain.
+        return true;
+    }
+
+    public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+    {
+        bool classified = Default.TryClassify(message, exception, out isRetriable);
+
+        Debug.Assert(classified);
+
+        // BitVector-based classifiers should always end any chain.
         return true;
     }
 

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace System.ClientModel.Primitives;
 
-public class PipelineMessageClassifier
+public abstract class PipelineMessageClassifier
 {
     public static PipelineMessageClassifier Default { get; } = new EndOfChainClassifier();
 
@@ -14,17 +14,9 @@ public class PipelineMessageClassifier
 
     protected PipelineMessageClassifier() { }
 
-    public virtual bool TryClassify(PipelineMessage message, out bool isError)
-    {
-        isError = false;
-        return false;
-    }
+    public abstract bool TryClassify(PipelineMessage message, out bool isError);
 
-    public virtual bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
-    {
-        isRetriable = false;
-        return false;
-    }
+    public abstract bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable);
 
     internal class EndOfChainClassifier : PipelineMessageClassifier
     {

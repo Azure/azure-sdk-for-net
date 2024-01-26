@@ -157,13 +157,13 @@ namespace System.ClientModel.Primitives
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
-    public partial class PipelineMessageClassifier
+    public abstract partial class PipelineMessageClassifier
     {
         protected PipelineMessageClassifier() { }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Default { get { throw null; } }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
-        public virtual bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError) { throw null; }
-        public virtual bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable) { throw null; }
+        public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError);
+        public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable);
     }
     public abstract partial class PipelinePolicy
     {

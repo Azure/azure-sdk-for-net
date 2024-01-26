@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel.Primitives;
 
 namespace ClientModel.Tests.Mocks;
@@ -46,6 +47,11 @@ public class MockMessageClassifier : PipelineMessageClassifier
             return true;
         }
 
-        return base.TryClassify(message, out isError);
+        return Default.TryClassify(message, out isError);
+    }
+
+    public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+    {
+        return Default.TryClassify(message, exception, out isRetriable);
     }
 }

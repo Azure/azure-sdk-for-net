@@ -216,6 +216,12 @@ public class PipelineMessageClassifierTests
             isError = false;
             return false;
         }
+
+        public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
+        {
+            isRetriable = false;
+            return false;
+        }
     }
 
     internal class RetriableStatusCodeClassifier : PipelineMessageClassifier
@@ -225,6 +231,12 @@ public class PipelineMessageClassifierTests
         public RetriableStatusCodeClassifier(int code, bool isRetriable)
         {
             _code = (code, isRetriable);
+        }
+
+        public override bool TryClassify(PipelineMessage message, out bool isError)
+        {
+            isError = false;
+            return false;
         }
 
         public override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)

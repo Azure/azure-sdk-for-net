@@ -71,6 +71,9 @@ namespace Azure.Core
         /// <param name="isError"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO: Add a test that breaks if we unseal this to prevent that from happening
+        // Note: this is sealed to force the base type to call through to any overridden virtual methods
+        // on a subtype of ResponseClassifier.
         public sealed override bool TryClassify(PipelineMessage message, out bool isError)
         {
             HttpMessage httpMessage = AssertHttpMessage(message);
@@ -88,6 +91,9 @@ namespace Azure.Core
         /// <param name="isRetriable"></param>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        // TODO: Add a test that breaks if we unseal this to prevent that from happening
+        // Note: this is sealed to force the base type to call through to any overridden virtual methods
+        // on a subtype of ResponseClassifier.
         public sealed override bool TryClassify(PipelineMessage message, Exception? exception, out bool isRetriable)
         {
             HttpMessage httpMessage = AssertHttpMessage(message);
