@@ -175,6 +175,7 @@ namespace Azure.Communication.CallAutomation
             if (options != null)
             {
                 request.PlayOptions = new PlayOptionsInternal(options.Loop);
+                request.PlayOptions.InterruptCallMediaOperation = options.InterruptCallMediaOperation;
                 request.OperationContext = options.OperationContext;
                 request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
             }
@@ -203,7 +204,8 @@ namespace Azure.Communication.CallAutomation
                 {
                     OperationContext = options.OperationContext,
                     OperationCallbackUri = options.OperationCallbackUri,
-                    Loop = options.Loop
+                    Loop = options.Loop,
+                    InterruptCallMediaOperation = options.InterruptCallMediaOperation,
                 };
                 return await PlayAsync(playOptions, cancellationToken).ConfigureAwait(false);
             }

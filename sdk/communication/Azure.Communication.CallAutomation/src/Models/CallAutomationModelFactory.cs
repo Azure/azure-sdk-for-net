@@ -41,6 +41,31 @@ namespace Azure.Communication.CallAutomation
         /// <param name="sourceIdentity">Source identity.</param>
         /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
         /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
+        /// <param name="answeredBy">AnsweredBy identity.</param>
+        /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
+        public static CallConnectionProperties CallConnectionProperties(
+            string callConnectionId = default,
+            string serverCallId = default,
+            IEnumerable<CommunicationIdentifier> targets = default,
+            CallConnectionState callConnectionState = default,
+            Uri callbackUri = default,
+            CommunicationIdentifier sourceIdentity = default,
+            PhoneNumberIdentifier sourceCallerIdNumber = default,
+            string sourceDisplayName = default,
+            CommunicationIdentifier answeredBy = default)
+        {
+            return new CallConnectionProperties(callConnectionId, serverCallId, targets, callConnectionState, callbackUri, sourceIdentity, sourceCallerIdNumber, sourceDisplayName, null, answeredBy);
+        }
+
+        /// <summary> Initializes a new instance of CallConnectionProperties. </summary>
+        /// <param name="callConnectionId">The call connection id.</param>
+        /// <param name="serverCallId">The server call id.</param>
+        /// <param name="targets">The targets of the call.</param>
+        /// <param name="callConnectionState">The state of the call connection.</param>
+        /// <param name="callbackUri">The callback URI.</param>
+        /// <param name="sourceIdentity">Source identity.</param>
+        /// <param name="sourceCallerIdNumber">Caller ID phone number to appear on the invitee.</param>
+        /// <param name="sourceDisplayName">Display name to appear on the invitee.</param>
         /// <param name="dataSubscriptionId">The subscriptionId for transcription.</param>
         /// <param name="answeredBy">AnsweredBy identity.</param>
         /// <returns> A new <see cref="CallAutomation.CallConnectionProperties"/> instance for mocking. </returns>
