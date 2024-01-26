@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Authorization
         private readonly RoleManagementPolicyAssignmentData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignment";
+        public static readonly ResourceType ResourceType = "Microsoft.Authorization/roleManagementPolicyAssignments";
 
         /// <summary> Initializes a new instance of the <see cref="RoleManagementPolicyAssignmentResource"/> class for mocking. </summary>
         protected RoleManagementPolicyAssignmentResource()

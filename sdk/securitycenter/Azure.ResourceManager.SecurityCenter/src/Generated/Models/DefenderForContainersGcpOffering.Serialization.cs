@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForContainersGcpOffering : IUtf8JsonSerializable
+    public partial class DefenderForContainersGcpOffering : IUtf8JsonSerializable, IJsonModel<DefenderForContainersGcpOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForContainersGcpOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefenderForContainersGcpOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NativeCloudConnection))
             {
@@ -40,13 +51,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("policyAgentAutoProvisioningFlag"u8);
                 writer.WriteBooleanValue(IsPolicyAgentAutoProvisioningEnabled.Value);
             }
+            if (Optional.IsDefined(MdcContainersImageAssessment))
+            {
+                writer.WritePropertyName("mdcContainersImageAssessment"u8);
+                writer.WriteObjectValue(MdcContainersImageAssessment);
+            }
+            if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
+            {
+                writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
+                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+            }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForContainersGcpOffering DeserializeDefenderForContainersGcpOffering(JsonElement element)
+        DefenderForContainersGcpOffering IJsonModel<DefenderForContainersGcpOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForContainersGcpOffering(document.RootElement, options);
+        }
+
+        internal static DefenderForContainersGcpOffering DeserializeDefenderForContainersGcpOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,8 +111,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<bool> auditLogsAutoProvisioningFlag = default;
             Optional<bool> defenderAgentAutoProvisioningFlag = default;
             Optional<bool> policyAgentAutoProvisioningFlag = default;
+            Optional<DefenderForContainersGcpOfferingMdcContainersImageAssessment> mdcContainersImageAssessment = default;
+            Optional<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S> mdcContainersAgentlessDiscoveryK8S = default;
             OfferingType offeringType = default;
             Optional<string> description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nativeCloudConnection"u8))
@@ -105,6 +164,24 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     policyAgentAutoProvisioningFlag = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("mdcContainersImageAssessment"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersImageAssessment = DefenderForContainersGcpOfferingMdcContainersImageAssessment.DeserializeDefenderForContainersGcpOfferingMdcContainersImageAssessment(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("mdcContainersAgentlessDiscoveryK8s"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    mdcContainersAgentlessDiscoveryK8S = DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.DeserializeDefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("offeringType"u8))
                 {
                     offeringType = new OfferingType(property.Value.GetString());
@@ -115,8 +192,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForContainersGcpOffering(offeringType, description.Value, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DefenderForContainersGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value, dataPipelineNativeCloudConnection.Value, Optional.ToNullable(auditLogsAutoProvisioningFlag), Optional.ToNullable(defenderAgentAutoProvisioningFlag), Optional.ToNullable(policyAgentAutoProvisioningFlag), mdcContainersImageAssessment.Value, mdcContainersAgentlessDiscoveryK8S.Value);
         }
+
+        BinaryData IPersistableModel<DefenderForContainersGcpOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DefenderForContainersGcpOffering IPersistableModel<DefenderForContainersGcpOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderForContainersGcpOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderForContainersGcpOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

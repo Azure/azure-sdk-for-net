@@ -31,8 +31,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="expiryOn"></param>
         /// <param name="metadata"> Any object. </param>
         /// <param name="target"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credentials"> Custom Keys credential object. </param>
-        internal CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, CustomKeys credentials) : base(authType, category, expiryOn, metadata, target)
+        internal CustomKeysWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomKeys credentials) : base(authType, category, expiryOn, metadata, target, serializedAdditionalRawData)
         {
             Credentials = credentials;
             AuthType = authType;

@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class ServiceAuthConfiguration : IUtf8JsonSerializable
+    public partial class ServiceAuthConfiguration : IUtf8JsonSerializable, IJsonModel<ServiceAuthConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceAuthConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceAuthConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAuthConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAuthConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("primaryAuthKeyHash"u8);
             writer.WriteStringValue(PrimaryAuthKeyHash);
             writer.WritePropertyName("secondaryAuthKeyHash"u8);
             writer.WriteStringValue(SecondaryAuthKeyHash);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceAuthConfiguration DeserializeServiceAuthConfiguration(JsonElement element)
+        ServiceAuthConfiguration IJsonModel<ServiceAuthConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAuthConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceAuthConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceAuthConfiguration(document.RootElement, options);
+        }
+
+        internal static ServiceAuthConfiguration DeserializeServiceAuthConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string primaryAuthKeyHash = default;
             string secondaryAuthKeyHash = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryAuthKeyHash"u8))
@@ -42,8 +84,44 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                     secondaryAuthKeyHash = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceAuthConfiguration(primaryAuthKeyHash, secondaryAuthKeyHash);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceAuthConfiguration(primaryAuthKeyHash, secondaryAuthKeyHash, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceAuthConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAuthConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAuthConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceAuthConfiguration IPersistableModel<ServiceAuthConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAuthConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceAuthConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceAuthConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceAuthConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

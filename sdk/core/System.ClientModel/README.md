@@ -31,11 +31,35 @@ The `System.ClientModel` package provides a `KeyCredential` type for authenticat
 
 The main shared concepts of `System.ClientModel` include:
 
+- Configuring service clients (`ClientPipelineOptions`).
 - Accessing HTTP response details (`ClientResult`, `ClientResult<T>`).
 - Exceptions for reporting errors from service requests in a consistent fashion (`ClientResultException`).
-- Providing APIs to read and write models in different formats.
+- Customizing requests (`RequestOptions`).
+- Providing APIs to read and write models in different formats (`ModelReaderWriter`).
 
 ## Examples
+
+### Send a message using the MessagePipeline
+
+A very basic client implementation might use the following approach:
+
+```csharp
+ApiKeyCredential credential = new ApiKeyCredential(key);
+ApiKeyAuthenticationPolicy authenticationPolicy = ApiKeyAuthenticationPolicy.CreateBearerAuthorizationPolicy(credential);
+ClientPipeline pipeline = ClientPipeline.Create(pipelineOptions, authenticationPolicy);
+
+PipelineMessage message = pipeline.CreateMessage();
+message.Apply(requestOptions);
+message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+
+PipelineRequest request = message.Request;
+request.Method = "GET";
+request.Uri = new Uri("https://www.example.com/");
+request.Headers.Add("Accept", "application/json");
+
+pipeline.Send(message);
+Console.WriteLine(message.Response.Status);
+```
 
 ### Read and write persistable models
 

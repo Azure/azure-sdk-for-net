@@ -5,17 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class CustomAssessmentAutomationCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class CustomAssessmentAutomationCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(CompressedQuery))
@@ -49,11 +80,40 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(RemediationDescription);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomAssessmentAutomationCreateOrUpdateContent DeserializeCustomAssessmentAutomationCreateOrUpdateContent(JsonElement element)
+        CustomAssessmentAutomationCreateOrUpdateContent IJsonModel<CustomAssessmentAutomationCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomAssessmentAutomationCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static CustomAssessmentAutomationCreateOrUpdateContent DeserializeCustomAssessmentAutomationCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +128,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             Optional<string> displayName = default;
             Optional<string> description = default;
             Optional<string> remediationDescription = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -144,8 +206,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomAssessmentAutomationCreateOrUpdateContent(id, name, type, systemData.Value, compressedQuery.Value, Optional.ToNullable(supportedCloud), Optional.ToNullable(severity), displayName.Value, description.Value, remediationDescription.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CustomAssessmentAutomationCreateOrUpdateContent(id, name, type, systemData.Value, compressedQuery.Value, Optional.ToNullable(supportedCloud), Optional.ToNullable(severity), displayName.Value, description.Value, remediationDescription.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CustomAssessmentAutomationCreateOrUpdateContent IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomAssessmentAutomationCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomAssessmentAutomationCreateOrUpdateContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomAssessmentAutomationCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

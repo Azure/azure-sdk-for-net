@@ -5,30 +5,67 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> NetworkProfile - Profile of network configuration. </summary>
+    /// <summary> The network configuration profile for the provisioned cluster. </summary>
     public partial class ProvisionedClusterNetworkProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterNetworkProfile"/>. </summary>
         public ProvisionedClusterNetworkProfile()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterNetworkProfile"/>. </summary>
-        /// <param name="loadBalancerProfile"> LoadBalancerProfile - Profile of the cluster load balancer. </param>
-        /// <param name="networkPolicy"> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: 'calico', 'flannel'. Default is 'calico'. </param>
-        /// <param name="podCidr"> PodCidr - A CIDR notation IP range from which to assign pod IPs when kubenet is used. </param>
-        internal ProvisionedClusterNetworkProfile(ProvisionedClusterLoadBalancerProfile loadBalancerProfile, ProvisionedClusterNetworkPolicy? networkPolicy, string podCidr)
+        /// <param name="loadBalancerProfile"> Profile of the HA Proxy load balancer. </param>
+        /// <param name="networkPolicy"> Network policy used for building Kubernetes network. Possible values include: 'calico'. </param>
+        /// <param name="podCidr"> A CIDR notation IP Address range from which to assign pod IPs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterNetworkProfile(ProvisionedClusterLoadBalancerProfile loadBalancerProfile, ProvisionedClusterNetworkPolicy? networkPolicy, string podCidr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoadBalancerProfile = loadBalancerProfile;
             NetworkPolicy = networkPolicy;
             PodCidr = podCidr;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> LoadBalancerProfile - Profile of the cluster load balancer. </summary>
+        /// <summary> Profile of the HA Proxy load balancer. </summary>
         internal ProvisionedClusterLoadBalancerProfile LoadBalancerProfile { get; set; }
-        /// <summary> Count - Number of load balancer VMs. The default value is 0. </summary>
+        /// <summary> Number of HA Proxy load balancer VMs. The default value is 0. </summary>
         public int? LoadBalancerCount
         {
             get => LoadBalancerProfile is null ? default : LoadBalancerProfile.Count;
@@ -40,9 +77,9 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
         }
 
-        /// <summary> NetworkPolicy - Network policy used for building Kubernetes network. Possible values include: 'calico', 'flannel'. Default is 'calico'. </summary>
+        /// <summary> Network policy used for building Kubernetes network. Possible values include: 'calico'. </summary>
         public ProvisionedClusterNetworkPolicy? NetworkPolicy { get; set; }
-        /// <summary> PodCidr - A CIDR notation IP range from which to assign pod IPs when kubenet is used. </summary>
+        /// <summary> A CIDR notation IP Address range from which to assign pod IPs. </summary>
         public string PodCidr { get; set; }
     }
 }

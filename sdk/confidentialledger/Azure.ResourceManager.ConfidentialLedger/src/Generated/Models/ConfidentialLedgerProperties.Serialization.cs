@@ -6,17 +6,46 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
 {
-    public partial class ConfidentialLedgerProperties : IUtf8JsonSerializable
+    public partial class ConfidentialLedgerProperties : IUtf8JsonSerializable, IJsonModel<ConfidentialLedgerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfidentialLedgerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConfidentialLedgerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LedgerName))
+            {
+                writer.WritePropertyName("ledgerName"u8);
+                writer.WriteStringValue(LedgerName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LedgerUri))
+            {
+                writer.WritePropertyName("ledgerUri"u8);
+                writer.WriteStringValue(LedgerUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IdentityServiceUri))
+            {
+                writer.WritePropertyName("identityServiceUri"u8);
+                writer.WriteStringValue(IdentityServiceUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LedgerInternalNamespace))
+            {
+                writer.WritePropertyName("ledgerInternalNamespace"u8);
+                writer.WriteStringValue(LedgerInternalNamespace);
+            }
             if (Optional.IsDefined(RunningState))
             {
                 writer.WritePropertyName("runningState"u8);
@@ -26,6 +55,11 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             {
                 writer.WritePropertyName("ledgerType"u8);
                 writer.WriteStringValue(LedgerType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(AadBasedSecurityPrincipals))
             {
@@ -47,11 +81,40 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element)
+        ConfidentialLedgerProperties IJsonModel<ConfidentialLedgerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfidentialLedgerProperties(document.RootElement, options);
+        }
+
+        internal static ConfidentialLedgerProperties DeserializeConfidentialLedgerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +128,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             Optional<ConfidentialLedgerProvisioningState> provisioningState = default;
             Optional<IList<AadBasedSecurityPrincipal>> aadBasedSecurityPrincipals = default;
             Optional<IList<CertBasedSecurityPrincipal>> certBasedSecurityPrincipals = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ledgerName"u8))
@@ -150,8 +215,44 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                     certBasedSecurityPrincipals = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConfidentialLedgerProperties(ledgerName.Value, ledgerUri.Value, identityServiceUri.Value, ledgerInternalNamespace.Value, Optional.ToNullable(runningState), Optional.ToNullable(ledgerType), Optional.ToNullable(provisioningState), Optional.ToList(aadBasedSecurityPrincipals), Optional.ToList(certBasedSecurityPrincipals), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfidentialLedgerProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConfidentialLedgerProperties IPersistableModel<ConfidentialLedgerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConfidentialLedgerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfidentialLedgerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_WorkloadNetworksGetPortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/WorkloadNetworks_GetPortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_GetPortMirroringProfiles.json
             // this example is just showing the usage of "WorkloadNetworks_GetPortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_WorkloadNetworksUpdatePortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/WorkloadNetworks_UpdatePortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_UpdatePortMirroringProfiles.json
             // this example is just showing the usage of "WorkloadNetworks_UpdatePortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Avs.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_WorkloadNetworksDeletePortMirroring()
         {
-            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2022-05-01/examples/WorkloadNetworks_DeletePortMirroringProfiles.json
+            // Generated from example definition: specification/vmware/resource-manager/Microsoft.AVS/stable/2023-03-01/examples/WorkloadNetworks_DeletePortMirroringProfiles.json
             // this example is just showing the usage of "WorkloadNetworks_DeletePortMirroring" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

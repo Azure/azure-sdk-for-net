@@ -5,11 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Agent pool profile along with a name parameter. </summary>
+    /// <summary> Profile of the default agent pool along with a name parameter. </summary>
     public partial class HybridContainerServiceNamedAgentPoolProfile : HybridContainerServiceAgentPoolProfile
     {
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceNamedAgentPoolProfile"/>. </summary>
@@ -18,25 +19,34 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceNamedAgentPoolProfile"/>. </summary>
-        /// <param name="availabilityZones"> AvailabilityZones - The list of Availability zones to use for nodes. Datacenter racks modelled as zones. </param>
-        /// <param name="osType"> The particular KubernetesVersion's Image's OS Type (Linux, Windows). </param>
+        /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
-        /// <param name="nodeImageVersion"> The version of node image. </param>
-        /// <param name="count"> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </param>
-        /// <param name="vmSize"> VmSize - The size of the agent pool VMs. </param>
-        /// <param name="name"> Unique name of the agent pool profile in the context of the subscription and resource group. </param>
-        internal HybridContainerServiceNamedAgentPoolProfile(IList<string> availabilityZones, HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, string nodeImageVersion, int? count, string vmSize, string name) : base(availabilityZones, osType, osSku, nodeImageVersion)
+        /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
+        /// <param name="nodeTaints"> Taints added to new nodes during node pool create and scale. For example, key=value:NoSchedule. </param>
+        /// <param name="maxCount"> The maximum number of nodes for auto-scaling. </param>
+        /// <param name="minCount"> The minimum number of nodes for auto-scaling. </param>
+        /// <param name="enableAutoScaling"> Whether to enable auto-scaler. Default value is false. </param>
+        /// <param name="maxPods"> The maximum number of pods that can run on a node. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
+        /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
+        /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
+        /// <param name="name"> Unique name of the default agent pool in the context of the provisioned cluster. Default value is &lt;clusterName&gt;-nodepool1. </param>
+        internal HybridContainerServiceNamedAgentPoolProfile(HybridContainerServiceOSType? osType, HybridContainerServiceOSSku? osSku, IDictionary<string, string> nodeLabels, IList<string> nodeTaints, int? maxCount, int? minCount, bool? enableAutoScaling, int? maxPods, IDictionary<string, BinaryData> serializedAdditionalRawData, int? count, string vmSize, string kubernetesVersion, string name) : base(osType, osSku, nodeLabels, nodeTaints, maxCount, minCount, enableAutoScaling, maxPods, serializedAdditionalRawData)
         {
             Count = count;
             VmSize = vmSize;
+            KubernetesVersion = kubernetesVersion;
             Name = name;
         }
 
-        /// <summary> Count - Number of agents to host docker containers. Allowed values must be in the range of 1 to 100 (inclusive). The default value is 1. </summary>
+        /// <summary> Number of nodes in the agent pool. The default value is 1. </summary>
         public int? Count { get; set; }
-        /// <summary> VmSize - The size of the agent pool VMs. </summary>
+        /// <summary> The VM sku size of the agent pool node VMs. </summary>
         public string VmSize { get; set; }
-        /// <summary> Unique name of the agent pool profile in the context of the subscription and resource group. </summary>
+        /// <summary> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </summary>
+        public string KubernetesVersion { get; }
+        /// <summary> Unique name of the default agent pool in the context of the provisioned cluster. Default value is &lt;clusterName&gt;-nodepool1. </summary>
         public string Name { get; set; }
     }
 }

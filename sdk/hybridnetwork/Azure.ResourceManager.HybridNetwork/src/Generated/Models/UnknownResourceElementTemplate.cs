@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> The UnknownResourceElementTemplate. </summary>
@@ -14,9 +17,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>
-        internal UnknownResourceElementTemplate(string name, Type resourceElementType, DependsOnProfile dependsOnProfile) : base(name, resourceElementType, dependsOnProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownResourceElementTemplate(string name, Type resourceElementType, DependsOnProfile dependsOnProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(name, resourceElementType, dependsOnProfile, serializedAdditionalRawData)
         {
             ResourceElementType = resourceElementType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownResourceElementTemplate"/> for deserialization. </summary>
+        internal UnknownResourceElementTemplate()
+        {
         }
     }
 }

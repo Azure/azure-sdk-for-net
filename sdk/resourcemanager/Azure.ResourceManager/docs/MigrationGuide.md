@@ -599,6 +599,93 @@ VirtualMachineResource virtualMachine = virtualMachineOperation.Value;
 
 Finally, as it can be seen here, from the resource group you can get the Virtual Machine collection and create a new one using the `VirtualMachineData` for the parameters.
 
+### Update a Virtual Machine
+
+**Replace or create the virtual machine resource**
+```C# Snippet:UpdateByReplace_Fluent_VirtualMachine
+var virtualMachineDataToModify = new VirtualMachineData(AzureLocation.EastUS)
+{
+    HardwareProfile = new VirtualMachineHardwareProfile()
+    {
+        VmSize = VirtualMachineSizeType.StandardD2V3
+    },
+    StorageProfile = new VirtualMachineStorageProfile()
+    {
+        ImageReference = new ImageReference()
+        {
+            Publisher = "Canonical",
+            Offer = "0001-com-ubuntu-server-jammy",
+            Sku = "22_04-lts-gen2",
+            Version = "latest",
+        },
+        OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+        {
+            OSType = SupportedOperatingSystemType.Windows,
+            Name = "QuickstartVmOSDisk",
+            Caching = CachingType.ReadOnly,
+            ManagedDisk = new VirtualMachineManagedDisk()
+            {
+                StorageAccountType = StorageAccountType.StandardLrs,
+            },
+        },
+    },
+    OSProfile = new VirtualMachineOSProfile()
+    {
+        AdminUsername = "admin-username",
+        AdminPassword = "admin-p4$$w0rd",
+        ComputerName = "computer-name"
+    },
+    NetworkProfile = new VirtualMachineNetworkProfile()
+    {
+        NetworkInterfaces =
+        {
+            new VirtualMachineNetworkInterfaceReference()
+            {
+                Id = networkInterface.Id,
+                Primary = false,
+            }
+        }
+    }
+};
+VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
+var virtualMachineModify = (await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachine.Data.Name, virtualMachineDataToModify)).Value;
+```
+**Update a few properties using `UpdateAsync` method**
+```C# Snippet:UpdateByUpdateAsync_Fluent_VirtualMachine
+var patch = new VirtualMachinePatch()
+{
+    NetworkProfile = new VirtualMachineNetworkProfile()
+    {
+        NetworkInterfaces =
+        {
+            new VirtualMachineNetworkInterfaceReference()
+            {
+                Id = networkInterface.Id,
+                Primary = false,
+            }
+        }
+    }
+};
+var virtualMachineModify = (await virtualMachine.UpdateAsync(WaitUntil.Completed, patch)).Value;
+```
+**Get the virtual machine resource by name and modify its Data property**
+```C# Snippet:UpdateByDataProerty_Fluent_VirtualMachine
+var virtualMachines = resourceGroup.GetVirtualMachines();
+var virtualMachineGet = (await virtualMachines.GetAsync(virtualMachine.Data.Name)).Value;
+virtualMachineGet.Data.NetworkProfile = new VirtualMachineNetworkProfile()
+{
+    NetworkInterfaces =
+    {
+        new VirtualMachineNetworkInterfaceReference()
+        {
+            Id = networkInterface.Id,
+            Primary = false,
+        }
+    }
+};
+var virtualMachineModify = (await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachine.Data.Name, virtualMachineGet.Data)).Value;
+```
+
 ### List all Virtual Networks
 
 **Old**

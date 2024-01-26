@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Webhook details specific for Azure DevOps. </summary>
@@ -19,7 +22,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="AzureDevOpsWebhook"/>. </summary>
         /// <param name="eventType"> Send callback on a specified notification event. </param>
         /// <param name="webhookType"> [Required] Specifies the type of service to send a callback. </param>
-        internal AzureDevOpsWebhook(string eventType, MachineLearningWebhookType webhookType) : base(eventType, webhookType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureDevOpsWebhook(string eventType, MachineLearningWebhookType webhookType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(eventType, webhookType, serializedAdditionalRawData)
         {
             WebhookType = webhookType;
         }

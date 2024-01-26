@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightSecurityProfile : IUtf8JsonSerializable
+    public partial class HDInsightSecurityProfile : IUtf8JsonSerializable, IJsonModel<HDInsightSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightSecurityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DirectoryType))
             {
@@ -77,11 +86,40 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("msiResourceId"u8);
                 writer.WriteStringValue(MsiResourceId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HDInsightSecurityProfile DeserializeHDInsightSecurityProfile(JsonElement element)
+        HDInsightSecurityProfile IJsonModel<HDInsightSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightSecurityProfile(document.RootElement, options);
+        }
+
+        internal static HDInsightSecurityProfile DeserializeHDInsightSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -95,6 +133,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<IList<string>> clusterUsersGroupDNs = default;
             Optional<ResourceIdentifier> aaddsResourceId = default;
             Optional<ResourceIdentifier> msiResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("directoryType"u8))
@@ -179,8 +219,44 @@ namespace Azure.ResourceManager.HDInsight.Models
                     msiResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightSecurityProfile(Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, Optional.ToList(ldapsUrls), domainUsername.Value, domainUserPassword.Value, Optional.ToList(clusterUsersGroupDNs), aaddsResourceId.Value, msiResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HDInsightSecurityProfile(Optional.ToNullable(directoryType), domain.Value, organizationalUnitDN.Value, Optional.ToList(ldapsUrls), domainUsername.Value, domainUserPassword.Value, Optional.ToList(clusterUsersGroupDNs), aaddsResourceId.Value, msiResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightSecurityProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HDInsightSecurityProfile IPersistableModel<HDInsightSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHDInsightSecurityProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightSecurityProfile)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(end, nameof(end));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(end, nameof(end));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -860,7 +860,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -915,7 +915,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentAPIKey> GetAPIKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey, _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentAPIKey> GetAPIKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey, _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1197,7 +1197,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentExportConfiguration> GetExportConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1222,7 +1222,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentExportConfiguration> GetExportConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1251,7 +1251,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(exportProperties, nameof(exportProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1280,7 +1280,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(exportProperties, nameof(exportProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1891,7 +1891,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentProactiveDetectionConfiguration> GetProactiveDetectionConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proactiveDetectionConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration, _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(e), _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1916,7 +1916,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentProactiveDetectionConfiguration> GetProactiveDetectionConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proactiveDetectionConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration, _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(e), _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2101,7 +2101,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<WorkItemConfiguration> GetWorkItemConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workItemConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WorkItemConfiguration.DeserializeWorkItemConfiguration, _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WorkItemConfiguration.DeserializeWorkItemConfiguration(e), _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2126,7 +2126,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<WorkItemConfiguration> GetWorkItemConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workItemConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WorkItemConfiguration.DeserializeWorkItemConfiguration, _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WorkItemConfiguration.DeserializeWorkItemConfiguration(e), _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2537,7 +2537,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentFavorite> GetFavoritesAsync(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite, _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(e), _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2566,7 +2566,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentFavorite> GetFavorites(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite, _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(e), _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2911,7 +2911,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestLocationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation, _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(e), _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2936,7 +2936,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestLocationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation, _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(e), _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -3025,7 +3025,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItemsAsync(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem, _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(e), _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -3054,7 +3054,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItems(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem, _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(e), _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
         }
 
         /// <summary>

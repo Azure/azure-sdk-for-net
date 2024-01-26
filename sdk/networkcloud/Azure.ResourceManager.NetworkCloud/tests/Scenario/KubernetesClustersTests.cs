@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public KubernetesClustersTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task KubernetesClusters()
         {
             string resourceGroupName = TestEnvironment.ResourceGroup;

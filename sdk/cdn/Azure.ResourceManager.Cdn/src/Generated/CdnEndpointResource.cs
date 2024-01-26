@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CdnUsage.DeserializeCdnUsage, _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1049,7 +1049,7 @@ namespace Azure.ResourceManager.Cdn
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cdnEndpointRestClient.CreateListResourceUsageRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _cdnEndpointRestClient.CreateListResourceUsageNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CdnUsage.DeserializeCdnUsage, _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CdnUsage.DeserializeCdnUsage(e), _cdnEndpointClientDiagnostics, Pipeline, "CdnEndpointResource.GetResourceUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

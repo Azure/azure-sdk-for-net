@@ -5,36 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> Contains Provisioning errors. </summary>
+    /// <summary> The detailed status of the long running operation. </summary>
     public partial class VirtualNetworkPropertiesStatusOperationStatus
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
         internal VirtualNetworkPropertiesStatusOperationStatus()
         {
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkPropertiesStatusOperationStatus"/>. </summary>
-        /// <param name="error"></param>
-        /// <param name="operationId"></param>
-        /// <param name="phase"> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </param>
-        /// <param name="status"></param>
-        internal VirtualNetworkPropertiesStatusOperationStatus(HybridContainerServiceNetworkOperationError error, string operationId, string phase, string status)
+        /// <param name="error"> The error if any from the operation. </param>
+        /// <param name="operationId"> The identifier of the operation. </param>
+        /// <param name="status"> The status of the operation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkPropertiesStatusOperationStatus(HybridContainerServiceNetworkOperationError error, string operationId, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Error = error;
             OperationId = operationId;
-            Phase = phase;
             Status = status;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets the error. </summary>
+        /// <summary> The error if any from the operation. </summary>
         public HybridContainerServiceNetworkOperationError Error { get; }
-        /// <summary> Gets the operation id. </summary>
+        /// <summary> The identifier of the operation. </summary>
         public string OperationId { get; }
-        /// <summary> Phase represents the current phase of the virtual network provisioning. E.g. Pending, Running, Terminating, Failed etc. </summary>
-        public string Phase { get; }
-        /// <summary> Gets the status. </summary>
+        /// <summary> The status of the operation. </summary>
         public string Status { get; }
     }
 }
