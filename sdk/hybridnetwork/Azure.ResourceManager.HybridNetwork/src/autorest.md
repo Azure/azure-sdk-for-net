@@ -16,11 +16,12 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
 
- 
+
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -55,7 +56,7 @@ acronym-mapping:
 rename-mapping:
   HelmInstallOptions: HelmInstallConfig
   HelmUpgradeOptions: HelmUpgradeConfig
-  HelmMappingRuleProfileOptions: HelmMappingRuleProfileConfig 
+  HelmMappingRuleProfileOptions: HelmMappingRuleProfileConfig
   Resources: ComponentKubernetesResources
   Status: ComponentStatus
   DaemonSet: KubernetesDaemonSet

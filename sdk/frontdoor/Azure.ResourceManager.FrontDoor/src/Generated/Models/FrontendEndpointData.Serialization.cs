@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.FrontDoor.Models;
@@ -12,10 +15,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontendEndpointData : IUtf8JsonSerializable
+    public partial class FrontendEndpointData : IUtf8JsonSerializable, IJsonModel<FrontendEndpointData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontendEndpointData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FrontendEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -26,6 +37,11 @@ namespace Azure.ResourceManager.FrontDoor
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -49,12 +65,82 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
                 JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
             }
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            {
+                writer.WritePropertyName("resourceState"u8);
+                writer.WriteStringValue(ResourceState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningState))
+            {
+                if (CustomHttpsProvisioningState != null)
+                {
+                    writer.WritePropertyName("customHttpsProvisioningState"u8);
+                    writer.WriteStringValue(CustomHttpsProvisioningState.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("customHttpsProvisioningState");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsProvisioningSubstate))
+            {
+                if (CustomHttpsProvisioningSubstate != null)
+                {
+                    writer.WritePropertyName("customHttpsProvisioningSubstate"u8);
+                    writer.WriteStringValue(CustomHttpsProvisioningSubstate.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("customHttpsProvisioningSubstate");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomHttpsConfiguration))
+            {
+                if (CustomHttpsConfiguration != null)
+                {
+                    writer.WritePropertyName("customHttpsConfiguration"u8);
+                    writer.WriteObjectValue(CustomHttpsConfiguration);
+                }
+                else
+                {
+                    writer.WriteNull("customHttpsConfiguration");
+                }
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element)
+        FrontendEndpointData IJsonModel<FrontendEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontendEndpointData(document.RootElement, options);
+        }
+
+        internal static FrontendEndpointData DeserializeFrontendEndpointData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,6 +156,8 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<FrontendEndpointCustomHttpsProvisioningState?> customHttpsProvisioningState = default;
             Optional<FrontendEndpointCustomHttpsProvisioningSubstate?> customHttpsProvisioningSubstate = default;
             Optional<CustomHttpsConfiguration> customHttpsConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -178,8 +266,44 @@ namespace Azure.ResourceManager.FrontDoor
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FrontendEndpointData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, hostName.Value, Optional.ToNullable(sessionAffinityEnabledState), Optional.ToNullable(sessionAffinityTtlSeconds), webApplicationFirewallPolicyLink, Optional.ToNullable(resourceState), Optional.ToNullable(customHttpsProvisioningState), Optional.ToNullable(customHttpsProvisioningSubstate), customHttpsConfiguration.Value);
         }
+
+        BinaryData IPersistableModel<FrontendEndpointData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FrontendEndpointData IPersistableModel<FrontendEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontendEndpointData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFrontendEndpointData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontendEndpointData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FrontendEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

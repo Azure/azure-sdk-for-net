@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Grafana.Models
 {
     /// <summary>
@@ -13,6 +16,38 @@ namespace Azure.ResourceManager.Grafana.Models
     /// </summary>
     public partial class Smtp
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="Smtp"/>. </summary>
         public Smtp()
         {
@@ -39,7 +74,8 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Verify SSL for SMTP server. Default is false
         /// https://pkg.go.dev/crypto/tls#Config
         /// </param>
-        internal Smtp(bool? enabled, string host, string user, string password, string fromAddress, string fromName, StartTLSPolicy? startTLSPolicy, bool? skipVerify)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Smtp(bool? enabled, string host, string user, string password, string fromAddress, string fromName, StartTLSPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Enabled = enabled;
             Host = host;
@@ -49,6 +85,7 @@ namespace Azure.ResourceManager.Grafana.Models
             FromName = fromName;
             StartTLSPolicy = startTLSPolicy;
             SkipVerify = skipVerify;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Enable this to allow Grafana to send email. Default is false. </summary>
