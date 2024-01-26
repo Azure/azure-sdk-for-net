@@ -6,41 +6,48 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
-using System.Globalization;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using System.Xml;
 using Azure.Core;
-using Azure.Core.Serialization;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class AzureCliScript : IModelJsonSerializable<AzureCliScript>
+    public partial class AzureCliScript : IJsonModel<AzureCliScript>
     {
-        void IModelJsonSerializable<AzureCliScript>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<AzureCliScript>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        AzureCliScript IModelJsonSerializable<AzureCliScript>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        AzureCliScript IJsonModel<AzureCliScript>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeAzureCliScript(document.RootElement);
         }
 
-        BinaryData IModelSerializable<AzureCliScript>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<AzureCliScript>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCliScript>)this).GetFormatFromOptions(options) : options.Format;
 
-        AzureCliScript IModelSerializable<AzureCliScript>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureCliScript)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzureCliScript IPersistableModel<AzureCliScript>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeAzureCliScript(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<AzureCliScript>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");

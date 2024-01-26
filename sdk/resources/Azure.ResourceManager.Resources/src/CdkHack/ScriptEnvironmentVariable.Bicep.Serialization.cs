@@ -6,37 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ScriptEnvironmentVariable : IModelJsonSerializable<ScriptEnvironmentVariable>
+    public partial class ScriptEnvironmentVariable : IJsonModel<ScriptEnvironmentVariable>
     {
-        void IModelJsonSerializable<ScriptEnvironmentVariable>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<ScriptEnvironmentVariable>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        ScriptEnvironmentVariable IModelJsonSerializable<ScriptEnvironmentVariable>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        ScriptEnvironmentVariable IJsonModel<ScriptEnvironmentVariable>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeScriptEnvironmentVariable(document.RootElement);
         }
 
-        BinaryData IModelSerializable<ScriptEnvironmentVariable>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<ScriptEnvironmentVariable>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<ScriptEnvironmentVariable>)this).GetFormatFromOptions(options) : options.Format;
 
-        ScriptEnvironmentVariable IModelSerializable<ScriptEnvironmentVariable>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ScriptEnvironmentVariable)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ScriptEnvironmentVariable IPersistableModel<ScriptEnvironmentVariable>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeScriptEnvironmentVariable(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<ScriptEnvironmentVariable>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");
