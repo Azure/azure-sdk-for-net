@@ -3,9 +3,12 @@
 
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Models.Transcription
+namespace Azure.Communication.CallAutomation
 {
-    internal class Word
+    /// <summary>
+    /// The result for each word of the phrase
+    /// </summary>
+    public class WordData
     {
         /// <summary>
         /// Text in the phrase.
@@ -17,5 +20,11 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         /// </summary>
         [JsonPropertyName("offset")]
         public ulong Offset { get; set; }
+
+        /// <summary>
+        /// Duration in ticks. 1 tick = 100 nanoseconds.
+        /// </summary>
+        [JsonPropertyName("duration")]
+        public ulong Duration { get; set; }
     }
 }

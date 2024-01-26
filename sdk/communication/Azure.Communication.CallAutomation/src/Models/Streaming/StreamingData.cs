@@ -4,9 +4,9 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>
-    /// Transcription Package.
+    /// Base class for Streaming Data
     /// </summary>
-    public abstract class TranscriptionPackageBase
+    public abstract class StreamingData
     {
     }
 }

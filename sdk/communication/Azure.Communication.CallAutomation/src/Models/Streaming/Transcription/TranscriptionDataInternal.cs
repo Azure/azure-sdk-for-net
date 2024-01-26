@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Models.Transcription
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Streaming Transcription.
@@ -37,10 +37,16 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         public ulong Offset { get; set; }
 
         /// <summary>
+        /// Duration in ticks. 1 tick = 100 nanoseconds.
+        /// </summary>
+        [JsonPropertyName("duration")]
+        public ulong Duration { get; set; }
+
+        /// <summary>
         /// The result for each word of the phrase
         /// </summary>
         [JsonPropertyName("words")]
-        public IEnumerable<Word> Words { get; set; }
+        public IEnumerable<WordData> Words { get; set; }
 
         /// <summary>
         /// The identified speaker based on participant raw ID

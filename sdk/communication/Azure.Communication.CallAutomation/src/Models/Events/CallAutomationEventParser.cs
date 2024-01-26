@@ -142,8 +142,6 @@ namespace Azure.Communication.CallAutomation
                     return TranscriptionStarted.Deserialize(eventData);
                 case nameof(TranscriptionStopped):
                     return TranscriptionStopped.Deserialize(eventData);
-                case nameof(TranscriptionResumed):
-                    return TranscriptionResumed.Deserialize(eventData);
                 case nameof(TranscriptionFailed):
                     return TranscriptionFailed.Deserialize(eventData);
                 #region Dialog

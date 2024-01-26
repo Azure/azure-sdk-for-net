@@ -3,25 +3,25 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Azure.Communication.CallAutomation.Models.Transcription
+namespace Azure.Communication.CallAutomation
 {
     /// <summary>
     /// Streaming Transcription.
     /// </summary>
-    internal class TranscriptionData : TranscriptionPackageBase
+    public class TranscriptionData : StreamingData
     {
-        internal TranscriptionData(string text, string format, double confidence, ulong offset, IEnumerable<Word> words, string participantRawID, string resultStatus)
+        internal TranscriptionData(string text, string format, double confidence, ulong offset, ulong duration, IEnumerable<WordData> words, string participantRawID, string resultStatus)
         {
             Text = text;
             Format = ConvertToTextFormatEnum(format);
             Confidence = confidence;
             Offset = offset;
+            Duration = duration;
             Words = words;
             if (participantRawID != null)
             {
-                Participant = new CommunicationUserIdentifier(participantRawID);
+                Participant = CommunicationIdentifier.FromRawId(participantRawID);
             }
             ResultStatus = ConvertToResultStatusEnum(resultStatus);
         }
@@ -48,14 +48,19 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
         public ulong Offset { get; set; }
 
         /// <summary>
+        /// Duration in ticks. 1 tick = 100 nanoseconds.
+        /// </summary>
+        public ulong Duration { get; set; }
+
+        /// <summary>
         /// The result for each word of the phrase
         /// </summary>
-        public IEnumerable<Word> Words { get; set; }
+        public IEnumerable<WordData> Words { get; set; }
 
         /// <summary>
         /// The identified speaker based on participant raw ID
         /// </summary>
-        public CommunicationUserIdentifier Participant { get; set; }
+        public CommunicationIdentifier Participant { get; set; }
 
         /// <summary>
         /// Status of the result of transcription
@@ -64,26 +69,20 @@ namespace Azure.Communication.CallAutomation.Models.Transcription
 
         private static ResultStatus ConvertToResultStatusEnum(string resultStatus)
         {
-            switch (resultStatus)
-            {
-                case "intermediate":
-                    return ResultStatus.Intermediate;
-                case "final":
-                    return ResultStatus.Final;
-                default:
-                    throw new NotSupportedException(resultStatus);
-            }
+            if ("Intermediate".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
+                return ResultStatus.Intermediate;
+            else if ("Final".Equals(resultStatus, StringComparison.OrdinalIgnoreCase))
+                return ResultStatus.Final;
+            else
+                throw new NotSupportedException(resultStatus);
         }
 
         private static TextFormat ConvertToTextFormatEnum(string format)
         {
-            switch (format)
-            {
-                case "display":
-                    return TextFormat.Display;
-                default:
-                    throw new NotSupportedException(format);
-            }
+            if ("Display".Equals(format, StringComparison.OrdinalIgnoreCase))
+                return TextFormat.Display;
+            else
+                throw new NotSupportedException(format);
         }
     }
 }
