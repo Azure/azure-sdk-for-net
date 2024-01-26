@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> The UnknownDraModelCustomProperties. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownDraModelCustomProperties"/>. </summary>
         /// <param name="instanceType"> Gets or sets the instance type. </param>
-        internal UnknownDraModelCustomProperties(string instanceType) : base(instanceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownDraModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, serializedAdditionalRawData)
         {
             InstanceType = instanceType ?? "Unknown";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDraModelCustomProperties"/> for deserialization. </summary>
+        internal UnknownDraModelCustomProperties()
+        {
         }
     }
 }

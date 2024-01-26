@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class SqlDatabaseOutputDataSource : IUtf8JsonSerializable
+    public partial class SqlDatabaseOutputDataSource : IUtf8JsonSerializable, IJsonModel<SqlDatabaseOutputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDatabaseOutputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlDatabaseOutputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(OutputDataSourceType);
@@ -60,11 +71,40 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStringValue(AuthenticationMode.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlDatabaseOutputDataSource DeserializeSqlDatabaseOutputDataSource(JsonElement element)
+        SqlDatabaseOutputDataSource IJsonModel<SqlDatabaseOutputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlDatabaseOutputDataSource(document.RootElement, options);
+        }
+
+        internal static SqlDatabaseOutputDataSource DeserializeSqlDatabaseOutputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -78,6 +118,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<int> maxBatchCount = default;
             Optional<int> maxWriterCount = default;
             Optional<StreamAnalyticsAuthenticationMode> authenticationMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -149,8 +191,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlDatabaseOutputDataSource(type, server.Value, database.Value, user.Value, password.Value, table.Value, Optional.ToNullable(maxBatchCount), Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlDatabaseOutputDataSource(type, serializedAdditionalRawData, server.Value, database.Value, user.Value, password.Value, table.Value, Optional.ToNullable(maxBatchCount), Optional.ToNullable(maxWriterCount), Optional.ToNullable(authenticationMode));
         }
+
+        BinaryData IPersistableModel<SqlDatabaseOutputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlDatabaseOutputDataSource IPersistableModel<SqlDatabaseOutputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlDatabaseOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlDatabaseOutputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDatabaseOutputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlDatabaseOutputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

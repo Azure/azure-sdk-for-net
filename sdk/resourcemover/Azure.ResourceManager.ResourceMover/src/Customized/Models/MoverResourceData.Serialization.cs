@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceMover
                     continue;
                 }
             }
-            return new MoverResourceData(id, name, type, systemData.Value, properties.Value);
+            return new MoverResourceData(id, name, type, systemData.Value, properties.Value, null);
         }
     }
 }

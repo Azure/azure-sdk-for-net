@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageAzureV2SwitchProviderDetails
+    public partial class InMageAzureV2SwitchProviderDetails : IUtf8JsonSerializable, IJsonModel<InMageAzureV2SwitchProviderDetails>
     {
-        internal static InMageAzureV2SwitchProviderDetails DeserializeInMageAzureV2SwitchProviderDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageAzureV2SwitchProviderDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageAzureV2SwitchProviderDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TargetVaultId))
+            {
+                writer.WritePropertyName("targetVaultId"u8);
+                writer.WriteStringValue(TargetVaultId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetResourceId))
+            {
+                writer.WritePropertyName("targetResourceId"u8);
+                writer.WriteStringValue(TargetResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetFabricId))
+            {
+                writer.WritePropertyName("targetFabricId"u8);
+                writer.WriteStringValue(TargetFabricId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetApplianceId))
+            {
+                writer.WritePropertyName("targetApplianceId"u8);
+                writer.WriteStringValue(TargetApplianceId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageAzureV2SwitchProviderDetails IJsonModel<InMageAzureV2SwitchProviderDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageAzureV2SwitchProviderDetails(document.RootElement, options);
+        }
+
+        internal static InMageAzureV2SwitchProviderDetails DeserializeInMageAzureV2SwitchProviderDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<ResourceIdentifier> targetResourceId = default;
             Optional<ResourceIdentifier> targetFabricId = default;
             Optional<string> targetApplianceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetVaultId"u8))
@@ -56,8 +124,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     targetApplianceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageAzureV2SwitchProviderDetails(targetVaultId.Value, targetResourceId.Value, targetFabricId.Value, targetApplianceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InMageAzureV2SwitchProviderDetails(targetVaultId.Value, targetResourceId.Value, targetFabricId.Value, targetApplianceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InMageAzureV2SwitchProviderDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InMageAzureV2SwitchProviderDetails IPersistableModel<InMageAzureV2SwitchProviderDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2SwitchProviderDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageAzureV2SwitchProviderDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageAzureV2SwitchProviderDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageAzureV2SwitchProviderDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

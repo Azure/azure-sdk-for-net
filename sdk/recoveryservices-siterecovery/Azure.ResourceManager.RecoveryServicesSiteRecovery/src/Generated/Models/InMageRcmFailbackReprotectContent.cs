@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -28,15 +29,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReprotectContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="runAsAccountId"> The run as account Id. </param>
         /// <param name="policyId"> The Policy Id. </param>
-        internal InMageRcmFailbackReprotectContent(string instanceType, Guid processServerId, string runAsAccountId, ResourceIdentifier policyId) : base(instanceType)
+        internal InMageRcmFailbackReprotectContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, Guid processServerId, string runAsAccountId, ResourceIdentifier policyId) : base(instanceType, serializedAdditionalRawData)
         {
             ProcessServerId = processServerId;
             RunAsAccountId = runAsAccountId;
             PolicyId = policyId;
             InstanceType = instanceType ?? "InMageRcmFailback";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmFailbackReprotectContent"/> for deserialization. </summary>
+        internal InMageRcmFailbackReprotectContent()
+        {
         }
 
         /// <summary> The process server Id. </summary>

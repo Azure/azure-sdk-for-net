@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListLinkedDatabasesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase(e), _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _syncAgentRestClient.CreateListLinkedDatabasesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _syncAgentRestClient.CreateListLinkedDatabasesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase, _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SyncAgentLinkedDatabase.DeserializeSyncAgentLinkedDatabase(e), _syncAgentClientDiagnostics, Pipeline, "SyncAgentResource.GetLinkedDatabases", "value", "nextLink", cancellationToken);
         }
     }
 }
