@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class H265Video : IUtf8JsonSerializable
+    public partial class H265Video : IUtf8JsonSerializable, IJsonModel<H265Video>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<H265Video>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<H265Video>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<H265Video>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(H265Video)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UseSceneChangeDetection))
             {
@@ -59,11 +68,40 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static H265Video DeserializeH265Video(JsonElement element)
+        H265Video IJsonModel<H265Video>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<H265Video>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(H265Video)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeH265Video(document.RootElement, options);
+        }
+
+        internal static H265Video DeserializeH265Video(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -76,6 +114,8 @@ namespace Azure.ResourceManager.Media.Models
             Optional<VideoSyncMode> syncMode = default;
             string odataType = default;
             Optional<string> label = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sceneChangeDetection"u8))
@@ -147,8 +187,44 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new H265Video(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(sceneChangeDetection), Optional.ToNullable(complexity), Optional.ToList(layers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new H265Video(odataType, label.Value, serializedAdditionalRawData, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), Optional.ToNullable(sceneChangeDetection), Optional.ToNullable(complexity), Optional.ToList(layers));
         }
+
+        BinaryData IPersistableModel<H265Video>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<H265Video>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(H265Video)} does not support '{options.Format}' format.");
+            }
+        }
+
+        H265Video IPersistableModel<H265Video>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<H265Video>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeH265Video(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(H265Video)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<H265Video>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

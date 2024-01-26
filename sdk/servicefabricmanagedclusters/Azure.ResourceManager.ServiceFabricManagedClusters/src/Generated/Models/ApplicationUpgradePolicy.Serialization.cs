@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    public partial class ApplicationUpgradePolicy : IUtf8JsonSerializable
+    public partial class ApplicationUpgradePolicy : IUtf8JsonSerializable, IJsonModel<ApplicationUpgradePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationUpgradePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationUpgradePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationHealthPolicy))
             {
@@ -50,11 +61,40 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 writer.WritePropertyName("recreateApplication"u8);
                 writer.WriteBooleanValue(RecreateApplication.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element)
+        ApplicationUpgradePolicy IJsonModel<ApplicationUpgradePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationUpgradePolicy(document.RootElement, options);
+        }
+
+        internal static ApplicationUpgradePolicy DeserializeApplicationUpgradePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,6 +106,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             Optional<RollingUpgradeMode> upgradeMode = default;
             Optional<long> upgradeReplicaSetCheckTimeout = default;
             Optional<bool> recreateApplication = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationHealthPolicy"u8))
@@ -131,8 +173,44 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     recreateApplication = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationUpgradePolicy(applicationHealthPolicy.Value, Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, Optional.ToNullable(instanceCloseDelayDuration), Optional.ToNullable(upgradeMode), Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(recreateApplication));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ApplicationUpgradePolicy(applicationHealthPolicy.Value, Optional.ToNullable(forceRestart), rollingUpgradeMonitoringPolicy.Value, Optional.ToNullable(instanceCloseDelayDuration), Optional.ToNullable(upgradeMode), Optional.ToNullable(upgradeReplicaSetCheckTimeout), Optional.ToNullable(recreateApplication), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplicationUpgradePolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ApplicationUpgradePolicy IPersistableModel<ApplicationUpgradePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationUpgradePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationUpgradePolicy)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationUpgradePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> The properties that are associated with an Azure Storage account with MSI. </summary>
@@ -19,7 +22,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="accountName"> The name of the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="accountKey"> The account key for the Azure Storage account. Required on PUT (CreateOrReplace) requests. </param>
         /// <param name="authenticationMode"> Authentication Mode. </param>
-        internal StreamingJobStorageAccount(string accountName, string accountKey, StreamAnalyticsAuthenticationMode? authenticationMode) : base(accountName, accountKey, authenticationMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal StreamingJobStorageAccount(string accountName, string accountKey, StreamAnalyticsAuthenticationMode? authenticationMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(accountName, accountKey, authenticationMode, serializedAdditionalRawData)
         {
         }
     }

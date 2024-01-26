@@ -6,16 +6,150 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ServiceObjectiveCapability
+    public partial class ServiceObjectiveCapability : IUtf8JsonSerializable, IJsonModel<ServiceObjectiveCapability>
     {
-        internal static ServiceObjectiveCapability DeserializeServiceObjectiveCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceObjectiveCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceObjectiveCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaxSizes))
+            {
+                writer.WritePropertyName("supportedMaxSizes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedMaxSizes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(PerformanceLevel))
+            {
+                writer.WritePropertyName("performanceLevel"u8);
+                writer.WriteObjectValue(PerformanceLevel);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteObjectValue(Sku);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
+            {
+                writer.WritePropertyName("supportedLicenseTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedLicenseTypes)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
+            {
+                writer.WritePropertyName("includedMaxSize"u8);
+                writer.WriteObjectValue(IncludedMaxSize);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedAutoPauseDelay))
+            {
+                writer.WritePropertyName("supportedAutoPauseDelay"u8);
+                writer.WriteObjectValue(SupportedAutoPauseDelay);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMinCapacities))
+            {
+                writer.WritePropertyName("supportedMinCapacities"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedMinCapacities)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ComputeModel))
+            {
+                writer.WritePropertyName("computeModel"u8);
+                writer.WriteStringValue(ComputeModel);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMaintenanceConfigurations))
+            {
+                writer.WritePropertyName("supportedMaintenanceConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedMaintenanceConfigurations)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServiceObjectiveCapability IJsonModel<ServiceObjectiveCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceObjectiveCapability(document.RootElement, options);
+        }
+
+        internal static ServiceObjectiveCapability DeserializeServiceObjectiveCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -34,6 +168,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<IReadOnlyList<MaintenanceConfigurationCapability>> supportedMaintenanceConfigurations = default;
             Optional<SqlCapabilityStatus> status = default;
             Optional<string> reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -170,8 +306,44 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ServiceObjectiveCapability(Optional.ToNullable(id), name.Value, Optional.ToList(supportedMaxSizes), performanceLevel.Value, sku.Value, Optional.ToList(supportedLicenseTypes), includedMaxSize.Value, Optional.ToNullable(zoneRedundant), supportedAutoPauseDelay.Value, Optional.ToList(supportedMinCapacities), computeModel.Value, Optional.ToList(supportedMaintenanceConfigurations), Optional.ToNullable(status), reason.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceObjectiveCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ServiceObjectiveCapability IPersistableModel<ServiceObjectiveCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceObjectiveCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceObjectiveCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

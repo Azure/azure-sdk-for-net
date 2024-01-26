@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class EventGridStreamInputDataSource : IUtf8JsonSerializable
+    public partial class EventGridStreamInputDataSource : IUtf8JsonSerializable, IJsonModel<EventGridStreamInputDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridStreamInputDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventGridStreamInputDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StreamInputDataSourceType);
@@ -51,11 +61,40 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridStreamInputDataSource DeserializeEventGridStreamInputDataSource(JsonElement element)
+        EventGridStreamInputDataSource IJsonModel<EventGridStreamInputDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridStreamInputDataSource(document.RootElement, options);
+        }
+
+        internal static EventGridStreamInputDataSource DeserializeEventGridStreamInputDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +104,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             Optional<EventGridEventSchemaType> schema = default;
             Optional<IList<StreamAnalyticsStorageAccount>> storageAccounts = default;
             Optional<IList<string>> eventTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -130,8 +171,44 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridStreamInputDataSource(type, subscriber.Value, Optional.ToNullable(schema), Optional.ToList(storageAccounts), Optional.ToList(eventTypes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridStreamInputDataSource(type, serializedAdditionalRawData, subscriber.Value, Optional.ToNullable(schema), Optional.ToList(storageAccounts), Optional.ToList(eventTypes));
         }
+
+        BinaryData IPersistableModel<EventGridStreamInputDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventGridStreamInputDataSource IPersistableModel<EventGridStreamInputDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventGridStreamInputDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventGridStreamInputDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

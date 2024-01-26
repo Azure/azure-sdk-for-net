@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceFabricManagedApplicationTypeData(id, name, resourceType, systemData, tags, location, provisioningState);
+            return new ServiceFabricManagedApplicationTypeData(id, name, resourceType, systemData, tags, location, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationTypeVersionData"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceFabricManagedApplicationTypeVersionData(id, name, resourceType, systemData, tags, location, provisioningState, appPackageUri);
+            return new ServiceFabricManagedApplicationTypeVersionData(id, name, resourceType, systemData, tags, location, provisioningState, appPackageUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedApplicationData"/>. </summary>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             parameters ??= new Dictionary<string, string>();
             managedIdentities ??= new List<ApplicationUserAssignedIdentityInfo>();
 
-            return new ServiceFabricManagedApplicationData(id, name, resourceType, systemData, tags, location, identity, provisioningState, version, parameters, upgradePolicy, managedIdentities?.ToList());
+            return new ServiceFabricManagedApplicationData(id, name, resourceType, systemData, tags, location, identity, provisioningState, version, parameters, upgradePolicy, managedIdentities?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedServiceData"/>. </summary>
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceFabricManagedServiceData(id, name, resourceType, systemData, tags, location, properties);
+            return new ServiceFabricManagedServiceData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedServiceProperties"/>. </summary>
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             servicePlacementPolicies ??= new List<ManagedServicePlacementPolicy>();
             scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
 
-            return new ManagedServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName);
+            return new ManagedServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), serializedAdditionalRawData: null, provisioningState, serviceKind, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/>. </summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             auxiliarySubnets ??= new List<ManagedClusterSubnet>();
             serviceEndpoints ??= new List<ManagedClusterServiceEndpoint>();
 
-            return new ServiceFabricManagedClusterData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new ServiceFabricManagedClustersSku(skuName.Value) : null, dnsName, fqdn, ipv4Address, clusterId, clusterState, clusterCertificateThumbprints?.ToList(), clientConnectionPort, httpGatewayConnectionPort, adminUserName, adminPassword, loadBalancingRules?.ToList(), isRdpAccessAllowed, networkSecurityRules?.ToList(), clients?.ToList(), azureActiveDirectory, fabricSettings?.ToList(), provisioningState, clusterCodeVersion, clusterUpgradeMode, clusterUpgradeCadence, addOnFeatures?.ToList(), isAutoOSUpgradeEnabled, hasZoneResiliency, maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value) : null, isIPv6Enabled, subnetId, ipTags?.ToList(), ipv6Address, isServicePublicIPEnabled, auxiliarySubnets?.ToList(), serviceEndpoints?.ToList(), zonalUpdateMode, useCustomVnet, publicIPPrefixId, etag);
+            return new ServiceFabricManagedClusterData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new ServiceFabricManagedClustersSku(skuName.Value, serializedAdditionalRawData: null) : null, dnsName, fqdn, ipv4Address, clusterId, clusterState, clusterCertificateThumbprints?.ToList(), clientConnectionPort, httpGatewayConnectionPort, adminUserName, adminPassword, loadBalancingRules?.ToList(), isRdpAccessAllowed, networkSecurityRules?.ToList(), clients?.ToList(), azureActiveDirectory, fabricSettings?.ToList(), provisioningState, clusterCodeVersion, clusterUpgradeMode, clusterUpgradeCadence, addOnFeatures?.ToList(), isAutoOSUpgradeEnabled, hasZoneResiliency, maxUnusedVersionsToKeep.HasValue ? new ApplicationTypeVersionsCleanupPolicy(maxUnusedVersionsToKeep.Value, serializedAdditionalRawData: null) : null, isIPv6Enabled, subnetId, ipTags?.ToList(), ipv6Address, isServicePublicIPEnabled, auxiliarySubnets?.ToList(), serviceEndpoints?.ToList(), zonalUpdateMode, useCustomVnet, publicIPPrefixId, etag, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedAzResiliencyStatus"/>. </summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             baseResourceStatus ??= new List<ResourceAzStatus>();
 
-            return new ManagedAzResiliencyStatus(baseResourceStatus?.ToList(), isClusterZoneResilient);
+            return new ManagedAzResiliencyStatus(baseResourceStatus?.ToList(), isClusterZoneResilient, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceAzStatus"/>. </summary>
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ResourceAzStatus"/> instance for mocking. </returns>
         public static ResourceAzStatus ResourceAzStatus(string resourceName = null, ResourceType? resourceType = null, bool? isZoneResilient = null)
         {
-            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient);
+            return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedClusterVersion"/>. </summary>
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ServiceFabricManagedClusterVersion"/> instance for mocking. </returns>
         public static ServiceFabricManagedClusterVersion ServiceFabricManagedClusterVersion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string clusterCodeVersion = null, DateTimeOffset? versionSupportExpireOn = null, ServiceFabricManagedClusterOSType? osType = null)
         {
-            return new ServiceFabricManagedClusterVersion(id, name, resourceType, systemData, clusterCodeVersion, versionSupportExpireOn, osType);
+            return new ServiceFabricManagedClusterVersion(id, name, resourceType, systemData, clusterCodeVersion, versionSupportExpireOn, osType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/>. </summary>
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
         public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vmSize = null)
         {
-            return new ServiceFabricManagedUnsupportedVmSize(id, name, resourceType, systemData, vmSize != null ? new VmSize(vmSize) : null);
+            return new ServiceFabricManagedUnsupportedVmSize(id, name, resourceType, systemData, vmSize != null ? new VmSize(vmSize, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/>. </summary>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             vmSetupActions ??= new List<VmSetupAction>();
             tags ??= new Dictionary<string, string>();
 
-            return new ServiceFabricManagedNodeTypeData(id, name, resourceType, systemData, sku, isPrimary, vmInstanceCount, dataDiskSizeInGB, dataDiskType, dataDiskLetter, placementProperties, capacities, applicationPorts, ephemeralPorts, vmSize, vmImagePublisher, vmImageOffer, vmImageSku, vmImageVersion, vmSecrets?.ToList(), vmExtensions?.ToList(), userAssignedIdentities != null ? new VmManagedIdentity(userAssignedIdentities?.ToList()) : null, isStateless, hasMultiplePlacementGroups, frontendConfigurations?.ToList(), networkSecurityRules?.ToList(), additionalDataDisks?.ToList(), isEncryptionAtHostEnabled, provisioningState, isAcceleratedNetworkingEnabled, useDefaultPublicLoadBalancer, useTempDataDisk, isOverProvisioningEnabled, zones?.ToList(), isSpotVm, hostGroupId, useEphemeralOSDisk, spotRestoreTimeout, evictionPolicy, vmImageResourceId, subnetId, vmSetupActions?.ToList(), securityType, isSecureBootEnabled, isNodePublicIPEnabled, vmSharedGalleryImageId, natGatewayId, vmImagePlan, tags);
+            return new ServiceFabricManagedNodeTypeData(id, name, resourceType, systemData, sku, isPrimary, vmInstanceCount, dataDiskSizeInGB, dataDiskType, dataDiskLetter, placementProperties, capacities, applicationPorts, ephemeralPorts, vmSize, vmImagePublisher, vmImageOffer, vmImageSku, vmImageVersion, vmSecrets?.ToList(), vmExtensions?.ToList(), userAssignedIdentities != null ? new VmManagedIdentity(userAssignedIdentities?.ToList(), serializedAdditionalRawData: null) : null, isStateless, hasMultiplePlacementGroups, frontendConfigurations?.ToList(), networkSecurityRules?.ToList(), additionalDataDisks?.ToList(), isEncryptionAtHostEnabled, provisioningState, isAcceleratedNetworkingEnabled, useDefaultPublicLoadBalancer, useTempDataDisk, isOverProvisioningEnabled, zones?.ToList(), isSpotVm, hostGroupId, useEphemeralOSDisk, spotRestoreTimeout, evictionPolicy, vmImageResourceId, subnetId, vmSetupActions?.ToList(), securityType, isSecureBootEnabled, isNodePublicIPEnabled, vmSharedGalleryImageId, natGatewayId, vmImagePlan, tags, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NodeTypeVmssExtension"/>. </summary>
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         {
             provisionAfterExtensions ??= new List<string>();
 
-            return new NodeTypeVmssExtension(name, publisher, vmssExtensionPropertiesType, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings, forceUpdateTag, provisionAfterExtensions?.ToList(), provisioningState, isAutomaticUpgradeEnabled);
+            return new NodeTypeVmssExtension(name, publisher, vmssExtensionPropertiesType, typeHandlerVersion, autoUpgradeMinorVersion, settings, protectedSettings, forceUpdateTag, provisionAfterExtensions?.ToList(), provisioningState, isAutomaticUpgradeEnabled, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NodeTypeAvailableSku"/>. </summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.NodeTypeAvailableSku"/> instance for mocking. </returns>
         public static NodeTypeAvailableSku NodeTypeAvailableSku(ResourceType? resourceType = null, NodeTypeSupportedSku sku = null, NodeTypeSkuCapacity capacity = null)
         {
-            return new NodeTypeAvailableSku(resourceType, sku, capacity);
+            return new NodeTypeAvailableSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NodeTypeSupportedSku"/>. </summary>
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.NodeTypeSupportedSku"/> instance for mocking. </returns>
         public static NodeTypeSupportedSku NodeTypeSupportedSku(string name = null, string tier = null)
         {
-            return new NodeTypeSupportedSku(name, tier);
+            return new NodeTypeSupportedSku(name, tier, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NodeTypeSkuCapacity"/>. </summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <returns> A new <see cref="Models.NodeTypeSkuCapacity"/> instance for mocking. </returns>
         public static NodeTypeSkuCapacity NodeTypeSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, NodeTypeSkuScaleType? scaleType = null)
         {
-            return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType);
+            return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StatefulServiceProperties"/>. </summary>
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             servicePlacementPolicies ??= new List<ManagedServicePlacementPolicy>();
             scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
 
-            return new StatefulServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), provisioningState, ServiceKind.Stateful, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName, hasPersistedState, targetReplicaSetSize, minReplicaSetSize, replicaRestartWaitDuration, quorumLossWaitDuration, standByReplicaKeepDuration, servicePlacementTimeLimit);
+            return new StatefulServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), serializedAdditionalRawData: null, provisioningState, ServiceKind.Stateful, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName, hasPersistedState, targetReplicaSetSize, minReplicaSetSize, replicaRestartWaitDuration, quorumLossWaitDuration, standByReplicaKeepDuration, servicePlacementTimeLimit);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StatelessServiceProperties"/>. </summary>
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             servicePlacementPolicies ??= new List<ManagedServicePlacementPolicy>();
             scalingPolicies ??= new List<ManagedServiceScalingPolicy>();
 
-            return new StatelessServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), provisioningState, ServiceKind.Stateless, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName, instanceCount, minInstanceCount, minInstancePercentage);
+            return new StatelessServiceProperties(placementConstraints, correlationScheme?.ToList(), serviceLoadMetrics?.ToList(), servicePlacementPolicies?.ToList(), defaultMoveCost, scalingPolicies?.ToList(), serializedAdditionalRawData: null, provisioningState, ServiceKind.Stateless, serviceTypeName, partitionDescription, servicePackageActivationMode, serviceDnsName, instanceCount, minInstanceCount, minInstancePercentage);
         }
     }
 }

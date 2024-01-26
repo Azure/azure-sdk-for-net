@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventGrid
 {
-    public partial class EventGridNamespaceData : IUtf8JsonSerializable
+    public partial class EventGridNamespaceData : IUtf8JsonSerializable, IJsonModel<EventGridNamespaceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridNamespaceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EventGridNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
@@ -41,6 +51,26 @@ namespace Azure.ResourceManager.EventGrid
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PrivateEndpointConnections))
@@ -52,6 +82,11 @@ namespace Azure.ResourceManager.EventGrid
                     writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(TopicsConfiguration))
             {
@@ -89,11 +124,40 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStringValue(MinimumTlsVersionAllowed.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static EventGridNamespaceData DeserializeEventGridNamespaceData(JsonElement element)
+        EventGridNamespaceData IJsonModel<EventGridNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEventGridNamespaceData(document.RootElement, options);
+        }
+
+        internal static EventGridNamespaceData DeserializeEventGridNamespaceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,6 +178,8 @@ namespace Azure.ResourceManager.EventGrid
             Optional<EventGridPublicNetworkAccess> publicNetworkAccess = default;
             Optional<IList<EventGridInboundIPRule>> inboundIPRules = default;
             Optional<TlsVersion> minimumTlsVersionAllowed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -271,8 +337,44 @@ namespace Azure.ResourceManager.EventGrid
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EventGridNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), topicsConfiguration.Value, topicSpacesConfiguration.Value, Optional.ToNullable(isZoneRedundant), Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(minimumTlsVersionAllowed));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new EventGridNamespaceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, identity, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), topicsConfiguration.Value, topicSpacesConfiguration.Value, Optional.ToNullable(isZoneRedundant), Optional.ToNullable(publicNetworkAccess), Optional.ToList(inboundIPRules), Optional.ToNullable(minimumTlsVersionAllowed), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        EventGridNamespaceData IPersistableModel<EventGridNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEventGridNamespaceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EventGridNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

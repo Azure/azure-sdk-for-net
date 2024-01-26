@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The ClassificationModelPerformanceMetricThreshold. </summary>
@@ -21,11 +24,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="ClassificationModelPerformanceMetricThreshold"/>. </summary>
         /// <param name="modelType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="metric"> [Required] The classification model performance to calculate. </param>
-        internal ClassificationModelPerformanceMetricThreshold(MonitoringModelType modelType, MonitoringThreshold threshold, ClassificationModelPerformanceMetric metric) : base(modelType, threshold)
+        internal ClassificationModelPerformanceMetricThreshold(MonitoringModelType modelType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationModelPerformanceMetric metric) : base(modelType, threshold, serializedAdditionalRawData)
         {
             Metric = metric;
             ModelType = modelType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ClassificationModelPerformanceMetricThreshold"/> for deserialization. </summary>
+        internal ClassificationModelPerformanceMetricThreshold()
+        {
         }
 
         /// <summary> [Required] The classification model performance to calculate. </summary>

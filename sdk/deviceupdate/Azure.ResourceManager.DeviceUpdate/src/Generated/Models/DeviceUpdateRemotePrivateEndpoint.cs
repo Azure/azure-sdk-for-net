@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
     /// <summary> Remote private endpoint details. </summary>
     public partial class DeviceUpdateRemotePrivateEndpoint
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DeviceUpdateRemotePrivateEndpoint"/>. </summary>
         public DeviceUpdateRemotePrivateEndpoint()
         {
@@ -32,7 +65,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
         /// <param name="privateLinkServiceConnections"> List of automatically approved private link service connections. </param>
         /// <param name="privateLinkServiceProxies"> List of private link service proxies. </param>
         /// <param name="connectionDetails"> List of connection details. </param>
-        internal DeviceUpdateRemotePrivateEndpoint(ResourceIdentifier id, AzureLocation? location, string immutableSubscriptionId, ResourceIdentifier immutableResourceId, string vnetTrafficTag, IList<DeviceUpdatePrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<DeviceUpdatePrivateLinkServiceConnection> privateLinkServiceConnections, IList<DeviceUpdatePrivateLinkServiceProxy> privateLinkServiceProxies, IList<DeviceUpdatePrivateEndpointConnectionDetails> connectionDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DeviceUpdateRemotePrivateEndpoint(ResourceIdentifier id, AzureLocation? location, string immutableSubscriptionId, ResourceIdentifier immutableResourceId, string vnetTrafficTag, IList<DeviceUpdatePrivateLinkServiceConnection> manualPrivateLinkServiceConnections, IList<DeviceUpdatePrivateLinkServiceConnection> privateLinkServiceConnections, IList<DeviceUpdatePrivateLinkServiceProxy> privateLinkServiceProxies, IList<DeviceUpdatePrivateEndpointConnectionDetails> connectionDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Location = location;
@@ -43,6 +77,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             PrivateLinkServiceConnections = privateLinkServiceConnections;
             PrivateLinkServiceProxies = privateLinkServiceProxies;
             ConnectionDetails = connectionDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Remote endpoint resource ID. </summary>

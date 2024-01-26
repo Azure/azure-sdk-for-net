@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ExtendedErrorInfo : IUtf8JsonSerializable
+    public partial class ExtendedErrorInfo : IUtf8JsonSerializable, IJsonModel<ExtendedErrorInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtendedErrorInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExtendedErrorInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedErrorInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Code))
             {
@@ -51,11 +61,40 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element)
+        ExtendedErrorInfo IJsonModel<ExtendedErrorInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtendedErrorInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtendedErrorInfo(document.RootElement, options);
+        }
+
+        internal static ExtendedErrorInfo DeserializeExtendedErrorInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -65,6 +104,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             Optional<string> message = default;
             Optional<IList<ExtendedErrorInfo>> details = default;
             Optional<IList<TypedErrorInfo>> additionalInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -110,8 +151,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     additionalInfo = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ExtendedErrorInfo(code.Value, target.Value, message.Value, Optional.ToList(details), Optional.ToList(additionalInfo), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExtendedErrorInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedErrorInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ExtendedErrorInfo IPersistableModel<ExtendedErrorInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtendedErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExtendedErrorInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtendedErrorInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExtendedErrorInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
