@@ -4,8 +4,12 @@
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2023-09-01' to 'package-2023-10-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/ce47f9b775ec53750f37def0402ecacf3f1d661b/specification/compute/resource-manager/readme.md.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-- Disk RP to `2023-10-02` (ManagedDisks, Snapshots, etc)
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.10.0.
 
 ## 1.3.0 (2023-12-29)
 
