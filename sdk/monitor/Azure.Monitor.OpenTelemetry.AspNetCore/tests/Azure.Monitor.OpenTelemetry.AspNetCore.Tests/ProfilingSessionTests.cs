@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             ActivitySource activitySource = new("Azure.Monitor.TestSource");
 
             // Simulate a profiler session starting
-            using IDisposable profilingSession = _profiler.StartProfiling();
+            using IDisposable profilerSession = _profiler.StartProfiling();
 
             // Start and stop an activity.
             using Activity? activity = activitySource.StartActivity("Test");
@@ -94,8 +94,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
         /// <summary>
         /// Simulation of a profiler that can start and stop profiling sessions
-        /// and communicate the session ID to the <see cref="ProfilingSession"/>
-        /// EventSource.
+        /// and communicate the session ID to the <see cref="ProfilingSessionEventSource"/>.
         /// </summary>
         private sealed class Profiler : EventListener
         {
