@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AppCertificateData : IUtf8JsonSerializable, IJsonModel<AppCertificateData>
     {
-        internal static AppCertificateData DeserializeAppCertificateData(JsonElement element, ModelReaderWriterOptions options)
+        internal static AppCertificateData DeserializeAppCertificateData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
