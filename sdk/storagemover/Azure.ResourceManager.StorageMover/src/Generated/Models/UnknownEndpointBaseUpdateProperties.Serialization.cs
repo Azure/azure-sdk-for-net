@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    public partial class AzureStorageBlobContainerEndpointUpdateProperties : IUtf8JsonSerializable, IJsonModel<AzureStorageBlobContainerEndpointUpdateProperties>
+    internal partial class UnknownEndpointBaseUpdateProperties : IUtf8JsonSerializable, IJsonModel<EndpointBaseUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureStorageBlobContainerEndpointUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EndpointBaseUpdateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<AzureStorageBlobContainerEndpointUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EndpointBaseUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteEndObject();
         }
 
-        AzureStorageBlobContainerEndpointUpdateProperties IJsonModel<AzureStorageBlobContainerEndpointUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EndpointBaseUpdateProperties IJsonModel<EndpointBaseUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAzureStorageBlobContainerEndpointUpdateProperties(document.RootElement, options);
+            return DeserializeUnknownEndpointBaseUpdateProperties(document.RootElement, options);
         }
 
-        internal static AzureStorageBlobContainerEndpointUpdateProperties DeserializeAzureStorageBlobContainerEndpointUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UnknownEndpointBaseUpdateProperties DeserializeUnknownEndpointBaseUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             {
                 return null;
             }
-            EndpointType endpointType = default;
+            EndpointType endpointType = "Unknown";
             Optional<string> description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,38 +93,38 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureStorageBlobContainerEndpointUpdateProperties(endpointType, description.Value, serializedAdditionalRawData);
+            return new UnknownEndpointBaseUpdateProperties(endpointType, description.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EndpointBaseUpdateProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support '{options.Format}' format.");
             }
         }
 
-        AzureStorageBlobContainerEndpointUpdateProperties IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EndpointBaseUpdateProperties IPersistableModel<EndpointBaseUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EndpointBaseUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAzureStorageBlobContainerEndpointUpdateProperties(document.RootElement, options);
+                        return DeserializeUnknownEndpointBaseUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureStorageBlobContainerEndpointUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointBaseUpdateProperties)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AzureStorageBlobContainerEndpointUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EndpointBaseUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
