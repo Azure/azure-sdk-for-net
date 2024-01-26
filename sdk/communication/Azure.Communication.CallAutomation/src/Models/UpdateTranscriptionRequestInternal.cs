@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("UpdateTranscriptionDataRequest")]
-    internal partial class UpdateTranscriptionDataRequestInternal
+    [CodeGenModel("UpdateTranscriptionRequest")]
+    internal partial class UpdateTranscriptionRequestInternal
     {
     }
 }

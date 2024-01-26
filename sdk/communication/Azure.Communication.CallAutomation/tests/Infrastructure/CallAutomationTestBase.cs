@@ -49,7 +49,6 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         protected string CreateOrAnswerCallOrGetCallConnectionPayload = string.Format(DummyPayload, NoneMediaSubscriptionId, NoneDataSubscriptionId);
         protected string CreateOrAnswerCallOrGetCallConnectionWithMediaSubscriptionAndTranscriptionPayload = string.Format(DummyPayload, MediaSubscriptionId, DataSubscriptionId);
 
-
         internal CallAutomationClient CreateMockCallAutomationClient(int responseCode, object? responseContent = null, HttpHeader[]? httpHeaders = null)
         {
             var mockResponse = new MockResponse(responseCode);

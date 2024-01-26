@@ -941,11 +941,10 @@ namespace Azure.Communication.CallAutomation.Tests.Events
             }
         }
 
-
         [Test]
         public void TranscriptionStartedEventParsed_Test()
         {
-            TranscriptionStarted @event = CommunicationCallAutomationModelFactory.TranscriptionStarted(
+            TranscriptionStarted @event = CallAutomationModelFactory.TranscriptionStarted(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -974,7 +973,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void TranscriptionStoppedEventParsed_Test()
         {
-            TranscriptionStopped @event = CommunicationCallAutomationModelFactory.TranscriptionStopped(
+            TranscriptionStopped @event = CallAutomationModelFactory.TranscriptionStopped(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
@@ -1003,13 +1002,13 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void TranscriptionResumedEventParsed_Test()
         {
-            TranscriptionResumed @event = CommunicationCallAutomationModelFactory.TranscriptionResumed(
+            TranscriptionResumed @event = CallAutomationModelFactory.TranscriptionResumed(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",
                 operationContext: "operationContext",
                 resultInformation: new ResultInformation(code: 200, subCode: 0, message: "Action completed successfully"),
-                transcriptionUpdateResult: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionResumed, transcriptionStatusDetails: TranscriptionStatusDetails.StreamConnectionReestablished));
+                transcriptionUpdate: new TranscriptionUpdate(transcriptionStatus: TranscriptionStatus.TranscriptionResumed, transcriptionStatusDetails: TranscriptionStatusDetails.StreamConnectionReestablished));
             JsonSerializerOptions jsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
             string jsonEvent = JsonSerializer.Serialize(@event, jsonOptions);
             var parsedEvent = CallAutomationEventParser.Parse(jsonEvent, "Microsoft.Communication.TranscriptionResumed");
@@ -1020,8 +1019,8 @@ namespace Azure.Communication.CallAutomation.Tests.Events
                 Assert.AreEqual("serverCallId", transcriptionResumed.ServerCallId);
                 Assert.AreEqual("operationContext", transcriptionResumed.OperationContext);
                 Assert.AreEqual(200, transcriptionResumed.ResultInformation?.Code);
-                Assert.AreEqual(TranscriptionStatus.TranscriptionResumed, transcriptionResumed.TranscriptionUpdateResult.TranscriptionStatus);
-                Assert.AreEqual(TranscriptionStatusDetails.StreamConnectionReestablished, transcriptionResumed.TranscriptionUpdateResult.TranscriptionStatusDetails);
+                Assert.AreEqual(TranscriptionStatus.TranscriptionResumed, transcriptionResumed.TranscriptionUpdate.TranscriptionStatus);
+                Assert.AreEqual(TranscriptionStatusDetails.StreamConnectionReestablished, transcriptionResumed.TranscriptionUpdate.TranscriptionStatusDetails);
             }
             else
             {
@@ -1032,7 +1031,7 @@ namespace Azure.Communication.CallAutomation.Tests.Events
         [Test]
         public void TranscriptionFailedEventParsed_Test()
         {
-            TranscriptionFailed @event = CommunicationCallAutomationModelFactory.TranscriptionFailed(
+            TranscriptionFailed @event = CallAutomationModelFactory.TranscriptionFailed(
                 callConnectionId: "callConnectionId",
                 serverCallId: "serverCallId",
                 correlationId: "correlationId",

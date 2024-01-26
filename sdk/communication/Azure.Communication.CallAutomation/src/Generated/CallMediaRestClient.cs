@@ -260,7 +260,7 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
-        internal HttpMessage CreateUpdateTranscriptionRequest(string callConnectionId, UpdateTranscriptionRequest updateTranscriptionRequest)
+        internal HttpMessage CreateUpdateTranscriptionRequest(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -286,7 +286,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>
-        public async Task<Response> UpdateTranscriptionAsync(string callConnectionId, UpdateTranscriptionRequest updateTranscriptionRequest, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateTranscriptionAsync(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
@@ -314,7 +314,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="updateTranscriptionRequest"/> is null. </exception>
         /// <remarks> API to change transcription language. </remarks>
-        public Response UpdateTranscription(string callConnectionId, UpdateTranscriptionRequest updateTranscriptionRequest, CancellationToken cancellationToken = default)
+        public Response UpdateTranscription(string callConnectionId, UpdateTranscriptionRequestInternal updateTranscriptionRequest, CancellationToken cancellationToken = default)
         {
             if (callConnectionId == null)
             {
