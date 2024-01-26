@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The KerberosPasswordSecrets. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="KerberosPasswordSecrets"/>. </summary>
         /// <param name="secretsType"> [Required] Credential type used to authentication with storage. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kerberosPassword"> Kerberos password secret. </param>
-        internal KerberosPasswordSecrets(SecretsType secretsType, string kerberosPassword) : base(secretsType)
+        internal KerberosPasswordSecrets(SecretsType secretsType, IDictionary<string, BinaryData> serializedAdditionalRawData, string kerberosPassword) : base(secretsType, serializedAdditionalRawData)
         {
             KerberosPassword = kerberosPassword;
             SecretsType = secretsType;

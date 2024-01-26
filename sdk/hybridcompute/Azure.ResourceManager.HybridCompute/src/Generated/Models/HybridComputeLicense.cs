@@ -15,6 +15,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> Describes a license in a hybrid machine. </summary>
     public partial class HybridComputeLicense : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicense"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridComputeLicense(AzureLocation location) : base(location)
@@ -32,12 +64,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="tenantId"> Describes the tenant id. </param>
         /// <param name="licenseType"> The type of the license resource. </param>
         /// <param name="licenseDetails"> Describes the properties of a License. </param>
-        internal HybridComputeLicense(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, Guid? tenantId, HybridComputeLicenseType? licenseType, HybridComputeLicenseDetails licenseDetails) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeLicense(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HybridComputeProvisioningState? provisioningState, Guid? tenantId, HybridComputeLicenseType? licenseType, HybridComputeLicenseDetails licenseDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             TenantId = tenantId;
             LicenseType = licenseType;
             LicenseDetails = licenseDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeLicense"/> for deserialization. </summary>
+        internal HybridComputeLicense()
+        {
         }
 
         /// <summary> The provisioning state, which only appears in the response. </summary>

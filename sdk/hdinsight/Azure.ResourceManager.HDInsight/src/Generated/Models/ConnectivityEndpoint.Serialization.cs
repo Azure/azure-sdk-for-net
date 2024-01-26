@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class ConnectivityEndpoint : IUtf8JsonSerializable
+    public partial class ConnectivityEndpoint : IUtf8JsonSerializable, IJsonModel<ConnectivityEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectivityEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityEndpoint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -41,11 +52,40 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConnectivityEndpoint DeserializeConnectivityEndpoint(JsonElement element)
+        ConnectivityEndpoint IJsonModel<ConnectivityEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityEndpoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityEndpoint(document.RootElement, options);
+        }
+
+        internal static ConnectivityEndpoint DeserializeConnectivityEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -55,6 +95,8 @@ namespace Azure.ResourceManager.HDInsight.Models
             Optional<string> location = default;
             Optional<int> port = default;
             Optional<IPAddress> privateIPAddress = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -90,8 +132,44 @@ namespace Azure.ResourceManager.HDInsight.Models
                     privateIPAddress = IPAddress.Parse(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityEndpoint(name.Value, protocol.Value, location.Value, Optional.ToNullable(port), privateIPAddress.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectivityEndpoint(name.Value, protocol.Value, location.Value, Optional.ToNullable(port), privateIPAddress.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConnectivityEndpoint IPersistableModel<ConnectivityEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectivityEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectivityEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

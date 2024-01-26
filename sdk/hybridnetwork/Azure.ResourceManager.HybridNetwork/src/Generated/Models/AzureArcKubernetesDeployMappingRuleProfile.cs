@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
     /// <summary> Azure arc kubernetes deploy mapping rule profile. </summary>
@@ -17,8 +20,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureArcKubernetesDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="helmMappingRuleProfile"> The helm mapping rule profile. </param>
-        internal AzureArcKubernetesDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, HelmMappingRuleProfile helmMappingRuleProfile) : base(applicationEnablement)
+        internal AzureArcKubernetesDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, HelmMappingRuleProfile helmMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
         {
             HelmMappingRuleProfile = helmMappingRuleProfile;
         }

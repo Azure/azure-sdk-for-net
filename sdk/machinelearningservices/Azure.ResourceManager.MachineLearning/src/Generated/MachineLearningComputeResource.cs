@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNodesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(e), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -492,7 +492,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _machineLearningComputeComputeRestClient.CreateListNodesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _machineLearningComputeComputeRestClient.CreateListNodesNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation, _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AmlComputeNodeInformation.DeserializeAmlComputeNodeInformation(e), _machineLearningComputeComputeClientDiagnostics, Pipeline, "MachineLearningComputeResource.GetNodes", "nodes", "nextLink", cancellationToken);
         }
 
         /// <summary>
