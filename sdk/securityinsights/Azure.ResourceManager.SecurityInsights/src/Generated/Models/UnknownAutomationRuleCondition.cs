@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> The UnknownAutomationRuleCondition. </summary>
@@ -12,9 +15,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAutomationRuleCondition"/>. </summary>
         /// <param name="conditionType"></param>
-        internal UnknownAutomationRuleCondition(ConditionType conditionType) : base(conditionType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownAutomationRuleCondition(ConditionType conditionType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(conditionType, serializedAdditionalRawData)
         {
             ConditionType = conditionType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownAutomationRuleCondition"/> for deserialization. </summary>
+        internal UnknownAutomationRuleCondition()
+        {
         }
     }
 }
