@@ -60,7 +60,7 @@ namespace Azure.Core
         /// </summary>
         public virtual bool IsErrorResponse(HttpMessage message)
         {
-            bool classified = base.TryClassify(message, out bool isError);
+            bool classified = Default.TryClassify(message, out bool isError);
 
             Debug.Assert(classified);
 
