@@ -11,11 +11,6 @@ namespace Azure.AI.OpenAI.Assistants
     internal partial class UnknownMessageContent : MessageContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMessageContent"/>. </summary>
-        internal UnknownMessageContent()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageContent"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal UnknownMessageContent(string type) : base(type)
         {

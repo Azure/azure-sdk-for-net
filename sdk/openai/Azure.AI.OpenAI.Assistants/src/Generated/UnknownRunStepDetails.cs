@@ -11,11 +11,6 @@ namespace Azure.AI.OpenAI.Assistants
     internal partial class UnknownRunStepDetails : RunStepDetails
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRunStepDetails"/>. </summary>
-        internal UnknownRunStepDetails()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRunStepDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal UnknownRunStepDetails(RunStepType type) : base(type)
         {

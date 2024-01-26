@@ -5,24 +5,11 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> Unknown version of MessageTextAnnotation. </summary>
     internal partial class UnknownMessageTextAnnotation : MessageTextAnnotation
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownMessageTextAnnotation"/>. </summary>
-        /// <param name="text"> The textual content associated with this text annotation item. </param>
-        /// <param name="startIndex"> The first text index associated with this text annotation. </param>
-        /// <param name="endIndex"> The last text index associated with this text annotation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
-        internal UnknownMessageTextAnnotation(string text, int startIndex, int endIndex) : base(text, startIndex, endIndex)
-        {
-            Argument.AssertNotNull(text, nameof(text));
-        }
-
         /// <summary> Initializes a new instance of <see cref="UnknownMessageTextAnnotation"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="text"> The textual content associated with this text annotation item. </param>

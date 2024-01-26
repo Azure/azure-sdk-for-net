@@ -5,22 +5,11 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> Unknown version of RequiredToolCall. </summary>
     internal partial class UnknownRequiredToolCall : RequiredToolCall
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownRequiredToolCall"/>. </summary>
-        /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
-        internal UnknownRequiredToolCall(string id) : base(id)
-        {
-            Argument.AssertNotNull(id, nameof(id));
-        }
-
         /// <summary> Initializes a new instance of <see cref="UnknownRequiredToolCall"/>. </summary>
         /// <param name="type"> The object type for the required tool call. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>

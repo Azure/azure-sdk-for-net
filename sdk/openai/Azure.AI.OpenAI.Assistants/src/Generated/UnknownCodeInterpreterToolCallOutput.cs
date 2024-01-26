@@ -11,11 +11,6 @@ namespace Azure.AI.OpenAI.Assistants
     internal partial class UnknownCodeInterpreterToolCallOutput : CodeInterpreterToolCallOutput
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCodeInterpreterToolCallOutput"/>. </summary>
-        internal UnknownCodeInterpreterToolCallOutput()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownCodeInterpreterToolCallOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal UnknownCodeInterpreterToolCallOutput(string type) : base(type)
         {

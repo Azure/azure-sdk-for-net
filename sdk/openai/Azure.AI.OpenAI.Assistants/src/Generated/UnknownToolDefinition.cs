@@ -11,11 +11,6 @@ namespace Azure.AI.OpenAI.Assistants
     internal partial class UnknownToolDefinition : ToolDefinition
     {
         /// <summary> Initializes a new instance of <see cref="UnknownToolDefinition"/>. </summary>
-        internal UnknownToolDefinition()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal UnknownToolDefinition(string type) : base(type)
         {

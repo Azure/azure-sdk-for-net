@@ -11,11 +11,6 @@ namespace Azure.AI.OpenAI.Assistants
     internal partial class UnknownRequiredAction : RequiredAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRequiredAction"/>. </summary>
-        internal UnknownRequiredAction()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UnknownRequiredAction"/>. </summary>
         /// <param name="type"> The object type. </param>
         internal UnknownRequiredAction(string type) : base(type)
         {
