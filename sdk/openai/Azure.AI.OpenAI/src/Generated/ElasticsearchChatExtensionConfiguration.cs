@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -21,8 +22,9 @@ namespace Azure.AI.OpenAI
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> The parameters to use when configuring Elasticsearch®. </param>
-        internal ElasticsearchChatExtensionConfiguration(AzureChatExtensionType type, ElasticsearchChatExtensionParameters parameters) : base(type)
+        internal ElasticsearchChatExtensionConfiguration(AzureChatExtensionType type, IDictionary<string, BinaryData> serializedAdditionalRawData, ElasticsearchChatExtensionParameters parameters) : base(type, serializedAdditionalRawData)
         {
             Parameters = parameters;
         }

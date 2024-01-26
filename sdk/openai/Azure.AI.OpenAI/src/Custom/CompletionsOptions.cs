@@ -195,7 +195,8 @@ public partial class CompletionsOptions
     ///
     ///     <see cref="TokenSelectionBiases"/> is equivalent to 'logit_bias' in the REST request schema.
     /// </remarks>
-    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases))]
+    [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(SerializeTokenSelectionBiases),
+                                     DeserializationValueHook = nameof(DeserializeTokenSelectionBiases))]
     public IDictionary<int, int> TokenSelectionBiases { get; }
 
     // CUSTOM CODE NOTE:
@@ -253,5 +254,21 @@ public partial class CompletionsOptions
             writer.WriteNumberValue(item.Value);
         }
         writer.WriteEndObject();
+    }
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static void DeserializeTokenSelectionBiases(JsonProperty property, ref Optional<IDictionary<int, int>> propertyValue)
+    {
+        if (property.Value.ValueKind == JsonValueKind.Null)
+        {
+            propertyValue = default;
+            return;
+        }
+        var dictionary = new Dictionary<int, int>();
+        foreach (var item in property.Value.EnumerateObject())
+        {
+            dictionary.Add(int.Parse(item.Name), item.Value.GetInt32());
+        }
+        propertyValue = dictionary;
     }
 }

@@ -68,6 +68,6 @@ public partial class Completions
                 continue;
             }
         }
-        return new Completions(id, created, Optional.ToList(promptAnnotations), choices, usage);
+        return new Completions(id, created, Optional.ToList(promptAnnotations), choices, usage, serializedAdditionalRawData: null);
     }
 }

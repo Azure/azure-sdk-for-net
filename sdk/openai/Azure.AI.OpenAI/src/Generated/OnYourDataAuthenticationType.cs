@@ -25,6 +25,8 @@ namespace Azure.AI.OpenAI
         private const string ApiKeyValue = "APIKey";
         private const string ConnectionStringValue = "ConnectionString";
         private const string KeyAndKeyIdValue = "KeyAndKeyId";
+        private const string EncodedApiKeyValue = "EncodedAPIKey";
+        private const string AccessTokenValue = "AccessToken";
         private const string SystemAssignedManagedIdentityValue = "SystemAssignedManagedIdentity";
         private const string UserAssignedManagedIdentityValue = "UserAssignedManagedIdentity";
 
@@ -34,6 +36,10 @@ namespace Azure.AI.OpenAI
         public static OnYourDataAuthenticationType ConnectionString { get; } = new OnYourDataAuthenticationType(ConnectionStringValue);
         /// <summary> Authentication via key and key ID pair. </summary>
         public static OnYourDataAuthenticationType KeyAndKeyId { get; } = new OnYourDataAuthenticationType(KeyAndKeyIdValue);
+        /// <summary> Authentication via encoded API key. </summary>
+        public static OnYourDataAuthenticationType EncodedApiKey { get; } = new OnYourDataAuthenticationType(EncodedApiKeyValue);
+        /// <summary> Authentication via access token. </summary>
+        public static OnYourDataAuthenticationType AccessToken { get; } = new OnYourDataAuthenticationType(AccessTokenValue);
         /// <summary> Authentication via system-assigned managed identity. </summary>
         public static OnYourDataAuthenticationType SystemAssignedManagedIdentity { get; } = new OnYourDataAuthenticationType(SystemAssignedManagedIdentityValue);
         /// <summary> Authentication via user-assigned managed identity. </summary>

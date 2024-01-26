@@ -35,7 +35,14 @@ public static partial class AzureOpenAIModelFactory
         ContentFilterResultsForChoice contentFilterResults = null,
         AzureChatEnhancements enhancements = null)
     {
-        return new ChatChoice(message, index, finishReason, finishDetails, deltaMessage, contentFilterResults, enhancements);
+        return new ChatChoice(message,
+                              index,
+                              finishReason,
+                              finishDetails,
+                              deltaMessage,
+                              contentFilterResults,
+                              enhancements,
+                              serializedAdditionalRawData: null);
     }
 
     public static StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(
@@ -88,7 +95,7 @@ public static partial class AzureOpenAIModelFactory
     /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
     public static AudioTranscription AudioTranscription(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranscriptionSegment> segments)
     {
-        return new AudioTranscription(text, default, language, duration, segments);
+        return new AudioTranscription(text, default, language, duration, segments, serializedAdditionalRawData: null);
     }
 
     // CUSTOM CODE NOTE:
@@ -103,6 +110,6 @@ public static partial class AzureOpenAIModelFactory
     /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
     public static AudioTranslation AudioTranslation(string text, string language, TimeSpan duration, IReadOnlyList<AudioTranslationSegment> segments)
     {
-        return new AudioTranslation(text, default, language, duration, segments);
+        return new AudioTranslation(text, default, language, duration, segments, serializedAdditionalRawData: null);
     }
 }
