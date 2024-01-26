@@ -10,7 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
-
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -179,22 +178,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static string GetOperationNameV2(Activity activity, ref AzMonList MappedTags)
         {
-            var httpMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
-            if (!string.IsNullOrWhiteSpace(httpMethod))
+            var httpRequestMethod = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRequestMethod)?.ToString();
+            if (!string.IsNullOrWhiteSpace(httpRequestMethod))
             {
                 var httpRoute = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeHttpRoute)?.ToString();
 
                 // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
                 // To work around that we will use path from url.path.
-                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute!.Contains("{controller}"))
+                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute!.Contains("{controller"))
                 {
-                    return $"{httpMethod} {httpRoute}";
+                    return $"{httpRequestMethod} {httpRoute}";
                 }
 
-                var httpPath = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeUrlPath)?.ToString();
-                if (!string.IsNullOrWhiteSpace(httpPath))
+                var urlPath = AzMonList.GetTagValue(ref MappedTags, SemanticConventions.AttributeUrlPath)?.ToString();
+                if (!string.IsNullOrWhiteSpace(urlPath))
                 {
-                    return $"{httpMethod} {httpPath}";
+                    return $"{httpRequestMethod} {urlPath}";
                 }
             }
 
