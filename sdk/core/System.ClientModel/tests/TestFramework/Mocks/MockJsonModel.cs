@@ -10,7 +10,7 @@ using System.Text.Json;
 
 namespace ClientModel.Tests.Mocks;
 
-public class MockPersistableJsonModel : IJsonModel<MockPersistableJsonModel>
+public class MockJsonModel : IJsonModel<MockJsonModel>
 {
     public int IntValue { get; set; }
 
@@ -18,7 +18,7 @@ public class MockPersistableJsonModel : IJsonModel<MockPersistableJsonModel>
 
     public byte[] Utf8BytesValue { get; }
 
-    public MockPersistableJsonModel(int intValue, string stringValue)
+    public MockJsonModel(int intValue, string stringValue)
     {
         IntValue = intValue;
         StringValue = stringValue;
@@ -39,29 +39,29 @@ public class MockPersistableJsonModel : IJsonModel<MockPersistableJsonModel>
         Utf8BytesValue = stream.ToArray();
     }
 
-    MockPersistableJsonModel IPersistableModel<MockPersistableJsonModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+    MockJsonModel IPersistableModel<MockJsonModel>.Create(BinaryData data, ModelReaderWriterOptions options)
     {
         dynamic json = data.ToDynamicFromJson(JsonPropertyNames.CamelCase);
-        return new MockPersistableJsonModel(json.IntValue, json.StringValue);
+        return new MockJsonModel(json.IntValue, json.StringValue);
     }
 
-    MockPersistableJsonModel IJsonModel<MockPersistableJsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+    MockJsonModel IJsonModel<MockJsonModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
     {
         using JsonDocument doc = JsonDocument.ParseValue(ref reader);
         int intValue = doc.RootElement.GetProperty("IntValue").GetInt32();
         string stringValue = doc.RootElement.GetProperty("StringValue").GetString()!;
-        return new MockPersistableJsonModel(intValue, stringValue);
+        return new MockJsonModel(intValue, stringValue);
     }
 
-    string IPersistableModel<MockPersistableJsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
+    string IPersistableModel<MockJsonModel>.GetFormatFromOptions(ModelReaderWriterOptions options)
         => "J";
 
-    BinaryData IPersistableModel<MockPersistableJsonModel>.Write(ModelReaderWriterOptions options)
+    BinaryData IPersistableModel<MockJsonModel>.Write(ModelReaderWriterOptions options)
     {
         return BinaryData.FromBytes(Utf8BytesValue);
     }
 
-    void IJsonModel<MockPersistableJsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    void IJsonModel<MockJsonModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
         writer.WriteStartObject();
         writer.WriteNumber("IntValue", IntValue);

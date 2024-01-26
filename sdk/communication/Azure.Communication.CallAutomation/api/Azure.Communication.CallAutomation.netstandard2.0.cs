@@ -1002,6 +1002,7 @@ namespace Azure.Communication.CallAutomation
     {
         public PlayToAllOptions(Azure.Communication.CallAutomation.PlaySource playSource) { }
         public PlayToAllOptions(System.Collections.Generic.IEnumerable<Azure.Communication.CallAutomation.PlaySource> playSources) { }
+        public bool InterruptCallMediaOperation { get { throw null; } set { } }
         public bool Loop { get { throw null; } set { } }
         public System.Uri OperationCallbackUri { get { throw null; } set { } }
         public string OperationContext { get { throw null; } set { } }

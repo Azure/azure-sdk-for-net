@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -15,10 +17,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.FrontDoor
 {
-    public partial class FrontDoorWebApplicationFirewallPolicyData : IUtf8JsonSerializable
+    public partial class FrontDoorWebApplicationFirewallPolicyData : IUtf8JsonSerializable, IJsonModel<FrontDoorWebApplicationFirewallPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FrontDoorWebApplicationFirewallPolicyData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FrontDoorWebApplicationFirewallPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
@@ -43,6 +53,26 @@ namespace Azure.ResourceManager.FrontDoor
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(PolicySettings))
@@ -60,12 +90,81 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WritePropertyName("managedRules"u8);
                 writer.WriteObjectValue(ManagedRules);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(FrontendEndpointLinks))
+            {
+                writer.WritePropertyName("frontendEndpointLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in FrontendEndpointLinks)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RoutingRuleLinks))
+            {
+                writer.WritePropertyName("routingRuleLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in RoutingRuleLinks)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecurityPolicyLinks))
+            {
+                writer.WritePropertyName("securityPolicyLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecurityPolicyLinks)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceState))
+            {
+                writer.WritePropertyName("resourceState"u8);
+                writer.WriteStringValue(ResourceState.Value.ToString());
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FrontDoorWebApplicationFirewallPolicyData DeserializeFrontDoorWebApplicationFirewallPolicyData(JsonElement element)
+        FrontDoorWebApplicationFirewallPolicyData IJsonModel<FrontDoorWebApplicationFirewallPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement, options);
+        }
+
+        internal static FrontDoorWebApplicationFirewallPolicyData DeserializeFrontDoorWebApplicationFirewallPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -86,6 +185,8 @@ namespace Azure.ResourceManager.FrontDoor
             Optional<IReadOnlyList<SubResource>> securityPolicyLinks = default;
             Optional<string> provisioningState = default;
             Optional<FrontDoorWebApplicationFirewallPolicyResourceState> resourceState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -244,8 +345,44 @@ namespace Azure.ResourceManager.FrontDoor
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FrontDoorWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value, policySettings.Value, customRules.Value, managedRules.Value, Optional.ToList(frontendEndpointLinks), Optional.ToList(routingRuleLinks), Optional.ToList(securityPolicyLinks), provisioningState.Value, Optional.ToNullable(resourceState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FrontDoorWebApplicationFirewallPolicyData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, Optional.ToNullable(etag), sku.Value, policySettings.Value, customRules.Value, managedRules.Value, Optional.ToList(frontendEndpointLinks), Optional.ToList(routingRuleLinks), Optional.ToList(securityPolicyLinks), provisioningState.Value, Optional.ToNullable(resourceState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FrontDoorWebApplicationFirewallPolicyData IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
