@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
@@ -16,7 +15,7 @@ namespace Azure.ResourceManager.KeyVault.Models
     {
         BinaryData global::System.ClientModel.Primitives.IPersistableModel<KeyVaultSku>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSku>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultSku)} does not support '{options.Format}' format.");
             }
         }
 
