@@ -3,8 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.ClientModel.Primitives;
-using System.ClientModel;
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 namespace Azure.ResourceManager.ManagedServiceIdentities
