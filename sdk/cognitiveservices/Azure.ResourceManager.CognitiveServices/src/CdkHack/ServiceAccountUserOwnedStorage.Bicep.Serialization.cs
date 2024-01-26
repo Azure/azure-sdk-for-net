@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
     {
         BinaryData global::System.ClientModel.Primitives.IPersistableModel<ServiceAccountUserOwnedStorage>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceAccountUserOwnedStorage>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAccountUserOwnedStorage)} does not support '{options.Format}' format.");
             }
         }
 
