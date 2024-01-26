@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -21,7 +20,7 @@ namespace Azure.AI.Translator.Document.Tests
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
         [RecordedTest]
-        public void TranslateTextDocument()
+        public void Translate_TextDocument()
         {
             var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
             string filePath = Path.Combine("TestData", "test-input.txt");
@@ -35,7 +34,7 @@ namespace Azure.AI.Translator.Document.Tests
         }
 
         [RecordedTest]
-        public async Task TranslateTextDocumentWithCsvGlossary()
+        public async Task Translate_TextDocument_Single_CsvGlossary()
         {
             var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
             string filePath = Path.Combine("TestData", "test-input.txt");
@@ -46,7 +45,7 @@ namespace Azure.AI.Translator.Document.Tests
             using Stream glossaryStream = File.OpenRead(filePath);
             var sourceGlossaries = new List<MultipartFormFileData>()
             {
-                new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv")
+                new(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv")
             };
 
             var response = await client.DocumentTranslateAsync("hi", sourceDocument, sourceGlossaries).ConfigureAwait(false);
@@ -56,17 +55,30 @@ namespace Azure.AI.Translator.Document.Tests
             Assert.IsTrue(outputString.ToLowerInvariant().Contains("test"), $"'{outputString}' does not contain glossary 'test'");
         }
 
-        #region Helpers
-
-        private static BinaryData GetContentFromResponse(Response r)
+        [RecordedTest]
+        public async Task Translate_TextDocument_Multiple_CsvGlossary()
         {
-            // Workaround azure/azure-sdk-for-net#21048, which prevents .Content from working when dealing with responses
-            // from the playback system.
+            var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            string filePath = Path.Combine("TestData", "test-input.txt");
+            using Stream fileStream = File.OpenRead(filePath);
 
-            MemoryStream ms = new MemoryStream();
-            r.ContentStream.CopyTo(ms);
-            return new BinaryData(ms.ToArray());
+            var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
+            filePath = Path.Combine("TestData", "test-glossary.csv");
+            using Stream glossaryStream = File.OpenRead(filePath);
+            var sourceGlossaries = new List<MultipartFormFileData>()
+            {
+                new(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv"),
+                new(Path.GetFileName(filePath), BinaryData.FromStream(glossaryStream), "text/csv")
+            };
+
+            try
+            {
+                var response = await client.DocumentTranslateAsync("hi", sourceDocument, sourceGlossaries).ConfigureAwait(false);
+            }
+            catch (RequestFailedException ex)
+            {
+                Assert.AreEqual(400, ex.Status);
+            }
         }
-        #endregion
     }
 }
