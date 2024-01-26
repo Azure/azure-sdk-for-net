@@ -6,37 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceSkuDescription : IModelJsonSerializable<AppServiceSkuDescription>
+    public partial class AppServiceSkuDescription : IJsonModel<AppServiceSkuDescription>
     {
-        void IModelJsonSerializable<AppServiceSkuDescription>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<AppServiceSkuDescription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        AppServiceSkuDescription IModelJsonSerializable<AppServiceSkuDescription>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        AppServiceSkuDescription IJsonModel<AppServiceSkuDescription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeAppServiceSkuDescription(document.RootElement);
         }
 
-        BinaryData IModelSerializable<AppServiceSkuDescription>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<AppServiceSkuDescription>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceSkuDescription>)this).GetFormatFromOptions(options) : options.Format;
 
-        AppServiceSkuDescription IModelSerializable<AppServiceSkuDescription>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceSkuDescription)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceSkuDescription IPersistableModel<AppServiceSkuDescription>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeAppServiceSkuDescription(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<AppServiceSkuDescription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");

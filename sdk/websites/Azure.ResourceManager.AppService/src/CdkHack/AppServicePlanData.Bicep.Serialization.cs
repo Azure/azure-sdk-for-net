@@ -6,41 +6,47 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
-using Azure.ResourceManager.AppService.Models;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    public partial class AppServicePlanData : IModelJsonSerializable<AppServicePlanData>
+    public partial class AppServicePlanData : IJsonModel<AppServicePlanData>
     {
-        void IModelJsonSerializable<AppServicePlanData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<AppServicePlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        AppServicePlanData IModelJsonSerializable<AppServicePlanData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        AppServicePlanData IJsonModel<AppServicePlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServicePlanData(doc.RootElement);
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServicePlanData(document.RootElement);
         }
 
-        BinaryData IModelSerializable<AppServicePlanData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<AppServicePlanData>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanData>)this).GetFormatFromOptions(options) : options.Format;
 
-        AppServicePlanData IModelSerializable<AppServicePlanData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServicePlanData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServicePlanData IPersistableModel<AppServicePlanData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeAppServicePlanData(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<AppServicePlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");

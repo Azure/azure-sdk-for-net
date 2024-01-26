@@ -5,38 +5,48 @@
 
 #nullable disable
 
-using System.Text;
 using System;
+using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceHttpLogsConfig : IModelJsonSerializable<AppServiceHttpLogsConfig>
+    public partial class AppServiceHttpLogsConfig : IJsonModel<AppServiceHttpLogsConfig>
     {
-        void IModelJsonSerializable<AppServiceHttpLogsConfig>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<AppServiceHttpLogsConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        AppServiceHttpLogsConfig IModelJsonSerializable<AppServiceHttpLogsConfig>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        AppServiceHttpLogsConfig IJsonModel<AppServiceHttpLogsConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            using var doc = JsonDocument.ParseValue(ref reader);
-            return DeserializeAppServiceHttpLogsConfig(doc.RootElement);
+            using var document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceHttpLogsConfig(document.RootElement);
         }
 
-        BinaryData IModelSerializable<AppServiceHttpLogsConfig>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<AppServiceHttpLogsConfig>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceHttpLogsConfig>)this).GetFormatFromOptions(options) : options.Format;
 
-        AppServiceHttpLogsConfig IModelSerializable<AppServiceHttpLogsConfig>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceHttpLogsConfig)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AppServiceHttpLogsConfig IPersistableModel<AppServiceHttpLogsConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeAppServiceHttpLogsConfig(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<AppServiceHttpLogsConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  fileSystem: {{");
