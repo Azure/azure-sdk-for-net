@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -97,5 +98,38 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(isError, classifier.IsErrorResponse(message));
         }
+
+        [Test]
+        public void CanCustomizeRetriesViaClassifier()
+        {
+            int retriableStatus = 404;
+            HttpMessage message = new HttpMessage(new MockRequest(), new CustomRetryClassifier(retriableStatus));
+            message.Response = new MockResponse(retriableStatus);
+
+            Assert.IsTrue(message.ResponseClassifier.IsRetriableResponse(message));
+        }
+
+        #region Helpers
+        internal class CustomRetryClassifier : ResponseClassifier
+        {
+            private readonly int[] _retriableCodes;
+
+            public CustomRetryClassifier(params int[] retriableCodes)
+            {
+                _retriableCodes = retriableCodes;
+            }
+
+            public override bool IsRetriableResponse(HttpMessage message)
+            {
+                // Extend the set of default retriable status codes.
+                if (_retriableCodes.Contains(message.Response.Status))
+                {
+                    return true;
+                }
+
+                return base.IsRetriableResponse(message);
+            }
+        }
+        #endregion
     }
 }
