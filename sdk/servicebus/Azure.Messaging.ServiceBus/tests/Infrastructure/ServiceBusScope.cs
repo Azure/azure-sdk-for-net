@@ -17,11 +17,14 @@ namespace Azure.Messaging.ServiceBus.Tests
     public static class ServiceBusScope
     {
         /// <summary> The client used to create and delete resources on the Service Bus namespace. </summary>
-        private static readonly ServiceBusAdministrationClient s_adminClient =
-            new ServiceBusAdministrationClient(
-                ServiceBusTestEnvironment.Instance.ServiceBusConnectionString,
+        private static ServiceBusAdministrationClient CreateClient(string namespaceName)
+        {
+            return new ServiceBusAdministrationClient(
+                $"{namespaceName}.servicebus.windows.net",
+                ServiceBusTestEnvironment.Instance.Credential,
                 // disable tracing so as not to impact any tracing tests
                 new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
+        }
 
         /// <summary>
         ///   Creates a Service Bus scope associated with a queue instance, intended to be used in the context
@@ -74,7 +77,9 @@ namespace Azure.Messaging.ServiceBus.Tests
                 queueOptions.DefaultMessageTimeToLive = defaultMessageTimeToLive.Value;
             }
 
-            QueueProperties queueProperties = await s_adminClient.CreateQueueAsync(queueOptions);
+            var client = CreateClient(serviceBusNamespace);
+
+            QueueProperties queueProperties = await client.CreateQueueAsync(queueOptions);
             return new QueueScope(serviceBusNamespace, queueProperties.Name, true);
         }
 
@@ -106,7 +111,8 @@ namespace Azure.Messaging.ServiceBus.Tests
                 EnablePartitioning = enablePartitioning
             };
 
-            TopicProperties topicProperties = await s_adminClient.CreateTopicAsync(topicOptions);
+            var client = CreateClient(serviceBusNamespace);
+            TopicProperties topicProperties = await client.CreateTopicAsync(topicOptions);
 
             var activeSubscriptions = new List<string>();
 
@@ -116,7 +122,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 {
                     RequiresSession = enableSession
                 };
-                SubscriptionProperties subscriptionProperties = await s_adminClient.CreateSubscriptionAsync(subscriptionOptions);
+                SubscriptionProperties subscriptionProperties = await client.CreateSubscriptionAsync(subscriptionOptions);
                 activeSubscriptions.Add(subscriptionProperties.SubscriptionName);
             }
 
@@ -190,7 +196,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 try
                 {
-                    await s_adminClient.DeleteQueueAsync(QueueName);
+                    var client = CreateClient(NamespaceName);
+                    await client.DeleteQueueAsync(QueueName);
                 }
                 catch
                 {
@@ -282,7 +289,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 try
                 {
-                    await s_adminClient.DeleteTopicAsync(TopicName);
+                    var client = CreateClient(NamespaceName);
+                    await client.DeleteTopicAsync(TopicName);
                 }
                 catch
                 {
