@@ -6,37 +6,47 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class SearchSku : IModelJsonSerializable<SearchSku>
+    internal partial class SearchSku : IJsonModel<SearchSku>
     {
-        void IModelJsonSerializable<SearchSku>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<SearchSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        SearchSku IModelJsonSerializable<SearchSku>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        SearchSku IJsonModel<SearchSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchSku(document.RootElement);
         }
 
-        BinaryData IModelSerializable<SearchSku>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<SearchSku>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<SearchSku>)this).GetFormatFromOptions(options) : options.Format;
 
-        SearchSku IModelSerializable<SearchSku>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SearchSku)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SearchSku IPersistableModel<SearchSku>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeSearchSku(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<SearchSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");

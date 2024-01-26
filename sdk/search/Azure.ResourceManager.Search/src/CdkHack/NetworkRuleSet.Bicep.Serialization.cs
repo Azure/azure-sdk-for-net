@@ -6,38 +6,47 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class NetworkRuleSet : IModelJsonSerializable<NetworkRuleSet>
+    internal partial class NetworkRuleSet : IJsonModel<NetworkRuleSet>
     {
-        void IModelJsonSerializable<NetworkRuleSet>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<NetworkRuleSet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        NetworkRuleSet IModelJsonSerializable<NetworkRuleSet>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        NetworkRuleSet IJsonModel<NetworkRuleSet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeNetworkRuleSet(document.RootElement);
         }
 
-        BinaryData IModelSerializable<NetworkRuleSet>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<NetworkRuleSet>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkRuleSet>)this).GetFormatFromOptions(options) : options.Format;
 
-        NetworkRuleSet IModelSerializable<NetworkRuleSet>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkRuleSet)} does not support '{options.Format}' format.");
+            }
+        }
+
+        NetworkRuleSet IPersistableModel<NetworkRuleSet>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeNetworkRuleSet(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<NetworkRuleSet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder sb = new StringBuilder();
             if(Optional.IsCollectionDefined(IPRules))

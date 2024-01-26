@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Search
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Search.SearchServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Search.SearchServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SearchServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SearchServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SearchServiceData>
     {
         public SearchServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions AuthOptions { get { throw null; } set { } }
@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.Search
         public Azure.ResourceManager.Search.Models.SearchSkuName? SkuName { get { throw null; } set { } }
         public Azure.ResourceManager.Search.Models.SearchServiceStatus? Status { get { throw null; } }
         public string StatusDetails { get { throw null; } }
+        Azure.ResourceManager.Search.SearchServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.SearchServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.SearchServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SearchServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SearchServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.SearchServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SearchServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -228,11 +233,16 @@ namespace Azure.ResourceManager.Search.Models
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
     }
-    public partial class SearchAadAuthDataPlaneAuthOptions
+    public partial class SearchAadAuthDataPlaneAuthOptions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>
     {
         public SearchAadAuthDataPlaneAuthOptions() { }
         public Azure.ResourceManager.Search.Models.SearchAadAuthFailureMode? AadAuthFailureMode { get { throw null; } set { } }
         public System.BinaryData ApiKeyOnly { get { throw null; } set { } }
+        Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchAadAuthDataPlaneAuthOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SearchAadAuthFailureMode
     {
@@ -244,11 +254,16 @@ namespace Azure.ResourceManager.Search.Models
         Compliant = 0,
         NonCompliant = 1,
     }
-    public partial class SearchEncryptionWithCmk
+    public partial class SearchEncryptionWithCmk : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>
     {
         public SearchEncryptionWithCmk() { }
         public Azure.ResourceManager.Search.Models.SearchEncryptionComplianceStatus? EncryptionComplianceStatus { get { throw null; } }
         public Azure.ResourceManager.Search.Models.SearchEncryptionWithCmkEnforcement? Enforcement { get { throw null; } set { } }
+        Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchEncryptionWithCmk>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum SearchEncryptionWithCmkEnforcement
     {
@@ -331,10 +346,15 @@ namespace Azure.ResourceManager.Search.Models
         Default = 0,
         HighDensity = 1,
     }
-    public partial class SearchServiceIPRule
+    public partial class SearchServiceIPRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>
     {
         public SearchServiceIPRule() { }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Search.Models.SearchServiceIPRule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Search.Models.SearchServiceIPRule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Search.Models.SearchServiceIPRule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SearchServiceNameAvailabilityContent
     {

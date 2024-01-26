@@ -5,38 +5,48 @@
 
 #nullable disable
 
-using System.Text;
 using System;
+using System.ClientModel.Primitives;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    internal partial class DataPlaneAadOrApiKeyAuthOption : IModelJsonSerializable<DataPlaneAadOrApiKeyAuthOption>
+    internal partial class DataPlaneAadOrApiKeyAuthOption : IJsonModel<DataPlaneAadOrApiKeyAuthOption>
     {
-        void IModelJsonSerializable<DataPlaneAadOrApiKeyAuthOption>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<DataPlaneAadOrApiKeyAuthOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        DataPlaneAadOrApiKeyAuthOption IModelJsonSerializable<DataPlaneAadOrApiKeyAuthOption>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        DataPlaneAadOrApiKeyAuthOption IJsonModel<DataPlaneAadOrApiKeyAuthOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeDataPlaneAadOrApiKeyAuthOption(document.RootElement);
         }
 
-        BinaryData IModelSerializable<DataPlaneAadOrApiKeyAuthOption>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<DataPlaneAadOrApiKeyAuthOption>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<DataPlaneAadOrApiKeyAuthOption>)this).GetFormatFromOptions(options) : options.Format;
 
-        DataPlaneAadOrApiKeyAuthOption IModelSerializable<DataPlaneAadOrApiKeyAuthOption>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(DataPlaneAadOrApiKeyAuthOption)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataPlaneAadOrApiKeyAuthOption IPersistableModel<DataPlaneAadOrApiKeyAuthOption>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeDataPlaneAadOrApiKeyAuthOption(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<DataPlaneAadOrApiKeyAuthOption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"  aadAuthFailureMode: '{AadAuthFailureMode.Value.ToSerialString()}'");

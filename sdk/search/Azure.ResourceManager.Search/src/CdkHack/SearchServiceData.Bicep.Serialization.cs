@@ -6,39 +6,49 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Core.Serialization;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Search.Models;
 
 namespace Azure.ResourceManager.Search
 {
-    public partial class SearchServiceData : IModelJsonSerializable<SearchServiceData>
+    public partial class SearchServiceData : IJsonModel<SearchServiceData>
     {
-        void IModelJsonSerializable<SearchServiceData>.Serialize(Utf8JsonWriter writer, ModelSerializerOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
+        void IJsonModel<SearchServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IUtf8JsonSerializable)this).Write(writer);
 
-        SearchServiceData IModelJsonSerializable<SearchServiceData>.Deserialize(ref Utf8JsonReader reader, ModelSerializerOptions options)
+        SearchServiceData IJsonModel<SearchServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.ParseValue(ref reader);
             return DeserializeSearchServiceData(document.RootElement);
         }
 
-        BinaryData IModelSerializable<SearchServiceData>.Serialize(ModelSerializerOptions options) => (options.Format.ToString()) switch
+        BinaryData IPersistableModel<SearchServiceData>.Write(ModelReaderWriterOptions options)
         {
-            "J" or "W" => ModelSerializer.SerializeCore(this, options),
-            "bicep" => SerializeBicep(options),
-            _ => throw new FormatException($"Unsupported format {options.Format}")
-        };
+            var format = options.Format == "W" ? ((IPersistableModel<SearchServiceData>)this).GetFormatFromOptions(options) : options.Format;
 
-        SearchServiceData IModelSerializable<SearchServiceData>.Deserialize(BinaryData data, ModelSerializerOptions options)
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SearchServiceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SearchServiceData IPersistableModel<SearchServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
             using var document = JsonDocument.Parse(data);
             return DeserializeSearchServiceData(document.RootElement);
         }
 
-        private BinaryData SerializeBicep(ModelSerializerOptions options)
+        string IPersistableModel<SearchServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"  name: '{Name}'");
