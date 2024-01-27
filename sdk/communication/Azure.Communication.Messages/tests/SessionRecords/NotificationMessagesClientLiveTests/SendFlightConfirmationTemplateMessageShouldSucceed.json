@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-89df170b460f3495287673bea8e02d45-1c7a573c69611fe6-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240116.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "76d25a10ed4666dd4044c196113e2bba",
+        "traceparent": "00-7dfa22a65ac0b30c1f3d1ad02765a68e-67c05827a2a443d5-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240126.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "172afcdd2bc70f58875a5929d7ba8701",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 17 Jan 2024 01:22:42 GMT",
+        "x-ms-date": "Sat, 27 Jan 2024 02:50:09 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,23 +24,23 @@
           "values": [
             {
               "url": "https://go.microsoft.com/fwlink/?linkid=2131549",
-              "kind": "document",
-              "name": "document"
+              "name": "document",
+              "kind": "document"
             },
             {
               "text": "Gloria",
-              "kind": "text",
-              "name": "firstName"
+              "name": "firstName",
+              "kind": "text"
             },
             {
               "text": "Li",
-              "kind": "text",
-              "name": "lastName"
+              "name": "lastName",
+              "kind": "text"
             },
             {
               "text": "July 1st, 2023",
-              "kind": "text",
-              "name": "date"
+              "name": "date",
+              "kind": "text"
             }
           ],
           "bindings": {
@@ -63,11 +63,11 @@
             "kind": "whatsApp"
           }
         },
-        "kind": "template",
         "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
           "\u002B16041234567"
-        ]
+        ],
+        "kind": "template"
       },
       "StatusCode": 202,
       "ResponseHeaders": {
@@ -75,18 +75,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Jan 2024 01:22:40 GMT",
-        "MS-CV": "oqqQweLA0UqadwTp5bzXLw.0",
+        "Date": "Sat, 27 Jan 2024 02:50:11 GMT",
+        "MS-CV": "c/4KV3kEq0eNgmmejV1NCA.0",
+        "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240117T012240Z-n2zu1scpch1m1ev8a0hcg2n4y400000001z000000000y8ht",
+        "x-azure-ref": "20240127T025010Z-u4eynard2h4875wbsqrxbdprp4000000038g00000000cgtd",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "525ms"
+        "X-Processing-Time": "884ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "602d3c99-c7ea-4169-9547-5afaa7db3f08",
+            "messageId": "b67ab1fd-66a6-4060-a1f5-10603903c308",
             "to": "\u002B16041234567"
           }
         ]
@@ -94,6 +95,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1436981001"
+    "RandomSeed": "1081242907"
   }
 }

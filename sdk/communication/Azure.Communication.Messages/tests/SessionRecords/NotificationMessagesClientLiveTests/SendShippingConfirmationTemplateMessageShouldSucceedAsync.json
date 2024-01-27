@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-47d3899c8cff9c6d77c1bd5df7960a3e-cbf622ce15c9e20f-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240116.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "afda66b32492c6e7797df79a03d88ac4",
+        "traceparent": "00-61b1689f1c1c2968f491a4de0222d399-ba488501cf0e1e95-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240126.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "155bebf3210545f85af9bdeda77a6b6b",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 17 Jan 2024 01:22:52 GMT",
+        "x-ms-date": "Sat, 27 Jan 2024 02:50:20 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,8 +24,8 @@
           "values": [
             {
               "text": "3",
-              "kind": "text",
-              "name": "threeDays"
+              "name": "threeDays",
+              "kind": "text"
             }
           ],
           "bindings": {
@@ -37,11 +37,11 @@
             "kind": "whatsApp"
           }
         },
-        "kind": "template",
         "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
           "\u002B16041234567"
-        ]
+        ],
+        "kind": "template"
       },
       "StatusCode": 202,
       "ResponseHeaders": {
@@ -49,18 +49,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Jan 2024 01:22:50 GMT",
-        "MS-CV": "EqQj9kGo9EO/g0v8DUBTxQ.0",
+        "Date": "Sat, 27 Jan 2024 02:50:21 GMT",
+        "MS-CV": "Iki5WPy/2EGNVXV\u002B2yyFXw.0",
+        "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240117T012249Z-n2zu1scpch1m1ev8a0hcg2n4y400000001z000000000y9dt",
+        "x-azure-ref": "20240127T025021Z-u4eynard2h4875wbsqrxbdprp4000000038g00000000chfn",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "707ms"
+        "X-Processing-Time": "539ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "76a38b00-c349-4e15-9c76-2c7b35c3c169",
+            "messageId": "316d4035-4b19-48f0-b90a-a8fceb2be516",
             "to": "\u002B16041234567"
           }
         ]
@@ -68,6 +69,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "575970576"
+    "RandomSeed": "1857708689"
   }
 }

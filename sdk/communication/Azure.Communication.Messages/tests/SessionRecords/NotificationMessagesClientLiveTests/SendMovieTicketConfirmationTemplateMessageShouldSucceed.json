@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-549eb1ba1a010bdebdc177f9a120599e-e8361f6df99a3e2b-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240116.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "dc00fdfb7b8f22ba64e4c31d4f44fa1e",
+        "traceparent": "00-ad742a5aa61bb53a3128fc642d0ea12a-1a86d5f9e345c639-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240126.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "4a5063404384168ce04de499b14791ca",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 17 Jan 2024 01:22:45 GMT",
+        "x-ms-date": "Sat, 27 Jan 2024 02:50:13 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,28 +24,28 @@
           "values": [
             {
               "url": "https://upload.wikimedia.org/wikipedia/commons/3/30/Building92microsoft.jpg",
-              "kind": "image",
-              "name": "image"
+              "name": "image",
+              "kind": "image"
             },
             {
               "text": "Avengers",
-              "kind": "text",
-              "name": "title"
+              "name": "title",
+              "kind": "text"
             },
             {
               "text": "July 1st, 2023 12:30PM",
-              "kind": "text",
-              "name": "time"
+              "name": "time",
+              "kind": "text"
             },
             {
               "text": "Cineplex",
-              "kind": "text",
-              "name": "venue"
+              "name": "venue",
+              "kind": "text"
             },
             {
               "text": "Seat 1A",
-              "kind": "text",
-              "name": "seats"
+              "name": "seats",
+              "kind": "text"
             }
           ],
           "bindings": {
@@ -71,11 +71,11 @@
             "kind": "whatsApp"
           }
         },
-        "kind": "template",
         "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
           "\u002B16041234567"
-        ]
+        ],
+        "kind": "template"
       },
       "StatusCode": 202,
       "ResponseHeaders": {
@@ -83,18 +83,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Jan 2024 01:22:43 GMT",
-        "MS-CV": "oKQZMMu1KkOijbjloPjKUg.0",
+        "Date": "Sat, 27 Jan 2024 02:50:15 GMT",
+        "MS-CV": "m9GRwZVQE0WXU44HJg5hpw.0",
+        "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240117T012243Z-n2zu1scpch1m1ev8a0hcg2n4y400000001z000000000y8te",
+        "x-azure-ref": "20240127T025014Z-u4eynard2h4875wbsqrxbdprp4000000038g00000000ch27",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "494ms"
+        "X-Processing-Time": "702ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "30c975c1-f545-4a41-a5af-2eb950ea53c5",
+            "messageId": "7c37f077-bfe5-4096-960a-ea29ae04490a",
             "to": "\u002B16041234567"
           }
         ]
@@ -102,6 +103,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "1115267788"
+    "RandomSeed": "2038202785"
   }
 }

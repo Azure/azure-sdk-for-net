@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-3d60265b8d91d5adc50c33f173b5d4b2-b1860590302a8d40-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240116.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "80553674a60f337b47cba8ba84517500",
+        "traceparent": "00-8305151b416d8104d0e2c5b6acc2a73e-5083a2f20883289a-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240126.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "6120be8aaf7b9e682bbc565126cc3eae",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Wed, 17 Jan 2024 01:22:48 GMT",
+        "x-ms-date": "Sat, 27 Jan 2024 02:50:16 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -24,18 +24,18 @@
           "values": [
             {
               "text": "Starbucks",
-              "kind": "text",
-              "name": "venue"
+              "name": "venue",
+              "kind": "text"
             },
             {
               "text": "Today 2-4PM",
-              "kind": "text",
-              "name": "time"
+              "name": "time",
+              "kind": "text"
             },
             {
               "url": "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4",
-              "kind": "video",
-              "name": "video"
+              "name": "video",
+              "kind": "video"
             }
           ],
           "bindings": {
@@ -55,11 +55,11 @@
             "kind": "whatsApp"
           }
         },
-        "kind": "template",
         "channelRegistrationId": "75da05b7-831f-45cf-923d-98e9a9f4c16a",
         "to": [
           "\u002B16041234567"
-        ]
+        ],
+        "kind": "template"
       },
       "StatusCode": 202,
       "ResponseHeaders": {
@@ -67,18 +67,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 17 Jan 2024 01:22:46 GMT",
-        "MS-CV": "fBXneYuZJE\u002BtdEVHOVcEIA.0",
+        "Date": "Sat, 27 Jan 2024 02:50:17 GMT",
+        "MS-CV": "ybun4x61WUSwA3eOTNmJLQ.0",
+        "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240117T012246Z-n2zu1scpch1m1ev8a0hcg2n4y400000001z000000000y91w",
+        "x-azure-ref": "20240127T025017Z-u4eynard2h4875wbsqrxbdprp4000000038g00000000ch7n",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "625ms"
+        "X-Processing-Time": "608ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "d4204256-4f4a-4514-9380-0068fba9ef13",
+            "messageId": "f4fa9c3f-96b8-4bd8-ac90-8e7b42b37231",
             "to": "\u002B16041234567"
           }
         ]
@@ -86,6 +87,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2114423515"
+    "RandomSeed": "1232083646"
   }
 }
