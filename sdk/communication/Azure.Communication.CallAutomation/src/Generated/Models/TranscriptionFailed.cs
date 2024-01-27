@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TranscriptionFailed. </summary>
-    public partial class TranscriptionFailed
+    public partial class TranscriptionFailed : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionFailed"/>. </summary>
         internal TranscriptionFailed()

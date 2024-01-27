@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecordingStateChangedEvent. </summary>
-    public partial class CallRecordingStateChanged
+    public partial class CallRecordingStateChanged : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="CallRecordingStateChanged"/>. </summary>
         internal CallRecordingStateChanged()

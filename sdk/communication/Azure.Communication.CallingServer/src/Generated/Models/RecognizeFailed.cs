@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecognizeFailed. </summary>
-    public partial class RecognizeFailed
+    public partial class RecognizeFailed : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="RecognizeFailed"/>. </summary>
         internal RecognizeFailed()

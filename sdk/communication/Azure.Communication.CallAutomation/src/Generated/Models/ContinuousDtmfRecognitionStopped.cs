@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> Call connection ID. </summary>
-    public partial class ContinuousDtmfRecognitionStopped
+    public partial class ContinuousDtmfRecognitionStopped : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionStopped"/>. </summary>
         internal ContinuousDtmfRecognitionStopped()

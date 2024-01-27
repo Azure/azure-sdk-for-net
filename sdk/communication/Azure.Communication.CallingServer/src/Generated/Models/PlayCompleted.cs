@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The PlayCompleted. </summary>
-    public partial class PlayCompleted
+    public partial class PlayCompleted : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="PlayCompleted"/>. </summary>
         internal PlayCompleted()

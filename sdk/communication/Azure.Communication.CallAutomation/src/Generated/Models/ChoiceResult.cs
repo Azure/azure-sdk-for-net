@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ChoiceResult. </summary>
-    public partial class ChoiceResult
+    public partial class ChoiceResult : RecognizeResult
     {
         /// <summary> Initializes a new instance of <see cref="ChoiceResult"/>. </summary>
         internal ChoiceResult()

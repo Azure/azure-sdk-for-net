@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TranscriptionStopped. </summary>
-    public partial class TranscriptionStopped
+    public partial class TranscriptionStopped : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="TranscriptionStopped"/>. </summary>
         internal TranscriptionStopped()

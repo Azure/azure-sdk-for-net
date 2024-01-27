@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallConnectedEvent. </summary>
-    public partial class CallConnected
+    public partial class CallConnected : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="CallConnected"/>. </summary>
         internal CallConnected()

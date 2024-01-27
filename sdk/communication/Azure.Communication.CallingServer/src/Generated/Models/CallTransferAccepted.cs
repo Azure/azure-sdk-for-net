@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallTransferAcceptedEvent. </summary>
-    public partial class CallTransferAccepted
+    public partial class CallTransferAccepted : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="CallTransferAccepted"/>. </summary>
         internal CallTransferAccepted()

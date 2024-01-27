@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The RecognizeCompleted. </summary>
-    public partial class RecognizeCompleted
+    public partial class RecognizeCompleted : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="RecognizeCompleted"/>. </summary>
         internal RecognizeCompleted()

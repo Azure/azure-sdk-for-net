@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The ContinuousDtmfRecognitionToneFailed. </summary>
-    public partial class ContinuousDtmfRecognitionToneFailed
+    public partial class ContinuousDtmfRecognitionToneFailed : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="ContinuousDtmfRecognitionToneFailed"/>. </summary>
         internal ContinuousDtmfRecognitionToneFailed()

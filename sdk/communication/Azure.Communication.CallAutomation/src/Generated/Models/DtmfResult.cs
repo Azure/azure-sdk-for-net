@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The DtmfResult. </summary>
-    public partial class DtmfResult
+    public partial class DtmfResult : RecognizeResult
     {
         /// <summary> Initializes a new instance of <see cref="DtmfResult"/>. </summary>
         internal DtmfResult()

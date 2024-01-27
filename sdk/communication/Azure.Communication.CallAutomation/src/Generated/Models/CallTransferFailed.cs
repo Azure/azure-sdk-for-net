@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The call transfer failed event. </summary>
-    public partial class CallTransferFailed
+    public partial class CallTransferFailed : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="CallTransferFailed"/>. </summary>
         internal CallTransferFailed()

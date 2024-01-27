@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecognizeCanceled. </summary>
-    public partial class RecognizeCanceled
+    public partial class RecognizeCanceled : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="RecognizeCanceled"/>. </summary>
         internal RecognizeCanceled()

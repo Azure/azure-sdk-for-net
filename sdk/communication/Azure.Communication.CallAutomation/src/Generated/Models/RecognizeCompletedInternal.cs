@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The RecognizeCompleted. </summary>
-    internal partial class RecognizeCompletedInternal
+    internal partial class RecognizeCompletedInternal : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="RecognizeCompletedInternal"/>. </summary>
         internal RecognizeCompletedInternal()

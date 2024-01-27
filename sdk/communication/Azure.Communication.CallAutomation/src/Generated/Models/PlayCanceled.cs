@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The PlayCanceled. </summary>
-    public partial class PlayCanceled
+    public partial class PlayCanceled : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="PlayCanceled"/>. </summary>
         internal PlayCanceled()

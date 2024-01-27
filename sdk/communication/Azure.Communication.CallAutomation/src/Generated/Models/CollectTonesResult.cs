@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The CollectTonesResult. </summary>
-    public partial class CollectTonesResult
+    public partial class CollectTonesResult : RecognizeResult
     {
         /// <summary> Initializes a new instance of <see cref="CollectTonesResult"/>. </summary>
         internal CollectTonesResult()

@@ -8,7 +8,7 @@
 namespace Azure.Communication.CallingServer
 {
     /// <summary> The CallDisconnectedEvent. </summary>
-    public partial class CallDisconnected
+    public partial class CallDisconnected : CallAutomationEventBase
     {
         /// <summary> Initializes a new instance of <see cref="CallDisconnected"/>. </summary>
         internal CallDisconnected()
