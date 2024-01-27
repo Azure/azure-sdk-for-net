@@ -279,7 +279,7 @@
     <PackageReference Update="Microsoft.Azure.Management.ServiceBus" Version="2.1.0" />
     <PackageReference Update="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
     <PackageReference Update="Microsoft.Azure.Management.Storage" Version="13.0.0" />
-    <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.10.1]" />
+    <PackageReference Update="Microsoft.Azure.ResourceManager" Version="[1.1.0-preview]" />
     <PackageReference Update="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.Storage.Blob" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Storage.File" Version="11.2.2" />
