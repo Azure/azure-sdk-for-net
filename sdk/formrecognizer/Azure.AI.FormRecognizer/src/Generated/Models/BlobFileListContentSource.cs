@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> File list in Azure Blob Storage. </summary>
-    public partial class BlobFileListContentSource
+    public partial class BlobFileListContentSource : DocumentContentSource
     {
     }
 }

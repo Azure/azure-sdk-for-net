@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Azure Blob Storage content. </summary>
-    public partial class BlobContentSource
+    public partial class BlobContentSource : DocumentContentSource
     {
         /// <summary> Blob name prefix. </summary>
         public string Prefix { get; set; }
