@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -22,7 +21,7 @@ namespace Azure.Communication.JobRouter
                 return null;
             }
             Optional<string> classificationPolicyId = default;
-            Optional<IDictionary<string, BinaryData>> labelsToUpsert = default;
+            Optional<IDictionary<string, RouterValue>> labelsToUpsert = default;
             Optional<string> id = default;
             ExceptionActionKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -34,23 +33,7 @@ namespace Azure.Communication.JobRouter
                 }
                 if (property.NameEquals("labelsToUpsert"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    labelsToUpsert = dictionary;
+                    ReadLabelsToUpsert(property, ref labelsToUpsert);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

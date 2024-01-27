@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,34 +15,54 @@ namespace Azure.Communication.JobRouter
         public ReclassifyExceptionAction()
         {
             Kind = ExceptionActionKind.Reclassify;
-            _labelsToUpsert = new ChangeTrackingDictionary<string, BinaryData>();
-        }
-
-        [CodeGenMember("LabelsToUpsert")]
-        internal IDictionary<string, BinaryData> _labelsToUpsert
-        {
-            get
-            {
-                return LabelsToUpsert != null && LabelsToUpsert.Count != 0
-                    ? LabelsToUpsert?.ToDictionary(x => x.Key, x => BinaryData.FromObjectAsJson(x.Value?.Value))
-                    : new ChangeTrackingDictionary<string, BinaryData>();
-            }
-            set
-            {
-                if (value != null && value.Count != 0)
-                {
-                    foreach (var label in value)
-                    {
-                        LabelsToUpsert[label.Key] = new RouterValue(label.Value.ToObjectFromJson());
-                    }
-                }
-            }
+            LabelsToUpsert = new ChangeTrackingDictionary<string, RouterValue>();
         }
 
         /// <summary>
         /// (optional) Dictionary containing the labels to update (or add if not existing) in key-value pairs. Values must be primitive values - number, string, boolean.
         /// </summary>
-        public IDictionary<string, RouterValue> LabelsToUpsert { get; } = new Dictionary<string, RouterValue>();
+        [CodeGenMember("LabelsToUpsert")]
+        [CodeGenMemberSerializationHooks(SerializationValueHook = nameof(WriteLabelsToUpsert), DeserializationValueHook = nameof(ReadLabelsToUpsert))]
+        public IDictionary<string, RouterValue> LabelsToUpsert { get; }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal void WriteLabelsToUpsert(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            foreach (var item in LabelsToUpsert)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+                writer.WriteObjectValue(item.Value.Value);
+            }
+            writer.WriteEndObject();
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static void ReadLabelsToUpsert(JsonProperty property, ref Optional<IDictionary<string, RouterValue>> labelsToUpsert)
+        {
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            {
+                return;
+            }
+            Dictionary<string, RouterValue> dictionary = new Dictionary<string, RouterValue>();
+            foreach (var property0 in property.Value.EnumerateObject())
+            {
+                if (property0.Value.ValueKind == JsonValueKind.Null)
+                {
+                    dictionary.Add(property0.Name, null);
+                }
+                else
+                {
+                    dictionary.Add(property0.Name, new RouterValue(property0.Value.GetObject()));
+                }
+            }
+            labelsToUpsert = dictionary;
+        }
 
         /// <summary>
         /// (optional) The new classification policy that will determine queue, priority
@@ -63,21 +83,10 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (Optional.IsCollectionDefined(_labelsToUpsert))
+            if (Optional.IsCollectionDefined(LabelsToUpsert))
             {
                 writer.WritePropertyName("labelsToUpsert"u8);
-                writer.WriteStartObject();
-                foreach (var item in _labelsToUpsert)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteObjectValue(item.Value.ToObjectFromJson());
-                }
-                writer.WriteEndObject();
+                WriteLabelsToUpsert(writer);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());

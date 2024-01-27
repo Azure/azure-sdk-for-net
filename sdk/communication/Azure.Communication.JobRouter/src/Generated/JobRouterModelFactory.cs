@@ -303,6 +303,18 @@ namespace Azure.Communication.JobRouter
             return new QueueWeightedAllocation(weight, queueSelectors?.ToList());
         }
 
+        /// <summary> Initializes a new instance of <see cref="JobRouter.ReclassifyExceptionAction"/>. </summary>
+        /// <param name="id"> Unique Id of the exception action. </param>
+        /// <param name="classificationPolicyId"> The new classification policy that will determine queue, priority and worker selectors. </param>
+        /// <param name="labelsToUpsert"> Dictionary containing the labels to update (or add if not existing) in key-value pairs.  Values must be primitive values - number, string, boolean. </param>
+        /// <returns> A new <see cref="JobRouter.ReclassifyExceptionAction"/> instance for mocking. </returns>
+        public static ReclassifyExceptionAction ReclassifyExceptionAction(string id = null, string classificationPolicyId = null, IDictionary<string, RouterValue> labelsToUpsert = null)
+        {
+            labelsToUpsert ??= new Dictionary<string, RouterValue>();
+
+            return new ReclassifyExceptionAction(id, ExceptionActionKind.Reclassify, classificationPolicyId, labelsToUpsert);
+        }
+
         /// <summary> Initializes a new instance of <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/>. </summary>
         /// <param name="rule"> A RouterRule that resolves a collection of queue selectors to attach. </param>
         /// <returns> A new <see cref="JobRouter.RuleEngineQueueSelectorAttachment"/> instance for mocking. </returns>

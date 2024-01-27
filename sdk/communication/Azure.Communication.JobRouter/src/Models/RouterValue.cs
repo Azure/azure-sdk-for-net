@@ -87,6 +87,11 @@ namespace Azure.Communication.JobRouter
         /// <inheritdoc />
         public bool Equals(RouterValue other)
         {
+            if (other is null)
+            {
+                return false;
+            }
+
             if (Value == null)
             {
                 return other.Value == null;

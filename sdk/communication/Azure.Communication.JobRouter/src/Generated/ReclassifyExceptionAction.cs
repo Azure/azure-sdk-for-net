@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -19,10 +18,10 @@ namespace Azure.Communication.JobRouter
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <param name="classificationPolicyId"> The new classification policy that will determine queue, priority and worker selectors. </param>
         /// <param name="labelsToUpsert"> Dictionary containing the labels to update (or add if not existing) in key-value pairs.  Values must be primitive values - number, string, boolean. </param>
-        internal ReclassifyExceptionAction(string id, ExceptionActionKind kind, string classificationPolicyId, IDictionary<string, BinaryData> labelsToUpsert) : base(id, kind)
+        internal ReclassifyExceptionAction(string id, ExceptionActionKind kind, string classificationPolicyId, IDictionary<string, RouterValue> labelsToUpsert) : base(id, kind)
         {
             ClassificationPolicyId = classificationPolicyId;
-            _labelsToUpsert = labelsToUpsert;
+            LabelsToUpsert = labelsToUpsert;
         }
     }
 }
