@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages
             Argument.AssertNotNull(to, nameof(to));
             Argument.AssertNotNull(mediaUri, nameof(mediaUri));
 
-            Kind = CommunicationMessageType.Image;
+            Kind = CommunicationMessageKind.Image;
             MediaUri = mediaUri;
         }
 
@@ -40,7 +40,7 @@ namespace Azure.Communication.Messages
         /// A media url for the file. Required if the type is one of the supported media
         /// types, e.g. image
         /// </param>
-        internal MediaNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageType kind, string content, Uri mediaUri) : base(channelRegistrationId, to, kind)
+        internal MediaNotificationContent(Guid channelRegistrationId, IList<string> to, CommunicationMessageKind kind, string content, Uri mediaUri) : base(channelRegistrationId, to, kind)
         {
             Content = content;
             MediaUri = mediaUri;

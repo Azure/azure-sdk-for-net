@@ -15,11 +15,8 @@ namespace Azure.Communication.Messages.Models.Channels
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(SubType))
-            {
-                writer.WritePropertyName("subType"u8);
-                writer.WriteStringValue(SubType);
-            }
+            writer.WritePropertyName("subType"u8);
+            writer.WriteStringValue(SubType);
             writer.WritePropertyName("refValue"u8);
             writer.WriteStringValue(RefValue);
             writer.WriteEndObject();

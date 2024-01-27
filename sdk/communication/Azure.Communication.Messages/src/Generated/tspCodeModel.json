@@ -1,6 +1,6 @@
 {
  "$id": "1",
- "Name": "AzureCommunicationMessagesService",
+ "Name": "Azure.Communication.MessagesService",
  "Description": "Azure Communication Messages Service",
  "ApiVersions": [
   "2024-02-01"
@@ -8,7 +8,7 @@
  "Enums": [
   {
    "$id": "2",
-   "Name": "CommunicationMessageType",
+   "Name": "CommunicationMessageKind",
    "EnumValueType": "String",
    "AllowedValues": [
     {
@@ -30,8 +30,7 @@
      "Description": "Template message type."
     }
    ],
-   "Namespace": "AzureCommunicationMessagesService",
-   "Accessibility": "public",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of message. Supports text, image, template.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -67,8 +66,7 @@
      "Description": "Message template is paused."
     }
    ],
-   "Namespace": "AzureCommunicationMessagesService",
-   "Accessibility": "public",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The aggregated template status.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -86,7 +84,7 @@
      "Description": "The WhatsApp communication messages channel type."
     }
    ],
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the communication messages channel.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -94,7 +92,7 @@
   },
   {
    "$id": "13",
-   "Name": "MessageTemplateValueType",
+   "Name": "MessageTemplateValueKind",
    "EnumValueType": "String",
    "AllowedValues": [
     {
@@ -134,7 +132,7 @@
      "Description": "The quick action template parameter type."
     }
    ],
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -142,7 +140,7 @@
   },
   {
    "$id": "20",
-   "Name": "MessageTemplateBindingsType",
+   "Name": "MessageTemplateBindingsKind",
    "EnumValueType": "String",
    "AllowedValues": [
     {
@@ -152,7 +150,7 @@
      "Description": "The WhatsApp template type."
     }
    ],
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The type of the message template.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -176,8 +174,7 @@
      "Description": "The WhatsApp button sub type is url."
     }
    ],
-   "Namespace": "AzureCommunicationMessagesService",
-   "Accessibility": "public",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
    "IsNullable": false,
@@ -195,7 +192,7 @@
      "Description": "Azure Communication Messages 2024-02-01 api version"
     }
    ],
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "Azure Communication Messages Versions",
    "IsExtensible": true,
    "IsNullable": false,
@@ -206,7 +203,7 @@
   {
    "$id": "27",
    "Name": "NotificationContent",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "Details of the message to send.",
    "IsNullable": false,
    "DiscriminatorPropertyName": "kind",
@@ -262,7 +259,7 @@
   {
    "$id": "34",
    "Name": "SendMessageResult",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "Result of the send message operation.",
    "IsNullable": false,
    "Usage": "Output",
@@ -278,7 +275,7 @@
       "ElementType": {
        "$id": "37",
        "Name": "MessageReceipt",
-       "Namespace": "AzureCommunicationMessagesService",
+       "Namespace": "Azure.Communication.MessagesService",
        "Description": "Receipt of the sending one message.",
        "IsNullable": false,
        "Usage": "Output",
@@ -342,7 +339,7 @@
       "ElementType": {
        "$id": "45",
        "Name": "MessageTemplateItem",
-       "Namespace": "AzureCommunicationMessagesService",
+       "Namespace": "Azure.Communication.MessagesService",
        "Description": "The message template as returned from the service.",
        "IsNullable": false,
        "DiscriminatorPropertyName": "kind",
@@ -366,7 +363,7 @@
          "$id": "48",
          "Name": "language",
          "SerializedName": "language",
-         "Description": "The template's language.",
+         "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
          "Type": {
           "$id": "49",
           "Name": "string",
@@ -428,7 +425,7 @@
   {
    "$id": "54",
    "Name": "MessageDataStream",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Accessibility": "internal",
    "Description": "A data stream.",
    "IsNullable": false,
@@ -467,7 +464,7 @@
   {
    "$id": "59",
    "Name": "Notifications",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "A notification.",
    "IsNullable": false,
    "Usage": "None",
@@ -491,7 +488,7 @@
   {
    "$id": "62",
    "Name": "CommunicationChannel",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "A communication channel.",
    "IsNullable": false,
    "Usage": "None",
@@ -515,7 +512,7 @@
   {
    "$id": "65",
    "Name": "TextNotificationContent",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "A request to send a text notification.",
    "IsNullable": false,
    "DiscriminatorValue": "text",
@@ -543,7 +540,7 @@
   {
    "$id": "68",
    "Name": "MediaNotificationContent",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "A request to send a media notification.",
    "IsNullable": false,
    "DiscriminatorValue": "image",
@@ -585,7 +582,7 @@
   {
    "$id": "73",
    "Name": "TemplateNotificationContent",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "A request to send a template notification.",
    "IsNullable": false,
    "DiscriminatorValue": "template",
@@ -602,7 +599,7 @@
      "Type": {
       "$id": "75",
       "Name": "MessageTemplate",
-      "Namespace": "AzureCommunicationMessagesService",
+      "Namespace": "Azure.Communication.MessagesService",
       "Description": "The template object used to create templates.",
       "IsNullable": false,
       "Usage": "Input",
@@ -625,7 +622,7 @@
         "$id": "78",
         "Name": "language",
         "SerializedName": "language",
-        "Description": "The codes for the supported languages for templates.",
+        "Description": "The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'.",
         "Type": {
          "$id": "79",
          "Name": "string",
@@ -646,7 +643,7 @@
          "ElementType": {
           "$id": "82",
           "Name": "MessageTemplateValue",
-          "Namespace": "AzureCommunicationMessagesService",
+          "Namespace": "Azure.Communication.MessagesService",
           "Description": "The class describes a parameter of a template.",
           "IsNullable": false,
           "DiscriminatorPropertyName": "kind",
@@ -693,7 +690,7 @@
         "Type": {
          "$id": "87",
          "Name": "MessageTemplateBindings",
-         "Namespace": "AzureCommunicationMessagesService",
+         "Namespace": "Azure.Communication.MessagesService",
          "Description": "The binding object to link values to the template specific locations",
          "IsNullable": false,
          "DiscriminatorPropertyName": "kind",
@@ -735,7 +732,7 @@
   {
    "$id": "89",
    "Name": "MessageTemplateText",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's text value information.",
    "IsNullable": false,
    "DiscriminatorValue": "text",
@@ -763,7 +760,7 @@
   {
    "$id": "92",
    "Name": "MessageTemplateMedia",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's media value information.\nCould be an image, document or\nvideo.",
    "IsNullable": false,
    "Usage": "None",
@@ -815,7 +812,7 @@
   {
    "$id": "99",
    "Name": "MessageTemplateImage",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's image value information.",
    "IsNullable": false,
    "DiscriminatorValue": "image",
@@ -871,7 +868,7 @@
   {
    "$id": "106",
    "Name": "MessageTemplateDocument",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's document value information.",
    "IsNullable": false,
    "DiscriminatorValue": "document",
@@ -927,7 +924,7 @@
   {
    "$id": "113",
    "Name": "MessageTemplateVideo",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's video value information.",
    "IsNullable": false,
    "DiscriminatorValue": "video",
@@ -983,7 +980,7 @@
   {
    "$id": "120",
    "Name": "MessageTemplateLocation",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's location value information.",
    "IsNullable": false,
    "DiscriminatorValue": "location",
@@ -1053,7 +1050,7 @@
   {
    "$id": "129",
    "Name": "MessageTemplateQuickAction",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The message template's quick action value information.",
    "IsNullable": false,
    "DiscriminatorValue": "quickAction",
@@ -1095,7 +1092,7 @@
   {
    "$id": "134",
    "Name": "WhatsAppMessageTemplateBindings",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The template bindings for WhatsApp",
    "IsNullable": false,
    "DiscriminatorValue": "whatsApp",
@@ -1115,7 +1112,7 @@
       "ElementType": {
        "$id": "137",
        "Name": "WhatsAppMessageTemplateBindingsComponent",
-       "Namespace": "AzureCommunicationMessagesService",
+       "Namespace": "Azure.Communication.MessagesService",
        "Description": "The template bindings component for WhatsApp",
        "IsNullable": false,
        "Usage": "Input",
@@ -1184,7 +1181,7 @@
       "ElementType": {
        "$id": "146",
        "Name": "WhatsAppMessageTemplateBindingsButton",
-       "Namespace": "AzureCommunicationMessagesService",
+       "Namespace": "Azure.Communication.MessagesService",
        "Description": "The template bindings component button for WhatsApp",
        "IsNullable": false,
        "Usage": "Input",
@@ -1197,7 +1194,7 @@
          "Type": {
           "$ref": "22"
          },
-         "IsRequired": false,
+         "IsRequired": true,
          "IsReadOnly": false
         },
         {
@@ -1232,7 +1229,7 @@
   {
    "$id": "150",
    "Name": "WhatsAppMessageTemplateItem",
-   "Namespace": "AzureCommunicationMessagesService",
+   "Namespace": "Azure.Communication.MessagesService",
    "Description": "The WhatsApp-specific template response contract",
    "IsNullable": false,
    "DiscriminatorValue": "whatsApp",

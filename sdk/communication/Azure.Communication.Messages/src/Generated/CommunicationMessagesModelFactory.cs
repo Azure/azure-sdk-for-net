@@ -46,7 +46,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="Messages.MessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
-        /// <param name="language"> The template's language. </param>
+        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <returns> A new <see cref="Messages.MessageTemplateItem"/> instance for mocking. </returns>
@@ -57,7 +57,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="Models.Channels.WhatsAppMessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
-        /// <param name="language"> The template's language. </param>
+        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="content">
         /// WhatsApp platform's template content

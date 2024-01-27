@@ -14,26 +14,20 @@ namespace Azure.Communication.Messages.Models.Channels
     public partial class WhatsAppMessageTemplateBindingsButton
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
-        /// <param name="refValue"> The name of the referenced item in the template values. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="refValue"/> is null. </exception>
-        public WhatsAppMessageTemplateBindingsButton(string refValue)
-        {
-            Argument.AssertNotNull(refValue, nameof(refValue));
-
-            RefValue = refValue;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindingsButton"/>. </summary>
         /// <param name="subType"> The WhatsApp button sub type. </param>
         /// <param name="refValue"> The name of the referenced item in the template values. </param>
-        internal WhatsAppMessageTemplateBindingsButton(string subType, string refValue)
+        /// <exception cref="ArgumentNullException"> <paramref name="subType"/> or <paramref name="refValue"/> is null. </exception>
+        public WhatsAppMessageTemplateBindingsButton(string subType, string refValue)
         {
+            Argument.AssertNotNull(subType, nameof(subType));
+            Argument.AssertNotNull(refValue, nameof(refValue));
+
             SubType = subType;
             RefValue = refValue;
         }
 
         /// <summary> The WhatsApp button sub type. </summary>
-        public string SubType { get; set; }
+        public string SubType { get; }
         /// <summary> The name of the referenced item in the template values. </summary>
         public string RefValue { get; }
     }

@@ -17,7 +17,7 @@ namespace Azure.Communication.Messages
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplate"/>. </summary>
         /// <param name="name"> Name of the template. </param>
-        /// <param name="language"> The codes for the supported languages for templates. </param>
+        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="language"/> is null. </exception>
         public MessageTemplate(string name, string language)
         {
@@ -31,7 +31,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplate"/>. </summary>
         /// <param name="name"> Name of the template. </param>
-        /// <param name="language"> The codes for the supported languages for templates. </param>
+        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="values"> The template values. </param>
         /// <param name="bindings"> The binding object to link values to the template specific locations. </param>
         internal MessageTemplate(string name, string language, IList<MessageTemplateValue> values, MessageTemplateBindings bindings)
@@ -44,7 +44,7 @@ namespace Azure.Communication.Messages
 
         /// <summary> Name of the template. </summary>
         public string Name { get; }
-        /// <summary> The codes for the supported languages for templates. </summary>
+        /// <summary> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </summary>
         public string Language { get; }
         /// <summary>
         /// The template values.

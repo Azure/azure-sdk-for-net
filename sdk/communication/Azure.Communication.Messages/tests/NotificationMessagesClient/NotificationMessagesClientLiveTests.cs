@@ -116,8 +116,8 @@ namespace Azure.Communication.Messages.Tests
 
             WhatsAppMessageTemplateBindings bindings = new();
             bindings.Body.Add(new(name.Name));
-            bindings.Buttons.Add(new(yes.Name) { SubType = WhatsAppMessageButtonSubType.QuickReply.ToString() });
-            bindings.Buttons.Add(new(no.Name) { SubType = WhatsAppMessageButtonSubType.QuickReply.ToString() });
+            bindings.Buttons.Add(new(WhatsAppMessageButtonSubType.QuickReply.ToString(), yes.Name));
+            bindings.Buttons.Add(new(WhatsAppMessageButtonSubType.QuickReply.ToString(), no.Name));
 
             MessageTemplate template = new("sample_issue_resolution", "en_us")
             {

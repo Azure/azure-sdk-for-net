@@ -15,7 +15,7 @@ namespace Azure.Communication.Messages.Models.Channels
     public partial class WhatsAppMessageTemplateItem : MessageTemplateItem
     {
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>
-        /// <param name="language"> The template's language. </param>
+        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
         internal WhatsAppMessageTemplateItem(string language, MessageTemplateStatus status) : base(language, status)
@@ -27,7 +27,7 @@ namespace Azure.Communication.Messages.Models.Channels
 
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateItem"/>. </summary>
         /// <param name="name"> The template's name. </param>
-        /// <param name="language"> The template's language. </param>
+        /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
         /// <param name="content">
