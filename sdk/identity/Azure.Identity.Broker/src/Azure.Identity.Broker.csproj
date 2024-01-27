@@ -16,12 +16,14 @@
     <!-- <PackageReference Include="Azure.Core" /> -->
     <!-- <PackageReference Include="Azure.Identity" /> -->
     <ProjectReference Include="..\..\Azure.Identity\src\Azure.Identity.csproj" />
-    <PackageReference Include="System.Memory" />
-    <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
     <PackageReference Include="System.Security.Cryptography.ProtectedData" />
     <PackageReference Include="Microsoft.Identity.Client.Broker" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net462' OR '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
   </ItemGroup>
 </Project>
