@@ -12,6 +12,8 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461' OR '$(TargetFramework)' == 'netstandard2.0'">
     <PackageReference Include="Microsoft.CSharp" />
   </ItemGroup>
 
