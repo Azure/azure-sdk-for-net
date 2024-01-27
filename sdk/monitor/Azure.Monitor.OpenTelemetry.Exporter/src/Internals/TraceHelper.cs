@@ -161,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 // ASP.NET instrumentation assigns route as {controller}/{action}/{id} which would result in the same name for different operations.
                 // To work around that we will use path from httpUrl.
-                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute!.Contains("{controller"))
+                if (!string.IsNullOrWhiteSpace(httpRoute) && !httpRoute!.Contains("{controller}"))
                 {
                     return $"{httpMethod} {httpRoute}";
                 }
