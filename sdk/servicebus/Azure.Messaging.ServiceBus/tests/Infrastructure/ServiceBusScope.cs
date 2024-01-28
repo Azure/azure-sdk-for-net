@@ -5,8 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus.Tests
