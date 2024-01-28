@@ -5,15 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class CertificateOrderContact
+    public partial class CertificateOrderContact : IUtf8JsonSerializable, IJsonModel<CertificateOrderContact>
     {
-        internal static CertificateOrderContact DeserializeCertificateOrderContact(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertificateOrderContact>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CertificateOrderContact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Email))
+            {
+                writer.WritePropertyName("email"u8);
+                writer.WriteStringValue(Email);
+            }
+            if (Optional.IsDefined(NameFirst))
+            {
+                writer.WritePropertyName("nameFirst"u8);
+                writer.WriteStringValue(NameFirst);
+            }
+            if (Optional.IsDefined(NameLast))
+            {
+                writer.WritePropertyName("nameLast"u8);
+                writer.WriteStringValue(NameLast);
+            }
+            if (Optional.IsDefined(Phone))
+            {
+                writer.WritePropertyName("phone"u8);
+                writer.WriteStringValue(Phone);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CertificateOrderContact IJsonModel<CertificateOrderContact>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCertificateOrderContact(document.RootElement, options);
+        }
+
+        internal static CertificateOrderContact DeserializeCertificateOrderContact(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +88,8 @@ namespace Azure.ResourceManager.AppService.Models
             Optional<string> nameFirst = default;
             Optional<string> nameLast = default;
             Optional<string> phone = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("email"u8))
@@ -44,8 +112,44 @@ namespace Azure.ResourceManager.AppService.Models
                     phone = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CertificateOrderContact(email.Value, nameFirst.Value, nameLast.Value, phone.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CertificateOrderContact(email.Value, nameFirst.Value, nameLast.Value, phone.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CertificateOrderContact>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CertificateOrderContact IPersistableModel<CertificateOrderContact>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CertificateOrderContact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCertificateOrderContact(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CertificateOrderContact)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CertificateOrderContact>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -19,9 +20,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricL2IsolationDomainPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, string annotation, int? mtu) : base(tags)
+        internal NetworkFabricL2IsolationDomainPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string annotation, int? mtu) : base(tags, serializedAdditionalRawData)
         {
             Annotation = annotation;
             Mtu = mtu;

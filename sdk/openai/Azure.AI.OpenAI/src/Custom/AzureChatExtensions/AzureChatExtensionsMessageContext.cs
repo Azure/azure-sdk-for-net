@@ -22,8 +22,8 @@ public partial class AzureChatExtensionsMessageContext
         IReadOnlyList<ChatResponseMessage> messages,
         ContentFilterResultsForPrompt requestContentFilterResults,
         ContentFilterResultsForChoice responseContentFilterResults)
-        : this(messages)
     {
+        Messages = messages;
         RequestContentFilterResults = requestContentFilterResults;
         ResponseContentFilterResults = responseContentFilterResults;
     }

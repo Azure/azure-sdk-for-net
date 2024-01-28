@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.Compute.Models
         private const string ConfidentialVmGuestStateOnlyEncryptedWithPlatformKeyValue = "ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey";
         private const string ConfidentialVmDiskEncryptedWithPlatformKeyValue = "ConfidentialVM_DiskEncryptedWithPlatformKey";
         private const string ConfidentialVmDiskEncryptedWithCustomerKeyValue = "ConfidentialVM_DiskEncryptedWithCustomerKey";
+        private const string ConfidentialVmNonPersistedTPMValue = "ConfidentialVM_NonPersistedTPM";
 
         /// <summary> Trusted Launch provides security features such as secure boot and virtual Trusted Platform Module (vTPM). </summary>
         public static DiskSecurityType TrustedLaunch { get; } = new DiskSecurityType(TrustedLaunchValue);
@@ -35,6 +36,8 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskSecurityType ConfidentialVmDiskEncryptedWithPlatformKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithPlatformKeyValue);
         /// <summary> Indicates Confidential VM disk with both OS disk and VM guest state encrypted with a customer managed key. </summary>
         public static DiskSecurityType ConfidentialVmDiskEncryptedWithCustomerKey { get; } = new DiskSecurityType(ConfidentialVmDiskEncryptedWithCustomerKeyValue);
+        /// <summary> Indicates Confidential VM disk with a ephemeral vTPM. vTPM state is not persisted across VM reboots. </summary>
+        public static DiskSecurityType ConfidentialVmNonPersistedTPM { get; } = new DiskSecurityType(ConfidentialVmNonPersistedTPMValue);
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are the same. </summary>
         public static bool operator ==(DiskSecurityType left, DiskSecurityType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskSecurityType"/> values are not the same. </summary>

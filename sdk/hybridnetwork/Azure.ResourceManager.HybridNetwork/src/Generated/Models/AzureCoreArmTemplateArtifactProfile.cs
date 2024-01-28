@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
@@ -19,8 +21,9 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureCoreArmTemplateArtifactProfile"/>. </summary>
         /// <param name="artifactStore"> The reference to artifact store. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="templateArtifactProfile"> Template artifact profile. </param>
-        internal AzureCoreArmTemplateArtifactProfile(WritableSubResource artifactStore, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore)
+        internal AzureCoreArmTemplateArtifactProfile(WritableSubResource artifactStore, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmTemplateArtifactProfile templateArtifactProfile) : base(artifactStore, serializedAdditionalRawData)
         {
             TemplateArtifactProfile = templateArtifactProfile;
         }

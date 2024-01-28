@@ -22,11 +22,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineCaptureResult"/>. </summary>
         /// <param name="id"> Resource Id. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="schema"> the schema of the captured virtual machine. </param>
         /// <param name="contentVersion"> the version of the content. </param>
         /// <param name="parameters"> parameters of the captured virtual machine. </param>
         /// <param name="resources"> a list of resource items of the captured virtual machine. </param>
-        internal VirtualMachineCaptureResult(ResourceIdentifier id, string schema, string contentVersion, BinaryData parameters, IReadOnlyList<BinaryData> resources) : base(id)
+        internal VirtualMachineCaptureResult(ResourceIdentifier id, IDictionary<string, BinaryData> serializedAdditionalRawData, string schema, string contentVersion, BinaryData parameters, IReadOnlyList<BinaryData> resources) : base(id, serializedAdditionalRawData)
         {
             Schema = schema;
             ContentVersion = contentVersion;

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureUpdateReplicationProtectedItemContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoveryAzureV1ResourceGroupId"> The recovery Azure resource group Id for classic deployment. </param>
         /// <param name="recoveryAzureV2ResourceGroupId"> The recovery Azure resource group Id for resource manager deployment. </param>
         /// <param name="useManagedDisks"> A value indicating whether managed disks should be used during failover. </param>
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
         /// <param name="vmDisks"> The list of disk update properties. </param>
-        internal HyperVReplicaAzureUpdateReplicationProtectedItemContent(string instanceType, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, IDictionary<string, string> diskIdToDiskEncryptionMap, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, IList<UpdateDiskContent> vmDisks) : base(instanceType)
+        internal HyperVReplicaAzureUpdateReplicationProtectedItemContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryAzureV1ResourceGroupId, ResourceIdentifier recoveryAzureV2ResourceGroupId, string useManagedDisks, IDictionary<string, string> diskIdToDiskEncryptionMap, ResourceIdentifier targetProximityPlacementGroupId, string targetAvailabilityZone, IDictionary<string, string> targetVmTags, IDictionary<string, string> targetManagedDiskTags, IDictionary<string, string> targetNicTags, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, IList<UpdateDiskContent> vmDisks) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryAzureV1ResourceGroupId = recoveryAzureV1ResourceGroupId;
             RecoveryAzureV2ResourceGroupId = recoveryAzureV2ResourceGroupId;

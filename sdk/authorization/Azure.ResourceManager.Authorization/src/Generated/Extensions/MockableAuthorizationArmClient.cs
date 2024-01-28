@@ -867,7 +867,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, scope, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "MockableAuthorizationArmClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EligibleChildResource.DeserializeEligibleChildResource(e), EligibleChildResourcesClientDiagnostics, Pipeline, "MockableAuthorizationArmClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => EligibleChildResourcesRestClient.CreateGetRequest(scope, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => EligibleChildResourcesRestClient.CreateGetNextPageRequest(nextLink, scope, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, EligibleChildResource.DeserializeEligibleChildResource, EligibleChildResourcesClientDiagnostics, Pipeline, "MockableAuthorizationArmClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EligibleChildResource.DeserializeEligibleChildResource(e), EligibleChildResourcesClientDiagnostics, Pipeline, "MockableAuthorizationArmClient.GetEligibleChildResources", "value", "nextLink", cancellationToken);
         }
         /// <summary>
         /// Gets an object representing a <see cref="DenyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.

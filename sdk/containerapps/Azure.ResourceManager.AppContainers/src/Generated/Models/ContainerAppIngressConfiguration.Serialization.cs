@@ -5,17 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppIngressConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppIngressConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppIngressConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppIngressConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppIngressConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
             if (Optional.IsDefined(External))
             {
                 writer.WritePropertyName("external"u8);
@@ -86,11 +101,40 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("corsPolicy"u8);
                 writer.WriteObjectValue(CorsPolicy);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppIngressConfiguration DeserializeContainerAppIngressConfiguration(JsonElement element)
+        ContainerAppIngressConfiguration IJsonModel<ContainerAppIngressConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppIngressConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppIngressConfiguration DeserializeContainerAppIngressConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -107,6 +151,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             Optional<IngressStickySessions> stickySessions = default;
             Optional<ContainerAppIngressClientCertificateMode> clientCertificateMode = default;
             Optional<ContainerAppCorsPolicy> corsPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fqdn"u8))
@@ -228,8 +274,44 @@ namespace Azure.ResourceManager.AppContainers.Models
                     corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppIngressConfiguration IPersistableModel<ContainerAppIngressConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppIngressConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppIngressConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

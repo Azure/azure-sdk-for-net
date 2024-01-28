@@ -20,6 +20,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
 # mgmt-debug:
 #  show-serialized-names: true
@@ -819,4 +820,21 @@ directive:
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers'].post
+    transform: >
+        $['responses'] = {
+            "200":{
+                "description": "No Content"
+            },
+            "204": {
+                "description": "No Content"
+            },
+            "default": {
+                "description": "App Service error response.",
+                "schema": {
+                    "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+                }
+            }
+        };
 ```

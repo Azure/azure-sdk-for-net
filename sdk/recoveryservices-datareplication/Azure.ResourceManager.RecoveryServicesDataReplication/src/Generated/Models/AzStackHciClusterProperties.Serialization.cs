@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class AzStackHciClusterProperties : IUtf8JsonSerializable
+    public partial class AzStackHciClusterProperties : IUtf8JsonSerializable, IJsonModel<AzStackHciClusterProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzStackHciClusterProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzStackHciClusterProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("clusterName"u8);
             writer.WriteStringValue(ClusterName);
@@ -29,11 +39,40 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzStackHciClusterProperties DeserializeAzStackHciClusterProperties(JsonElement element)
+        AzStackHciClusterProperties IJsonModel<AzStackHciClusterProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzStackHciClusterProperties(document.RootElement, options);
+        }
+
+        internal static AzStackHciClusterProperties DeserializeAzStackHciClusterProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +81,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string resourceName = default;
             string storageAccountName = default;
             IList<StorageContainerProperties> storageContainers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterName"u8))
@@ -69,8 +110,44 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     storageContainers = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzStackHciClusterProperties(clusterName, resourceName, storageAccountName, storageContainers);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AzStackHciClusterProperties(clusterName, resourceName, storageAccountName, storageContainers, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzStackHciClusterProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AzStackHciClusterProperties IPersistableModel<AzStackHciClusterProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzStackHciClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzStackHciClusterProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzStackHciClusterProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzStackHciClusterProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

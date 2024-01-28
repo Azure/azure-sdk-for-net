@@ -6,15 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class StorageCacheUpgradeStatus
+    public partial class StorageCacheUpgradeStatus : IUtf8JsonSerializable, IJsonModel<StorageCacheUpgradeStatus>
     {
-        internal static StorageCacheUpgradeStatus DeserializeStorageCacheUpgradeStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageCacheUpgradeStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageCacheUpgradeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(CurrentFirmwareVersion))
+            {
+                writer.WritePropertyName("currentFirmwareVersion"u8);
+                writer.WriteStringValue(CurrentFirmwareVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirmwareUpdateStatus))
+            {
+                writer.WritePropertyName("firmwareUpdateStatus"u8);
+                writer.WriteStringValue(FirmwareUpdateStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(FirmwareUpdateDeadline))
+            {
+                writer.WritePropertyName("firmwareUpdateDeadline"u8);
+                writer.WriteStringValue(FirmwareUpdateDeadline.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastFirmwareUpdate))
+            {
+                writer.WritePropertyName("lastFirmwareUpdate"u8);
+                writer.WriteStringValue(LastFirmwareUpdate.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PendingFirmwareVersion))
+            {
+                writer.WritePropertyName("pendingFirmwareVersion"u8);
+                writer.WriteStringValue(PendingFirmwareVersion);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageCacheUpgradeStatus IJsonModel<StorageCacheUpgradeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageCacheUpgradeStatus(document.RootElement, options);
+        }
+
+        internal static StorageCacheUpgradeStatus DeserializeStorageCacheUpgradeStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +94,8 @@ namespace Azure.ResourceManager.StorageCache.Models
             Optional<DateTimeOffset> firmwareUpdateDeadline = default;
             Optional<DateTimeOffset> lastFirmwareUpdate = default;
             Optional<string> pendingFirmwareVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentFirmwareVersion"u8))
@@ -63,8 +135,44 @@ namespace Azure.ResourceManager.StorageCache.Models
                     pendingFirmwareVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageCacheUpgradeStatus(currentFirmwareVersion.Value, Optional.ToNullable(firmwareUpdateStatus), Optional.ToNullable(firmwareUpdateDeadline), Optional.ToNullable(lastFirmwareUpdate), pendingFirmwareVersion.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new StorageCacheUpgradeStatus(currentFirmwareVersion.Value, Optional.ToNullable(firmwareUpdateStatus), Optional.ToNullable(firmwareUpdateDeadline), Optional.ToNullable(lastFirmwareUpdate), pendingFirmwareVersion.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageCacheUpgradeStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        StorageCacheUpgradeStatus IPersistableModel<StorageCacheUpgradeStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageCacheUpgradeStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageCacheUpgradeStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageCacheUpgradeStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

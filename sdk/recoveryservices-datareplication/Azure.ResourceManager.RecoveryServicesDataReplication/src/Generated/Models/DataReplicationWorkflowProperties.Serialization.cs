@@ -6,16 +6,157 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class DataReplicationWorkflowProperties
+    public partial class DataReplicationWorkflowProperties : IUtf8JsonSerializable, IJsonModel<DataReplicationWorkflowProperties>
     {
-        internal static DataReplicationWorkflowProperties DeserializeDataReplicationWorkflowProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationWorkflowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataReplicationWorkflowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationWorkflowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ObjectId))
+            {
+                writer.WritePropertyName("objectId"u8);
+                writer.WriteStringValue(ObjectId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ObjectName))
+            {
+                writer.WritePropertyName("objectName"u8);
+                writer.WriteStringValue(ObjectName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ObjectInternalId))
+            {
+                writer.WritePropertyName("objectInternalId"u8);
+                writer.WriteStringValue(ObjectInternalId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ObjectInternalName))
+            {
+                writer.WritePropertyName("objectInternalName"u8);
+                writer.WriteStringValue(ObjectInternalName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ObjectType))
+            {
+                writer.WritePropertyName("objectType"u8);
+                writer.WriteStringValue(ObjectType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReplicationProviderId))
+            {
+                writer.WritePropertyName("replicationProviderId"u8);
+                writer.WriteStringValue(ReplicationProviderId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceFabricProviderId))
+            {
+                writer.WritePropertyName("sourceFabricProviderId"u8);
+                writer.WriteStringValue(SourceFabricProviderId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetFabricProviderId))
+            {
+                writer.WritePropertyName("targetFabricProviderId"u8);
+                writer.WriteStringValue(TargetFabricProviderId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AllowedActions))
+            {
+                writer.WritePropertyName("allowedActions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AllowedActions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActivityId))
+            {
+                writer.WritePropertyName("activityId"u8);
+                writer.WriteStringValue(ActivityId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tasks))
+            {
+                writer.WritePropertyName("tasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tasks)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("customProperties"u8);
+            writer.WriteObjectValue(CustomProperties);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataReplicationWorkflowProperties IJsonModel<DataReplicationWorkflowProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationWorkflowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataReplicationWorkflowProperties(document.RootElement, options);
+        }
+
+        internal static DataReplicationWorkflowProperties DeserializeDataReplicationWorkflowProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +178,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             Optional<IReadOnlyList<DataReplicationTask>> tasks = default;
             Optional<IReadOnlyList<DataReplicationErrorInfo>> errors = default;
             WorkflowModelCustomProperties customProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -167,8 +310,44 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     customProperties = WorkflowModelCustomProperties.DeserializeWorkflowModelCustomProperties(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataReplicationWorkflowProperties(displayName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), objectId.Value, objectName.Value, objectInternalId.Value, objectInternalName.Value, Optional.ToNullable(objectType), replicationProviderId.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, Optional.ToList(allowedActions), activityId.Value, Optional.ToList(tasks), Optional.ToList(errors), customProperties);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DataReplicationWorkflowProperties(displayName.Value, Optional.ToNullable(state), Optional.ToNullable(startTime), Optional.ToNullable(endTime), objectId.Value, objectName.Value, objectInternalId.Value, objectInternalName.Value, Optional.ToNullable(objectType), replicationProviderId.Value, sourceFabricProviderId.Value, targetFabricProviderId.Value, Optional.ToList(allowedActions), activityId.Value, Optional.ToList(tasks), Optional.ToList(errors), customProperties, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataReplicationWorkflowProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationWorkflowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DataReplicationWorkflowProperties IPersistableModel<DataReplicationWorkflowProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataReplicationWorkflowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataReplicationWorkflowProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataReplicationWorkflowProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataReplicationWorkflowProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

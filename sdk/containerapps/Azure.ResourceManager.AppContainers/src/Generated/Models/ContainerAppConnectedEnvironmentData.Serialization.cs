@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
@@ -14,10 +16,18 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    public partial class ContainerAppConnectedEnvironmentData : IUtf8JsonSerializable
+    public partial class ContainerAppConnectedEnvironmentData : IUtf8JsonSerializable, IJsonModel<ContainerAppConnectedEnvironmentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppConnectedEnvironmentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppConnectedEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConnectedEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppConnectedEnvironmentData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
@@ -37,8 +47,43 @@ namespace Azure.ResourceManager.AppContainers
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
+            {
+                writer.WritePropertyName("deploymentErrors"u8);
+                writer.WriteStringValue(DeploymentErrors);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultDomain))
+            {
+                writer.WritePropertyName("defaultDomain"u8);
+                writer.WriteStringValue(DefaultDomain);
+            }
             if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
@@ -55,11 +100,40 @@ namespace Azure.ResourceManager.AppContainers
                 writer.WriteObjectValue(CustomDomainConfiguration);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppConnectedEnvironmentData DeserializeContainerAppConnectedEnvironmentData(JsonElement element)
+        ContainerAppConnectedEnvironmentData IJsonModel<ContainerAppConnectedEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConnectedEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppConnectedEnvironmentData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppConnectedEnvironmentData(document.RootElement, options);
+        }
+
+        internal static ContainerAppConnectedEnvironmentData DeserializeContainerAppConnectedEnvironmentData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -77,6 +151,8 @@ namespace Azure.ResourceManager.AppContainers
             Optional<IPAddress> staticIP = default;
             Optional<string> daprAIConnectionString = default;
             Optional<ContainerAppCustomDomainConfiguration> customDomainConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("extendedLocation"u8))
@@ -185,8 +261,44 @@ namespace Azure.ResourceManager.AppContainers
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ContainerAppConnectedEnvironmentData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, extendedLocation.Value, Optional.ToNullable(provisioningState), deploymentErrors.Value, defaultDomain.Value, staticIP.Value, daprAIConnectionString.Value, customDomainConfiguration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppConnectedEnvironmentData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConnectedEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppConnectedEnvironmentData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppConnectedEnvironmentData IPersistableModel<ContainerAppConnectedEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConnectedEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppConnectedEnvironmentData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppConnectedEnvironmentData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppConnectedEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

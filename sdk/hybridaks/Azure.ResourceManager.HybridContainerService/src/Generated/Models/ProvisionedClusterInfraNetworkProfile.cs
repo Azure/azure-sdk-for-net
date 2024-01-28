@@ -5,14 +5,47 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    /// <summary> InfraNetworkProfile - List of infra network profiles for the provisioned cluster. </summary>
+    /// <summary> The profile for the infrastructure networks used by the provisioned cluster. </summary>
     internal partial class ProvisionedClusterInfraNetworkProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterInfraNetworkProfile"/>. </summary>
         public ProvisionedClusterInfraNetworkProfile()
         {
@@ -20,13 +53,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterInfraNetworkProfile"/>. </summary>
-        /// <param name="vnetSubnetIds"> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
-        internal ProvisionedClusterInfraNetworkProfile(IList<ResourceIdentifier> vnetSubnetIds)
+        /// <param name="vnetSubnetIds"> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterInfraNetworkProfile(IList<ResourceIdentifier> vnetSubnetIds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VnetSubnetIds = vnetSubnetIds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Array of references to azure resource corresponding to the Network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
+        /// <summary> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </summary>
         public IList<ResourceIdentifier> VnetSubnetIds { get; }
     }
 }

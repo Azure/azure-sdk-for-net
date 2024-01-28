@@ -6,16 +6,95 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceSsoDetailsResult
+    public partial class DynatraceSsoDetailsResult : IUtf8JsonSerializable, IJsonModel<DynatraceSsoDetailsResult>
     {
-        internal static DynatraceSsoDetailsResult DeserializeDynatraceSsoDetailsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceSsoDetailsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DynatraceSsoDetailsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsSsoEnabled))
+            {
+                writer.WritePropertyName("isSsoEnabled"u8);
+                writer.WriteStringValue(IsSsoEnabled.Value.ToString());
+            }
+            if (Optional.IsDefined(MetadataUri))
+            {
+                writer.WritePropertyName("metadataUrl"u8);
+                writer.WriteStringValue(MetadataUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(SingleSignOnUri))
+            {
+                writer.WritePropertyName("singleSignOnUrl"u8);
+                writer.WriteStringValue(SingleSignOnUri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(AadDomains))
+            {
+                writer.WritePropertyName("aadDomains"u8);
+                writer.WriteStartArray();
+                foreach (var item in AadDomains)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AdminUsers))
+            {
+                writer.WritePropertyName("adminUsers"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdminUsers)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DynatraceSsoDetailsResult IJsonModel<DynatraceSsoDetailsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceSsoDetailsResult(document.RootElement, options);
+        }
+
+        internal static DynatraceSsoDetailsResult DeserializeDynatraceSsoDetailsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +104,8 @@ namespace Azure.ResourceManager.Dynatrace.Models
             Optional<Uri> singleSignOnUrl = default;
             Optional<IReadOnlyList<string>> aadDomains = default;
             Optional<IReadOnlyList<string>> adminUsers = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isSsoEnabled"u8))
@@ -82,8 +163,44 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     adminUsers = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DynatraceSsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DynatraceSsoDetailsResult(Optional.ToNullable(isSsoEnabled), metadataUrl.Value, singleSignOnUrl.Value, Optional.ToList(aadDomains), Optional.ToList(adminUsers), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DynatraceSsoDetailsResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DynatraceSsoDetailsResult IPersistableModel<DynatraceSsoDetailsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceSsoDetailsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynatraceSsoDetailsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceSsoDetailsResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynatraceSsoDetailsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
