@@ -55,9 +55,6 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            var serviceBusNamespace = useSecondaryNamespace ? ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace
-                : ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
-
             var queueName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
             var queueOptions = new CreateQueueOptions(queueName)
@@ -101,7 +98,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
             topicSubscriptions ??= new[] { "default-subscription" };
 
-            var serviceBusNamespace = ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
             var topicName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
             var topicOptions = new CreateTopicOptions(topicName)
