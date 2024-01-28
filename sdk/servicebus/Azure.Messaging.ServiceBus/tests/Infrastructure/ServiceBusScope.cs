@@ -16,22 +16,19 @@ namespace Azure.Messaging.ServiceBus.Tests
     ///
     public static class ServiceBusScope
     {
-        /// <summary>
-        /// The domain to use when forming the fully qualified namespace.
-        /// </summary>
-        private static readonly string s_hostDomain =
-            ServiceBusTestEnvironment.Instance.AzureEnvironment == "AzureUSGovernment" ? "servicebus.usgovcloudapi.net"
-            : "servicebus.windows.net";
-
-        /// <summary> The client used to create and delete resources on the Service Bus namespace. </summary>
-        private static ServiceBusAdministrationClient CreateClient(string namespaceName)
-        {
-            return new ServiceBusAdministrationClient(
-                $"{namespaceName}.{s_hostDomain}",
+        private static ServiceBusAdministrationClient s_adminClient =>
+            new ServiceBusAdministrationClient(
+                $"{ServiceBusTestEnvironment.Instance.FullyQualifiedNamespace}",
                 ServiceBusTestEnvironment.Instance.Credential,
                 // disable tracing so as not to impact any tracing tests
                 new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
-        }
+
+        private static ServiceBusAdministrationClient s_secondaryAdminClient =>
+            new ServiceBusAdministrationClient(
+                $"{ServiceBusTestEnvironment.Instance.SecondaryFullyQualifiedNamespace}",
+                ServiceBusTestEnvironment.Instance.Credential,
+                // disable tracing so as not to impact any tracing tests
+                new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
 
         /// <summary>
         ///   Creates a Service Bus scope associated with a queue instance, intended to be used in the context
@@ -40,24 +37,17 @@ namespace Azure.Messaging.ServiceBus.Tests
         ///
         /// <param name="enablePartitioning">When <c>true</c>, partitioning will be enabled on the queue that is created.</param>
         /// <param name="enableSession">When <c>true</c>, a session will be enabled on the queue that is created.</param>
-        /// <param name="forceQueueCreation">When <c>true</c>, forces creation of a new queue even if an environmental override was specified to use an existing one.</param>
         /// <param name="caller">The name of the calling method; this is intended to be populated by the runtime.</param>
         /// <param name="lockDuration">The lock duration for the queue.</param>
-        /// <param name="overrideNamespace">The namespace to use for the queue.</param>
+        /// <param name="useSecondaryNamespace">When <c>true</c>, the queue will be created in the secondary namespace corresponding
+        /// to <see cref="ServiceBusTestEnvironment.ServiceBusSecondaryNamespace"/>.</param>
         /// <param name="defaultMessageTimeToLive">The default message time to live for the queue.</param>
         /// <returns>The requested Service Bus <see cref="QueueScope" />.</returns>
         ///
-        /// <remarks>
-        ///   If an environmental override was set to use an existing Service Bus queue resource and the <paramref name="forceQueueCreation" /> flag
-        ///   was not set, the existing queue will be assumed with no validation.  In this case the <paramref name="enablePartitioning" /> and
-        ///   <paramref name="enableSession" /> parameters are also ignored.
-        /// </remarks>
-        ///
         public static async Task<QueueScope> CreateWithQueue(bool enablePartitioning,
                                                              bool enableSession,
-                                                             bool forceQueueCreation = false,
                                                              TimeSpan? lockDuration = default,
-                                                             string overrideNamespace = default,
+                                                             bool useSecondaryNamespace = false,
                                                              TimeSpan? defaultMessageTimeToLive = default,
                                                              [CallerMemberName] string caller = "")
         {
@@ -65,7 +55,8 @@ namespace Azure.Messaging.ServiceBus.Tests
 
             caller = (caller.Length < 16) ? caller : caller.Substring(0, 15);
 
-            var serviceBusNamespace = overrideNamespace ?? ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
+            var serviceBusNamespace = useSecondaryNamespace ? ServiceBusTestEnvironment.Instance.ServiceBusSecondaryNamespace
+                : ServiceBusTestEnvironment.Instance.ServiceBusNamespace;
 
             var queueName = $"{ Guid.NewGuid().ToString("D").Substring(0, 13) }-{ caller }";
 
@@ -84,10 +75,10 @@ namespace Azure.Messaging.ServiceBus.Tests
                 queueOptions.DefaultMessageTimeToLive = defaultMessageTimeToLive.Value;
             }
 
-            var client = CreateClient(serviceBusNamespace);
+            var client = useSecondaryNamespace ? s_secondaryAdminClient : s_adminClient;
 
             QueueProperties queueProperties = await client.CreateQueueAsync(queueOptions);
-            return new QueueScope(serviceBusNamespace, queueProperties.Name, true);
+            return new QueueScope(queueProperties.Name, true, useSecondaryNamespace);
         }
 
         /// <summary>
@@ -118,8 +109,7 @@ namespace Azure.Messaging.ServiceBus.Tests
                 EnablePartitioning = enablePartitioning
             };
 
-            var client = CreateClient(serviceBusNamespace);
-            TopicProperties topicProperties = await client.CreateTopicAsync(topicOptions);
+            TopicProperties topicProperties = await s_adminClient.CreateTopicAsync(topicOptions);
 
             var activeSubscriptions = new List<string>();
 
@@ -129,11 +119,11 @@ namespace Azure.Messaging.ServiceBus.Tests
                 {
                     RequiresSession = enableSession
                 };
-                SubscriptionProperties subscriptionProperties = await client.CreateSubscriptionAsync(subscriptionOptions);
+                SubscriptionProperties subscriptionProperties = await s_adminClient.CreateSubscriptionAsync(subscriptionOptions);
                 activeSubscriptions.Add(subscriptionProperties.SubscriptionName);
             }
 
-            return new TopicScope(serviceBusNamespace, topicProperties.Name, activeSubscriptions, true);
+            return new TopicScope(topicProperties.Name, activeSubscriptions, true);
         }
 
         /// <summary>
@@ -149,10 +139,9 @@ namespace Azure.Messaging.ServiceBus.Tests
             private bool _disposed = false;
 
             /// <summary>
-            ///   The name of the Service Bus namespace associated with the queue.
+            /// A flag indicating whether the queue should is in the secondary namespace or not.
             /// </summary>
-            ///
-            public string NamespaceName { get; }
+            private readonly bool _useSecondaryNamespace;
 
             /// <summary>
             ///  The name of the queue.
@@ -172,17 +161,17 @@ namespace Azure.Messaging.ServiceBus.Tests
             ///   Initializes a new instance of the <see cref="QueueScope"/> class.
             /// </summary>
             ///
-            /// <param name="serviceBusNamespaceName">The name of the Service Bus namespace to which the queue is associated.</param>
             /// <param name="queueName">The name of the queue.</param>
             /// <param name="shouldRemoveAtScopeCompletion">A flag indicating whether the queue should be removed when the scope is complete.</param>
+            /// <param name="useSecondaryNamespace">A flag indicating whether the queue should be created in the secondary namespace.</param>
             ///
-            public QueueScope(string serviceBusNamespaceName,
-                              string queueName,
-                              bool shouldRemoveAtScopeCompletion)
+            public QueueScope(string queueName,
+                              bool shouldRemoveAtScopeCompletion,
+                              bool useSecondaryNamespace)
             {
-                NamespaceName = serviceBusNamespaceName;
                 QueueName = queueName;
                 ShouldRemoveAtScopeCompletion = shouldRemoveAtScopeCompletion;
+                _useSecondaryNamespace = useSecondaryNamespace;
             }
 
             /// <summary>
@@ -203,7 +192,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 try
                 {
-                    var client = CreateClient(NamespaceName);
+                    var client = _useSecondaryNamespace ? s_secondaryAdminClient : s_adminClient;
                     await client.DeleteQueueAsync(QueueName);
                 }
                 catch
@@ -233,12 +222,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             private bool _disposed = false;
 
             /// <summary>
-            ///   The name of the Service Bus namespace associated with the queue.
-            /// </summary>
-            ///
-            public string NamespaceName { get; }
-
-            /// <summary>
             ///  The name of the topic.
             /// </summary>
             ///
@@ -262,17 +245,14 @@ namespace Azure.Messaging.ServiceBus.Tests
             ///   Initializes a new instance of the <see cref="TopicScope"/> class.
             /// </summary>
             ///
-            /// <param name="serviceBusNamespaceName">The name of the Service Bus namespace to which the queue is associated.</param>
             /// <param name="topicName">The name of the topic.</param>
             /// <param name="subscriptionNames">The set of names for the subscriptions </param>
             /// <param name="shouldRemoveAtScopeCompletion">A flag indicating whether the topic should be removed when the scope is complete.</param>
             ///
-            public TopicScope(string serviceBusNamespaceName,
-                              string topicName,
+            public TopicScope(string topicName,
                               IReadOnlyList<string> subscriptionNames,
                               bool shouldRemoveAtScopeCompletion)
             {
-                NamespaceName = serviceBusNamespaceName;
                 TopicName = topicName;
                 SubscriptionNames = subscriptionNames;
                 ShouldRemoveAtScopeCompletion = shouldRemoveAtScopeCompletion;
@@ -296,8 +276,7 @@ namespace Azure.Messaging.ServiceBus.Tests
 
                 try
                 {
-                    var client = CreateClient(NamespaceName);
-                    await client.DeleteTopicAsync(TopicName);
+                    await s_adminClient.DeleteTopicAsync(TopicName);
                 }
                 catch
                 {
