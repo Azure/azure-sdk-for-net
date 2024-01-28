@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 
 namespace Azure.Messaging.ServiceBus.Tests
@@ -16,11 +18,18 @@ namespace Azure.Messaging.ServiceBus.Tests
     ///
     public static class ServiceBusScope
     {
+        /// <summary>
+        /// The domain to use when forming the fully qualified namespace.
+        /// </summary>
+        private static readonly string s_hostDomain =
+            ServiceBusTestEnvironment.Instance.AzureEnvironment == "AzureUSGovernment" ? "servicebus.usgovcloudapi.net"
+            : "servicebus.windows.net";
+
         /// <summary> The client used to create and delete resources on the Service Bus namespace. </summary>
         private static ServiceBusAdministrationClient CreateClient(string namespaceName)
         {
             return new ServiceBusAdministrationClient(
-                $"{namespaceName}.servicebus.windows.net",
+                $"{namespaceName}.{s_hostDomain}",
                 ServiceBusTestEnvironment.Instance.Credential,
                 // disable tracing so as not to impact any tracing tests
                 new ServiceBusAdministrationClientOptions { Diagnostics = { IsDistributedTracingEnabled = false } });
