@@ -220,7 +220,7 @@ namespace Azure.AI.Translator.Document
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/document:translate", false);
+            uri.AppendPath("/translator/document:translate", false);
             uri.AppendQuery("targetLanguage", targetLanguage, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             if (sourceLanguage != null)
