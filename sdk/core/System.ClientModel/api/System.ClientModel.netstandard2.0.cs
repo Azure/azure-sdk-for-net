@@ -146,7 +146,7 @@ namespace System.ClientModel.Primitives
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } protected internal set { } }
-        public System.ClientModel.Primitives.PipelineMessageClassifier? MessageClassifier { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelineMessageClassifier MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
@@ -156,11 +156,13 @@ namespace System.ClientModel.Primitives
         public void SetProperty(System.Type type, object value) { }
         public bool TryGetProperty(System.Type type, out object? value) { throw null; }
     }
-    public partial class PipelineMessageClassifier
+    public abstract partial class PipelineMessageClassifier
     {
-        protected internal PipelineMessageClassifier() { }
+        protected PipelineMessageClassifier() { }
+        public static System.ClientModel.Primitives.PipelineMessageClassifier Default { get { throw null; } }
         public static System.ClientModel.Primitives.PipelineMessageClassifier Create(System.ReadOnlySpan<ushort> successStatusCodes) { throw null; }
-        public virtual bool IsErrorResponse(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
+        public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, out bool isError);
+        public abstract bool TryClassify(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception, out bool isRetriable);
     }
     public abstract partial class PipelinePolicy
     {

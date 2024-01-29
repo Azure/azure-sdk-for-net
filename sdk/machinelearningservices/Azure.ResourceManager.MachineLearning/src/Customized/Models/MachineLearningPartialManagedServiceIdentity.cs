@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 
-[assembly:CodeGenSuppressType("MachineLearningPartialManagedServiceIdentity")]
+[assembly: CodeGenSuppressType("MachineLearningPartialManagedServiceIdentity")]
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -46,17 +46,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </para>
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
-        /// <summary> Initializes a new instance of PartialManagedServiceIdentity. </summary>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        public MachineLearningPartialManagedServiceIdentity(IDictionary<string, BinaryData> serializedAdditionalRawData = null)
-        {
-            UserAssignedIdentities = new ChangeTrackingDictionary<string, BinaryData>();
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningPartialManagedServiceIdentity"/>. </summary>
         public MachineLearningPartialManagedServiceIdentity()
         {
             UserAssignedIdentities = new ChangeTrackingDictionary<string, BinaryData>();
+        }
+
+        /// <summary> Initializes a new instance of PartialManagedServiceIdentity. </summary>
+        /// <param name="managedServiceIdentityType"> Managed service identity (system assigned and/or user assigned identities) </param>
+        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: &apos;/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningPartialManagedServiceIdentity(Azure.ResourceManager.Models.ManagedServiceIdentityType? managedServiceIdentityType, IDictionary<string, BinaryData> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ManagedServiceIdentityType = managedServiceIdentityType;
+            UserAssignedIdentities = userAssignedIdentities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

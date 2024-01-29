@@ -106,12 +106,6 @@ public class RequestOptions
         // cancellation token will be set again in HttpPipeline.Send.
         message.CancellationToken = CancellationToken;
 
-        // We don't overwrite the classifier on the message if it's already set.
-        // This preserves any values set by the client author, and is also
-        // needed for Azure.Core-based clients so we don't overwrite a default
-        // Azure.Core ResponseClassifier.
-        message.MessageClassifier ??= PipelineMessageClassifier.Default;
-
         // Copy custom pipeline policies to the message.
         message.PerCallPolicies = _perCallPolicies;
         message.PerTryPolicies = _perTryPolicies;

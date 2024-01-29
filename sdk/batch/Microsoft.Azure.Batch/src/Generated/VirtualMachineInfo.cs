@@ -25,10 +25,12 @@ namespace Microsoft.Azure.Batch
         private class PropertyContainer : PropertyCollection
         {
             public readonly PropertyAccessor<ImageReference> ImageReferenceProperty;
+            public readonly PropertyAccessor<string> ScaleSetVmResourceIdProperty;
 
             public PropertyContainer() : base(BindingState.Unbound)
             {
                 this.ImageReferenceProperty = this.CreatePropertyAccessor<ImageReference>(nameof(ImageReference), BindingAccess.Read | BindingAccess.Write);
+                this.ScaleSetVmResourceIdProperty = this.CreatePropertyAccessor<string>(nameof(ScaleSetVmResourceId), BindingAccess.Read | BindingAccess.Write);
             }
 
             public PropertyContainer(Models.VirtualMachineInfo protocolObject) : base(BindingState.Bound)
@@ -36,6 +38,10 @@ namespace Microsoft.Azure.Batch
                 this.ImageReferenceProperty = this.CreatePropertyAccessor(
                     UtilitiesInternal.CreateObjectWithNullCheck(protocolObject.ImageReference, o => new ImageReference(o).Freeze()),
                     nameof(ImageReference),
+                    BindingAccess.Read);
+                this.ScaleSetVmResourceIdProperty = this.CreatePropertyAccessor(
+                    protocolObject.ScaleSetVmResourceId,
+                    nameof(ScaleSetVmResourceId),
                     BindingAccess.Read);
             }
         }
@@ -70,6 +76,16 @@ namespace Microsoft.Azure.Batch
             set { this.propertyContainer.ImageReferenceProperty.Value = value; }
         }
 
+        /// <summary>
+        /// Gets or sets the resource ID of the Compute Node's current Virtual Machine Scale Set VM. Only defined if the 
+        /// Batch Account was created with its poolAllocationMode property set to 'UserSubscription'.
+        /// </summary>
+        public string ScaleSetVmResourceId
+        {
+            get { return this.propertyContainer.ScaleSetVmResourceIdProperty.Value; }
+            set { this.propertyContainer.ScaleSetVmResourceIdProperty.Value = value; }
+        }
+
         #endregion // VirtualMachineInfo
 
         #region IPropertyMetadata
@@ -97,6 +113,7 @@ namespace Microsoft.Azure.Batch
             Models.VirtualMachineInfo result = new Models.VirtualMachineInfo()
             {
                 ImageReference = UtilitiesInternal.CreateObjectWithNullCheck(this.ImageReference, (o) => o.GetTransportObject()),
+                ScaleSetVmResourceId = this.ScaleSetVmResourceId,
             };
 
             return result;

@@ -19,6 +19,7 @@ public class PipelineMessage : IDisposable
         _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
 
         BufferResponse = true;
+        MessageClassifier = PipelineMessageClassifier.Default;
     }
 
     public PipelineRequest Request { get; }
@@ -64,7 +65,7 @@ public class PipelineMessage : IDisposable
     // the client-provided classifier or compose a chain of classification
     // handlers that preserve the functionality of the client-provided classifier
     // at the end of the chain.
-    public PipelineMessageClassifier? MessageClassifier { get; set; }
+    public PipelineMessageClassifier MessageClassifier { get; set; }
 
     public void Apply(RequestOptions options)
     {
