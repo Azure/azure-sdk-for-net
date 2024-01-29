@@ -58,7 +58,6 @@
         "uniqueSubDomainName": "[format('{0}-{1}', parameters('baseName'), parameters('endpointPrefix'))]",
         "endpointValue": "[format('https://{0}-{1}{2}', parameters('baseName'), parameters('endpointPrefix'), parameters('endpointSuffix'))]",
         "storageAccountName": "[concat(parameters('baseName'), 'prim')]",
-        "documentEndpointValue": "[format('https://flt.document.microsofttranslator.com')]",
         "documentUniqueSubDomainName": "[format('{0}-document-translator', parameters('baseName'))]",
         "documentCustomEndpointValue": "[format('https://{0}-document-translator.cognitiveservices.azure.com', parameters('baseName'))]",
         "encryption": {
@@ -182,7 +181,7 @@
         },
         "DOCUMENT_TRANSLATOR_ENDPOINT": {
             "type": "string",
-            "value": "[variables('documentEndpointValue')]"
+            "value": "[variables('documentCustomEndpointValue')]"
         },
         "DOCUMENT_TRANSLATOR_CUSTOM_ENDPOINT": {
             "type": "string",
