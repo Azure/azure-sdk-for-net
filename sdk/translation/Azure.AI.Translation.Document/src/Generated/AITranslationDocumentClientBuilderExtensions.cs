@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using Azure;
 using Azure.AI.Translation.Document;
 using Azure.Core.Extensions;
 
@@ -17,10 +18,20 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="DocumentTranslationRestClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        public static IAzureClientBuilder<DocumentTranslationRestClient, DocumentTranslationRestClientOptions> AddDocumentTranslationRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<DocumentTranslationRestClient, DocumentTranslationRestClientOptions> AddDocumentTranslationRestClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<DocumentTranslationRestClient, DocumentTranslationRestClientOptions>((options) => new DocumentTranslationRestClient(endpoint, options));
+            return builder.RegisterClientFactory<DocumentTranslationRestClient, DocumentTranslationRestClientOptions>((options) => new DocumentTranslationRestClient(endpoint, credential, options));
+        }
+
+        /// <summary> Registers a <see cref="DocumentTranslationRestClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        public static IAzureClientBuilder<DocumentTranslationRestClient, DocumentTranslationRestClientOptions> AddDocumentTranslationRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<DocumentTranslationRestClient, DocumentTranslationRestClientOptions>((options, cred) => new DocumentTranslationRestClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="DocumentTranslationRestClient"/> instance. </summary>

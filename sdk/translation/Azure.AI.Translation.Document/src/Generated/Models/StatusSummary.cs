@@ -18,7 +18,7 @@ namespace Azure.AI.Translation.Document.Models
         /// <param name="notYetStarted"> Count of not yet started. </param>
         /// <param name="cancelled"> Number of cancelled. </param>
         /// <param name="totalCharacterCharged"> Total characters charged by the API. </param>
-        internal StatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, int totalCharacterCharged)
+        internal StatusSummary(int total, int failed, int success, int inProgress, int notYetStarted, int cancelled, long totalCharacterCharged)
         {
             Total = total;
             Failed = failed;
@@ -42,6 +42,6 @@ namespace Azure.AI.Translation.Document.Models
         /// <summary> Number of cancelled. </summary>
         public int Cancelled { get; }
         /// <summary> Total characters charged by the API. </summary>
-        public int TotalCharacterCharged { get; }
+        public long TotalCharacterCharged { get; }
     }
 }
