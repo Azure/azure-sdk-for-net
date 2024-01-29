@@ -30,90 +30,13 @@ public class ResponseBufferingPolicy : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
     {
-        Debug.Assert(message.NetworkTimeout is not null);
-
-        TimeSpan invocationNetworkTimeout = (TimeSpan)message.NetworkTimeout!;
-
-        CancellationToken oldToken = message.CancellationToken;
-        using CancellationTokenSource cts = CancellationTokenSource.CreateLinkedTokenSource(oldToken);
-        cts.CancelAfter(invocationNetworkTimeout);
-
-        try
+        if (async)
         {
-            message.CancellationToken = cts.Token;
-            if (async)
-            {
-                await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
-            }
-            else
-            {
-                ProcessNext(message, pipeline, currentIndex);
-            }
+            await ProcessNextAsync(message, pipeline, currentIndex).ConfigureAwait(false);
         }
-        catch (OperationCanceledException ex)
+        else
         {
-            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
-            throw;
-        }
-        finally
-        {
-            message.CancellationToken = oldToken;
-            cts.CancelAfter(Timeout.Infinite);
-        }
-
-        message.AssertResponse();
-        message.Response!.NetworkTimeout = invocationNetworkTimeout;
-
-        Stream? responseContentStream = message.Response!.ContentStream;
-        if (responseContentStream is null ||
-            message.Response.TryGetBufferedContent(out var _))
-        {
-            // There is either no content on the response, or the content has already
-            // been buffered.
-            return;
-        }
-
-        if (!message.BufferResponse)
-        {
-            // Client has requested not to buffer the message response content.
-            // If applicable, wrap it in a read-timeout stream.
-            if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan)
-            {
-                message.Response.ContentStream = new ReadTimeoutStream(responseContentStream, invocationNetworkTimeout);
-            }
-
-            return;
-        }
-
-        // If we got this far, buffer the response.
-
-        // If cancellation is possible (whether due to network timeout or a user cancellation token being passed), then
-        // register callback to dispose the stream on cancellation.
-        if (invocationNetworkTimeout != Timeout.InfiniteTimeSpan || oldToken.CanBeCanceled)
-        {
-            cts.Token.Register(state => ((Stream?)state)?.Dispose(), responseContentStream);
-        }
-
-        try
-        {
-            if (async)
-            {
-                await message.Response.BufferContentAsync(invocationNetworkTimeout, cts).ConfigureAwait(false);
-            }
-            else
-            {
-                message.Response.BufferContent(invocationNetworkTimeout, cts);
-            }
-        }
-        // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
-        catch (Exception ex)
-            when (ex is ObjectDisposedException
-                      or IOException
-                      or OperationCanceledException
-                      or NotSupportedException)
-        {
-            ThrowIfCancellationRequestedOrTimeout(oldToken, cts.Token, ex, invocationNetworkTimeout);
-            throw;
+            ProcessNext(message, pipeline, currentIndex);
         }
     }
 
