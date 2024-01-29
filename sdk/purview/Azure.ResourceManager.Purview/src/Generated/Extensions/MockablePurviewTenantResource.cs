@@ -119,82 +119,6 @@ namespace Azure.ResourceManager.Purview.Mocking
         }
 
         /// <summary>
-        /// Sets the default account for the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Set</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
-
-            using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
-            scope.Start();
-            try
-            {
-                var response = await DefaultAccountsRestClient.SetAsync(defaultAccountPayload, cancellationToken).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Sets the default account for the scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DefaultAccounts_Set</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
-        public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
-
-            using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
-            scope.Start();
-            try
-            {
-                var response = DefaultAccountsRestClient.Set(defaultAccountPayload, cancellationToken);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Removes the default account from the scope.
         /// <list type="bullet">
         /// <item>
@@ -264,6 +188,68 @@ namespace Azure.ResourceManager.Purview.Mocking
             catch (Exception e)
             {
                 scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sets the default account for the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
+            scope.Start();
+            try
+            {
+                var response = await DefaultAccountsRestClient.SetAsync(defaultAccountPayload, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Sets the default account for the scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Purview/setDefaultAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>DefaultAccounts_Set</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
+        {
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
+            scope.Start();
+            try
+            {
+                var response = DefaultAccountsRestClient.Set(defaultAccountPayload, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
                 throw;
             }
         }

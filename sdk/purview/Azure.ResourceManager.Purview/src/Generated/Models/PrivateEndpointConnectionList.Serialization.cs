@@ -82,22 +82,12 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
-            Optional<long> count = default;
             Optional<string> nextLink = default;
             IReadOnlyList<PurviewPrivateEndpointConnectionData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    count = property.Value.GetInt64();
-                    continue;
-                }
                 if (property.NameEquals("nextLink"u8))
                 {
                     nextLink = property.Value.GetString();
@@ -118,8 +108,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateEndpointConnectionList(Optional.ToNullable(count), nextLink.Value, value, serializedAdditionalRawData);
+            return new PrivateEndpointConnectionList(nextLink.Value, value);
         }
 
         BinaryData IPersistableModel<PrivateEndpointConnectionList>.Write(ModelReaderWriterOptions options)

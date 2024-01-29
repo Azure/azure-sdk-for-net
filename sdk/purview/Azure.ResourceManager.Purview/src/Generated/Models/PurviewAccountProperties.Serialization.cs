@@ -32,55 +32,25 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("cloudConnectors"u8);
                 writer.WriteObjectValue(CloudConnectors);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            if (Optional.IsDefined(IngestionStorage))
             {
-                writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WritePropertyName("ingestionStorage"u8);
+                writer.WriteObjectValue(IngestionStorage);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            if (Optional.IsDefined(ManagedEventHubState))
             {
-                writer.WritePropertyName("createdBy"u8);
-                writer.WriteStringValue(CreatedBy);
-            }
-            if (options.Format != "W" && Optional.IsDefined(CreatedByObjectId))
-            {
-                writer.WritePropertyName("createdByObjectId"u8);
-                writer.WriteStringValue(CreatedByObjectId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Endpoints))
-            {
-                writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
+                writer.WritePropertyName("managedEventHubState"u8);
+                writer.WriteStringValue(ManagedEventHubState.Value.ToString());
             }
             if (Optional.IsDefined(ManagedResourceGroupName))
             {
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ManagedResources))
+            if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
-                writer.WritePropertyName("managedResources"u8);
-                writer.WriteObjectValue(ManagedResources);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
-            {
-                writer.WritePropertyName("privateEndpointConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in PrivateEndpointConnections)
-                {
-                    writer.WriteObjectValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("managedResourcesPublicNetworkAccess"u8);
+                writer.WriteStringValue(ManagedResourcesPublicNetworkAccess.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {

@@ -80,7 +80,6 @@ namespace Azure.ResourceManager.Purview.Models
                 return null;
             }
             Optional<string> catalog = default;
-            Optional<string> guardian = default;
             Optional<string> scan = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -89,11 +88,6 @@ namespace Azure.ResourceManager.Purview.Models
                 if (property.NameEquals("catalog"u8))
                 {
                     catalog = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("guardian"u8))
-                {
-                    guardian = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("scan"u8))
@@ -106,8 +100,7 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountEndpoint(catalog.Value, guardian.Value, scan.Value, serializedAdditionalRawData);
+            return new PurviewAccountEndpoint(catalog.Value, scan.Value);
         }
 
         BinaryData IPersistableModel<PurviewAccountEndpoint>.Write(ModelReaderWriterOptions options)

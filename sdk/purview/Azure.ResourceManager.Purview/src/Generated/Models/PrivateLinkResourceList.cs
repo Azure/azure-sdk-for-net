@@ -58,14 +58,11 @@ namespace Azure.ResourceManager.Purview.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateLinkResourceList"/>. </summary>
-        /// <param name="count"> Total item count. </param>
+        /// <summary> Initializes a new instance of PrivateLinkResourceList. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type results. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrivateLinkResourceList(long? count, string nextLink, IReadOnlyList<PurviewPrivateLinkResourceData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateLinkResourceList(string nextLink, IReadOnlyList<PurviewPrivateLinkResourceData> value)
         {
-            Count = count;
             NextLink = nextLink;
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -76,8 +73,6 @@ namespace Azure.ResourceManager.Purview.Models
         {
         }
 
-        /// <summary> Total item count. </summary>
-        public long? Count { get; }
         /// <summary> The Url of next result page. </summary>
         public string NextLink { get; }
         /// <summary> Collection of items of type results. </summary>

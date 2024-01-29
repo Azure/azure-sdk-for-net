@@ -53,42 +53,9 @@ namespace Azure.ResourceManager.Purview.Models
             PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountProperties"/>. </summary>
-        /// <param name="cloudConnectors">
-        /// Cloud connectors.
-        /// External cloud identifier used as part of scanning configuration.
-        /// </param>
-        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
-        /// <param name="createdBy"> Gets the creator of the entity. </param>
-        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
-        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
-        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
-        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
-        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
-        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
-        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
-        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountProperties(CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, string managedResourceGroupName, PurviewManagedResource managedResources, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            CloudConnectors = cloudConnectors;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            CreatedByObjectId = createdByObjectId;
-            Endpoints = endpoints;
-            FriendlyName = friendlyName;
-            ManagedResourceGroupName = managedResourceGroupName;
-            ManagedResources = managedResources;
-            PrivateEndpointConnections = privateEndpointConnections;
-            ProvisioningState = provisioningState;
-            PublicNetworkAccess = publicNetworkAccess;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary>
-        /// Cloud connectors.
-        /// External cloud identifier used as part of scanning configuration.
-        /// </summary>
+        /// <summary> Gets or sets the status of the account. </summary>
+        public AccountPropertiesAccountStatus AccountStatus { get; }
+        /// <summary> External Cloud Service connectors. </summary>
         internal CloudConnectors CloudConnectors { get; set; }
         /// <summary>
         /// AWS external identifier.
@@ -109,10 +76,16 @@ namespace Azure.ResourceManager.Purview.Models
         public PurviewAccountEndpoint Endpoints { get; }
         /// <summary> Gets or sets the friendly name. </summary>
         public string FriendlyName { get; }
+        /// <summary> Ingestion Storage Account Info. </summary>
+        public IngestionStorage IngestionStorage { get; set; }
+        /// <summary> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </summary>
+        public ManagedEventHubState? ManagedEventHubState { get; set; }
         /// <summary> Gets or sets the managed resource group name. </summary>
         public string ManagedResourceGroupName { get; set; }
         /// <summary> Gets the resource identifiers of the managed resources. </summary>
         public PurviewManagedResource ManagedResources { get; }
+        /// <summary> Gets or sets the public network access for managed resources. </summary>
+        public ManagedResourcesPublicNetworkAccess? ManagedResourcesPublicNetworkAccess { get; set; }
         /// <summary> Gets the private endpoint connections information. </summary>
         public IReadOnlyList<PurviewPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Gets or sets the state of the provisioning. </summary>
