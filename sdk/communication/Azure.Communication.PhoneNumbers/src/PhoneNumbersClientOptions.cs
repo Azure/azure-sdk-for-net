@@ -24,6 +24,8 @@ namespace Azure.Communication.PhoneNumbers
             V2022_01_11_Preview_2 = 2,
             /// <summary> Service version "2022-12-01. </summary>
             V2022_12_01 = 3,
+            /// <summary> Service version "2023-05-01-preview". </summary>
+            V2023_05_01_Preview = 4,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
 
@@ -45,6 +47,7 @@ namespace Azure.Communication.PhoneNumbers
                 ServiceVersion.V2021_03_07 => "2021-03-07",
                 ServiceVersion.V2022_01_11_Preview_2 => "2022-01-11-preview2",
                 ServiceVersion.V2022_12_01 => "2022-12-01",
+                ServiceVersion.V2023_05_01_Preview => "2023-05-01-preview",
                 _ => throw new NotSupportedException()
             };
         }
