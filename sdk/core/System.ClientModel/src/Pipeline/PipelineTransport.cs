@@ -74,7 +74,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (OperationCanceledException ex)
         {
-            ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, networkTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, networkTimeout);
             throw;
         }
         finally
@@ -115,26 +115,6 @@ public abstract class PipelineTransport : PipelinePolicy
         }
 
         return isError;
-    }
-
-    /// <summary>Throws a cancellation exception if cancellation has been requested via <paramref name="messageToken"/> or <paramref name="timeoutToken"/>.</summary>
-    /// <param name="messageToken">The user-provided token.</param>
-    /// <param name="timeoutToken">The linked token that is cancelled on timeout provided token.</param>
-    /// <param name="innerException">The inner exception to use.</param>
-    /// <param name="timeout">The timeout used for the operation.</param>
-#pragma warning disable CA1068 // Cancellation token has to be the last parameter
-    private static void ThrowIfCancellationRequestedOrTimeout(CancellationToken messageToken, CancellationToken timeoutToken, Exception? innerException, TimeSpan timeout)
-#pragma warning restore CA1068
-    {
-        CancellationHelper.ThrowIfCancellationRequested(messageToken);
-
-        if (timeoutToken.IsCancellationRequested)
-        {
-            throw CancellationHelper.CreateOperationCanceledException(
-                innerException,
-                timeoutToken,
-                $"The operation was cancelled because it exceeded the configured timeout of {timeout:g}. ");
-        }
     }
 
     private void BufferResponse(PipelineMessage message, TimeSpan networkTimeout, CancellationToken userToken, CancellationTokenSource joinedTokenSource)
@@ -185,7 +165,7 @@ public abstract class PipelineTransport : PipelinePolicy
                                       or OperationCanceledException
                                       or NotSupportedException)
         {
-            ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, networkTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, networkTimeout);
             throw;
         }
     }

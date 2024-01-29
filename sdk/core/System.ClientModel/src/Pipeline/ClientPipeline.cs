@@ -103,9 +103,6 @@ public sealed partial class ClientPipeline
 
         int perTryIndex = index;
 
-        // Response buffering comes before the transport.
-        policies[index++] = ResponseBufferingPolicy.Default;
-
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));
         index += beforeTransportPolicies.Length;
