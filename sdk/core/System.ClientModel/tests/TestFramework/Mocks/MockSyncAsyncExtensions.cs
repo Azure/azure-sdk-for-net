@@ -73,7 +73,7 @@ public static class MockSyncAsyncExtensions
         }
     }
 
-    public static async Task WaitSyncOrAsync(this ClientRetryPolicy policy, TimeSpan delay, CancellationToken cancellationToken, bool isAsync)
+    public static async Task WaitSyncOrAsync(this MockRetryPolicy policy, TimeSpan delay, CancellationToken cancellationToken, bool isAsync)
     {
         if (isAsync)
         {
