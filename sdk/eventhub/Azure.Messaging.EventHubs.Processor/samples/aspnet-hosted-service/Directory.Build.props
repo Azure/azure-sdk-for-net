@@ -1,4 +1,10 @@
 ﻿<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
+    <IsPackable>false</IsPackable>
+    <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+  </PropertyGroup>
+
   <!-- Import the common SDK build properties. -->
   <Import
     Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory)..\..\.., Directory.Build.props))\Directory.Build.props"
@@ -6,7 +12,7 @@
   />
 
   <PropertyGroup>
+    <IsShippingLibrary>false</IsShippingLibrary>
     <RequiredTargetFrameworks Condition="$(IsTestProject) != 'true'">net6.0;net7.0</RequiredTargetFrameworks>
-    <IsPackable>false</IsPackable>
   </PropertyGroup>
 </Project>
