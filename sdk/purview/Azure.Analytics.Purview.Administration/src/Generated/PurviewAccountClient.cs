@@ -23,6 +23,7 @@ namespace Azure.Analytics.Purview.Administration
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _collectionName;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -37,20 +38,25 @@ namespace Azure.Analytics.Purview.Administration
 
         /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="collectionName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewAccountClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new PurviewAccountClientOptions())
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public PurviewAccountClient(Uri endpoint, string collectionName, TokenCredential credential) : this(endpoint, collectionName, credential, new PurviewAccountClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of PurviewAccountClient. </summary>
         /// <param name="endpoint"> The account endpoint of your Purview account. Example: https://{accountName}.purview.azure.com/account/. </param>
+        /// <param name="collectionName"> The <see cref="string"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public PurviewAccountClient(Uri endpoint, TokenCredential credential, PurviewAccountClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="collectionName"/> or <paramref name="credential"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        public PurviewAccountClient(Uri endpoint, string collectionName, TokenCredential credential, PurviewAccountClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new PurviewAccountClientOptions();
 
@@ -58,6 +64,7 @@ namespace Azure.Analytics.Purview.Administration
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _collectionName = collectionName;
         }
 
         /// <summary>
@@ -404,17 +411,13 @@ namespace Azure.Analytics.Purview.Administration
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "PurviewAccountClient.GetResourceSetRules", "value", "nextLink", context);
         }
 
+        private PurviewCollection _cachedPurviewCollection;
         private PurviewResourceSetRule _cachedPurviewResourceSetRule;
 
         /// <summary> Initializes a new instance of PurviewCollection. </summary>
-        /// <param name="collectionName"> The <see cref="string"/> to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual PurviewCollection GetPurviewCollectionClient(string collectionName)
+        public virtual PurviewCollection GetPurviewCollectionClient()
         {
-            Argument.AssertNotNullOrEmpty(collectionName, nameof(collectionName));
-
-            return new PurviewCollection(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, collectionName);
+            return Volatile.Read(ref _cachedPurviewCollection) ?? Interlocked.CompareExchange(ref _cachedPurviewCollection, new PurviewCollection(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _collectionName), null) ?? _cachedPurviewCollection;
         }
 
         /// <summary> Initializes a new instance of PurviewResourceSetRule. </summary>
