@@ -25,7 +25,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<sensorMappingId>", content);
@@ -40,7 +40,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<sensorMappingId>", content);
@@ -55,7 +55,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -96,7 +96,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -137,7 +137,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = client.GetSensorMapping("<sensorMappingId>", null);
 
@@ -151,7 +151,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = await client.GetSensorMappingAsync("<sensorMappingId>", null);
 
@@ -165,7 +165,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = client.GetSensorMapping("<sensorMappingId>", null);
 
@@ -192,7 +192,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = await client.GetSensorMappingAsync("<sensorMappingId>", null);
 
@@ -219,7 +219,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = client.Delete("<sensorMappingId>");
 
@@ -232,7 +232,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = await client.DeleteAsync("<sensorMappingId>");
 
@@ -245,7 +245,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = client.Delete("<sensorMappingId>");
 
@@ -258,7 +258,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             Response response = await client.DeleteAsync("<sensorMappingId>");
 
@@ -271,7 +271,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             foreach (BinaryData item in client.GetSensorMappings(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -286,7 +286,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             await foreach (BinaryData item in client.GetSensorMappingsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -301,7 +301,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             foreach (BinaryData item in client.GetSensorMappings(new string[] { "<sensorIds>" }, new string[] { "<sensorPartnerIds>" }, new string[] { "<partyIds>" }, new string[] { "<boundaryIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -329,7 +329,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient(apiVersion: "2022-11-01-preview");
+            SensorMappings client = new FarmBeatsClient(endpoint, credential).GetSensorMappingsClient();
 
             await foreach (BinaryData item in client.GetSensorMappingsAsync(new string[] { "<sensorIds>" }, new string[] { "<sensorPartnerIds>" }, new string[] { "<partyIds>" }, new string[] { "<boundaryIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {

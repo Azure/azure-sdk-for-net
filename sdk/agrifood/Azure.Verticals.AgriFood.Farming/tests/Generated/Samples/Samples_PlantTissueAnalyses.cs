@@ -25,7 +25,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = client.GetPlantTissueAnalysis("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -39,7 +39,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = await client.GetPlantTissueAnalysisAsync("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -53,7 +53,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = client.GetPlantTissueAnalysis("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -96,7 +96,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = await client.GetPlantTissueAnalysisAsync("<partyId>", "<plantTissueAnalysisId>", null);
 
@@ -139,7 +139,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<plantTissueAnalysisId>", content);
@@ -154,7 +154,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<plantTissueAnalysisId>", content);
@@ -169,7 +169,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -243,7 +243,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -317,7 +317,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = client.Delete("<partyId>", "<plantTissueAnalysisId>");
 
@@ -330,7 +330,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<plantTissueAnalysisId>");
 
@@ -343,7 +343,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = client.Delete("<partyId>", "<plantTissueAnalysisId>");
 
@@ -356,7 +356,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<plantTissueAnalysisId>");
 
@@ -369,7 +369,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -385,7 +385,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -401,7 +401,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -426,7 +426,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -451,7 +451,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -466,7 +466,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             await foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -481,7 +481,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyId("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -525,7 +525,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             await foreach (BinaryData item in client.GetPlantTissueAnalysesByPartyIdAsync("<partyId>", new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -569,7 +569,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             foreach (BinaryData item in client.GetPlantTissueAnalyses(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -584,7 +584,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             await foreach (BinaryData item in client.GetPlantTissueAnalysesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -599,7 +599,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             foreach (BinaryData item in client.GetPlantTissueAnalyses(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -643,7 +643,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             await foreach (BinaryData item in client.GetPlantTissueAnalysesAsync(new string[] { "<seasonIds>" }, new string[] { "<cropIds>" }, new string[] { "<cropProductsIds>" }, new string[] { "<fieldIds>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -687,7 +687,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
             BinaryData responseData = operation.Value;
@@ -704,7 +704,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
             BinaryData responseData = operation.Value;
@@ -721,7 +721,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
             BinaryData responseData = operation.Value;
@@ -747,7 +747,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient(apiVersion: "2022-11-01-preview");
+            PlantTissueAnalyses client = new FarmBeatsClient(endpoint, credential).GetPlantTissueAnalysesClient();
 
             Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<plantTissueAnalysisId>", null);
             BinaryData responseData = operation.Value;
