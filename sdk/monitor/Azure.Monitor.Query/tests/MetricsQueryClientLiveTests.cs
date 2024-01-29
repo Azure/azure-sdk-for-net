@@ -346,6 +346,35 @@ namespace Azure.Monitor.Query.Tests
 
             var resourceId = TestEnvironment.StorageAccountId;
             IEnumerable<ResourceIdentifier> resourceIdentifiers = new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) };
+            Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                resourceIds: resourceIdentifiers,
+                metricNames: new List<string> { "Ingress" },
+                metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
+
+            MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
+            Assert.AreEqual(1, metricsQueryResults.Values.Count);
+            Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
+            Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
+            Assert.AreEqual(TestEnvironment.Location, metricsQueryResults.Values[0].ResourceRegion);
+            for (int i = 0; i < metricsQueryResults.Values.Count; i++)
+            {
+                foreach (MetricResult value in metricsQueryResults.Values[i].Metrics)
+                {
+                    for (int j = 0; j < value.TimeSeries.Count; j++)
+                    {
+                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
+                    }
+                }
+            }
+        }
+
+        [RecordedTest]
+        public async Task MetricsBatchQueryWithOptionsAsync()
+        {
+            MetricsClient client = CreateMetricsClient();
+
+            var resourceId = TestEnvironment.StorageAccountId;
+            IEnumerable<ResourceIdentifier> resourceIdentifiers = new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) };
             MetricsQueryResourcesOptions options = new MetricsQueryResourcesOptions
             {
                 // Set Granularity to 5 minutes.
@@ -373,7 +402,8 @@ namespace Azure.Monitor.Query.Tests
                 {
                     for (int j = 0; j < value.TimeSeries.Count; j++)
                     {
-                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Total, 0);
+                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Average, 0);
+                        Assert.GreaterOrEqual(value.TimeSeries[j].Values[i].Count, 0);
                     }
                 }
             }
