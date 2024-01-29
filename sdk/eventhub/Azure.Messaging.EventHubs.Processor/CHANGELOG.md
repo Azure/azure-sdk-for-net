@@ -2,7 +2,7 @@
 
 ## 5.11.0-beta.1 (Unreleased)
 
-hank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
+Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Dave Trainer _([GitHub](https://github.com/davetrainer))_
 
