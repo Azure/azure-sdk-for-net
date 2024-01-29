@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="SchemaRegistryClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The Schema Registry service endpoint, for example 'my-namespace.servicebus.windows.net'. </param>
+        /// <param name="endpoint"> The Schema Registry service endpoint, for example 'https://my-namespace.servicebus.windows.net'. </param>
         public static IAzureClientBuilder<SchemaRegistryClient, SchemaRegistryClientOptions> AddSchemaRegistryClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {

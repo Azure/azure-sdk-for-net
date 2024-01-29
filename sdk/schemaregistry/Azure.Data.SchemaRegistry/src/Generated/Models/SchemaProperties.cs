@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
@@ -13,6 +14,38 @@ namespace Azure.Data.SchemaRegistry.Models
     /// <summary> Meta properties of a schema. </summary>
     internal partial class SchemaProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SchemaProperties"/>. </summary>
         /// <param name="id"> References a specific schema in the registry namespace. </param>
         /// <param name="format"> Format for the schema being stored. </param>
@@ -31,6 +64,28 @@ namespace Azure.Data.SchemaRegistry.Models
             GroupName = groupName;
             Name = name;
             Version = version;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaProperties"/>. </summary>
+        /// <param name="id"> References a specific schema in the registry namespace. </param>
+        /// <param name="format"> Format for the schema being stored. </param>
+        /// <param name="groupName"> Schema group under which schema is stored. </param>
+        /// <param name="name"> Name of schema. </param>
+        /// <param name="version"> Version of schema. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SchemaProperties(string id, SchemaFormat format, string groupName, string name, int version, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Id = id;
+            Format = format;
+            GroupName = groupName;
+            Name = name;
+            Version = version;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SchemaProperties"/> for deserialization. </summary>
+        internal SchemaProperties()
+        {
         }
 
         /// <summary> References a specific schema in the registry namespace. </summary>
