@@ -106,7 +106,8 @@ internal class StructuredMessageEncodingStream : Stream
                     // Inner stream has moved to next segment but we're still writing the previous segment footer
                     CurrentEncodingSegment * (_segmentHeaderLength + _segmentFooterLength) -
                     _segmentFooterLength + _currentRegionPosition,
-                SMRegion.SegmentContent => _streamHeaderLength +
+                SMRegion.SegmentContent => _innerStream.Position +
+                    _streamHeaderLength +
                     CurrentEncodingSegment * (_segmentHeaderLength + _segmentFooterLength) -
                     _segmentFooterLength,
                 _ => throw new InvalidDataException($"{nameof(StructuredMessageEncodingStream)} invalid state."),
@@ -129,14 +130,15 @@ internal class StructuredMessageEncodingStream : Stream
                 _innerStream.Position = _innerStream.Length;
                 return;
             }
-            int segmentPosition = (int)(Position - _streamHeaderLength -
-                ((CurrentInnerSegment - 1) * (_segmentHeaderLength + _segmentFooterLength + _segmentContentLength)));
+            int newSegmentNum = 1 + (int)Math.Floor((value - _streamHeaderLength) / (double)(_segmentHeaderLength + _segmentFooterLength + _segmentContentLength));
+            int segmentPosition = (int)(value - _streamHeaderLength -
+                ((newSegmentNum - 1) * (_segmentHeaderLength + _segmentFooterLength + _segmentContentLength)));
 
             if (segmentPosition < _segmentHeaderLength)
             {
                 _currentRegion = SMRegion.SegmentHeader;
                 _currentRegionPosition = (int)((value - _streamHeaderLength) % SegmentTotalLength);
-                _innerStream.Position = (CurrentInnerSegment - 1) * _segmentContentLength;
+                _innerStream.Position = (newSegmentNum - 1) * _segmentContentLength;
                 return;
             }
             if (segmentPosition < _segmentHeaderLength + _segmentContentLength)
@@ -144,14 +146,14 @@ internal class StructuredMessageEncodingStream : Stream
                 _currentRegion = SMRegion.SegmentContent;
                 _currentRegionPosition = (int)((value - _streamHeaderLength) % SegmentTotalLength) -
                     _segmentHeaderLength;
-                _innerStream.Position = (CurrentInnerSegment - 1) * _segmentContentLength + _currentRegionPosition;
+                _innerStream.Position = (newSegmentNum - 1) * _segmentContentLength + _currentRegionPosition;
                 return;
             }
 
             _currentRegion = SMRegion.SegmentFooter;
             _currentRegionPosition = (int)((value - _streamHeaderLength) % SegmentTotalLength) -
                     _segmentHeaderLength - _segmentContentLength;
-            _innerStream.Position = CurrentInnerSegment * _segmentContentLength;
+            _innerStream.Position = newSegmentNum * _segmentContentLength;
         }
     }
     #endregion

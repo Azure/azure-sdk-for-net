@@ -104,16 +104,19 @@ namespace Azure.Storage.Tests
             }
 
             Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), 1024, flags);
-            MemoryStream dest = new();
-            await CopyStream(encodingStream, dest);
-            byte[] encodedData = dest.ToArray();
+            byte[] encodedData;
+            using (MemoryStream dest = new())
+            {
+                await CopyStream(encodingStream, dest);
+                encodedData = dest.ToArray();
+            }
 
             Assert.That(encodedData.Length, Is.EqualTo(data.Length + expectedHeaderLen + expectedFooterLen));
-            Assert.That(new Span<byte>(encodedData, 0, expectedHeaderLen).SequenceEqual(expectedHeader), Is.True);
+            Assert.That(new Span<byte>(encodedData, 0, expectedHeaderLen).SequenceEqual(expectedHeader));
             if (flags.HasFlag(Flags.CrcSegment))
             {
                 Assert.That(new Span<byte>(encodedData, expectedHeaderLen + data.Length, expectedFooterLen)
-                    .SequenceEqual(expectedFooter), Is.True);
+                    .SequenceEqual(expectedFooter));
             }
         }
 
@@ -135,9 +138,12 @@ namespace Azure.Storage.Tests
             new Random().NextBytes(data);
 
             Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, flags);
-            MemoryStream dest = new();
-            await CopyStream(encodingStream, dest);
-            byte[] encodedData = dest.ToArray();
+            byte[] encodedData;
+            using (MemoryStream dest = new())
+            {
+                await CopyStream(encodingStream, dest);
+                encodedData = dest.ToArray();
+            }
 
             Assert.That(encodedData.Length, Is.EqualTo(expectedEncodedDataLen));
             AssertExpectedStreamHeader(new Span<byte>(encodedData, 0, V1_0.StreamHeaderLength),
@@ -148,13 +154,74 @@ namespace Azure.Storage.Tests
                 int segContentLength = Math.Min(segmentLength, dataLength - ((segNum-1) * segmentLength));
                 AssertExpectedSegmentHeader(new Span<byte>(encodedData, segOffset, V1_0.SegmentHeaderLength), segNum, segContentLength);
                 Assert.That(new Span<byte>(encodedData, segOffset + V1_0.SegmentHeaderLength, segContentLength)
-                    .SequenceEqual(new Span<byte>(data, (segNum - 1) * segmentLength, segContentLength)), Is.True);
+                    .SequenceEqual(new Span<byte>(data, (segNum - 1) * segmentLength, segContentLength)));
                 if (flags.HasFlag(Flags.CrcSegment))
                 {
                     Assert.That(new Span<byte>(encodedData, segOffset + V1_0.SegmentHeaderLength + segContentLength, Crc64Length)
-                        .SequenceEqual(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 }), Is.True); // TODO
+                        .SequenceEqual(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 })); // TODO
                 }
             }
+        }
+
+        [TestCase(0, 0)] // start
+        [TestCase(5, 0)] // partway through stream header
+        [TestCase(V1_0.StreamHeaderLength, 0)] // start of segment
+        [TestCase(V1_0.StreamHeaderLength + 3, 0)] // partway through segment header
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength, 0)] // start of segment content
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 123, 123)] // partway through segment content
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 512, 512)] // start of segment footer
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 515, 512)] // partway through segment footer
+        [TestCase(V1_0.StreamHeaderLength + 3*V1_0.SegmentHeaderLength + 2*Crc64Length + 1500, 1500)] // partway through not first segment content
+        public async Task Seek(int targetRewindOffset, int expectedInnerStreamPosition)
+        {
+            const int segmentLength = 512;
+            const int dataLength = 2055;
+            byte[] data = new byte[dataLength];
+            new Random().NextBytes(data);
+
+            MemoryStream dataStream = new(data);
+            StructuredMessageEncodingStream encodingStream = new(dataStream, segmentLength, Flags.CrcSegment);
+
+            // no support for seeking past existing read, need to consume whole stream before seeking
+            await CopyStream(encodingStream, Stream.Null);
+
+            encodingStream.Position = targetRewindOffset;
+            Assert.That(encodingStream.Position, Is.EqualTo(targetRewindOffset));
+            Assert.That(dataStream.Position, Is.EqualTo(expectedInnerStreamPosition));
+        }
+
+        [TestCase(0)] // start
+        [TestCase(5)] // partway through stream header
+        [TestCase(V1_0.StreamHeaderLength)] // start of segment
+        [TestCase(V1_0.StreamHeaderLength + 3)] // partway through segment header
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength)] // start of segment content
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 123)] // partway through segment content
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 512)] // start of segment footer
+        [TestCase(V1_0.StreamHeaderLength + V1_0.SegmentHeaderLength + 515)] // partway through segment footer
+        [TestCase(V1_0.StreamHeaderLength + 2 * V1_0.SegmentHeaderLength + Crc64Length + 1500)] // partway through not first segment content
+        public async Task SupportsRewind(int targetRewindOffset)
+        {
+            const int segmentLength = 512;
+            const int dataLength = 2055;
+            byte[] data = new byte[dataLength];
+            new Random().NextBytes(data);
+
+            Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), segmentLength, Flags.CrcSegment);
+            byte[] encodedData1;
+            using (MemoryStream dest = new())
+            {
+                await CopyStream(encodingStream, dest);
+                encodedData1 = dest.ToArray();
+            }
+            encodingStream.Position = targetRewindOffset;
+            byte[] encodedData2;
+            using (MemoryStream dest = new())
+            {
+                await CopyStream(encodingStream, dest);
+                encodedData2 = dest.ToArray();
+            }
+
+            Assert.That(new Span<byte>(encodedData1).Slice(targetRewindOffset).SequenceEqual(encodedData2));
         }
 
         private static void AssertExpectedStreamHeader(ReadOnlySpan<byte> actual, int originalDataLength, Flags flags, int expectedSegments)
