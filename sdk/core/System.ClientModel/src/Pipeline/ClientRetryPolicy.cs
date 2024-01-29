@@ -165,7 +165,7 @@ public class ClientRetryPolicy : PipelinePolicy
             return false;
         }
 
-        if (!message.MessageClassifier.TryClassify(message, exception, out bool isRetriable))
+        if (!message.ResponseClassifier.TryClassify(message, exception, out bool isRetriable))
         {
             bool classified = PipelineMessageClassifier.Default.TryClassify(message, exception, out isRetriable);
 

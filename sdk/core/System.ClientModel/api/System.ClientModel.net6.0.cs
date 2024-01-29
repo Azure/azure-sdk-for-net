@@ -142,10 +142,10 @@ namespace System.ClientModel.Primitives
         protected internal PipelineMessage(System.ClientModel.Primitives.PipelineRequest request) { }
         public bool BufferResponse { get { throw null; } set { } }
         public System.Threading.CancellationToken CancellationToken { get { throw null; } protected internal set { } }
-        public System.ClientModel.Primitives.PipelineMessageClassifier MessageClassifier { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
+        public System.ClientModel.Primitives.PipelineMessageClassifier ResponseClassifier { get { throw null; } set { } }
         public void Apply(System.ClientModel.Primitives.RequestOptions options) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
