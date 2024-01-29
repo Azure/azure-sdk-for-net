@@ -25,7 +25,7 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="endpoint">The data plane service endpoint to use. For example <c>https://metrics.monitor.azure.com/.default</c> for public cloud.</param>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
-        /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to as client configuration.</param>
+        /// <param name="options">The <see cref="MetricsClientOptions"/> instance to as client configuration.</param>
         public MetricsClient(Uri endpoint, TokenCredential credential, MetricsClientOptions options = null)
         {
             Argument.AssertNotNull(credential, nameof(credential));
