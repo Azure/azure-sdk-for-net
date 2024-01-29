@@ -235,7 +235,7 @@ internal class StructuredMessageEncodingStream : Stream
     public override int Read(Span<byte> buffer)
     {
         int totalRead = 0;
-        while (totalRead < buffer.Length)
+        while (totalRead < buffer.Length && Position < Length)
         {
             switch (_currentRegion)
             {
@@ -265,7 +265,7 @@ internal class StructuredMessageEncodingStream : Stream
     public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
     {
         int totalRead = 0;
-        while (totalRead < buffer.Length)
+        while (totalRead < buffer.Length && Position < Length)
         {
             switch (_currentRegion)
             {
@@ -322,7 +322,10 @@ internal class StructuredMessageEncodingStream : Stream
     {
         int read = Math.Min(buffer.Length, _segmentHeaderLength - _currentRegionPosition);
         using IDisposable _ = StructuredMessage.V1_0.GetSegmentHeaderBytes(
-            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, CurrentInnerSegment, _segmentContentLength);
+            ArrayPool<byte>.Shared,
+            out Memory<byte> headerBytes,
+            CurrentInnerSegment,
+            Math.Min(_segmentContentLength, _innerStream.Length - _innerStream.Position));
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
         _currentRegionPosition += read;
 
@@ -364,7 +367,7 @@ internal class StructuredMessageEncodingStream : Stream
 
     private void CleanupContentSegment()
     {
-        if (_currentRegionPosition == _segmentContentLength)
+        if (_currentRegionPosition == _segmentContentLength || _innerStream.Position >= _innerStream.Length)
         {
             _currentRegion = SMRegion.SegmentFooter;
             _currentRegionPosition = 0;
