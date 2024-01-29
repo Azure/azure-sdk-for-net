@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ReplicaResource"/> and their operations.
-    /// Each <see cref="ReplicaResource"/> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource"/>.
-    /// To get a <see cref="ReplicaCollection"/> instance call the GetReplicas method from an instance of <see cref="AppConfigurationStoreResource"/>.
+    /// A class representing a collection of <see cref="AppConfigurationReplicaResource"/> and their operations.
+    /// Each <see cref="AppConfigurationReplicaResource"/> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource"/>.
+    /// To get an <see cref="AppConfigurationReplicaCollection"/> instance call the GetAppConfigurationReplicas method from an instance of <see cref="AppConfigurationStoreResource"/>.
     /// </summary>
-    public partial class ReplicaCollection : ArmCollection, IEnumerable<ReplicaResource>, IAsyncEnumerable<ReplicaResource>
+    public partial class AppConfigurationReplicaCollection : ArmCollection, IEnumerable<AppConfigurationReplicaResource>, IAsyncEnumerable<AppConfigurationReplicaResource>
     {
-        private readonly ClientDiagnostics _replicaClientDiagnostics;
-        private readonly ReplicasRestOperations _replicaRestClient;
+        private readonly ClientDiagnostics _appConfigurationReplicaReplicasClientDiagnostics;
+        private readonly ReplicasRestOperations _appConfigurationReplicaReplicasRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaCollection"/> class for mocking. </summary>
-        protected ReplicaCollection()
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationReplicaCollection"/> class for mocking. </summary>
+        protected AppConfigurationReplicaCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationReplicaCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal ReplicaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppConfigurationReplicaCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ReplicaResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ReplicaResource.ResourceType, out string replicaApiVersion);
-            _replicaRestClient = new ReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicaApiVersion);
+            _appConfigurationReplicaReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationReplicaResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppConfigurationReplicaResource.ResourceType, out string appConfigurationReplicaReplicasApiVersion);
+            _appConfigurationReplicaReplicasRestClient = new ReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationReplicaReplicasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,17 +80,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicaName, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppConfigurationReplicaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicaName, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.CreateOrUpdate");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _replicaRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaClientDiagnostics, Pipeline, _replicaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appConfigurationReplicaReplicasRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(new AppConfigurationReplicaOperationSource(Client), _appConfigurationReplicaReplicasClientDiagnostics, Pipeline, _appConfigurationReplicaReplicasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ReplicaResource> CreateOrUpdate(WaitUntil waitUntil, string replicaName, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppConfigurationReplicaResource> CreateOrUpdate(WaitUntil waitUntil, string replicaName, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.CreateOrUpdate");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _replicaRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaClientDiagnostics, Pipeline, _replicaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appConfigurationReplicaReplicasRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data, cancellationToken);
+                var operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(new AppConfigurationReplicaOperationSource(Client), _appConfigurationReplicaReplicasClientDiagnostics, Pipeline, _appConfigurationReplicaReplicasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,18 +176,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual async Task<Response<ReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.Get");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _replicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationReplicaReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,18 +221,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual Response<ReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.Get");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Get");
             scope.Start();
             try
             {
-                var response = _replicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken);
+                var response = _appConfigurationReplicaReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -258,18 +258,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ReplicaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ReplicaResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AppConfigurationReplicaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AppConfigurationReplicaResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicaRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicaRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ReplicaResource(Client, ReplicaData.DeserializeReplicaData(e)), _replicaClientDiagnostics, Pipeline, "ReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationReplicaReplicasRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationReplicaReplicasRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationReplicaResource(Client, AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(e)), _appConfigurationReplicaReplicasClientDiagnostics, Pipeline, "AppConfigurationReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -289,18 +289,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ReplicaResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ReplicaResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AppConfigurationReplicaResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AppConfigurationReplicaResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _replicaRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _replicaRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ReplicaResource(Client, ReplicaData.DeserializeReplicaData(e)), _replicaClientDiagnostics, Pipeline, "ReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _appConfigurationReplicaReplicasRestClient.CreateListByConfigurationStoreRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _appConfigurationReplicaReplicasRestClient.CreateListByConfigurationStoreNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AppConfigurationReplicaResource(Client, AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(e)), _appConfigurationReplicaReplicasClientDiagnostics, Pipeline, "AppConfigurationReplicaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.Exists");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _replicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationReplicaReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,11 +375,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.Exists");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _replicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
+                var response = _appConfigurationReplicaReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,18 +414,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AppConfigurationReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.GetIfExists");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _replicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationReplicaReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ReplicaResource>(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AppConfigurationReplicaResource>(response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -459,18 +459,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
-        public virtual NullableResponse<ReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AppConfigurationReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaCollection.GetIfExists");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _replicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
+                var response = _appConfigurationReplicaReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, replicaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ReplicaResource>(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AppConfigurationReplicaResource>(response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppConfiguration
             }
         }
 
-        IEnumerator<ReplicaResource> IEnumerable<ReplicaResource>.GetEnumerator()
+        IEnumerator<AppConfigurationReplicaResource> IEnumerable<AppConfigurationReplicaResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.AppConfiguration
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ReplicaResource> IAsyncEnumerable<ReplicaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AppConfigurationReplicaResource> IAsyncEnumerable<AppConfigurationReplicaResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

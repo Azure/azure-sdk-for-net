@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Samples
 {
-    public partial class Sample_ReplicaCollection
+    public partial class Sample_AppConfigurationReplicaCollection
     {
         // Replicas_ListByConfigurationStore
         [NUnit.Framework.Test]
@@ -38,15 +38,15 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = appConfigurationStore.GetReplicas();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation and iterate over the result
-            await foreach (ReplicaResource item in collection.GetAllAsync())
+            await foreach (AppConfigurationReplicaResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ReplicaData resourceData = item.Data;
+                AppConfigurationReplicaData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -75,16 +75,16 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = appConfigurationStore.GetReplicas();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation
             string replicaName = "myReplicaEus";
-            ReplicaResource result = await collection.GetAsync(replicaName);
+            AppConfigurationReplicaResource result = await collection.GetAsync(replicaName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            AppConfigurationReplicaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -110,8 +110,8 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = appConfigurationStore.GetReplicas();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation
             string replicaName = "myReplicaEus";
@@ -141,13 +141,13 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = appConfigurationStore.GetReplicas();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation
             string replicaName = "myReplicaEus";
-            NullableResponse<ReplicaResource> response = await collection.GetIfExistsAsync(replicaName);
-            ReplicaResource result = response.HasValue ? response.Value : null;
+            NullableResponse<AppConfigurationReplicaResource> response = await collection.GetIfExistsAsync(replicaName);
+            AppConfigurationReplicaResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ReplicaData resourceData = result.Data;
+                AppConfigurationReplicaData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -184,21 +184,21 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this ReplicaResource
-            ReplicaCollection collection = appConfigurationStore.GetReplicas();
+            // get the collection of this AppConfigurationReplicaResource
+            AppConfigurationReplicaCollection collection = appConfigurationStore.GetAppConfigurationReplicas();
 
             // invoke the operation
             string replicaName = "myReplicaEus";
-            ReplicaData data = new ReplicaData()
+            AppConfigurationReplicaData data = new AppConfigurationReplicaData()
             {
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<ReplicaResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName, data);
-            ReplicaResource result = lro.Value;
+            ArmOperation<AppConfigurationReplicaResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicaName, data);
+            AppConfigurationReplicaResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            AppConfigurationReplicaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

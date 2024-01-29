@@ -15,7 +15,7 @@ using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Samples
 {
-    public partial class Sample_ReplicaResource
+    public partial class Sample_AppConfigurationReplicaResource
     {
         // Replicas_Get
         [NUnit.Framework.Test]
@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this AppConfigurationReplicaResource created on azure
+            // for more information of creating AppConfigurationReplicaResource, please refer to the document of AppConfigurationReplicaResource
             string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
             string resourceGroupName = "myResourceGroup";
             string configStoreName = "contoso";
             string replicaName = "myReplicaEus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier appConfigurationReplicaResourceId = AppConfigurationReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName, replicaName);
+            AppConfigurationReplicaResource appConfigurationReplica = client.GetAppConfigurationReplicaResource(appConfigurationReplicaResourceId);
 
             // invoke the operation
-            ReplicaResource result = await replica.GetAsync();
+            AppConfigurationReplicaResource result = await appConfigurationReplica.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            AppConfigurationReplicaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -62,26 +62,26 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this AppConfigurationReplicaResource created on azure
+            // for more information of creating AppConfigurationReplicaResource, please refer to the document of AppConfigurationReplicaResource
             string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
             string resourceGroupName = "myResourceGroup";
             string configStoreName = "contoso";
             string replicaName = "myReplicaEus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier appConfigurationReplicaResourceId = AppConfigurationReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName, replicaName);
+            AppConfigurationReplicaResource appConfigurationReplica = client.GetAppConfigurationReplicaResource(appConfigurationReplicaResourceId);
 
             // invoke the operation
-            ReplicaData data = new ReplicaData()
+            AppConfigurationReplicaData data = new AppConfigurationReplicaData()
             {
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<ReplicaResource> lro = await replica.UpdateAsync(WaitUntil.Completed, data);
-            ReplicaResource result = lro.Value;
+            ArmOperation<AppConfigurationReplicaResource> lro = await appConfigurationReplica.UpdateAsync(WaitUntil.Completed, data);
+            AppConfigurationReplicaResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ReplicaData resourceData = result.Data;
+            AppConfigurationReplicaData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -99,17 +99,17 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ReplicaResource created on azure
-            // for more information of creating ReplicaResource, please refer to the document of ReplicaResource
+            // this example assumes you already have this AppConfigurationReplicaResource created on azure
+            // for more information of creating AppConfigurationReplicaResource, please refer to the document of AppConfigurationReplicaResource
             string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
             string resourceGroupName = "myResourceGroup";
             string configStoreName = "contoso";
             string replicaName = "myReplicaEus";
-            ResourceIdentifier replicaResourceId = ReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName, replicaName);
-            ReplicaResource replica = client.GetReplicaResource(replicaResourceId);
+            ResourceIdentifier appConfigurationReplicaResourceId = AppConfigurationReplicaResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName, replicaName);
+            AppConfigurationReplicaResource appConfigurationReplica = client.GetAppConfigurationReplicaResource(appConfigurationReplicaResourceId);
 
             // invoke the operation
-            await replica.DeleteAsync(WaitUntil.Completed);
+            await appConfigurationReplica.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

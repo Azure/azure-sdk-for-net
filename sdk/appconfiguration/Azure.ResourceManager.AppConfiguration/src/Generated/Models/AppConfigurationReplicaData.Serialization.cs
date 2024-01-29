@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class ReplicaData : IUtf8JsonSerializable, IJsonModel<ReplicaData>
+    public partial class AppConfigurationReplicaData : IUtf8JsonSerializable, IJsonModel<AppConfigurationReplicaData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationReplicaData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppConfigurationReplicaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationReplicaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicaData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationReplicaData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.AppConfiguration
             writer.WriteEndObject();
         }
 
-        ReplicaData IJsonModel<ReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppConfigurationReplicaData IJsonModel<AppConfigurationReplicaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationReplicaData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicaData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationReplicaData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReplicaData(document.RootElement, options);
+            return DeserializeAppConfigurationReplicaData(document.RootElement, options);
         }
 
-        internal static ReplicaData DeserializeReplicaData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppConfigurationReplicaData DeserializeAppConfigurationReplicaData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -180,38 +180,38 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicaData(id, name, type, systemData.Value, Optional.ToNullable(location), endpoint.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
+            return new AppConfigurationReplicaData(id, name, type, systemData.Value, Optional.ToNullable(location), endpoint.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReplicaData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppConfigurationReplicaData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationReplicaData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicaData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationReplicaData)} does not support '{options.Format}' format.");
             }
         }
 
-        ReplicaData IPersistableModel<ReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppConfigurationReplicaData IPersistableModel<AppConfigurationReplicaData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReplicaData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationReplicaData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReplicaData(document.RootElement, options);
+                        return DeserializeAppConfigurationReplicaData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicaData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationReplicaData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppConfigurationReplicaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

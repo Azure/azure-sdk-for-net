@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A class representing the Replica data model.
+    /// A class representing the AppConfigurationReplica data model.
     /// The replica resource.
     /// </summary>
-    public partial class ReplicaData : ResourceData
+    public partial class AppConfigurationReplicaData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaData"/>. </summary>
-        public ReplicaData()
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationReplicaData"/>. </summary>
+        public AppConfigurationReplicaData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReplicaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationReplicaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="endpoint"> The URI of the replica where the replica API will be available. </param>
         /// <param name="provisioningState"> The provisioning state of the replica. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string endpoint, ReplicaProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppConfigurationReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string endpoint, ReplicaProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Endpoint = endpoint;

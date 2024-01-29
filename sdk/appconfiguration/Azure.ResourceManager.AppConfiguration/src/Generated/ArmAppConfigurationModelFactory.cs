@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             return new DeletedAppConfigurationStoreData(id, name, resourceType, systemData, configurationStoreId, location, deletedOn, scheduledPurgeOn, tags, isPurgeProtectionEnabled, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfiguration.ReplicaData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationReplicaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -184,10 +184,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="location"> The location of the replica. </param>
         /// <param name="endpoint"> The URI of the replica where the replica API will be available. </param>
         /// <param name="provisioningState"> The provisioning state of the replica. </param>
-        /// <returns> A new <see cref="AppConfiguration.ReplicaData"/> instance for mocking. </returns>
-        public static ReplicaData ReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string endpoint = null, ReplicaProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="AppConfiguration.AppConfigurationReplicaData"/> instance for mocking. </returns>
+        public static AppConfigurationReplicaData AppConfigurationReplicaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AzureLocation? location = null, string endpoint = null, ReplicaProvisioningState? provisioningState = null)
         {
-            return new ReplicaData(id, name, resourceType, systemData, location, endpoint, provisioningState, serializedAdditionalRawData: null);
+            return new AppConfigurationReplicaData(id, name, resourceType, systemData, location, endpoint, provisioningState, serializedAdditionalRawData: null);
         }
     }
 }

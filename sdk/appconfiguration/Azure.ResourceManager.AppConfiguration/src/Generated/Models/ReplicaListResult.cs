@@ -50,14 +50,14 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Initializes a new instance of <see cref="ReplicaListResult"/>. </summary>
         internal ReplicaListResult()
         {
-            Value = new ChangeTrackingList<ReplicaData>();
+            Value = new ChangeTrackingList<AppConfigurationReplicaData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ReplicaListResult"/>. </summary>
         /// <param name="value"> The collection value. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReplicaListResult(IReadOnlyList<ReplicaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReplicaListResult(IReadOnlyList<AppConfigurationReplicaData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The collection value. </summary>
-        public IReadOnlyList<ReplicaData> Value { get; }
+        public IReadOnlyList<AppConfigurationReplicaData> Value { get; }
         /// <summary> The URI that can be used to request the next set of paged results. </summary>
         public string NextLink { get; }
     }

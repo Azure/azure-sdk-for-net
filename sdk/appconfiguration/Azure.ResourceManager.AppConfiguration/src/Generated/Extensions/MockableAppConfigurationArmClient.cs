@@ -97,15 +97,15 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ReplicaResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ReplicaResource.CreateResourceIdentifier" /> to create a <see cref="ReplicaResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationReplicaResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationReplicaResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationReplicaResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ReplicaResource"/> object. </returns>
-        public virtual ReplicaResource GetReplicaResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationReplicaResource"/> object. </returns>
+        public virtual AppConfigurationReplicaResource GetAppConfigurationReplicaResource(ResourceIdentifier id)
         {
-            ReplicaResource.ValidateResourceId(id);
-            return new ReplicaResource(Client, id);
+            AppConfigurationReplicaResource.ValidateResourceId(id);
+            return new AppConfigurationReplicaResource(Client, id);
         }
     }
 }

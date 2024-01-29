@@ -41,6 +41,7 @@ rename-mapping:
   EncryptionProperties: AppConfigurationStoreEncryptionProperties
   NameAvailabilityStatus: AppConfigurationNameAvailabilityResult
   PrivateEndpointConnectionReference: AppConfigurationPrivateEndpointConnectionReference
+  Replica: AppConfigurationReplica
 
 prepend-rp-prefix:
   - ActionsRequired

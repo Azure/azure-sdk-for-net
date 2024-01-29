@@ -300,11 +300,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return GetAppConfigurationKeyValues().Get(keyValueName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ReplicaResources in the AppConfigurationStore. </summary>
-        /// <returns> An object representing collection of ReplicaResources and their operations over a ReplicaResource. </returns>
-        public virtual ReplicaCollection GetReplicas()
+        /// <summary> Gets a collection of AppConfigurationReplicaResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationReplicaResources and their operations over a AppConfigurationReplicaResource. </returns>
+        public virtual AppConfigurationReplicaCollection GetAppConfigurationReplicas()
         {
-            return GetCachedClient(client => new ReplicaCollection(client, Id));
+            return GetCachedClient(client => new AppConfigurationReplicaCollection(client, Id));
         }
 
         /// <summary>
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -333,9 +333,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ReplicaResource>> GetReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationReplicaResource>> GetAppConfigurationReplicaAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            return await GetReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
+            return await GetAppConfigurationReplicas().GetAsync(replicaName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,9 +364,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicaName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ReplicaResource> GetReplica(string replicaName, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationReplicaResource> GetAppConfigurationReplica(string replicaName, CancellationToken cancellationToken = default)
         {
-            return GetReplicas().Get(replicaName, cancellationToken);
+            return GetAppConfigurationReplicas().Get(replicaName, cancellationToken);
         }
 
         /// <summary>

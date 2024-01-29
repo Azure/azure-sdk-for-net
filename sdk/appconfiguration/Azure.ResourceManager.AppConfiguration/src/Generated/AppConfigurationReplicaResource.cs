@@ -17,14 +17,14 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A Class representing a Replica along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ReplicaResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetReplicaResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource"/> using the GetReplica method.
+    /// A Class representing an AppConfigurationReplica along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AppConfigurationReplicaResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAppConfigurationReplicaResource method.
+    /// Otherwise you can get one from its parent resource <see cref="AppConfigurationStoreResource"/> using the GetAppConfigurationReplica method.
     /// </summary>
-    public partial class ReplicaResource : ArmResource
+    public partial class AppConfigurationReplicaResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ReplicaResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AppConfigurationReplicaResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="configStoreName"> The configStoreName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.AppConfiguration
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _replicaClientDiagnostics;
-        private readonly ReplicasRestOperations _replicaRestClient;
-        private readonly ReplicaData _data;
+        private readonly ClientDiagnostics _appConfigurationReplicaReplicasClientDiagnostics;
+        private readonly ReplicasRestOperations _appConfigurationReplicaReplicasRestClient;
+        private readonly AppConfigurationReplicaData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.AppConfiguration/configurationStores/replicas";
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaResource"/> class for mocking. </summary>
-        protected ReplicaResource()
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationReplicaResource"/> class for mocking. </summary>
+        protected AppConfigurationReplicaResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ReplicaResource(ArmClient client, ReplicaData data) : this(client, data.Id)
+        internal AppConfigurationReplicaResource(ArmClient client, AppConfigurationReplicaData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ReplicaResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationReplicaResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ReplicaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppConfigurationReplicaResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _replicaClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string replicaApiVersion);
-            _replicaRestClient = new ReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, replicaApiVersion);
+            _appConfigurationReplicaReplicasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string appConfigurationReplicaReplicasApiVersion);
+            _appConfigurationReplicaReplicasRestClient = new ReplicasRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationReplicaReplicasApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppConfiguration
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ReplicaData Data
+        public virtual AppConfigurationReplicaData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ReplicaResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationReplicaResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaResource.Get");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaResource.Get");
             scope.Start();
             try
             {
-                var response = await _replicaRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationReplicaReplicasRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ReplicaResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationReplicaResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaResource.Get");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaResource.Get");
             scope.Start();
             try
             {
-                var response = _replicaRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _appConfigurationReplicaReplicasRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ReplicaResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationReplicaResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaResource.Delete");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaResource.Delete");
             scope.Start();
             try
             {
-                var response = await _replicaRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation(_replicaClientDiagnostics, Pipeline, _replicaRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appConfigurationReplicaReplicasRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation(_appConfigurationReplicaReplicasClientDiagnostics, Pipeline, _appConfigurationReplicaReplicasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaResource.Delete");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaResource.Delete");
             scope.Start();
             try
             {
-                var response = _replicaRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new AppConfigurationArmOperation(_replicaClientDiagnostics, Pipeline, _replicaRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appConfigurationReplicaReplicasRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new AppConfigurationArmOperation(_appConfigurationReplicaReplicasClientDiagnostics, Pipeline, _appConfigurationReplicaReplicasRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -279,16 +279,16 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="data"> The parameters for creating a replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ReplicaResource>> UpdateAsync(WaitUntil waitUntil, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppConfigurationReplicaResource>> UpdateAsync(WaitUntil waitUntil, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaResource.Update");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaResource.Update");
             scope.Start();
             try
             {
-                var response = await _replicaRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaClientDiagnostics, Pipeline, _replicaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appConfigurationReplicaReplicasRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(new AppConfigurationReplicaOperationSource(Client), _appConfigurationReplicaReplicasClientDiagnostics, Pipeline, _appConfigurationReplicaReplicasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ReplicaResource"/></description>
+        /// <description><see cref="AppConfigurationReplicaResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -325,16 +325,16 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="data"> The parameters for creating a replica. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ReplicaResource> Update(WaitUntil waitUntil, ReplicaData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppConfigurationReplicaResource> Update(WaitUntil waitUntil, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _replicaClientDiagnostics.CreateScope("ReplicaResource.Update");
+            using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaResource.Update");
             scope.Start();
             try
             {
-                var response = _replicaRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<ReplicaResource>(new ReplicaOperationSource(Client), _replicaClientDiagnostics, Pipeline, _replicaRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appConfigurationReplicaReplicasRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new AppConfigurationArmOperation<AppConfigurationReplicaResource>(new AppConfigurationReplicaOperationSource(Client), _appConfigurationReplicaReplicasClientDiagnostics, Pipeline, _appConfigurationReplicaReplicasRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

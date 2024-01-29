@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReplicaData>> value = default;
+            Optional<IReadOnlyList<AppConfigurationReplicaData>> value = default;
             Optional<string> nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    List<ReplicaData> array = new List<ReplicaData>();
+                    List<AppConfigurationReplicaData> array = new List<AppConfigurationReplicaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReplicaData.DeserializeReplicaData(item));
+                        array.Add(AppConfigurationReplicaData.DeserializeAppConfigurationReplicaData(item));
                     }
                     value = array;
                     continue;
