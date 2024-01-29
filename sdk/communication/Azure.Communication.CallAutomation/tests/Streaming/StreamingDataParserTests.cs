@@ -4,14 +4,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using Azure.Communication.CallAutomation.Models.Transcription;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
-namespace Azure.Communication.CallAutomation.Tests.Trascription
+namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
 {
-    internal class TranscriptionPackageParserTests
+    internal class StreamingDataParserTests
     {
         [Test]
         public void ParseTranscriptionMetadata_Test()
@@ -27,7 +25,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
                 "}" +
             "}";
 
-            TranscriptionMetadata streamingMetadata = (TranscriptionMetadata)TranscriptionPackageParser.Parse(metadataJson);
+            TranscriptionMetadata streamingMetadata = (TranscriptionMetadata)StreamingDataParser.Parse(metadataJson);
             ValidateMetadata(streamingMetadata);
         }
 
@@ -59,7 +57,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
                 "}" +
             "}";
 
-            TranscriptionData transcription = (TranscriptionData)TranscriptionPackageParser.Parse(transcriptionJson);
+            TranscriptionData transcription = (TranscriptionData)StreamingDataParser.Parse(transcriptionJson);
             ValidateTranscriptionData(transcription);
         }
 
@@ -98,7 +96,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
 
             var binaryData = BinaryData.FromString(jsonData.ToString());
 
-            TranscriptionData transcription = (TranscriptionData)TranscriptionPackageParser.Parse(binaryData);
+            TranscriptionData transcription = (TranscriptionData)StreamingDataParser.Parse(binaryData);
             ValidateTranscriptionData(transcription);
         }
 
@@ -136,7 +134,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             jsonData["transcriptionData"]["resultStatus"] = "final";
 
             byte[] receivedBytes = System.Text.Encoding.UTF8.GetBytes(jsonData.ToString());
-            TranscriptionData parsedPackage = (TranscriptionData)TranscriptionPackageParser.Parse(receivedBytes);
+            TranscriptionData parsedPackage = (TranscriptionData)StreamingDataParser.Parse(receivedBytes);
 
             Assert.NotNull(parsedPackage);
             ValidateTranscriptionData(parsedPackage);
@@ -159,7 +157,7 @@ namespace Azure.Communication.CallAutomation.Tests.Trascription
             Assert.AreEqual(1, transcription.Offset);
 
             // validate individual words
-            IList<Word> words = transcription.Words.ToList();
+            IList<WordData> words = transcription.Words.ToList();
             Assert.AreEqual(2, words.Count);
             Assert.AreEqual("Hello", words[0].Text);
             Assert.AreEqual(1, words[0].Offset);
