@@ -3,12 +3,8 @@
 
 namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
 {
-    /// <summary>
-    /// An example interface for processing of events.
-    /// </summary>
     public interface ISampleApplicationProcessor
     {
-        /// <returns></returns>
         Task Process(string body);
     }
 }
