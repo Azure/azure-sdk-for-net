@@ -37,6 +37,7 @@ public abstract class PipelineTransport : PipelinePolicy
     #endregion
 
     #region Process message
+
     /// <summary>
     /// TBD: needed for inheritdoc.
     /// </summary>
@@ -54,6 +55,9 @@ public abstract class PipelineTransport : PipelinePolicy
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
         Debug.Assert(message.NetworkTimeout is not null);
+
+        // Implement network timeout around call to concrete transport
+        // implementation of ProcessCore.
         TimeSpan networkTimeout = (TimeSpan)message.NetworkTimeout!;
 
         CancellationToken userToken = message.CancellationToken;
@@ -74,7 +78,8 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (OperationCanceledException ex)
         {
-            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(userToken, joinedTokenSource.Token, ex, networkTimeout);
+            CancellationHelper.ThrowIfCancellationRequestedOrTimeout(userToken,
+                joinedTokenSource.Token, ex, networkTimeout);
             throw;
         }
         finally
@@ -83,14 +88,17 @@ public abstract class PipelineTransport : PipelinePolicy
             joinedTokenSource.CancelAfter(Timeout.Infinite);
         }
 
+        // Validate the transport implementation set a response.
         if (message.Response is null)
         {
             throw new InvalidOperationException("Response was not set by transport.");
         }
 
+        // Set meta-data required by the pipeline on the message
         message.Response.SetIsError(ClassifyResponse(message));
         message.Response.NetworkTimeout = networkTimeout;
 
+        // Buffer the response if applicable.
         if (async)
         {
             await BufferResponseAsync(message, networkTimeout, userToken, joinedTokenSource).ConfigureAwait(false);
@@ -127,25 +135,27 @@ public abstract class PipelineTransport : PipelinePolicy
     {
         if (message.Response!.ContentStream is not null)
         {
-            // No need to buffer the response.
+            // No need to buffer if there is no content stream.
             return;
         }
 
         if (!message.BufferResponse)
         {
-            // Don't buffer the response content, e.g. in order to return
-            // the network stream to the end user of the client as part of
-            // a streaming API. Wrap the content stream in a read-timeout
+            // Don't buffer the response content, e.g. in order to return the
+            // network stream to the end user of a client as part of a streaming
+            // API.  In this case, we wrap the content stream in a read-timeout
             // stream, to respect the client's network timeout setting.
             WrapNetworkStream(message, networkTimeout);
             return;
         }
 
-        // If cancellation is possible (either due to network timeout or a user cancellation
-        // token being cancelled), then register callback to dispose the stream on cancellation.
+        // If cancellation is possible, either due to network timeout or a user
+        // cancellation token being cancelled, register a callback to dispose
+        // the stream on cancellation.
         if (networkTimeout != Timeout.InfiniteTimeSpan || userToken.CanBeCanceled)
         {
-            joinedTokenSource.Token.Register(state => ((Stream?)state)?.Dispose(), message.Response!.ContentStream!);
+            joinedTokenSource.Token.Register(state => ((Stream?)state)?.Dispose(),
+                message.Response!.ContentStream!);
         }
 
         try
@@ -159,7 +169,8 @@ public abstract class PipelineTransport : PipelinePolicy
                 message.Response.BufferContent(networkTimeout, joinedTokenSource);
             }
         }
-        // We dispose stream on timeout or user cancellation so catch and check if cancellation token was cancelled
+        // We dispose stream on timeout or user cancellation so catch and check
+        // if cancellation token was cancelled.
         catch (Exception ex) when (ex is ObjectDisposedException
                                       or IOException
                                       or OperationCanceledException
