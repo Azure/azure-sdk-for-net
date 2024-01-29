@@ -133,7 +133,7 @@ namespace Azure.AI.Translator.Document
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(sourceDocument, nameof(sourceDocument));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.DocumentTranslate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.DocumentTranslate");
             scope.Start();
             try
             {
@@ -189,7 +189,7 @@ namespace Azure.AI.Translator.Document
             Argument.AssertNotNull(targetLanguage, nameof(targetLanguage));
             Argument.AssertNotNull(sourceDocument, nameof(sourceDocument));
 
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DocumentTranslationClient.DocumentTranslate");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SingleDocumentTranslationClient.DocumentTranslate");
             scope.Start();
             try
             {

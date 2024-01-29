@@ -11,32 +11,37 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translator.Document.Tests
 {
-    public class SingleDocumentTranslationClientLiveTests: RecordedTestBase<DocumentClientTestEnvironment>
+    public partial class SingleDocumentTranslationClientLiveTests : DocumentTranslationLiveTestBase
     {
-        public SingleDocumentTranslationClientLiveTests(bool isAsync) : base(isAsync)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SingleDocumentTranslationClientLiveTests"/> class.
+        /// </summary>
+        /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
+        public SingleDocumentTranslationClientLiveTests(bool isAsync)
+            : base(isAsync)
         {
         }
 
-        /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
-
         [RecordedTest]
-        public void Translate_TextDocument()
+        [TestCase(false)]
+        public async Task Translate_TextDocumentAsync(bool usetokenCredential)
         {
-            var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var client = GetClient(useTokenCredential: usetokenCredential);
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
             var sourceDocument = new MultipartFormFileData(Path.GetFileName(filePath), BinaryData.FromStream(fileStream), "text/html");
-            var response = client.DocumentTranslate("hi", sourceDocument);
+            var response = await client.DocumentTranslateAsync("hi", sourceDocument).ConfigureAwait(false);
             var requestString = File.ReadAllText(filePath);
             var responseString = Encoding.UTF8.GetString(response.Value.ToArray());
             Assert.AreNotEqual(requestString, responseString);
         }
 
         [RecordedTest]
-        public async Task Translate_TextDocument_Single_CsvGlossary()
+        [TestCase(false)]
+        public async Task Translate_TextDocument_Single_CsvGlossary(bool usetokenCredential)
         {
-            var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var client = GetClient(useTokenCredential: usetokenCredential);
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
@@ -56,9 +61,10 @@ namespace Azure.AI.Translator.Document.Tests
         }
 
         [RecordedTest]
-        public async Task Translate_TextDocument_Multiple_CsvGlossary()
+        [TestCase(false)]
+        public async Task Translate_TextDocument_Multiple_CsvGlossary(bool usetokenCredential)
         {
-            var client = new SingleDocumentTranslationClient(new Uri(TestEnvironment.Endpoint), new AzureKeyCredential(TestEnvironment.ApiKey));
+            var client = GetClient(useTokenCredential: usetokenCredential);
             string filePath = Path.Combine("TestData", "test-input.txt");
             using Stream fileStream = File.OpenRead(filePath);
 
