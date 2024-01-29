@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.AppConfiguration
         public AppConfigurationReplicaData() { }
         public string Endpoint { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
-        public Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState? ProvisioningState { get { throw null; } }
         Azure.ResourceManager.AppConfiguration.AppConfigurationReplicaData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppConfiguration.AppConfigurationReplicaData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppConfiguration.AppConfigurationReplicaData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppConfiguration.AppConfigurationReplicaData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.AppConfigurationReplicaData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -521,6 +521,27 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationRegenerateKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppConfigurationReplicaProvisioningState : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppConfigurationReplicaProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState left, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AppConfigurationResourceType : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationResourceType>
     {
         private readonly object _dummy;
@@ -586,30 +607,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateEndpointConnectionReference AppConfigurationPrivateEndpointConnectionReference(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionState connectionState = null) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.AppConfigurationPrivateLinkResourceData AppConfigurationPrivateLinkResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionState AppConfigurationPrivateLinkServiceConnectionState(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus? status = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateLinkServiceConnectionStatus?), string description = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired? actionsRequired = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationActionsRequired?)) { throw null; }
-        public static Azure.ResourceManager.AppConfiguration.AppConfigurationReplicaData AppConfigurationReplicaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string endpoint = null, Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState? provisioningState = default(Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.AppConfiguration.AppConfigurationReplicaData AppConfigurationReplicaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string endpoint = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState? provisioningState = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationReplicaProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.Models.AppConfigurationStoreApiKey AppConfigurationStoreApiKey(string id = null, string name = null, string value = null, string connectionString = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), bool? isReadOnly = default(bool?)) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.AppConfigurationStoreData AppConfigurationStoreData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, string skuName = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState? provisioningState = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string endpoint = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationKeyVaultProperties encryptionKeyVaultProperties = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections = null, Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationPublicNetworkAccess?), bool? disableLocalAuth = default(bool?), int? softDeleteRetentionInDays = default(int?), bool? enablePurgeProtection = default(bool?), Azure.ResourceManager.AppConfiguration.Models.AppConfigurationCreateMode? createMode = default(Azure.ResourceManager.AppConfiguration.Models.AppConfigurationCreateMode?)) { throw null; }
         public static Azure.ResourceManager.AppConfiguration.DeletedAppConfigurationStoreData DeletedAppConfigurationStoreData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier configurationStoreId = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.DateTimeOffset? deletedOn = default(System.DateTimeOffset?), System.DateTimeOffset? scheduledPurgeOn = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null, bool? isPurgeProtectionEnabled = default(bool?)) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ReplicaProvisioningState : System.IEquatable<Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ReplicaProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState Succeeded { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState left, Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState left, Azure.ResourceManager.AppConfiguration.Models.ReplicaProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
     }
 }

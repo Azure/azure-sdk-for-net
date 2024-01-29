@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceType type = default;
             Optional<SystemData> systemData = default;
             Optional<string> endpoint = default;
-            Optional<ReplicaProvisioningState> provisioningState = default;
+            Optional<AppConfigurationReplicaProvisioningState> provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            provisioningState = new ReplicaProvisioningState(property0.Value.GetString());
+                            provisioningState = new AppConfigurationReplicaProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }

@@ -42,6 +42,7 @@ rename-mapping:
   NameAvailabilityStatus: AppConfigurationNameAvailabilityResult
   PrivateEndpointConnectionReference: AppConfigurationPrivateEndpointConnectionReference
   Replica: AppConfigurationReplica
+  ReplicaProvisioningState: AppConfigurationReplicaProvisioningState
 
 prepend-rp-prefix:
   - ActionsRequired

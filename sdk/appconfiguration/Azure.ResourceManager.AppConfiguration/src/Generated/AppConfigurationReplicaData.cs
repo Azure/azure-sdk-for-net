@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="endpoint"> The URI of the replica where the replica API will be available. </param>
         /// <param name="provisioningState"> The provisioning state of the replica. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string endpoint, ReplicaProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppConfigurationReplicaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, string endpoint, AppConfigurationReplicaProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Endpoint = endpoint;
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> The URI of the replica where the replica API will be available. </summary>
         public string Endpoint { get; }
         /// <summary> The provisioning state of the replica. </summary>
-        public ReplicaProvisioningState? ProvisioningState { get; }
+        public AppConfigurationReplicaProvisioningState? ProvisioningState { get; }
     }
 }
