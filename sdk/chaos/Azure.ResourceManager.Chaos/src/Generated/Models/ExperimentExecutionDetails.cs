@@ -15,6 +15,38 @@ namespace Azure.ResourceManager.Chaos.Models
     /// <summary> Model that represents the execution details of an Experiment. </summary>
     public partial class ExperimentExecutionDetails : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ExperimentExecutionDetails"/>. </summary>
         internal ExperimentExecutionDetails()
         {
@@ -31,7 +63,8 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="failureReason"> The reason why the execution failed. </param>
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformation"> The information of the experiment run. </param>
-        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ChaosExperimentRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartedOn = startedOn;
@@ -39,6 +72,7 @@ namespace Azure.ResourceManager.Chaos.Models
             FailureReason = failureReason;
             LastActionOn = lastActionOn;
             RunInformation = runInformation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The status of the execution. </summary>
@@ -52,9 +86,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> String that represents the last action date time. </summary>
         public DateTimeOffset? LastActionOn { get; }
         /// <summary> The information of the experiment run. </summary>
-        internal ExperimentExecutionDetailsPropertiesRunInformation RunInformation { get; }
+        internal ChaosExperimentRunInformation RunInformation { get; }
         /// <summary> The steps of the experiment run. </summary>
-        public IReadOnlyList<StepStatus> RunInformationSteps
+        public IReadOnlyList<ChaosExperimentRunStepStatus> RunInformationSteps
         {
             get => RunInformation?.Steps;
         }

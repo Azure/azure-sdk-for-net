@@ -306,7 +306,8 @@
         "Keda",
         "Kata",
         "Mshv",
-        "Fips"
+        "Fips",
+        "Istio"
       ]
     },
     {
@@ -432,7 +433,8 @@
         "Inprogress",
         "Twilio",
         "Vertica",
-        "Xero"
+        "Xero",
+		    "Soql"
       ]
     },
     {

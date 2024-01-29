@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PredictionGradesItem : IUtf8JsonSerializable
+    public partial class PredictionGradesItem : IUtf8JsonSerializable, IJsonModel<PredictionGradesItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionGradesItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PredictionGradesItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GradeName))
             {
@@ -30,11 +41,40 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("maxScoreThreshold"u8);
                 writer.WriteNumberValue(MaxScoreThreshold.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PredictionGradesItem DeserializePredictionGradesItem(JsonElement element)
+        PredictionGradesItem IJsonModel<PredictionGradesItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictionGradesItem(document.RootElement, options);
+        }
+
+        internal static PredictionGradesItem DeserializePredictionGradesItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,6 +82,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             Optional<string> gradeName = default;
             Optional<int> minScoreThreshold = default;
             Optional<int> maxScoreThreshold = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("gradeName"u8))
@@ -67,8 +109,44 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     maxScoreThreshold = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PredictionGradesItem(gradeName.Value, Optional.ToNullable(minScoreThreshold), Optional.ToNullable(maxScoreThreshold));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PredictionGradesItem(gradeName.Value, Optional.ToNullable(minScoreThreshold), Optional.ToNullable(maxScoreThreshold), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PredictionGradesItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PredictionGradesItem IPersistableModel<PredictionGradesItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionGradesItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePredictionGradesItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PredictionGradesItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PredictionGradesItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Peering.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CdnPeeringPrefix.DeserializeCdnPeeringPrefix(e), CdnPeeringPrefixesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Peering.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CdnPeeringPrefixesRestClient.CreateListRequest(Id.SubscriptionId, peeringLocation);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CdnPeeringPrefixesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, peeringLocation);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CdnPeeringPrefix.DeserializeCdnPeeringPrefix, CdnPeeringPrefixesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CdnPeeringPrefix.DeserializeCdnPeeringPrefix(e), CdnPeeringPrefixesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetCdnPeeringPrefixes", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringLocationsRestClient.CreateListRequest(Id.SubscriptionId, kind, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, kind, directPeeringType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringLocation.DeserializePeeringLocation, PeeringLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PeeringLocation.DeserializePeeringLocation(e), PeeringLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringLocationsRestClient.CreateListRequest(Id.SubscriptionId, kind, directPeeringType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, kind, directPeeringType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringLocation.DeserializePeeringLocation, PeeringLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PeeringLocation.DeserializePeeringLocation(e), PeeringLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceCountriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceCountriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceCountry.DeserializePeeringServiceCountry, PeeringServiceCountriesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PeeringServiceCountry.DeserializePeeringServiceCountry(e), PeeringServiceCountriesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -601,7 +601,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceCountriesRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceCountriesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceCountry.DeserializePeeringServiceCountry, PeeringServiceCountriesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PeeringServiceCountry.DeserializePeeringServiceCountry(e), PeeringServiceCountriesClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceCountries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceLocationsRestClient.CreateListRequest(Id.SubscriptionId, country);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, country);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceLocation.DeserializePeeringServiceLocation, PeeringServiceLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PeeringServiceLocation.DeserializePeeringServiceLocation(e), PeeringServiceLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceLocationsRestClient.CreateListRequest(Id.SubscriptionId, country);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceLocationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, country);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceLocation.DeserializePeeringServiceLocation, PeeringServiceLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PeeringServiceLocation.DeserializePeeringServiceLocation(e), PeeringServiceLocationsClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceLocations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PeeringServiceProvider.DeserializePeeringServiceProvider, PeeringServiceProvidersClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PeeringServiceProvider.DeserializePeeringServiceProvider(e), PeeringServiceProvidersClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Peering.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => PeeringServiceProvidersRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PeeringServiceProvidersRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PeeringServiceProvider.DeserializePeeringServiceProvider, PeeringServiceProvidersClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PeeringServiceProvider.DeserializePeeringServiceProvider(e), PeeringServiceProvidersClientDiagnostics, Pipeline, "MockablePeeringSubscriptionResource.GetPeeringServiceProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

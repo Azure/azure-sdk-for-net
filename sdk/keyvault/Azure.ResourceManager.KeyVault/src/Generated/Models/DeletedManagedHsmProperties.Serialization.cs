@@ -6,16 +6,96 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class DeletedManagedHsmProperties
+    public partial class DeletedManagedHsmProperties : IUtf8JsonSerializable, IJsonModel<DeletedManagedHsmProperties>
     {
-        internal static DeletedManagedHsmProperties DeserializeDeletedManagedHsmProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeletedManagedHsmProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeletedManagedHsmProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeletedManagedHsmProperties)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ManagedHsmId))
+            {
+                writer.WritePropertyName("mhsmId"u8);
+                writer.WriteStringValue(ManagedHsmId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeletedOn))
+            {
+                writer.WritePropertyName("deletionDate"u8);
+                writer.WriteStringValue(DeletedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
+            {
+                writer.WritePropertyName("scheduledPurgeDate"u8);
+                writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(PurgeProtectionEnabled))
+            {
+                writer.WritePropertyName("purgeProtectionEnabled"u8);
+                writer.WriteBooleanValue(PurgeProtectionEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DeletedManagedHsmProperties IJsonModel<DeletedManagedHsmProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeletedManagedHsmProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeletedManagedHsmProperties(document.RootElement, options);
+        }
+
+        internal static DeletedManagedHsmProperties DeserializeDeletedManagedHsmProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +106,8 @@ namespace Azure.ResourceManager.KeyVault.Models
             Optional<DateTimeOffset> scheduledPurgeDate = default;
             Optional<bool> purgeProtectionEnabled = default;
             Optional<IReadOnlyDictionary<string, string>> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mhsmId"u8))
@@ -87,8 +169,44 @@ namespace Azure.ResourceManager.KeyVault.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeletedManagedHsmProperties(managedHsmId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(purgeProtectionEnabled), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DeletedManagedHsmProperties(managedHsmId.Value, Optional.ToNullable(location), Optional.ToNullable(deletionDate), Optional.ToNullable(scheduledPurgeDate), Optional.ToNullable(purgeProtectionEnabled), Optional.ToDictionary(tags), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeletedManagedHsmProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeletedManagedHsmProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DeletedManagedHsmProperties IPersistableModel<DeletedManagedHsmProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeletedManagedHsmProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeletedManagedHsmProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeletedManagedHsmProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeletedManagedHsmProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

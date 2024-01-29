@@ -53,7 +53,68 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
         /// <summary>
         /// Load secrets into this provider.
         /// </summary>
-        public override void Load() => LoadAsync().GetAwaiter().GetResult();
+        public override void Load()
+        {
+            var secretPages = _client.GetPropertiesOfSecrets();
+
+            using var secretLoader = new ParallelSecretLoader(_client);
+            var newLoadedSecrets = new Dictionary<string, KeyVaultSecret>();
+            var oldLoadedSecrets = Interlocked.Exchange(ref _loadedSecrets, null);
+
+            foreach (var secret in secretPages)
+            {
+                AddSecretToLoader(secret, oldLoadedSecrets, newLoadedSecrets, secretLoader);
+            }
+
+            var loadedSecret = secretLoader.WaitForAll();
+            UpdateSecrets(loadedSecret, newLoadedSecrets, oldLoadedSecrets);
+
+            // schedule a polling task only if none exists and a valid delay is specified
+            if (_pollingTask == null && _reloadInterval != null)
+            {
+                _pollingTask = PollForSecretChangesAsync();
+            }
+        }
+
+        private void AddSecretToLoader(SecretProperties secret, Dictionary<string, KeyVaultSecret> oldLoadedSecrets, Dictionary<string, KeyVaultSecret> newLoadedSecrets, ParallelSecretLoader secretLoader)
+        {
+            if (!_manager.Load(secret) || secret.Enabled != true)
+            {
+                return;
+            }
+
+            var secretId = secret.Name;
+            if (oldLoadedSecrets != null && oldLoadedSecrets.TryGetValue(secretId, out var existingSecret) && IsUpToDate(existingSecret, secret))
+            {
+                oldLoadedSecrets.Remove(secretId);
+                newLoadedSecrets.Add(secretId, existingSecret);
+            }
+            else
+            {
+                secretLoader.AddSecretToLoad(secret.Name);
+            }
+        }
+
+        private void UpdateSecrets(Response<KeyVaultSecret>[] loadedSecret, Dictionary<string, KeyVaultSecret> newLoadedSecrets, Dictionary<string, KeyVaultSecret> oldLoadedSecrets)
+        {
+            foreach (var secretBundle in loadedSecret)
+            {
+                newLoadedSecrets.Add(secretBundle.Value.Name, secretBundle);
+            }
+
+            _loadedSecrets = newLoadedSecrets;
+
+            // Reload is needed if we are loading secrets that were not loaded before or
+            // secret that was loaded previously is not available anymore
+            if (loadedSecret.Any() || oldLoadedSecrets?.Any() == true)
+            {
+                Data = _manager.GetData(newLoadedSecrets.Values);
+                if (oldLoadedSecrets != null)
+                {
+                    OnReload();
+                }
+            }
+        }
 
         private async Task PollForSecretChangesAsync()
         {
@@ -79,57 +140,17 @@ namespace Azure.Extensions.AspNetCore.Configuration.Secrets
 
         private async Task LoadAsync()
         {
-            var secretPages = _client.GetPropertiesOfSecretsAsync();
-
             using var secretLoader = new ParallelSecretLoader(_client);
             var newLoadedSecrets = new Dictionary<string, KeyVaultSecret>();
             var oldLoadedSecrets = Interlocked.Exchange(ref _loadedSecrets, null);
 
-            await foreach (var secret in secretPages.ConfigureAwait(false))
+            await foreach (var secret in _client.GetPropertiesOfSecretsAsync().ConfigureAwait(false))
             {
-                if (!_manager.Load(secret) || secret.Enabled != true)
-                {
-                    continue;
-                }
-
-                var secretId = secret.Name;
-                if (oldLoadedSecrets != null &&
-                    oldLoadedSecrets.TryGetValue(secretId, out var existingSecret) &&
-                    IsUpToDate(existingSecret, secret))
-                {
-                    oldLoadedSecrets.Remove(secretId);
-                    newLoadedSecrets.Add(secretId, existingSecret);
-                }
-                else
-                {
-                    secretLoader.Add(secret.Name);
-                }
+                AddSecretToLoader(secret, oldLoadedSecrets, newLoadedSecrets, secretLoader);
             }
 
-            var loadedSecret = await secretLoader.WaitForAll().ConfigureAwait(false);
-            foreach (var secretBundle in loadedSecret)
-            {
-                newLoadedSecrets.Add(secretBundle.Value.Name, secretBundle);
-            }
-
-            _loadedSecrets = newLoadedSecrets;
-
-            // Reload is needed if we are loading secrets that were not loaded before or
-            // secret that was loaded previously is not available anymore
-            if (loadedSecret.Any() || oldLoadedSecrets?.Any() == true)
-            {
-                Data = _manager.GetData(newLoadedSecrets.Values);
-                if (oldLoadedSecrets != null)
-                {
-                    OnReload();
-                }
-            }
-
-            // schedule a polling task only if none exists and a valid delay is specified
-            if (_pollingTask == null && _reloadInterval != null)
-            {
-                _pollingTask = PollForSecretChangesAsync();
-            }
+            var loadedSecret = await secretLoader.WaitForAllAsync().ConfigureAwait(false);
+            UpdateSecrets(loadedSecret, newLoadedSecrets, oldLoadedSecrets);
         }
 
         /// <summary>

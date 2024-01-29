@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,10 +22,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="ResourceCapabilities"/>. </summary>
         /// <param name="resourceCapabilitiesBaseType"> Describes the Resource type: Microsoft.RecoveryServices/Vaults. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Capabilities information. </param>
-        internal ResourceCapabilities(ResourceType resourceCapabilitiesBaseType, CapabilitiesProperties properties) : base(resourceCapabilitiesBaseType)
+        internal ResourceCapabilities(ResourceType resourceCapabilitiesBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, CapabilitiesProperties properties) : base(resourceCapabilitiesBaseType, serializedAdditionalRawData)
         {
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceCapabilities"/> for deserialization. </summary>
+        internal ResourceCapabilities()
+        {
         }
 
         /// <summary> Capabilities information. </summary>

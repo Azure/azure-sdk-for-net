@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class FilesNotTieringError
+    public partial class FilesNotTieringError : IUtf8JsonSerializable, IJsonModel<FilesNotTieringError>
     {
-        internal static FilesNotTieringError DeserializeFilesNotTieringError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FilesNotTieringError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FilesNotTieringError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FilesNotTieringError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteNumberValue(ErrorCode.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FileCount))
+            {
+                writer.WritePropertyName("fileCount"u8);
+                writer.WriteNumberValue(FileCount.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FilesNotTieringError IJsonModel<FilesNotTieringError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilesNotTieringError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFilesNotTieringError(document.RootElement, options);
+        }
+
+        internal static FilesNotTieringError DeserializeFilesNotTieringError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<int> errorCode = default;
             Optional<long> fileCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -40,8 +98,44 @@ namespace Azure.ResourceManager.StorageSync.Models
                     fileCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FilesNotTieringError(Optional.ToNullable(errorCode), Optional.ToNullable(fileCount));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new FilesNotTieringError(Optional.ToNullable(errorCode), Optional.ToNullable(fileCount), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FilesNotTieringError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilesNotTieringError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        FilesNotTieringError IPersistableModel<FilesNotTieringError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FilesNotTieringError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFilesNotTieringError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FilesNotTieringError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

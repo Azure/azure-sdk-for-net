@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningEncryptionSetting. </summary>
     public partial class MachineLearningEncryptionSetting
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/>. </summary>
         /// <param name="keyVaultProperties"> KeyVault details to do the encryption. </param>
         /// <param name="status"> Indicates whether or not the encryption is enabled for the workspace. </param>
@@ -41,7 +74,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// The byok storage account that customer brings to store customer's data
         /// with encryption
         /// </param>
-        internal MachineLearningEncryptionSetting(ResourceIdentifier cosmosDBResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEncryptionSetting(ResourceIdentifier cosmosDBResourceId, MachineLearningCmkIdentity identity, MachineLearningEncryptionKeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CosmosDBResourceId = cosmosDBResourceId;
             Identity = identity;
@@ -49,6 +83,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SearchAccountResourceId = searchAccountResourceId;
             Status = status;
             StorageAccountResourceId = storageAccountResourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningEncryptionSetting"/> for deserialization. </summary>
+        internal MachineLearningEncryptionSetting()
+        {
         }
 
         /// <summary>

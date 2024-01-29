@@ -459,7 +459,7 @@
 /sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/        @JoshLove-msft @jsquire
 
 # ServiceLabel: %Event Hubs %Service Attention
-/sdk/eventhub/Microsoft.Azure.EventHubs/                           @serkantkaraca @sjkwak @kasun04 @saglodha
+/sdk/eventhub/Microsoft.Azure.EventHubs/                           @serkantkaraca @sjkwak @kasun04
 
 # ServiceLabel: %Event Hubs %Service Attention
 /sdk/eventhub/Microsoft.Azure.EventHubs.Processor/                 @serkantkaraca @sjkwak @kasun04
@@ -583,7 +583,7 @@
 
 # PRLabel: %Monitor - LiveMetrics
 # ServiceLabel: %Monitor - LiveMetrics %Service Attention
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @cijothomas @reyang @rajkumar-rangaraj @TimothyMothra @vishweshbankwar @xiang17
 
 # ServiceLabel: %MySQL %Service Attention
 /sdk/mysql/Microsoft.Azure.Management.MySQL/                       @ajlam @ambhatna @kummanish
@@ -730,7 +730,7 @@
 /sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/     @JoshLove-msft @jsquire
 
 # ServiceLabel: %Service Bus %Service Attention
-/sdk/servicebus/Microsoft.Azure.ServiceBus/                        @shankarsama @DorothySun216 @EldertGrootenboer @saglodha
+/sdk/servicebus/Microsoft.Azure.ServiceBus/                        @shankarsama @DorothySun216 @EldertGrootenboer
 
 # ServiceLabel: %Service Fabric %Service Attention
 /sdk/servicefabric/Microsoft.Azure.Management.ServiceFabric/       @QingChenmsft @vaishnavk @juhacket
@@ -827,6 +827,12 @@
 # PRLabel: %Cognitive - Personalizer
 /sdk/personalizer/                                                 @orenmichaely @tyclintw
 
+# PRLabel: %Playwright
+/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
+
+# ServiceLabel: %Playwright %Service Attention
+#/<NotInRepo>/                                                     @shreyaanand @mjmadhu
+
 # ######## Management Plane ########
 
 /**/*Management*/                                                  @archerzz @ArcturusZhang @ArthurMa1978
@@ -860,3 +866,9 @@
 
 # PRLabel: %Spring App Discovery
 /sdk/springappdiscovery/Azure.ResourceManager.*/                    @sunkun99
+
+# PRLabel: %Large Instance
+/sdk/azurelargeinstance                                             @8Gitbrix
+
+# ServiceLabel: %Large Instance %Service Attention
+#/<NotInRepo>/                                                     @8Gitbrix

@@ -5,20 +5,41 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql
 {
-    public partial class IPv6FirewallRuleData : IUtf8JsonSerializable
+    public partial class IPv6FirewallRuleData : IUtf8JsonSerializable, IJsonModel<IPv6FirewallRuleData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPv6FirewallRuleData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IPv6FirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPv6FirewallRuleData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -33,11 +54,40 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStringValue(EndIPv6Address);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IPv6FirewallRuleData DeserializeIPv6FirewallRuleData(JsonElement element)
+        IPv6FirewallRuleData IJsonModel<IPv6FirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPv6FirewallRuleData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPv6FirewallRuleData(document.RootElement, options);
+        }
+
+        internal static IPv6FirewallRuleData DeserializeIPv6FirewallRuleData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -47,6 +97,8 @@ namespace Azure.ResourceManager.Sql
             Optional<ResourceType> type = default;
             Optional<string> startIPv6Address = default;
             Optional<string> endIPv6Address = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -94,8 +146,44 @@ namespace Azure.ResourceManager.Sql
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IPv6FirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), startIPv6Address.Value, endIPv6Address.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new IPv6FirewallRuleData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, startIPv6Address.Value, endIPv6Address.Value);
         }
+
+        BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IPv6FirewallRuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        IPv6FirewallRuleData IPersistableModel<IPv6FirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPv6FirewallRuleData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIPv6FirewallRuleData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IPv6FirewallRuleData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IPv6FirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

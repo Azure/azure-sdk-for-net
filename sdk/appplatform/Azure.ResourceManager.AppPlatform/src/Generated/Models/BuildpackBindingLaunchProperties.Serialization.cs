@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class BuildpackBindingLaunchProperties : IUtf8JsonSerializable
+    public partial class BuildpackBindingLaunchProperties : IUtf8JsonSerializable, IJsonModel<BuildpackBindingLaunchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BuildpackBindingLaunchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BuildpackBindingLaunchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildpackBindingLaunchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BuildpackBindingLaunchProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -38,17 +48,48 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BuildpackBindingLaunchProperties DeserializeBuildpackBindingLaunchProperties(JsonElement element)
+        BuildpackBindingLaunchProperties IJsonModel<BuildpackBindingLaunchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildpackBindingLaunchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BuildpackBindingLaunchProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBuildpackBindingLaunchProperties(document.RootElement, options);
+        }
+
+        internal static BuildpackBindingLaunchProperties DeserializeBuildpackBindingLaunchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IDictionary<string, string>> properties = default;
             Optional<IDictionary<string, string>> secrets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -79,8 +120,44 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     secrets = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BuildpackBindingLaunchProperties(Optional.ToDictionary(properties), Optional.ToDictionary(secrets));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new BuildpackBindingLaunchProperties(Optional.ToDictionary(properties), Optional.ToDictionary(secrets), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BuildpackBindingLaunchProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildpackBindingLaunchProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BuildpackBindingLaunchProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        BuildpackBindingLaunchProperties IPersistableModel<BuildpackBindingLaunchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BuildpackBindingLaunchProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBuildpackBindingLaunchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BuildpackBindingLaunchProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BuildpackBindingLaunchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
