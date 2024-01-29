@@ -1,14 +1,17 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0 (2023-31-01)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Enable national cloud support for US Gov and China clouds
 
 ### Other Changes
+- Removed the `MetricsBatchQueryClient` client to support batch querying of metrics. This client is currently only available in beta release.
+- Removed `QueryBatch` and `QueryBatchAsync` methods to `MetricsBatchQueryClient`. These methods are currently only available in beta release.
 
 ## 1.3.0-beta.2 (2023-12-05)
 
