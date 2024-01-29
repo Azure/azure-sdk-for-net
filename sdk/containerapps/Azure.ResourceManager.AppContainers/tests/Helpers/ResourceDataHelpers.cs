@@ -442,20 +442,20 @@ Name = "testcontainerappsjob-1102",
             ContainerAppSourceControlData data = new ContainerAppSourceControlData()
             {
                 //RepoUri = new Uri("https://github.com/xwang971/ghatest"),
-                Branch = "master",
+                Branch = "<< REDACTED >>",
                 GitHubActionConfiguration = new ContainerAppGitHubActionConfiguration()
                 {
                     RegistryInfo = new ContainerAppRegistryInfo()
                     {
-                        RegistryServer = "xwang971reg.azurecr.io",
-                        RegistryUserName = "xwang971reg",
-                        RegistryPassword = "123456",
+                        RegistryServer = "<< REDACTED >>",
+                        RegistryUserName = "<< REDACTED >>",
+                        RegistryPassword = "<< REDACTED >>",
                     },
                     AzureCredentials = new ContainerAppCredentials()
                     {
-                        ClientId = "8e6d47e0-7969-4fde-a62c-4fea4f165e98",
-                        ClientSecret = "aCL8Q~tRxT~r3yyWr5~UUIpS47KbbgvQfMnekaKT",
-                        TenantId = Guid.Parse("72f988bf-86f1-41af-91ab-2d7cd011db47"),
+                        ClientId = "<< REDACTED >>",
+                        ClientSecret = "<< REDACTED >>",
+                        TenantId = Guid.Parse("<< REDACTED >>"),
                         Kind = "feaderated",
                     },
                     ContextPath = "./",
