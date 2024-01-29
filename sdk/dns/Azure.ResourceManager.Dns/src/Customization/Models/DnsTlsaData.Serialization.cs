@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Dns
             }
             if (Optional.IsDefined(TrafficManagementProfile))
             {
-                writer.WritePropertyName("trafficManagementProfile"u8);
+                writer.WritePropertyName("trafficManagementProfile");
                 JsonSerializer.Serialize(writer, TrafficManagementProfile);
             }
             if (Optional.IsCollectionDefined(DnsTlsaRecords))
@@ -165,13 +165,14 @@ namespace Azure.ResourceManager.Dns
                             targetResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
-                        if (property0.NameEquals("trafficManagementProfile"u8))
+                        if (property0.NameEquals("trafficManagementProfile"))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            trafficManagementProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.ToString());
                             continue;
                         }
                         if (property0.NameEquals("TLSARecords"))
