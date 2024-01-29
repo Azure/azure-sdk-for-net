@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -21,12 +22,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterSchedulePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="scheduledType"> Supported type this scheduled task represents. </param>
         /// <param name="frequency"> The frequency of this scheduled task. </param>
         /// <param name="time"> The target time to trigger the action. The format is HH:MM. </param>
         /// <param name="timeZone"> The IANA timezone id at which the schedule should execute. </param>
         /// <param name="state"> Indicates whether or not this scheduled task is enabled. </param>
-        internal DevCenterSchedulePatch(IDictionary<string, string> tags, AzureLocation? location, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state) : base(tags, location)
+        internal DevCenterSchedulePatch(IDictionary<string, string> tags, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData, DevCenterScheduledType? scheduledType, DevCenterScheduledFrequency? frequency, string time, string timeZone, DevCenterScheduleEnableStatus? state) : base(tags, location, serializedAdditionalRawData)
         {
             ScheduledType = scheduledType;
             Frequency = frequency;
