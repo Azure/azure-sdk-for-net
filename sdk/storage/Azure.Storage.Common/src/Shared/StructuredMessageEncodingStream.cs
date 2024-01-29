@@ -68,6 +68,12 @@ internal class StructuredMessageEncodingStream : Stream
 
     public override bool CanSeek => _innerStream.CanSeek;
 
+    public override bool CanTimeout => _innerStream.CanTimeout;
+
+    public override int ReadTimeout => _innerStream.ReadTimeout;
+
+    public override int WriteTimeout => _innerStream.WriteTimeout;
+
     public override long Length =>
         _streamHeaderLength + _streamFooterLength +
         (_segmentHeaderLength + _segmentFooterLength) * TotalSegments +
