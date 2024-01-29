@@ -441,7 +441,6 @@ Name = "testcontainerappsjob-1102",
         {
             ContainerAppSourceControlData data = new ContainerAppSourceControlData()
             {
-                //RepoUri = new Uri("https://github.com/xwang971/ghatest"),
                 Branch = "<< REDACTED >>",
                 GitHubActionConfiguration = new ContainerAppGitHubActionConfiguration()
                 {
