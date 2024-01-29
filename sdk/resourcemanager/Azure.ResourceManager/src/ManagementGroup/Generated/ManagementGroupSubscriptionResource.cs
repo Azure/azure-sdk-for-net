@@ -17,14 +17,14 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagementGroups
 {
     /// <summary>
-    /// A Class representing a SubscriptionUnderManagementGroup along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SubscriptionUnderManagementGroupResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSubscriptionUnderManagementGroupResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetSubscriptionUnderManagementGroup method.
+    /// A Class representing a ManagementGroupSubscription along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ManagementGroupSubscriptionResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetManagementGroupSubscriptionResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ManagementGroupResource"/> using the GetManagementGroupSubscription method.
     /// </summary>
-    public partial class SubscriptionUnderManagementGroupResource : ArmResource
+    public partial class ManagementGroupSubscriptionResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SubscriptionUnderManagementGroupResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="ManagementGroupSubscriptionResource"/> instance. </summary>
         /// <param name="groupId"> The groupId. </param>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string groupId, string subscriptionId)
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.ManagementGroups
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics;
-        private readonly ManagementGroupSubscriptionsRestOperations _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient;
-        private readonly SubscriptionUnderManagementGroupData _data;
+        private readonly ClientDiagnostics _managementGroupSubscriptionClientDiagnostics;
+        private readonly ManagementGroupSubscriptionsRestOperations _managementGroupSubscriptionRestClient;
+        private readonly ManagementGroupSubscriptionData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Management/managementGroups/subscriptions";
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionUnderManagementGroupResource"/> class for mocking. </summary>
-        protected SubscriptionUnderManagementGroupResource()
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupSubscriptionResource"/> class for mocking. </summary>
+        protected ManagementGroupSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionUnderManagementGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SubscriptionUnderManagementGroupResource(ArmClient client, SubscriptionUnderManagementGroupData data) : this(client, data.Id)
+        internal ManagementGroupSubscriptionResource(ArmClient client, ManagementGroupSubscriptionData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionUnderManagementGroupResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SubscriptionUnderManagementGroupResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagementGroupSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string subscriptionUnderManagementGroupManagementGroupSubscriptionsApiVersion);
-            _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient = new ManagementGroupSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionUnderManagementGroupManagementGroupSubscriptionsApiVersion);
+            _managementGroupSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string managementGroupSubscriptionApiVersion);
+            _managementGroupSubscriptionRestClient = new ManagementGroupSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupSubscriptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ManagementGroups
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SubscriptionUnderManagementGroupData Data
+        public virtual ManagementGroupSubscriptionData Data
         {
             get
             {
@@ -106,22 +106,22 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SubscriptionUnderManagementGroupResource>> GetAsync(string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupSubscriptionResource>> GetAsync(string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupResource.Get");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscriptionAsync(Id.Parent.Name, Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupSubscriptionRestClient.GetSubscriptionAsync(Id.Parent.Name, Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -148,22 +148,22 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SubscriptionUnderManagementGroupResource> Get(string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupSubscriptionResource> Get(string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupResource.Get");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionResource.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscription(Id.Parent.Name, Id.Name, cacheControl, cancellationToken);
+                var response = _managementGroupSubscriptionRestClient.GetSubscription(Id.Parent.Name, Id.Name, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -199,11 +199,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupResource.Delete");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = await _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupSubscriptionRestClient.DeleteAsync(Id.Parent.Name, Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
                 var operation = new ManagementGroupsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupResource.Delete");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionResource.Delete");
             scope.Start();
             try
             {
-                var response = _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.Delete(Id.Parent.Name, Id.Name, cacheControl, cancellationToken);
+                var response = _managementGroupSubscriptionRestClient.Delete(Id.Parent.Name, Id.Name, cacheControl, cancellationToken);
                 var operation = new ManagementGroupsArmOperation(response);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -278,21 +278,21 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<SubscriptionUnderManagementGroupResource>> UpdateAsync(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroupSubscriptionResource>> UpdateAsync(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupResource.Update");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = await _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateAsync(Id.Parent.Name, Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupsArmOperation<SubscriptionUnderManagementGroupResource>(Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response), response.GetRawResponse()));
+                var response = await _managementGroupSubscriptionRestClient.CreateAsync(Id.Parent.Name, Id.Name, cacheControl, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupSubscriptionResource>(Response.FromValue(new ManagementGroupSubscriptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -322,21 +322,21 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<SubscriptionUnderManagementGroupResource> Update(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroupSubscriptionResource> Update(WaitUntil waitUntil, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupResource.Update");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionResource.Update");
             scope.Start();
             try
             {
-                var response = _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.Create(Id.Parent.Name, Id.Name, cacheControl, cancellationToken);
-                var operation = new ManagementGroupsArmOperation<SubscriptionUnderManagementGroupResource>(Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response), response.GetRawResponse()));
+                var response = _managementGroupSubscriptionRestClient.Create(Id.Parent.Name, Id.Name, cacheControl, cancellationToken);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupSubscriptionResource>(Response.FromValue(new ManagementGroupSubscriptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

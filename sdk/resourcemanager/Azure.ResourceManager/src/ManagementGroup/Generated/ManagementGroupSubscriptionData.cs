@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.ManagementGroups
 {
     /// <summary>
-    /// A class representing the SubscriptionUnderManagementGroup data model.
+    /// A class representing the ManagementGroupSubscription data model.
     /// The details of subscription under management group.
     /// </summary>
-    public partial class SubscriptionUnderManagementGroupData : ResourceData
+    public partial class ManagementGroupSubscriptionData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionUnderManagementGroupData"/>. </summary>
-        internal SubscriptionUnderManagementGroupData()
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupSubscriptionData"/>. </summary>
+        internal ManagementGroupSubscriptionData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionUnderManagementGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroupSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="parent"> The ID of the parent management group. </param>
         /// <param name="state"> The state of the subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionUnderManagementGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tenant, string displayName, DescendantParentGroupInfo parent, string state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ManagementGroupSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string tenant, string displayName, DescendantParentGroupInfo parent, string state, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Tenant = tenant;
             DisplayName = displayName;

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionUnderManagementGroupData>> CreateAsync(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupSubscriptionData>> CreateAsync(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 case 200:
                     {
-                        SubscriptionUnderManagementGroupData value = default;
+                        ManagementGroupSubscriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(document.RootElement);
+                        value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionUnderManagementGroupData> Create(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupSubscriptionData> Create(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -111,9 +111,9 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 case 200:
                     {
-                        SubscriptionUnderManagementGroupData value = default;
+                        ManagementGroupSubscriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(document.RootElement);
+                        value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<SubscriptionUnderManagementGroupData>> GetSubscriptionAsync(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public async Task<Response<ManagementGroupSubscriptionData>> GetSubscriptionAsync(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -240,13 +240,13 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 case 200:
                     {
-                        SubscriptionUnderManagementGroupData value = default;
+                        ManagementGroupSubscriptionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(document.RootElement);
+                        value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SubscriptionUnderManagementGroupData)null, message.Response);
+                    return Response.FromValue((ManagementGroupSubscriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="groupId"/> or <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<SubscriptionUnderManagementGroupData> GetSubscription(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public Response<ManagementGroupSubscriptionData> GetSubscription(string groupId, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -273,13 +273,13 @@ namespace Azure.ResourceManager.ManagementGroups
             {
                 case 200:
                     {
-                        SubscriptionUnderManagementGroupData value = default;
+                        ManagementGroupSubscriptionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(document.RootElement);
+                        value = ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((SubscriptionUnderManagementGroupData)null, message.Response);
+                    return Response.FromValue((ManagementGroupSubscriptionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Models
             return new DescendantData(id, name, resourceType, systemData, displayName, parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagementGroups.SubscriptionUnderManagementGroupData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagementGroups.ManagementGroupSubscriptionData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -158,10 +158,10 @@ namespace Azure.ResourceManager.Models
         /// <param name="displayName"> The friendly name of the subscription. </param>
         /// <param name="parentId"> The ID of the parent management group. </param>
         /// <param name="state"> The state of the subscription. </param>
-        /// <returns> A new <see cref="ManagementGroups.SubscriptionUnderManagementGroupData"/> instance for mocking. </returns>
-        public static SubscriptionUnderManagementGroupData SubscriptionUnderManagementGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string tenant = null, string displayName = null, ResourceIdentifier parentId = null, string state = null)
+        /// <returns> A new <see cref="ManagementGroups.ManagementGroupSubscriptionData"/> instance for mocking. </returns>
+        public static ManagementGroupSubscriptionData ManagementGroupSubscriptionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string tenant = null, string displayName = null, ResourceIdentifier parentId = null, string state = null)
         {
-            return new SubscriptionUnderManagementGroupData(id, name, resourceType, systemData, tenant, displayName, parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null, state, serializedAdditionalRawData: null);
+            return new ManagementGroupSubscriptionData(id, name, resourceType, systemData, tenant, displayName, parentId != null ? new DescendantParentGroupInfo(parentId, serializedAdditionalRawData: null) : null, state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagementGroups.Models.ManagementGroupNameAvailabilityResult"/>. </summary>

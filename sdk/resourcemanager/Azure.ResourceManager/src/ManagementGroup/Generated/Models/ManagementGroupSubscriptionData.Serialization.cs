@@ -15,16 +15,16 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagementGroups
 {
-    public partial class SubscriptionUnderManagementGroupData : IUtf8JsonSerializable, IJsonModel<SubscriptionUnderManagementGroupData>
+    public partial class ManagementGroupSubscriptionData : IUtf8JsonSerializable, IJsonModel<ManagementGroupSubscriptionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionUnderManagementGroupData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementGroupSubscriptionData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<SubscriptionUnderManagementGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagementGroupSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUnderManagementGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionUnderManagementGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupSubscriptionData)} does not support '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,19 +96,19 @@ namespace Azure.ResourceManager.ManagementGroups
             writer.WriteEndObject();
         }
 
-        SubscriptionUnderManagementGroupData IJsonModel<SubscriptionUnderManagementGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagementGroupSubscriptionData IJsonModel<ManagementGroupSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUnderManagementGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionUnderManagementGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementGroupSubscriptionData)} does not support '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubscriptionUnderManagementGroupData(document.RootElement, options);
+            return DeserializeManagementGroupSubscriptionData(document.RootElement, options);
         }
 
-        internal static SubscriptionUnderManagementGroupData DeserializeSubscriptionUnderManagementGroupData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagementGroupSubscriptionData DeserializeManagementGroupSubscriptionData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -195,38 +195,38 @@ namespace Azure.ResourceManager.ManagementGroups
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SubscriptionUnderManagementGroupData(id, name, type, systemData.Value, tenant.Value, displayName.Value, parent.Value, state.Value, serializedAdditionalRawData);
+            return new ManagementGroupSubscriptionData(id, name, type, systemData.Value, tenant.Value, displayName.Value, parent.Value, state.Value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SubscriptionUnderManagementGroupData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagementGroupSubscriptionData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUnderManagementGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionUnderManagementGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupSubscriptionData)} does not support '{options.Format}' format.");
             }
         }
 
-        SubscriptionUnderManagementGroupData IPersistableModel<SubscriptionUnderManagementGroupData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagementGroupSubscriptionData IPersistableModel<ManagementGroupSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionUnderManagementGroupData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementGroupSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSubscriptionUnderManagementGroupData(document.RootElement, options);
+                        return DeserializeManagementGroupSubscriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionUnderManagementGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementGroupSubscriptionData)} does not support '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubscriptionUnderManagementGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagementGroupSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

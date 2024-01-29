@@ -25,15 +25,15 @@ namespace Azure.ResourceManager
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SubscriptionUnderManagementGroupResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SubscriptionUnderManagementGroupResource.CreateResourceIdentifier" /> to create a <see cref="SubscriptionUnderManagementGroupResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="ManagementGroupSubscriptionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ManagementGroupSubscriptionResource.CreateResourceIdentifier" /> to create a <see cref="ManagementGroupSubscriptionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SubscriptionUnderManagementGroupResource"/> object. </returns>
-        public virtual SubscriptionUnderManagementGroupResource GetSubscriptionUnderManagementGroupResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ManagementGroupSubscriptionResource"/> object. </returns>
+        public virtual ManagementGroupSubscriptionResource GetManagementGroupSubscriptionResource(ResourceIdentifier id)
         {
-            SubscriptionUnderManagementGroupResource.ValidateResourceId(id);
-            return new SubscriptionUnderManagementGroupResource(this, id);
+            ManagementGroupSubscriptionResource.ValidateResourceId(id);
+            return new ManagementGroupSubscriptionResource(this, id);
         }
     }
 }

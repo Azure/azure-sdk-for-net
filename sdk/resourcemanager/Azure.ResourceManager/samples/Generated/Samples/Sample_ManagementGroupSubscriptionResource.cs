@@ -15,7 +15,7 @@ using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.ManagementGroups.Samples
 {
-    public partial class Sample_SubscriptionUnderManagementGroupResource
+    public partial class Sample_ManagementGroupSubscriptionResource
     {
         // AddSubscriptionToManagementGroup
         [NUnit.Framework.Test]
@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionUnderManagementGroupResource created on azure
-            // for more information of creating SubscriptionUnderManagementGroupResource, please refer to the document of SubscriptionUnderManagementGroupResource
+            // this example assumes you already have this ManagementGroupSubscriptionResource created on azure
+            // for more information of creating ManagementGroupSubscriptionResource, please refer to the document of ManagementGroupSubscriptionResource
             string groupId = "Group";
             string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
-            ResourceIdentifier subscriptionUnderManagementGroupResourceId = SubscriptionUnderManagementGroupResource.CreateResourceIdentifier(groupId, subscriptionId);
-            SubscriptionUnderManagementGroupResource subscriptionUnderManagementGroup = client.GetSubscriptionUnderManagementGroupResource(subscriptionUnderManagementGroupResourceId);
+            ResourceIdentifier managementGroupSubscriptionResourceId = ManagementGroupSubscriptionResource.CreateResourceIdentifier(groupId, subscriptionId);
+            ManagementGroupSubscriptionResource managementGroupSubscription = client.GetManagementGroupSubscriptionResource(managementGroupSubscriptionResourceId);
 
             // invoke the operation
             string cacheControl = "no-cache";
-            ArmOperation<SubscriptionUnderManagementGroupResource> lro = await subscriptionUnderManagementGroup.UpdateAsync(WaitUntil.Completed, cacheControl: cacheControl);
-            SubscriptionUnderManagementGroupResource result = lro.Value;
+            ArmOperation<ManagementGroupSubscriptionResource> lro = await managementGroupSubscription.UpdateAsync(WaitUntil.Completed, cacheControl: cacheControl);
+            ManagementGroupSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SubscriptionUnderManagementGroupData resourceData = result.Data;
+            ManagementGroupSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -62,16 +62,16 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionUnderManagementGroupResource created on azure
-            // for more information of creating SubscriptionUnderManagementGroupResource, please refer to the document of SubscriptionUnderManagementGroupResource
+            // this example assumes you already have this ManagementGroupSubscriptionResource created on azure
+            // for more information of creating ManagementGroupSubscriptionResource, please refer to the document of ManagementGroupSubscriptionResource
             string groupId = "Group";
             string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
-            ResourceIdentifier subscriptionUnderManagementGroupResourceId = SubscriptionUnderManagementGroupResource.CreateResourceIdentifier(groupId, subscriptionId);
-            SubscriptionUnderManagementGroupResource subscriptionUnderManagementGroup = client.GetSubscriptionUnderManagementGroupResource(subscriptionUnderManagementGroupResourceId);
+            ResourceIdentifier managementGroupSubscriptionResourceId = ManagementGroupSubscriptionResource.CreateResourceIdentifier(groupId, subscriptionId);
+            ManagementGroupSubscriptionResource managementGroupSubscription = client.GetManagementGroupSubscriptionResource(managementGroupSubscriptionResourceId);
 
             // invoke the operation
             string cacheControl = "no-cache";
-            await subscriptionUnderManagementGroup.DeleteAsync(WaitUntil.Completed, cacheControl: cacheControl);
+            await managementGroupSubscription.DeleteAsync(WaitUntil.Completed, cacheControl: cacheControl);
 
             Console.WriteLine($"Succeeded");
         }
@@ -89,20 +89,20 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionUnderManagementGroupResource created on azure
-            // for more information of creating SubscriptionUnderManagementGroupResource, please refer to the document of SubscriptionUnderManagementGroupResource
+            // this example assumes you already have this ManagementGroupSubscriptionResource created on azure
+            // for more information of creating ManagementGroupSubscriptionResource, please refer to the document of ManagementGroupSubscriptionResource
             string groupId = "Group";
             string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
-            ResourceIdentifier subscriptionUnderManagementGroupResourceId = SubscriptionUnderManagementGroupResource.CreateResourceIdentifier(groupId, subscriptionId);
-            SubscriptionUnderManagementGroupResource subscriptionUnderManagementGroup = client.GetSubscriptionUnderManagementGroupResource(subscriptionUnderManagementGroupResourceId);
+            ResourceIdentifier managementGroupSubscriptionResourceId = ManagementGroupSubscriptionResource.CreateResourceIdentifier(groupId, subscriptionId);
+            ManagementGroupSubscriptionResource managementGroupSubscription = client.GetManagementGroupSubscriptionResource(managementGroupSubscriptionResourceId);
 
             // invoke the operation
             string cacheControl = "no-cache";
-            SubscriptionUnderManagementGroupResource result = await subscriptionUnderManagementGroup.GetAsync(cacheControl: cacheControl);
+            ManagementGroupSubscriptionResource result = await managementGroupSubscription.GetAsync(cacheControl: cacheControl);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SubscriptionUnderManagementGroupData resourceData = result.Data;
+            ManagementGroupSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

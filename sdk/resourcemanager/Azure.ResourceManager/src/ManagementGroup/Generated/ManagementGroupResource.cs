@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.ManagementGroups
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of SubscriptionUnderManagementGroupResources in the ManagementGroup. </summary>
-        /// <returns> An object representing collection of SubscriptionUnderManagementGroupResources and their operations over a SubscriptionUnderManagementGroupResource. </returns>
-        public virtual SubscriptionUnderManagementGroupCollection GetSubscriptionUnderManagementGroups()
+        /// <summary> Gets a collection of ManagementGroupSubscriptionResources in the ManagementGroup. </summary>
+        /// <returns> An object representing collection of ManagementGroupSubscriptionResources and their operations over a ManagementGroupSubscriptionResource. </returns>
+        public virtual ManagementGroupSubscriptionCollection GetManagementGroupSubscriptions()
         {
-            return GetCachedClient(client => new SubscriptionUnderManagementGroupCollection(client, Id));
+            return GetCachedClient(client => new ManagementGroupSubscriptionCollection(client, Id));
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,9 +125,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SubscriptionUnderManagementGroupResource>> GetSubscriptionUnderManagementGroupAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupSubscriptionResource>> GetManagementGroupSubscriptionAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            return await GetSubscriptionUnderManagementGroups().GetAsync(subscriptionId, cacheControl, cancellationToken).ConfigureAwait(false);
+            return await GetManagementGroupSubscriptions().GetAsync(subscriptionId, cacheControl, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,9 +158,9 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SubscriptionUnderManagementGroupResource> GetSubscriptionUnderManagementGroup(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupSubscriptionResource> GetManagementGroupSubscription(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionUnderManagementGroups().Get(subscriptionId, cacheControl, cancellationToken);
+            return GetManagementGroupSubscriptions().Get(subscriptionId, cacheControl, cancellationToken);
         }
 
         /// <summary>

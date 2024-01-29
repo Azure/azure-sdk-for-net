@@ -20,28 +20,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.ManagementGroups
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SubscriptionUnderManagementGroupResource"/> and their operations.
-    /// Each <see cref="SubscriptionUnderManagementGroupResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
-    /// To get a <see cref="SubscriptionUnderManagementGroupCollection"/> instance call the GetSubscriptionUnderManagementGroups method from an instance of <see cref="ManagementGroupResource"/>.
+    /// A class representing a collection of <see cref="ManagementGroupSubscriptionResource"/> and their operations.
+    /// Each <see cref="ManagementGroupSubscriptionResource"/> in the collection will belong to the same instance of <see cref="ManagementGroupResource"/>.
+    /// To get a <see cref="ManagementGroupSubscriptionCollection"/> instance call the GetManagementGroupSubscriptions method from an instance of <see cref="ManagementGroupResource"/>.
     /// </summary>
-    public partial class SubscriptionUnderManagementGroupCollection : ArmCollection, IEnumerable<SubscriptionUnderManagementGroupResource>, IAsyncEnumerable<SubscriptionUnderManagementGroupResource>
+    public partial class ManagementGroupSubscriptionCollection : ArmCollection, IEnumerable<ManagementGroupSubscriptionResource>, IAsyncEnumerable<ManagementGroupSubscriptionResource>
     {
-        private readonly ClientDiagnostics _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics;
-        private readonly ManagementGroupSubscriptionsRestOperations _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient;
+        private readonly ClientDiagnostics _managementGroupSubscriptionClientDiagnostics;
+        private readonly ManagementGroupSubscriptionsRestOperations _managementGroupSubscriptionRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionUnderManagementGroupCollection"/> class for mocking. </summary>
-        protected SubscriptionUnderManagementGroupCollection()
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupSubscriptionCollection"/> class for mocking. </summary>
+        protected ManagementGroupSubscriptionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SubscriptionUnderManagementGroupCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ManagementGroupSubscriptionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SubscriptionUnderManagementGroupCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ManagementGroupSubscriptionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", SubscriptionUnderManagementGroupResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SubscriptionUnderManagementGroupResource.ResourceType, out string subscriptionUnderManagementGroupManagementGroupSubscriptionsApiVersion);
-            _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient = new ManagementGroupSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionUnderManagementGroupManagementGroupSubscriptionsApiVersion);
+            _managementGroupSubscriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagementGroups", ManagementGroupSubscriptionResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ManagementGroupSubscriptionResource.ResourceType, out string managementGroupSubscriptionApiVersion);
+            _managementGroupSubscriptionRestClient = new ManagementGroupSubscriptionsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, managementGroupSubscriptionApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual async Task<ArmOperation<SubscriptionUnderManagementGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ManagementGroupSubscriptionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.CreateOrUpdate");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateAsync(Id.Name, subscriptionId, cacheControl, cancellationToken).ConfigureAwait(false);
-                var operation = new ManagementGroupsArmOperation<SubscriptionUnderManagementGroupResource>(Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response), response.GetRawResponse()));
+                var response = await _managementGroupSubscriptionRestClient.CreateAsync(Id.Name, subscriptionId, cacheControl, cancellationToken).ConfigureAwait(false);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupSubscriptionResource>(Response.FromValue(new ManagementGroupSubscriptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,16 +130,16 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual ArmOperation<SubscriptionUnderManagementGroupResource> CreateOrUpdate(WaitUntil waitUntil, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ManagementGroupSubscriptionResource> CreateOrUpdate(WaitUntil waitUntil, string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.CreateOrUpdate");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.Create(Id.Name, subscriptionId, cacheControl, cancellationToken);
-                var operation = new ManagementGroupsArmOperation<SubscriptionUnderManagementGroupResource>(Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response), response.GetRawResponse()));
+                var response = _managementGroupSubscriptionRestClient.Create(Id.Name, subscriptionId, cacheControl, cancellationToken);
+                var operation = new ManagementGroupsArmOperation<ManagementGroupSubscriptionResource>(Response.FromValue(new ManagementGroupSubscriptionResource(Client, response), response.GetRawResponse()));
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual async Task<Response<SubscriptionUnderManagementGroupResource>> GetAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ManagementGroupSubscriptionResource>> GetAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.Get");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscriptionAsync(Id.Name, subscriptionId, cacheControl, cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupSubscriptionRestClient.GetSubscriptionAsync(Id.Name, subscriptionId, cacheControl, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,18 +225,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual Response<SubscriptionUnderManagementGroupResource> Get(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual Response<ManagementGroupSubscriptionResource> Get(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.Get");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Get");
             scope.Start();
             try
             {
-                var response = _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscription(Id.Name, subscriptionId, cacheControl, cancellationToken);
+                var response = _managementGroupSubscriptionRestClient.GetSubscription(Id.Name, subscriptionId, cacheControl, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,12 +273,12 @@ namespace Azure.ResourceManager.ManagementGroups
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SubscriptionUnderManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SubscriptionUnderManagementGroupResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ManagementGroupSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ManagementGroupSubscriptionResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUnderManagementGroupResource(Client, SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(e)), _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics, Pipeline, "SubscriptionUnderManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupSubscriptionRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupSubscriptionRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupSubscriptionResource(Client, ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(e)), _managementGroupSubscriptionClientDiagnostics, Pipeline, "ManagementGroupSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,12 +309,12 @@ namespace Azure.ResourceManager.ManagementGroups
         ///
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SubscriptionUnderManagementGroupResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SubscriptionUnderManagementGroupResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ManagementGroupSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ManagementGroupSubscriptionResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skipToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SubscriptionUnderManagementGroupResource(Client, SubscriptionUnderManagementGroupData.DeserializeSubscriptionUnderManagementGroupData(e)), _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics, Pipeline, "SubscriptionUnderManagementGroupCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _managementGroupSubscriptionRestClient.CreateGetSubscriptionsUnderManagementGroupRequest(Id.Name, skipToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _managementGroupSubscriptionRestClient.CreateGetSubscriptionsUnderManagementGroupNextPageRequest(nextLink, Id.Name, skipToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ManagementGroupSubscriptionResource(Client, ManagementGroupSubscriptionData.DeserializeManagementGroupSubscriptionData(e)), _managementGroupSubscriptionClientDiagnostics, Pipeline, "ManagementGroupSubscriptionCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,11 +347,11 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.Exists");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscriptionAsync(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupSubscriptionRestClient.GetSubscriptionAsync(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -391,11 +391,11 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.Exists");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscription(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken);
+                var response = _managementGroupSubscriptionRestClient.GetSubscription(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,18 +431,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual async Task<NullableResponse<SubscriptionUnderManagementGroupResource>> GetIfExistsAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ManagementGroupSubscriptionResource>> GetIfExistsAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.GetIfExists");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscriptionAsync(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _managementGroupSubscriptionRestClient.GetSubscriptionAsync(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<SubscriptionUnderManagementGroupResource>(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ManagementGroupSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ManagementGroups
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SubscriptionUnderManagementGroupResource"/></description>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -477,18 +477,18 @@ namespace Azure.ResourceManager.ManagementGroups
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        public virtual NullableResponse<SubscriptionUnderManagementGroupResource> GetIfExists(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ManagementGroupSubscriptionResource> GetIfExists(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
-            using var scope = _subscriptionUnderManagementGroupManagementGroupSubscriptionsClientDiagnostics.CreateScope("SubscriptionUnderManagementGroupCollection.GetIfExists");
+            using var scope = _managementGroupSubscriptionClientDiagnostics.CreateScope("ManagementGroupSubscriptionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _subscriptionUnderManagementGroupManagementGroupSubscriptionsRestClient.GetSubscription(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken);
+                var response = _managementGroupSubscriptionRestClient.GetSubscription(Id.Name, subscriptionId, cacheControl, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<SubscriptionUnderManagementGroupResource>(response.GetRawResponse());
-                return Response.FromValue(new SubscriptionUnderManagementGroupResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ManagementGroupSubscriptionResource>(response.GetRawResponse());
+                return Response.FromValue(new ManagementGroupSubscriptionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -497,7 +497,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
         }
 
-        IEnumerator<SubscriptionUnderManagementGroupResource> IEnumerable<SubscriptionUnderManagementGroupResource>.GetEnumerator()
+        IEnumerator<ManagementGroupSubscriptionResource> IEnumerable<ManagementGroupSubscriptionResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.ManagementGroups
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SubscriptionUnderManagementGroupResource> IAsyncEnumerable<SubscriptionUnderManagementGroupResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ManagementGroupSubscriptionResource> IAsyncEnumerable<ManagementGroupSubscriptionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

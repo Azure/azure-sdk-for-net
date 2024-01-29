@@ -718,6 +718,10 @@ rename-mapping:
   Permissions: EntityPermission
   Permissions.noaccess: NoAccess
   SearchOptions: EntitySearchOption
+  SubscriptionUnderManagementGroup: ManagementGroupSubscription
+
+override-operation-name:
+  ManagementGroupSubscriptions_GetSubscription: GetManagementGroupSubscription
 
 acronym-mapping:
   CPU: Cpu

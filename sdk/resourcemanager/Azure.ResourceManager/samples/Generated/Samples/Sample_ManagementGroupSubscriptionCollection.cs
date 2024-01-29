@@ -15,7 +15,7 @@ using Azure.ResourceManager.ManagementGroups;
 
 namespace Azure.ResourceManager.ManagementGroups.Samples
 {
-    public partial class Sample_SubscriptionUnderManagementGroupCollection
+    public partial class Sample_ManagementGroupSubscriptionCollection
     {
         // AddSubscriptionToManagementGroup
         [NUnit.Framework.Test]
@@ -36,18 +36,18 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(groupId);
             ManagementGroupResource managementGroup = client.GetManagementGroupResource(managementGroupResourceId);
 
-            // get the collection of this SubscriptionUnderManagementGroupResource
-            SubscriptionUnderManagementGroupCollection collection = managementGroup.GetSubscriptionUnderManagementGroups();
+            // get the collection of this ManagementGroupSubscriptionResource
+            ManagementGroupSubscriptionCollection collection = managementGroup.GetManagementGroupSubscriptions();
 
             // invoke the operation
             string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
             string cacheControl = "no-cache";
-            ArmOperation<SubscriptionUnderManagementGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionId, cacheControl: cacheControl);
-            SubscriptionUnderManagementGroupResource result = lro.Value;
+            ArmOperation<ManagementGroupSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, subscriptionId, cacheControl: cacheControl);
+            ManagementGroupSubscriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SubscriptionUnderManagementGroupData resourceData = result.Data;
+            ManagementGroupSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -71,17 +71,17 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(groupId);
             ManagementGroupResource managementGroup = client.GetManagementGroupResource(managementGroupResourceId);
 
-            // get the collection of this SubscriptionUnderManagementGroupResource
-            SubscriptionUnderManagementGroupCollection collection = managementGroup.GetSubscriptionUnderManagementGroups();
+            // get the collection of this ManagementGroupSubscriptionResource
+            ManagementGroupSubscriptionCollection collection = managementGroup.GetManagementGroupSubscriptions();
 
             // invoke the operation
             string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
             string cacheControl = "no-cache";
-            SubscriptionUnderManagementGroupResource result = await collection.GetAsync(subscriptionId, cacheControl: cacheControl);
+            ManagementGroupSubscriptionResource result = await collection.GetAsync(subscriptionId, cacheControl: cacheControl);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SubscriptionUnderManagementGroupData resourceData = result.Data;
+            ManagementGroupSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(groupId);
             ManagementGroupResource managementGroup = client.GetManagementGroupResource(managementGroupResourceId);
 
-            // get the collection of this SubscriptionUnderManagementGroupResource
-            SubscriptionUnderManagementGroupCollection collection = managementGroup.GetSubscriptionUnderManagementGroups();
+            // get the collection of this ManagementGroupSubscriptionResource
+            ManagementGroupSubscriptionCollection collection = managementGroup.GetManagementGroupSubscriptions();
 
             // invoke the operation
             string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
@@ -135,14 +135,14 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(groupId);
             ManagementGroupResource managementGroup = client.GetManagementGroupResource(managementGroupResourceId);
 
-            // get the collection of this SubscriptionUnderManagementGroupResource
-            SubscriptionUnderManagementGroupCollection collection = managementGroup.GetSubscriptionUnderManagementGroups();
+            // get the collection of this ManagementGroupSubscriptionResource
+            ManagementGroupSubscriptionCollection collection = managementGroup.GetManagementGroupSubscriptions();
 
             // invoke the operation
             string subscriptionId = "728bcbe4-8d56-4510-86c2-4921b8beefbc";
             string cacheControl = "no-cache";
-            NullableResponse<SubscriptionUnderManagementGroupResource> response = await collection.GetIfExistsAsync(subscriptionId, cacheControl: cacheControl);
-            SubscriptionUnderManagementGroupResource result = response.HasValue ? response.Value : null;
+            NullableResponse<ManagementGroupSubscriptionResource> response = await collection.GetIfExistsAsync(subscriptionId, cacheControl: cacheControl);
+            ManagementGroupSubscriptionResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SubscriptionUnderManagementGroupData resourceData = result.Data;
+                ManagementGroupSubscriptionData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -177,15 +177,15 @@ namespace Azure.ResourceManager.ManagementGroups.Samples
             ResourceIdentifier managementGroupResourceId = ManagementGroupResource.CreateResourceIdentifier(groupId);
             ManagementGroupResource managementGroup = client.GetManagementGroupResource(managementGroupResourceId);
 
-            // get the collection of this SubscriptionUnderManagementGroupResource
-            SubscriptionUnderManagementGroupCollection collection = managementGroup.GetSubscriptionUnderManagementGroups();
+            // get the collection of this ManagementGroupSubscriptionResource
+            ManagementGroupSubscriptionCollection collection = managementGroup.GetManagementGroupSubscriptions();
 
             // invoke the operation and iterate over the result
-            await foreach (SubscriptionUnderManagementGroupResource item in collection.GetAllAsync())
+            await foreach (ManagementGroupSubscriptionResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SubscriptionUnderManagementGroupData resourceData = item.Data;
+                ManagementGroupSubscriptionData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
