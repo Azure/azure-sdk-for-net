@@ -69,7 +69,15 @@ namespace Azure.Monitor.Query
 
             Endpoint = endpoint;
             options ??= new LogsQueryClientOptions();
-            var scope = $"{endpoint.AbsoluteUri}/.default";
+            string scope;
+            if (string.IsNullOrEmpty(options.Audience?.ToString()))
+            {
+                scope = $"{endpoint.AbsoluteUri}/.default";
+            }
+            else
+            {
+                scope = $"{options.Audience}/.default";
+            }
 
             endpoint = new Uri(endpoint, options.GetVersionString());
             _clientDiagnostics = new ClientDiagnostics(options);

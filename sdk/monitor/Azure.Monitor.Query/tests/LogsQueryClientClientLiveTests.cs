@@ -36,7 +36,8 @@ namespace Azure.Monitor.Query.Tests
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new LogsQueryClientOptions()
                 {
-                    Diagnostics = { IsLoggingContentEnabled = true }
+                    Diagnostics = { IsLoggingContentEnabled = true },
+                    Audience = TestEnvironment.GetLogsAudience()
                 })
             ));
         }
