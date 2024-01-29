@@ -69,7 +69,6 @@ public sealed partial class ClientPipeline
         pipelineLength += options.BeforeTransportPolicies?.Length ?? 0;
 
         pipelineLength++; // for retry policy
-        pipelineLength++; // for response buffering policy
         pipelineLength++; // for transport
 
         PipelinePolicy[] policies = new PipelinePolicy[pipelineLength];
