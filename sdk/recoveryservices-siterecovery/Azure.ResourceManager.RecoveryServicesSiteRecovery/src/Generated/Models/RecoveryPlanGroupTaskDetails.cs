@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -25,10 +26,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="RecoveryPlanGroupTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
         /// <param name="childTasks"> The child tasks. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> The name. </param>
         /// <param name="groupId"> The group identifier. </param>
         /// <param name="rpGroupType"> The group type. </param>
-        internal RecoveryPlanGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, string name, string groupId, string rpGroupType) : base(instanceType, childTasks)
+        internal RecoveryPlanGroupTaskDetails(string instanceType, IReadOnlyList<AsrTask> childTasks, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, string groupId, string rpGroupType) : base(instanceType, childTasks, serializedAdditionalRawData)
         {
             Name = name;
             GroupId = groupId;

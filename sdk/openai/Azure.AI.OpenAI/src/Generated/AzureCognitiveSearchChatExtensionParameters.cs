@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -13,6 +14,38 @@ namespace Azure.AI.OpenAI
     /// <summary> Parameters for Azure Cognitive Search when used as an Azure OpenAI chat extension. </summary>
     internal partial class AzureCognitiveSearchChatExtensionParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureCognitiveSearchChatExtensionParameters"/>. </summary>
         /// <param name="authentication">
         /// The authentication method to use when accessing the defined data source.
@@ -35,7 +68,8 @@ namespace Azure.AI.OpenAI
         /// <param name="embeddingEndpoint"> When using embeddings for search, specifies the resource endpoint URL from which embeddings should be retrieved. It should be in the format of format https://YOUR_RESOURCE_NAME.openai.azure.com/openai/deployments/YOUR_DEPLOYMENT_NAME/embeddings?api-version={api-version}. </param>
         /// <param name="embeddingKey"> When using embeddings, specifies the API key to use with the provided embeddings endpoint. </param>
         /// <param name="embeddingDependency"> The embedding dependency for vector search. </param>
-        internal AzureCognitiveSearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri searchEndpoint, string indexName, string key, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, AzureCognitiveSearchQueryType? queryType, string semanticConfiguration, string filter, Uri embeddingEndpoint, string embeddingKey, OnYourDataVectorizationSource embeddingDependency)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureCognitiveSearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication, int? documentCount, bool? shouldRestrictResultScope, int? strictness, string roleInformation, Uri searchEndpoint, string indexName, string key, AzureCognitiveSearchIndexFieldMappingOptions fieldMappingOptions, AzureCognitiveSearchQueryType? queryType, string semanticConfiguration, string filter, Uri embeddingEndpoint, string embeddingKey, OnYourDataVectorizationSource embeddingDependency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             DocumentCount = documentCount;
@@ -52,6 +86,7 @@ namespace Azure.AI.OpenAI
             EmbeddingEndpoint = embeddingEndpoint;
             EmbeddingKey = embeddingKey;
             EmbeddingDependency = embeddingDependency;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>

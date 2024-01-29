@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanVolumeResource volume3 = (await volume1.UpdateAsync(WaitUntil.Completed, patch)).Value;
             Assert.AreEqual(200, volume3.Data.SizeGiB);
 
-            await volume1.DeleteAsync(WaitUntil.Completed, XMsDeleteSnapshot.True, XMsForceDelete.True);
+            await volume1.DeleteAsync(WaitUntil.Completed, XmsDeleteSnapshot.True, XmsForceDelete.True);
         }
     }
 }

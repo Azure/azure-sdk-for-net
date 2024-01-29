@@ -5,15 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SyncFullSchemaTableColumn
+    public partial class SyncFullSchemaTableColumn : IUtf8JsonSerializable, IJsonModel<SyncFullSchemaTableColumn>
     {
-        internal static SyncFullSchemaTableColumn DeserializeSyncFullSchemaTableColumn(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SyncFullSchemaTableColumn>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SyncFullSchemaTableColumn>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncFullSchemaTableColumn>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SyncFullSchemaTableColumn)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DataSize))
+            {
+                writer.WritePropertyName("dataSize"u8);
+                writer.WriteStringValue(DataSize);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataType))
+            {
+                writer.WritePropertyName("dataType"u8);
+                writer.WriteStringValue(DataType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorId))
+            {
+                writer.WritePropertyName("errorId"u8);
+                writer.WriteStringValue(ErrorId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HasError))
+            {
+                writer.WritePropertyName("hasError"u8);
+                writer.WriteBooleanValue(HasError.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsPrimaryKey))
+            {
+                writer.WritePropertyName("isPrimaryKey"u8);
+                writer.WriteBooleanValue(IsPrimaryKey.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(QuotedName))
+            {
+                writer.WritePropertyName("quotedName"u8);
+                writer.WriteStringValue(QuotedName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SyncFullSchemaTableColumn IJsonModel<SyncFullSchemaTableColumn>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncFullSchemaTableColumn>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SyncFullSchemaTableColumn)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSyncFullSchemaTableColumn(document.RootElement, options);
+        }
+
+        internal static SyncFullSchemaTableColumn DeserializeSyncFullSchemaTableColumn(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -25,6 +106,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<bool> isPrimaryKey = default;
             Optional<string> name = default;
             Optional<string> quotedName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSize"u8))
@@ -70,8 +153,44 @@ namespace Azure.ResourceManager.Sql.Models
                     quotedName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SyncFullSchemaTableColumn(dataSize.Value, dataType.Value, errorId.Value, Optional.ToNullable(hasError), Optional.ToNullable(isPrimaryKey), name.Value, quotedName.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SyncFullSchemaTableColumn(dataSize.Value, dataType.Value, errorId.Value, Optional.ToNullable(hasError), Optional.ToNullable(isPrimaryKey), name.Value, quotedName.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SyncFullSchemaTableColumn>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncFullSchemaTableColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SyncFullSchemaTableColumn)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SyncFullSchemaTableColumn IPersistableModel<SyncFullSchemaTableColumn>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SyncFullSchemaTableColumn>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSyncFullSchemaTableColumn(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SyncFullSchemaTableColumn)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SyncFullSchemaTableColumn>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

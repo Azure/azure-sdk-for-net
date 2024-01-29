@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
@@ -14,15 +16,43 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption
 {
-    public partial class ConsumptionBudgetData : IUtf8JsonSerializable
+    public partial class ConsumptionBudgetData : IUtf8JsonSerializable, IJsonModel<ConsumptionBudgetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBudgetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionBudgetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -51,6 +81,11 @@ namespace Azure.ResourceManager.Consumption
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter);
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
+            {
+                writer.WritePropertyName("currentSpend"u8);
+                writer.WriteObjectValue(CurrentSpend);
+            }
             if (Optional.IsCollectionDefined(Notifications))
             {
                 writer.WritePropertyName("notifications"u8);
@@ -62,12 +97,46 @@ namespace Azure.ResourceManager.Consumption
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
+            {
+                writer.WritePropertyName("forecastSpend"u8);
+                writer.WriteObjectValue(ForecastSpend);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionBudgetData DeserializeConsumptionBudgetData(JsonElement element)
+        ConsumptionBudgetData IJsonModel<ConsumptionBudgetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionBudgetData(document.RootElement, options);
+        }
+
+        internal static ConsumptionBudgetData DeserializeConsumptionBudgetData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -85,6 +154,8 @@ namespace Azure.ResourceManager.Consumption
             Optional<BudgetCurrentSpend> currentSpend = default;
             Optional<IDictionary<string, BudgetAssociatedNotification>> notifications = default;
             Optional<BudgetForecastSpend> forecastSpend = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -209,8 +280,44 @@ namespace Azure.ResourceManager.Consumption
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, Optional.ToDictionary(notifications), forecastSpend.Value, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConsumptionBudgetData(id, name, type, systemData.Value, Optional.ToNullable(category), Optional.ToNullable(amount), Optional.ToNullable(timeGrain), timePeriod.Value, filter.Value, currentSpend.Value, Optional.ToDictionary(notifications), forecastSpend.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionBudgetData IPersistableModel<ConsumptionBudgetData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionBudgetData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionBudgetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

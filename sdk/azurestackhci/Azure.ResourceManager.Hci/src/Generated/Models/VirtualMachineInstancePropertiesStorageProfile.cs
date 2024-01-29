@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.Hci.Models
     /// <summary> StorageProfile - contains information about the disks and storage information for the virtual machine instance. </summary>
     public partial class VirtualMachineInstancePropertiesStorageProfile
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="VirtualMachineInstancePropertiesStorageProfile"/>. </summary>
         public VirtualMachineInstancePropertiesStorageProfile()
         {
@@ -25,12 +58,14 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="imageReference"> Which Image to use for the virtual machine instance. </param>
         /// <param name="osDisk"> VHD to attach as OS disk. </param>
         /// <param name="vmConfigStoragePathId"> Id of the storage container that hosts the VM configuration file. </param>
-        internal VirtualMachineInstancePropertiesStorageProfile(IList<WritableSubResource> dataDisks, WritableSubResource imageReference, VirtualMachineInstancePropertiesStorageProfileOSDisk osDisk, ResourceIdentifier vmConfigStoragePathId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineInstancePropertiesStorageProfile(IList<WritableSubResource> dataDisks, WritableSubResource imageReference, VirtualMachineInstancePropertiesStorageProfileOSDisk osDisk, ResourceIdentifier vmConfigStoragePathId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DataDisks = dataDisks;
             ImageReference = imageReference;
             OSDisk = osDisk;
             VmConfigStoragePathId = vmConfigStoragePathId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> adds data disks to the virtual machine instance. </summary>

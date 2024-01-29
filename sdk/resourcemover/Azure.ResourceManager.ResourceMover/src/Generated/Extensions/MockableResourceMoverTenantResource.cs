@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         public virtual AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(e), OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         public virtual Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(e), OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
     }
 }

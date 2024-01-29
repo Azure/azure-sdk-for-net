@@ -5,20 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringDirectConnection : IUtf8JsonSerializable
+    public partial class PeeringDirectConnection : IUtf8JsonSerializable, IJsonModel<PeeringDirectConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringDirectConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PeeringDirectConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedBandwidthInMbps))
+            {
+                writer.WritePropertyName("provisionedBandwidthInMbps"u8);
+                writer.WriteNumberValue(ProvisionedBandwidthInMbps.Value);
             }
             if (Optional.IsDefined(SessionAddressProvider))
             {
@@ -30,10 +46,20 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(MicrosoftTrackingId))
+            {
+                writer.WritePropertyName("microsoftTrackingId"u8);
+                writer.WriteStringValue(MicrosoftTrackingId);
+            }
             if (Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
+            {
+                writer.WritePropertyName("connectionState"u8);
+                writer.WriteStringValue(ConnectionState.Value.ToString());
             }
             if (Optional.IsDefined(BgpSession))
             {
@@ -45,11 +71,45 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier);
             }
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeeringDirectConnection DeserializePeeringDirectConnection(JsonElement element)
+        PeeringDirectConnection IJsonModel<PeeringDirectConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringDirectConnection(document.RootElement, options);
+        }
+
+        internal static PeeringDirectConnection DeserializePeeringDirectConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +124,8 @@ namespace Azure.ResourceManager.Peering.Models
             Optional<PeeringBgpSession> bgpSession = default;
             Optional<string> connectionIdentifier = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bandwidthInMbps"u8))
@@ -144,8 +206,44 @@ namespace Azure.ResourceManager.Peering.Models
                     errorMessage = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeeringDirectConnection(Optional.ToNullable(bandwidthInMbps), Optional.ToNullable(provisionedBandwidthInMbps), Optional.ToNullable(sessionAddressProvider), Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PeeringDirectConnection(Optional.ToNullable(bandwidthInMbps), Optional.ToNullable(provisionedBandwidthInMbps), Optional.ToNullable(sessionAddressProvider), Optional.ToNullable(useForPeeringService), microsoftTrackingId.Value, Optional.ToNullable(peeringDBFacilityId), Optional.ToNullable(connectionState), bgpSession.Value, connectionIdentifier.Value, errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeeringDirectConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PeeringDirectConnection IPersistableModel<PeeringDirectConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePeeringDirectConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeeringDirectConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,25 +6,114 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class RefreshExternalGovernanceStatusOperationResult : IUtf8JsonSerializable
+    public partial class RefreshExternalGovernanceStatusOperationResult : IUtf8JsonSerializable, IJsonModel<RefreshExternalGovernanceStatusOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RefreshExternalGovernanceStatusOperationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RefreshExternalGovernanceStatusOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RefreshExternalGovernanceStatusOperationResult)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(RequestId))
+            {
+                writer.WritePropertyName("requestId"u8);
+                writer.WriteStringValue(RequestId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RequestType))
+            {
+                writer.WritePropertyName("requestType"u8);
+                writer.WriteStringValue(RequestType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(QueuedTime))
+            {
+                writer.WritePropertyName("queuedTime"u8);
+                writer.WriteStringValue(QueuedTime);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
+            {
+                writer.WritePropertyName("serverName"u8);
+                writer.WriteStringValue(ServerName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RefreshExternalGovernanceStatusOperationResult DeserializeRefreshExternalGovernanceStatusOperationResult(JsonElement element)
+        RefreshExternalGovernanceStatusOperationResult IJsonModel<RefreshExternalGovernanceStatusOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RefreshExternalGovernanceStatusOperationResult)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRefreshExternalGovernanceStatusOperationResult(document.RootElement, options);
+        }
+
+        internal static RefreshExternalGovernanceStatusOperationResult DeserializeRefreshExternalGovernanceStatusOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +128,8 @@ namespace Azure.ResourceManager.Sql.Models
             Optional<string> serverName = default;
             Optional<string> status = default;
             Optional<string> errorMessage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -111,8 +202,44 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RefreshExternalGovernanceStatusOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, serverName.Value, status.Value, errorMessage.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new RefreshExternalGovernanceStatusOperationResult(id, name, type, systemData.Value, Optional.ToNullable(requestId), requestType.Value, queuedTime.Value, serverName.Value, status.Value, errorMessage.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RefreshExternalGovernanceStatusOperationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RefreshExternalGovernanceStatusOperationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        RefreshExternalGovernanceStatusOperationResult IPersistableModel<RefreshExternalGovernanceStatusOperationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RefreshExternalGovernanceStatusOperationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRefreshExternalGovernanceStatusOperationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RefreshExternalGovernanceStatusOperationResult)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RefreshExternalGovernanceStatusOperationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

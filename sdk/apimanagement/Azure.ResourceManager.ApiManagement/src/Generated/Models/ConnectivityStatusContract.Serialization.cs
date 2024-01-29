@@ -6,15 +6,77 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ConnectivityStatusContract
+    public partial class ConnectivityStatusContract : IUtf8JsonSerializable, IJsonModel<ConnectivityStatusContract>
     {
-        internal static ConnectivityStatusContract DeserializeConnectivityStatusContract(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityStatusContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectivityStatusContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityStatusContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+            writer.WritePropertyName("lastUpdated"u8);
+            writer.WriteStringValue(LastUpdatedOn, "O");
+            writer.WritePropertyName("lastStatusChange"u8);
+            writer.WriteStringValue(LastStatusChangedOn, "O");
+            writer.WritePropertyName("resourceType"u8);
+            writer.WriteStringValue(ResourceType);
+            writer.WritePropertyName("isOptional"u8);
+            writer.WriteBooleanValue(IsOptional);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectivityStatusContract IJsonModel<ConnectivityStatusContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityStatusContract>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityStatusContract(document.RootElement, options);
+        }
+
+        internal static ConnectivityStatusContract DeserializeConnectivityStatusContract(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,6 +88,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             DateTimeOffset lastStatusChange = default;
             string resourceType = default;
             bool isOptional = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -63,8 +127,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     isOptional = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityStatusContract(name, status, error.Value, lastUpdated, lastStatusChange, resourceType, isOptional);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ConnectivityStatusContract(name, status, error.Value, lastUpdated, lastStatusChange, resourceType, isOptional, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityStatusContract>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityStatusContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        ConnectivityStatusContract IPersistableModel<ConnectivityStatusContract>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityStatusContract>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectivityStatusContract(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityStatusContract)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectivityStatusContract>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

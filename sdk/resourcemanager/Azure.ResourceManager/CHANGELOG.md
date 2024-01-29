@@ -12,6 +12,12 @@
 
 ### Other Changes
 
+## 1.10.1 (2024-01-26)
+
+### Bugs Fixed
+
+- Change the private ctor `OperationStatusResult` to protected.
+
 ## 1.10.0 (2024-01-12)
 
 ### Features Added

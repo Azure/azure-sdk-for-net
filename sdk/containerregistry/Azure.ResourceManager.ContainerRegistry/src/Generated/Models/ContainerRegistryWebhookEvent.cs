@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -19,9 +20,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryWebhookEvent"/>. </summary>
         /// <param name="id"> The event ID. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="eventRequestMessage"> The event request message sent to the service URI. </param>
         /// <param name="eventResponseMessage"> The event response message received from the service URI. </param>
-        internal ContainerRegistryWebhookEvent(Guid? id, ContainerRegistryWebhookEventRequestMessage eventRequestMessage, ContainerRegistryWebhookEventResponseMessage eventResponseMessage) : base(id)
+        internal ContainerRegistryWebhookEvent(Guid? id, IDictionary<string, BinaryData> serializedAdditionalRawData, ContainerRegistryWebhookEventRequestMessage eventRequestMessage, ContainerRegistryWebhookEventResponseMessage eventResponseMessage) : base(id, serializedAdditionalRawData)
         {
             EventRequestMessage = eventRequestMessage;
             EventResponseMessage = eventResponseMessage;

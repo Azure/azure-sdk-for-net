@@ -20,6 +20,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 requestion-path-to-parent:
   /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions: /{scope}/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/{marketplaceIdentifier}

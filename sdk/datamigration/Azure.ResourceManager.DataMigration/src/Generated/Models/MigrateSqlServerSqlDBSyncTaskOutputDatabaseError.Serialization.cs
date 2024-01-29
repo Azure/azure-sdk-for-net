@@ -5,16 +5,83 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError
+    public partial class MigrateSqlServerSqlDBSyncTaskOutputDatabaseError : IUtf8JsonSerializable, IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>
     {
-        internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseError DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseError)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsCollectionDefined(Events))
+            {
+                writer.WritePropertyName("events"u8);
+                writer.WriteStartArray();
+                foreach (var item in Events)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateSqlServerSqlDBSyncTaskOutputDatabaseError IJsonModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseError)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(document.RootElement, options);
+        }
+
+        internal static MigrateSqlServerSqlDBSyncTaskOutputDatabaseError DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,6 +90,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
             Optional<string> id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorMessage"u8))
@@ -54,8 +123,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(id.Value, resultType, errorMessage.Value, Optional.ToList(events));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MigrateSqlServerSqlDBSyncTaskOutputDatabaseError(id.Value, resultType, serializedAdditionalRawData, errorMessage.Value, Optional.ToList(events));
         }
+
+        BinaryData IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MigrateSqlServerSqlDBSyncTaskOutputDatabaseError IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSqlServerSqlDBSyncTaskOutputDatabaseError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBSyncTaskOutputDatabaseError)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSqlServerSqlDBSyncTaskOutputDatabaseError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
