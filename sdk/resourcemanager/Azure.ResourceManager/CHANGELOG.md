@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/38154) that sdk caches wrong subscription provider.
+
 ### Other Changes
 
 ## 1.10.0 (2024-01-12)
