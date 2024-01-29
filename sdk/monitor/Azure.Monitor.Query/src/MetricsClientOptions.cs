@@ -11,7 +11,7 @@ namespace Azure.Monitor.Query
     /// <summary>
     /// Provides the client configuration options for connecting to Azure Monitor Metrics service.
     /// </summary>
-    public class MetricsClientOptions: ClientOptions
+    internal class MetricsClientOptions: ClientOptions
     {
         private readonly ServiceVersion _version;
 

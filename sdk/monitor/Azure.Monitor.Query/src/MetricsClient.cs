@@ -15,7 +15,7 @@ namespace Azure.Monitor.Query
     /// <summary>
     /// The <see cref="MetricsClient"/> allows you to query multiple Azure Monitor Metric services.
     /// </summary>
-    public class MetricsClient
+    internal class MetricsClient
     {
         private readonly MetricsBatchRestClient _metricClient;
         private readonly ClientDiagnostics _clientDiagnostics;
