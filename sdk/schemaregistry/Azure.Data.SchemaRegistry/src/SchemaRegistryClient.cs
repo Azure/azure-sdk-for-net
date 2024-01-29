@@ -44,6 +44,32 @@ namespace Azure.Data.SchemaRegistry
         {
         }
 
+        /// <summary> Initializes a new instance of SchemaRegistryClient. </summary>
+        /// <param name="endpoint"> The Schema Registry service endpoint, for example 'https://my-namespace.servicebus.windows.net'. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        internal SchemaRegistryClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new SchemaRegistryClientOptions())
+        {
+        }
+
+        /// <summary> Initializes a new instance of SchemaRegistryClient. </summary>
+        /// <param name="endpoint"> The Schema Registry service endpoint, for example 'https://my-namespace.servicebus.windows.net'. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        internal SchemaRegistryClient(Uri endpoint, TokenCredential credential, SchemaRegistryClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new SchemaRegistryClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
         /// <summary>
         /// Gets the fully qualified namespace that the client is connecting to.
         /// </summary>
