@@ -209,6 +209,7 @@ internal class StructuredMessageEncodingStream : Stream
     private async ValueTask<int> ReadInternal(byte[] buffer, int offset, int count, bool async, CancellationToken cancellationToken)
     {
         int totalRead = 0;
+        bool readInner = false;
         while (totalRead < count && Position < Length)
         {
             int subreadOffset = offset + totalRead;
@@ -228,10 +229,15 @@ internal class StructuredMessageEncodingStream : Stream
                     totalRead += ReadFromSegmentFooter(new Span<byte>(buffer, subreadOffset, subreadCount));
                     break;
                 case SMRegion.SegmentContent:
+                    // don't double read from stream. Allow caller to multi-read when desired.
+                    if (readInner)
+                    {
+                        return totalRead;
+                    }
                     totalRead += await ReadFromInnerStreamInternal(
                         buffer, subreadOffset, subreadCount, async, cancellationToken).ConfigureAwait(false);
-                    // don't loop after reading underlying stream
-                    return totalRead;
+                    readInner = true;
+                    break;
                 default:
                     break;
             }
@@ -243,6 +249,7 @@ internal class StructuredMessageEncodingStream : Stream
     public override int Read(Span<byte> buffer)
     {
         int totalRead = 0;
+        bool readInner = false;
         while (totalRead < buffer.Length && Position < Length)
         {
             switch (_currentRegion)
@@ -260,9 +267,14 @@ internal class StructuredMessageEncodingStream : Stream
                     totalRead += ReadFromSegmentFooter(buffer.Slice(totalRead));
                     break;
                 case SMRegion.SegmentContent:
+                    // don't double read from stream. Allow caller to multi-read when desired.
+                    if (readInner)
+                    {
+                        return totalRead;
+                    }
                     totalRead += ReadFromInnerStream(buffer.Slice(totalRead));
-                    // don't loop after reading underlying stream
-                    return totalRead;
+                    readInner = true;
+                    break;
                 default:
                     break;
             }
@@ -273,6 +285,7 @@ internal class StructuredMessageEncodingStream : Stream
     public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
     {
         int totalRead = 0;
+        bool readInner = false;
         while (totalRead < buffer.Length && Position < Length)
         {
             switch (_currentRegion)
@@ -290,9 +303,14 @@ internal class StructuredMessageEncodingStream : Stream
                     totalRead += ReadFromSegmentFooter(buffer.Slice(totalRead).Span);
                     break;
                 case SMRegion.SegmentContent:
+                    // don't double read from stream. Allow caller to multi-read when desired.
+                    if (readInner)
+                    {
+                        return totalRead;
+                    }
                     totalRead += await ReadFromInnerStreamAsync(buffer.Slice(totalRead), cancellationToken).ConfigureAwait(false);
-                    // don't loop after reading underlying stream
-                    return totalRead;
+                    readInner = true;
+                    break;
                 default:
                     break;
             }
