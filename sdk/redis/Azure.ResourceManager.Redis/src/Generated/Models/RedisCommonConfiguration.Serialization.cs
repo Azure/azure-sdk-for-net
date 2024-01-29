@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Redis.Models
 {
     public partial class RedisCommonConfiguration : IUtf8JsonSerializable, IJsonModel<RedisCommonConfiguration>
     {
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisCommonConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
         void IJsonModel<RedisCommonConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisCommonConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RdbBackupMaxSnapshotCount))
             {
                 writer.WritePropertyName("rdb-backup-max-snapshot-count"u8);
-                writer.WriteNumberValue(RdbBackupMaxSnapshotCount.Value);
+                WriteRdbBackupMaxSnapshotCount(writer);
             }
             if (Optional.IsDefined(RdbStorageConnectionString))
             {
@@ -173,11 +175,7 @@ namespace Azure.ResourceManager.Redis.Models
             {
                 if (property.NameEquals("rdb-backup-enabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rdbBackupEnabled = property.Value.GetBoolean();
+                    ReadIsRdbBackupEnabled(property, ref rdbBackupEnabled);
                     continue;
                 }
                 if (property.NameEquals("rdb-backup-frequency"u8))
@@ -187,11 +185,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (property.NameEquals("rdb-backup-max-snapshot-count"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    rdbBackupMaxSnapshotCount = property.Value.GetInt32();
+                    ReadRdbBackupMaxSnapshotCount(property, ref rdbBackupMaxSnapshotCount);
                     continue;
                 }
                 if (property.NameEquals("rdb-storage-connection-string"u8))
@@ -201,11 +195,7 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (property.NameEquals("aof-backup-enabled"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    aofBackupEnabled = property.Value.GetBoolean();
+                    ReadIsAofBackupEnabled(property, ref aofBackupEnabled);
                     continue;
                 }
                 if (property.NameEquals("aof-storage-connection-string-0"u8))
