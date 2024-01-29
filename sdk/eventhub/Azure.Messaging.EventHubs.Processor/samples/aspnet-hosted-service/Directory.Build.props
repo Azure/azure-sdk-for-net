@@ -7,6 +7,6 @@
 
   <PropertyGroup>
     <RequiredTargetFrameworks Condition="$(IsTestProject) != 'true'">net6.0;net7.0</RequiredTargetFrameworks>
-    <IsPackable Condition="$(IsSamplesProject) == 'true'">true</IsPackable>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 </Project>
