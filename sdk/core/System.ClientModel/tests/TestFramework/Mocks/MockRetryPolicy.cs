@@ -3,6 +3,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ClientModel.Tests.Mocks;
@@ -94,4 +95,10 @@ public class MockRetryPolicy : ClientRetryPolicy
 
         return base.GetNextDelayCore(message, tryCount);
     }
+
+    public async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+    => await WaitCoreAsync(time, cancellationToken).ConfigureAwait(false);
+
+    public void Wait(TimeSpan time, CancellationToken cancellationToken)
+        => WaitCore(time, cancellationToken);
 }

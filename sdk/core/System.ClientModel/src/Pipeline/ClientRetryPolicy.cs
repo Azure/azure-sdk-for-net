@@ -133,10 +133,10 @@ public class ClientRetryPolicy : PipelinePolicy
 
     protected virtual void OnTryComplete(PipelineMessage message) { }
 
-    public bool ShouldRetry(PipelineMessage message, Exception? exception)
+    internal bool ShouldRetry(PipelineMessage message, Exception? exception)
         => ShouldRetrySyncOrAsync(message, exception, async: false).EnsureCompleted();
 
-    public async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+    internal async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
         => await ShouldRetrySyncOrAsync(message, exception, async: true).ConfigureAwait(false);
 
     private async ValueTask<bool> ShouldRetrySyncOrAsync(PipelineMessage message, Exception? exception, bool async)
@@ -178,7 +178,7 @@ public class ClientRetryPolicy : PipelinePolicy
     protected virtual ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
         => new(ShouldRetryCore(message, exception));
 
-    public TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
+    internal TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
         => GetNextDelayCore(message, tryCount);
 
     protected virtual TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
@@ -187,7 +187,7 @@ public class ClientRetryPolicy : PipelinePolicy
         return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
     }
 
-    public async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
+    internal async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
         => await WaitCoreAsync(time, cancellationToken).ConfigureAwait(false);
 
     protected virtual async Task WaitCoreAsync(TimeSpan time, CancellationToken cancellationToken)
@@ -195,7 +195,7 @@ public class ClientRetryPolicy : PipelinePolicy
         await Task.Delay(time, cancellationToken).ConfigureAwait(false);
     }
 
-    public void Wait(TimeSpan time, CancellationToken cancellationToken)
+    internal void Wait(TimeSpan time, CancellationToken cancellationToken)
         => WaitCore(time, cancellationToken);
 
     protected virtual void WaitCore(TimeSpan time, CancellationToken cancellationToken)
