@@ -5,40 +5,30 @@ using Azure.Messaging.EventHubs.Consumer;
 
 namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
 {
-    /// <summary>
-    /// Implementation of the <see cref="IHostedService"/> interface for processing events.
-    /// </summary>
     public class EventProcessorClientService : IHostedService
     {
         private readonly ILogger<EventProcessorClientService> _logger;
         private readonly EventProcessorClient _processorClient;
-        private readonly ISampleApplicationProcessor _appProcessor;
+        private readonly ISampleApplicationProcessor _applicationProcessor;
 
-        /// <summary>
-        /// Initializes an instance of the <see cref="EventProcessorClientService"/> class.
-        /// </summary>
-        /// <param name="logger">A named <see cref="ILogger"/> used for logging within the <see cref="EventProcessorClientService"/> class.</param>
-        /// <param name="processorClient"><see cref="EventProcessorClient"/> used for consuming and processing events within the <see cref="EventProcessorClientService"/> class.</param>
-        /// <param name="appProcessor">A named <see cref="ISampleApplicationProcessor"/> used as an example to show how to pass events to a downstream service for further processing.</param>
         public EventProcessorClientService(
             ILogger<EventProcessorClientService> logger,
             EventProcessorClient processorClient,
-            ISampleApplicationProcessor appProcessor)
+            ISampleApplicationProcessor applicationProcessor)
         {
             _logger = logger;
             _processorClient = processorClient;
-            _appProcessor = appProcessor;
+            _applicationProcessor = applicationProcessor;
         }
 
-        /// <returns></returns>
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            // Initialize the client event handlers.
+            // Initialize the client event handlers and begin processing events.
+
             _processorClient.PartitionInitializingAsync += InitializeEventHandler;
             _processorClient.ProcessEventAsync += ProcessEventHandler;
             _processorClient.ProcessErrorAsync += ProcessErrorHandler;
 
-            //Start processing events.
             await _processorClient.StartProcessingAsync(cancellationToken).ConfigureAwait(false);
         }
 
@@ -46,13 +36,17 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
         {
             try
             {
-                // Respecting cancellation tokens is an application based decision, and can be ignored based on your specific processing requirements.
+                // Respecting cancellation tokens is an application based decision, and can be
+                // ignored based on your specific processing requirements.
+
                 if (args.CancellationToken.IsCancellationRequested)
                 {
                     return Task.CompletedTask;
                 }
 
-                // Example: set the default position to latest, so that only new events are processed.
+                // Example: set the default position to latest, so that only new events are
+                // processed.
+
                 args.DefaultStartingPosition = EventPosition.Latest;
             }
             catch
@@ -75,7 +69,9 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
         {
             try
             {
-                // Respecting cancellation tokens is an application based decision, and can be ignored based on your specific processing requirements.
+                // Respecting cancellation tokens is an application based decision, and can be
+                // ignored based on your specific processing requirements.
+
                 if (args.CancellationToken.IsCancellationRequested)
                 {
                     return Task.CompletedTask;
@@ -84,9 +80,9 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
                 // Example: process the body of the event to a event processing class.
                 // Replace this code with your application specific requirements
                 // for event handling.
-                var body = args.Data.EventBody.ToString();
 
-                _appProcessor.Process(body);
+                var body = args.Data.EventBody.ToString();
+                _applicationProcessor.Process(body);
             }
             catch
             {
@@ -108,15 +104,20 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
         {
             try
             {
-                // Respecting cancellation tokens is an application based decision, and can be ignored based on your specific processing requirements.
+                // Respecting cancellation tokens is an application based decision, and can be
+                // ignored based on your specific processing requirements.
+
                 if (args.CancellationToken.IsCancellationRequested)
                 {
                     return Task.CompletedTask;
                 }
 
-                // Example: log the error.
-                // Replace this code with your application specific requirements
-                // for error handling.
+                // Replace this code with your application-specific requirements for
+                // error handling.
+                //
+                // For more information on error handling, see:
+                // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs.Processor/samples/Sample03_EventProcessorHandlers.md#reacting-to-processor-errors
+
                 _logger.LogError(args.Exception, "Error in the EventProcessorClient \tOperation: {Operation}", args.Operation);
             }
             catch
@@ -135,17 +136,18 @@ namespace Azure.Messaging.EventHubs.Processor.Samples.HostedService
             return Task.CompletedTask;
         }
 
-        /// <returns></returns>
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             try
             {
-                // The hosted service is being stopped, stop processing events
+                // The hosted service is being stopped, stop processing events.
+
                 await _processorClient.StopProcessingAsync(cancellationToken).ConfigureAwait(false);
             }
             finally
             {
-                // The hosted service is being stopped, clean-up event handlers
+                // The hosted service is being stopped, clean-up event handlers.
+
                 _processorClient.PartitionInitializingAsync -= InitializeEventHandler;
                 _processorClient.ProcessEventAsync -= ProcessEventHandler;
                 _processorClient.ProcessErrorAsync -= ProcessErrorHandler;
