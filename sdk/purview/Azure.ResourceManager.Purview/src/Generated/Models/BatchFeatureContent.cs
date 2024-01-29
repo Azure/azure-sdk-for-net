@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> The account update properties. </summary>
-    public partial class PurviewAccountPatch
+    /// <summary> Feature request model. </summary>
+    public partial class BatchFeatureContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,30 +46,22 @@ namespace Azure.ResourceManager.Purview.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
-        public PurviewAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="BatchFeatureContent"/>. </summary>
+        public BatchFeatureContent()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Features = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
-        /// <param name="identity"> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="properties"> The account properties. </param>
-        /// <param name="tags"> Tags on the azure resource. </param>
+        /// <summary> Initializes a new instance of <see cref="BatchFeatureContent"/>. </summary>
+        /// <param name="features"> Set of features. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountPatch(ManagedServiceIdentity identity, PurviewAccountProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BatchFeatureContent(IList<string> features, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Identity = identity;
-            Properties = properties;
-            Tags = tags;
+            Features = features;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The account properties. </summary>
-        public PurviewAccountProperties Properties { get; set; }
-        /// <summary> Tags on the azure resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Set of features. </summary>
+        public IList<string> Features { get; }
     }
 }

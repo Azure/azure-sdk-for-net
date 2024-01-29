@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Purview
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateSubscriptionGetRequest(string subscriptionId, string locations, BatchFeatureRequest featureRequest)
+        internal HttpMessage CreateSubscriptionGetRequest(string subscriptionId, string locations, BatchFeatureContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Purview
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(featureRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.Purview
         /// <summary> Gets details from a list of feature names. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locations"/> or <paramref name="featureRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BatchFeatureStatus>> SubscriptionGetAsync(string subscriptionId, string locations, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchFeatureStatus>> SubscriptionGetAsync(string subscriptionId, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubscriptionGetRequest(subscriptionId, locations, featureRequest);
+            using var message = CreateSubscriptionGetRequest(subscriptionId, locations, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.Purview
         /// <summary> Gets details from a list of feature names. </summary>
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locations"/> or <paramref name="featureRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BatchFeatureStatus> SubscriptionGet(string subscriptionId, string locations, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        public Response<BatchFeatureStatus> SubscriptionGet(string subscriptionId, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(locations, nameof(locations));
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateSubscriptionGetRequest(subscriptionId, locations, featureRequest);
+            using var message = CreateSubscriptionGetRequest(subscriptionId, locations, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Purview
             }
         }
 
-        internal HttpMessage CreateAccountGetRequest(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureRequest featureRequest)
+        internal HttpMessage CreateAccountGetRequest(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -136,9 +136,9 @@ namespace Azure.ResourceManager.Purview
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(featureRequest);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue(content);
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.Purview
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> The name of the account. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="featureRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BatchFeatureStatus>> AccountGetAsync(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        public async Task<Response<BatchFeatureStatus>> AccountGetAsync(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAccountGetRequest(subscriptionId, resourceGroupName, accountName, featureRequest);
+            using var message = CreateAccountGetRequest(subscriptionId, resourceGroupName, accountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -178,18 +178,18 @@ namespace Azure.ResourceManager.Purview
         /// <param name="subscriptionId"> The subscription identifier. </param>
         /// <param name="resourceGroupName"> The resource group name. </param>
         /// <param name="accountName"> The name of the account. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="featureRequest"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BatchFeatureStatus> AccountGet(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        public Response<BatchFeatureStatus> AccountGet(string subscriptionId, string resourceGroupName, string accountName, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateAccountGetRequest(subscriptionId, resourceGroupName, accountName, featureRequest);
+            using var message = CreateAccountGetRequest(subscriptionId, resourceGroupName, accountName, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

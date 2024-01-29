@@ -20,9 +20,9 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Purview
 {
     /// <summary>
-    /// A class representing a collection of <see cref="KafkaConfigurationResource" /> and their operations.
-    /// Each <see cref="KafkaConfigurationResource" /> in the collection will belong to the same instance of <see cref="PurviewAccountResource" />.
-    /// To get a <see cref="KafkaConfigurationCollection" /> instance call the GetKafkaConfigurations method from an instance of <see cref="PurviewAccountResource" />.
+    /// A class representing a collection of <see cref="KafkaConfigurationResource"/> and their operations.
+    /// Each <see cref="KafkaConfigurationResource"/> in the collection will belong to the same instance of <see cref="PurviewAccountResource"/>.
+    /// To get a <see cref="KafkaConfigurationCollection"/> instance call the GetKafkaConfigurations method from an instance of <see cref="PurviewAccountResource"/>.
     /// </summary>
     public partial class KafkaConfigurationCollection : ArmCollection, IEnumerable<KafkaConfigurationResource>, IAsyncEnumerable<KafkaConfigurationResource>
     {
@@ -63,6 +63,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -105,6 +113,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_CreateOrUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -146,6 +162,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
@@ -182,6 +206,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -220,11 +252,19 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_ListByAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="KafkaConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="KafkaConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<KafkaConfigurationResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kafkaConfigurationRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
@@ -243,11 +283,19 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_ListByAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> The skip token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="KafkaConfigurationResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="KafkaConfigurationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<KafkaConfigurationResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _kafkaConfigurationRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, skipToken);
@@ -265,6 +313,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +357,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
@@ -335,6 +399,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -372,6 +444,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

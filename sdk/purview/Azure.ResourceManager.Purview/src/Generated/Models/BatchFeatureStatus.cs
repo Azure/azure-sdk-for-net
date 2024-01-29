@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,17 +14,51 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> List of features with enabled status. </summary>
     public partial class BatchFeatureStatus
     {
-        /// <summary> Initializes a new instance of BatchFeatureStatus. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="BatchFeatureStatus"/>. </summary>
         internal BatchFeatureStatus()
         {
             Features = new ChangeTrackingDictionary<string, bool>();
         }
 
-        /// <summary> Initializes a new instance of BatchFeatureStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="BatchFeatureStatus"/>. </summary>
         /// <param name="features"> Features with enabled status. </param>
-        internal BatchFeatureStatus(IReadOnlyDictionary<string, bool> features)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BatchFeatureStatus(IReadOnlyDictionary<string, bool> features, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Features = features;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Features with enabled status. </summary>

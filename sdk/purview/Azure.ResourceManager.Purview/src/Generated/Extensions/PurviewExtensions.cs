@@ -59,26 +59,25 @@ namespace Azure.ResourceManager.Purview
             return GetMockablePurviewArmClient(client).GetPurviewAccountResource(id);
         }
 
-        #region KafkaConfigurationResource
         /// <summary>
         /// Gets an object representing a <see cref="KafkaConfigurationResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="KafkaConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="KafkaConfigurationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewArmClient.GetKafkaConfigurationResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="KafkaConfigurationResource" /> object. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="KafkaConfigurationResource"/> object. </returns>
         public static KafkaConfigurationResource GetKafkaConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            return client.GetResourceClient(() =>
-            {
-                KafkaConfigurationResource.ValidateResourceId(id);
-                return new KafkaConfigurationResource(client, id);
-            }
-            );
-        }
-        #endregion
+            Argument.AssertNotNull(client, nameof(client));
 
-        #region PurviewPrivateEndpointConnectionResource
+            return GetMockablePurviewArmClient(client).GetKafkaConfigurationResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing a <see cref="PurviewPrivateEndpointConnectionResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="PurviewPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="PurviewPrivateEndpointConnectionResource" /> <see cref="ResourceIdentifier" /> from its components.
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,20 +366,27 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Features_SubscriptionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeature(string,BatchFeatureContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="featureRequest"/> is null. </exception>
-        public static async Task<Response<BatchFeatureStatus>> SubscriptionGetFeatureAsync(this SubscriptionResource subscriptionResource, string locations, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        public static async Task<Response<BatchFeatureStatus>> SubscriptionGetFeatureAsync(this SubscriptionResource subscriptionResource, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetSubscriptionResourceExtensionClient(subscriptionResource).SubscriptionGetFeatureAsync(locations, featureRequest, cancellationToken).ConfigureAwait(false);
+            return await GetMockablePurviewSubscriptionResource(subscriptionResource).SubscriptionGetFeatureAsync(locations, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -394,20 +400,27 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Features_SubscriptionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.SubscriptionGetFeature(string,BatchFeatureContent,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="featureRequest"/> is null. </exception>
-        public static Response<BatchFeatureStatus> SubscriptionGetFeature(this SubscriptionResource subscriptionResource, string locations, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        public static Response<BatchFeatureStatus> SubscriptionGetFeature(this SubscriptionResource subscriptionResource, string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).SubscriptionGetFeature(locations, featureRequest, cancellationToken);
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).SubscriptionGetFeature(locations, content, cancellationToken);
         }
 
         /// <summary>
@@ -421,16 +434,27 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> An async collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PurviewUsage> GetUsagesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).GetUsagesAsync(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -444,16 +468,27 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewSubscriptionResource.GetUsages(AzureLocation,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="location"> The region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PurviewUsage> GetUsages(this SubscriptionResource subscriptionResource, AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
-            return GetSubscriptionResourceExtensionClient(subscriptionResource).GetUsages(location, filter, cancellationToken);
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockablePurviewSubscriptionResource(subscriptionResource).GetUsages(location, filter, cancellationToken);
         }
 
         /// <summary>
@@ -469,7 +504,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -503,7 +538,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -535,16 +570,27 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Remove</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response> RemoveDefaultAccountAsync(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
-            return await GetTenantResourceExtensionClient(tenantResource).RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return await GetMockablePurviewTenantResource(tenantResource).RemoveDefaultAccountAsync(scopeTenantId, scopeType, scope, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -558,16 +604,27 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Remove</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockablePurviewTenantResource.RemoveDefaultAccount(Guid,PurviewAccountScopeType,string,CancellationToken)"/> instead.</description>
+        /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="scopeTenantId"> The tenant ID. </param>
         /// <param name="scopeType"> The scope for the default account. </param>
         /// <param name="scope"> The Id of the scope object, for example if the scope is "Subscription" then it is the ID of that subscription. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response RemoveDefaultAccount(this TenantResource tenantResource, Guid scopeTenantId, PurviewAccountScopeType scopeType, string scope = null, CancellationToken cancellationToken = default)
         {
-            return GetTenantResourceExtensionClient(tenantResource).RemoveDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
+
+            return GetMockablePurviewTenantResource(tenantResource).RemoveDefaultAccount(scopeTenantId, scopeType, scope, cancellationToken);
         }
 
         /// <summary>
@@ -583,7 +640,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -615,7 +672,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// <item>

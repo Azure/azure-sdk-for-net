@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,18 +210,27 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Features_SubscriptionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<BatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BatchFeatureStatus>> SubscriptionGetFeatureAsync(string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = FeaturesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SubscriptionGetFeature");
+            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();
             try
             {
-                var response = await FeaturesRestClient.SubscriptionGetAsync(Id.SubscriptionId, locations, featureRequest, cancellationToken).ConfigureAwait(false);
+                var response = await FeaturesRestClient.SubscriptionGetAsync(Id.SubscriptionId, locations, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -242,18 +251,27 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Features_SubscriptionGet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="locations"> Location of feature. </param>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<BatchFeatureStatus> SubscriptionGetFeature(string locations, BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentException"> <paramref name="locations"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="locations"/> or <paramref name="content"/> is null. </exception>
+        public virtual Response<BatchFeatureStatus> SubscriptionGetFeature(string locations, BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            using var scope = FeaturesClientDiagnostics.CreateScope("SubscriptionResourceExtensionClient.SubscriptionGetFeature");
+            Argument.AssertNotNullOrEmpty(locations, nameof(locations));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = FeaturesClientDiagnostics.CreateScope("MockablePurviewSubscriptionResource.SubscriptionGetFeature");
             scope.Start();
             try
             {
-                var response = FeaturesRestClient.SubscriptionGet(Id.SubscriptionId, locations, featureRequest, cancellationToken);
+                var response = FeaturesRestClient.SubscriptionGet(Id.SubscriptionId, locations, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -274,16 +292,20 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PurviewUsage> GetUsagesAsync(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PurviewUsage.DeserializePurviewUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PurviewUsage.DeserializePurviewUsage(e), UsagesClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -297,16 +319,20 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The region. </param>
         /// <param name="filter"> The filter, currently unused. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewUsage" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PurviewUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PurviewUsage> GetUsages(AzureLocation location, string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateGetRequest(Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PurviewUsage.DeserializePurviewUsage, UsagesClientDiagnostics, Pipeline, "SubscriptionResourceExtensionClient.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PurviewUsage.DeserializePurviewUsage(e), UsagesClientDiagnostics, Pipeline, "MockablePurviewSubscriptionResource.GetUsages", "value", null, cancellationToken);
         }
     }
 }

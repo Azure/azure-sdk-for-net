@@ -53,7 +53,8 @@ namespace Azure.ResourceManager.Purview.Models
         /// <summary> Initializes a new instance of <see cref="PurviewAccountEndpoint"/>. </summary>
         /// <param name="catalog"> Gets the catalog endpoint. </param>
         /// <param name="scan"> Gets the scan endpoint. </param>
-        internal PurviewAccountEndpoint(string catalog, string scan)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountEndpoint(string catalog, string scan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Catalog = catalog;
             Scan = scan;

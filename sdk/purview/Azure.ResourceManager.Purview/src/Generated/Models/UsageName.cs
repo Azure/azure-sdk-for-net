@@ -5,20 +5,24 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Purview.Models
 {
     /// <summary> Quota name. </summary>
     public partial class UsageName : QuotaName
     {
-        /// <summary> Initializes a new instance of UsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
         internal UsageName()
         {
         }
 
-        /// <summary> Initializes a new instance of UsageName. </summary>
+        /// <summary> Initializes a new instance of <see cref="UsageName"/>. </summary>
         /// <param name="localizedValue"> Gets or sets the localized name value. </param>
         /// <param name="value"> Gets or sets the name value. </param>
-        internal UsageName(string localizedValue, string value) : base(localizedValue, value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UsageName(string localizedValue, string value, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(localizedValue, value, serializedAdditionalRawData)
         {
         }
     }

@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -203,13 +203,20 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Set</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual async Task<Response<DefaultPurviewAccountPayload>> SetDefaultAccountAsync(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();
             try
             {
@@ -234,13 +241,20 @@ namespace Azure.ResourceManager.Purview.Mocking
         /// <term>Operation Id</term>
         /// <description>DefaultAccounts_Set</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultAccountPayload"> The payload containing the default account information and the scope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="defaultAccountPayload"/> is null. </exception>
         public virtual Response<DefaultPurviewAccountPayload> SetDefaultAccount(DefaultPurviewAccountPayload defaultAccountPayload, CancellationToken cancellationToken = default)
         {
-            using var scope = DefaultAccountsClientDiagnostics.CreateScope("TenantResourceExtensionClient.SetDefaultAccount");
+            Argument.AssertNotNull(defaultAccountPayload, nameof(defaultAccountPayload));
+
+            using var scope = DefaultAccountsClientDiagnostics.CreateScope("MockablePurviewTenantResource.SetDefaultAccount");
             scope.Start();
             try
             {

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    /// <summary> The account update properties. </summary>
-    public partial class PurviewAccountPatch
+    /// <summary> A private endpoint connection status update response class. </summary>
+    public partial class PrivateEndpointConnectionStatusUpdateResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,30 +45,25 @@ namespace Azure.ResourceManager.Purview.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
-        public PurviewAccountPatch()
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionStatusUpdateResult"/>. </summary>
+        internal PrivateEndpointConnectionStatusUpdateResult()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PurviewAccountPatch"/>. </summary>
-        /// <param name="identity"> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
-        /// <param name="properties"> The account properties. </param>
-        /// <param name="tags"> Tags on the azure resource. </param>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionStatusUpdateResult"/>. </summary>
+        /// <param name="privateEndpointId"> The private endpoint resource identifier. </param>
+        /// <param name="status"> The private endpoint connection status. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PurviewAccountPatch(ManagedServiceIdentity identity, PurviewAccountProperties properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrivateEndpointConnectionStatusUpdateResult(string privateEndpointId, string status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Identity = identity;
-            Properties = properties;
-            Tags = tags;
+            PrivateEndpointId = privateEndpointId;
+            Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Managed Identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> The account properties. </summary>
-        public PurviewAccountProperties Properties { get; set; }
-        /// <summary> Tags on the azure resource. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The private endpoint resource identifier. </summary>
+        public string PrivateEndpointId { get; }
+        /// <summary> The private endpoint connection status. </summary>
+        public string Status { get; }
     }
 }

@@ -58,10 +58,11 @@ namespace Azure.ResourceManager.Purview.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PrivateEndpointConnectionList. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionList"/>. </summary>
         /// <param name="nextLink"> The Url of next result page. </param>
         /// <param name="value"> Collection of items of type results. </param>
-        internal PrivateEndpointConnectionList(string nextLink, IReadOnlyList<PurviewPrivateEndpointConnectionData> value)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PrivateEndpointConnectionList(string nextLink, IReadOnlyList<PurviewPrivateEndpointConnectionData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NextLink = nextLink;
             Value = value;

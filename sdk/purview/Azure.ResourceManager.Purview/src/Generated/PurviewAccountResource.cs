@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Purview
         /// <returns> An object representing collection of KafkaConfigurationResources and their operations over a KafkaConfigurationResource. </returns>
         public virtual KafkaConfigurationCollection GetKafkaConfigurations()
         {
-            return GetCachedClient(Client => new KafkaConfigurationCollection(Client, Id));
+            return GetCachedClient(client => new KafkaConfigurationCollection(client, Id));
         }
 
         /// <summary>
@@ -119,12 +119,20 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<KafkaConfigurationResource>> GetKafkaConfigurationAsync(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -142,12 +150,20 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>KafkaConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KafkaConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="kafkaConfigurationName"> Name of kafka configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="kafkaConfigurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="kafkaConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<KafkaConfigurationResource> GetKafkaConfiguration(string kafkaConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -174,7 +190,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -205,7 +221,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -243,7 +259,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -274,7 +290,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -305,7 +321,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -345,7 +361,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -385,7 +401,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -427,7 +443,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -469,7 +485,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -515,7 +531,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -559,6 +575,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>Accounts_AddRootCollectionAdmin</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The collection admin update payload. </param>
@@ -592,6 +616,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_AddRootCollectionAdmin</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -629,7 +661,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -667,7 +699,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -705,26 +737,22 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewAccountResource"/></description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureRequest"/> is null. </exception>
-        public virtual async Task<Response<BatchFeatureStatus>> AccountGetFeatureAsync(BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<BatchFeatureStatus>> AccountGetFeatureAsync(BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _featuresClientDiagnostics.CreateScope("PurviewAccountResource.AccountGetFeature");
             scope.Start();
             try
             {
-                var response = await _featuresRestClient.AccountGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureRequest, cancellationToken).ConfigureAwait(false);
+                var response = await _featuresRestClient.AccountGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -747,26 +775,22 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PurviewAccountResource"/></description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="featureRequest"> Request body with feature names. </param>
+        /// <param name="content"> Request body with feature names. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="featureRequest"/> is null. </exception>
-        public virtual Response<BatchFeatureStatus> AccountGetFeature(BatchFeatureRequest featureRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<BatchFeatureStatus> AccountGetFeature(BatchFeatureContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(featureRequest, nameof(featureRequest));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _featuresClientDiagnostics.CreateScope("PurviewAccountResource.AccountGetFeature");
             scope.Start();
             try
             {
-                var response = _featuresRestClient.AccountGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, featureRequest, cancellationToken);
+                var response = _featuresRestClient.AccountGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content, cancellationToken);
                 return response;
             }
             catch (Exception e)
@@ -787,10 +811,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>IngestionPrivateEndpointConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnectionsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -809,10 +837,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>IngestionPrivateEndpointConnections_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PurviewPrivateEndpointConnectionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PurviewPrivateEndpointConnectionResource> GetIngestionPrivateEndpointConnections(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _ingestionPrivateEndpointConnectionsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
@@ -831,12 +863,16 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>IngestionPrivateEndpointConnections_UpdateStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The ingestion private endpoint connection status update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<PrivateEndpointConnectionStatusUpdateResponse>> UpdateStatusIngestionPrivateEndpointConnectionAsync(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateEndpointConnectionStatusUpdateResult>> UpdateStatusIngestionPrivateEndpointConnectionAsync(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -865,12 +901,16 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>IngestionPrivateEndpointConnections_UpdateStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The ingestion private endpoint connection status update request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<PrivateEndpointConnectionStatusUpdateResponse> UpdateStatusIngestionPrivateEndpointConnection(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateEndpointConnectionStatusUpdateResult> UpdateStatusIngestionPrivateEndpointConnection(PrivateEndpointConnectionStatusUpdateContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -901,7 +941,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -963,7 +1003,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1025,7 +1065,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1082,7 +1122,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1139,7 +1179,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1199,7 +1239,7 @@ namespace Azure.ResourceManager.Purview
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2021-07-01</description>
+        /// <description>2023-05-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

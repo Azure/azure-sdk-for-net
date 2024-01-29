@@ -53,6 +53,43 @@ namespace Azure.ResourceManager.Purview.Models
             PrivateEndpointConnections = new ChangeTrackingList<PurviewPrivateEndpointConnectionData>();
         }
 
+        /// <summary> Initializes a new instance of <see cref="PurviewAccountProperties"/>. </summary>
+        /// <param name="accountStatus"> Gets or sets the status of the account. </param>
+        /// <param name="cloudConnectors"> External Cloud Service connectors. </param>
+        /// <param name="createdOn"> Gets the time at which the entity was created. </param>
+        /// <param name="createdBy"> Gets the creator of the entity. </param>
+        /// <param name="createdByObjectId"> Gets the creators of the entity's object id. </param>
+        /// <param name="endpoints"> The URIs that are the public endpoints of the account. </param>
+        /// <param name="friendlyName"> Gets or sets the friendly name. </param>
+        /// <param name="ingestionStorage"> Ingestion Storage Account Info. </param>
+        /// <param name="managedEventHubState"> Gets or sets the state of managed eventhub. If enabled managed eventhub will be created, if disabled the managed eventhub will be removed. </param>
+        /// <param name="managedResourceGroupName"> Gets or sets the managed resource group name. </param>
+        /// <param name="managedResources"> Gets the resource identifiers of the managed resources. </param>
+        /// <param name="managedResourcesPublicNetworkAccess"> Gets or sets the public network access for managed resources. </param>
+        /// <param name="privateEndpointConnections"> Gets the private endpoint connections information. </param>
+        /// <param name="provisioningState"> Gets or sets the state of the provisioning. </param>
+        /// <param name="publicNetworkAccess"> Gets or sets the public network access. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PurviewAccountProperties(AccountPropertiesAccountStatus accountStatus, CloudConnectors cloudConnectors, DateTimeOffset? createdOn, string createdBy, string createdByObjectId, PurviewAccountEndpoint endpoints, string friendlyName, IngestionStorage ingestionStorage, ManagedEventHubState? managedEventHubState, string managedResourceGroupName, PurviewManagedResource managedResources, ManagedResourcesPublicNetworkAccess? managedResourcesPublicNetworkAccess, IReadOnlyList<PurviewPrivateEndpointConnectionData> privateEndpointConnections, PurviewProvisioningState? provisioningState, PurviewPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AccountStatus = accountStatus;
+            CloudConnectors = cloudConnectors;
+            CreatedOn = createdOn;
+            CreatedBy = createdBy;
+            CreatedByObjectId = createdByObjectId;
+            Endpoints = endpoints;
+            FriendlyName = friendlyName;
+            IngestionStorage = ingestionStorage;
+            ManagedEventHubState = managedEventHubState;
+            ManagedResourceGroupName = managedResourceGroupName;
+            ManagedResources = managedResources;
+            ManagedResourcesPublicNetworkAccess = managedResourcesPublicNetworkAccess;
+            PrivateEndpointConnections = privateEndpointConnections;
+            ProvisioningState = provisioningState;
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> Gets or sets the status of the account. </summary>
         public AccountPropertiesAccountStatus AccountStatus { get; }
         /// <summary> External Cloud Service connectors. </summary>

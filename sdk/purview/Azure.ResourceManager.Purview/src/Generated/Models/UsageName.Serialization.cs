@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class UsageName
+    public partial class UsageName : IUtf8JsonSerializable, IJsonModel<UsageName>
     {
-        internal static UsageName DeserializeUsageName(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UsageName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UsageName)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LocalizedValue))
+            {
+                writer.WritePropertyName("localizedValue"u8);
+                writer.WriteStringValue(LocalizedValue);
+            }
+            if (Optional.IsDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStringValue(Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UsageName IJsonModel<UsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UsageName)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUsageName(document.RootElement, options);
+        }
+
+        internal static UsageName DeserializeUsageName(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<string> localizedValue = default;
             Optional<string> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("localizedValue"u8))
@@ -32,8 +90,44 @@ namespace Azure.ResourceManager.Purview.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UsageName(localizedValue.Value, value.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new UsageName(localizedValue.Value, value.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UsageName>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UsageName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        UsageName IPersistableModel<UsageName>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UsageName>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUsageName(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UsageName)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UsageName>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

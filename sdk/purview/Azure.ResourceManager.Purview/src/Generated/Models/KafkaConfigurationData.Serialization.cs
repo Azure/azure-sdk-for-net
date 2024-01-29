@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -12,11 +15,39 @@ using Azure.ResourceManager.Purview.Models;
 
 namespace Azure.ResourceManager.Purview
 {
-    public partial class KafkaConfigurationData : IUtf8JsonSerializable
+    public partial class KafkaConfigurationData : IUtf8JsonSerializable, IJsonModel<KafkaConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KafkaConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KafkaConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ConsumerGroup))
@@ -55,11 +86,40 @@ namespace Azure.ResourceManager.Purview
                 writer.WriteStringValue(EventStreamingType.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KafkaConfigurationData DeserializeKafkaConfigurationData(JsonElement element)
+        KafkaConfigurationData IJsonModel<KafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKafkaConfigurationData(document.RootElement, options);
+        }
+
+        internal static KafkaConfigurationData DeserializeKafkaConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -75,6 +135,8 @@ namespace Azure.ResourceManager.Purview
             Optional<EventHubType> eventHubType = default;
             Optional<EventStreamingState> eventStreamingState = default;
             Optional<EventStreamingType> eventStreamingType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -168,8 +230,44 @@ namespace Azure.ResourceManager.Purview
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KafkaConfigurationData(id, name, type, systemData.Value, consumerGroup.Value, credentials.Value, eventHubPartitionId.Value, eventHubResourceId.Value, Optional.ToNullable(eventHubType), Optional.ToNullable(eventStreamingState), Optional.ToNullable(eventStreamingType));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new KafkaConfigurationData(id, name, type, systemData.Value, consumerGroup.Value, credentials.Value, eventHubPartitionId.Value, eventHubResourceId.Value, Optional.ToNullable(eventHubType), Optional.ToNullable(eventStreamingState), Optional.ToNullable(eventStreamingType), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KafkaConfigurationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        KafkaConfigurationData IPersistableModel<KafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKafkaConfigurationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KafkaConfigurationData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

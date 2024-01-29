@@ -73,10 +73,40 @@ namespace Azure.ResourceManager.Purview
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AccountStatus))
+            {
+                writer.WritePropertyName("accountStatus"u8);
+                writer.WriteObjectValue(AccountStatus);
+            }
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
                 writer.WriteObjectValue(CloudConnectors);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("createdBy"u8);
+                writer.WriteStringValue(CreatedBy);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedByObjectId))
+            {
+                writer.WritePropertyName("createdByObjectId"u8);
+                writer.WriteStringValue(CreatedByObjectId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteObjectValue(Endpoints);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(IngestionStorage))
             {
@@ -93,10 +123,30 @@ namespace Azure.ResourceManager.Purview
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
+            if (options.Format != "W" && Optional.IsDefined(ManagedResources))
+            {
+                writer.WritePropertyName("managedResources"u8);
+                writer.WriteObjectValue(ManagedResources);
+            }
             if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
                 writer.WritePropertyName("managedResourcesPublicNetworkAccess"u8);
                 writer.WriteStringValue(ManagedResourcesPublicNetworkAccess.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -371,7 +421,8 @@ namespace Azure.ResourceManager.Purview
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new PurviewAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, accountStatus.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, ingestionStorage.Value, Optional.ToNullable(managedEventHubState), managedResourceGroupName.Value, managedResources.Value, Optional.ToNullable(managedResourcesPublicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), identity);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PurviewAccountData(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, sku.Value, accountStatus.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, ingestionStorage.Value, Optional.ToNullable(managedEventHubState), managedResourceGroupName.Value, managedResources.Value, Optional.ToNullable(managedResourcesPublicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountData>.Write(ModelReaderWriterOptions options)

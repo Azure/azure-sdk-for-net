@@ -27,11 +27,6 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(Count))
-            {
-                writer.WritePropertyName("count"u8);
-                writer.WriteNumberValue(Count.Value);
-            }
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
@@ -108,7 +103,8 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new AccountList(nextLink.Value, value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AccountList(nextLink.Value, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountList>.Write(ModelReaderWriterOptions options)

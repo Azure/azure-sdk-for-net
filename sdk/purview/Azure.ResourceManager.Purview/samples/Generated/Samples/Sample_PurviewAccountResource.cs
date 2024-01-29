@@ -258,14 +258,14 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            BatchFeatureRequest featureRequest = new BatchFeatureRequest()
+            BatchFeatureContent content = new BatchFeatureContent()
             {
                 Features =
 {
 "Feature1","Feature2","FeatureThatDoesntExist"
 },
             };
-            BatchFeatureStatus result = await purviewAccount.AccountGetFeatureAsync(featureRequest);
+            BatchFeatureStatus result = await purviewAccount.AccountGetFeatureAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Purview.Samples
                 PrivateEndpointId = "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/SampleResourceGroup/providers/Microsoft.Purview/accounts/account1/privateEndpointConnections/privateEndpointConnection1",
                 Status = "Approved",
             };
-            PrivateEndpointConnectionStatusUpdateResponse result = await purviewAccount.UpdateStatusIngestionPrivateEndpointConnectionAsync(content);
+            PrivateEndpointConnectionStatusUpdateResult result = await purviewAccount.UpdateStatusIngestionPrivateEndpointConnectionAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
         }

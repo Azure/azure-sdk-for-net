@@ -41,6 +41,8 @@ rename-mapping:
   Reason: PurviewAccountNameUnavailableReason
   ScopeType: PurviewAccountScopeType
   Status: PurviewPrivateLinkServiceStatus
+  BatchFeatureRequest: BatchFeatureContent
+  PrivateEndpointConnectionStatusUpdateResponse: PrivateEndpointConnectionStatusUpdateResult
 
 format-by-name-rules:
   'tenantId': 'uuid'

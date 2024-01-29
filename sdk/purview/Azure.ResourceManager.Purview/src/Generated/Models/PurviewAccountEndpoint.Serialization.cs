@@ -31,11 +31,6 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("catalog"u8);
                 writer.WriteStringValue(Catalog);
             }
-            if (options.Format != "W" && Optional.IsDefined(Guardian))
-            {
-                writer.WritePropertyName("guardian"u8);
-                writer.WriteStringValue(Guardian);
-            }
             if (options.Format != "W" && Optional.IsDefined(Scan))
             {
                 writer.WritePropertyName("scan"u8);
@@ -100,7 +95,8 @@ namespace Azure.ResourceManager.Purview.Models
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new PurviewAccountEndpoint(catalog.Value, scan.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PurviewAccountEndpoint(catalog.Value, scan.Value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountEndpoint>.Write(ModelReaderWriterOptions options)

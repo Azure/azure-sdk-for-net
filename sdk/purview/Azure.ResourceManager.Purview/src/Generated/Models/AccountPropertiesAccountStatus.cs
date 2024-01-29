@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure;
 
 namespace Azure.ResourceManager.Purview.Models
@@ -12,15 +14,16 @@ namespace Azure.ResourceManager.Purview.Models
     /// <summary> Gets or sets the status of the account. </summary>
     public partial class AccountPropertiesAccountStatus : AccountStatus
     {
-        /// <summary> Initializes a new instance of AccountPropertiesAccountStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountPropertiesAccountStatus"/>. </summary>
         internal AccountPropertiesAccountStatus()
         {
         }
 
-        /// <summary> Initializes a new instance of AccountPropertiesAccountStatus. </summary>
+        /// <summary> Initializes a new instance of <see cref="AccountPropertiesAccountStatus"/>. </summary>
         /// <param name="accountProvisioningState"> Gets the account status code. </param>
         /// <param name="errorDetails"> Gets the account error details. </param>
-        internal AccountPropertiesAccountStatus(AccountProvisioningState? accountProvisioningState, ResponseError errorDetails) : base(accountProvisioningState, errorDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AccountPropertiesAccountStatus(AccountProvisioningState? accountProvisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(accountProvisioningState, errorDetails, serializedAdditionalRawData)
         {
         }
     }

@@ -27,10 +27,40 @@ namespace Azure.ResourceManager.Purview.Models
             }
 
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AccountStatus))
+            {
+                writer.WritePropertyName("accountStatus"u8);
+                writer.WriteObjectValue(AccountStatus);
+            }
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
                 writer.WriteObjectValue(CloudConnectors);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdAt"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("createdBy"u8);
+                writer.WriteStringValue(CreatedBy);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedByObjectId))
+            {
+                writer.WritePropertyName("createdByObjectId"u8);
+                writer.WriteStringValue(CreatedByObjectId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteObjectValue(Endpoints);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
             }
             if (Optional.IsDefined(IngestionStorage))
             {
@@ -47,10 +77,30 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("managedResourceGroupName"u8);
                 writer.WriteStringValue(ManagedResourceGroupName);
             }
+            if (options.Format != "W" && Optional.IsDefined(ManagedResources))
+            {
+                writer.WritePropertyName("managedResources"u8);
+                writer.WriteObjectValue(ManagedResources);
+            }
             if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
                 writer.WritePropertyName("managedResourcesPublicNetworkAccess"u8);
                 writer.WriteStringValue(ManagedResourcesPublicNetworkAccess.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -95,14 +145,18 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 return null;
             }
+            Optional<AccountPropertiesAccountStatus> accountStatus = default;
             Optional<CloudConnectors> cloudConnectors = default;
             Optional<DateTimeOffset> createdAt = default;
             Optional<string> createdBy = default;
             Optional<string> createdByObjectId = default;
             Optional<PurviewAccountEndpoint> endpoints = default;
             Optional<string> friendlyName = default;
+            Optional<IngestionStorage> ingestionStorage = default;
+            Optional<ManagedEventHubState> managedEventHubState = default;
             Optional<string> managedResourceGroupName = default;
             Optional<PurviewManagedResource> managedResources = default;
+            Optional<ManagedResourcesPublicNetworkAccess> managedResourcesPublicNetworkAccess = default;
             Optional<IReadOnlyList<PurviewPrivateEndpointConnectionData>> privateEndpointConnections = default;
             Optional<PurviewProvisioningState> provisioningState = default;
             Optional<PurviewPublicNetworkAccess> publicNetworkAccess = default;
@@ -110,6 +164,15 @@ namespace Azure.ResourceManager.Purview.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("accountStatus"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accountStatus = AccountPropertiesAccountStatus.DeserializeAccountPropertiesAccountStatus(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("cloudConnectors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -152,6 +215,24 @@ namespace Azure.ResourceManager.Purview.Models
                     friendlyName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("ingestionStorage"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ingestionStorage = IngestionStorage.DeserializeIngestionStorage(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("managedEventHubState"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedEventHubState = new ManagedEventHubState(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("managedResourceGroupName"u8))
                 {
                     managedResourceGroupName = property.Value.GetString();
@@ -164,6 +245,15 @@ namespace Azure.ResourceManager.Purview.Models
                         continue;
                     }
                     managedResources = PurviewManagedResource.DeserializePurviewManagedResource(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("managedResourcesPublicNetworkAccess"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedResourcesPublicNetworkAccess = new ManagedResourcesPublicNetworkAccess(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateEndpointConnections"u8))
@@ -204,7 +294,7 @@ namespace Azure.ResourceManager.Purview.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PurviewAccountProperties(cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, managedResourceGroupName.Value, managedResources.Value, Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new PurviewAccountProperties(accountStatus.Value, cloudConnectors.Value, Optional.ToNullable(createdAt), createdBy.Value, createdByObjectId.Value, endpoints.Value, friendlyName.Value, ingestionStorage.Value, Optional.ToNullable(managedEventHubState), managedResourceGroupName.Value, managedResources.Value, Optional.ToNullable(managedResourcesPublicNetworkAccess), Optional.ToList(privateEndpointConnections), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PurviewAccountProperties>.Write(ModelReaderWriterOptions options)

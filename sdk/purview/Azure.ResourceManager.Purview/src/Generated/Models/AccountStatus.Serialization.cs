@@ -5,22 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class AccountStatus
+    public partial class AccountStatus : IUtf8JsonSerializable, IJsonModel<AccountStatus>
     {
-        internal static AccountStatus DeserializeAccountStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AccountStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AccountStatus)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AccountProvisioningState))
+            {
+                writer.WritePropertyName("accountProvisioningState"u8);
+                writer.WriteStringValue(AccountProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                JsonSerializer.Serialize(writer, ErrorDetails);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AccountStatus IJsonModel<AccountStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AccountStatus)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAccountStatus(document.RootElement, options);
+        }
+
+        internal static AccountStatus DeserializeAccountStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<AccountProvisioningState> accountProvisioningState = default;
             Optional<ResponseError> errorDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountProvisioningState"u8))
@@ -41,8 +99,44 @@ namespace Azure.ResourceManager.Purview.Models
                     errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AccountStatus(Optional.ToNullable(accountProvisioningState), errorDetails.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new AccountStatus(Optional.ToNullable(accountProvisioningState), errorDetails.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AccountStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AccountStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        AccountStatus IPersistableModel<AccountStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccountStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAccountStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AccountStatus)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AccountStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
