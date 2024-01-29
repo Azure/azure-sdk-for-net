@@ -10,13 +10,19 @@ using Azure.Core.Pipeline;
 
 namespace Azure.AI.Translator.Document
 {
+    [CodeGenClient("DocumentTranslationClient")]
     [CodeGenSuppress("CreateDocumentTranslateRequest", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
     [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(DocumentTranslateContent), typeof(string), typeof(string), typeof(bool?), typeof(CancellationToken))]
     [CodeGenSuppress("DocumentTranslate", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
     [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
-    public partial class DocumentTranslationClient
+    [CodeGenSuppress("DocumentTranslateAsync", typeof(string), typeof(RequestContent), typeof(string), typeof(string), typeof(bool?), typeof(RequestContext))]
+    [CodeGenSuppress("FromCancellationToken", typeof(CancellationToken))]
+
+    public partial class SingleDocumentTranslationClient
     {
+        private static RequestContext DefaultRequestContext = new RequestContext();
+
         /// <summary> API to translate a document. </summary>
         /// <param name="targetLanguage">
         /// Specifies the language of the output document.
@@ -195,6 +201,16 @@ namespace Azure.AI.Translator.Document
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        internal RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
+        {
+            if (!cancellationToken.CanBeCanceled)
+            {
+                return DefaultRequestContext;
+            }
+
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
         internal HttpMessage CreateDocumentTranslateRequest(string targetLanguage, MultipartFormFileData sourceDocument, IEnumerable<MultipartFormFileData> sourceGlossaries, string sourceLanguage, string category, bool? allowFallback, RequestContext context)
