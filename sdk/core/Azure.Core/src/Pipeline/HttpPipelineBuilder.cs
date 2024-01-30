@@ -97,7 +97,7 @@ namespace Azure.Core.Pipeline
             Argument.AssertNotNull(buildOptions.PerCallPolicies, nameof(buildOptions.PerCallPolicies));
             Argument.AssertNotNull(buildOptions.PerRetryPolicies, nameof(buildOptions.PerRetryPolicies));
 
-            var policies = new List<HttpPipelinePolicy>(8 +
+            var policies = new List<HttpPipelinePolicy>(7 +
                                                         (buildOptions.ClientOptions.Policies?.Count ?? 0) +
                                                         buildOptions.PerCallPolicies.Count +
                                                         buildOptions.PerRetryPolicies.Count);
