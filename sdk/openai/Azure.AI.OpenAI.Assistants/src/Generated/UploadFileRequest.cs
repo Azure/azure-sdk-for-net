@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -13,6 +14,38 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary> The UploadFileRequest. </summary>
     internal partial class UploadFileRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/>. </summary>
         /// <param name="data"> The file data (not filename) to upload. </param>
         /// <param name="purpose"> The intended purpose of the file. </param>
@@ -29,11 +62,18 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="data"> The file data (not filename) to upload. </param>
         /// <param name="purpose"> The intended purpose of the file. </param>
         /// <param name="filename"> A filename to associate with the uploaded data. </param>
-        internal UploadFileRequest(BinaryData data, OpenAIFilePurpose purpose, string filename)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UploadFileRequest(BinaryData data, OpenAIFilePurpose purpose, string filename, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Data = data;
             Purpose = purpose;
             Filename = filename;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UploadFileRequest"/> for deserialization. </summary>
+        internal UploadFileRequest()
+        {
         }
 
         /// <summary>

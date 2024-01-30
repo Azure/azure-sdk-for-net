@@ -28,10 +28,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="RunStepToolCallDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toolCalls"> A list of tool call details for this run step. </param>
-        internal RunStepToolCallDetails(RunStepType type, IReadOnlyList<ToolCall> toolCalls) : base(type)
+        internal RunStepToolCallDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<ToolCall> toolCalls) : base(type, serializedAdditionalRawData)
         {
             ToolCalls = toolCalls;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunStepToolCallDetails"/> for deserialization. </summary>
+        internal RunStepToolCallDetails()
+        {
         }
 
         /// <summary>

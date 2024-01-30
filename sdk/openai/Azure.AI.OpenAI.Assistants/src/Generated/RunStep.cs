@@ -14,6 +14,38 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary> Detailed information about a single step of an assistant thread run. </summary>
     public partial class RunStep
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RunStep"/>. </summary>
         /// <param name="id"> The identifier, which can be referenced in API endpoints. </param>
         /// <param name="type"> The type of run step, which can be either message_creation or tool_calls. </param>
@@ -70,7 +102,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="cancelledAt"> The Unix timestamp, in seconds, representing when this was cancelled. </param>
         /// <param name="failedAt"> The Unix timestamp, in seconds, representing when this failed. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal RunStep(string id, string @object, RunStepType type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RunStep(string id, string @object, RunStepType type, string assistantId, string threadId, string runId, RunStepStatus status, RunStepDetails stepDetails, RunStepError lastError, DateTimeOffset createdAt, DateTimeOffset? expiredAt, DateTimeOffset? completedAt, DateTimeOffset? cancelledAt, DateTimeOffset? failedAt, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Object = @object;
@@ -87,6 +120,12 @@ namespace Azure.AI.OpenAI.Assistants
             CancelledAt = cancelledAt;
             FailedAt = failedAt;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunStep"/> for deserialization. </summary>
+        internal RunStep()
+        {
         }
 
         /// <summary> The identifier, which can be referenced in API endpoints. </summary>

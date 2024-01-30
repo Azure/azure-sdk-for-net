@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -26,10 +27,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="RunStepMessageCreationDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="messageCreation"> Information about the message creation associated with this run step. </param>
-        internal RunStepMessageCreationDetails(RunStepType type, RunStepMessageCreationReference messageCreation) : base(type)
+        internal RunStepMessageCreationDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData, RunStepMessageCreationReference messageCreation) : base(type, serializedAdditionalRawData)
         {
             MessageCreation = messageCreation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RunStepMessageCreationDetails"/> for deserialization. </summary>
+        internal RunStepMessageCreationDetails()
+        {
         }
 
         /// <summary> Information about the message creation associated with this run step. </summary>

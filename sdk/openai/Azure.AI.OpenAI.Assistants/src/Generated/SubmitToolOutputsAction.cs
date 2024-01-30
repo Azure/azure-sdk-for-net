@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -26,10 +27,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsAction"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> The details describing tools that should be called to submit tool outputs. </param>
-        internal SubmitToolOutputsAction(string type, InternalSubmitToolOutputsDetails internalDetails) : base(type)
+        internal SubmitToolOutputsAction(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalSubmitToolOutputsDetails internalDetails) : base(type, serializedAdditionalRawData)
         {
             InternalDetails = internalDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SubmitToolOutputsAction"/> for deserialization. </summary>
+        internal SubmitToolOutputsAction()
+        {
         }
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> Unknown version of RunStepDetails. </summary>
@@ -12,7 +15,13 @@ namespace Azure.AI.OpenAI.Assistants
     {
         /// <summary> Initializes a new instance of <see cref="UnknownRunStepDetails"/>. </summary>
         /// <param name="type"> The object type. </param>
-        internal UnknownRunStepDetails(RunStepType type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownRunStepDetails(RunStepType type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownRunStepDetails"/> for deserialization. </summary>
+        internal UnknownRunStepDetails()
         {
         }
     }

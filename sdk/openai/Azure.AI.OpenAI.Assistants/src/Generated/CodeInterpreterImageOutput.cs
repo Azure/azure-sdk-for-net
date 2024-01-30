@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -26,10 +27,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterImageOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="image"> Referential information for the image associated with this output. </param>
-        internal CodeInterpreterImageOutput(string type, CodeInterpreterImageReference image) : base(type)
+        internal CodeInterpreterImageOutput(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, CodeInterpreterImageReference image) : base(type, serializedAdditionalRawData)
         {
             Image = image;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CodeInterpreterImageOutput"/> for deserialization. </summary>
+        internal CodeInterpreterImageOutput()
+        {
         }
 
         /// <summary> Referential information for the image associated with this output. </summary>

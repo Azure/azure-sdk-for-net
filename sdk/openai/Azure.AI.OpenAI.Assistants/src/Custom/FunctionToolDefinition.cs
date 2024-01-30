@@ -41,7 +41,7 @@ public partial class FunctionToolDefinition
     /// <param name="parameters"> The parameters the functions accepts, described as a JSON Schema object. </param>
     /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="description"/> or <paramref name="parameters"/> is null. </exception>
     public FunctionToolDefinition(string name, string description, BinaryData parameters)
-        : this(type: "function", new InternalFunctionDefinition(name, description, parameters))
+        : this(type: "function", serializedAdditionalRawData: null, new InternalFunctionDefinition(name, description, parameters, serializedAdditionalRawData: null))
     {
     }
 

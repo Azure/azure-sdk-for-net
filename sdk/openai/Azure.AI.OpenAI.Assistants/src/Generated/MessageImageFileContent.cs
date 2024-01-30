@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -26,10 +27,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="MessageImageFileContent"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> The image file for this thread message content item. </param>
-        internal MessageImageFileContent(string type, InternalMessageImageFileDetails internalDetails) : base(type)
+        internal MessageImageFileContent(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMessageImageFileDetails internalDetails) : base(type, serializedAdditionalRawData)
         {
             InternalDetails = internalDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageImageFileContent"/> for deserialization. </summary>
+        internal MessageImageFileContent()
+        {
         }
     }
 }

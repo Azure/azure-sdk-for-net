@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The input definition information for a code interpreter tool as used to configure an assistant. </summary>
@@ -18,7 +21,8 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolDefinition"/>. </summary>
         /// <param name="type"> The object type. </param>
-        internal CodeInterpreterToolDefinition(string type) : base(type)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CodeInterpreterToolDefinition(string type, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(type, serializedAdditionalRawData)
         {
         }
     }

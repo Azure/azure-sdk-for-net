@@ -14,6 +14,38 @@ namespace Azure.AI.OpenAI.Assistants
     /// <summary> The details used when creating and immediately running a new assistant thread. </summary>
     public partial class CreateAndRunThreadOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CreateAndRunThreadOptions"/>. </summary>
         /// <param name="assistantId"> The ID of the assistant for which the thread should be created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="assistantId"/> is null. </exception>
@@ -33,7 +65,8 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="overrideInstructions"> The overridden system instructions the assistant should use to run the thread. </param>
         /// <param name="overrideTools"> The overridden list of enabled tools the assistant should use to run the thread. </param>
         /// <param name="metadata"> A set of up to 16 key/value pairs that can be attached to an object, used for storing additional information about that object in a structured format. Keys may be up to 64 characters in length and values may be up to 512 characters in length. </param>
-        internal CreateAndRunThreadOptions(string assistantId, AssistantThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IList<ToolDefinition> overrideTools, IDictionary<string, string> metadata)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CreateAndRunThreadOptions(string assistantId, AssistantThreadCreationOptions thread, string overrideModelName, string overrideInstructions, IList<ToolDefinition> overrideTools, IDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssistantId = assistantId;
             Thread = thread;
@@ -41,6 +74,12 @@ namespace Azure.AI.OpenAI.Assistants
             OverrideInstructions = overrideInstructions;
             OverrideTools = overrideTools;
             Metadata = metadata;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CreateAndRunThreadOptions"/> for deserialization. </summary>
+        internal CreateAndRunThreadOptions()
+        {
         }
 
         /// <summary> The ID of the assistant for which the thread should be created. </summary>

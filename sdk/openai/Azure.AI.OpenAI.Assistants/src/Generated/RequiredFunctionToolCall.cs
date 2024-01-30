@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -29,10 +30,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="RequiredFunctionToolCall"/>. </summary>
         /// <param name="type"> The object type for the required tool call. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalFunctionDefinition"> Detailed information about the function to be executed by the tool that includes name and arguments. </param>
-        internal RequiredFunctionToolCall(string type, string id, InternalFunctionDefinition internalFunctionDefinition) : base(type, id)
+        internal RequiredFunctionToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalFunctionDefinition internalFunctionDefinition) : base(type, id, serializedAdditionalRawData)
         {
             InternalFunctionDefinition = internalFunctionDefinition;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RequiredFunctionToolCall"/> for deserialization. </summary>
+        internal RequiredFunctionToolCall()
+        {
         }
     }
 }

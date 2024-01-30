@@ -33,10 +33,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="RetrievalToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="retrieval"> The key/value pairs produced by the retrieval tool. </param>
-        internal RetrievalToolCall(string type, string id, IReadOnlyDictionary<string, string> retrieval) : base(type, id)
+        internal RetrievalToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, string> retrieval) : base(type, id, serializedAdditionalRawData)
         {
             Retrieval = retrieval;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RetrievalToolCall"/> for deserialization. </summary>
+        internal RetrievalToolCall()
+        {
         }
 
         /// <summary> The key/value pairs produced by the retrieval tool. </summary>

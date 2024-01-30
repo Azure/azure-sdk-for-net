@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -33,10 +34,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> A URL for the file that's generated when the assistant used the code_interpreter tool to generate a file. </param>
-        internal MessageTextFilePathAnnotation(string type, string text, int startIndex, int endIndex, InternalMessageTextFilePathDetails internalDetails) : base(type, text, startIndex, endIndex)
+        internal MessageTextFilePathAnnotation(string type, string text, int startIndex, int endIndex, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMessageTextFilePathDetails internalDetails) : base(type, text, startIndex, endIndex, serializedAdditionalRawData)
         {
             InternalDetails = internalDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTextFilePathAnnotation"/> for deserialization. </summary>
+        internal MessageTextFilePathAnnotation()
+        {
         }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -26,10 +27,16 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterLogOutput"/>. </summary>
         /// <param name="type"> The object type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="logs"> The serialized log output emitted by the code interpreter. </param>
-        internal CodeInterpreterLogOutput(string type, string logs) : base(type)
+        internal CodeInterpreterLogOutput(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, string logs) : base(type, serializedAdditionalRawData)
         {
             Logs = logs;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CodeInterpreterLogOutput"/> for deserialization. </summary>
+        internal CodeInterpreterLogOutput()
+        {
         }
 
         /// <summary> The serialized log output emitted by the code interpreter. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -36,13 +37,19 @@ namespace Azure.AI.OpenAI.Assistants
         /// <param name="text"> The textual content associated with this text annotation item. </param>
         /// <param name="startIndex"> The first text index associated with this text annotation. </param>
         /// <param name="endIndex"> The last text index associated with this text annotation. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails">
         /// A citation within the message that points to a specific quote from a specific file.
         /// Generated when the assistant uses the "retrieval" tool to search files.
         /// </param>
-        internal MessageTextFileCitationAnnotation(string type, string text, int startIndex, int endIndex, InternalMessageTextFileCitationDetails internalDetails) : base(type, text, startIndex, endIndex)
+        internal MessageTextFileCitationAnnotation(string type, string text, int startIndex, int endIndex, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalMessageTextFileCitationDetails internalDetails) : base(type, text, startIndex, endIndex, serializedAdditionalRawData)
         {
             InternalDetails = internalDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MessageTextFileCitationAnnotation"/> for deserialization. </summary>
+        internal MessageTextFileCitationAnnotation()
+        {
         }
     }
 }

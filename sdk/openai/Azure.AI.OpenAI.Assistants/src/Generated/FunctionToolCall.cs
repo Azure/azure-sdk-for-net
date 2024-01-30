@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -32,10 +33,16 @@ namespace Azure.AI.OpenAI.Assistants
         /// <summary> Initializes a new instance of <see cref="FunctionToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="internalDetails"> The detailed information about the function called by the model. </param>
-        internal FunctionToolCall(string type, string id, InternalFunctionToolCallDetails internalDetails) : base(type, id)
+        internal FunctionToolCall(string type, string id, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalFunctionToolCallDetails internalDetails) : base(type, id, serializedAdditionalRawData)
         {
             InternalDetails = internalDetails;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FunctionToolCall"/> for deserialization. </summary>
+        internal FunctionToolCall()
+        {
         }
     }
 }

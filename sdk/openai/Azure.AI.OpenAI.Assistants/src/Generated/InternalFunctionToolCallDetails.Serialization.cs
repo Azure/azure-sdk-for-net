@@ -5,15 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    internal partial class InternalFunctionToolCallDetails
+    internal partial class InternalFunctionToolCallDetails : IUtf8JsonSerializable, IJsonModel<InternalFunctionToolCallDetails>
     {
-        internal static InternalFunctionToolCallDetails DeserializeInternalFunctionToolCallDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InternalFunctionToolCallDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InternalFunctionToolCallDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("arguments"u8);
+            writer.WriteStringValue(Arguments);
+            if (Output != null)
+            {
+                writer.WritePropertyName("output"u8);
+                writer.WriteStringValue(Output);
+            }
+            else
+            {
+                writer.WriteNull("output");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InternalFunctionToolCallDetails IJsonModel<InternalFunctionToolCallDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInternalFunctionToolCallDetails(document.RootElement, options);
+        }
+
+        internal static InternalFunctionToolCallDetails DeserializeInternalFunctionToolCallDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +81,8 @@ namespace Azure.AI.OpenAI.Assistants
             string name = default;
             string arguments = default;
             string output = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,9 +105,45 @@ namespace Azure.AI.OpenAI.Assistants
                     output = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InternalFunctionToolCallDetails(name, arguments, output);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InternalFunctionToolCallDetails(name, arguments, output, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InternalFunctionToolCallDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InternalFunctionToolCallDetails IPersistableModel<InternalFunctionToolCallDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InternalFunctionToolCallDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInternalFunctionToolCallDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InternalFunctionToolCallDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InternalFunctionToolCallDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -53,6 +151,14 @@ namespace Azure.AI.OpenAI.Assistants
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeInternalFunctionToolCallDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this);
+            return content;
         }
     }
 }

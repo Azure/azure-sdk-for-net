@@ -37,7 +37,17 @@ public static partial class AssistantsModelFactory
         fileIds ??= new List<string>();
         metadata ??= new Dictionary<string, string>();
 
-        return new Assistant(id, @object: null, createdAt, name, description, model, instructions, tools?.ToList(), fileIds?.ToList(), metadata);
+        return new Assistant(
+            id,
+            @object: null,
+            createdAt,
+            name,
+            description,
+            model,
+            instructions, tools?.ToList(),
+            fileIds?.ToList(),
+            metadata,
+            serializedAdditionalRawData: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Assistants.AssistantFile"/>. </summary>
@@ -59,7 +69,7 @@ public static partial class AssistantsModelFactory
     {
         metadata ??= new Dictionary<string, string>();
 
-        return new AssistantThread(id, @object: null, createdAt, metadata);
+        return new AssistantThread(id, @object: null, createdAt, metadata, serializedAdditionalRawData: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Assistants.MessageFile"/>. </summary>
@@ -97,7 +107,7 @@ public static partial class AssistantsModelFactory
         fileIds ??= new List<string>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadRun(id, @object: null, threadId, assistantId, status, requiredAction, lastError, model, instructions, tools?.ToList(), fileIds?.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, metadata);
+        return new ThreadRun(id, @object: null, threadId, assistantId, status, requiredAction, lastError, model, instructions, tools?.ToList(), fileIds?.ToList(), createdAt, expiresAt, startedAt, completedAt, cancelledAt, failedAt, metadata, serializedAdditionalRawData: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Assistants.OpenAIFile"/>. </summary>
@@ -132,7 +142,7 @@ public static partial class AssistantsModelFactory
     {
         metadata ??= new Dictionary<string, string>();
 
-        return new RunStep(id, @object: null, type, assistantId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, metadata);
+        return new RunStep(id, @object: null, type, assistantId, threadId, runId, status, stepDetails, lastError, createdAt, expiredAt, completedAt, cancelledAt, failedAt, metadata, serializedAdditionalRawData: null);
     }
 
     /// <summary> Initializes a new instance of <see cref="Assistants.ThreadMessage"/>. </summary>
@@ -155,7 +165,7 @@ public static partial class AssistantsModelFactory
         fileIds ??= new List<string>();
         metadata ??= new Dictionary<string, string>();
 
-        return new ThreadMessage(id, @object: null, createdAt, threadId, role, contentItems?.ToList(), assistantId, runId, fileIds?.ToList(), metadata);
+        return new ThreadMessage(id, @object: null, createdAt, threadId, role, contentItems?.ToList(), assistantId, runId, fileIds?.ToList(), metadata, serializedAdditionalRawData: null);
     }
 
     public static RequiredFunctionToolCall RequiredFunctionToolCall(string toolCallId, string functionName, BinaryData functionParameters)
