@@ -15,7 +15,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// </summary>
     internal static class DocumentHelper
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static RemoteDependency ConvertToRemoteDependency(Activity activity)
         {
             string urlFull = string.Empty, httpResponseStatusCode = string.Empty;
@@ -57,7 +56,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return remoteDependencyDocumentIngress;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static Request ConvertToRequest(Activity activity)
         {
             string httpResponseStatusCode = string.Empty;
@@ -133,7 +131,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return requestDocumentIngress;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static Models.Exception CreateException(string exceptionType, string exceptionMessage)
         {
             Models.Exception exceptionDocumentIngress = new()
