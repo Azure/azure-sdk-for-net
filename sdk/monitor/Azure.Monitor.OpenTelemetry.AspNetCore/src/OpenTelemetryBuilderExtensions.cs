@@ -3,9 +3,6 @@
 
 #nullable enable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Microsoft.Extensions.DependencyInjection;
@@ -135,7 +132,17 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             builder.Services.AddOptions<OpenTelemetryLoggerOptions>()
                     .Configure<IOptionsMonitor<AzureMonitorOptions>>((loggingOptions, azureOptions) =>
                     {
-                        loggingOptions.AddAzureMonitorLogExporter(o => azureOptions.Get(Options.DefaultName).SetValueToExporterOptions(o));
+                        var azureMonitorOptions = azureOptions.Get(Options.DefaultName);
+                        if (azureMonitorOptions.EnableLogSampling)
+                        {
+                            var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
+                            azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
+                            loggingOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
+                        }
+                        else
+                        {
+                            loggingOptions.AddAzureMonitorLogExporter(o => azureMonitorOptions.SetValueToExporterOptions(o));
+                        }
                     });
 
             // Register a configuration action so that when

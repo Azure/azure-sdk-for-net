@@ -13,6 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     {
         private const string AzureMonitorSectionFromConfig = "AzureMonitor";
         private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
+        private const string EnableLogSamplingEnvVar = "OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING";
         private readonly IConfiguration? _configuration;
 
         /// <summary>
@@ -38,6 +39,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     {
                         options.ConnectionString = connectionStringFromIConfig;
                     }
+
+                    var enableLogSamplingIConfig = _configuration[EnableLogSamplingEnvVar];
+                    if (enableLogSamplingIConfig != null && enableLogSamplingIConfig.Equals("true", StringComparison.OrdinalIgnoreCase))
+                    {
+                        options.EnableLogSampling = true;
+                    }
                 }
 
                 // Environment Variable should take precedence.
@@ -45,6 +52,12 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 if (!string.IsNullOrEmpty(connectionStringFromEnvVar))
                 {
                     options.ConnectionString = connectionStringFromEnvVar;
+                }
+
+                var enableLogSamplingEnvVar = Environment.GetEnvironmentVariable(EnableLogSamplingEnvVar);
+                if (!options.EnableLogSampling && enableLogSamplingEnvVar != null && enableLogSamplingEnvVar.Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    options.EnableLogSampling = true;
                 }
             }
             catch (Exception ex)
