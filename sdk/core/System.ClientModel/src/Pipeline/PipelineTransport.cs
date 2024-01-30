@@ -38,9 +38,14 @@ public abstract class PipelineTransport : PipelinePolicy
         try
         {
             message.CancellationToken = joinedTokenSource.Token;
+
             if (async)
             {
                 await ProcessCoreAsync(message).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessCore(message);
             }
         }
         catch (OperationCanceledException ex)
