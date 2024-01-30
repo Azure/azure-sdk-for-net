@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResourceConnector.Tests
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Distro = ResourceConnectorDistro.AksEdge,
-                InfrastructureConfig = new AppliancePropertiesInfrastructureConfig("VMWare")
+                InfrastructureConfig = new AppliancePropertiesInfrastructureConfig("VMWare", null)
             };
             var appliance = (await LocationCollection.CreateOrUpdateAsync(WaitUntil.Completed, resourceName, parameters)).Value;
 

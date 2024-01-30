@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<NetworkSecurityPerimeterConfigurationData> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData, _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "DomainNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e), _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "DomainNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<NetworkSecurityPerimeterConfigurationData> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, "domains", Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData, _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "DomainNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e), _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "DomainNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>

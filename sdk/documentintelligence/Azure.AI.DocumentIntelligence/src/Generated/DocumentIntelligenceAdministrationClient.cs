@@ -669,7 +669,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DocumentModelDetails.DeserializeDocumentModelDetails, ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentModelDetails.DeserializeDocumentModelDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
         }
 
         /// <summary> List all document models. </summary>
@@ -680,7 +680,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DocumentModelDetails.DeserializeDocumentModelDetails, ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentModelDetails.DeserializeDocumentModelDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetModels", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -743,7 +743,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, OperationDetails.DeserializeOperationDetails, ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => OperationDetails.DeserializeOperationDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary> Lists all operations. </summary>
@@ -754,7 +754,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetOperationsRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetOperationsNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, OperationDetails.DeserializeOperationDetails, ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => OperationDetails.DeserializeOperationDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetOperations", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -817,7 +817,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, DocumentClassifierDetails.DeserializeDocumentClassifierDetails, ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DocumentClassifierDetails.DeserializeDocumentClassifierDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
         /// <summary> List all document classifiers. </summary>
@@ -828,7 +828,7 @@ namespace Azure.AI.DocumentIntelligence
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetClassifiersRequest(context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetClassifiersNextPageRequest(nextLink, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, DocumentClassifierDetails.DeserializeDocumentClassifierDetails, ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DocumentClassifierDetails.DeserializeDocumentClassifierDetails(e), ClientDiagnostics, _pipeline, "DocumentIntelligenceAdministrationClient.GetClassifiers", "value", "nextLink", context);
         }
 
         /// <summary>

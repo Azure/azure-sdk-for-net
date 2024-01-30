@@ -16,12 +16,6 @@
       "metadata": {
         "description": "The application client ID used to run tests."
       }
-    },
-    "testApplicationSecret": {
-      "type": "string",
-      "metadata": {
-        "description": "The application client secret used to run tests."
-      }
     }
   },
   "variables": {

@@ -5,9 +5,9 @@
 
 #nullable disable
 
-using System;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -19,14 +19,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SparkJobReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ReferenceName);
-#else
-            using (JsonDocument document = JsonDocument.Parse(ReferenceName))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, ReferenceName);
             writer.WriteEndObject();
         }
 
@@ -37,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             SparkJobReferenceType type = default;
-            BinaryData referenceName = default;
+            DataFactoryElement<string> referenceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -47,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("referenceName"u8))
                 {
-                    referenceName = BinaryData.FromString(property.Value.GetRawText());
+                    referenceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
             }

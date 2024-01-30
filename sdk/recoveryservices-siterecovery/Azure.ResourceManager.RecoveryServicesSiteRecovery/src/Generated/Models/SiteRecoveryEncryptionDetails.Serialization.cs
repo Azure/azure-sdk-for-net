@@ -6,15 +6,75 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryEncryptionDetails
+    public partial class SiteRecoveryEncryptionDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryEncryptionDetails>
     {
-        internal static SiteRecoveryEncryptionDetails DeserializeSiteRecoveryEncryptionDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryEncryptionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryEncryptionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEncryptionDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryEncryptionDetails)} does not support '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(KekState))
+            {
+                writer.WritePropertyName("kekState"u8);
+                writer.WriteStringValue(KekState);
+            }
+            if (Optional.IsDefined(KekCertThumbprint))
+            {
+                writer.WritePropertyName("kekCertThumbprint"u8);
+                writer.WriteStringValue(KekCertThumbprint);
+            }
+            if (Optional.IsDefined(KekCertExpireOn))
+            {
+                writer.WritePropertyName("kekCertExpiryDate"u8);
+                writer.WriteStringValue(KekCertExpireOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryEncryptionDetails IJsonModel<SiteRecoveryEncryptionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEncryptionDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryEncryptionDetails)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryEncryptionDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryEncryptionDetails DeserializeSiteRecoveryEncryptionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +82,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Optional<string> kekState = default;
             Optional<string> kekCertThumbprint = default;
             Optional<DateTimeOffset> kekCertExpireOn = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kekState"u8))
@@ -43,8 +105,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     kekCertExpireOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Optional.ToNullable(kekCertExpireOn));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SiteRecoveryEncryptionDetails(kekState.Value, kekCertThumbprint.Value, Optional.ToNullable(kekCertExpireOn), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryEncryptionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEncryptionDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryEncryptionDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryEncryptionDetails IPersistableModel<SiteRecoveryEncryptionDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEncryptionDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryEncryptionDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryEncryptionDetails)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryEncryptionDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -16,9 +17,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
-        internal UnknownMonitoringSignalBase(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType) : base(mode, properties, signalType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMonitoringSignalBase(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(mode, properties, signalType, serializedAdditionalRawData)
         {
             SignalType = signalType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMonitoringSignalBase"/> for deserialization. </summary>
+        internal UnknownMonitoringSignalBase()
+        {
         }
     }
 }

@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DockerSetting : IUtf8JsonSerializable
+    public partial class DockerSetting : IUtf8JsonSerializable, IJsonModel<DockerSetting>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DockerSetting>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DockerSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DockerSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DockerSetting)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Privileged))
             {
@@ -44,8 +53,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static DockerSetting DeserializeDockerSetting(JsonElement element)
+        DockerSetting IJsonModel<DockerSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DockerSetting>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DockerSetting)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDockerSetting(document.RootElement, options);
+        }
+
+        internal static DockerSetting DeserializeDockerSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -70,5 +93,36 @@ namespace Azure.ResourceManager.MachineLearning.Models
             additionalProperties = additionalPropertiesDictionary;
             return new DockerSetting(Optional.ToNullable(privileged), additionalProperties);
         }
+
+        BinaryData IPersistableModel<DockerSetting>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DockerSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DockerSetting)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DockerSetting IPersistableModel<DockerSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DockerSetting>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDockerSetting(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DockerSetting)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DockerSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

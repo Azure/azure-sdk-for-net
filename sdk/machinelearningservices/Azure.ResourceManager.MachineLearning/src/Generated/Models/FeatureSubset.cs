@@ -28,11 +28,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="FeatureSubset"/>. </summary>
         /// <param name="filterType"> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="features"> [Required] The list of features to include. </param>
-        internal FeatureSubset(MonitoringFeatureFilterType filterType, IList<string> features) : base(filterType)
+        internal FeatureSubset(MonitoringFeatureFilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> features) : base(filterType, serializedAdditionalRawData)
         {
             Features = features;
             FilterType = filterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FeatureSubset"/> for deserialization. </summary>
+        internal FeatureSubset()
+        {
         }
 
         /// <summary> [Required] The list of features to include. </summary>

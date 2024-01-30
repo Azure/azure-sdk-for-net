@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
     /// <summary> Describes a blob input data source that contains stream data. </summary>
@@ -18,8 +21,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <summary> Initializes a new instance of <see cref="GatewayMessageBusStreamInputDataSource"/>. </summary>
         /// <param name="streamInputDataSourceType"> Indicates the type of input data source containing stream data. Required on PUT (CreateOrReplace) requests. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="topic"> The name of the Service Bus topic. </param>
-        internal GatewayMessageBusStreamInputDataSource(string streamInputDataSourceType, string topic) : base(streamInputDataSourceType)
+        internal GatewayMessageBusStreamInputDataSource(string streamInputDataSourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string topic) : base(streamInputDataSourceType, serializedAdditionalRawData)
         {
             Topic = topic;
             StreamInputDataSourceType = streamInputDataSourceType ?? "GatewayMessageBus";
