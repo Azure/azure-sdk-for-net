@@ -17,7 +17,7 @@ public abstract class PipelinePolicy
     {
         currentIndex++;
 
-        Debug.Assert(currentIndex < pipeline.Count);
+        Debug.Assert(currentIndex < pipeline.Count, "Policy index is outside bounds of policy collection.");
 
         pipeline[currentIndex].Process(message, pipeline, currentIndex);
     }
@@ -26,7 +26,7 @@ public abstract class PipelinePolicy
     {
         currentIndex++;
 
-        Debug.Assert(currentIndex < pipeline.Count);
+        Debug.Assert(currentIndex < pipeline.Count, "Policy index is outside bounds of policy collection.");
 
         await pipeline[currentIndex].ProcessAsync(message, pipeline, currentIndex).ConfigureAwait(false);
     }

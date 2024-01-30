@@ -28,7 +28,7 @@ public abstract class PipelineTransport : PipelinePolicy
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
-        Debug.Assert(message.NetworkTimeout is not null);
+        Debug.Assert(message.NetworkTimeout is not null, "NetworkTimeout is not set on PipelineMessage.");
         TimeSpan networkTimeout = (TimeSpan)message.NetworkTimeout!;
 
         CancellationToken userToken = message.CancellationToken;
@@ -121,7 +121,7 @@ public abstract class PipelineTransport : PipelinePolicy
         {
             bool classified = PipelineMessageClassifier.Default.TryClassify(message, out isError);
 
-            Debug.Assert(classified);
+            Debug.Assert(classified, "Error classifier did not classify message.");
         }
 
         return isError;
@@ -168,13 +168,13 @@ public abstract class PipelineTransport : PipelinePolicy
     {
         Process(message);
 
-        Debug.Assert(++currentIndex == pipeline.Count);
+        Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
 
     public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
     {
         await ProcessAsync(message).ConfigureAwait(false);
 
-        Debug.Assert(++currentIndex == pipeline.Count);
+        Debug.Assert(++currentIndex == pipeline.Count, "Transport is not at last position in pipeline.");
     }
 }

@@ -987,7 +987,7 @@ namespace Azure.Core.Tests
                 var transport = GetTransport();
                 Request request = transport.CreateRequest();
                 request.Uri.Reset(testServer.Address);
-                Response response = await ExecuteRequest(request, transport);
+                Response response = await ExecuteRequest(request, transport, bufferResponse: false);
 
                 tcs.SetResult(null);
 
