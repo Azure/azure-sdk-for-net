@@ -19,7 +19,7 @@ namespace Azure.Core
             }
             Optional<Guid> id = default;
             string version = string.Empty;
-            HeaderSource headerSource = default;
+            string headerSource = default;
             string nextRequestUri = string.Empty;
             string initialUri = string.Empty;
             RequestMethod requestMethod = default;
@@ -44,10 +44,7 @@ namespace Azure.Core
                 }
                 if (property.NameEquals("headerSource"u8))
                 {
-                    if (!Enum.TryParse(property.Value.GetString(), out headerSource))
-                    {
-                        headerSource = default;
-                    }
+                    headerSource = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("nextRequestUri"u8))
