@@ -166,10 +166,6 @@ version = "<version>",
 storageSource = "AzureBlob",
 }
 },
-options = new
-{
-pdfOutputAdditionalFormat = "None",
-},
 storageSource = "AzureBlob",
 }
 },
@@ -224,10 +220,6 @@ version = "<version>",
 storageSource = "AzureBlob",
 }
 },
-options = new
-{
-pdfOutputAdditionalFormat = "None",
-},
 storageSource = "AzureBlob",
 }
 },
@@ -262,10 +254,6 @@ Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
 {
 FormatVersion = "<version>",
 }},
-Options = new BatchRequestOptions
-{
-PdfOutputAdditionalFormat = AdditionalOutputFileFormat.None,
-},
 }
 })
 {
@@ -297,10 +285,6 @@ Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
 {
 FormatVersion = "<version>",
 }},
-Options = new BatchRequestOptions
-{
-PdfOutputAdditionalFormat = AdditionalOutputFileFormat.None,
-},
 }
 })
 {

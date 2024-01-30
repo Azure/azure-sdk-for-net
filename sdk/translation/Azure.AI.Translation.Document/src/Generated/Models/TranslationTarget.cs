@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.AI.Translation.Document.Models;
 using Azure.Core;
 
 namespace Azure.AI.Translation.Document
@@ -34,20 +33,16 @@ namespace Azure.AI.Translation.Document
         /// <param name="categoryId"> Category / custom system for translation request. </param>
         /// <param name="languageCode"> Target Language. </param>
         /// <param name="glossaries"> List of Glossary. </param>
-        /// <param name="options"> Batch Request Options. </param>
         /// <param name="storageSource"> Storage Source. </param>
-        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, BatchRequestOptions options, string storageSource)
+        internal TranslationTarget(Uri targetUri, string categoryId, string languageCode, IList<TranslationGlossary> glossaries, string storageSource)
         {
             TargetUri = targetUri;
             CategoryId = categoryId;
             LanguageCode = languageCode;
             Glossaries = glossaries;
-            Options = options;
             StorageSource = storageSource;
         }
         /// <summary> List of Glossary. </summary>
         public IList<TranslationGlossary> Glossaries { get; }
-        /// <summary> Batch Request Options. </summary>
-        public BatchRequestOptions Options { get; set; }
     }
 }

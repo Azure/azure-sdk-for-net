@@ -38,10 +38,6 @@ StartTranslationDetails startTranslationDetails = new StartTranslationDetails(ne
             {
                 FormatVersion = "<version>",
             }},
-            Options = new BatchRequestOptions
-            {
-                PdfOutputAdditionalFormat = AdditionalOutputFileFormat.None,
-            },
         }
     })
     {
@@ -88,10 +84,6 @@ StartTranslationDetails startTranslationDetails = new StartTranslationDetails(ne
             {
                 FormatVersion = "<version>",
             }},
-            Options = new BatchRequestOptions
-            {
-                PdfOutputAdditionalFormat = AdditionalOutputFileFormat.None,
-            },
         }
     })
     {
@@ -173,10 +165,6 @@ using RequestContent content = RequestContent.Create(new
                             version = "<version>",
                             storageSource = "AzureBlob",
                         }
-                    },
-                    options = new
-                    {
-                        pdfOutputAdditionalFormat = "None",
                     },
                     storageSource = "AzureBlob",
                 }
@@ -262,10 +250,6 @@ using RequestContent content = RequestContent.Create(new
                             version = "<version>",
                             storageSource = "AzureBlob",
                         }
-                    },
-                    options = new
-                    {
-                        pdfOutputAdditionalFormat = "None",
                     },
                     storageSource = "AzureBlob",
                 }

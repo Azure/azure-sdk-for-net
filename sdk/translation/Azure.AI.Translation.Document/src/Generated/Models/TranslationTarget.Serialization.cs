@@ -34,11 +34,6 @@ namespace Azure.AI.Translation.Document
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(Options))
-            {
-                writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
-            }
             if (Optional.IsDefined(StorageSource))
             {
                 writer.WritePropertyName("storageSource"u8);
