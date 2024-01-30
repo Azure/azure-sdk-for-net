@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageAzureV2ReprotectContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="masterTargetId"> The Master target Id. </param>
         /// <param name="processServerId"> The Process Server Id. </param>
         /// <param name="storageAccountId"> The storage account id. </param>
@@ -30,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="policyId"> The Policy Id. </param>
         /// <param name="logStorageAccountId"> The storage account to be used for logging during replication. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
-        internal InMageAzureV2ReprotectContent(string instanceType, string masterTargetId, Guid? processServerId, ResourceIdentifier storageAccountId, string runAsAccountId, ResourceIdentifier policyId, ResourceIdentifier logStorageAccountId, IList<string> disksToInclude) : base(instanceType)
+        internal InMageAzureV2ReprotectContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string masterTargetId, Guid? processServerId, ResourceIdentifier storageAccountId, string runAsAccountId, ResourceIdentifier policyId, ResourceIdentifier logStorageAccountId, IList<string> disksToInclude) : base(instanceType, serializedAdditionalRawData)
         {
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;

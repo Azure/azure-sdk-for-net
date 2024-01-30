@@ -36,16 +36,22 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <param name="location"> Location of the PowerBI Dedicated resource. </param>
         /// <param name="tags"> Key-value pairs of additional resource provisioning properties. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sku"> The SKU of the auto scale v-core resource. </param>
         /// <param name="capacityLimit"> The maximum capacity of an auto scale v-core resource. </param>
         /// <param name="capacityObjectId"> The object ID of the capacity resource associated with the auto scale v-core resource. </param>
         /// <param name="provisioningState"> The current deployment state of an auto scale v-core resource. The provisioningState is to indicate states for resource provisioning. </param>
-        internal AutoScaleVCoreData(string id, string name, string resourceType, AzureLocation location, IDictionary<string, string> tags, SystemData systemData, AutoScaleVCoreSku sku, int? capacityLimit, string capacityObjectId, VCoreProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, systemData)
+        internal AutoScaleVCoreData(string id, string name, string resourceType, AzureLocation location, IDictionary<string, string> tags, SystemData systemData, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoScaleVCoreSku sku, int? capacityLimit, string capacityObjectId, VCoreProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, systemData, serializedAdditionalRawData)
         {
             Sku = sku;
             CapacityLimit = capacityLimit;
             CapacityObjectId = capacityObjectId;
             ProvisioningState = provisioningState;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutoScaleVCoreData"/> for deserialization. </summary>
+        internal AutoScaleVCoreData()
+        {
         }
 
         /// <summary> The SKU of the auto scale v-core resource. </summary>

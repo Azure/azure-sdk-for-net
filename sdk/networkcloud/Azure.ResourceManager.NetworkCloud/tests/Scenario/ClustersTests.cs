@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudClusterCollection clusterCollection = ResourceGroupResource.GetNetworkCloudClusters();
 
             // Create
-            var createCreds = new AdministrativeCredentials("password","username");
+            var createCreds = new AdministrativeCredentials("password","username", null);
             NetworkCloudClusterData data = new NetworkCloudClusterData
             (
                 new AzureLocation(TestEnvironment.Location),

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    public partial class CloudHsmClusterSku : IUtf8JsonSerializable
+    public partial class CloudHsmClusterSku : IUtf8JsonSerializable, IJsonModel<CloudHsmClusterSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudHsmClusterSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudHsmClusterSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("family"u8);
             writer.WriteStringValue(Family.ToString());
@@ -24,11 +35,40 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CloudHsmClusterSku DeserializeCloudHsmClusterSku(JsonElement element)
+        CloudHsmClusterSku IJsonModel<CloudHsmClusterSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSku>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudHsmClusterSku(document.RootElement, options);
+        }
+
+        internal static CloudHsmClusterSku DeserializeCloudHsmClusterSku(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             CloudHsmClusterSkuFamily family = default;
             CloudHsmClusterSkuName name = default;
             Optional<int> capacity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("family"u8))
@@ -57,8 +99,44 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     capacity = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudHsmClusterSku(family, name, Optional.ToNullable(capacity));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new CloudHsmClusterSku(family, name, Optional.ToNullable(capacity), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudHsmClusterSku>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{options.Format}' format.");
+            }
+        }
+
+        CloudHsmClusterSku IPersistableModel<CloudHsmClusterSku>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterSku>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudHsmClusterSku(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudHsmClusterSku)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudHsmClusterSku>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
