@@ -43,7 +43,7 @@ namespace Azure.Core.Pipeline
             ((List<HttpPipelinePolicy>)pipelineOptions.PerRetryPolicies).AddRange(perRetryPolicies);
             var result = BuildInternal(pipelineOptions, null);
 
-            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.NetworkTimeout);
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.Core.Pipeline
             ((List<HttpPipelinePolicy>)pipelineOptions.PerCallPolicies).AddRange(perCallPolicies);
             ((List<HttpPipelinePolicy>)pipelineOptions.PerRetryPolicies).AddRange(perRetryPolicies);
             var result = BuildInternal(pipelineOptions, transportOptions);
-            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
+            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned, result.NetworkTimeout);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace Azure.Core.Pipeline
         public static HttpPipeline Build(HttpPipelineOptions options)
         {
             var result = BuildInternal(options, null);
-            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier);
+            return new HttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.NetworkTimeout);
         }
 
         /// <summary>
@@ -87,10 +87,10 @@ namespace Azure.Core.Pipeline
         {
             Argument.AssertNotNull(transportOptions, nameof(transportOptions));
             var result = BuildInternal(options, transportOptions);
-            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned);
+            return new DisposableHttpPipeline(result.Transport, result.PerCallIndex, result.PerRetryIndex, result.Policies, result.Classifier, result.IsTransportOwned, result.NetworkTimeout);
         }
 
-        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned) BuildInternal(
+        internal static (ResponseClassifier Classifier, HttpPipelineTransport Transport, int PerCallIndex, int PerRetryIndex, HttpPipelinePolicy[] Policies, bool IsTransportOwned, TimeSpan NetworkTimeout) BuildInternal(
             HttpPipelineOptions buildOptions,
             HttpPipelineTransportOptions? defaultTransportOptions)
         {
@@ -207,7 +207,7 @@ namespace Azure.Core.Pipeline
 
             buildOptions.ResponseClassifier ??= ResponseClassifier.Shared;
 
-            return (buildOptions.ResponseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated);
+            return (buildOptions.ResponseClassifier, transport, perCallIndex, perRetryIndex, policies.ToArray(), isTransportInternallyCreated, buildOptions.ClientOptions.Retry.NetworkTimeout);
         }
 
         // internal for testing

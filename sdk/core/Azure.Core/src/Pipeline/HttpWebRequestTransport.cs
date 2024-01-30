@@ -18,11 +18,14 @@ namespace Azure.Core.Pipeline
     /// <summary>
     /// The <see cref="HttpWebRequest"/> based <see cref="HttpPipelineTransport"/> implementation.
     /// </summary>
-    internal class HttpWebRequestTransport : HttpPipelineTransport
+    internal partial class HttpWebRequestTransport : HttpPipelineTransport
     {
-        private readonly Action<HttpWebRequest> _configureRequest;
         public static readonly HttpWebRequestTransport Shared = new HttpWebRequestTransport();
+
+        private readonly Action<HttpWebRequest> _configureRequest;
         private readonly IWebProxy? _environmentProxy;
+
+        private readonly AzureCoreHttpWebRequestTransport _transport;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpWebRequestTransport"/>
@@ -42,19 +45,17 @@ namespace Azure.Core.Pipeline
             {
                 _environmentProxy = webProxy;
             }
+
+            _transport = new(this);
         }
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
-        {
-            ProcessSyncOrAsync(message, false).EnsureCompleted();
-        }
+            => _transport.Process(message);
 
         /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
-        {
-            await ProcessSyncOrAsync(message, true).ConfigureAwait(false);
-        }
+            => await _transport.ProcessAsync(message).ConfigureAwait(false);
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
         {

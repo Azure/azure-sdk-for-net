@@ -15,6 +15,8 @@ namespace Azure.Core.Pipeline
     /// </summary>
     public class HttpPipeline
     {
+        internal static readonly TimeSpan DefaultNetworkTimeout = TimeSpan.FromSeconds(100);
+
         private static readonly AsyncLocal<HttpMessagePropertiesScope?> CurrentHttpMessagePropertiesScope = new AsyncLocal<HttpMessagePropertiesScope?>();
 
         private protected readonly HttpPipelineTransport _transport;
@@ -39,6 +41,8 @@ namespace Azure.Core.Pipeline
         /// if any are specified using <see cref="RequestContext.AddPolicy(HttpPipelinePolicy, HttpPipelinePosition)"/>.
         /// </summary>
         private readonly int _perRetryIndex;
+
+        private readonly TimeSpan _networkTimeout;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpPipeline"/> with the provided transport, policies and response classifier.
@@ -66,7 +70,8 @@ namespace Azure.Core.Pipeline
             int perCallIndex,
             int perRetryIndex,
             HttpPipelinePolicy[] pipeline,
-            ResponseClassifier responseClassifier)
+            ResponseClassifier responseClassifier,
+            TimeSpan? networkTimeout)
         {
             ResponseClassifier = responseClassifier ?? throw new ArgumentNullException(nameof(responseClassifier));
 
@@ -77,6 +82,9 @@ namespace Azure.Core.Pipeline
 
             _perCallIndex = perCallIndex;
             _perRetryIndex = perRetryIndex;
+
+            _networkTimeout = networkTimeout ?? DefaultNetworkTimeout;
+
             _internallyConstructed = true;
         }
 
@@ -85,14 +93,25 @@ namespace Azure.Core.Pipeline
         /// </summary>
         /// <returns>The request.</returns>
         public Request CreateRequest()
-            => _transport.CreateRequest();
+        {
+            Request request = _transport.CreateRequest();
+            request.NetworkTimeout = _networkTimeout;
+            return request;
+        }
 
         /// <summary>
         /// Creates a new <see cref="HttpMessage"/> instance.
         /// </summary>
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage()
-            => new(CreateRequest(), ResponseClassifier);
+        {
+            Request request = CreateRequest();
+            HttpMessage message = new(request, ResponseClassifier)
+            {
+                NetworkTimeout = request.NetworkTimeout
+            };
+            return message;
+        }
 
         /// <summary>
         /// </summary>
@@ -109,7 +128,11 @@ namespace Azure.Core.Pipeline
         /// <returns>The message.</returns>
         public HttpMessage CreateMessage(RequestContext? context, ResponseClassifier? classifier = default)
         {
-            HttpMessage message = new HttpMessage(CreateRequest(), classifier ?? ResponseClassifier);
+            Request request = CreateRequest();
+            HttpMessage message = new(request, classifier ?? ResponseClassifier)
+            {
+                NetworkTimeout = request.NetworkTimeout
+            };
 
             if (context != null)
             {

@@ -73,6 +73,8 @@ namespace Azure.Core
         /// </summary>
         public new RequestHeaders Headers => new(this);
 
+        internal TimeSpan NetworkTimeout { get; set; }
+
         #region Overrides for "Core" methods from the PipelineRequest Template pattern
 
         /// <summary>
