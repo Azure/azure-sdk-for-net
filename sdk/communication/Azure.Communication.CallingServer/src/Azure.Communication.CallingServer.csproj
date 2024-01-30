@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>
       This client library enables working with the Microsoft Azure Communication CallingServer service.
@@ -23,7 +23,7 @@
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-	  <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)RetriableStream.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>

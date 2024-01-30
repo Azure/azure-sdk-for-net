@@ -450,6 +450,14 @@ namespace Azure.Core
             return HeaderSource.None;
         }
 
+        private enum HeaderSource
+        {
+            None,
+            OperationLocation,
+            AzureAsyncOperation,
+            Location
+        }
+
         private class CompletedOperation : IOperation
         {
             private readonly OperationState _operationState;
