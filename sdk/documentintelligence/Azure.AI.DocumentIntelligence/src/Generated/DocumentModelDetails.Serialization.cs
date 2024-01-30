@@ -259,6 +259,14 @@ namespace Azure.AI.DocumentIntelligence
 
         string IPersistableModel<DocumentModelDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentModelDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentModelDetails(document.RootElement);
+        }
+
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()
         {
