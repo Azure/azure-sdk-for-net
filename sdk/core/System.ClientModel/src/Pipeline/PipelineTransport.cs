@@ -112,7 +112,7 @@ public abstract class PipelineTransport : PipelinePolicy
 
     private static bool ClassifyResponse(PipelineMessage message)
     {
-        if (!message.MessageClassifier.TryClassify(message, out bool isError))
+        if (!message.ResponseClassifier.TryClassify(message, out bool isError))
         {
             bool classified = PipelineMessageClassifier.Default.TryClassify(message, out isError);
 
