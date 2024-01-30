@@ -76,7 +76,7 @@ namespace Azure.Monitor.Query
             }
             else
             {
-                scope = $"{options.Audience}/.default";
+                scope = $"{options.Audience}.default";
             }
 
             endpoint = new Uri(endpoint, options.GetVersionString());

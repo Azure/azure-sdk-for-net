@@ -57,7 +57,7 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            var scope = $"{endpoint.AbsoluteUri}/.default";
+            var scope = $"{endpoint.AbsoluteUri}.default";
 
             Endpoint = endpoint;
 
