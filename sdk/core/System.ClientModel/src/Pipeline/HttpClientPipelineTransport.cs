@@ -64,8 +64,11 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
     protected sealed override void ProcessCore(PipelineMessage message)
     {
 #if NET6_0_OR_GREATER
+
         ProcessSyncOrAsync(message, async: false).EnsureCompleted();
+
 #else
+
         // We do sync-over-async on netstandard2.0 target.
         // This can cause deadlocks in applications when the threadpool gets saturated.
         // The resolution is for a customer to upgrade to a net6.0+ target,
@@ -82,7 +85,7 @@ public partial class HttpClientPipelineTransport : PipelineTransport, IDisposabl
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
-        if (message.Request is not HttpPipelineRequest request)
+        if (message.Request is not PipelineRequest request)
         {
             throw new InvalidOperationException($"The request type is not compatible with the transport: '{message.Request?.GetType()}'.");
         }
