@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-d286129a577e31f65ed7b97b00f39f27-3601966cbc712716-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240126.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "c6e395246c6915735e464b0b24365d58",
+        "traceparent": "00-c179dd9387e070e7c9bc2b5041cd8d22-625c12f1b65255b9-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "17d3430f24d2663ff5ac7326b0bcf1d4",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 27 Jan 2024 02:50:14 GMT",
+        "x-ms-date": "Tue, 30 Jan 2024 19:31:00 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -59,19 +59,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 27 Jan 2024 02:50:16 GMT",
-        "MS-CV": "D36S3VlWAEmlXnOHwDpC7w.0",
+        "Date": "Tue, 30 Jan 2024 19:31:00 GMT",
+        "MS-CV": "yNunCzV5S0SRBRXcoIMqJw.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240127T025015Z-u4eynard2h4875wbsqrxbdprp4000000038g00000000ch3w",
+        "x-azure-ref": "20240130T193100Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cnsz",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "611ms"
+        "X-Processing-Time": "495ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "89029e66-f5b8-430c-b9e5-69b584576b7a",
+            "messageId": "a0d82623-5dde-431c-9dca-4ad07760aeaf",
             "to": "\u002B16041234567"
           }
         ]
@@ -79,6 +79,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "35374970"
+    "RandomSeed": "252585547"
   }
 }

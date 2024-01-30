@@ -10,11 +10,11 @@
         "Content-Type": "application/json",
         "Repeatability-First-Sent": "Sanitized",
         "Repeatability-Request-ID": "Sanitized",
-        "traceparent": "00-a9fa2fa8b00081c5b22f99933aff4353-51b6bf95f302c109-00",
-        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240126.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
-        "x-ms-client-request-id": "32604b5e7f29160d4be3b8f8dd88fa0e",
+        "traceparent": "00-5ff9cf4fc738777be5d315e1a1633135-8f897d0a9bcdd0b1-00",
+        "User-Agent": "azsdk-net-Communication.Messages/1.0.0-alpha.20240130.1 (.NET 7.0.15; Microsoft Windows 10.0.22631)",
+        "x-ms-client-request-id": "92f18254c09c0509d5e822019fb80271",
         "x-ms-content-sha256": "Sanitized",
-        "x-ms-date": "Sat, 27 Jan 2024 02:50:12 GMT",
+        "x-ms-date": "Tue, 30 Jan 2024 19:30:58 GMT",
         "x-ms-return-client-request-id": "true"
       },
       "RequestBody": {
@@ -31,19 +31,19 @@
         "Connection": "keep-alive",
         "Content-Length": "87",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Sat, 27 Jan 2024 02:50:13 GMT",
-        "MS-CV": "x8g\u002B052BCEWD3N9BTa4O2w.0",
+        "Date": "Tue, 30 Jan 2024 19:30:59 GMT",
+        "MS-CV": "s2GMffNHfkSALs1AnjLe2w.0",
         "Repeatability-Result": "accepted",
         "Request-Context": "appId=",
         "Strict-Transport-Security": "max-age=2592000",
-        "x-azure-ref": "20240127T025012Z-u4eynard2h4875wbsqrxbdprp4000000038g00000000cgyt",
+        "x-azure-ref": "20240130T193058Z-8yckms9b854avctg0mg5k53sbn00000007xg00000000cnkg",
         "X-Cache": "CONFIG_NOCACHE",
-        "X-Processing-Time": "550ms"
+        "X-Processing-Time": "400ms"
       },
       "ResponseBody": {
         "receipts": [
           {
-            "messageId": "6d65e54f-b87a-4b0c-8caf-2d103bdcf279",
+            "messageId": "fed1fc26-9c9d-469b-9b98-d3d8388faf8d",
             "to": "\u002B16041234567"
           }
         ]
@@ -51,6 +51,6 @@
     }
   ],
   "Variables": {
-    "RandomSeed": "2001044880"
+    "RandomSeed": "1745786205"
   }
 }
