@@ -7,7 +7,7 @@ This sample shows how to call GetSeasonAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = await client.GetSeasonAsync("<seasonId>", null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetSeasonAsync with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = await client.GetSeasonAsync("<seasonId>", null);
 
@@ -46,7 +46,7 @@ This sample shows how to call GetSeason and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = client.GetSeason("<seasonId>", null);
 
@@ -57,7 +57,7 @@ This sample shows how to call GetSeason with all parameters and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = client.GetSeason("<seasonId>", null);
 
@@ -85,7 +85,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<seasonId>", content);
@@ -97,7 +97,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -140,7 +140,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<seasonId>", content);
@@ -152,7 +152,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -195,7 +195,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = await client.DeleteAsync("<seasonId>");
 
@@ -205,7 +205,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = await client.DeleteAsync("<seasonId>");
 
@@ -218,7 +218,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = client.Delete("<seasonId>");
 
@@ -228,7 +228,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 Response response = client.Delete("<seasonId>");
 
@@ -241,7 +241,7 @@ This sample shows how to call GetSeasonsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 await foreach (BinaryData item in client.GetSeasonsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -253,7 +253,7 @@ This sample shows how to call GetSeasonsAsync with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 await foreach (BinaryData item in client.GetSeasonsAsync(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -282,7 +282,7 @@ This sample shows how to call GetSeasons and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 foreach (BinaryData item in client.GetSeasons(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -294,7 +294,7 @@ This sample shows how to call GetSeasons with all parameters and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient(apiVersion: "2022-11-01-preview");
+Seasons client = new FarmBeatsClient(endpoint, credential).GetSeasonsClient();
 
 foreach (BinaryData item in client.GetSeasons(DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), new int[] { 1234 }, new string[] { "<seasonIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {

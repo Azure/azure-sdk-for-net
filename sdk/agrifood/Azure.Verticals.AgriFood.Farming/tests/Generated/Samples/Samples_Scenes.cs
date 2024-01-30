@@ -26,7 +26,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = client.Download("<filePath>", null);
 
@@ -43,7 +43,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = await client.DownloadAsync("<filePath>", null);
 
@@ -60,7 +60,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = client.Download("<filePath>", null);
 
@@ -77,7 +77,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = await client.DownloadAsync("<filePath>", null);
 
@@ -94,7 +94,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>", null);
 
@@ -112,7 +112,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>", null);
 
@@ -130,7 +130,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = client.GetSatelliteDataIngestionJobDetails("<jobId>", null);
 
@@ -166,7 +166,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = await client.GetSatelliteDataIngestionJobDetailsAsync("<jobId>", null);
 
@@ -202,7 +202,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -227,7 +227,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -252,7 +252,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -313,7 +313,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -374,7 +374,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
 
@@ -394,7 +394,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
 
@@ -414,7 +414,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = client.GetStacFeature("Sentinel_2_L2A", "<featureId>", null);
 
@@ -444,7 +444,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             Response response = await client.GetStacFeatureAsync("Sentinel_2_L2A", "<featureId>", null);
 
@@ -474,7 +474,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
             {
@@ -489,7 +489,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", null, null, null, null, null, null, null, null, null, null))
             {
@@ -504,7 +504,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             foreach (BinaryData item in client.GetScenes("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
             {
@@ -533,7 +533,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             await foreach (BinaryData item in client.GetScenesAsync("<provider>", "<partyId>", "<boundaryId>", "<source>", DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 123.45, 123.45, new string[] { "<imageNames>" }, new double[] { 123.45 }, new string[] { "<imageFormats>" }, 1234, "<skipToken>", null))
             {
@@ -562,7 +562,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -589,7 +589,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -616,7 +616,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -683,7 +683,7 @@ new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient(apiVersion: "2022-11-01-preview");
+            Scenes client = new FarmBeatsClient(endpoint, credential).GetScenesClient();
 
             using RequestContent content = RequestContent.Create(new
             {

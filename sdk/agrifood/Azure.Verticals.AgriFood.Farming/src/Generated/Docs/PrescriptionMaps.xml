@@ -7,7 +7,7 @@ This sample shows how to call GetPrescriptionMapAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = await client.GetPrescriptionMapAsync("<partyId>", "<prescriptionMapId>", null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetPrescriptionMapAsync with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = await client.GetPrescriptionMapAsync("<partyId>", "<prescriptionMapId>", null);
 
@@ -47,7 +47,7 @@ This sample shows how to call GetPrescriptionMap and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = client.GetPrescriptionMap("<partyId>", "<prescriptionMapId>", null);
 
@@ -58,7 +58,7 @@ This sample shows how to call GetPrescriptionMap with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = client.GetPrescriptionMap("<partyId>", "<prescriptionMapId>", null);
 
@@ -87,7 +87,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<prescriptionMapId>", content);
@@ -99,7 +99,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -143,7 +143,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<prescriptionMapId>", content);
@@ -155,7 +155,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -199,7 +199,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<prescriptionMapId>");
 
@@ -209,7 +209,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<prescriptionMapId>");
 
@@ -222,7 +222,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = client.Delete("<partyId>", "<prescriptionMapId>");
 
@@ -232,7 +232,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = client.Delete("<partyId>", "<prescriptionMapId>");
 
@@ -245,7 +245,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -258,7 +258,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -283,7 +283,7 @@ This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -296,7 +296,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -321,7 +321,7 @@ This sample shows how to call GetPrescriptionMapsByPartyIdAsync and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 await foreach (BinaryData item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -333,7 +333,7 @@ This sample shows how to call GetPrescriptionMapsByPartyIdAsync with all paramet
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 await foreach (BinaryData item in client.GetPrescriptionMapsByPartyIdAsync("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -363,7 +363,7 @@ This sample shows how to call GetPrescriptionMapsByPartyId and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 foreach (BinaryData item in client.GetPrescriptionMapsByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -375,7 +375,7 @@ This sample shows how to call GetPrescriptionMapsByPartyId with all parameters a
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 foreach (BinaryData item in client.GetPrescriptionMapsByPartyId("<partyId>", new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -405,7 +405,7 @@ This sample shows how to call GetPrescriptionMapsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 await foreach (BinaryData item in client.GetPrescriptionMapsAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -417,7 +417,7 @@ This sample shows how to call GetPrescriptionMapsAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 await foreach (BinaryData item in client.GetPrescriptionMapsAsync(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -447,7 +447,7 @@ This sample shows how to call GetPrescriptionMaps and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 foreach (BinaryData item in client.GetPrescriptionMaps(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -459,7 +459,7 @@ This sample shows how to call GetPrescriptionMaps with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 foreach (BinaryData item in client.GetPrescriptionMaps(new string[] { "<types>" }, new string[] { "<cropIds>" }, new string[] { "<seasonIds>" }, new string[] { "<fieldIds>" }, new string[] { "<sources>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -489,7 +489,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", null);
 BinaryData responseData = operation.Value;
@@ -503,7 +503,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", null);
 BinaryData responseData = operation.Value;
@@ -529,7 +529,7 @@ This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", null);
 BinaryData responseData = operation.Value;
@@ -543,7 +543,7 @@ This sample shows how to call CreateCascadeDeleteJob with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient(apiVersion: "2022-11-01-preview");
+PrescriptionMaps client = new FarmBeatsClient(endpoint, credential).GetPrescriptionMapsClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<prescriptionMapId>", null);
 BinaryData responseData = operation.Value;

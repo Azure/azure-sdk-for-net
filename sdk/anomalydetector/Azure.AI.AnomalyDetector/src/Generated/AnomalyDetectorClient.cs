@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -20,6 +21,7 @@ namespace Azure.AI.AnomalyDetector
         private readonly AzureKeyCredential _keyCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -61,28 +63,22 @@ namespace Azure.AI.AnomalyDetector
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of Univariate. </summary>
-        /// <param name="apiVersion"> Api Version. Allowed values: "v1.1". </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Univariate GetUnivariateClient(string apiVersion = "v1.1")
-        {
-            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
+        private Univariate _cachedUnivariate;
+        private Multivariate _cachedMultivariate;
 
-            return new Univariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
+        /// <summary> Initializes a new instance of Univariate. </summary>
+        public virtual Univariate GetUnivariateClient()
+        {
+            return Volatile.Read(ref _cachedUnivariate) ?? Interlocked.CompareExchange(ref _cachedUnivariate, new Univariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, _apiVersion), null) ?? _cachedUnivariate;
         }
 
         /// <summary> Initializes a new instance of Multivariate. </summary>
-        /// <param name="apiVersion"> Api Version. Allowed values: "v1.1". </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="apiVersion"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Multivariate GetMultivariateClient(string apiVersion = "v1.1")
+        public virtual Multivariate GetMultivariateClient()
         {
-            Argument.AssertNotNullOrEmpty(apiVersion, nameof(apiVersion));
-
-            return new Multivariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedMultivariate) ?? Interlocked.CompareExchange(ref _cachedMultivariate, new Multivariate(ClientDiagnostics, _pipeline, _keyCredential, _endpoint, _apiVersion), null) ?? _cachedMultivariate;
         }
     }
 }

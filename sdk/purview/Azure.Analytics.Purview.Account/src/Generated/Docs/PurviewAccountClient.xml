@@ -7,7 +7,7 @@ This sample shows how to call GetAccountPropertiesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = await client.GetAccountPropertiesAsync(null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetAccountPropertiesAsync with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = await client.GetAccountPropertiesAsync(null);
 
@@ -69,7 +69,7 @@ This sample shows how to call GetAccountProperties and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = client.GetAccountProperties(null);
 
@@ -80,7 +80,7 @@ This sample shows how to call GetAccountProperties with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = client.GetAccountProperties(null);
 
@@ -131,7 +131,7 @@ This sample shows how to call UpdateAccountPropertiesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.UpdateAccountPropertiesAsync(content);
@@ -143,7 +143,7 @@ This sample shows how to call UpdateAccountPropertiesAsync with all request cont
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -198,7 +198,7 @@ This sample shows how to call UpdateAccountProperties and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.UpdateAccountProperties(content);
@@ -210,7 +210,7 @@ This sample shows how to call UpdateAccountProperties with all request content a
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -265,7 +265,7 @@ This sample shows how to call GetAccessKeysAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = await client.GetAccessKeysAsync(null);
 
@@ -276,7 +276,7 @@ This sample shows how to call GetAccessKeysAsync with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = await client.GetAccessKeysAsync(null);
 
@@ -291,7 +291,7 @@ This sample shows how to call GetAccessKeys and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = client.GetAccessKeys(null);
 
@@ -302,7 +302,7 @@ This sample shows how to call GetAccessKeys with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 Response response = client.GetAccessKeys(null);
 
@@ -317,7 +317,7 @@ This sample shows how to call RegenerateAccessKeyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.RegenerateAccessKeyAsync(content);
@@ -329,7 +329,7 @@ This sample shows how to call RegenerateAccessKeyAsync with all request content 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -348,7 +348,7 @@ This sample shows how to call RegenerateAccessKey and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.RegenerateAccessKey(content);
@@ -360,7 +360,7 @@ This sample shows how to call RegenerateAccessKey with all request content and p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -379,7 +379,7 @@ This sample shows how to call GetCollectionsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 await foreach (BinaryData item in client.GetCollectionsAsync(null, null))
 {
@@ -391,7 +391,7 @@ This sample shows how to call GetCollectionsAsync with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 await foreach (BinaryData item in client.GetCollectionsAsync("<skipToken>", null))
 {
@@ -417,7 +417,7 @@ This sample shows how to call GetCollections and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 foreach (BinaryData item in client.GetCollections(null, null))
 {
@@ -429,7 +429,7 @@ This sample shows how to call GetCollections with all parameters and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 foreach (BinaryData item in client.GetCollections("<skipToken>", null))
 {
@@ -455,7 +455,7 @@ This sample shows how to call GetResourceSetRulesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 await foreach (BinaryData item in client.GetResourceSetRulesAsync(null, null))
 {
@@ -467,7 +467,7 @@ This sample shows how to call GetResourceSetRulesAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 await foreach (BinaryData item in client.GetResourceSetRulesAsync("<skipToken>", null))
 {
@@ -566,7 +566,7 @@ This sample shows how to call GetResourceSetRules and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 foreach (BinaryData item in client.GetResourceSetRules(null, null))
 {
@@ -578,7 +578,7 @@ This sample shows how to call GetResourceSetRules with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 TokenCredential credential = new DefaultAzureCredential();
-PurviewAccountClient client = new PurviewAccountClient(endpoint, credential);
+PurviewAccountClient client = new PurviewAccountClient(endpoint, null, credential);
 
 foreach (BinaryData item in client.GetResourceSetRules("<skipToken>", null))
 {
