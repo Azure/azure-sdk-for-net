@@ -22,10 +22,14 @@ internal class StructuredMessageEncodingStream : Stream
     private readonly int _segmentContentLength;
 
     private readonly StructuredMessage.Flags _flags;
-    private bool UseCrcSegment => _flags.HasFlag(StructuredMessage.Flags.CrcSegment);
-
     private bool _disposed;
 
+    private bool UseCrcSegment => _flags.HasFlag(StructuredMessage.Flags.CrcSegment);
+    private readonly StorageCrc64HashAlgorithm _runningCrc;
+    private readonly byte[] _runningCrcCheckpoints;
+    private int _latestSegmentCrcd = 0;
+
+    #region Segments
     /// <summary>
     /// Gets the 1-indexed segment number the underlying stream is currently positioned in.
     /// 1-indexed to match segment labelling as specified by SM spec.
@@ -60,7 +64,12 @@ internal class StructuredMessageEncodingStream : Stream
     /// </summary>
     private int SegmentTotalLength => _segmentHeaderLength + _segmentContentLength + _segmentFooterLength;
 
-    private int TotalSegments => (int)Math.Ceiling(_innerStream.Length / (float)_segmentContentLength);
+    private int TotalSegments => GetTotalSegments(_innerStream, _segmentContentLength);
+    private static int GetTotalSegments(Stream innerStream, long segmentContentLength)
+    {
+        return (int)Math.Ceiling(innerStream.Length / (float)segmentContentLength);
+    }
+    #endregion
 
     public override bool CanRead => true;
 
@@ -182,14 +191,23 @@ internal class StructuredMessageEncodingStream : Stream
         // real world scenarios will probably use a minimum of tens of KB
         Argument.AssertInRange(segmentContentLength, 2, int.MaxValue, nameof(segmentContentLength));
 
-        _innerStream = innerStream;
-        _segmentContentLength = segmentContentLength;
         _flags = flags;
+        _segmentContentLength = segmentContentLength;
 
         _streamHeaderLength = StructuredMessage.V1_0.StreamHeaderLength;
         _streamFooterLength = 0;
         _segmentHeaderLength = StructuredMessage.V1_0.SegmentHeaderLength;
         _segmentFooterLength = UseCrcSegment ? StructuredMessage.Crc64Length : 0;
+
+        if (UseCrcSegment)
+        {
+            _runningCrc = StorageCrc64HashAlgorithm.Create();
+            _runningCrcCheckpoints = ArrayPool<byte>.Shared.Rent(
+                GetTotalSegments(innerStream, segmentContentLength) * StructuredMessage.Crc64Length);
+            innerStream = ChecksumCalculatingStream.GetReadStream(innerStream, span => _runningCrc.Append(span));
+        }
+
+        _innerStream = innerStream;
     }
 
     #region Write
@@ -373,7 +391,14 @@ internal class StructuredMessageEncodingStream : Stream
         }
 
         using IDisposable _ = StructuredMessage.V1_0.GetSegmentFooterBytes(
-            ArrayPool<byte>.Shared, out Memory<byte> headerBytes, crc64: UseCrcSegment ? new byte[8] : default); //TODO
+            ArrayPool<byte>.Shared,
+            out Memory<byte> headerBytes,
+            crc64: UseCrcSegment
+                ? new Span<byte>(
+                    _runningCrcCheckpoints,
+                    (CurrentEncodingSegment-1) * _runningCrc.HashLengthInBytes,
+                    _runningCrc.HashLengthInBytes)
+                : default);
         headerBytes.Slice(_currentRegionPosition, read).Span.CopyTo(buffer);
         _currentRegionPosition += read;
 
@@ -397,6 +422,14 @@ internal class StructuredMessageEncodingStream : Stream
         {
             _currentRegion = SMRegion.SegmentFooter;
             _currentRegionPosition = 0;
+            if (UseCrcSegment && CurrentEncodingSegment - 1 == _latestSegmentCrcd)
+            {
+                _runningCrc.GetCurrentHash(new Span<byte>(
+                    _runningCrcCheckpoints,
+                    _latestSegmentCrcd * _runningCrc.HashLengthInBytes,
+                    _runningCrc.HashLengthInBytes));
+                _latestSegmentCrcd++;
+            }
         }
     }
 

@@ -100,7 +100,7 @@ namespace Azure.Storage.Tests
                 segmentLength: dataLength);
             if (flags.HasFlag(Flags.CrcSegment))
             {
-                V1_0.WriteSegmentFooter(expectedFooter, new byte[Crc64Length]); // TODO actual crc
+                V1_0.WriteSegmentFooter(expectedFooter, CrcInline(data));
             }
 
             Stream encodingStream = new StructuredMessageEncodingStream(new MemoryStream(data), 1024, flags);
@@ -157,8 +157,9 @@ namespace Azure.Storage.Tests
                     .SequenceEqual(new Span<byte>(data, (segNum - 1) * segmentLength, segContentLength)));
                 if (flags.HasFlag(Flags.CrcSegment))
                 {
+                    int offset = (segNum - 1) * segmentLength;
                     Assert.That(new Span<byte>(encodedData, segOffset + V1_0.SegmentHeaderLength + segContentLength, Crc64Length)
-                        .SequenceEqual(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 })); // TODO
+                        .SequenceEqual(CrcInline(new Span<byte>(data, 0, offset + Math.Min(segmentLength, data.Length - offset)))));
                 }
             }
         }
@@ -240,6 +241,13 @@ namespace Azure.Storage.Tests
         {
             Assert.That(BinaryPrimitives.ReadInt16LittleEndian(actual.Slice(0, 2)), Is.EqualTo((short) segmentNum));
             Assert.That(BinaryPrimitives.ReadInt64LittleEndian(actual.Slice(2, 8)), Is.EqualTo(contentLength));
+        }
+
+        private static byte[] CrcInline(ReadOnlySpan<byte> data)
+        {
+            var crc = StorageCrc64HashAlgorithm.Create();
+            crc.Append(data);
+            return crc.GetCurrentHash();
         }
     }
 }
