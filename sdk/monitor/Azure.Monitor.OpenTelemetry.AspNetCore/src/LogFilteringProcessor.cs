@@ -6,21 +6,21 @@ using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore
 {
-    internal class LogFilteringProcessor : BaseProcessor<LogRecord>
+    internal class LogFilteringProcessor : BatchLogRecordExportProcessor
     {
         private readonly bool _enableSampling;
         private readonly BaseProcessor<LogRecord> _processor;
 
-        public LogFilteringProcessor(BaseProcessor<LogRecord> processor)
+        public LogFilteringProcessor(BaseExporter<LogRecord> exporter)
+            : base(exporter)
         {
-            _processor = processor;
         }
 
         public override void OnEnd(LogRecord logRecord)
         {
             if (logRecord.SpanId == default || logRecord.TraceFlags == ActivityTraceFlags.Recorded)
             {
-                _processor.OnEnd(logRecord);
+                base.OnEnd(logRecord);
             }
         }
 

@@ -137,7 +137,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                         {
                             var azureMonitorExporterOptions = new AzureMonitorExporterOptions();
                             azureMonitorOptions.SetValueToExporterOptions(azureMonitorExporterOptions);
-                            loggingOptions.AddProcessor(new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
+                            loggingOptions.AddProcessor(new LogFilteringProcessor(new AzureMonitorLogExporter(azureMonitorExporterOptions)));
                         }
                         else
                         {
