@@ -17,7 +17,6 @@ namespace Azure.Core
 {
     internal class NextLinkOperationImplementation : IOperation
     {
-        private const string RehydrationTokenVersion = "1.0.0";
         private const string ApiVersionParam = "api-version";
         private static readonly string[] FailureStates = { "failed", "canceled" };
         private static readonly string[] SuccessStates = { "succeeded" };
@@ -138,14 +137,14 @@ namespace Azure.Core
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia)
         {
-            var parameters = new object?[] { null, RehydrationTokenVersion, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia };
+            var parameters = new object?[] { null, null, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia };
             var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
             return rehydrationToken is null ? string.Empty : ModelReaderWriter.Write(rehydrationToken).ToString();
         }
 
         public string GetRehydrationToken()
         {
-            var parameters = new object?[] { null, RehydrationTokenVersion, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia };
+            var parameters = new object?[] { null, null, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia };
             var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
             return rehydrationToken is null ? string.Empty : ModelReaderWriter.Write(rehydrationToken).ToString();
         }
