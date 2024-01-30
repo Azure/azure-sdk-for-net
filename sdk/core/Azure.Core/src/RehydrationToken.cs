@@ -8,9 +8,9 @@ using System;
 namespace Azure.Core
 {
     /// <summary>
-    /// xxx
+    /// Represents a token that can be used to rehydrate a long-running operation.
     /// </summary>
-    public partial struct RehydrationToken
+    public readonly partial struct RehydrationToken
     {
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
@@ -20,7 +20,7 @@ namespace Azure.Core
 
         internal string Version { get; } = "1.0.0";
 
-        internal HeaderSource HeaderSource { get; }
+        internal string HeaderSource { get; }
 
         internal string NextRequestUri { get; }
 
@@ -34,10 +34,13 @@ namespace Azure.Core
 
         internal OperationFinalStateVia FinalStateVia { get; }
 
-        internal RehydrationToken(Guid? id, string version, HeaderSource headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, bool originalResponseHasLocation, string? lastKnownLocation, OperationFinalStateVia finalStateVia)
+        internal RehydrationToken(Guid? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, bool originalResponseHasLocation, string? lastKnownLocation, OperationFinalStateVia finalStateVia)
         {
             Id = id;
-            Version = version;
+            if (version is not null)
+            {
+                Version = version;
+            }
             HeaderSource = headerSource;
             NextRequestUri = nextRequestUri;
             InitialUri = initialUri;

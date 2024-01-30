@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningVirtualMachineProperties : IUtf8JsonSerializable
+    public partial class MachineLearningVirtualMachineProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningVirtualMachineProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningVirtualMachineProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningVirtualMachineProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualMachineSize))
             {
@@ -53,11 +64,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("isNotebookInstanceCompute"u8);
                 writer.WriteBooleanValue(IsNotebookInstanceCompute.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningVirtualMachineProperties DeserializeMachineLearningVirtualMachineProperties(JsonElement element)
+        MachineLearningVirtualMachineProperties IJsonModel<MachineLearningVirtualMachineProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningVirtualMachineProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningVirtualMachineProperties DeserializeMachineLearningVirtualMachineProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -68,6 +108,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Optional<IPAddress> address = default;
             Optional<MachineLearningVmSshCredentials> administratorAccount = default;
             Optional<bool> isNotebookInstanceCompute = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachineSize"u8))
@@ -121,8 +163,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     isNotebookInstanceCompute = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningVirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), Optional.ToNullable(notebookServerPort), address.Value, administratorAccount.Value, Optional.ToNullable(isNotebookInstanceCompute));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MachineLearningVirtualMachineProperties(virtualMachineSize.Value, Optional.ToNullable(sshPort), Optional.ToNullable(notebookServerPort), address.Value, administratorAccount.Value, Optional.ToNullable(isNotebookInstanceCompute), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningVirtualMachineProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningVirtualMachineProperties IPersistableModel<MachineLearningVirtualMachineProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVirtualMachineProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningVirtualMachineProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningVirtualMachineProperties)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningVirtualMachineProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

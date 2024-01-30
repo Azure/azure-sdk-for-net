@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> Trial component definition. </summary>
     public partial class MachineLearningTrialComponent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MachineLearningTrialComponent"/>. </summary>
         /// <param name="command"> [Required] The command to execute on startup of the job. eg. "python train.py". </param>
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
@@ -39,7 +71,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="environmentId"> [Required] The ARM resource ID of the Environment specification for the job. </param>
         /// <param name="environmentVariables"> Environment variables included in the job. </param>
         /// <param name="resources"> Compute Resource configuration for the job. </param>
-        internal MachineLearningTrialComponent(ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, MachineLearningJobResourceConfiguration resources)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningTrialComponent(ResourceIdentifier codeId, string command, MachineLearningDistributionConfiguration distribution, ResourceIdentifier environmentId, IDictionary<string, string> environmentVariables, MachineLearningJobResourceConfiguration resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CodeId = codeId;
             Command = command;
@@ -47,6 +80,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
             Resources = resources;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningTrialComponent"/> for deserialization. </summary>
+        internal MachineLearningTrialComponent()
+        {
         }
 
         /// <summary> ARM resource ID of the code asset. </summary>

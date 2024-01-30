@@ -5,25 +5,63 @@
 
 #nullable disable
 
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System;
+
 namespace Azure.ResourceManager.HDInsight.Models
 {
     /// <summary> Gateway settings. </summary>
     public partial class HDInsightClusterGatewaySettings
     {
-        /// <summary> Initializes a new instance of HDInsightClusterGatewaySettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterGatewaySettings"/>. </summary>
         internal HDInsightClusterGatewaySettings()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightClusterGatewaySettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightClusterGatewaySettings"/>. </summary>
         /// <param name="isCredentialEnabled"> Indicates whether or not the gateway settings based authorization is enabled. </param>
         /// <param name="userName"> The gateway settings user name. </param>
         /// <param name="password"> The gateway settings user password. </param>
-        internal HDInsightClusterGatewaySettings(bool? isCredentialEnabled, string userName, string password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightClusterGatewaySettings(bool? isCredentialEnabled, string userName, string password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsCredentialEnabled = isCredentialEnabled;
             UserName = userName;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates whether or not the gateway settings based authorization is enabled. </summary>

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The UnknownModelPerformanceMetricThresholdBase. </summary>
@@ -13,9 +16,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="UnknownModelPerformanceMetricThresholdBase"/>. </summary>
         /// <param name="modelType"> [Required] Specifies the data type of the metric threshold. </param>
         /// <param name="threshold"> The threshold value. If null, a default value will be set depending on the selected metric. </param>
-        internal UnknownModelPerformanceMetricThresholdBase(MonitoringModelType modelType, MonitoringThreshold threshold) : base(modelType, threshold)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownModelPerformanceMetricThresholdBase(MonitoringModelType modelType, MonitoringThreshold threshold, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(modelType, threshold, serializedAdditionalRawData)
         {
             ModelType = modelType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownModelPerformanceMetricThresholdBase"/> for deserialization. </summary>
+        internal UnknownModelPerformanceMetricThresholdBase()
+        {
         }
     }
 }
