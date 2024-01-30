@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0 (2023-31-01)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
 
