@@ -28,7 +28,6 @@
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
-	  <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
@@ -73,8 +72,8 @@
     <Compile Include="Shared\OperationFinalStateVia.cs" />
     <Compile Include="Shared\OperationInternal.cs" />
     <Compile Include="Shared\OperationInternalOfT.cs" />
-	  <Compile Include="Shared\OperationFinalStateVia.cs" />
-	  <Compile Include="Shared\Optional.cs" />
+    <Compile Include="Shared\OperationFinalStateVia.cs" />
+    <Compile Include="Shared\Optional.cs" />
     <Compile Include="Shared\SequentialDelayStrategy.cs" />
     <Compile Include="Shared\SerializationConstructorAttribute.cs" />
     <Compile Include="Shared\TaskExtensions.cs" />
