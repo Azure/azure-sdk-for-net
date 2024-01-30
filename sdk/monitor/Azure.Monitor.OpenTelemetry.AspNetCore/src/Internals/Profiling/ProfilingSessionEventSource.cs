@@ -4,7 +4,7 @@
 
 using System.Diagnostics.Tracing;
 
-namespace Azure.Monitor.OpenTelemetry
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
 {
     /// <summary>
     /// An EventSource that can be enabled by profilers when profiling is
@@ -20,7 +20,7 @@ namespace Azure.Monitor.OpenTelemetry
     /// </summary>
     /// <remarks>
     /// PerfView instructions:
-    /// <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /Providers=/Providers:"*Azure-Monitor-ProfilingSession:::SessionId=SESSIONID"</code>
+    /// <code>PerfView.exe collect -MaxCollectSec:300 -NoGui /Providers:"*Azure-Monitor-ProfilingSession:::SessionId=SESSIONID"</code>
     /// Dotnet-Trace instructions:
     /// <code>dotnet-trace collect -p PID --providers Azure-Monitor-ProfilingSession:::SessionId=SESSIONID</code>
     /// </remarks>

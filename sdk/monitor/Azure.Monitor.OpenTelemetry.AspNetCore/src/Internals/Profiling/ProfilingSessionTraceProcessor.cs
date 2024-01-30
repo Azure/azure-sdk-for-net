@@ -4,7 +4,7 @@
 
 using OpenTelemetry;
 
-namespace Azure.Monitor.OpenTelemetry
+namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling
 {
     /// <summary>
     /// An OpenTelemetry trace processor that tags activities with a session ID

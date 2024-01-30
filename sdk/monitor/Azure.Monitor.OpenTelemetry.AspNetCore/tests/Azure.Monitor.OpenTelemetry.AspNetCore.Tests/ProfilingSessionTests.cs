@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using Azure.Core.TestFramework;
+using Azure.Monitor.OpenTelemetry.AspNetCore.Internals.Profiling;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Trace;
 using Xunit;
