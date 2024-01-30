@@ -131,7 +131,7 @@ namespace Azure.Core
         {
             // FinalOperation represents operation that is in final state and can't be updated.
             // It implements IOperation<T> and throws exception when UpdateStateAsync is called.
-            _operation = new FinalOperation(finalState.RehydrationToken);
+            _operation = new FinalOperation(finalState.RehydrationToken is null ? null : ModelReaderWriter.Write(finalState.RehydrationToken).ToString());
             _rawResponse = finalState.RawResponse;
             _stateLock = new AsyncLockWithValue<OperationState<T>>(finalState);
         }
@@ -285,7 +285,7 @@ namespace Azure.Core
                 }
 
                 asyncLock.SetValue(state);
-                return GetResponseFromState(state, GetRequestMethod());
+                return GetResponseFromState(state, GetRequestMethod(_operation.GetRehydrationToken()));
             }
             catch (Exception e)
             {
@@ -294,17 +294,17 @@ namespace Azure.Core
             }
         }
 
-        private RequestMethod? GetRequestMethod()
+        private RequestMethod? GetRequestMethod(string? rehydrationToken)
         {
-            var rehydrationToken = _operation.GetRehydrationToken();
             if (rehydrationToken is null)
             {
                 return null;
             }
-            return ModelReaderWriter.Read<RehydrationToken>(new BinaryData(rehydrationToken)).RequestMethod;
+            var lroDetails = BinaryData.FromObjectAsJson(rehydrationToken).ToObjectFromJson<Dictionary<string, string>>();
+            return new RequestMethod(lroDetails["RequestMethod"]);
         }
 
-        public virtual RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
+        public virtual string? GetRehydrationToken() => _operation.GetRehydrationToken();
 
         private static Response GetResponseFromState(OperationState<T> state, RequestMethod? requestmethod = null)
         {
@@ -324,9 +324,9 @@ namespace Azure.Core
 
         private class FinalOperation : IOperation<T>
         {
-            private RehydrationToken? _rehydrationToken;
+            private string? _rehydrationToken;
 
-            public FinalOperation(RehydrationToken? rehydrationToken)
+            public FinalOperation(string? rehydrationToken)
             {
                 _rehydrationToken = rehydrationToken;
             }
@@ -334,7 +334,7 @@ namespace Azure.Core
             public ValueTask<OperationState<T>> UpdateStateAsync(bool async, CancellationToken cancellationToken)
                 => throw new NotSupportedException("The operation has already completed");
 
-            public RehydrationToken? GetRehydrationToken() => _rehydrationToken;
+            public string? GetRehydrationToken() => _rehydrationToken;
         }
     }
 
@@ -379,7 +379,7 @@ namespace Azure.Core
         /// <summary>
         /// To get the token of the operation for rehydration purpose.
         /// </summary>
-        RehydrationToken? GetRehydrationToken();
+        string? GetRehydrationToken();
     }
 
     /// <summary>

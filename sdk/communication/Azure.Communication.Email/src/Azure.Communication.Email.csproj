@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-	<PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->

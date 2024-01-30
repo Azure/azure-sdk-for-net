@@ -124,7 +124,7 @@ namespace Azure.Core
         protected override async ValueTask<Response> UpdateStatusAsync(bool async, CancellationToken cancellationToken) =>
             async ? await _internalOperation.UpdateStatusAsync(cancellationToken).ConfigureAwait(false) : _internalOperation.UpdateStatus(cancellationToken);
 
-        public virtual RehydrationToken? GetRehydrationToken()
+        public virtual string? GetRehydrationToken()
         {
             return _internalOperation.GetRehydrationToken();
         }
@@ -155,7 +155,7 @@ namespace Azure.Core
                 return OperationState<VoidValue>.Failure(state.RawResponse, state.OperationFailedException);
             }
 
-            public RehydrationToken? GetRehydrationToken()
+            public string? GetRehydrationToken()
             {
                 return _operation.GetRehydrationToken();
             }
@@ -201,7 +201,7 @@ namespace Azure.Core
         /// <summary>
         /// To get the token of the operation for rehydration purpose.
         /// </summary>
-        RehydrationToken? GetRehydrationToken();
+        string? GetRehydrationToken();
     }
 
     /// <summary>

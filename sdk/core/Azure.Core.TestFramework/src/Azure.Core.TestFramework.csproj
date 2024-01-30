@@ -23,7 +23,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Core" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets" />
     <PackageReference Include="Microsoft.AspNetCore.Http" />
-	  <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.IO.Pipelines" />
   </ItemGroup>
   <!-- Import Azure.Core shared source -->

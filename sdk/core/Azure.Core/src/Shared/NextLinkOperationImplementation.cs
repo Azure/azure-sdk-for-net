@@ -7,6 +7,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -79,7 +80,7 @@ namespace Azure.Core
             string id,
             string? apiVersionOverride = null)
         {
-            var lroDetails = BinaryData.FromBytes(Convert.FromBase64String(id)).ToObjectFromJson<Dictionary<string, string>>();
+            var lroDetails = BinaryData.FromObjectAsJson(id).ToObjectFromJson<Dictionary<string, string>>();
             if (!Uri.TryCreate(lroDetails["InitialUri"], UriKind.Absolute, out var startRequestUri))
                 throw new InvalidOperationException("Invalid initial URI");
             if (!lroDetails.TryGetValue("NextRequestUri", out var nextRequestUri))
@@ -128,18 +129,26 @@ namespace Azure.Core
             _apiVersion = apiVersion;
         }
 
-        internal static RehydrationToken GetRehydrationToken(
+        internal static string GetRehydrationToken(
             RequestMethod requestMethod,
             Uri startRequestUri,
             string nextRequestUri,
-            HeaderSource headerSource,
+            string headerSource,
             bool originalResponseHasLocation,
             string? lastKnownLocation,
             OperationFinalStateVia finalStateVia)
-            => new RehydrationToken(null, RehydrationTokenVersion, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia);
+        {
+            var parameters = new object?[] { null, RehydrationTokenVersion, headerSource, nextRequestUri, startRequestUri.AbsoluteUri, requestMethod, originalResponseHasLocation, lastKnownLocation, finalStateVia };
+            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
+            return rehydrationToken is null ? string.Empty : ModelReaderWriter.Write(rehydrationToken).ToString();
+        }
 
-        public RehydrationToken? GetRehydrationToken()
-            => new RehydrationToken(null, RehydrationTokenVersion, _headerSource, _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia);
+        public string GetRehydrationToken()
+        {
+            var parameters = new object?[] { null, RehydrationTokenVersion, _headerSource.ToString(), _nextRequestUri, _startRequestUri.AbsoluteUri, _requestMethod, _originalResponseHasLocation, _lastKnownLocation, _finalStateVia };
+            var rehydrationToken = Activator.CreateInstance(typeof(RehydrationToken), BindingFlags.NonPublic | BindingFlags.Instance, parameters, null);
+            return rehydrationToken is null ? string.Empty : ModelReaderWriter.Write(rehydrationToken).ToString();
+        }
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
@@ -452,7 +461,7 @@ namespace Azure.Core
 
             public ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken) => new(_operationState);
 
-            public RehydrationToken? GetRehydrationToken() => null;
+            public string? GetRehydrationToken() => null;
         }
 
         private sealed class OperationToOperationOfT<T> : IOperation<T>
@@ -486,7 +495,7 @@ namespace Azure.Core
                 return OperationState<T>.Pending(state.RawResponse);
             }
 
-            public RehydrationToken? GetRehydrationToken() => _operation.GetRehydrationToken();
+            public string? GetRehydrationToken() => _operation.GetRehydrationToken();
         }
     }
 }

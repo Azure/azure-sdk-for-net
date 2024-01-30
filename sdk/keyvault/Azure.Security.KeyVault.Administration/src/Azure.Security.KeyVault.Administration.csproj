@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-	  <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
@@ -32,7 +31,7 @@
     <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)CallerShouldAuditAttribute.cs" LinkBase="Shared\Core" />
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
-	<Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared\Core" />
+	  <Compile Include="$(AzureCoreSharedSources)Base64Url.cs" LinkBase="Shared\Core" />
   </ItemGroup>
 
 </Project>
