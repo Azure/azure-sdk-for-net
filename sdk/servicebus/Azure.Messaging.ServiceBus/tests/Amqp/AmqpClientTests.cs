@@ -47,5 +47,28 @@ namespace Azure.Messaging.ServiceBus.Tests
             Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
             Assert.That(client.ServiceEndpoint.Host, Is.EqualTo(endpoint.Host), "The service endpoint should have used the namespace URI.");
         }
+
+        /// <summary>
+        ///   Verifies functionality of the constructor.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(true, "amqps")]
+        [TestCase(false, "amqp")]
+        public void ConstructorRespectsTheUseTlsOption(bool useTls,
+                                                       string expectedScheme)
+        {
+            var options = new ServiceBusClientOptions
+            {
+                CustomEndpointAddress = new Uri("sb://iam.custom.net"),
+                TransportType = ServiceBusTransportType.AmqpTcp
+            };
+
+            var credential = new Mock<ServiceBusTokenCredential>(Mock.Of<TokenCredential>());
+            var client = new AmqpClient("my.endpoint.com", credential.Object, options, useTls);
+
+            Assert.That(client.ConnectionEndpoint.Host, Is.EqualTo(options.CustomEndpointAddress.Host), "The connection endpoint should have used the custom endpoint URI from the options.");
+            Assert.That(client.ConnectionEndpoint.Scheme, Is.EqualTo(expectedScheme), "The connection endpoint scheme should reflect the TLS setting.");
+        }
     }
 }
