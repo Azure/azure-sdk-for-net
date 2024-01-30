@@ -18,18 +18,32 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<CallMediaRecognitionType> recognitionType = default;
-            Optional<CollectTonesResult> collectTonesResult = default;
-            Optional<DtmfResult> dtmfResult = default;
-            Optional<SpeechResult> speechResult = default;
-            Optional<ChoiceResult> choiceResult = default;
             Optional<string> callConnectionId = default;
             Optional<string> serverCallId = default;
             Optional<string> correlationId = default;
+            Optional<string> operationContext = default;
+            Optional<ResultInformation> resultInformation = default;
+            Optional<CallMediaRecognitionType> recognitionType = default;
+            Optional<DtmfResult> dtmfResult = default;
+            Optional<ChoiceResult> choiceResult = default;
+            Optional<SpeechResult> speechResult = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -53,15 +67,6 @@ namespace Azure.Communication.CallAutomation
                     recognitionType = new CallMediaRecognitionType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("collectTonesResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    collectTonesResult = CollectTonesResult.DeserializeCollectTonesResult(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("dtmfResult"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -69,15 +74,6 @@ namespace Azure.Communication.CallAutomation
                         continue;
                     }
                     dtmfResult = DtmfResult.DeserializeDtmfResult(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("speechResult"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    speechResult = SpeechResult.DeserializeSpeechResult(property.Value);
                     continue;
                 }
                 if (property.NameEquals("choiceResult"u8))
@@ -89,23 +85,17 @@ namespace Azure.Communication.CallAutomation
                     choiceResult = ChoiceResult.DeserializeChoiceResult(property.Value);
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"u8))
+                if (property.NameEquals("speechResult"u8))
                 {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    speechResult = SpeechResult.DeserializeSpeechResult(property.Value);
                     continue;
                 }
             }
-            return new RecognizeCompletedInternal(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, dtmfResult.Value, speechResult.Value, choiceResult.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new RecognizeCompletedInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, recognitionType, dtmfResult.Value, choiceResult.Value, speechResult.Value);
         }
     }
 }

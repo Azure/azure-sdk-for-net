@@ -31,24 +31,17 @@ namespace Azure.Communication.CallAutomation
         /// <param name="incomingCallContext"> The context associated with the call. </param>
         /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
-        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        /// <param name="sourceCallerIdNumber">
-        /// The source caller Id, a phone number, that's will be used when inviting a pstn target.
-        /// Required only when transferring call to PSTN, if this is an incoming voip call.
-        /// </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, PhoneNumberIdentifierModel sourceCallerIdNumber)
+        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, TranscriptionOptionsInternal transcriptionConfiguration)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
             OperationContext = operationContext;
-            MediaStreamingConfiguration = mediaStreamingConfiguration;
-            TranscriptionConfiguration = transcriptionConfiguration;
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
-            SourceCallerIdNumber = sourceCallerIdNumber;
+            TranscriptionConfiguration = transcriptionConfiguration;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -57,18 +50,11 @@ namespace Azure.Communication.CallAutomation
         public string CallbackUri { get; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> Live Transcription Configuration. </summary>
-        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
-        /// <summary>
-        /// The source caller Id, a phone number, that's will be used when inviting a pstn target.
-        /// Required only when transferring call to PSTN, if this is an incoming voip call.
-        /// </summary>
-        public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
+        /// <summary> Live Transcription Configuration. </summary>
+        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
     }
 }

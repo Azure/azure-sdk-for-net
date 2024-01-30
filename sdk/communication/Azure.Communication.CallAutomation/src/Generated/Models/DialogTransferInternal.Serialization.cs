@@ -18,26 +18,31 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> transferType = default;
-            Optional<string> transferDestination = default;
+            Optional<string> callConnectionId = default;
+            Optional<string> serverCallId = default;
+            Optional<string> correlationId = default;
             Optional<string> operationContext = default;
             Optional<ResultInformation> resultInformation = default;
             Optional<DialogInputType> dialogInputType = default;
             Optional<string> dialogId = default;
+            Optional<string> transferType = default;
+            Optional<string> transferDestination = default;
             Optional<object> ivrContext = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("transferType"u8))
+                if (property.NameEquals("callConnectionId"u8))
                 {
-                    transferType = property.Value.GetString();
+                    callConnectionId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transferDestination"u8))
+                if (property.NameEquals("serverCallId"u8))
                 {
-                    transferDestination = property.Value.GetString();
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operationContext"u8))
@@ -68,6 +73,16 @@ namespace Azure.Communication.CallAutomation
                     dialogId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("transferType"u8))
+                {
+                    transferType = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("transferDestination"u8))
+                {
+                    transferDestination = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("ivrContext"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -77,23 +92,8 @@ namespace Azure.Communication.CallAutomation
                     ivrContext = property.Value.GetObject();
                     continue;
                 }
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
             }
-            return new DialogTransferInternal(transferType.Value, transferDestination.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, ivrContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new DialogTransferInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, transferType.Value, transferDestination.Value, ivrContext.Value);
         }
     }
 }
