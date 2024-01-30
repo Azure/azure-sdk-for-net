@@ -25,7 +25,7 @@ namespace Azure.Core.Pipeline
         private readonly Action<HttpWebRequest> _configureRequest;
         private readonly IWebProxy? _environmentProxy;
 
-        private readonly AzureCoreHttpWebRequestTransport _transport;
+        //private readonly AzureCoreHttpWebRequestTransport _transport;
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpWebRequestTransport"/>
@@ -46,16 +46,18 @@ namespace Azure.Core.Pipeline
                 _environmentProxy = webProxy;
             }
 
-            _transport = new(this);
+            //_transport = new(this);
         }
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
-            => _transport.Process(message);
+            //=> _transport.Process(message);
+            => ProcessSyncOrAsync(message, async: false).EnsureCompleted();
 
         /// <inheritdoc />
         public override async ValueTask ProcessAsync(HttpMessage message)
-            => await _transport.ProcessAsync(message).ConfigureAwait(false);
+            //=> await _transport.ProcessAsync(message).ConfigureAwait(false);
+            => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
         private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
         {
