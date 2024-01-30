@@ -78,8 +78,8 @@ public class ClientRetryPolicy : PipelinePolicy
             }
 
             bool shouldRetry = async ?
-                await ShouldRetryAsync(message, thisTryException).ConfigureAwait(false) :
-                ShouldRetry(message, thisTryException);
+                await ShouldRetryInternalAsync(message, thisTryException).ConfigureAwait(false) :
+                ShouldRetryInternal(message, thisTryException);
 
             if (shouldRetry)
             {
@@ -133,13 +133,13 @@ public class ClientRetryPolicy : PipelinePolicy
 
     protected virtual void OnTryComplete(PipelineMessage message) { }
 
-    internal bool ShouldRetry(PipelineMessage message, Exception? exception)
-        => ShouldRetrySyncOrAsync(message, exception, async: false).EnsureCompleted();
+    internal bool ShouldRetryInternal(PipelineMessage message, Exception? exception)
+        => ShouldRetryInternalSyncOrAsync(message, exception, async: false).EnsureCompleted();
 
-    internal async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
-        => await ShouldRetrySyncOrAsync(message, exception, async: true).ConfigureAwait(false);
+    internal async ValueTask<bool> ShouldRetryInternalAsync(PipelineMessage message, Exception? exception)
+        => await ShouldRetryInternalSyncOrAsync(message, exception, async: true).ConfigureAwait(false);
 
-    private async ValueTask<bool> ShouldRetrySyncOrAsync(PipelineMessage message, Exception? exception, bool async)
+    private async ValueTask<bool> ShouldRetryInternalSyncOrAsync(PipelineMessage message, Exception? exception, bool async)
     {
         // If there was no exception and we got a success response, don't retry.
         if (exception is null && message.Response is not null && !message.Response.IsError)
@@ -149,15 +149,15 @@ public class ClientRetryPolicy : PipelinePolicy
 
         if (async)
         {
-            return await ShouldRetryCoreAsync(message, exception).ConfigureAwait(false);
+            return await ShouldRetryAsync(message, exception).ConfigureAwait(false);
         }
         else
         {
-            return ShouldRetryCore(message, exception);
+            return ShouldRetry(message, exception);
         }
     }
 
-    protected virtual bool ShouldRetryCore(PipelineMessage message, Exception? exception)
+    protected virtual bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
         if (message.RetryCount >= _maxRetries)
         {
@@ -175,30 +175,21 @@ public class ClientRetryPolicy : PipelinePolicy
         return isRetriable;
     }
 
-    protected virtual ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
-        => new(ShouldRetryCore(message, exception));
+    protected virtual ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
+        => new(ShouldRetry(message, exception));
 
-    internal TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
-        => GetNextDelayCore(message, tryCount);
-
-    protected virtual TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
+    protected virtual TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {
         // Default implementation is exponential backoff
         return TimeSpan.FromMilliseconds((1 << (tryCount - 1)) * _initialDelay.TotalMilliseconds);
     }
 
-    internal async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-        => await WaitCoreAsync(time, cancellationToken).ConfigureAwait(false);
-
-    protected virtual async Task WaitCoreAsync(TimeSpan time, CancellationToken cancellationToken)
+    protected virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
     {
         await Task.Delay(time, cancellationToken).ConfigureAwait(false);
     }
 
-    internal void Wait(TimeSpan time, CancellationToken cancellationToken)
-        => WaitCore(time, cancellationToken);
-
-    protected virtual void WaitCore(TimeSpan time, CancellationToken cancellationToken)
+    protected virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
     {
         if (cancellationToken.WaitHandle.WaitOne(time))
         {

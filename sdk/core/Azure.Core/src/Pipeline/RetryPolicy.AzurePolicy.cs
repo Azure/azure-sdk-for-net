@@ -58,10 +58,10 @@ public partial class RetryPolicy
             _elapsedTime = (_afterProcess - _beforeProcess) / (double)Stopwatch.Frequency;
         }
 
-        protected override bool ShouldRetryCore(PipelineMessage message, Exception? exception)
+        protected override bool ShouldRetry(PipelineMessage message, Exception? exception)
             => _pipelinePolicy.ShouldRetry(AssertHttpMessage(message), exception);
 
-        protected override async ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
+        protected override async ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
             => await _pipelinePolicy.ShouldRetryAsync(AssertHttpMessage(message), exception).ConfigureAwait(false);
 
         protected override void OnTryComplete(PipelineMessage message)
@@ -77,7 +77,7 @@ public partial class RetryPolicy
             _elapsedTime = default;
         }
 
-        protected override TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
+        protected override TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
         {
             HttpMessage httpMessage = AssertHttpMessage(message);
 
@@ -87,10 +87,10 @@ public partial class RetryPolicy
             return _delayStrategy.GetNextDelay(response, tryCount + 1);
         }
 
-        protected override async Task WaitCoreAsync(TimeSpan time, CancellationToken cancellationToken)
+        protected override async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
             => await _pipelinePolicy.WaitAsync(time, cancellationToken).ConfigureAwait(false);
 
-        protected override void WaitCore(TimeSpan time, CancellationToken cancellationToken)
+        protected override void Wait(TimeSpan time, CancellationToken cancellationToken)
             => _pipelinePolicy.Wait(time, cancellationToken);
 
         private static HttpMessage AssertHttpMessage(PipelineMessage message)
