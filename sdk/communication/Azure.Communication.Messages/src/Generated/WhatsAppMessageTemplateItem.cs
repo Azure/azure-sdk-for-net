@@ -30,20 +30,14 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
         /// <param name="kind"> The type discriminator describing a template type. </param>
-        /// <param name="content">
-        /// WhatsApp platform's template content
-        /// This is the payload returned from WhatsApp
-        /// API.
-        /// </param>
+        /// <param name="content"> WhatsApp platform's template content. This is the payload returned from WhatsApp API. </param>
         internal WhatsAppMessageTemplateItem(string name, string language, MessageTemplateStatus status, CommunicationMessagesChannel kind, BinaryData content) : base(name, language, status, kind)
         {
             Content = content;
         }
 
         /// <summary>
-        /// WhatsApp platform's template content
-        /// This is the payload returned from WhatsApp
-        /// API.
+        /// WhatsApp platform's template content. This is the payload returned from WhatsApp API.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>

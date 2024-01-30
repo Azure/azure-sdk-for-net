@@ -15,25 +15,6 @@ namespace Azure.Communication.Messages
         public static Azure.Communication.Messages.SendMessageResult SendMessageResult(System.Collections.Generic.IEnumerable<Azure.Communication.Messages.MessageReceipt> receipts = null) { throw null; }
         public static Azure.Communication.Messages.Models.Channels.WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, Azure.Communication.Messages.MessageTemplateStatus status = default(Azure.Communication.Messages.MessageTemplateStatus), System.BinaryData content = null) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct CommunicationMessageType : System.IEquatable<Azure.Communication.Messages.CommunicationMessageType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public CommunicationMessageType(string value) { throw null; }
-        public static Azure.Communication.Messages.CommunicationMessageType Image { get { throw null; } }
-        public static Azure.Communication.Messages.CommunicationMessageType Template { get { throw null; } }
-        public static Azure.Communication.Messages.CommunicationMessageType Text { get { throw null; } }
-        public bool Equals(Azure.Communication.Messages.CommunicationMessageType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Communication.Messages.CommunicationMessageType left, Azure.Communication.Messages.CommunicationMessageType right) { throw null; }
-        public static implicit operator Azure.Communication.Messages.CommunicationMessageType (string value) { throw null; }
-        public static bool operator !=(Azure.Communication.Messages.CommunicationMessageType left, Azure.Communication.Messages.CommunicationMessageType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class MediaNotificationContent : Azure.Communication.Messages.NotificationContent
     {
         public MediaNotificationContent(System.Guid channelRegistrationId, System.Collections.Generic.IEnumerable<string> to, System.Uri mediaUri) : base (default(System.Guid), default(System.Collections.Generic.IEnumerable<string>)) { }
@@ -68,10 +49,10 @@ namespace Azure.Communication.Messages
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
         public MessageTemplateClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Communication.Messages.CommunicationMessagesClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Pageable<System.BinaryData> GetTemplates(string channelId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.Pageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplates(string channelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<System.BinaryData> GetTemplatesAsync(string channelId, Azure.RequestContext context) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(string channelId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<System.BinaryData> GetTemplates(string channelId, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.Pageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplates(string channelId, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<System.BinaryData> GetTemplatesAsync(string channelId, int? maxpagesize, Azure.RequestContext context) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Communication.Messages.MessageTemplateItem> GetTemplatesAsync(string channelId, int? maxpagesize = default(int?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MessageTemplateDocument : Azure.Communication.Messages.MessageTemplateValue
     {
@@ -217,9 +198,9 @@ namespace Azure.Communication.Messages.Models.Channels
     }
     public partial class WhatsAppMessageTemplateBindingsButton
     {
-        public WhatsAppMessageTemplateBindingsButton(string refValue) { }
+        public WhatsAppMessageTemplateBindingsButton(string subType, string refValue) { }
         public string RefValue { get { throw null; } }
-        public string SubType { get { throw null; } set { } }
+        public string SubType { get { throw null; } }
     }
     public partial class WhatsAppMessageTemplateBindingsComponent
     {

@@ -567,7 +567,7 @@
      "$id": "71",
      "Name": "mediaUri",
      "SerializedName": "mediaUri",
-     "Description": "A media url for the file. Required if the type is one of the supported media\ntypes, e.g. image",
+     "Description": "A media url for the file. Required if the type is one of the supported media types, e.g. image",
      "Type": {
       "$id": "72",
       "Name": "url",
@@ -761,7 +761,7 @@
    "$id": "92",
    "Name": "MessageTemplateMedia",
    "Namespace": "Azure.Communication.MessagesService",
-   "Description": "The message template's media value information.\nCould be an image, document or\nvideo.",
+   "Description": "The message template's media value information. Could be an image, document or video.",
    "IsNullable": false,
    "Usage": "None",
    "Properties": [
@@ -1242,7 +1242,7 @@
      "$id": "151",
      "Name": "content",
      "SerializedName": "content",
-     "Description": "WhatsApp platform's template content\nThis is the payload returned from WhatsApp\nAPI.",
+     "Description": "WhatsApp platform's template content. This is the payload returned from WhatsApp API.",
      "Type": {
       "$id": "152",
       "Name": "Intrinsic",
@@ -1697,11 +1697,32 @@
       },
       {
        "$id": "200",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Description": "Number of objects to return per page.",
+       "Type": {
+        "$id": "201",
+        "Name": "int32",
+        "Kind": "Int32",
+        "IsNullable": false
+       },
+       "Location": "Query",
+       "IsRequired": false,
+       "IsApiVersion": false,
+       "IsResourceParameter": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "SkipUrlEncoding": false,
+       "Explode": false,
+       "Kind": "Method"
+      },
+      {
+       "$id": "202",
        "Name": "clientRequestId",
        "NameInRequest": "x-ms-client-request-id",
        "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
        "Type": {
-        "$id": "201",
+        "$id": "203",
         "Name": "uuid",
         "Kind": "Guid",
         "IsNullable": false
@@ -1717,11 +1738,11 @@
        "Kind": "Method"
       },
       {
-       "$id": "202",
+       "$id": "204",
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "203",
+        "$id": "205",
         "Name": "String",
         "Kind": "String",
         "IsNullable": false
@@ -1736,9 +1757,9 @@
        "Explode": false,
        "Kind": "Constant",
        "DefaultValue": {
-        "$id": "204",
+        "$id": "206",
         "Type": {
-         "$ref": "203"
+         "$ref": "205"
         },
         "Value": "application/json"
        }
@@ -1746,7 +1767,7 @@
      ],
      "Responses": [
       {
-       "$id": "205",
+       "$id": "207",
        "StatusCodes": [
         200
        ],
@@ -1756,12 +1777,12 @@
        "BodyMediaType": "Json",
        "Headers": [
         {
-         "$id": "206",
+         "$id": "208",
          "Name": "x-ms-client-request-id",
          "NameInResponse": "clientRequestId",
          "Description": "An opaque, globally-unique, client-generated string identifier for the request.",
          "Type": {
-          "$id": "207",
+          "$id": "209",
           "Name": "uuid",
           "Kind": "Guid",
           "IsNullable": false
@@ -1777,7 +1798,7 @@
      "Path": "/messages/channels/{channelId}/templates",
      "BufferResponse": true,
      "Paging": {
-      "$id": "208",
+      "$id": "210",
       "NextLinkName": "nextLink",
       "ItemName": "value"
      },
@@ -1786,19 +1807,19 @@
     }
    ],
    "Protocol": {
-    "$id": "209"
+    "$id": "211"
    },
    "Creatable": true
   }
  ],
  "Auth": {
-  "$id": "210",
+  "$id": "212",
   "ApiKey": {
-   "$id": "211",
+   "$id": "213",
    "Name": "Authorization"
   },
   "OAuth2": {
-   "$id": "212",
+   "$id": "214",
    "Scopes": [
     "https://communication.azure.com/.default"
    ]

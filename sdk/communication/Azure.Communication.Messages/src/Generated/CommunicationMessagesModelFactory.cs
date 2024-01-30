@@ -59,11 +59,7 @@ namespace Azure.Communication.Messages
         /// <param name="name"> The template's name. </param>
         /// <param name="language"> The template's language, in the ISO 639 format, consist of a two-letter language code followed by an optional two-letter country code, e.g., 'en' or 'en_US'. </param>
         /// <param name="status"> The aggregated template status. </param>
-        /// <param name="content">
-        /// WhatsApp platform's template content
-        /// This is the payload returned from WhatsApp
-        /// API.
-        /// </param>
+        /// <param name="content"> WhatsApp platform's template content. This is the payload returned from WhatsApp API. </param>
         /// <returns> A new <see cref="Models.Channels.WhatsAppMessageTemplateItem"/> instance for mocking. </returns>
         public static WhatsAppMessageTemplateItem WhatsAppMessageTemplateItem(string name = null, string language = null, MessageTemplateStatus status = default, BinaryData content = null)
         {
