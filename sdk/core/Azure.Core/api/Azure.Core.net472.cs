@@ -488,7 +488,7 @@ namespace Azure.Core
         public Azure.Core.MessageProcessingContext ProcessingContext { get { throw null; } }
         public new Azure.Core.Request Request { get { throw null; } }
         public new Azure.Response Response { get { throw null; } set { } }
-        public Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
+        public new Azure.Core.ResponseClassifier ResponseClassifier { get { throw null; } set { } }
         public System.IO.Stream? ExtractResponseContent() { throw null; }
         public void SetProperty(string name, object value) { }
         public bool TryGetProperty(string name, out object? value) { throw null; }

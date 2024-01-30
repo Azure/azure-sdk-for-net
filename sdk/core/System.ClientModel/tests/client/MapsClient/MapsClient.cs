@@ -69,7 +69,7 @@ public class MapsClient
     private PipelineMessage CreateGetLocationRequest(string ipAddress, RequestOptions options)
     {
         PipelineMessage message = _pipeline.CreateMessage();
-        message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        message.ResponseClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
         PipelineRequest request = message.Request;
         request.Method = "GET";

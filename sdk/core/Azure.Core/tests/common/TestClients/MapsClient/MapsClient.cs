@@ -71,7 +71,7 @@ public class MapsClient
     {
         HttpMessage message = _pipeline.CreateMessage();
         message.Apply(context);
-        message.MessageClassifier = PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        message.ResponseClassifier = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         Request request = message.Request;
         request.Method = RequestMethod.Get;
