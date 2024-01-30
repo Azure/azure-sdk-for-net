@@ -22,7 +22,7 @@ namespace Azure.Monitor.Query.Tests
         private MetricsQueryClient CreateClient()
         {
             return InstrumentClient(new MetricsQueryClient(
-                TestEnvironment.MetricsEndpoint,
+                new Uri(TestEnvironment.GetMetricsAudience()),
                 TestEnvironment.Credential,
                 InstrumentClientOptions(new MetricsQueryClientOptions()
                 {
