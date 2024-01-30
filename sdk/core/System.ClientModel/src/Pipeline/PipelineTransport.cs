@@ -67,7 +67,7 @@ public abstract class PipelineTransport : PipelinePolicy
         message.Response.SetIsError(ClassifyResponse(message));
         message.Response!.NetworkTimeout = networkTimeout;
 
-        if (message.Response!.ContentStream is not null)
+        if (message.Response!.ContentStream is null)
         {
             // No need to buffer if there is no content stream.
             return;
