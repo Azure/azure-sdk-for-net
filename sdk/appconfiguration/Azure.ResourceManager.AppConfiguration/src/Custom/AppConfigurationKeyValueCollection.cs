@@ -5,11 +5,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
-    public partial class AppConfigurationKeyValueCollection : IEnumerable<AppConfigurationKeyValueResource>, IAsyncEnumerable<AppConfigurationKeyValueResource> // previously this class implemented these interfaces, and it must implement them now (and forever)
+    public partial class AppConfigurationKeyValueCollection : IEnumerable<AppConfigurationKeyValueResource>, IAsyncEnumerable<AppConfigurationKeyValueResource>
     {
         /// <summary>
         /// Lists the key-values for a given configuration store.
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.AppConfiguration
         [Obsolete("This method is obsolete as it never works, it will be removed in a future release", false)]
         public virtual AsyncPageable<AppConfigurationKeyValueResource> GetAllAsync(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            throw null;
+            return AsyncPageable<AppConfigurationKeyValueResource>.FromPages(Enumerable.Empty<Page<AppConfigurationKeyValueResource>>());
         }
 
         /// <summary>
@@ -70,17 +71,19 @@ namespace Azure.ResourceManager.AppConfiguration
         [Obsolete("This method is obsolete as it never works, it will be removed in a future release", false)]
         public virtual Pageable<AppConfigurationKeyValueResource> GetAll(string skipToken = null, CancellationToken cancellationToken = default)
         {
-            throw null;
+            return Pageable<AppConfigurationKeyValueResource>.FromPages(Enumerable.Empty<Page<AppConfigurationKeyValueResource>>());
         }
 
+        [Obsolete("This method is obsolete as it never works, it will be removed in a future release", false)]
         IEnumerator<AppConfigurationKeyValueResource> IEnumerable<AppConfigurationKeyValueResource>.GetEnumerator()
         {
-            yield break;
+            return GetAll().GetEnumerator();
         }
 
+        [Obsolete("This method is obsolete as it never works, it will be removed in a future release", false)]
         IEnumerator IEnumerable.GetEnumerator()
         {
-            yield break;
+            return GetAll().GetEnumerator();
         }
 
         [Obsolete("This method is obsolete as it never works, it will be removed in a future release", false)]
