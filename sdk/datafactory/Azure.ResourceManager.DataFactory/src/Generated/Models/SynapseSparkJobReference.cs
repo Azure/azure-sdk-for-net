@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
         /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, BinaryData referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SparkJobReferenceType = sparkJobReferenceType;
             ReferenceName = referenceName;

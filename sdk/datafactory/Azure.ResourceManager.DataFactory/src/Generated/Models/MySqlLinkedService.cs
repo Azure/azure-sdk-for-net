@@ -52,11 +52,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "MySql";
         }
 
-        /// <summary> Initializes a new instance of <see cref="MySqlLinkedService"/> for deserialization. </summary>
-        internal MySqlLinkedService()
-        {
-        }
-
         /// <summary> The version of the MySQL driver. Type: string. V1 or empty for legacy driver, V2 for new driver. V1 can support connection string and property bag, V2 can only support connection string. </summary>
         public DataFactoryElement<string> DriverVersion { get; set; }
         /// <summary> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>

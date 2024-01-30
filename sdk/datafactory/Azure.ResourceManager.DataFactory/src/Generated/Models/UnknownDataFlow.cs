@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             DataFlowType = dataFlowType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDataFlow"/> for deserialization. </summary>
+        internal UnknownDataFlow()
+        {
+        }
     }
 }

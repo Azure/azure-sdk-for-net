@@ -23,5 +23,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             MetadataType = metadataType;
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownSsisObjectMetadata"/> for deserialization. </summary>
+        internal UnknownSsisObjectMetadata()
+        {
+        }
     }
 }

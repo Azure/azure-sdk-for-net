@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             CustomSetupBaseType = customSetupBaseType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomSetupBase"/> for deserialization. </summary>
+        internal UnknownCustomSetupBase()
+        {
+        }
     }
 }

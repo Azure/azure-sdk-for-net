@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             AuthorizationType = authorizationType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownLinkedIntegrationRuntimeType"/> for deserialization. </summary>
+        internal UnknownLinkedIntegrationRuntimeType()
+        {
+        }
     }
 }

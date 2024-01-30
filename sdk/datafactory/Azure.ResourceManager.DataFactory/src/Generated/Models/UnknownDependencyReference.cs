@@ -20,5 +20,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             DependencyReferenceType = dependencyReferenceType ?? "Unknown";
         }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownDependencyReference"/> for deserialization. </summary>
+        internal UnknownDependencyReference()
+        {
+        }
     }
 }

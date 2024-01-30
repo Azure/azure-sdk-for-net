@@ -30,14 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SparkJobReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ReferenceName);
-#else
-            using (JsonDocument document = JsonDocument.Parse(ReferenceName))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            JsonSerializer.Serialize(writer, ReferenceName);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

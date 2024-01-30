@@ -131,8 +131,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
         }
 
-        /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> ClusterSize { get; set; }
         /// <summary> Number of worker/data nodes in the cluster. Suggestion value: 4. Type: int (or Expression with resultType int). </summary>
         public DataFactoryElement<int> ClusterSize { get; set; }
         /// <summary> The allowed idle time for the on-demand HDInsight cluster. Specifies how long the on-demand HDInsight cluster stays alive after completion of an activity run if there are no other active jobs in the cluster. The minimum value is 5 mins. Type: string (or Expression with resultType string). </summary>
