@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -22,7 +23,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     internal partial class Manager
     {
         private Thread? _backgroundThread;
-        private static AutoResetEvent _autoResetEvent = new AutoResetEvent(false);
+        private static readonly ManualResetEvent _shutdownEvent = new(false);
 
         private readonly State _state = new();
         private TimeSpan _period;
@@ -48,6 +49,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
             SetPingState();
             _backgroundThread.Start();
+        }
+
+        private void ShutdownState()
+        {
+            _shutdownEvent.Set(); // Tell the background thread to exit
+            _backgroundThread?.Join(); // Wait for the thread to finish
+            _shutdownEvent.Dispose();
         }
 
         private void SetPingState()
@@ -100,31 +108,42 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// </summary>
         private void Run()
         {
-            while (true)
+            try
             {
-                var callbackStarted = DateTimeOffset.UtcNow;
-
-                _callbackAction.Invoke();
-
-                var timeSpentInThisCallback = DateTimeOffset.UtcNow - callbackStarted;
-
-                TimeSpan nextTick;
-
-                // Check if we need to backoff.
-                if (_evaluateBackoff.Invoke())
+                while (true)
                 {
-                    Debug.WriteLine($"{DateTime.Now}: Backing off.");
-                    SetBackoffState();
-                    nextTick = _period;
-                }
-                else
-                {
-                    // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
-                    nextTick = _period - timeSpentInThisCallback;
-                    nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
-                }
+                    var callbackStarted = DateTimeOffset.UtcNow;
 
-                _autoResetEvent.WaitOne(nextTick);
+                    _callbackAction.Invoke();
+
+                    var timeSpentInThisCallback = DateTimeOffset.UtcNow - callbackStarted;
+
+                    TimeSpan nextTick;
+
+                    // Check if we need to backoff.
+                    if (_evaluateBackoff.Invoke())
+                    {
+                        Debug.WriteLine($"{DateTime.Now}: Backing off.");
+                        SetBackoffState();
+                        nextTick = _period;
+                    }
+                    else
+                    {
+                        // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
+                        nextTick = _period - timeSpentInThisCallback;
+                        nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
+                    }
+
+                    if (_shutdownEvent.WaitOne(nextTick))
+                    {
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.StateMachineFailedWithUnknownException(ex);
+                Debug.WriteLine(ex);
             }
         }
     }
