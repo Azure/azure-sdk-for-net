@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    internal partial class B2BPartnerContent : IUtf8JsonSerializable
+    internal partial class B2BPartnerContent : IUtf8JsonSerializable, IJsonModel<B2BPartnerContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<B2BPartnerContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<B2BPartnerContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<B2BPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(BusinessIdentities))
             {
@@ -26,16 +36,47 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static B2BPartnerContent DeserializeB2BPartnerContent(JsonElement element)
+        B2BPartnerContent IJsonModel<B2BPartnerContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<B2BPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeB2BPartnerContent(document.RootElement, options);
+        }
+
+        internal static B2BPartnerContent DeserializeB2BPartnerContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<IntegrationAccountBusinessIdentity>> businessIdentities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("businessIdentities"u8))
@@ -52,8 +93,44 @@ namespace Azure.ResourceManager.Logic.Models
                     businessIdentities = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new B2BPartnerContent(Optional.ToList(businessIdentities));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new B2BPartnerContent(Optional.ToList(businessIdentities), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<B2BPartnerContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<B2BPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        B2BPartnerContent IPersistableModel<B2BPartnerContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<B2BPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeB2BPartnerContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(B2BPartnerContent)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<B2BPartnerContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -32,9 +32,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="ephemeralOSDiskSettings">Specifies the ephemeral Disk
         /// Settings for the operating system disk used by the compute node
         /// (VM).</param>
-        public OSDisk(DiffDiskSettings ephemeralOSDiskSettings = default(DiffDiskSettings))
+        /// <param name="caching">Specifies the caching requirements. Possible
+        /// values are: None, ReadOnly, ReadWrite. The default values are: None
+        /// for Standard storage. ReadOnly for Premium storage.</param>
+        /// <param name="managedDisk">The managed disk parameters.</param>
+        /// <param name="diskSizeGB">The initial disk size in GB when creating
+        /// new OS disk.</param>
+        /// <param name="writeAcceleratorEnabled">Specifies whether
+        /// writeAccelerator should be enabled or disabled on the disk.</param>
+        public OSDisk(DiffDiskSettings ephemeralOSDiskSettings = default(DiffDiskSettings), CachingType? caching = default(CachingType?), ManagedDisk managedDisk = default(ManagedDisk), int? diskSizeGB = default(int?), bool? writeAcceleratorEnabled = default(bool?))
         {
             EphemeralOSDiskSettings = ephemeralOSDiskSettings;
+            Caching = caching;
+            ManagedDisk = managedDisk;
+            DiskSizeGB = diskSizeGB;
+            WriteAcceleratorEnabled = writeAcceleratorEnabled;
             CustomInit();
         }
 
@@ -49,6 +61,36 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "ephemeralOSDiskSettings")]
         public DiffDiskSettings EphemeralOSDiskSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the caching requirements. Possible values
+        /// are: None, ReadOnly, ReadWrite. The default values are: None for
+        /// Standard storage. ReadOnly for Premium storage.
+        /// </summary>
+        /// <remarks>
+        /// Possible values include: 'none', 'readOnly', 'readWrite'
+        /// </remarks>
+        [JsonProperty(PropertyName = "caching")]
+        public CachingType? Caching { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed disk parameters.
+        /// </summary>
+        [JsonProperty(PropertyName = "managedDisk")]
+        public ManagedDisk ManagedDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets the initial disk size in GB when creating new OS disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "diskSizeGB")]
+        public int? DiskSizeGB { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether writeAccelerator should be enabled
+        /// or disabled on the disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "writeAcceleratorEnabled")]
+        public bool? WriteAcceleratorEnabled { get; set; }
 
     }
 }

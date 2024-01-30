@@ -57,14 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(HttpCompressionType))
             {
                 writer.WritePropertyName("httpCompressionType"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(HttpCompressionType);
-#else
-                using (JsonDocument document = JsonDocument.Parse(HttpCompressionType))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, HttpCompressionType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -134,10 +127,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             Optional<DataFactoryElement<string>> requestMethod = default;
-            Optional<DataFactoryElement<string>> additionalHeaders = default;
+            Optional<DataFactoryElement<IDictionary<string, string>>> additionalHeaders = default;
             Optional<DataFactoryElement<string>> httpRequestTimeout = default;
             Optional<BinaryData> requestInterval = default;
-            Optional<BinaryData> httpCompressionType = default;
+            Optional<DataFactoryElement<string>> httpCompressionType = default;
             string type = default;
             Optional<DataFactoryElement<int>> writeBatchSize = default;
             Optional<DataFactoryElement<string>> writeBatchTimeout = default;
@@ -164,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    additionalHeaders = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("httpRequestTimeout"u8))
@@ -191,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    httpCompressionType = BinaryData.FromString(property.Value.GetRawText());
+                    httpCompressionType = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

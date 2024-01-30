@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    internal partial class DailyRetentionFormat : IUtf8JsonSerializable
+    internal partial class DailyRetentionFormat : IUtf8JsonSerializable, IJsonModel<DailyRetentionFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DailyRetentionFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DailyRetentionFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DaysOfTheMonth))
             {
@@ -26,16 +36,47 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DailyRetentionFormat DeserializeDailyRetentionFormat(JsonElement element)
+        DailyRetentionFormat IJsonModel<DailyRetentionFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDailyRetentionFormat(document.RootElement, options);
+        }
+
+        internal static DailyRetentionFormat DeserializeDailyRetentionFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Optional<IList<BackupDay>> daysOfTheMonth = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daysOfTheMonth"u8))
@@ -52,8 +93,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     daysOfTheMonth = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DailyRetentionFormat(Optional.ToList(daysOfTheMonth));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new DailyRetentionFormat(Optional.ToList(daysOfTheMonth), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DailyRetentionFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        DailyRetentionFormat IPersistableModel<DailyRetentionFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DailyRetentionFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDailyRetentionFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DailyRetentionFormat)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DailyRetentionFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

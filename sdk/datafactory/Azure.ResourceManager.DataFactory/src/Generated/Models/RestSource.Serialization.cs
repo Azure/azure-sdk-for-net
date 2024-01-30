@@ -67,14 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(AdditionalColumns);
-#else
-                using (JsonDocument document = JsonDocument.Parse(AdditionalColumns))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySourceType);
@@ -139,7 +132,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<DataFactoryElement<string>> paginationRules = default;
             Optional<DataFactoryElement<string>> httpRequestTimeout = default;
             Optional<BinaryData> requestInterval = default;
-            Optional<BinaryData> additionalColumns = default;
+            Optional<DataFactoryElement<IDictionary<string, string>>> additionalColumns = default;
             string type = default;
             Optional<DataFactoryElement<int>> sourceRetryCount = default;
             Optional<DataFactoryElement<string>> sourceRetryWait = default;
@@ -209,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    additionalColumns = BinaryData.FromString(property.Value.GetRawText());
+                    additionalColumns = JsonSerializer.Deserialize<DataFactoryElement<IDictionary<string, string>>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))

@@ -198,6 +198,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SalesforceMarketingCloudObject": return SalesforceMarketingCloudObjectDataset.DeserializeSalesforceMarketingCloudObjectDataset(element);
                     case "SalesforceObject": return SalesforceObjectDataset.DeserializeSalesforceObjectDataset(element);
                     case "SalesforceServiceCloudObject": return SalesforceServiceCloudObjectDataset.DeserializeSalesforceServiceCloudObjectDataset(element);
+                    case "SalesforceServiceCloudV2Object": return SalesforceServiceCloudV2ObjectDataset.DeserializeSalesforceServiceCloudV2ObjectDataset(element);
+                    case "SalesforceV2Object": return SalesforceV2ObjectDataset.DeserializeSalesforceV2ObjectDataset(element);
                     case "SapBwCube": return SapBWCubeDataset.DeserializeSapBWCubeDataset(element);
                     case "SapCloudForCustomerResource": return SapCloudForCustomerResourceDataset.DeserializeSapCloudForCustomerResourceDataset(element);
                     case "SapEccResource": return SapEccResourceDataset.DeserializeSapEccResourceDataset(element);
@@ -209,12 +211,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element);
                     case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element);
                     case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element);
+                    case "SnowflakeV2Table": return SnowflakeV2Dataset.DeserializeSnowflakeV2Dataset(element);
                     case "SparkObject": return SparkObjectDataset.DeserializeSparkObjectDataset(element);
                     case "SqlServerTable": return SqlServerTableDataset.DeserializeSqlServerTableDataset(element);
                     case "SquareObject": return SquareObjectDataset.DeserializeSquareObjectDataset(element);
                     case "SybaseTable": return SybaseTableDataset.DeserializeSybaseTableDataset(element);
                     case "TeradataTable": return TeradataTableDataset.DeserializeTeradataTableDataset(element);
                     case "VerticaTable": return VerticaTableDataset.DeserializeVerticaTableDataset(element);
+                    case "WarehouseTable": return WarehouseTableDataset.DeserializeWarehouseTableDataset(element);
                     case "WebTable": return WebTableDataset.DeserializeWebTableDataset(element);
                     case "XeroObject": return XeroObjectDataset.DeserializeXeroObjectDataset(element);
                     case "Xml": return XmlDataset.DeserializeXmlDataset(element);

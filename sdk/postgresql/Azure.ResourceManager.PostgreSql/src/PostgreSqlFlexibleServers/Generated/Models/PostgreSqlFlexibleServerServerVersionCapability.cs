@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -22,9 +23,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <summary> Initializes a new instance of <see cref="PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
         /// <param name="capabilityStatus"> The status of the capability. </param>
         /// <param name="reason"> The reason for the capability not being available. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Server version. </param>
         /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
-        internal PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, string name, IReadOnlyList<string> supportedVersionsToUpgrade) : base(capabilityStatus, reason)
+        internal PostgreSqlFlexibleServerServerVersionCapability(PostgreSqlFlexbileServerCapabilityStatus? capabilityStatus, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, IReadOnlyList<string> supportedVersionsToUpgrade) : base(capabilityStatus, reason, serializedAdditionalRawData)
         {
             Name = name;
             SupportedVersionsToUpgrade = supportedVersionsToUpgrade;

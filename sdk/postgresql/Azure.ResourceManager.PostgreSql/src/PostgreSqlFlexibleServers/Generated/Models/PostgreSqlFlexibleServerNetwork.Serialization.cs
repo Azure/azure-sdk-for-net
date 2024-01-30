@@ -5,16 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerNetwork : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerNetwork : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerNetwork>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PostgreSqlFlexibleServerNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerNetwork)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
             if (Optional.IsDefined(DelegatedSubnetResourceId))
             {
                 writer.WritePropertyName("delegatedSubnetResourceId"u8);
@@ -25,11 +41,40 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("privateDnsZoneArmResourceId"u8);
                 writer.WriteStringValue(PrivateDnsZoneArmResourceId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerNetwork DeserializePostgreSqlFlexibleServerNetwork(JsonElement element)
+        PostgreSqlFlexibleServerNetwork IJsonModel<PostgreSqlFlexibleServerNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerNetwork)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerNetwork(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerNetwork DeserializePostgreSqlFlexibleServerNetwork(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -37,6 +82,8 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             Optional<PostgreSqlFlexibleServerPublicNetworkAccessState> publicNetworkAccess = default;
             Optional<ResourceIdentifier> delegatedSubnetResourceId = default;
             Optional<ResourceIdentifier> privateDnsZoneArmResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -66,8 +113,44 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     privateDnsZoneArmResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerNetwork(Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneArmResourceId.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new PostgreSqlFlexibleServerNetwork(Optional.ToNullable(publicNetworkAccess), delegatedSubnetResourceId.Value, privateDnsZoneArmResourceId.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerNetwork>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerNetwork>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerNetwork)} does not support '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlFlexibleServerNetwork IPersistableModel<PostgreSqlFlexibleServerNetwork>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerNetwork>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlFlexibleServerNetwork(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerNetwork)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppPlatform.Models
 {
     /// <summary> HTTPGetAction describes an action based on HTTP Get requests. </summary>
@@ -18,6 +21,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <summary> Initializes a new instance of <see cref="AppInstanceHttpGetAction"/>. </summary>
         /// <param name="probeActionType"> The type of the action to take to perform the health check. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="path"> Path to access on the HTTP server. </param>
         /// <param name="scheme">
         /// Scheme to use for connecting to the host. Defaults to HTTP.
@@ -26,7 +30,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         ///  - `"HTTP"` means that the scheme used will be http://
         ///  - `"HTTPS"` means that the scheme used will be https://
         /// </param>
-        internal AppInstanceHttpGetAction(ProbeActionType probeActionType, string path, AppInstanceHttpSchemeType? scheme) : base(probeActionType)
+        internal AppInstanceHttpGetAction(ProbeActionType probeActionType, IDictionary<string, BinaryData> serializedAdditionalRawData, string path, AppInstanceHttpSchemeType? scheme) : base(probeActionType, serializedAdditionalRawData)
         {
             Path = path;
             Scheme = scheme;

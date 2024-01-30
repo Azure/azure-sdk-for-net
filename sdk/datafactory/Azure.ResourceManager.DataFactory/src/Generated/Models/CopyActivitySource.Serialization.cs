@@ -158,7 +158,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "RestSource": return RestSource.DeserializeRestSource(element);
                     case "SalesforceMarketingCloudSource": return SalesforceMarketingCloudSource.DeserializeSalesforceMarketingCloudSource(element);
                     case "SalesforceServiceCloudSource": return SalesforceServiceCloudSource.DeserializeSalesforceServiceCloudSource(element);
+                    case "SalesforceServiceCloudV2Source": return SalesforceServiceCloudV2Source.DeserializeSalesforceServiceCloudV2Source(element);
                     case "SalesforceSource": return SalesforceSource.DeserializeSalesforceSource(element);
+                    case "SalesforceV2Source": return SalesforceV2Source.DeserializeSalesforceV2Source(element);
                     case "SapBwSource": return SapBWSource.DeserializeSapBWSource(element);
                     case "SapCloudForCustomerSource": return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element);
                     case "SapEccSource": return SapEccSource.DeserializeSapEccSource(element);
@@ -170,6 +172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SharePointOnlineListSource": return SharePointOnlineListSource.DeserializeSharePointOnlineListSource(element);
                     case "ShopifySource": return ShopifySource.DeserializeShopifySource(element);
                     case "SnowflakeSource": return SnowflakeSource.DeserializeSnowflakeSource(element);
+                    case "SnowflakeV2Source": return SnowflakeV2Source.DeserializeSnowflakeV2Source(element);
                     case "SparkSource": return SparkSource.DeserializeSparkSource(element);
                     case "SqlDWSource": return SqlDWSource.DeserializeSqlDWSource(element);
                     case "SqlMISource": return SqlMISource.DeserializeSqlMISource(element);
@@ -180,6 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "TabularSource": return TabularSource.DeserializeTabularSource(element);
                     case "TeradataSource": return TeradataSource.DeserializeTeradataSource(element);
                     case "VerticaSource": return VerticaSource.DeserializeVerticaSource(element);
+                    case "WarehouseSource": return WarehouseSource.DeserializeWarehouseSource(element);
                     case "WebSource": return WebSource.DeserializeWebSource(element);
                     case "XeroSource": return XeroSource.DeserializeXeroSource(element);
                     case "XmlSource": return XmlSource.DeserializeXmlSource(element);

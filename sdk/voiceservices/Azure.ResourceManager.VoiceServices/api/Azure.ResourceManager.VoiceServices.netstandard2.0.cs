@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.VoiceServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VoiceServicesCommunicationsGatewayData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VoiceServicesCommunicationsGatewayData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>
     {
         public VoiceServicesCommunicationsGatewayData(Azure.Core.AzureLocation location) { }
         public System.BinaryData ApiBridge { get { throw null; } set { } }
@@ -33,6 +33,11 @@ namespace Azure.ResourceManager.VoiceServices
         public System.Collections.Generic.IList<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties> ServiceLocations { get { throw null; } }
         public Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus? Status { get { throw null; } }
         public string TeamsVoicemailPilotNumber { get { throw null; } set { } }
+        Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesCommunicationsGatewayData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VoiceServicesCommunicationsGatewayResource : Azure.ResourceManager.ArmResource
     {
@@ -86,12 +91,17 @@ namespace Azure.ResourceManager.VoiceServices
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class VoiceServicesTestLineData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class VoiceServicesTestLineData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>
     {
         public VoiceServicesTestLineData(Azure.Core.AzureLocation location) { }
         public string PhoneNumber { get { throw null; } set { } }
         public Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose? Purpose { get { throw null; } set { } }
+        Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.VoiceServicesTestLineData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class VoiceServicesTestLineResource : Azure.ResourceManager.ArmResource
     {
@@ -166,18 +176,28 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesAutoGeneratedDomainNameLabelScope right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VoiceServicesCheckNameAvailabilityContent
+    public partial class VoiceServicesCheckNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent>
     {
         public VoiceServicesCheckNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class VoiceServicesCheckNameAvailabilityResult
+    public partial class VoiceServicesCheckNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>
     {
         internal VoiceServicesCheckNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCheckNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VoiceServicesCommunicationsGatewayConnectivity : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity>
@@ -196,10 +216,15 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayConnectivity right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VoiceServicesCommunicationsGatewayPatch
+    public partial class VoiceServicesCommunicationsGatewayPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch>
     {
         public VoiceServicesCommunicationsGatewayPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VoiceServicesCommunicationsGatewayStatus : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesCommunicationsGatewayStatus>
@@ -273,13 +298,18 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VoiceServicesPrimaryRegionProperties
+    public partial class VoiceServicesPrimaryRegionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties>
     {
         public VoiceServicesPrimaryRegionProperties(System.Collections.Generic.IEnumerable<string> operatorAddresses) { }
         public System.Collections.Generic.IList<string> AllowedMediaSourceAddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedSignalingSourceAddressPrefixes { get { throw null; } }
         public System.Collections.Generic.IList<string> EsrpAddresses { get { throw null; } }
         public System.Collections.Generic.IList<string> OperatorAddresses { get { throw null; } }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VoiceServicesProvisioningState : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState>
@@ -300,11 +330,16 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VoiceServicesServiceRegionProperties
+    public partial class VoiceServicesServiceRegionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties>
     {
         public VoiceServicesServiceRegionProperties(string name, Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties primaryRegionProperties) { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.VoiceServices.Models.VoiceServicesPrimaryRegionProperties PrimaryRegionProperties { get { throw null; } set { } }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesServiceRegionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VoiceServicesTeamsCodec : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec>
@@ -328,10 +363,15 @@ namespace Azure.ResourceManager.VoiceServices.Models
         public static bool operator !=(Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec left, Azure.ResourceManager.VoiceServices.Models.VoiceServicesTeamsCodec right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class VoiceServicesTestLinePatch
+    public partial class VoiceServicesTestLinePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch>
     {
         public VoiceServicesTestLinePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VoiceServicesTestLinePurpose : System.IEquatable<Azure.ResourceManager.VoiceServices.Models.VoiceServicesTestLinePurpose>

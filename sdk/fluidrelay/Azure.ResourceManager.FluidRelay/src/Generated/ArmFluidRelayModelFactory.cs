@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new FluidRelayServerData(id, name, resourceType, systemData, tags, location, identity, frsTenantId, fluidRelayEndpoints, provisioningState, customerManagedKeyEncryption != null ? new EncryptionProperties(customerManagedKeyEncryption) : null, storageSku);
+            return new FluidRelayServerData(id, name, resourceType, systemData, tags, location, identity, frsTenantId, fluidRelayEndpoints, provisioningState, customerManagedKeyEncryption != null ? new EncryptionProperties(customerManagedKeyEncryption, serializedAdditionalRawData: null) : null, storageSku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FluidRelayEndpoints"/>. </summary>
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             storageEndpoints ??= new List<string>();
             serviceEndpoints ??= new List<string>();
 
-            return new FluidRelayEndpoints(ordererEndpoints?.ToList(), storageEndpoints?.ToList(), serviceEndpoints?.ToList());
+            return new FluidRelayEndpoints(ordererEndpoints?.ToList(), storageEndpoints?.ToList(), serviceEndpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FluidRelayServerKeys"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <returns> A new <see cref="Models.FluidRelayServerKeys"/> instance for mocking. </returns>
         public static FluidRelayServerKeys FluidRelayServerKeys(string primaryKey = null, string secondaryKey = null)
         {
-            return new FluidRelayServerKeys(primaryKey, secondaryKey);
+            return new FluidRelayServerKeys(primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="FluidRelay.FluidRelayContainerData"/>. </summary>
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
         /// <returns> A new <see cref="FluidRelay.FluidRelayContainerData"/> instance for mocking. </returns>
         public static FluidRelayContainerData FluidRelayContainerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? frsTenantId = null, Guid? frsContainerId = null, FluidRelayProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? lastAccessOn = null)
         {
-            return new FluidRelayContainerData(id, name, resourceType, systemData, frsTenantId, frsContainerId, provisioningState, createdOn, lastAccessOn);
+            return new FluidRelayContainerData(id, name, resourceType, systemData, frsTenantId, frsContainerId, provisioningState, createdOn, lastAccessOn, serializedAdditionalRawData: null);
         }
     }
 }

@@ -91,14 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Arguments))
             {
                 writer.WritePropertyName("arguments"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(Arguments);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Arguments))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                JsonSerializer.Serialize(writer, Arguments);
             }
             if (Optional.IsDefined(GetDebugInfo))
             {
@@ -184,7 +177,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<IList<PipelineActivityDependency>> dependsOn = default;
             Optional<IList<PipelineActivityUserProperty>> userProperties = default;
             Optional<IList<DataFactoryLinkedServiceReference>> storageLinkedServices = default;
-            Optional<BinaryData> arguments = default;
+            Optional<DataFactoryElement<IList<string>>> arguments = default;
             Optional<HDInsightActivityDebugInfoOptionSetting> getDebugInfo = default;
             Optional<DataFactoryElement<string>> scriptPath = default;
             Optional<DataFactoryLinkedServiceReference> scriptLinkedService = default;
@@ -301,7 +294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            arguments = BinaryData.FromString(property0.Value.GetRawText());
+                            arguments = JsonSerializer.Deserialize<DataFactoryElement<IList<string>>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("getDebugInfo"u8))

@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Optional<string> description = default;
             Optional<IDictionary<string, EntityParameterSpecification>> parameters = default;
             Optional<IList<BinaryData>> annotations = default;
-            DataFactoryElement<string> clusterSize = default;
+            DataFactoryElement<int> clusterSize = default;
             DataFactoryElement<string> timeToLive = default;
             DataFactoryElement<string> version = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("clusterSize"u8))
                         {
-                            clusterSize = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            clusterSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("timeToLive"u8))

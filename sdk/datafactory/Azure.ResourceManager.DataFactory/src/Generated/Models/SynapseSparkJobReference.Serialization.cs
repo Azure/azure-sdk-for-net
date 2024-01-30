@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -76,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             SparkJobReferenceType type = default;
-            BinaryData referenceName = default;
+            DataFactoryElement<string> referenceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("referenceName"u8))
                 {
-                    referenceName = BinaryData.FromString(property.Value.GetRawText());
+                    referenceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (options.Format != "W")

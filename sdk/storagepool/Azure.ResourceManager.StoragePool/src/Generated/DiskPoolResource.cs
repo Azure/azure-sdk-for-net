@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment(e), _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.StoragePool
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _diskPoolRestClient.CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment, _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StoragePoolOutboundEnvironment.DeserializeStoragePoolOutboundEnvironment(e), _diskPoolClientDiagnostics, Pipeline, "DiskPoolResource.GetOutboundNetworkDependenciesEndpoints", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

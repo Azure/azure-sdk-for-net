@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="canReRegister"> Specifies whether the container is re-registrable. </param>
         /// <param name="containerId"> ID of container. </param>
         /// <param name="protectedItemCount"> Number of protected items in the BackupEngine. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isUpgradeAvailable"> To check if upgrade available. </param>
         /// <param name="protectionStatus"> Protection status of the container. </param>
         /// <param name="extendedInfo"> Extended Info of the container. </param>
-        internal BackupServerContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? isUpgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers, isUpgradeAvailable, protectionStatus, extendedInfo)
+        internal BackupServerContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? canReRegister, string containerId, long? protectedItemCount, string dpmAgentVersion, IList<string> dpmServers, bool? isUpgradeAvailable, string protectionStatus, DpmContainerExtendedInfo extendedInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers, isUpgradeAvailable, protectionStatus, extendedInfo)
         {
             ContainerType = containerType;
         }

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class HciPackageVersionInfo : IUtf8JsonSerializable
+    public partial class HciPackageVersionInfo : IUtf8JsonSerializable, IJsonModel<HciPackageVersionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HciPackageVersionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HciPackageVersionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPackageVersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PackageType))
             {
@@ -31,11 +41,40 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static HciPackageVersionInfo DeserializeHciPackageVersionInfo(JsonElement element)
+        HciPackageVersionInfo IJsonModel<HciPackageVersionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPackageVersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHciPackageVersionInfo(document.RootElement, options);
+        }
+
+        internal static HciPackageVersionInfo DeserializeHciPackageVersionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -43,6 +82,8 @@ namespace Azure.ResourceManager.Hci.Models
             Optional<string> packageType = default;
             Optional<string> version = default;
             Optional<DateTimeOffset> lastUpdated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packageType"u8))
@@ -64,8 +105,44 @@ namespace Azure.ResourceManager.Hci.Models
                     lastUpdated = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HciPackageVersionInfo(packageType.Value, version.Value, Optional.ToNullable(lastUpdated));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new HciPackageVersionInfo(packageType.Value, version.Value, Optional.ToNullable(lastUpdated), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HciPackageVersionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPackageVersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        HciPackageVersionInfo IPersistableModel<HciPackageVersionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HciPackageVersionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHciPackageVersionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HciPackageVersionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

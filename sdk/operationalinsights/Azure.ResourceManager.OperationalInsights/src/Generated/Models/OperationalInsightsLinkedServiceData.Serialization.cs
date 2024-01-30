@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +15,18 @@ using Azure.ResourceManager.OperationalInsights.Models;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
-    public partial class OperationalInsightsLinkedServiceData : IUtf8JsonSerializable
+    public partial class OperationalInsightsLinkedServiceData : IUtf8JsonSerializable, IJsonModel<OperationalInsightsLinkedServiceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsLinkedServiceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsLinkedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsLinkedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsLinkedServiceData)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -28,6 +38,26 @@ namespace Azure.ResourceManager.OperationalInsights
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -47,11 +77,40 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsLinkedServiceData DeserializeOperationalInsightsLinkedServiceData(JsonElement element)
+        OperationalInsightsLinkedServiceData IJsonModel<OperationalInsightsLinkedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsLinkedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsLinkedServiceData)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsLinkedServiceData(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsLinkedServiceData DeserializeOperationalInsightsLinkedServiceData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -64,6 +123,8 @@ namespace Azure.ResourceManager.OperationalInsights
             Optional<ResourceIdentifier> resourceId = default;
             Optional<ResourceIdentifier> writeAccessResourceId = default;
             Optional<OperationalInsightsLinkedServiceEntityStatus> provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -143,8 +204,44 @@ namespace Azure.ResourceManager.OperationalInsights
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsLinkedServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), resourceId.Value, writeAccessResourceId.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new OperationalInsightsLinkedServiceData(id, name, type, systemData.Value, Optional.ToDictionary(tags), resourceId.Value, writeAccessResourceId.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<OperationalInsightsLinkedServiceData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsLinkedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsLinkedServiceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsLinkedServiceData IPersistableModel<OperationalInsightsLinkedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsLinkedServiceData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsLinkedServiceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsLinkedServiceData)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsLinkedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

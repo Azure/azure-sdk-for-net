@@ -16,11 +16,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class CmdkeySetup : CustomSetupBase
     {
         /// <summary> Initializes a new instance of <see cref="CmdkeySetup"/>. </summary>
-        /// <param name="targetName"> The server name of data source access. </param>
-        /// <param name="userName"> The user name of data source access. </param>
+        /// <param name="targetName"> The server name of data source access. Type: string. </param>
+        /// <param name="userName"> The user name of data source access. Type: string. </param>
         /// <param name="password"> The password of data source access. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetName"/>, <paramref name="userName"/> or <paramref name="password"/> is null. </exception>
-        public CmdkeySetup(BinaryData targetName, BinaryData userName, DataFactorySecretBaseDefinition password)
+        public CmdkeySetup(DataFactoryElement<string> targetName, DataFactoryElement<string> userName, DataFactorySecretBaseDefinition password)
         {
             Argument.AssertNotNull(targetName, nameof(targetName));
             Argument.AssertNotNull(userName, nameof(userName));
@@ -113,6 +113,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </para>
         /// </summary>
         public BinaryData UserName { get; set; }
+        /// <summary> The server name of data source access. Type: string. </summary>
+        public DataFactoryElement<string> TargetName { get; set; }
+        /// <summary> The user name of data source access. Type: string. </summary>
+        public DataFactoryElement<string> UserName { get; set; }
         /// <summary> The password of data source access. </summary>
         public DataFactorySecretBaseDefinition Password { get; set; }
     }
