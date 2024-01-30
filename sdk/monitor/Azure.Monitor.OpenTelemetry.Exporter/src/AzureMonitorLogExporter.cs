@@ -11,13 +11,20 @@ using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
-    internal sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
+    /// <summary>
+    /// Azure Monitor Log Exporter.
+    /// </summary>
+    public sealed class AzureMonitorLogExporter : BaseExporter<LogRecord>
     {
         private readonly ITransmitter _transmitter;
         private readonly string _instrumentationKey;
         private AzureMonitorResource? _resource;
         private bool _disposed;
 
+        /// <summary>
+        /// Initializes a new instance of Azure Monitor Log Exporter.
+        /// </summary>
+        /// <param name="options">Configuration options for the exporter.</param>
         public AzureMonitorLogExporter(AzureMonitorExporterOptions options) : this(TransmitterFactory.Instance.Get(options))
         {
         }
@@ -54,6 +61,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return exportResult;
         }
 
+        /// <inheritdoc/>
         protected override void Dispose(bool disposing)
         {
             if (!_disposed)
