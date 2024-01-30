@@ -63,6 +63,7 @@ namespace Azure.Core.Pipeline
             policies.CopyTo(all, 0);
 
             _pipeline = all;
+            _networkTimeout = DefaultNetworkTimeout;
         }
 
         internal HttpPipeline(

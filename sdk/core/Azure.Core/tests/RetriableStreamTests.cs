@@ -371,16 +371,20 @@ namespace Azure.Core.Tests
         private static Stream SendTestRequest(HttpPipeline pipeline, long offset)
         {
             using Request request = CreateRequest(pipeline, offset);
-
-            Response response = pipeline.SendRequest(request, CancellationToken.None);
+            HttpMessage message = new HttpMessage(request, ResponseClassifier.Shared);
+            message.BufferResponse = false;
+            pipeline.Send(message, CancellationToken.None);
+            Response response = message.Response;
             return response.ContentStream;
         }
 
         private static async ValueTask<Stream> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
             using Request request = CreateRequest(pipeline, offset);
-
-            Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+            HttpMessage message = new HttpMessage(request, ResponseClassifier.Shared);
+            message.BufferResponse = false;
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Response response = message.Response;
             return response.ContentStream;
         }
 

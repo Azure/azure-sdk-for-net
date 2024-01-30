@@ -654,7 +654,7 @@ namespace Azure.Core.Tests
             {
                 request.Method = RequestMethod.Get;
                 request.Uri.Reset(new Uri("https://contoso.a.io"));
-            });
+            }, bufferResponse: false);
 
             var buffer = new byte[11];
 
