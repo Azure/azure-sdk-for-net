@@ -63,19 +63,10 @@ namespace Azure.Core
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier
+        public new ResponseClassifier ResponseClassifier
         {
-            get
-            {
-                if (MessageClassifier is not ResponseClassifier classifier)
-                {
-                    throw new InvalidOperationException($"Invalid ResponseClassifier set on message: '{base.MessageClassifier}'.");
-                }
-
-                return classifier;
-            }
-
-            set => MessageClassifier = value;
+            get => (ResponseClassifier)base.ResponseClassifier;
+            set => base.ResponseClassifier = value;
         }
 
         internal int RetryNumber { get; set; }
