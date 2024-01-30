@@ -19,7 +19,6 @@ namespace Azure.ResourceManager.SecurityCenter
     public partial class SecurityAssessmentMetadataData : ResourceData
     {
         /// <summary> Azure resource ID of the policy definition that turns this assessment calculation on. </summary>
-        [CodeGenMember("ExpireOn")]
         [CodeGenMemberSerializationHooks(DeserializationValueHook = nameof(DeserializePolicyDefinitionId))]
         public ResourceIdentifier PolicyDefinitionId { get; }
     }

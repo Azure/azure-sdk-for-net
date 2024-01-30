@@ -5,6 +5,7 @@
 ### Features Added
 
 - Enabled Root Squash for Azure Managed Lustre FileSystem using REST API requests
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Other changes
 

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GraphServicesAccountResourceData(id, name, resourceType, systemData, tags, location, properties);
+            return new GraphServicesAccountResourceData(id, name, resourceType, systemData, tags, location, properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GraphServicesAccountResourceProperties"/>. </summary>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.GraphServices.Models
         /// <returns> A new <see cref="Models.GraphServicesAccountResourceProperties"/> instance for mocking. </returns>
         public static GraphServicesAccountResourceProperties GraphServicesAccountResourceProperties(GraphServicesProvisioningState? provisioningState = null, string appId = null, string billingPlanId = null)
         {
-            return new GraphServicesAccountResourceProperties(provisioningState, appId, billingPlanId);
+            return new GraphServicesAccountResourceProperties(provisioningState, appId, billingPlanId, serializedAdditionalRawData: null);
         }
     }
 }

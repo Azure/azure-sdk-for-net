@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlScheduleItem : IUtf8JsonSerializable
+    public partial class SqlScheduleItem : IUtf8JsonSerializable, IJsonModel<SqlScheduleItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlScheduleItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlScheduleItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScheduleItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("startDay"u8);
             writer.WriteStringValue(StartDay.ToString());
@@ -23,11 +34,40 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(StopDay.ToString());
             writer.WritePropertyName("stopTime"u8);
             writer.WriteStringValue(StopTime);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlScheduleItem DeserializeSqlScheduleItem(JsonElement element)
+        SqlScheduleItem IJsonModel<SqlScheduleItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScheduleItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlScheduleItem(document.RootElement, options);
+        }
+
+        internal static SqlScheduleItem DeserializeSqlScheduleItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.Sql.Models
             string startTime = default;
             SqlDayOfWeek stopDay = default;
             string stopTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startDay"u8))
@@ -58,8 +100,44 @@ namespace Azure.ResourceManager.Sql.Models
                     stopTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlScheduleItem(startDay, startTime, stopDay, stopTime);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new SqlScheduleItem(startDay, startTime, stopDay, stopTime, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlScheduleItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScheduleItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        SqlScheduleItem IPersistableModel<SqlScheduleItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlScheduleItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlScheduleItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlScheduleItem)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlScheduleItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

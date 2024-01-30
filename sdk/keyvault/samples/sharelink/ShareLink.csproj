@@ -32,7 +32,7 @@
     <!-- Use decentralized package references when building outside https://github.com/Azure/azure-sdk-for-net -->
     <PackageReference Include="Microsoft.Azure.AutoRest.CSharp" Version="3.0.0-beta.20230427.2" PrivateAssets="All" />
     <PackageReference Update="Azure.Core" Version="1.26.0" />
-    <PackageReference Update="Azure.Identity" Version="1.4.0" />
+    <PackageReference Update="Azure.Identity" Version="1.10.4" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.1.1" />
     <PackageReference Update="System.CommandLine" Version="%(VersionOverride)" />
     <PackageReference Update="System.Text.Json" Version="4.6.0" />

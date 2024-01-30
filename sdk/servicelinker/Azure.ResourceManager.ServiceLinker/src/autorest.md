@@ -18,6 +18,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
 rename-mapping:
   TargetServiceBase: TargetServiceBaseInfo

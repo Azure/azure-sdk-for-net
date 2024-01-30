@@ -62,17 +62,10 @@ namespace Azure.ResourceManager.Redis.Models
             IsAadEnabled = isAadEnabled;
             AdditionalProperties = additionalProperties;
         }
-
-        /// <summary> Specifies whether the rdb backup is enabled. </summary>
-        public bool? IsRdbBackupEnabled { get; set; }
         /// <summary> Specifies the frequency for creating rdb backup in minutes. Valid values: (15, 30, 60, 360, 720, 1440). </summary>
         public string RdbBackupFrequency { get; set; }
-        /// <summary> Specifies the maximum number of snapshots for rdb backup. </summary>
-        public int? RdbBackupMaxSnapshotCount { get; set; }
         /// <summary> The storage account connection string for storing rdb file. </summary>
         public string RdbStorageConnectionString { get; set; }
-        /// <summary> Specifies whether the aof backup is enabled. </summary>
-        public bool? IsAofBackupEnabled { get; set; }
         /// <summary> First storage account connection string. </summary>
         public string AofStorageConnectionString0 { get; set; }
         /// <summary> Second storage account connection string. </summary>

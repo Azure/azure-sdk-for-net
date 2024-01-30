@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
     /// <summary> Parameter group. </summary>
     public partial class PolicyQuerySettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PolicyQuerySettings"/>. </summary>
         public PolicyQuerySettings()
         {
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.PolicyInsights.Models
         /// <param name="apply"> OData apply expression for aggregations. </param>
         /// <param name="skipToken"> Skiptoken is only provided if a previous response returned a partial result as a part of nextLink element. </param>
         /// <param name="expand"> The $expand query parameter. For example, to expand components use $expand=components. </param>
-        internal PolicyQuerySettings(int? top, string filter, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string apply, string skipToken, string expand)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PolicyQuerySettings(int? top, string filter, string orderBy, string select, DateTimeOffset? @from, DateTimeOffset? to, string apply, string skipToken, string expand, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Top = top;
             Filter = filter;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             Apply = apply;
             SkipToken = skipToken;
             Expand = expand;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Maximum number of records to return. </summary>

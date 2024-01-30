@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
-                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge)
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http401WithBearerChallenge, null)
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Search.Tests.Tests
 
             data.AuthOptions = new SearchAadAuthDataPlaneAuthOptions
             {
-                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http403)
+                AadOrApiKey = new DataPlaneAadOrApiKeyAuthOption(SearchAadAuthFailureMode.Http403, null)
             };
             SearchResource = (await SearchCollection.CreateOrUpdateAsync(WaitUntil.Completed, name, data)).Value;
             result = (await SearchResource.GetAsync()).Value;
