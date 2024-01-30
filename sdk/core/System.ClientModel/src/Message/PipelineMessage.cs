@@ -20,6 +20,7 @@ public class PipelineMessage : IDisposable
 
         BufferResponse = true;
         ResponseClassifier = PipelineMessageClassifier.Default;
+        NetworkTimeout = ClientPipeline.DefaultNetworkTimeout;
     }
 
     public PipelineRequest Request { get; }
