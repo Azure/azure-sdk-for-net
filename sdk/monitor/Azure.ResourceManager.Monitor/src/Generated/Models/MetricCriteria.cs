@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.Monitor.Models
             CriterionType = criterionType;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MetricCriteria"/> for deserialization. </summary>
+        internal MetricCriteria()
+        {
+        }
+
         /// <summary> the criteria operator. </summary>
         public MetricCriteriaOperator Operator { get; set; }
         /// <summary> the criteria threshold value that activates the alert. </summary>

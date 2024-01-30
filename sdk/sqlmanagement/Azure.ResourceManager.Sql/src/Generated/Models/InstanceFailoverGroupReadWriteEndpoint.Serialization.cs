@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class InstanceFailoverGroupReadWriteEndpoint : IUtf8JsonSerializable
+    public partial class InstanceFailoverGroupReadWriteEndpoint : IUtf8JsonSerializable, IJsonModel<InstanceFailoverGroupReadWriteEndpoint>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceFailoverGroupReadWriteEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InstanceFailoverGroupReadWriteEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadWriteEndpoint)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("failoverPolicy"u8);
             writer.WriteStringValue(FailoverPolicy.ToString());
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("failoverWithDataLossGracePeriodMinutes"u8);
                 writer.WriteNumberValue(FailoverWithDataLossGracePeriodMinutes.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InstanceFailoverGroupReadWriteEndpoint DeserializeInstanceFailoverGroupReadWriteEndpoint(JsonElement element)
+        InstanceFailoverGroupReadWriteEndpoint IJsonModel<InstanceFailoverGroupReadWriteEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstanceFailoverGroupReadWriteEndpoint)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceFailoverGroupReadWriteEndpoint(document.RootElement, options);
+        }
+
+        internal static InstanceFailoverGroupReadWriteEndpoint DeserializeInstanceFailoverGroupReadWriteEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReadWriteEndpointFailoverPolicy failoverPolicy = default;
             Optional<int> failoverWithDataLossGracePeriodMinutes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failoverPolicy"u8))
@@ -49,8 +91,44 @@ namespace Azure.ResourceManager.Sql.Models
                     failoverWithDataLossGracePeriodMinutes = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes));
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new InstanceFailoverGroupReadWriteEndpoint(failoverPolicy, Optional.ToNullable(failoverWithDataLossGracePeriodMinutes), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        InstanceFailoverGroupReadWriteEndpoint IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInstanceFailoverGroupReadWriteEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InstanceFailoverGroupReadWriteEndpoint)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InstanceFailoverGroupReadWriteEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

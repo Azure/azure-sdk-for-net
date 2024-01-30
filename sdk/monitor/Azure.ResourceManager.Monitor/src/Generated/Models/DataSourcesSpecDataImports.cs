@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> Specifications of pull based data sources. </summary>
@@ -17,7 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="DataSourcesSpecDataImports"/>. </summary>
         /// <param name="eventHub"> Definition of Event Hub configuration. </param>
-        internal DataSourcesSpecDataImports(DataImportSourcesEventHub eventHub) : base(eventHub)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataSourcesSpecDataImports(DataImportSourcesEventHub eventHub, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(eventHub, serializedAdditionalRawData)
         {
         }
     }

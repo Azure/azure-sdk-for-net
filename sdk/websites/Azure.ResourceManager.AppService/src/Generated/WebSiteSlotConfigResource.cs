@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo(e), _siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotConfigSnapshotWebAppsRestClient.CreateListConfigurationSnapshotInfoSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo, _siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SiteConfigurationSnapshotInfo.DeserializeSiteConfigurationSnapshotInfo(e), _siteSlotConfigSnapshotWebAppsClientDiagnostics, Pipeline, "WebSiteSlotConfigResource.GetConfigurationSnapshotInfoSlot", "value", "nextLink", cancellationToken);
         }
     }
 }

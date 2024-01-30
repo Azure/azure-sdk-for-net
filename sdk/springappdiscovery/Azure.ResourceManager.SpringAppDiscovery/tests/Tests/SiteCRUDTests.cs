@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
 
         public SpringBootSiteProperties siteProperties = new SpringBootSiteProperties();
 
-        public SpringBootSiteModelExtendedLocation extendLocation = new SpringBootSiteModelExtendedLocation("CustomLocation", "/subscriptions/" + subId + "/resourceGroups/" + rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot");
+        public SpringBootSiteModelExtendedLocation extendLocation = new SpringBootSiteModelExtendedLocation("CustomLocation", "/subscriptions/" + subId + "/resourceGroups/" + rgName + "/providers/Microsoft.ExtendedLocation/customLocations/springboot", null);
 
         public SiteCRUDTests(bool isAsync) : base(isAsync)
         {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Tests
             siteProperties.MigrateProjectId = "5678";
 
             SpringBootSiteData modelData = new SpringBootSiteData(null, siteName, resourceType, null, new Dictionary<string, string>(),
-                defaultResourceLocation, siteProperties, extendLocation);
+                defaultResourceLocation, siteProperties, extendLocation, null);
 
             //create a site
             var createSiteOperation = await siteColletion.CreateOrUpdateAsync(WaitUntil.Completed, siteName, modelData, CancellationToken.None);

@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class MonthlyRetentionSchedule : IUtf8JsonSerializable
+    public partial class MonthlyRetentionSchedule : IUtf8JsonSerializable, IJsonModel<MonthlyRetentionSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonthlyRetentionSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonthlyRetentionSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonthlyRetentionSchedule)} does not support '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RetentionScheduleFormatType))
             {
@@ -47,11 +56,40 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("retentionDuration"u8);
                 writer.WriteObjectValue(RetentionDuration);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonthlyRetentionSchedule DeserializeMonthlyRetentionSchedule(JsonElement element)
+        MonthlyRetentionSchedule IJsonModel<MonthlyRetentionSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonthlyRetentionSchedule)} does not support '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonthlyRetentionSchedule(document.RootElement, options);
+        }
+
+        internal static MonthlyRetentionSchedule DeserializeMonthlyRetentionSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -61,6 +99,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             Optional<WeeklyRetentionFormat> retentionScheduleWeekly = default;
             Optional<IList<DateTimeOffset>> retentionTimes = default;
             Optional<RetentionDuration> retentionDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("retentionScheduleFormatType"u8))
@@ -113,8 +153,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     retentionDuration = RetentionDuration.DeserializeRetentionDuration(property.Value);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonthlyRetentionSchedule(Optional.ToNullable(retentionScheduleFormatType), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, Optional.ToList(retentionTimes), retentionDuration.Value);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new MonthlyRetentionSchedule(Optional.ToNullable(retentionScheduleFormatType), retentionScheduleDaily.Value, retentionScheduleWeekly.Value, Optional.ToList(retentionTimes), retentionDuration.Value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonthlyRetentionSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonthlyRetentionSchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        MonthlyRetentionSchedule IPersistableModel<MonthlyRetentionSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonthlyRetentionSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonthlyRetentionSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonthlyRetentionSchedule)} does not support '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonthlyRetentionSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

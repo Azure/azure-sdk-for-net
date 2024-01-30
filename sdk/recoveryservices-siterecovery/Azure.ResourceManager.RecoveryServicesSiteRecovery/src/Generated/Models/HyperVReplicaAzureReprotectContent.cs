@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
@@ -20,13 +22,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureReprotectContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hyperVHostVmId"> The Hyper-V host Vm Id. </param>
         /// <param name="vmName"> The Vm Name. </param>
         /// <param name="osType"> The OS type associated with vm. </param>
         /// <param name="vhdId"> The OS disk VHD id associated with vm. </param>
         /// <param name="storageAccountId"> The storage account name. </param>
         /// <param name="logStorageAccountId"> The storage account to be used for logging during replication. </param>
-        internal HyperVReplicaAzureReprotectContent(string instanceType, string hyperVHostVmId, string vmName, string osType, string vhdId, ResourceIdentifier storageAccountId, ResourceIdentifier logStorageAccountId) : base(instanceType)
+        internal HyperVReplicaAzureReprotectContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string hyperVHostVmId, string vmName, string osType, string vhdId, ResourceIdentifier storageAccountId, ResourceIdentifier logStorageAccountId) : base(instanceType, serializedAdditionalRawData)
         {
             HyperVHostVmId = hyperVHostVmId;
             VmName = vmName;

@@ -252,7 +252,7 @@ public partial class OpenAIClient
                 baseResponse,
                 (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
                     responseForEnumeration.ContentStream,
-                    Completions.DeserializeCompletions,
+                    e => Completions.DeserializeCompletions(e),
                     cancellationToken));
         }
         catch (Exception e)
@@ -306,7 +306,7 @@ public partial class OpenAIClient
                 baseResponse,
                 (responseForEnumeration) => SseAsyncEnumerator<Completions>.EnumerateFromSseStream(
                     responseForEnumeration.ContentStream,
-                    Completions.DeserializeCompletions,
+                    e => Completions.DeserializeCompletions(e),
                     cancellationToken));
         }
         catch (Exception e)

@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         public virtual AsyncPageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiersAsync(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(e), LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PostgreSql.Mocking
         public virtual Pageable<PostgreSqlPerformanceTierProperties> GetLocationBasedPerformanceTiers(AzureLocation locationName, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationBasedPerformanceTierRestClient.CreateListRequest(Id.SubscriptionId, locationName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties, LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PostgreSqlPerformanceTierProperties.DeserializePostgreSqlPerformanceTierProperties(e), LocationBasedPerformanceTierClientDiagnostics, Pipeline, "MockablePostgreSqlSubscriptionResource.GetLocationBasedPerformanceTiers", "value", null, cancellationToken);
         }
 
         /// <summary>
