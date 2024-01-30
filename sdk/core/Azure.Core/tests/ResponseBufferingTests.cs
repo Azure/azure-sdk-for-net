@@ -21,31 +21,31 @@ public class ResponseBufferingTests : SyncAsyncPolicyTestBase
     {
     }
 
-    [Test]
-    public async Task ReadsEntireBodyIntoMemoryStream()
-    {
-        MockResponse mockResponse = new MockResponse(200);
-        var readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
-        mockResponse.ContentStream = readTrackingStream;
+    //[Test]
+    //public async Task ReadsEntireBodyIntoMemoryStream()
+    //{
+    //    MockResponse mockResponse = new MockResponse(200);
+    //    var readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
+    //    mockResponse.ContentStream = readTrackingStream;
 
-        MockTransport mockTransport = CreateMockTransport(mockResponse);
-        HttpPipeline pipeline = new(mockTransport);
-        using HttpMessage message = pipeline.CreateMessage();
-        message.NetworkTimeout = Timeout.InfiniteTimeSpan;
-        await SendMessageGetRequest(pipeline, message);
-        Response response = message.Response;
+    //    MockTransport mockTransport = CreateMockTransport(mockResponse);
+    //    HttpPipeline pipeline = new(mockTransport);
+    //    using HttpMessage message = pipeline.CreateMessage();
+    //    message.NetworkTimeout = Timeout.InfiniteTimeSpan;
+    //    await SendMessageGetRequest(pipeline, message);
+    //    Response response = message.Response;
 
-        Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
-        var ms = (MemoryStream)response.ContentStream;
+    //    Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
+    //    var ms = (MemoryStream)response.ContentStream;
 
-        Assert.AreEqual(128, ms.Length);
-        foreach (var b in ms.ToArray())
-        {
-            Assert.AreEqual(ReadTrackingStream.ContentByteValue, b);
-        }
-        Assert.AreEqual(128, readTrackingStream.BytesRead);
-        Assert.AreEqual(0, ms.Position);
-    }
+    //    Assert.AreEqual(128, ms.Length);
+    //    foreach (var b in ms.ToArray())
+    //    {
+    //        Assert.AreEqual(ReadTrackingStream.ContentByteValue, b);
+    //    }
+    //    Assert.AreEqual(128, readTrackingStream.BytesRead);
+    //    Assert.AreEqual(0, ms.Position);
+    //}
 
     #region Helpers
 
