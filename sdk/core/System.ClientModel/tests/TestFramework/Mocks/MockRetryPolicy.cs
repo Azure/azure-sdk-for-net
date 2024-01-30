@@ -25,11 +25,11 @@ public class MockRetryPolicy : ClientRetryPolicy
         _delayFactory = delayFactory;
     }
 
-    public Exception? LastException {  get; private set; }
+    public Exception? LastException { get; private set; }
 
     public bool ShouldRetryCalled { get; private set; }
 
-    public bool OnRequestSentCalled {  get; private set; }
+    public bool OnRequestSentCalled { get; private set; }
 
     public bool OnSendingRequestCalled { get; private set; }
 
@@ -42,20 +42,20 @@ public class MockRetryPolicy : ClientRetryPolicy
         OnRequestSentCalled = false;
     }
 
-    protected override bool ShouldRetryCore(PipelineMessage message, Exception? exception)
+    protected override bool ShouldRetry(PipelineMessage message, Exception? exception)
     {
         ShouldRetryCalled = true;
         LastException = exception;
 
-        return base.ShouldRetryCore(message, exception);
+        return base.ShouldRetry(message, exception);
     }
 
-    protected override ValueTask<bool> ShouldRetryCoreAsync(PipelineMessage message, Exception? exception)
+    protected override ValueTask<bool> ShouldRetryAsync(PipelineMessage message, Exception? exception)
     {
         ShouldRetryCalled = true;
         LastException = exception;
 
-        return base.ShouldRetryCoreAsync(message, exception);
+        return base.ShouldRetryAsync(message, exception);
     }
 
     protected override void OnRequestSent(PipelineMessage message)
@@ -86,19 +86,19 @@ public class MockRetryPolicy : ClientRetryPolicy
         return base.OnSendingRequestAsync(message);
     }
 
-    protected override TimeSpan GetNextDelayCore(PipelineMessage message, int tryCount)
+    protected override TimeSpan GetNextDelay(PipelineMessage message, int tryCount)
     {
         if (_delayFactory is not null)
         {
             return _delayFactory(tryCount);
         }
 
-        return base.GetNextDelayCore(message, tryCount);
+        return base.GetNextDelay(message, tryCount);
     }
 
-    public async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
-    => await WaitCoreAsync(time, cancellationToken).ConfigureAwait(false);
+    public void DoWait(TimeSpan time, CancellationToken cancellationToken)
+        => Wait(time, cancellationToken);
 
-    public void Wait(TimeSpan time, CancellationToken cancellationToken)
-        => WaitCore(time, cancellationToken);
+    public async Task DoWaitAsync(TimeSpan time, CancellationToken cancellationToken)
+        => await WaitAsync(time, cancellationToken).ConfigureAwait(false);
 }

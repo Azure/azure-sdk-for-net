@@ -79,7 +79,7 @@ namespace System.ClientModel.Primitives
     {
         public static readonly System.ClientModel.Primitives.ClientRetryPolicy Default;
         public ClientRetryPolicy(int maxRetries = 3) { }
-        protected virtual System.TimeSpan GetNextDelayCore(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
+        protected virtual System.TimeSpan GetNextDelay(System.ClientModel.Primitives.PipelineMessage message, int tryCount) { throw null; }
         protected virtual void OnRequestSent(System.ClientModel.Primitives.PipelineMessage message) { }
         protected virtual System.Threading.Tasks.ValueTask OnRequestSentAsync(System.ClientModel.Primitives.PipelineMessage message) { throw null; }
         protected virtual void OnSendingRequest(System.ClientModel.Primitives.PipelineMessage message) { }
@@ -87,10 +87,10 @@ namespace System.ClientModel.Primitives
         protected virtual void OnTryComplete(System.ClientModel.Primitives.PipelineMessage message) { }
         public sealed override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
         public sealed override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-        protected virtual bool ShouldRetryCore(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
-        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryCoreAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
-        protected virtual void WaitCore(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
-        protected virtual System.Threading.Tasks.Task WaitCoreAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
+        protected virtual bool ShouldRetry(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        protected virtual System.Threading.Tasks.ValueTask<bool> ShouldRetryAsync(System.ClientModel.Primitives.PipelineMessage message, System.Exception? exception) { throw null; }
+        protected virtual void Wait(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { }
+        protected virtual System.Threading.Tasks.Task WaitAsync(System.TimeSpan time, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     public partial class HttpClientPipelineTransport : System.ClientModel.Primitives.PipelineTransport, System.IDisposable
     {

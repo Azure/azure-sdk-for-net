@@ -77,11 +77,11 @@ public static class MockSyncAsyncExtensions
     {
         if (isAsync)
         {
-            await policy.WaitAsync(delay, cancellationToken).ConfigureAwait(false);
+            await policy.DoWaitAsync(delay, cancellationToken).ConfigureAwait(false);
         }
         else
         {
-            policy.Wait(delay, cancellationToken);
+            policy.DoWait(delay, cancellationToken);
         }
     }
 }
