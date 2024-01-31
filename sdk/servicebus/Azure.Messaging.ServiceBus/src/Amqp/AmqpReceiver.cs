@@ -6,6 +6,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -372,7 +373,28 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // to ensure FIFO ordering within each session.
                 if (_isSessionReceiver && messageList.Count < maxMessages)
                 {
-                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    using var backgroundCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                    var drainTask = link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+
+                    try
+                    {
+                        _ = Task.Run(async () =>
+                        {
+                            while (!backgroundCts.Token.IsCancellationRequested)
+                            {
+                                var additionalMessages = await link.ReceiveMessagesAsync(maxMessages, TimeSpan.FromMilliseconds(20), maxWaitTime ?? timeout, cancellationToken).ConfigureAwait(false);
+                                foreach (var message in additionalMessages)
+                                {
+                                    link.ReleaseMessage(message);
+                                }
+                            }
+                        }, cancellationToken);
+                        await drainTask;
+                        backgroundCts.Cancel();
+                    }
+                    catch (TaskCanceledException)
+                    {
+                    }
                 }
 
                 List<ServiceBusReceivedMessage> receivedMessages = null;
