@@ -4,14 +4,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
-using Polly;
 
 namespace Azure.Core.Tests;
 
