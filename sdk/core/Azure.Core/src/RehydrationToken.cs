@@ -28,13 +28,11 @@ namespace Azure.Core
 
         internal RequestMethod RequestMethod { get; }
 
-        internal bool OriginalResponseHasLocation { get; }
-
         internal string? LastKnownLocation { get; }
 
         internal OperationFinalStateVia FinalStateVia { get; }
 
-        internal RehydrationToken(Guid? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, bool originalResponseHasLocation, string? lastKnownLocation, OperationFinalStateVia finalStateVia)
+        internal RehydrationToken(Guid? id, string? version, string headerSource, string nextRequestUri, string initialUri, RequestMethod requestMethod, string? lastKnownLocation, OperationFinalStateVia finalStateVia)
         {
             Id = id;
             if (version is not null)
@@ -45,7 +43,6 @@ namespace Azure.Core
             NextRequestUri = nextRequestUri;
             InitialUri = initialUri;
             RequestMethod = requestMethod;
-            OriginalResponseHasLocation = originalResponseHasLocation;
             LastKnownLocation = lastKnownLocation;
             FinalStateVia = finalStateVia;
         }

@@ -23,7 +23,6 @@ namespace Azure.Core
             string nextRequestUri = string.Empty;
             string initialUri = string.Empty;
             RequestMethod requestMethod = default;
-            bool originalResponseHasLocation = default;
             Optional<string> lastKnownLocation = default;
             OperationFinalStateVia finalStateVia = default;
 
@@ -62,11 +61,6 @@ namespace Azure.Core
                     requestMethod = new RequestMethod(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("originalResponseHasLocation"u8))
-                {
-                    originalResponseHasLocation = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("lastKnownLocation"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -85,7 +79,7 @@ namespace Azure.Core
                     continue;
                 }
             }
-            return new RehydrationToken(id.Value, version, headerSource, nextRequestUri, initialUri, requestMethod, originalResponseHasLocation, lastKnownLocation.Value, finalStateVia);
+            return new RehydrationToken(id.Value, version, headerSource, nextRequestUri, initialUri, requestMethod, lastKnownLocation.Value, finalStateVia);
         }
 
         void IJsonModel<RehydrationToken>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -103,8 +97,6 @@ namespace Azure.Core
             writer.WriteStringValue(InitialUri);
             writer.WritePropertyName("requestMethod"u8);
             writer.WriteStringValue(RequestMethod.ToString());
-            writer.WritePropertyName("originalResponseHasLocation"u8);
-            writer.WriteBooleanValue(OriginalResponseHasLocation);
             writer.WritePropertyName("lastKnownLocation"u8);
             writer.WriteStringValue(LastKnownLocation);
             writer.WritePropertyName("finalStateVia"u8);
